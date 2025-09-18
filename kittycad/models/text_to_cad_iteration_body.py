@@ -5,7 +5,7 @@ from .base import KittyCadBaseModel
 
 
 class TextToCadIterationBody(KittyCadBaseModel):
-    """Body for generating models from text."""
+    """Body for generating parts from text."""
 
     kcl_version: Optional[str] = None
 

@@ -663,7 +663,7 @@ class MlAPI:
         *,
         kcl: Optional[bool] = None,
     ) -> TextToCad:
-        """Because our source of truth for the resulting model is a STEP file, you will always have STEP file contents when you list your generated models. Any other formats you request here will also be returned when you list your generated models.
+        """Because our source of truth for the resulting model is a STEP file, you will always have STEP file contents when you list your generated parts. Any other formats you request here will also be returned when you list your generated parts.
 
         This operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint.
 
@@ -1020,7 +1020,7 @@ class MlAPI:
         body: TextToCadMultiFileIterationBody,
         file_attachments: Dict[str, SyncUpload],
     ) -> TextToCadMultiFileIteration:
-        """This endpoint can iterate on multi-file models.
+        """This endpoint can iterate on multi-file projects.
 
         Even if you give specific ranges to edit, the model might change more than just those in order to make the changes you requested without breaking the code.
 
@@ -1100,7 +1100,7 @@ class MlAPI:
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return TextToCadMultiFileIteration.model_validate(json_data)
 
-    def list_text_to_cad_models_for_user(
+    def list_text_to_cad_parts_for_user(
         self,
         *,
         limit: Optional[int] = None,
@@ -1111,14 +1111,14 @@ class MlAPI:
     ) -> "SyncPageIterator":
         """This will always return the STEP file contents as well as the format the user originally requested.
 
-        This endpoint requires authentication by any Zoo user. It returns the text-to-CAD models for the authenticated user.
+        This endpoint requires authentication by any Zoo user. It returns the text-to-CAD parts for the authenticated user.
 
-        The text-to-CAD models are returned in order of creation, with the most recently created text-to-CAD models first.
+        The text-to-CAD parts are returned in order of creation, with the most recently created text-to-CAD parts first.
 
                 Returns an iterator that automatically handles pagination.
                 Iterate over all items across all pages:
 
-                    for item in client.user.list_text_to_cad_models_for_user():
+                    for item in client.user.list_text_to_cad_parts_for_user():
                         print(item)
         """
 
@@ -1147,7 +1147,7 @@ class MlAPI:
             kwargs["no_models"] = no_models
 
         def fetch_page(**kw):
-            return self._fetch_page_list_text_to_cad_models_for_user(**kw)
+            return self._fetch_page_list_text_to_cad_parts_for_user(**kw)
 
         # Create the page iterator
         return SyncPageIterator(
@@ -1155,7 +1155,7 @@ class MlAPI:
             initial_kwargs=kwargs,
         )
 
-    def _fetch_page_list_text_to_cad_models_for_user(
+    def _fetch_page_list_text_to_cad_parts_for_user(
         self, **kwargs
     ) -> TextToCadResponseResultsPage:
         """Internal method to fetch a single page."""
@@ -1214,7 +1214,7 @@ class MlAPI:
         # Validate into a Pydantic model (supports BaseModel/RootModel)
         return TextToCadResponseResultsPage.model_validate(json_data)
 
-    def get_text_to_cad_model_for_user(
+    def get_text_to_cad_parts_for_user(
         self,
         id: str,
     ) -> TextToCadResponse:
@@ -1242,7 +1242,7 @@ class MlAPI:
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return TextToCadResponse.model_validate(json_data)
 
-    def create_text_to_cad_model_feedback(
+    def create_text_to_cad_part_feedback(
         self,
         id: str,
         feedback: MlFeedback,
@@ -1301,7 +1301,7 @@ class AsyncMlAPI:
         *,
         kcl: Optional[bool] = None,
     ) -> TextToCad:
-        """Because our source of truth for the resulting model is a STEP file, you will always have STEP file contents when you list your generated models. Any other formats you request here will also be returned when you list your generated models.
+        """Because our source of truth for the resulting model is a STEP file, you will always have STEP file contents when you list your generated parts. Any other formats you request here will also be returned when you list your generated parts.
 
         This operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint.
 
@@ -1658,7 +1658,7 @@ class AsyncMlAPI:
         body: TextToCadMultiFileIterationBody,
         file_attachments: Dict[str, SyncUpload],
     ) -> TextToCadMultiFileIteration:
-        """This endpoint can iterate on multi-file models.
+        """This endpoint can iterate on multi-file projects.
 
         Even if you give specific ranges to edit, the model might change more than just those in order to make the changes you requested without breaking the code.
 
@@ -1738,7 +1738,7 @@ class AsyncMlAPI:
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return TextToCadMultiFileIteration.model_validate(json_data)
 
-    def list_text_to_cad_models_for_user(
+    def list_text_to_cad_parts_for_user(
         self,
         *,
         limit: Optional[int] = None,
@@ -1749,14 +1749,14 @@ class AsyncMlAPI:
     ) -> "AsyncPageIterator":
         """This will always return the STEP file contents as well as the format the user originally requested.
 
-        This endpoint requires authentication by any Zoo user. It returns the text-to-CAD models for the authenticated user.
+        This endpoint requires authentication by any Zoo user. It returns the text-to-CAD parts for the authenticated user.
 
-        The text-to-CAD models are returned in order of creation, with the most recently created text-to-CAD models first.
+        The text-to-CAD parts are returned in order of creation, with the most recently created text-to-CAD parts first.
 
                 Returns an async iterator that automatically handles pagination.
                 Iterate over all items across all pages:
 
-                    async for item in client.user.list_text_to_cad_models_for_user():
+                    async for item in client.user.list_text_to_cad_parts_for_user():
                         print(item)
         """
 
@@ -1785,7 +1785,7 @@ class AsyncMlAPI:
             kwargs["no_models"] = no_models
 
         async def fetch_page(**kw):
-            return await self._fetch_page_list_text_to_cad_models_for_user(**kw)
+            return await self._fetch_page_list_text_to_cad_parts_for_user(**kw)
 
         # Create the async page iterator
         return AsyncPageIterator(
@@ -1793,7 +1793,7 @@ class AsyncMlAPI:
             initial_kwargs=kwargs,
         )
 
-    async def _fetch_page_list_text_to_cad_models_for_user(
+    async def _fetch_page_list_text_to_cad_parts_for_user(
         self, **kwargs
     ) -> TextToCadResponseResultsPage:
         """Internal async method to fetch a single page."""
@@ -1852,7 +1852,7 @@ class AsyncMlAPI:
         # Validate into a Pydantic model (supports BaseModel/RootModel)
         return TextToCadResponseResultsPage.model_validate(json_data)
 
-    async def get_text_to_cad_model_for_user(
+    async def get_text_to_cad_parts_for_user(
         self,
         id: str,
     ) -> TextToCadResponse:
@@ -1880,7 +1880,7 @@ class AsyncMlAPI:
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return TextToCadResponse.model_validate(json_data)
 
-    async def create_text_to_cad_model_feedback(
+    async def create_text_to_cad_part_feedback(
         self,
         id: str,
         feedback: MlFeedback,

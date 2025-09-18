@@ -1099,7 +1099,7 @@
     "op": "add",
     "path": "/paths/~1user~1text-to-cad/get/x-python",
     "value": {
-      "example": "from kittycad.models.created_at_sort_mode import CreatedAtSortMode\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models import TextToCadResponseResultsPage\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\n\n\nfrom kittycad.models import TextToCadResponse\ndef example_list_text_to_cad_models_for_user():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    # Iterate through all pages automatically\n    item: TextToCadResponse\n    for item in client.ml.list_text_to_cad_models_for_user(sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,\n        conversation_id=Uuid(\"<string>\"),\n        limit=None,\n        page_token=None,\n        no_models=None):\n        print(item)\n\n",
+      "example": "from kittycad.models.created_at_sort_mode import CreatedAtSortMode\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models import TextToCadResponseResultsPage\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\n\n\nfrom kittycad.models import TextToCadResponse\ndef example_list_text_to_cad_parts_for_user():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    # Iterate through all pages automatically\n    item: TextToCadResponse\n    for item in client.ml.list_text_to_cad_parts_for_user(sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,\n        conversation_id=Uuid(\"<string>\"),\n        limit=None,\n        page_token=None,\n        no_models=None):\n        print(item)\n\n",
       "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD.ml"
     }
   },
@@ -1107,7 +1107,7 @@
     "op": "add",
     "path": "/paths/~1user~1text-to-cad~1{id}/get/x-python",
     "value": {
-      "example": "from kittycad.models import TextToCadResponse\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_get_text_to_cad_model_for_user():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    result: TextToCadResponse = client.ml.get_text_to_cad_model_for_user(id=\"<string>\")\n\n\n    body: TextToCadResponse = result\n    print(body)\n\n",
+      "example": "from kittycad.models import TextToCadResponse\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_get_text_to_cad_parts_for_user():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    result: TextToCadResponse = client.ml.get_text_to_cad_parts_for_user(id=\"<string>\")\n\n\n    body: TextToCadResponse = result\n    print(body)\n\n",
       "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD.ml"
     }
   },
@@ -1115,7 +1115,7 @@
     "op": "add",
     "path": "/paths/~1user~1text-to-cad~1{id}/post/x-python",
     "value": {
-      "example": "from kittycad.models.ml_feedback import MlFeedback\ndef example_create_text_to_cad_model_feedback():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    client.ml.create_text_to_cad_model_feedback(id=\"<string>\",\n        feedback=MlFeedback.THUMBS_UP)\n\n",
+      "example": "from kittycad.models.ml_feedback import MlFeedback\ndef example_create_text_to_cad_part_feedback():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    client.ml.create_text_to_cad_part_feedback(id=\"<string>\",\n        feedback=MlFeedback.THUMBS_UP)\n\n",
       "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD.ml"
     }
   },
