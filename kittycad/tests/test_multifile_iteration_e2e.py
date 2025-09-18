@@ -5,9 +5,11 @@ import pytest
 
 from kittycad import KittyCAD
 from kittycad.models.api_call_status import ApiCallStatus
+from kittycad.models.async_api_call_output import OptionTextToCadMultiFileIteration
 from kittycad.models.text_to_cad_multi_file_iteration_body import (
     TextToCadMultiFileIterationBody,
 )
+
 
 def test_text_to_cad_multi_file_iteration_returns_both_files(tmp_path: Path):
     """Test that a project with main.kcl and subdir/main.kcl is echoed back as two files.
@@ -54,6 +56,11 @@ def test_text_to_cad_multi_file_iteration_returns_both_files(tmp_path: Path):
             result = call_out.root
             last_status = str(result.status)
             if result.status == ApiCallStatus.COMPLETED:
+                # Ensure we got the correct output type
+                assert isinstance(result, OptionTextToCadMultiFileIteration), (
+                    f"Unexpected result type: {type(result)}"
+                )
+
                 # Validate basic shape
                 assert hasattr(result, "model_version")  # may be empty on some releases
                 assert result.outputs is not None
