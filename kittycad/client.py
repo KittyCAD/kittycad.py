@@ -1,5 +1,5 @@
 import ssl
-from typing import Dict, Optional, Union
+from typing import Dict, Optional, Self, Union
 
 import attr
 import httpx
@@ -67,7 +67,7 @@ class Client:
             self.http_client.close()
             self.http_client = None
 
-    def __enter__(self) -> "Client":
+    def __enter__(self) -> Self:
         """Context manager entry"""
         return self
 
@@ -135,7 +135,7 @@ class AsyncClient:
             await self.http_client.aclose()
             self.http_client = None
 
-    async def __aenter__(self) -> "AsyncClient":
+    async def __aenter__(self) -> Self:
         """Async context manager entry"""
         return self
 
