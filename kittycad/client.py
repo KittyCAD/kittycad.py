@@ -3,6 +3,7 @@ from typing import Dict, Optional, Union
 
 import attr
 import httpx
+import truststore
 
 DEFAULT_BASE_URL = "https://api.zoo.dev"
 
@@ -16,7 +17,7 @@ class Client:
     cookies: Dict[str, str] = attr.ib(factory=dict, kw_only=True)
     headers: Dict[str, str] = attr.ib(factory=dict, kw_only=True)
     timeout: float = attr.ib(120.0, kw_only=True)
-    verify_ssl: Union[str, bool, ssl.SSLContext] = attr.ib(True, kw_only=True)
+    verify_ssl: Union[str, bool, ssl.SSLContext, truststore.SSLContext] = attr.ib(True, kw_only=True)
     http_client: Optional[httpx.Client] = attr.ib(default=None, kw_only=True)
 
     def get_headers(self) -> Dict[str, str]:
@@ -82,7 +83,7 @@ class AsyncClient:
     cookies: Dict[str, str] = attr.ib(factory=dict, kw_only=True)
     headers: Dict[str, str] = attr.ib(factory=dict, kw_only=True)
     timeout: float = attr.ib(120.0, kw_only=True)
-    verify_ssl: Union[str, bool, ssl.SSLContext] = attr.ib(True, kw_only=True)
+    verify_ssl: Union[str, bool, ssl.SSLContext, truststore.SSLContext] = attr.ib(True, kw_only=True)
     http_client: Optional[httpx.AsyncClient] = attr.ib(default=None, kw_only=True)
 
     def get_headers(self) -> Dict[str, str]:
