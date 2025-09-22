@@ -43,7 +43,7 @@ def test_assets_kcl_project_roundtrip_outputs_match_inputs():
         prompt="make the bench longer",
         source_ranges=[],
         kcl_version="1.0",
-        project_name="assets/test_kcl_project",
+        project_name="test_kcl_project",
     )
 
     with KittyCAD() as client:

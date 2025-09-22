@@ -45,7 +45,7 @@ async def test_assets_kcl_project_roundtrip_outputs_match_inputs_async():
         prompt="make the bench longer",
         source_ranges=[],
         kcl_version="1.0",
-        project_name="assets/test_kcl_project",
+        project_name="test_kcl_project",
     )
 
     async with AsyncKittyCAD() as client:
@@ -66,18 +66,14 @@ async def test_assets_kcl_project_roundtrip_outputs_match_inputs_async():
                 )
                 assert root.outputs is not None, "Completed response missing outputs"
 
-                def _norm(k: str) -> str:
-                    pref = "assets/test_kcl_project/"
-                    return k[len(pref) :] if k.startswith(pref) else k
-
-                normalized_keys = {_norm(k) for k in root.outputs.keys()}
+                actual_keys = set(root.outputs.keys())
                 expected_keys = set(file_attachments.keys())
 
-                assert normalized_keys == expected_keys, (
-                    f"Output keys mismatch. expected={sorted(expected_keys)} actual={sorted(normalized_keys)} raw={sorted(root.outputs.keys())}"
+                assert actual_keys == expected_keys, (
+                    f"Output keys mismatch. expected={sorted(expected_keys)} actual={sorted(actual_keys)}"
                 )
-                assert len(normalized_keys) == 3, (
-                    f"Expected 3 outputs, got {len(normalized_keys)} with keys: {sorted(normalized_keys)}"
+                assert len(actual_keys) == 3, (
+                    f"Expected 3 outputs, got {len(actual_keys)} with keys: {sorted(actual_keys)}"
                 )
                 return
 
