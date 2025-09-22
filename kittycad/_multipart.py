@@ -425,8 +425,16 @@ def create_json_multipart_upload(
                 file_obj = cast(IO[bytes], wrapped_file_obj)
 
             # Create the file tuple: (filename, file_obj, content_type)
+            # If the provided field name encodes a relative path (contains a
+            # path separator), use it as the filename so the server receives
+            # the intended relative path rather than only the basename.
+            use_filename = (
+                field_name
+                if ("/" in field_name or "\\" in field_name)
+                else detected_filename
+            )
             files_dict[field_name] = (
-                detected_filename,
+                use_filename,
                 file_obj,
                 detected_content_type,
             )

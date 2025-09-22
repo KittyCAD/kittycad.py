@@ -65,11 +65,19 @@ async def test_assets_kcl_project_roundtrip_outputs_match_inputs_async():
                     f"Unexpected result type: {type(root)}"
                 )
                 assert root.outputs is not None, "Completed response missing outputs"
-                assert len(file_attachments) == len(root.outputs), (
-                    f"Expected {len(file_attachments)} outputs, got {len(root.outputs)}"
+
+                def _norm(k: str) -> str:
+                    pref = "assets/test_kcl_project/"
+                    return k[len(pref) :] if k.startswith(pref) else k
+
+                normalized_keys = {_norm(k) for k in root.outputs.keys()}
+                expected_keys = set(file_attachments.keys())
+
+                assert normalized_keys == expected_keys, (
+                    f"Output keys mismatch. expected={sorted(expected_keys)} actual={sorted(normalized_keys)} raw={sorted(root.outputs.keys())}"
                 )
-                assert len(root.outputs) == 3, (
-                    f"Expected 3 outputs, got {len(root.outputs)} with keys: {list(root.outputs.keys())}"
+                assert len(normalized_keys) == 3, (
+                    f"Expected 3 outputs, got {len(normalized_keys)} with keys: {sorted(normalized_keys)}"
                 )
                 return
 
