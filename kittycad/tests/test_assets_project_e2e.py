@@ -31,9 +31,9 @@ def test_assets_kcl_project_roundtrip_outputs_match_inputs():
     file_paths = [p for p in proj_path.rglob("*") if p.is_file() and p.suffix == ".kcl"]
     assert file_paths, "No .kcl files found in test project"
     # Ensure the fixture project shape: exactly 3 KCL files
-    assert (
-        len(file_paths) == 3
-    ), f"Expected 3 input .kcl files, found {len(file_paths)}: {[str(p.relative_to(proj_path)) for p in file_paths]}"
+    assert len(file_paths) == 3, (
+        f"Expected 3 input .kcl files, found {len(file_paths)}: {[str(p.relative_to(proj_path)) for p in file_paths]}"
+    )
 
     file_attachments: Dict[str, SyncUpload] = {
         str(fp.relative_to(proj_path)): fp for fp in file_paths
@@ -67,9 +67,9 @@ def test_assets_kcl_project_roundtrip_outputs_match_inputs():
                     f"Expected {len(file_attachments)} outputs, got {len(root.outputs)}"
                 )
                 # And specifically ensure we received 3 files back
-                assert (
-                    len(root.outputs) == 3
-                ), f"Expected 3 outputs, got {len(root.outputs)} with keys: {list(root.outputs.keys())}"
+                assert len(root.outputs) == 3, (
+                    f"Expected 3 outputs, got {len(root.outputs)} with keys: {list(root.outputs.keys())}"
+                )
                 return
 
             if root.status == ApiCallStatus.FAILED:
