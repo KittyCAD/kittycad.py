@@ -22,6 +22,21 @@ class MultipartDict(dict):
     pass
 
 
+def _resolve_multipart_filename(
+    field_name: str, detected_filename: Optional[str]
+) -> Optional[str]:
+    """Choose the filename to send in a multipart part.
+
+    - If the field name encodes a relative path (contains a path separator),
+      use it so servers that key by filename receive the intended path.
+    - Otherwise, fall back to the detected/basename filename.
+    """
+    if "/" in field_name or "\\" in field_name:
+        return field_name
+    # Keep None for bytes/streams with no inherent filename
+    return detected_filename
+
+
 def create_multipart_upload(
     file_param: str,
     file_input: SyncUpload,
@@ -70,7 +85,8 @@ def create_multipart_upload(
 
     # Create the file tuple for multipart
     # Format: (filename, file_obj, content_type)
-    file_tuple = (detected_filename, file_obj, detected_content_type)
+    use_filename = _resolve_multipart_filename(file_param, detected_filename)
+    file_tuple = (use_filename, file_obj, detected_content_type)
 
     # Build the fields dictionary
     fields = {file_param: file_tuple}
@@ -85,8 +101,8 @@ def create_multipart_upload(
 
         encoder = MultipartEncoder(fields=fields)
     except (AttributeError, ImportError):
-        # Fallback - create a simple dict that works with httpx
-        encoder = fields  # type: ignore[assignment]
+        # Fallback - create a simple dict-like that supports attribute storage
+        encoder = MultipartDict(fields)
 
     # Store cleanup info on the encoder for later use
     encoder._kittycad_file_obj = file_obj
@@ -144,7 +160,8 @@ def create_files_dict(
 
     # Create the file tuple
     # HTTPX expects: (filename, file_obj, content_type)
-    file_tuple = (detected_filename, file_obj, detected_content_type)
+    use_filename = _resolve_multipart_filename(file_param, detected_filename)
+    file_tuple = (use_filename, file_obj, detected_content_type)
 
     files_dict = MultipartDict({file_param: file_tuple})
 
@@ -426,7 +443,7 @@ def create_json_multipart_upload(
 
             # Create the file tuple: (filename, file_obj, content_type)
             files_dict[field_name] = (
-                detected_filename,
+                _resolve_multipart_filename(field_name, detected_filename),
                 file_obj,
                 detected_content_type,
             )

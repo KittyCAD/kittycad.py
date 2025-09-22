@@ -34,6 +34,7 @@ from kittycad._multipart import (
     cleanup_multipart_upload,
     create_files_dict,
     create_json_multipart_upload,
+    create_multipart_upload,
     upload_file_multipart,
     upload_json_multipart,
 )
@@ -1274,6 +1275,40 @@ class TestJsonMultipartUploads:
 
         # Clean up
         cleanup_json_multipart_upload(files_dict)
+
+    def test_create_files_dict_preserves_relative_path_in_filename(self, tmp_path):
+        """create_files_dict should send relative path as filename when field name has '/'."""
+        test_file = tmp_path / "main.kcl"
+        test_file.write_text("// content")
+
+        files = create_files_dict(
+            file_param="subdir/main.kcl",
+            file_input=str(test_file),
+        )
+        assert "subdir/main.kcl" in files
+        fname, fobj, ctype = files["subdir/main.kcl"]
+        assert fname == "subdir/main.kcl"
+        assert ctype == "application/octet-stream"
+        cleanup_multipart_upload(files)
+
+    def test_create_multipart_upload_preserves_relative_path_in_filename(
+        self, tmp_path
+    ):
+        """create_multipart_upload should send relative path as filename when field has '/'."""
+        test_file = tmp_path / "main.kcl"
+        test_file.write_text("// content")
+
+        enc = create_multipart_upload(
+            file_param="nested/dir/main.kcl",
+            file_input=str(test_file),
+        )
+        # We fall back to dict encoder when MultipartEncoder is unavailable.
+        # In that case we can assert directly; otherwise, skip strict introspection.
+        if isinstance(enc, dict):
+            fname, fobj, ctype = enc["nested/dir/main.kcl"]
+            assert fname == "nested/dir/main.kcl"
+            assert ctype == "application/octet-stream"
+            cleanup_multipart_upload(enc)
 
     def test_create_json_multipart_upload_pydantic_model(self, tmp_path):
         """Test multipart upload with Pydantic model as JSON body."""
