@@ -16,4 +16,4 @@ class OrgDetails(KittyCadBaseModel):
 
     name: Optional[str] = None
 
-    phone: Optional[str] = ""
+    phone: str = ""

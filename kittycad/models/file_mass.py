@@ -22,7 +22,7 @@ class FileMass(KittyCadBaseModel):
 
     mass: Optional[float] = None
 
-    material_density: Optional[float] = 0.0
+    material_density: float = 0.0
 
     material_density_unit: UnitDensity
 

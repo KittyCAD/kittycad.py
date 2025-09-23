@@ -10,7 +10,7 @@ from .base import KittyCadBaseModel
 class AsyncApiCall(KittyCadBaseModel):
     """An async API call."""
 
-    attempts: Optional[int] = 0
+    attempts: int = 0
 
     completed_at: Optional[datetime.datetime] = None
 

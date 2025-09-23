@@ -12,4 +12,4 @@ class OutputFile(KittyCadBaseModel):
 
     contents: Optional[str] = None
 
-    name: Optional[str] = ""
+    name: str = ""

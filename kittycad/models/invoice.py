@@ -11,19 +11,19 @@ from .base import KittyCadBaseModel
 class Invoice(KittyCadBaseModel):
     """An invoice."""
 
-    amount_due: Optional[float] = 0.0
+    amount_due: float = 0.0
 
-    amount_paid: Optional[float] = 0.0
+    amount_paid: float = 0.0
 
-    amount_remaining: Optional[float] = 0.0
+    amount_remaining: float = 0.0
 
-    attempt_count: Optional[int] = 0
+    attempt_count: int = 0
 
-    attempted: Optional[bool] = False
+    attempted: bool = False
 
     created_at: datetime.datetime
 
-    currency: Optional[Currency] = "usd"  # type: ignore[assignment]
+    currency: Currency = "usd"  # type: ignore[assignment]
 
     customer_email: Optional[str] = None
 
@@ -39,11 +39,11 @@ class Invoice(KittyCadBaseModel):
 
     lines: Optional[List[InvoiceLineItem]] = None
 
-    metadata: Optional[Dict[str, str]] = {}
+    metadata: Dict[str, str] = {}
 
     number: Optional[str] = None
 
-    paid: Optional[bool] = False
+    paid: bool = False
 
     pdf: Optional[str] = None
 
@@ -53,10 +53,10 @@ class Invoice(KittyCadBaseModel):
 
     status: Optional[InvoiceStatus] = None
 
-    subtotal: Optional[float] = 0.0
+    subtotal: float = 0.0
 
-    tax: Optional[float] = 0.0
+    tax: float = 0.0
 
-    total: Optional[float] = 0.0
+    total: float = 0.0
 
     url: Optional[str] = None

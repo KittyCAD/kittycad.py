@@ -96,7 +96,7 @@ class OptionFileMass(KittyCadBaseModel):
 
     mass: Optional[float] = None
 
-    material_density: Optional[float] = 0.0
+    material_density: float = 0.0
 
     material_density_unit: UnitDensity
 
@@ -156,7 +156,7 @@ class OptionFileDensity(KittyCadBaseModel):
 
     id: Uuid
 
-    material_mass: Optional[float] = 0.0
+    material_mass: float = 0.0
 
     material_mass_unit: UnitMass
 

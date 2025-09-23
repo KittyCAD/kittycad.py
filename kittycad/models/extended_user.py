@@ -13,13 +13,13 @@ class ExtendedUser(KittyCadBaseModel):
 
     block: Optional[BlockReason] = None
 
-    can_train_on_data: Optional[bool] = False
+    can_train_on_data: bool = False
 
     company: Optional[str] = None
 
     created_at: datetime.datetime
 
-    deletion_scheduled: Optional[bool] = False
+    deletion_scheduled: bool = False
 
     discord: Optional[str] = None
 
@@ -37,15 +37,15 @@ class ExtendedUser(KittyCadBaseModel):
 
     image: str
 
-    is_onboarded: Optional[bool] = False
+    is_onboarded: bool = False
 
-    is_service_account: Optional[bool] = False
+    is_service_account: bool = False
 
     last_name: Optional[str] = None
 
     name: Optional[str] = None
 
-    phone: Optional[str] = ""
+    phone: str = ""
 
     stripe_id: Optional[str] = None
 

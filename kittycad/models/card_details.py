@@ -9,13 +9,13 @@ class CardDetails(KittyCadBaseModel):
 
     brand: Optional[str] = None
 
-    checks: Optional[PaymentMethodCardChecks] = {}  # type: ignore[assignment]
+    checks: PaymentMethodCardChecks = {}  # type: ignore[assignment]
 
     country: Optional[str] = None
 
-    exp_month: Optional[int] = 0
+    exp_month: int = 0
 
-    exp_year: Optional[int] = 0
+    exp_year: int = 0
 
     fingerprint: Optional[str] = None
 

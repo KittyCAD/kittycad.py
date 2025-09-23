@@ -20,4 +20,4 @@ class UpdateUser(KittyCadBaseModel):
 
     last_name: Optional[str] = None
 
-    phone: Optional[str] = ""
+    phone: str = ""

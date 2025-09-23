@@ -18,7 +18,7 @@ class UnitCurrentConversion(KittyCadBaseModel):
 
     id: Uuid
 
-    input: Optional[float] = 0.0
+    input: float = 0.0
 
     input_unit: UnitCurrent
 

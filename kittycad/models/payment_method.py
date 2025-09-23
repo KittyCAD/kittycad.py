@@ -18,6 +18,6 @@ class PaymentMethod(KittyCadBaseModel):
 
     id: Optional[str] = None
 
-    metadata: Optional[Dict[str, str]] = {}
+    metadata: Dict[str, str] = {}
 
     type: PaymentMethodType

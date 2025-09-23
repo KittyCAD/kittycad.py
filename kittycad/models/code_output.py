@@ -13,6 +13,6 @@ class CodeOutput(KittyCadBaseModel):
 
     output_files: Optional[List[OutputFile]] = None
 
-    stderr: Optional[str] = ""
+    stderr: str = ""
 
-    stdout: Optional[str] = ""
+    stdout: str = ""

@@ -1,4 +1,4 @@
-from typing import Dict, List, Literal, Optional, Union
+from typing import Dict, List, Literal, Union
 
 from pydantic import Field, RootModel
 from typing_extensions import Annotated
@@ -45,7 +45,7 @@ class OptionModelingCmdBatchReq(KittyCadBaseModel):
 
     requests: List[ModelingCmdReq]
 
-    responses: Optional[bool] = False
+    responses: bool = False
 
     type: Literal["modeling_cmd_batch_req"] = "modeling_cmd_batch_req"
 

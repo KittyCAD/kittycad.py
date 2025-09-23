@@ -85,11 +85,11 @@ class OptionExtrude(KittyCadBaseModel):
 
     distance: LengthUnit
 
-    extrude_method: Optional[ExtrudeMethod] = "merge"  # type: ignore[assignment]
+    extrude_method: ExtrudeMethod = "merge"  # type: ignore[assignment]
 
     faces: Optional[ExtrudedFaceInfo] = None
 
-    opposite: Optional[OppositeForLengthUnit] = "None"  # type: ignore[assignment]
+    opposite: OppositeForLengthUnit = "None"  # type: ignore[assignment]
 
     target: ModelingCmdId
 
@@ -99,9 +99,9 @@ class OptionExtrude(KittyCadBaseModel):
 class OptionTwistExtrude(KittyCadBaseModel):
     """Command for twist extruding a solid 2d."""
 
-    angle_step_size: Optional[Angle] = {"unit": "degrees", "value": 15.0}  # type: ignore[assignment]
+    angle_step_size: Angle = {"unit": "degrees", "value": 15.0}  # type: ignore[assignment]
 
-    center_2d: Optional[Point2d] = {"x": 0.0, "y": 0.0}  # type: ignore[assignment]
+    center_2d: Point2d = {"x": 0.0, "y": 0.0}  # type: ignore[assignment]
 
     distance: LengthUnit
 
@@ -119,7 +119,7 @@ class OptionTwistExtrude(KittyCadBaseModel):
 class OptionSweep(KittyCadBaseModel):
     """Extrude the object along a path."""
 
-    relative_to: Optional[RelativeTo] = "sketch_plane"  # type: ignore[assignment]
+    relative_to: RelativeTo = "sketch_plane"  # type: ignore[assignment]
 
     sectional: bool
 
@@ -141,7 +141,7 @@ class OptionRevolve(KittyCadBaseModel):
 
     axis_is_2d: bool
 
-    opposite: Optional[OppositeForAngle] = "None"  # type: ignore[assignment]
+    opposite: OppositeForAngle = "None"  # type: ignore[assignment]
 
     origin: Point3d
 
@@ -157,7 +157,7 @@ class OptionSolid3dShellFace(KittyCadBaseModel):
 
     face_ids: List[str]
 
-    hollow: Optional[bool] = False
+    hollow: bool = False
 
     object_id: str
 
@@ -173,7 +173,7 @@ class OptionRevolveAboutEdge(KittyCadBaseModel):
 
     edge_id: str
 
-    opposite: Optional[OppositeForAngle] = "None"  # type: ignore[assignment]
+    opposite: OppositeForAngle = "None"  # type: ignore[assignment]
 
     target: ModelingCmdId
 
@@ -399,9 +399,9 @@ class OptionEntityLinearPatternTransform(KittyCadBaseModel):
 
     entity_id: str
 
-    transform: Optional[List[Transform]] = []
+    transform: List[Transform] = []
 
-    transforms: Optional[List[List[Transform]]] = []
+    transforms: List[List[Transform]] = []
 
     type: Literal["entity_linear_pattern_transform"] = "entity_linear_pattern_transform"
 
@@ -449,7 +449,7 @@ class OptionEntityMakeHelix(KittyCadBaseModel):
 
     revolutions: float
 
-    start_angle: Optional[Angle] = {"unit": "degrees", "value": 0.0}  # type: ignore[assignment]
+    start_angle: Angle = {"unit": "degrees", "value": 0.0}  # type: ignore[assignment]
 
     type: Literal["entity_make_helix"] = "entity_make_helix"
 
@@ -469,7 +469,7 @@ class OptionEntityMakeHelixFromParams(KittyCadBaseModel):
 
     revolutions: float
 
-    start_angle: Optional[Angle] = {"unit": "degrees", "value": 0.0}  # type: ignore[assignment]
+    start_angle: Angle = {"unit": "degrees", "value": 0.0}  # type: ignore[assignment]
 
     type: Literal["entity_make_helix_from_params"] = "entity_make_helix_from_params"
 
@@ -487,7 +487,7 @@ class OptionEntityMakeHelixFromEdge(KittyCadBaseModel):
 
     revolutions: float
 
-    start_angle: Optional[Angle] = {"unit": "degrees", "value": 0.0}  # type: ignore[assignment]
+    start_angle: Angle = {"unit": "degrees", "value": 0.0}  # type: ignore[assignment]
 
     type: Literal["entity_make_helix_from_edge"] = "entity_make_helix_from_edge"
 
@@ -725,19 +725,19 @@ class OptionSolid3dGetCommonEdge(KittyCadBaseModel):
 class OptionSolid3dFilletEdge(KittyCadBaseModel):
     """Fillets the given edge with the specified radius."""
 
-    cut_type: Optional[CutType] = "fillet"  # type: ignore[assignment]
+    cut_type: CutType = "fillet"  # type: ignore[assignment]
 
     edge_id: Optional[str] = None
 
-    edge_ids: Optional[List[str]] = []
+    edge_ids: List[str] = []
 
-    extra_face_ids: Optional[List[str]] = []
+    extra_face_ids: List[str] = []
 
     object_id: str
 
     radius: LengthUnit
 
-    strategy: Optional[CutStrategy] = "automatic"  # type: ignore[assignment]
+    strategy: CutStrategy = "automatic"  # type: ignore[assignment]
 
     tolerance: LengthUnit
 
@@ -803,7 +803,7 @@ class OptionEntitySetOpacity(KittyCadBaseModel):
 class OptionEntityFade(KittyCadBaseModel):
     """Fade entity in or out."""
 
-    duration_seconds: Optional[float] = 0.4
+    duration_seconds: float = 0.4
 
     entity_id: str
 
@@ -1229,7 +1229,7 @@ class OptionDefaultCameraSetPerspective(KittyCadBaseModel):
 class OptionDefaultCameraCenterToSelection(KittyCadBaseModel):
     """Updates the camera to center to the center of the current selection (or the origin if nothing is selected)"""
 
-    camera_movement: Optional[CameraMovement] = "vantage"  # type: ignore[assignment]
+    camera_movement: CameraMovement = "vantage"  # type: ignore[assignment]
 
     type: Literal["default_camera_center_to_selection"] = (
         "default_camera_center_to_selection"
@@ -1239,7 +1239,7 @@ class OptionDefaultCameraCenterToSelection(KittyCadBaseModel):
 class OptionDefaultCameraCenterToScene(KittyCadBaseModel):
     """Updates the camera to center to the center of the current scene's bounds"""
 
-    camera_movement: Optional[CameraMovement] = "vantage"  # type: ignore[assignment]
+    camera_movement: CameraMovement = "vantage"  # type: ignore[assignment]
 
     type: Literal["default_camera_center_to_scene"] = "default_camera_center_to_scene"
 
@@ -1247,11 +1247,11 @@ class OptionDefaultCameraCenterToScene(KittyCadBaseModel):
 class OptionZoomToFit(KittyCadBaseModel):
     """Fit the view to the specified object(s)."""
 
-    animated: Optional[bool] = False
+    animated: bool = False
 
-    object_ids: Optional[List[str]] = []
+    object_ids: List[str] = []
 
-    padding: Optional[float] = 0.0
+    padding: float = 0.0
 
     type: Literal["zoom_to_fit"] = "zoom_to_fit"
 
@@ -1259,11 +1259,11 @@ class OptionZoomToFit(KittyCadBaseModel):
 class OptionOrientToFace(KittyCadBaseModel):
     """Looks along the normal of the specified face (if it is planar!), and fits the view to it."""
 
-    animated: Optional[bool] = False
+    animated: bool = False
 
     face_id: str
 
-    padding: Optional[float] = 0.0
+    padding: float = 0.0
 
     type: Literal["orient_to_face"] = "orient_to_face"
 
@@ -1271,7 +1271,7 @@ class OptionOrientToFace(KittyCadBaseModel):
 class OptionViewIsometric(KittyCadBaseModel):
     """Fit the view to the scene with an isometric view."""
 
-    padding: Optional[float] = 0.0
+    padding: float = 0.0
 
     type: Literal["view_isometric"] = "view_isometric"
 

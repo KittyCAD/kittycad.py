@@ -18,7 +18,7 @@ class Shortlink(KittyCadBaseModel):
 
     password_hash: Optional[str] = None
 
-    restrict_to_org: Optional[bool] = False
+    restrict_to_org: bool = False
 
     updated_at: datetime.datetime
 

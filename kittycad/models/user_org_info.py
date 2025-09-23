@@ -28,7 +28,7 @@ class UserOrgInfo(KittyCadBaseModel):
 
     name: Optional[str] = None
 
-    phone: Optional[str] = ""
+    phone: str = ""
 
     role: OrgRole
 

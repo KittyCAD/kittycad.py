@@ -841,31 +841,31 @@ def generate_object_type_code(
                 is_required = property_name in required
                 has_default = "default" in property_schema
                 default_literal = None
-                type_hint = base_type
-
-                if not is_required:
-                    type_hint = "Optional[" + base_type + "]"
-                    if has_default:
-                        default_value = property_schema["default"]
-                        default_literal = (
-                            '"' + default_value + '"'
-                            if isinstance(default_value, str)
-                            else str(default_value)
-                        )
-                    else:
-                        default_literal = "None"
-                elif has_default:
+                default_value: Any = None
+                if has_default:
                     default_value = property_schema["default"]
-                    default_literal = (
-                        '"' + default_value + '"'
-                        if isinstance(default_value, str)
-                        else str(default_value)
-                    )
+                    if isinstance(default_value, str):
+                        default_literal = f'"{default_value}"'
+                    else:
+                        default_literal = repr(default_value)
+
+                type_hint = base_type
+                if not is_required:
+                    if has_default and default_value is not None:
+                        # Leave as base type; explicit default handles the missing case.
+                        pass
+                    else:
+                        type_hint = "Optional[" + base_type + "]"
+                        if default_literal is None:
+                            default_literal = "None"
+
+                elif has_default and default_literal is None:
+                    default_literal = "None"
 
                 needs_type_ignore = False
                 if has_default:
                     needs_type_ignore = not is_default_compatible(
-                        base_type, property_schema["default"]
+                        base_type, default_value
                     )
 
                 if property_name in field_alias_paths:
