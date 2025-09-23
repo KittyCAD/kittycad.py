@@ -700,126 +700,6 @@ class MlAPI:
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return TextToCad.model_validate(json_data)
 
-    def list_ml_prompts(
-        self,
-        *,
-        limit: Optional[int] = None,
-        page_token: Optional[str] = None,
-        sort_by: Optional[CreatedAtSortMode] = None,
-    ) -> "SyncPageIterator":
-        """For text-to-cad prompts, this will always return the STEP file contents as well as the format the user originally requested.
-
-        This endpoint requires authentication by a Zoo employee.
-
-        The ML prompts are returned in order of creation, with the most recently created ML prompts first.
-
-                Returns an iterator that automatically handles pagination.
-                Iterate over all items across all pages:
-
-                    for item in client.ml-prompts.list_ml_prompts():
-                        print(item)
-        """
-
-        from typing import Any, Dict
-
-        from kittycad.pagination import SyncPageIterator
-
-        # Store path parameters in closure for later use
-
-        # Create arguments dict, filtering out None values
-        kwargs: Dict[str, Any] = {}
-
-        if limit is not None:
-            kwargs["limit"] = limit
-
-        if page_token is not None:
-            kwargs["page_token"] = page_token
-
-        if sort_by is not None:
-            kwargs["sort_by"] = sort_by
-
-        def fetch_page(**kw):
-            return self._fetch_page_list_ml_prompts(**kw)
-
-        # Create the page iterator
-        return SyncPageIterator(
-            page_fetcher=fetch_page,
-            initial_kwargs=kwargs,
-        )
-
-    def _fetch_page_list_ml_prompts(self, **kwargs) -> MlPromptResultsPage:
-        """Internal method to fetch a single page."""
-        # Build URL with path parameters
-        url = "{}/ml-prompts".format(self.client.base_url)
-
-        # Add query parameters
-
-        if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
-
-        if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
-
-        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(kwargs["sort_by"])
-            else:
-                url = url + "?sort_by=" + str(kwargs["sort_by"])
-
-        # Pagination parameters (limit, page_token) are already handled above as regular query params
-
-        _client = self.client.get_http_client()
-        response = _client.get(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-        # Validate into a Pydantic model (supports BaseModel/RootModel)
-        return MlPromptResultsPage.model_validate(json_data)
-
-    def get_ml_prompt(
-        self,
-        id: str,
-    ) -> MlPrompt:
-        """This endpoint requires authentication by a Zoo employee."""
-
-        url = "{}/ml-prompts/{id}".format(self.client.base_url, id=id)
-
-        _client = self.client.get_http_client()
-
-        response = _client.get(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from ..response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return MlPrompt.model_validate(json_data)
-
     def list_conversations_for_user(
         self,
         *,
@@ -1100,6 +980,126 @@ class MlAPI:
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return TextToCadMultiFileIteration.model_validate(json_data)
 
+    def list_ml_prompts(
+        self,
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+        sort_by: Optional[CreatedAtSortMode] = None,
+    ) -> "SyncPageIterator":
+        """For text-to-cad prompts, this will always return the STEP file contents as well as the format the user originally requested.
+
+        This endpoint requires authentication by a Zoo employee.
+
+        The ML prompts are returned in order of creation, with the most recently created ML prompts first.
+
+                Returns an iterator that automatically handles pagination.
+                Iterate over all items across all pages:
+
+                    for item in client.ml-prompts.list_ml_prompts():
+                        print(item)
+        """
+
+        from typing import Any, Dict
+
+        from kittycad.pagination import SyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
+
+        if limit is not None:
+            kwargs["limit"] = limit
+
+        if page_token is not None:
+            kwargs["page_token"] = page_token
+
+        if sort_by is not None:
+            kwargs["sort_by"] = sort_by
+
+        def fetch_page(**kw):
+            return self._fetch_page_list_ml_prompts(**kw)
+
+        # Create the page iterator
+        return SyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    def _fetch_page_list_ml_prompts(self, **kwargs) -> MlPromptResultsPage:
+        """Internal method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/ml-prompts".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+        # Validate into a Pydantic model (supports BaseModel/RootModel)
+        return MlPromptResultsPage.model_validate(json_data)
+
+    def get_ml_prompt(
+        self,
+        id: str,
+    ) -> MlPrompt:
+        """This endpoint requires authentication by a Zoo employee."""
+
+        url = "{}/ml-prompts/{id}".format(self.client.base_url, id=id)
+
+        _client = self.client.get_http_client()
+
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return MlPrompt.model_validate(json_data)
+
     def list_text_to_cad_parts_for_user(
         self,
         *,
@@ -1273,12 +1273,16 @@ class MlAPI:
 
         return response.json() if response.content else None
 
-    def ml_copilot_ws(self) -> "WebSocketMlCopilotWs":
+    def ml_copilot_ws(
+        self, conversation_id: Optional[str] = None, replay: Optional[bool] = None
+    ) -> "WebSocketMlCopilotWs":
         """Open a websocket to prompt the ML copilot.
 
         Returns a WebSocket wrapper with methods for sending/receiving data.
         """
-        return WebSocketMlCopilotWs(client=self.client)
+        return WebSocketMlCopilotWs(
+            conversation_id=conversation_id, replay=replay, client=self.client
+        )
 
     def ml_reasoning_ws(self, id: str) -> "WebSocketMlReasoningWs":
         """Open a websocket to prompt the ML copilot.
@@ -1337,126 +1341,6 @@ class AsyncMlAPI:
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return TextToCad.model_validate(json_data)
-
-    def list_ml_prompts(
-        self,
-        *,
-        limit: Optional[int] = None,
-        page_token: Optional[str] = None,
-        sort_by: Optional[CreatedAtSortMode] = None,
-    ) -> "AsyncPageIterator":
-        """For text-to-cad prompts, this will always return the STEP file contents as well as the format the user originally requested.
-
-        This endpoint requires authentication by a Zoo employee.
-
-        The ML prompts are returned in order of creation, with the most recently created ML prompts first.
-
-                Returns an async iterator that automatically handles pagination.
-                Iterate over all items across all pages:
-
-                    async for item in client.ml-prompts.list_ml_prompts():
-                        print(item)
-        """
-
-        from typing import Any, Dict
-
-        from kittycad.pagination import AsyncPageIterator
-
-        # Store path parameters in closure for later use
-
-        # Create arguments dict, filtering out None values
-        kwargs: Dict[str, Any] = {}
-
-        if limit is not None:
-            kwargs["limit"] = limit
-
-        if page_token is not None:
-            kwargs["page_token"] = page_token
-
-        if sort_by is not None:
-            kwargs["sort_by"] = sort_by
-
-        async def fetch_page(**kw):
-            return await self._fetch_page_list_ml_prompts(**kw)
-
-        # Create the async page iterator
-        return AsyncPageIterator(
-            page_fetcher=fetch_page,
-            initial_kwargs=kwargs,
-        )
-
-    async def _fetch_page_list_ml_prompts(self, **kwargs) -> MlPromptResultsPage:
-        """Internal async method to fetch a single page."""
-        # Build URL with path parameters
-        url = "{}/ml-prompts".format(self.client.base_url)
-
-        # Add query parameters
-
-        if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
-
-        if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
-
-        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(kwargs["sort_by"])
-            else:
-                url = url + "?sort_by=" + str(kwargs["sort_by"])
-
-        # Pagination parameters (limit, page_token) are already handled above as regular query params
-
-        _client = self.client.get_http_client()
-        response = await _client.get(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-        # Validate into a Pydantic model (supports BaseModel/RootModel)
-        return MlPromptResultsPage.model_validate(json_data)
-
-    async def get_ml_prompt(
-        self,
-        id: str,
-    ) -> MlPrompt:
-        """This endpoint requires authentication by a Zoo employee."""
-
-        url = "{}/ml-prompts/{id}".format(self.client.base_url, id=id)
-
-        _client = self.client.get_http_client()
-
-        response = await _client.get(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from ..response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return MlPrompt.model_validate(json_data)
 
     def list_conversations_for_user(
         self,
@@ -1738,6 +1622,126 @@ class AsyncMlAPI:
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return TextToCadMultiFileIteration.model_validate(json_data)
 
+    def list_ml_prompts(
+        self,
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+        sort_by: Optional[CreatedAtSortMode] = None,
+    ) -> "AsyncPageIterator":
+        """For text-to-cad prompts, this will always return the STEP file contents as well as the format the user originally requested.
+
+        This endpoint requires authentication by a Zoo employee.
+
+        The ML prompts are returned in order of creation, with the most recently created ML prompts first.
+
+                Returns an async iterator that automatically handles pagination.
+                Iterate over all items across all pages:
+
+                    async for item in client.ml-prompts.list_ml_prompts():
+                        print(item)
+        """
+
+        from typing import Any, Dict
+
+        from kittycad.pagination import AsyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
+
+        if limit is not None:
+            kwargs["limit"] = limit
+
+        if page_token is not None:
+            kwargs["page_token"] = page_token
+
+        if sort_by is not None:
+            kwargs["sort_by"] = sort_by
+
+        async def fetch_page(**kw):
+            return await self._fetch_page_list_ml_prompts(**kw)
+
+        # Create the async page iterator
+        return AsyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    async def _fetch_page_list_ml_prompts(self, **kwargs) -> MlPromptResultsPage:
+        """Internal async method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/ml-prompts".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+        # Validate into a Pydantic model (supports BaseModel/RootModel)
+        return MlPromptResultsPage.model_validate(json_data)
+
+    async def get_ml_prompt(
+        self,
+        id: str,
+    ) -> MlPrompt:
+        """This endpoint requires authentication by a Zoo employee."""
+
+        url = "{}/ml-prompts/{id}".format(self.client.base_url, id=id)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return MlPrompt.model_validate(json_data)
+
     def list_text_to_cad_parts_for_user(
         self,
         *,
@@ -1911,7 +1915,9 @@ class AsyncMlAPI:
 
         return response.json() if response.content else None
 
-    async def ml_copilot_ws(self):
+    async def ml_copilot_ws(
+        self, conversation_id: Optional[str] = None, replay: Optional[bool] = None
+    ):
         """Open a websocket to prompt the ML copilot.
 
         Returns an async WebSocket connection for sending/receiving data.
@@ -1921,10 +1927,25 @@ class AsyncMlAPI:
         # This supports await websocket.send() and async for message in websocket
         async def ml_copilot_ws(
             self,
+            *,
+            conversation_id: Optional[str] = None,
+            replay: Optional[bool] = None,
         ) -> ClientConnectionAsync:
             """Open a websocket to prompt the ML copilot."""
 
             url = "/ws/ml/copilot"
+
+            if conversation_id is not None:
+                if "?" in url:
+                    url = url + "&conversation_id=" + str(conversation_id)
+                else:
+                    url = url + "?conversation_id=" + str(conversation_id)
+
+            if replay is not None:
+                if "?" in url:
+                    url = url + "&replay=" + str(replay).lower()
+                else:
+                    url = url + "?replay=" + str(replay).lower()
 
             return await ws_connect_async(
                 url.replace("http", "ws"),
@@ -10582,6 +10603,66 @@ class UsersAPI:
         # Validate into a Pydantic model (supports BaseModel/RootModel)
         return UserResultsPage.model_validate(json_data)
 
+    def get_user(
+        self,
+        id: UserIdentifier,
+    ) -> User:
+        """To get information about yourself, use `/users/me` as the endpoint. By doing so you will get the user information for the authenticated user.
+
+        Alternatively, to get information about the authenticated user, use `/user` endpoint."""
+
+        url = "{}/users/{id}".format(self.client.base_url, id=id)
+
+        _client = self.client.get_http_client()
+
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return User.model_validate(json_data)
+
+    def update_subscription_for_user(
+        self,
+        id: UserIdentifier,
+        body: ZooProductSubscriptionsUserRequest,
+    ) -> ZooProductSubscriptions:
+        """You must be a Zoo admin to perform this request."""
+
+        url = "{}/users/{id}/payment/subscriptions".format(self.client.base_url, id=id)
+
+        _client = self.client.get_http_client()
+
+        response = _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return ZooProductSubscriptions.model_validate(json_data)
+
     def list_users_extended(
         self,
         *,
@@ -10699,66 +10780,6 @@ class UsersAPI:
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return ExtendedUser.model_validate(json_data)
-
-    def get_user(
-        self,
-        id: UserIdentifier,
-    ) -> User:
-        """To get information about yourself, use `/users/me` as the endpoint. By doing so you will get the user information for the authenticated user.
-
-        Alternatively, to get information about the authenticated user, use `/user` endpoint."""
-
-        url = "{}/users/{id}".format(self.client.base_url, id=id)
-
-        _client = self.client.get_http_client()
-
-        response = _client.get(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from ..response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return User.model_validate(json_data)
-
-    def update_subscription_for_user(
-        self,
-        id: UserIdentifier,
-        body: ZooProductSubscriptionsUserRequest,
-    ) -> ZooProductSubscriptions:
-        """You must be a Zoo admin to perform this request."""
-
-        url = "{}/users/{id}/payment/subscriptions".format(self.client.base_url, id=id)
-
-        _client = self.client.get_http_client()
-
-        response = _client.put(
-            url=url,
-            headers=self.client.get_headers(),
-            content=body.model_dump_json(),
-        )
-
-        if not response.is_success:
-            from ..response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return ZooProductSubscriptions.model_validate(json_data)
 
     def put_public_form(
         self,
@@ -11337,6 +11358,66 @@ class AsyncUsersAPI:
         # Validate into a Pydantic model (supports BaseModel/RootModel)
         return UserResultsPage.model_validate(json_data)
 
+    async def get_user(
+        self,
+        id: UserIdentifier,
+    ) -> User:
+        """To get information about yourself, use `/users/me` as the endpoint. By doing so you will get the user information for the authenticated user.
+
+        Alternatively, to get information about the authenticated user, use `/user` endpoint."""
+
+        url = "{}/users/{id}".format(self.client.base_url, id=id)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return User.model_validate(json_data)
+
+    async def update_subscription_for_user(
+        self,
+        id: UserIdentifier,
+        body: ZooProductSubscriptionsUserRequest,
+    ) -> ZooProductSubscriptions:
+        """You must be a Zoo admin to perform this request."""
+
+        url = "{}/users/{id}/payment/subscriptions".format(self.client.base_url, id=id)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return ZooProductSubscriptions.model_validate(json_data)
+
     def list_users_extended(
         self,
         *,
@@ -11456,66 +11537,6 @@ class AsyncUsersAPI:
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return ExtendedUser.model_validate(json_data)
-
-    async def get_user(
-        self,
-        id: UserIdentifier,
-    ) -> User:
-        """To get information about yourself, use `/users/me` as the endpoint. By doing so you will get the user information for the authenticated user.
-
-        Alternatively, to get information about the authenticated user, use `/user` endpoint."""
-
-        url = "{}/users/{id}".format(self.client.base_url, id=id)
-
-        _client = self.client.get_http_client()
-
-        response = await _client.get(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from ..response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return User.model_validate(json_data)
-
-    async def update_subscription_for_user(
-        self,
-        id: UserIdentifier,
-        body: ZooProductSubscriptionsUserRequest,
-    ) -> ZooProductSubscriptions:
-        """You must be a Zoo admin to perform this request."""
-
-        url = "{}/users/{id}/payment/subscriptions".format(self.client.base_url, id=id)
-
-        _client = self.client.get_http_client()
-
-        response = await _client.put(
-            url=url,
-            headers=self.client.get_headers(),
-            content=body.model_dump_json(),
-        )
-
-        if not response.is_success:
-            from ..response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return ZooProductSubscriptions.model_validate(json_data)
 
     async def put_public_form(
         self,
@@ -12089,10 +12110,28 @@ class WebSocketMlCopilotWs:
 
     ws: ClientConnectionSync
 
-    def __init__(self, *, client: Client):
+    def __init__(
+        self,
+        conversation_id: Optional[str] = None,
+        replay: Optional[bool] = None,
+        *,
+        client: Client,
+    ):
         # Inline WebSocket connection logic
 
         url = ("{}" + "/ws/ml/copilot").format(client.base_url)
+
+        if conversation_id is not None:
+            if "?" in url:
+                url = url + "&conversation_id=" + str(conversation_id)
+            else:
+                url = url + "?conversation_id=" + str(conversation_id)
+
+        if replay is not None:
+            if "?" in url:
+                url = url + "&replay=" + str(replay).lower()
+            else:
+                url = url + "?replay=" + str(replay).lower()
 
         headers = client.get_headers()
         self.ws = ws_connect(

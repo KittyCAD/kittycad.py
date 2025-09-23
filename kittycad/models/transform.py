@@ -9,8 +9,8 @@ class Transform(KittyCadBaseModel):
     replicate: bool = True
 
     rotation: Rotation = {
-        "angle": {"unit": "degrees", "value": 0.0},
         "axis": {"x": 0.0, "y": 0.0, "z": 1.0},
+        "angle": {"unit": "degrees", "value": 0.0},
         "origin": {"type": "local"},
     }  # type: ignore[assignment]
 
