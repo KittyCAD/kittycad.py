@@ -83,19 +83,16 @@ from kittycad.models.direction import Direction
 from kittycad.models.email_authentication_form import EmailAuthenticationForm
 from kittycad.models.enterprise_subscription_tier_price import (
     EnterpriseSubscriptionTierPrice,
-    OptionFlat,
+    OptionPerUser,
 )
 from kittycad.models.event import Event, OptionModelingAppEvent
 from kittycad.models.file_export_format import FileExportFormat
 from kittycad.models.file_import_format import FileImportFormat
-from kittycad.models.gltf_presentation import GltfPresentation
-from kittycad.models.gltf_storage import GltfStorage
 from kittycad.models.idp_metadata_source import (
     IdpMetadataSource,
     OptionBase64EncodedXml,
-    OptionUrl,
 )
-from kittycad.models.input_format3d import InputFormat3d, OptionObj
+from kittycad.models.input_format3d import InputFormat3d, OptionGltf
 from kittycad.models.inquiry_form import InquiryForm
 from kittycad.models.inquiry_type import InquiryType
 from kittycad.models.kcl_code_completion_params import KclCodeCompletionParams
@@ -112,12 +109,13 @@ from kittycad.models.modeling_app_organization_subscription_tier import (
     ModelingAppOrganizationSubscriptionTier,
 )
 from kittycad.models.org_details import OrgDetails
-from kittycad.models.output_format3d import OptionGltf, OutputFormat3d
+from kittycad.models.output_format3d import OptionPly, OutputFormat3d
 from kittycad.models.plan_interval import PlanInterval
+from kittycad.models.ply_storage import PlyStorage
 from kittycad.models.post_effect_type import PostEffectType
 from kittycad.models.privacy_settings import PrivacySettings
-from kittycad.models.rtc_ice_candidate_init import RtcIceCandidateInit
 from kittycad.models.saml_identity_provider_create import SamlIdentityProviderCreate
+from kittycad.models.selection import OptionMeshByIndex, Selection
 from kittycad.models.service_account_uuid import ServiceAccountUuid
 from kittycad.models.session_uuid import SessionUuid
 from kittycad.models.source_position import SourcePosition
@@ -152,7 +150,9 @@ from kittycad.models.update_user import UpdateUser
 from kittycad.models.user_identifier import UserIdentifier
 from kittycad.models.user_org_role import UserOrgRole
 from kittycad.models.uuid import Uuid
-from kittycad.models.web_socket_request import OptionTrickleIce
+from kittycad.models.web_socket_request import (
+    OptionHeaders as WebSocketRequestOptionHeaders,
+)
 from kittycad.models.zoo_product_subscriptions_org_request import (
     ZooProductSubscriptionsOrgRequest,
 )
@@ -626,13 +626,7 @@ def test_create_file_conversion_options():
     result: FileConversion = client.file.create_file_conversion_options(
         body=ConversionParams(
             output_format=OutputFormat3d(
-                OptionGltf(
-                    presentation=GltfPresentation.COMPACT,
-                    storage=GltfStorage.BINARY,
-                )
-            ),
-            src_format=InputFormat3d(
-                OptionObj(
+                OptionPly(
                     coords=System(
                         forward=AxisDirectionPair(
                             axis=Axis.Y,
@@ -643,9 +637,16 @@ def test_create_file_conversion_options():
                             direction=Direction.POSITIVE,
                         ),
                     ),
+                    selection=Selection(
+                        OptionMeshByIndex(
+                            index=10,
+                        )
+                    ),
+                    storage=PlyStorage.ASCII,
                     units=UnitLength.CM,
                 )
             ),
+            src_format=InputFormat3d(OptionGltf()),
         ),
         file_attachments={
             "main.kcl": Path("path/to/main.kcl"),
@@ -666,13 +667,7 @@ async def test_create_file_conversion_options_async():
     result: FileConversion = await client.file.create_file_conversion_options(
         body=ConversionParams(
             output_format=OutputFormat3d(
-                OptionGltf(
-                    presentation=GltfPresentation.COMPACT,
-                    storage=GltfStorage.BINARY,
-                )
-            ),
-            src_format=InputFormat3d(
-                OptionObj(
+                OptionPly(
                     coords=System(
                         forward=AxisDirectionPair(
                             axis=Axis.Y,
@@ -683,9 +678,16 @@ async def test_create_file_conversion_options_async():
                             direction=Direction.POSITIVE,
                         ),
                     ),
+                    selection=Selection(
+                        OptionMeshByIndex(
+                            index=10,
+                        )
+                    ),
+                    storage=PlyStorage.ASCII,
                     units=UnitLength.CM,
                 )
             ),
+            src_format=InputFormat3d(OptionGltf()),
         ),
         file_attachments={
             "main.kcl": Path("path/to/main.kcl"),
@@ -1796,8 +1798,8 @@ def test_create_org_saml_idp():
         body=SamlIdentityProviderCreate(
             idp_entity_id="<string>",
             idp_metadata_source=IdpMetadataSource(
-                OptionUrl(
-                    url="<string>",
+                OptionBase64EncodedXml(
+                    data=Base64Data(b"<bytes>"),
                 )
             ),
             technical_contact_email="<string>",
@@ -1818,8 +1820,8 @@ async def test_create_org_saml_idp_async():
         body=SamlIdentityProviderCreate(
             idp_entity_id="<string>",
             idp_metadata_source=IdpMetadataSource(
-                OptionUrl(
-                    url="<string>",
+                OptionBase64EncodedXml(
+                    data=Base64Data(b"<bytes>"),
                 )
             ),
             technical_contact_email="<string>",
@@ -2039,7 +2041,7 @@ def test_update_enterprise_pricing_for_org():
     result: ZooProductSubscriptions = client.orgs.update_enterprise_pricing_for_org(
         id=Uuid("<string>"),
         body=EnterpriseSubscriptionTierPrice(
-            OptionFlat(
+            OptionPerUser(
                 interval=PlanInterval.DAY,
                 price=3.14,
             )
@@ -2060,7 +2062,7 @@ async def test_update_enterprise_pricing_for_org_async():
         await client.orgs.update_enterprise_pricing_for_org(
             id=Uuid("<string>"),
             body=EnterpriseSubscriptionTierPrice(
-                OptionFlat(
+                OptionPerUser(
                     interval=PlanInterval.DAY,
                     price=3.14,
                 )
@@ -3752,10 +3754,8 @@ def test_modeling_commands_ws():
         # Send a message.
         websocket.send(
             WebSocketRequest(
-                OptionTrickleIce(
-                    candidate=RtcIceCandidateInit(
-                        candidate="<string>",
-                    ),
+                WebSocketRequestOptionHeaders(
+                    headers={"<string>": "<string>"},
                 )
             )
         )

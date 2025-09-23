@@ -9,7 +9,7 @@ class InvoiceLineItem(KittyCadBaseModel):
 
     amount: float = 0.0
 
-    currency: Currency = "usd"  # type: ignore
+    currency: Currency = "usd"  # type: ignore[assignment]
 
     description: Optional[str] = None
 

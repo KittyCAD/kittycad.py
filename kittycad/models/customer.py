@@ -15,7 +15,7 @@ class Customer(KittyCadBaseModel):
 
     created_at: datetime.datetime
 
-    currency: Currency = "usd"  # type: ignore
+    currency: Currency = "usd"  # type: ignore[assignment]
 
     delinquent: bool = False
 

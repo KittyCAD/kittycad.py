@@ -7,7 +7,7 @@ from .base import KittyCadBaseModel
 class KclCodeCompletionRequest(KittyCadBaseModel):
     """A request to generate KCL code completions."""
 
-    extra: KclCodeCompletionParams = {"language": "", "trim_by_indentation": False}  # type: ignore
+    extra: KclCodeCompletionParams = {"language": "", "trim_by_indentation": False}  # type: ignore[assignment]
 
     max_tokens: Optional[int] = None
 

@@ -23,7 +23,7 @@ class Invoice(KittyCadBaseModel):
 
     created_at: datetime.datetime
 
-    currency: Currency = "usd"  # type: ignore
+    currency: Currency = "usd"  # type: ignore[assignment]
 
     customer_email: Optional[str] = None
 

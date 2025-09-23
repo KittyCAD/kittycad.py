@@ -9,7 +9,7 @@ class CardDetails(KittyCadBaseModel):
 
     brand: Optional[str] = None
 
-    checks: PaymentMethodCardChecks = {}  # type: ignore
+    checks: PaymentMethodCardChecks = {}  # type: ignore[assignment]
 
     country: Optional[str] = None
 

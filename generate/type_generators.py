@@ -3,7 +3,7 @@
 import logging
 import os
 import random
-from typing import List, Optional
+from typing import Any, List, Optional
 
 from .schema_analysis import (
     get_any_of_description,
@@ -522,125 +522,160 @@ def generate_one_of_type(path: str, name: str, schema: dict, data: dict):
                 imported_refs.add(class_name)
             all_options.append(class_name)
 
+    tag = None
+    content = None
+
     if is_nested_object_one_of(schema):
-        # We want to write each of the nested objects.
+        alias_imports_needed = False
         for one_of in schema["oneOf"]:
-            # Get the nested object.
-            if "properties" in one_of:
-                for prop_name in one_of["properties"]:
-                    nested_object = one_of["properties"][prop_name]
-                    if nested_object == {}:
-                        f.write("from typing import Any\n")
-                        f.write(prop_name + " = Any\n")
-                        f.write("\n")
-                        all_options.append(prop_name)
-                    elif "$ref" in nested_object:
-                        ref = nested_object["$ref"]
-                        ref_name = ref[ref.rfind("/") + 1 :]
-                        class_name = to_pascal_case(ref_name)
-                        # Use class name as the key to avoid importing same class multiple times regardless of path
-                        if class_name not in imported_refs:
-                            f.write(
-                                "from ."
-                                + camel_to_snake(ref_name)
-                                + " import "
-                                + class_name
-                                + "\n"
-                            )
-                            imported_refs.add(class_name)
-                        f.write("\n")
-                        if prop_name != ref_name:
-                            f.write(prop_name + " = " + class_name + "\n")
-                            f.write("\n")
-                        all_options.append(class_name)
-                    else:
-                        class_name = to_pascal_case(prop_name)
-                        object_code = generate_object_type_code(
-                            prop_name,
-                            nested_object,
-                            "object",
-                            data,
-                            None,
-                            None,
-                            False,
-                            imported_refs,
-                        )
-                        f.write(object_code)
-                        f.write("\n")
-                        all_options.append(class_name)
-            elif "type" in one_of and one_of["type"] == "string":
-                enum_code = generate_enum_type_code(
-                    one_of["enum"][0], one_of, "string", []
+            if "properties" not in one_of:
+                continue
+
+            props = list(one_of["properties"].items())
+            if len(props) != 1:
+                continue
+
+            outer_name, outer_schema = props[0]
+
+            wrap_entire_payload = (
+                outer_schema.get("type") == "object" and "properties" in outer_schema
+            )
+
+            if wrap_entire_payload:
+                inner_properties = outer_schema.get("properties", {})
+                required_fields = outer_schema.get("required", [])
+            else:
+                inner_properties = {outer_name: outer_schema}
+                required_fields = [outer_name]
+
+            flattened_schema = {
+                "type": "object",
+                "description": one_of.get("description", ""),
+                "properties": inner_properties,
+            }
+            if required_fields:
+                flattened_schema["required"] = required_fields
+
+            extra_imports = None
+            if not alias_imports_needed:
+                extra_imports = [
+                    "from pydantic import model_serializer, model_validator\n"
+                ]
+                alias_imports_needed = True
+
+            wrapped_key = outer_name
+            extra_body_lines = [
+                '    @model_validator(mode="before")',
+                "    @classmethod",
+                "    def _unwrap(cls, data):",
+                "        if isinstance(data, dict) and '"
+                + wrapped_key
+                + "' in data and isinstance(data['"
+                + wrapped_key
+                + "'], dict):",
+                "            return data['" + wrapped_key + "']",
+                "        return data",
+            ]
+
+            if wrap_entire_payload:
+                extra_body_lines.extend(
+                    [
+                        '    @model_serializer(mode="wrap")',
+                        "    def _wrap(self, handler, info):",
+                        "        payload = handler(self, info)",
+                        "        return {'" + wrapped_key + "': payload}",
+                    ]
                 )
-                f.write(enum_code)
-                f.write("\n")
-                all_options.append(one_of["enum"][0])
+            else:
+                extra_body_lines.extend(
+                    [
+                        '    @model_serializer(mode="wrap")',
+                        "    def _wrap(self, handler, info):",
+                        "        payload = handler(self, info)",
+                        "        if isinstance(payload, dict) and '"
+                        + wrapped_key
+                        + "' in payload:",
+                        "            value = payload['" + wrapped_key + "']",
+                        "        else:",
+                        "            value = payload",
+                        "        return {'" + wrapped_key + "': value}",
+                    ]
+                )
 
-    # Check if each one_of has the same enum of one.
-    tag = get_tag_one_of(schema)
-    content = get_content_one_of(schema, tag)
-
-    if tag is not None and content is not None:
-        # Generate each of the options from the tag.
-        for one_of in schema["oneOf"]:
-            # Get the value of the tag.
-            object_name = one_of["properties"][tag]["enum"][0]
-            # Generate the type for the object.
-            content_code = generate_object_type_code(
-                object_name + "_data",
-                one_of["properties"][content],
+            object_code = generate_object_type_code(
+                outer_name,
+                flattened_schema,
                 "object",
                 data,
                 None,
                 None,
                 False,
                 imported_refs,
-            )
-            f.write(content_code)
-            f.write("\n")
-            object_code = generate_object_type_code(
-                object_name, one_of, "object", data, tag, content, True, imported_refs
+                extra_imports=extra_imports,
+                extra_body_lines=extra_body_lines,
             )
             f.write(object_code)
             f.write("\n")
-            all_options.append(to_pascal_case("option_" + object_name))
-    elif tag is not None:
-        # Generate each of the options from the tag.
-        for one_of in schema["oneOf"]:
-            # Get the value of the tag.
-            object_name = one_of["properties"][tag]["enum"][0]
-            object_code = generate_object_type_code(
-                object_name, one_of, "object", data, tag, None, True, imported_refs
-            )
-            f.write(object_code)
-            f.write("\n")
-            all_options.append(to_pascal_case("option_" + object_name))
-    elif schema["oneOf"].__len__() == 1:
-        description = get_one_of_description(schema)
-        object_code = generate_object_type_code(
-            name,
-            schema["oneOf"][0],
-            "object",
-            data,
-            None,
-            None,
-            False,
-            imported_refs,
-        )
-        f.write(object_code)
-        f.write("\n")
-        f.close()
-        # return early.
-        return
+            all_options.append(to_pascal_case(outer_name))
     else:
-        # Generate each of the options from the tag.
-        i = 0
-        for one_of in schema["oneOf"]:
-            # Get the value of the tag.
-            object_name = camel_to_snake(name) + "_" + str(i)
+        # Check if each one_of has the same enum of one.
+        tag = get_tag_one_of(schema)
+        content = get_content_one_of(schema, tag)
+
+        if tag is not None and content is not None:
+            # Generate each of the options from the tag.
+            for one_of in schema["oneOf"]:
+                # Get the value of the tag.
+                object_name = one_of["properties"][tag]["enum"][0]
+                # Generate the type for the object.
+                content_code = generate_object_type_code(
+                    object_name + "_data",
+                    one_of["properties"][content],
+                    "object",
+                    data,
+                    None,
+                    None,
+                    False,
+                    imported_refs,
+                )
+                f.write(content_code)
+                f.write("\n")
+                object_code = generate_object_type_code(
+                    object_name,
+                    one_of,
+                    "object",
+                    data,
+                    tag,
+                    content,
+                    True,
+                    imported_refs,
+                )
+                f.write(object_code)
+                f.write("\n")
+                all_options.append(to_pascal_case("option_" + object_name))
+        elif tag is not None:
+            # Generate each of the options from the tag.
+            for one_of in schema["oneOf"]:
+                # Get the value of the tag.
+                object_name = one_of["properties"][tag]["enum"][0]
+                object_code = generate_object_type_code(
+                    object_name,
+                    one_of,
+                    "object",
+                    data,
+                    tag,
+                    None,
+                    True,
+                    imported_refs,
+                )
+                f.write(object_code)
+                f.write("\n")
+                all_options.append(to_pascal_case("option_" + object_name))
+        elif schema["oneOf"].__len__() == 1:
+            description = get_one_of_description(schema)
             object_code = generate_object_type_code(
-                object_name,
-                one_of,
+                name,
+                schema["oneOf"][0],
                 "object",
                 data,
                 None,
@@ -650,8 +685,29 @@ def generate_one_of_type(path: str, name: str, schema: dict, data: dict):
             )
             f.write(object_code)
             f.write("\n")
-            all_options.append(to_pascal_case(object_name))
-            i += 1
+            f.close()
+            # return early.
+            return
+        else:
+            # Generate each of the options from the tag.
+            i = 0
+            for one_of in schema["oneOf"]:
+                # Get the value of the tag.
+                object_name = camel_to_snake(name) + "_" + str(i)
+                object_code = generate_object_type_code(
+                    object_name,
+                    one_of,
+                    "object",
+                    data,
+                    None,
+                    None,
+                    False,
+                    imported_refs,
+                )
+                f.write(object_code)
+                f.write("\n")
+                all_options.append(to_pascal_case(object_name))
+                i += 1
 
     # Write the sum type.
     description = get_one_of_description(schema)
@@ -672,6 +728,10 @@ def generate_object_type_code(
     is_option: bool = False,
     imported_refs: Optional[set] = None,
     include_imports: bool = True,
+    field_type_overrides: Optional[dict[str, str]] = None,
+    extra_imports: Optional[List[str]] = None,
+    field_alias_paths: Optional[dict[str, List[str]]] = None,
+    extra_body_lines: Optional[List[str]] = None,
 ) -> str:
     from typing import List, TypedDict
 
@@ -692,6 +752,7 @@ def generate_object_type_code(
             "description": str,
             "name": str,
             "imports": List[str],
+            "extra_body_lines": List[str],
         },
     )
 
@@ -699,7 +760,11 @@ def generate_object_type_code(
     if "description" in schema:
         description = schema["description"].replace('"', '\\"')
 
-    imports = []
+    imports: List[str] = []
+    if extra_imports:
+        for extra_import in extra_imports:
+            if extra_import not in imports:
+                imports.append(extra_import)
     refs = get_refs(schema)
     if imported_refs is None:
         imported_refs = set()
@@ -709,6 +774,41 @@ def generate_object_type_code(
                 "from ..models." + camel_to_snake(ref) + " import " + ref + "\n"
             )
             imported_refs.add(ref)
+
+    if field_type_overrides is None:
+        field_type_overrides = {}
+    if field_alias_paths is None:
+        field_alias_paths = {}
+    if extra_body_lines is None:
+        extra_body_lines = []
+
+    def is_default_compatible(base_type_name: str, default_value: Any) -> bool:
+        if default_value is None:
+            return True
+
+        simple_type_map: dict[str, type | tuple[type, ...]] = {
+            "str": str,
+            "int": int,
+            "float": (int, float),
+            "bool": bool,
+        }
+        if base_type_name in simple_type_map:
+            expected_type = simple_type_map[base_type_name]
+            return isinstance(default_value, expected_type)
+
+        if base_type_name.startswith("List["):
+            return isinstance(default_value, list)
+
+        if base_type_name.startswith("Dict["):
+            return isinstance(default_value, dict)
+
+        if base_type_name.startswith("Literal["):
+            return True
+
+        if base_type_name == "bytes" and isinstance(default_value, (bytes, bytearray)):
+            return True
+
+        return False
 
     required = []
     if "required" in schema:
@@ -733,28 +833,69 @@ def generate_object_type_code(
                 }
                 fields.append(field1)
             else:
-                field_type = get_type_name(property_schema)
-                if property_name not in required:
-                    if "default" in property_schema:
-                        if field_type == "str":
-                            field_type += ' = "' + property_schema["default"] + '"'
-                        elif isinstance(property_schema["default"], str):
-                            field_type += (
-                                ' = "' + property_schema["default"] + '" # type: ignore'
-                            )
-                        elif "allOf" in property_schema:
-                            field_type += (
-                                " = "
-                                + str(property_schema["default"])
-                                + " # type: ignore"
-                            )
-                        else:
-                            field_type += " = " + str(property_schema["default"])
+                if property_name in field_type_overrides:
+                    base_type = field_type_overrides[property_name]
+                else:
+                    base_type = get_type_name(property_schema)
+
+                is_required = property_name in required
+                has_default = "default" in property_schema
+                default_literal = None
+                default_value: Any = None
+                if has_default:
+                    default_value = property_schema["default"]
+                    if isinstance(default_value, str):
+                        default_literal = f'"{default_value}"'
                     else:
-                        field_type = "Optional[" + field_type + "] = None"
+                        default_literal = repr(default_value)
+
+                type_hint = base_type
+                if not is_required:
+                    if has_default and default_value is not None:
+                        # Leave as base type; explicit default handles the missing case.
+                        pass
+                    else:
+                        type_hint = "Optional[" + base_type + "]"
+                        if default_literal is None:
+                            default_literal = "None"
+
+                elif has_default and default_literal is None:
+                    default_literal = "None"
+
+                needs_type_ignore = False
+                if has_default:
+                    needs_type_ignore = not is_default_compatible(
+                        base_type, default_value
+                    )
+
+                if property_name in field_alias_paths:
+                    alias_parts = ", ".join(
+                        ["'" + part + "'" for part in field_alias_paths[property_name]]
+                    )
+                    alias_expr = "AliasPath(" + alias_parts + ")"
+                    field_definition = type_hint + " = Field("
+                    field_default = (
+                        default_literal if default_literal is not None else "..."
+                    )
+                    field_definition += "default=" + field_default + ", "
+                    field_definition += (
+                        "validation_alias="
+                        + alias_expr
+                        + ", serialization_alias="
+                        + alias_expr
+                        + ")"
+                    )
+                else:
+                    field_definition = type_hint
+                    if default_literal is not None:
+                        field_definition += " = " + default_literal
+
+                if needs_type_ignore:
+                    field_definition += "  # type: ignore[assignment]"
+
                 field2: FieldType = {
                     "name": property_name,
-                    "type": field_type,
+                    "type": field_definition,
                     "value": "",
                 }
                 fields.append(field2)
@@ -768,6 +909,7 @@ def generate_object_type_code(
         "description": description,
         "name": name,
         "imports": imports,
+        "extra_body_lines": extra_body_lines if extra_body_lines else [],
     }
 
     # Iterate over the properties.

@@ -85,11 +85,11 @@ class OptionExtrude(KittyCadBaseModel):
 
     distance: LengthUnit
 
-    extrude_method: ExtrudeMethod = "merge"  # type: ignore
+    extrude_method: ExtrudeMethod = "merge"  # type: ignore[assignment]
 
     faces: Optional[ExtrudedFaceInfo] = None
 
-    opposite: OppositeForLengthUnit = "None"  # type: ignore
+    opposite: OppositeForLengthUnit = "None"  # type: ignore[assignment]
 
     target: ModelingCmdId
 
@@ -99,9 +99,9 @@ class OptionExtrude(KittyCadBaseModel):
 class OptionTwistExtrude(KittyCadBaseModel):
     """Command for twist extruding a solid 2d."""
 
-    angle_step_size: Angle = {"unit": "degrees", "value": 15.0}  # type: ignore
+    angle_step_size: Angle = {"unit": "degrees", "value": 15.0}  # type: ignore[assignment]
 
-    center_2d: Point2d = {"x": 0.0, "y": 0.0}  # type: ignore
+    center_2d: Point2d = {"x": 0.0, "y": 0.0}  # type: ignore[assignment]
 
     distance: LengthUnit
 
@@ -119,7 +119,7 @@ class OptionTwistExtrude(KittyCadBaseModel):
 class OptionSweep(KittyCadBaseModel):
     """Extrude the object along a path."""
 
-    relative_to: RelativeTo = "sketch_plane"  # type: ignore
+    relative_to: RelativeTo = "sketch_plane"  # type: ignore[assignment]
 
     sectional: bool
 
@@ -141,7 +141,7 @@ class OptionRevolve(KittyCadBaseModel):
 
     axis_is_2d: bool
 
-    opposite: OppositeForAngle = "None"  # type: ignore
+    opposite: OppositeForAngle = "None"  # type: ignore[assignment]
 
     origin: Point3d
 
@@ -173,7 +173,7 @@ class OptionRevolveAboutEdge(KittyCadBaseModel):
 
     edge_id: str
 
-    opposite: OppositeForAngle = "None"  # type: ignore
+    opposite: OppositeForAngle = "None"  # type: ignore[assignment]
 
     target: ModelingCmdId
 
@@ -449,7 +449,7 @@ class OptionEntityMakeHelix(KittyCadBaseModel):
 
     revolutions: float
 
-    start_angle: Angle = {"unit": "degrees", "value": 0.0}  # type: ignore
+    start_angle: Angle = {"unit": "degrees", "value": 0.0}  # type: ignore[assignment]
 
     type: Literal["entity_make_helix"] = "entity_make_helix"
 
@@ -469,7 +469,7 @@ class OptionEntityMakeHelixFromParams(KittyCadBaseModel):
 
     revolutions: float
 
-    start_angle: Angle = {"unit": "degrees", "value": 0.0}  # type: ignore
+    start_angle: Angle = {"unit": "degrees", "value": 0.0}  # type: ignore[assignment]
 
     type: Literal["entity_make_helix_from_params"] = "entity_make_helix_from_params"
 
@@ -487,7 +487,7 @@ class OptionEntityMakeHelixFromEdge(KittyCadBaseModel):
 
     revolutions: float
 
-    start_angle: Angle = {"unit": "degrees", "value": 0.0}  # type: ignore
+    start_angle: Angle = {"unit": "degrees", "value": 0.0}  # type: ignore[assignment]
 
     type: Literal["entity_make_helix_from_edge"] = "entity_make_helix_from_edge"
 
@@ -725,7 +725,7 @@ class OptionSolid3dGetCommonEdge(KittyCadBaseModel):
 class OptionSolid3dFilletEdge(KittyCadBaseModel):
     """Fillets the given edge with the specified radius."""
 
-    cut_type: CutType = "fillet"  # type: ignore
+    cut_type: CutType = "fillet"  # type: ignore[assignment]
 
     edge_id: Optional[str] = None
 
@@ -737,7 +737,7 @@ class OptionSolid3dFilletEdge(KittyCadBaseModel):
 
     radius: LengthUnit
 
-    strategy: CutStrategy = "automatic"  # type: ignore
+    strategy: CutStrategy = "automatic"  # type: ignore[assignment]
 
     tolerance: LengthUnit
 
@@ -1229,7 +1229,7 @@ class OptionDefaultCameraSetPerspective(KittyCadBaseModel):
 class OptionDefaultCameraCenterToSelection(KittyCadBaseModel):
     """Updates the camera to center to the center of the current selection (or the origin if nothing is selected)"""
 
-    camera_movement: CameraMovement = "vantage"  # type: ignore
+    camera_movement: CameraMovement = "vantage"  # type: ignore[assignment]
 
     type: Literal["default_camera_center_to_selection"] = (
         "default_camera_center_to_selection"
@@ -1239,7 +1239,7 @@ class OptionDefaultCameraCenterToSelection(KittyCadBaseModel):
 class OptionDefaultCameraCenterToScene(KittyCadBaseModel):
     """Updates the camera to center to the center of the current scene's bounds"""
 
-    camera_movement: CameraMovement = "vantage"  # type: ignore
+    camera_movement: CameraMovement = "vantage"  # type: ignore[assignment]
 
     type: Literal["default_camera_center_to_scene"] = "default_camera_center_to_scene"
 

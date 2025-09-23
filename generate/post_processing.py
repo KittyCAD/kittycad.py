@@ -3,6 +3,7 @@
 import json
 import logging
 import os
+import re
 from typing import List
 
 import jsonpatch
@@ -38,8 +39,39 @@ def generate_examples_tests(cwd: str, examples: List[str]):
     f.write("\n\n".join(examples_without_imports))
     f.close()
 
+    _alias_conflicting_option_headers(examples_test_path)
+
     # Post-process with ruff to clean up imports and formatting
     format_file_with_ruff(examples_test_path)
+
+
+def _alias_conflicting_option_headers(examples_test_path: str) -> None:
+    """Alias clashing OptionHeaders imports so tests stay lint-clean."""
+
+    with open(examples_test_path, "r") as file:
+        content = file.read()
+
+    original_import = "from kittycad.models.web_socket_request import OptionHeaders"
+    alias_import = (
+        "from kittycad.models.web_socket_request import OptionHeaders as "
+        "WebSocketRequestOptionHeaders"
+    )
+
+    if original_import not in content:
+        return
+
+    # Alias the import line for the websocket variant
+    content = content.replace(original_import, alias_import, 1)
+
+    # Update usages to reference the aliased name while preserving whitespace
+    content = re.sub(
+        r"WebSocketRequest\((\s*)OptionHeaders",
+        r"WebSocketRequest(\1WebSocketRequestOptionHeaders",
+        content,
+    )
+
+    with open(examples_test_path, "w") as file:
+        file.write(content)
 
 
 def generate_patch_json(cwd: str, spec_path: str, data: dict):
