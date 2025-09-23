@@ -176,23 +176,6 @@ Api Tokens API
 Ml API
 ------
 
-**list_ml_prompts**
-    List all ML prompts.
-    
-    Returns: ``SyncPageIterator[MlPrompt]``
-    
-    Example:
-    
-    .. code-block:: python
-    
-        # Sync
-        for item in client.ml.list_ml_prompts():
-            print(item)
-            
-        # Async  
-        async for item in client.ml.list_ml_prompts():
-            print(item)
-
 **list_conversations_for_user**
     List conversations
     
@@ -208,6 +191,23 @@ Ml API
             
         # Async  
         async for item in client.ml.list_conversations_for_user():
+            print(item)
+
+**list_ml_prompts**
+    List all ML prompts.
+    
+    Returns: ``SyncPageIterator[MlPrompt]``
+    
+    Example:
+    
+    .. code-block:: python
+    
+        # Sync
+        for item in client.ml.list_ml_prompts():
+            print(item)
+            
+        # Async  
+        async for item in client.ml.list_ml_prompts():
             print(item)
 
 **list_text_to_cad_parts_for_user**

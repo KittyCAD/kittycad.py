@@ -36,6 +36,8 @@ class MlPrompt(KittyCadBaseModel):
 
     prompt: str
 
+    seconds: Optional[int] = None
+
     started_at: Optional[datetime.datetime] = None
 
     status: ApiCallStatus
