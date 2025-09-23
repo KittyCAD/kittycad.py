@@ -12,3 +12,5 @@ class MlPromptMetadata(KittyCadBaseModel):
     original_source_code: Optional[str] = None
 
     source_ranges: Optional[List[SourceRangePrompt]] = None
+
+    upstream_conversation_id: Optional[str] = None

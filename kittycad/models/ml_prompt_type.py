@@ -20,5 +20,9 @@ class MlPromptType(str, Enum):
 
     TEXT_TO_KCL_MULTI_FILE_ITERATION = "text_to_kcl_multi_file_iteration"
 
+    """# Copilot chat/assist prompts."""  # noqa: E501
+
+    COPILOT = "copilot"
+
     def __str__(self) -> str:
         return str(self.value)
