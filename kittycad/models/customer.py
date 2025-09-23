@@ -11,20 +11,20 @@ class Customer(KittyCadBaseModel):
 
     address: Optional[AddressDetails] = None
 
-    balance: float = 0.0
+    balance: Optional[float] = 0.0
 
     created_at: datetime.datetime
 
-    currency: Currency = "usd"  # type: ignore
+    currency: Optional[Currency] = "usd"  # type: ignore[assignment]
 
-    delinquent: bool = False
+    delinquent: Optional[bool] = False
 
     email: Optional[str] = None
 
     id: Optional[str] = None
 
-    metadata: Dict[str, str] = {}
+    metadata: Optional[Dict[str, str]] = {}
 
     name: Optional[str] = None
 
-    phone: str = ""
+    phone: Optional[str] = ""

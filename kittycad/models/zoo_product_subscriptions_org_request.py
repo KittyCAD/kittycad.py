@@ -9,6 +9,6 @@ from .base import KittyCadBaseModel
 class ZooProductSubscriptionsOrgRequest(KittyCadBaseModel):
     """A struct of Zoo product subscriptions an organization can request."""
 
-    modeling_app: ModelingAppOrganizationSubscriptionTier = "team"  # type: ignore
+    modeling_app: Optional[ModelingAppOrganizationSubscriptionTier] = "team"  # type: ignore[assignment]
 
     pay_annually: Optional[bool] = None

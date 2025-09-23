@@ -7,7 +7,10 @@ from .base import KittyCadBaseModel
 class KclCodeCompletionRequest(KittyCadBaseModel):
     """A request to generate KCL code completions."""
 
-    extra: KclCodeCompletionParams = {"language": "", "trim_by_indentation": False}  # type: ignore
+    extra: Optional[KclCodeCompletionParams] = {
+        "language": "",
+        "trim_by_indentation": False,
+    }  # type: ignore[assignment]
 
     max_tokens: Optional[int] = None
 
@@ -15,13 +18,13 @@ class KclCodeCompletionRequest(KittyCadBaseModel):
 
     nwo: Optional[str] = None
 
-    prompt: str = ""
+    prompt: Optional[str] = ""
 
     stop: Optional[List[str]] = None
 
-    stream: bool = False
+    stream: Optional[bool] = False
 
-    suffix: str = ""
+    suffix: Optional[str] = ""
 
     temperature: Optional[float] = None
 

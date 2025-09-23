@@ -83,7 +83,7 @@ from kittycad.models.direction import Direction
 from kittycad.models.email_authentication_form import EmailAuthenticationForm
 from kittycad.models.enterprise_subscription_tier_price import (
     EnterpriseSubscriptionTierPrice,
-    OptionPerUser,
+    OptionFlat,
 )
 from kittycad.models.event import Event, OptionModelingAppEvent
 from kittycad.models.file_export_format import FileExportFormat
@@ -93,7 +93,7 @@ from kittycad.models.idp_metadata_source import (
     OptionBase64EncodedXml,
     OptionUrl,
 )
-from kittycad.models.input_format3d import InputFormat3d, OptionSldprt
+from kittycad.models.input_format3d import InputFormat3d, OptionPly
 from kittycad.models.inquiry_form import InquiryForm
 from kittycad.models.inquiry_type import InquiryType
 from kittycad.models.kcl_code_completion_params import KclCodeCompletionParams
@@ -148,7 +148,9 @@ from kittycad.models.update_user import UpdateUser
 from kittycad.models.user_identifier import UserIdentifier
 from kittycad.models.user_org_role import UserOrgRole
 from kittycad.models.uuid import Uuid
-from kittycad.models.web_socket_request import OptionPing
+from kittycad.models.web_socket_request import (
+    OptionHeaders as WebSocketRequestOptionHeaders,
+)
 from kittycad.models.zoo_product_subscriptions_org_request import (
     ZooProductSubscriptionsOrgRequest,
 )
@@ -636,8 +638,18 @@ def test_create_file_conversion_options():
                 )
             ),
             src_format=InputFormat3d(
-                OptionSldprt(
-                    split_closed_faces=False,
+                OptionPly(
+                    coords=System(
+                        forward=AxisDirectionPair(
+                            axis=Axis.Y,
+                            direction=Direction.POSITIVE,
+                        ),
+                        up=AxisDirectionPair(
+                            axis=Axis.Y,
+                            direction=Direction.POSITIVE,
+                        ),
+                    ),
+                    units=UnitLength.CM,
                 )
             ),
         ),
@@ -674,8 +686,18 @@ async def test_create_file_conversion_options_async():
                 )
             ),
             src_format=InputFormat3d(
-                OptionSldprt(
-                    split_closed_faces=False,
+                OptionPly(
+                    coords=System(
+                        forward=AxisDirectionPair(
+                            axis=Axis.Y,
+                            direction=Direction.POSITIVE,
+                        ),
+                        up=AxisDirectionPair(
+                            axis=Axis.Y,
+                            direction=Direction.POSITIVE,
+                        ),
+                    ),
+                    units=UnitLength.CM,
                 )
             ),
         ),
@@ -2031,7 +2053,7 @@ def test_update_enterprise_pricing_for_org():
     result: ZooProductSubscriptions = client.orgs.update_enterprise_pricing_for_org(
         id=Uuid("<string>"),
         body=EnterpriseSubscriptionTierPrice(
-            OptionPerUser(
+            OptionFlat(
                 interval=PlanInterval.DAY,
                 price=3.14,
             )
@@ -2052,7 +2074,7 @@ async def test_update_enterprise_pricing_for_org_async():
         await client.orgs.update_enterprise_pricing_for_org(
             id=Uuid("<string>"),
             body=EnterpriseSubscriptionTierPrice(
-                OptionPerUser(
+                OptionFlat(
                     interval=PlanInterval.DAY,
                     price=3.14,
                 )
@@ -3642,8 +3664,8 @@ def test_ml_copilot_ws():
         # Send a message.
         websocket.send(
             MlCopilotClientMessage(
-                OptionHeaders(
-                    headers={"<string>": "<string>"},
+                OptionSystem(
+                    command=MlCopilotSystemCommand.NEW,
                 )
             )
         )
@@ -3679,8 +3701,8 @@ def test_ml_reasoning_ws():
         # Send a message.
         websocket.send(
             MlCopilotClientMessage(
-                OptionSystem(
-                    command=MlCopilotSystemCommand.NEW,
+                OptionHeaders(
+                    headers={"<string>": "<string>"},
                 )
             )
         )
@@ -3725,7 +3747,13 @@ def test_modeling_commands_ws():
         replay=None,
     ) as websocket:
         # Send a message.
-        websocket.send(WebSocketRequest(OptionPing()))
+        websocket.send(
+            WebSocketRequest(
+                WebSocketRequestOptionHeaders(
+                    headers={"<string>": "<string>"},
+                )
+            )
+        )
 
         # Get a message.
         message = websocket.recv()

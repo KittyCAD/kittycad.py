@@ -1,4 +1,4 @@
-from typing import Literal, Union
+from typing import Literal, Optional, Union
 
 from pydantic import Field, RootModel
 from typing_extensions import Annotated
@@ -43,7 +43,7 @@ class OptionPly(KittyCadBaseModel):
 class OptionSldprt(KittyCadBaseModel):
     """SolidWorks part (SLDPRT) format."""
 
-    split_closed_faces: bool = False
+    split_closed_faces: Optional[bool] = False
 
     type: Literal["sldprt"] = "sldprt"
 
@@ -51,7 +51,7 @@ class OptionSldprt(KittyCadBaseModel):
 class OptionStep(KittyCadBaseModel):
     """ISO 10303-21 (STEP) format."""
 
-    split_closed_faces: bool = False
+    split_closed_faces: Optional[bool] = False
 
     type: Literal["step"] = "step"
 

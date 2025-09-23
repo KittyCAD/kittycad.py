@@ -18,7 +18,7 @@ class UnitFrequencyConversion(KittyCadBaseModel):
 
     id: Uuid
 
-    input: float = 0.0
+    input: Optional[float] = 0.0
 
     input_unit: UnitFrequency
 

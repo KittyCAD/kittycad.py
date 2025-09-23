@@ -21,3 +21,8 @@ class {{ name }}(KittyCadBaseModel):
     {{ field.name }}: {{ field.type }}
     {% endif %}
     {% endfor %}
+{% if extra_body_lines %}
+{% for line in extra_body_lines %}
+{{ line }}
+{% endfor %}
+{% endif %}

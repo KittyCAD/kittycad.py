@@ -8,11 +8,11 @@ class Coupon(KittyCadBaseModel):
 
     amount_off: Optional[float] = None
 
-    deleted: bool = False
+    deleted: Optional[bool] = False
 
     id: Optional[str] = None
 
-    metadata: Dict[str, str] = {}
+    metadata: Optional[Dict[str, str]] = {}
 
     name: Optional[str] = None
 

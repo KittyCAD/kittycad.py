@@ -19,7 +19,7 @@ class IpAddrInfo(KittyCadBaseModel):
 
     country_code3: Optional[str] = None
 
-    ip: str = ""
+    ip: Optional[str] = ""
 
     is_in_european_union: Optional[bool] = None
 

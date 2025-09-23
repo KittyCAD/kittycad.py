@@ -7,9 +7,9 @@ from .base import KittyCadBaseModel
 class InvoiceLineItem(KittyCadBaseModel):
     """An invoice line item."""
 
-    amount: float = 0.0
+    amount: Optional[float] = 0.0
 
-    currency: Currency = "usd"  # type: ignore
+    currency: Optional[Currency] = "usd"  # type: ignore[assignment]
 
     description: Optional[str] = None
 
@@ -17,4 +17,4 @@ class InvoiceLineItem(KittyCadBaseModel):
 
     invoice_item: Optional[str] = None
 
-    metadata: Dict[str, str] = {}
+    metadata: Optional[Dict[str, str]] = {}
