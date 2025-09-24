@@ -1,7 +1,7 @@
 """The KittyCAD Python SDK"""
 
 import os
-from typing import Any, Dict, List, Optional, Union
+from typing import Any, Callable, Dict, List, Optional, Union
 import httpx
 
 {% if has_websockets %}
@@ -51,12 +51,12 @@ class {{ tag_pascal }}API:
     
     {% for func_name, func_info in functions.items() %}
     {% if func_info.is_websocket and func_info.has_websocket_class %}
-    def {{ func_name }}(self{{ func_info.websocket_params if func_info.websocket_params else '' }}) -> "WebSocket{{ func_name|to_pascal_case }}":
+    def {{ func_name }}(self{{ func_info.websocket_params if func_info.websocket_params else '' }}, recv_timeout: Optional[float] = None, ws_factory: Optional[Callable[..., ClientConnectionSync]] = None) -> "WebSocket{{ func_name|to_pascal_case }}":
         """{{ func_info.description }}
         
         Returns a WebSocket wrapper with methods for sending/receiving data.
         """
-        return WebSocket{{ func_name|to_pascal_case }}({{ func_info.websocket_call_args if func_info.websocket_call_args else '' }}{{ ', ' if func_info.websocket_call_args else '' }}client=self.client)
+        return WebSocket{{ func_name|to_pascal_case }}({{ func_info.websocket_call_args if func_info.websocket_call_args else '' }}{{ ', ' if func_info.websocket_call_args else '' }}recv_timeout=recv_timeout, ws_factory=ws_factory, client=self.client)
     {% else %}
 {{ func_info.sync_implementation }}
     {% endif %}
@@ -93,7 +93,7 @@ class WebSocket{{ func_name|to_pascal_case }}:
 
     ws: ClientConnectionSync
 
-    def __init__(self{{ func_info.websocket_params if func_info.websocket_params else '' }}, *, client: Client):
+    def __init__(self{{ func_info.websocket_params if func_info.websocket_params else '' }}, recv_timeout: Optional[float] = None, ws_factory: Optional[Callable[..., ClientConnectionSync]] = None, *, client: Client):
         # Inline WebSocket connection logic
         {% set path_args = func_info.ws_args|selectattr("in_url")|list %}
         url = ("{}" + "{{ func_info.path }}").format(client.base_url{% for arg in path_args %}, {{ arg.name }}={{ arg.name }}{% endfor %})
@@ -114,7 +114,11 @@ class WebSocket{{ func_name|to_pascal_case }}:
         {% endif %}
         {% endfor %}
         headers = client.get_headers()
-        self.ws = ws_connect(url.replace("http", "ws"), additional_headers=headers, close_timeout=120, max_size=None)
+        factory = ws_factory or ws_connect
+        self.ws = factory(url.replace("http", "ws"), additional_headers=headers, close_timeout=120, max_size=None)
+        self._recv_timeout = (
+            client.get_websocket_recv_timeout() if recv_timeout is None else recv_timeout
+        )
 
     def __enter__(self):
         return self
@@ -156,7 +160,7 @@ class WebSocket{{ func_name|to_pascal_case }}:
 
     def recv(self) -> {{ func_info.ws_response_type }}:
         """Receive data from the websocket."""
-        message = self.ws.recv(timeout=60)
+        message = self.ws.recv(timeout=self._recv_timeout)
         {% if func_info.ws_response_is_dict %}
         return json.loads(message)
         {% else %}

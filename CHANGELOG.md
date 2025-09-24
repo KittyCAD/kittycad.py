@@ -5,6 +5,16 @@ All notable changes to the KittyCAD Python SDK will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## v1.2.5
+
+### Added
+
+- WebSocket wrappers now honor configurable receive timeouts. Set a client-wide default with `KittyCAD(..., websocket_recv_timeout=120)` or override per connection via `client.modeling.modeling_commands_ws(recv_timeout=300)`. Existing code keeps the previous 60 second timeout without changes.
+
+### Migration
+
+- No action required unless you wish to change the timeout. If you relied on the old hardcoded 60 second timeout, explicitly pass `recv_timeout=60` to preserve that behavior when using a client configured with a different default.
+
 ## v1.1.2
 
 ### Changed - WebSocket message typing
@@ -720,6 +730,7 @@ Example exception message:
 - **Easier Debugging**: No need to dig into Error objects
 - **Cleaner Code**: No error checking boilerplate needed
 - **Better IDE Support**: Improved autocomplete and type checking
+
 ## v1.1.3
 
 ### Fixed – Typed responses instead of raw dicts

@@ -2,7 +2,7 @@
 
 import json
 import os
-from typing import Any, Dict, List, Optional, Union
+from typing import Any, Callable, Dict, List, Optional, Union
 
 import bson
 import httpx
@@ -1274,22 +1274,37 @@ class MlAPI:
         return response.json() if response.content else None
 
     def ml_copilot_ws(
-        self, conversation_id: Optional[str] = None, replay: Optional[bool] = None
+        self,
+        conversation_id: Optional[str] = None,
+        replay: Optional[bool] = None,
+        recv_timeout: Optional[float] = None,
+        ws_factory: Optional[Callable[..., ClientConnectionSync]] = None,
     ) -> "WebSocketMlCopilotWs":
         """Open a websocket to prompt the ML copilot.
 
         Returns a WebSocket wrapper with methods for sending/receiving data.
         """
         return WebSocketMlCopilotWs(
-            conversation_id=conversation_id, replay=replay, client=self.client
+            conversation_id=conversation_id,
+            replay=replay,
+            recv_timeout=recv_timeout,
+            ws_factory=ws_factory,
+            client=self.client,
         )
 
-    def ml_reasoning_ws(self, id: str) -> "WebSocketMlReasoningWs":
+    def ml_reasoning_ws(
+        self,
+        id: str,
+        recv_timeout: Optional[float] = None,
+        ws_factory: Optional[Callable[..., ClientConnectionSync]] = None,
+    ) -> "WebSocketMlReasoningWs":
         """Open a websocket to prompt the ML copilot.
 
         Returns a WebSocket wrapper with methods for sending/receiving data.
         """
-        return WebSocketMlReasoningWs(id=id, client=self.client)
+        return WebSocketMlReasoningWs(
+            id=id, recv_timeout=recv_timeout, ws_factory=ws_factory, client=self.client
+        )
 
 
 class AsyncMlAPI:
@@ -4768,12 +4783,18 @@ class ExecutorAPI:
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return CodeOutput.model_validate(json_data)
 
-    def create_executor_term(self) -> "WebSocketCreateExecutorTerm":
+    def create_executor_term(
+        self,
+        recv_timeout: Optional[float] = None,
+        ws_factory: Optional[Callable[..., ClientConnectionSync]] = None,
+    ) -> "WebSocketCreateExecutorTerm":
         """Create a terminal.
 
         Returns a WebSocket wrapper with methods for sending/receiving data.
         """
-        return WebSocketCreateExecutorTerm(client=self.client)
+        return WebSocketCreateExecutorTerm(
+            recv_timeout=recv_timeout, ws_factory=ws_factory, client=self.client
+        )
 
 
 class AsyncExecutorAPI:
@@ -11973,6 +11994,8 @@ class ModelingAPI:
         video_res_height: Optional[int] = None,
         video_res_width: Optional[int] = None,
         webrtc: Optional[bool] = None,
+        recv_timeout: Optional[float] = None,
+        ws_factory: Optional[Callable[..., ClientConnectionSync]] = None,
     ) -> "WebSocketModelingCommandsWs":
         """Open a websocket which accepts modeling commands.
 
@@ -11989,6 +12012,8 @@ class ModelingAPI:
             video_res_height=video_res_height,
             video_res_width=video_res_width,
             webrtc=webrtc,
+            recv_timeout=recv_timeout,
+            ws_factory=ws_factory,
             client=self.client,
         )
 
@@ -12114,6 +12139,8 @@ class WebSocketMlCopilotWs:
         self,
         conversation_id: Optional[str] = None,
         replay: Optional[bool] = None,
+        recv_timeout: Optional[float] = None,
+        ws_factory: Optional[Callable[..., ClientConnectionSync]] = None,
         *,
         client: Client,
     ):
@@ -12134,11 +12161,17 @@ class WebSocketMlCopilotWs:
                 url = url + "?replay=" + str(replay).lower()
 
         headers = client.get_headers()
-        self.ws = ws_connect(
+        factory = ws_factory or ws_connect
+        self.ws = factory(
             url.replace("http", "ws"),
             additional_headers=headers,
             close_timeout=120,
             max_size=None,
+        )
+        self._recv_timeout = (
+            client.get_websocket_recv_timeout()
+            if recv_timeout is None
+            else recv_timeout
         )
 
     def __enter__(self):
@@ -12171,7 +12204,7 @@ class WebSocketMlCopilotWs:
 
     def recv(self) -> MlCopilotServerMessage:
         """Receive data from the websocket."""
-        message = self.ws.recv(timeout=60)
+        message = self.ws.recv(timeout=self._recv_timeout)
 
         return MlCopilotServerMessage.model_validate_json(message)
 
@@ -12185,17 +12218,30 @@ class WebSocketMlReasoningWs:
 
     ws: ClientConnectionSync
 
-    def __init__(self, id: str, *, client: Client):
+    def __init__(
+        self,
+        id: str,
+        recv_timeout: Optional[float] = None,
+        ws_factory: Optional[Callable[..., ClientConnectionSync]] = None,
+        *,
+        client: Client,
+    ):
         # Inline WebSocket connection logic
 
         url = ("{}" + "/ws/ml/reasoning/{id}").format(client.base_url, id=id)
 
         headers = client.get_headers()
-        self.ws = ws_connect(
+        factory = ws_factory or ws_connect
+        self.ws = factory(
             url.replace("http", "ws"),
             additional_headers=headers,
             close_timeout=120,
             max_size=None,
+        )
+        self._recv_timeout = (
+            client.get_websocket_recv_timeout()
+            if recv_timeout is None
+            else recv_timeout
         )
 
     def __enter__(self):
@@ -12228,7 +12274,7 @@ class WebSocketMlReasoningWs:
 
     def recv(self) -> MlCopilotServerMessage:
         """Receive data from the websocket."""
-        message = self.ws.recv(timeout=60)
+        message = self.ws.recv(timeout=self._recv_timeout)
 
         return MlCopilotServerMessage.model_validate_json(message)
 
@@ -12242,17 +12288,29 @@ class WebSocketCreateExecutorTerm:
 
     ws: ClientConnectionSync
 
-    def __init__(self, *, client: Client):
+    def __init__(
+        self,
+        recv_timeout: Optional[float] = None,
+        ws_factory: Optional[Callable[..., ClientConnectionSync]] = None,
+        *,
+        client: Client,
+    ):
         # Inline WebSocket connection logic
 
         url = ("{}" + "/ws/executor/term").format(client.base_url)
 
         headers = client.get_headers()
-        self.ws = ws_connect(
+        factory = ws_factory or ws_connect
+        self.ws = factory(
             url.replace("http", "ws"),
             additional_headers=headers,
             close_timeout=120,
             max_size=None,
+        )
+        self._recv_timeout = (
+            client.get_websocket_recv_timeout()
+            if recv_timeout is None
+            else recv_timeout
         )
 
     def __enter__(self):
@@ -12285,7 +12343,7 @@ class WebSocketCreateExecutorTerm:
 
     def recv(self) -> Dict[str, Any]:
         """Receive data from the websocket."""
-        message = self.ws.recv(timeout=60)
+        message = self.ws.recv(timeout=self._recv_timeout)
 
         return json.loads(message)
 
@@ -12311,6 +12369,8 @@ class WebSocketModelingCommandsWs:
         video_res_height: Optional[int] = None,
         video_res_width: Optional[int] = None,
         webrtc: Optional[bool] = None,
+        recv_timeout: Optional[float] = None,
+        ws_factory: Optional[Callable[..., ClientConnectionSync]] = None,
         *,
         client: Client,
     ):
@@ -12379,11 +12439,17 @@ class WebSocketModelingCommandsWs:
                 url = url + "?webrtc=" + str(webrtc).lower()
 
         headers = client.get_headers()
-        self.ws = ws_connect(
+        factory = ws_factory or ws_connect
+        self.ws = factory(
             url.replace("http", "ws"),
             additional_headers=headers,
             close_timeout=120,
             max_size=None,
+        )
+        self._recv_timeout = (
+            client.get_websocket_recv_timeout()
+            if recv_timeout is None
+            else recv_timeout
         )
 
     def __enter__(self):
@@ -12416,7 +12482,7 @@ class WebSocketModelingCommandsWs:
 
     def recv(self) -> WebSocketResponse:
         """Receive data from the websocket."""
-        message = self.ws.recv(timeout=60)
+        message = self.ws.recv(timeout=self._recv_timeout)
 
         return WebSocketResponse.model_validate_json(message)
 
