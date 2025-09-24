@@ -19,11 +19,8 @@ jobs:
       node-version: ${{ matrix.node }}
       setup-python: true
       install-command: |
-        New-Item -ItemType Directory -Path scripts/win -Force | Out-Null
-        Invoke-WebRequest -Uri https://raw.githubusercontent.com/kittycad/gh-action-win-ca/main/scripts/win/create-local-ca.ps1 -OutFile scripts/win/create-local-ca.ps1
-        Invoke-WebRequest -Uri https://raw.githubusercontent.com/kittycad/gh-action-win-ca/main/scripts/https-server.mjs -OutFile scripts/https-server.mjs
         uv sync --extra dev
       pre-test-command: uv run pytest kittycad/tests/test_win_ca_smoke.py --maxfail=1 --disable-warnings -q
       post-test-command: uv run pytest kittycad/tests/test_win_ca_smoke.py --maxfail=1 --disable-warnings -q
-    env:
-      WIN_CA_HOST: 'https://127.0.0.1:4443'
+      pre-step-extra-env: '{"WIN_CA_EXPECT_SUCCESS":"0","WIN_CA_HOST":"https://127.0.0.1:4443"}'
+      post-step-extra-env: '{"WIN_CA_EXPECT_SUCCESS":"1","WIN_CA_HOST":"https://127.0.0.1:4443"}'
