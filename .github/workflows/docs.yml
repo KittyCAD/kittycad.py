@@ -14,12 +14,16 @@ on:
       - 'docs/**'
       - 'kittycad/**'
       - '.github/workflows/docs.yml'
+      - pyproject.toml
+      - uv.lock
   pull_request:
     branches: [main]
     paths:
       - 'docs/**'
       - 'kittycad/**'
       - '.github/workflows/docs.yml'
+      - pyproject.toml
+      - uv.lock
 jobs:
   # Build job
   build:
