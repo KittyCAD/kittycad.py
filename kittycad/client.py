@@ -17,6 +17,7 @@ class Client:
     cookies: Dict[str, str] = attr.ib(factory=dict, kw_only=True)
     headers: Dict[str, str] = attr.ib(factory=dict, kw_only=True)
     timeout: float = attr.ib(120.0, kw_only=True)
+    websocket_recv_timeout: Optional[float] = attr.ib(60.0, kw_only=True)
     verify_ssl: Union[str, bool, ssl.SSLContext, truststore.SSLContext] = attr.ib(
         True, kw_only=True
     )
@@ -46,6 +47,13 @@ class Client:
     def with_timeout(self, timeout: float) -> "Client":
         """Get a new client matching this one with a new timeout (in seconds)"""
         return attr.evolve(self, timeout=timeout)
+
+    def get_websocket_recv_timeout(self) -> Optional[float]:
+        return self.websocket_recv_timeout
+
+    def with_websocket_recv_timeout(self, timeout: Optional[float]) -> "Client":
+        """Get a new client matching this one with a new websocket recv timeout"""
+        return attr.evolve(self, websocket_recv_timeout=timeout)
 
     def with_base_url(self, url: str) -> "Client":
         """Get a new client matching this one with a new base url"""
@@ -85,6 +93,7 @@ class AsyncClient:
     cookies: Dict[str, str] = attr.ib(factory=dict, kw_only=True)
     headers: Dict[str, str] = attr.ib(factory=dict, kw_only=True)
     timeout: float = attr.ib(120.0, kw_only=True)
+    websocket_recv_timeout: Optional[float] = attr.ib(60.0, kw_only=True)
     verify_ssl: Union[str, bool, ssl.SSLContext, truststore.SSLContext] = attr.ib(
         True, kw_only=True
     )
@@ -114,6 +123,13 @@ class AsyncClient:
     def with_timeout(self, timeout: float) -> "AsyncClient":
         """Get a new client matching this one with a new timeout (in seconds)"""
         return attr.evolve(self, timeout=timeout)
+
+    def get_websocket_recv_timeout(self) -> Optional[float]:
+        return self.websocket_recv_timeout
+
+    def with_websocket_recv_timeout(self, timeout: Optional[float]) -> "AsyncClient":
+        """Get a new client matching this one with a new websocket recv timeout"""
+        return attr.evolve(self, websocket_recv_timeout=timeout)
 
     def with_base_url(self, url: str) -> "AsyncClient":
         """Get a new client matching this one with a new base url"""

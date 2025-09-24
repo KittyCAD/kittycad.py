@@ -18,8 +18,10 @@ from kittycad.models.reasoning_message import OptionText, ReasoningMessage
 class FakeWS:
     def __init__(self, messages):
         self._messages = iter(messages)
+        self.timeouts = []
 
-    def recv(self, timeout=60):  # pragma: no cover - tiny helper
+    def recv(self, timeout=None):  # pragma: no cover - tiny helper
+        self.timeouts.append(timeout)
         try:
             return next(self._messages)
         except StopIteration as exc:
@@ -47,16 +49,19 @@ def test_ml_reasoning_ws_recv_parses_reasoning_messages():
         WebSocketMlReasoningWs, WebSocketMlReasoningWs.__new__(WebSocketMlReasoningWs)
     )
     websocket.ws = cast(ClientConnectionSync, fake_ws)
+    websocket._recv_timeout = 60
 
     session_message = websocket.recv()
     assert isinstance(session_message.root, SessionData)
     assert session_message.root.api_call_id == "abc123"
+    assert fake_ws.timeouts[-1] == 60
 
     reasoning_message = websocket.recv()
     assert isinstance(reasoning_message.root, Reasoning)
     resolved_reasoning = reasoning_message.root.reasoning.root
     assert isinstance(resolved_reasoning, OptionText)
     assert resolved_reasoning.content == reasoning_content
+    assert fake_ws.timeouts[-1] == 60
 
 
 def test_ml_reasoning_ws_real_round_trip() -> None:

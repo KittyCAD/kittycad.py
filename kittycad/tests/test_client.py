@@ -688,6 +688,53 @@ def test_list_users():
     print(f"ExtendedUserResultsPage: {response}")
 
 
+def test_websocket_recv_timeout_defaults_and_override(monkeypatch):
+    recorded_connections = []
+
+    class RecordingWS:
+        def __init__(self):
+            self.recv_calls = []
+
+        def recv(self, timeout=None):
+            self.recv_calls.append(timeout)
+            return "{}"
+
+        def __iter__(self):
+            return iter([])
+
+        def send(self, *_args, **_kwargs):
+            return None
+
+        def send_binary(self, *_args, **_kwargs):
+            return None
+
+        def close(self):
+            return None
+
+    def fake_ws_connect(*_args, **_kwargs):
+        ws = RecordingWS()
+        recorded_connections.append(ws)
+        return ws
+
+    monkeypatch.setattr("kittycad.__init__.ws_connect", fake_ws_connect)
+
+    client = KittyCAD(
+        token="fake-token",
+        base_url="https://example.com",
+        websocket_recv_timeout=45.0,
+    )
+
+    connection = client.executor.create_executor_term()
+    connection.recv()
+    assert recorded_connections[-1].recv_calls == [45.0]
+    connection.close()
+
+    connection_override = client.executor.create_executor_term(recv_timeout=120.0)
+    connection_override.recv()
+    assert recorded_connections[-1].recv_calls == [120.0]
+    connection_override.close()
+
+
 def test_ws_simple():
     # Create our client
     client = KittyCAD()
