@@ -1,8 +1,9 @@
 import ssl
-from typing import Dict, Optional, Union
+from typing import Dict, Optional, Self, Union
 
 import attr
 import httpx
+import truststore
 
 DEFAULT_BASE_URL = "https://api.zoo.dev"
 
@@ -16,7 +17,9 @@ class Client:
     cookies: Dict[str, str] = attr.ib(factory=dict, kw_only=True)
     headers: Dict[str, str] = attr.ib(factory=dict, kw_only=True)
     timeout: float = attr.ib(120.0, kw_only=True)
-    verify_ssl: Union[str, bool, ssl.SSLContext] = attr.ib(True, kw_only=True)
+    verify_ssl: Union[str, bool, ssl.SSLContext, truststore.SSLContext] = attr.ib(
+        True, kw_only=True
+    )
     http_client: Optional[httpx.Client] = attr.ib(default=None, kw_only=True)
 
     def get_headers(self) -> Dict[str, str]:
@@ -64,7 +67,7 @@ class Client:
             self.http_client.close()
             self.http_client = None
 
-    def __enter__(self) -> "Client":
+    def __enter__(self) -> Self:
         """Context manager entry"""
         return self
 
@@ -82,7 +85,9 @@ class AsyncClient:
     cookies: Dict[str, str] = attr.ib(factory=dict, kw_only=True)
     headers: Dict[str, str] = attr.ib(factory=dict, kw_only=True)
     timeout: float = attr.ib(120.0, kw_only=True)
-    verify_ssl: Union[str, bool, ssl.SSLContext] = attr.ib(True, kw_only=True)
+    verify_ssl: Union[str, bool, ssl.SSLContext, truststore.SSLContext] = attr.ib(
+        True, kw_only=True
+    )
     http_client: Optional[httpx.AsyncClient] = attr.ib(default=None, kw_only=True)
 
     def get_headers(self) -> Dict[str, str]:
@@ -130,7 +135,7 @@ class AsyncClient:
             await self.http_client.aclose()
             self.http_client = None
 
-    async def __aenter__(self) -> "AsyncClient":
+    async def __aenter__(self) -> Self:
         """Async context manager entry"""
         return self
 

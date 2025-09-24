@@ -192,6 +192,7 @@ from .method import Method
 from .ml_copilot_client_message import MlCopilotClientMessage
 from .ml_copilot_server_message import MlCopilotServerMessage
 from .ml_copilot_system_command import MlCopilotSystemCommand
+from .ml_copilot_tool import MlCopilotTool
 from .ml_feedback import MlFeedback
 from .ml_prompt import MlPrompt
 from .ml_prompt_metadata import MlPromptMetadata

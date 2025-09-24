@@ -9,11 +9,11 @@ class Transform(KittyCadBaseModel):
     replicate: bool = True
 
     rotation: Rotation = {
-        "angle": {"unit": "degrees", "value": 0.0},
         "axis": {"x": 0.0, "y": 0.0, "z": 1.0},
+        "angle": {"unit": "degrees", "value": 0.0},
         "origin": {"type": "local"},
-    }  # type: ignore
+    }  # type: ignore[assignment]
 
-    scale: Point3d = {"x": 1.0, "y": 1.0, "z": 1.0}  # type: ignore
+    scale: Point3d = {"x": 1.0, "y": 1.0, "z": 1.0}  # type: ignore[assignment]
 
-    translate: Point3d = {"x": 0.0, "y": 0.0, "z": 0.0}  # type: ignore
+    translate: Point3d = {"x": 0.0, "y": 0.0, "z": 0.0}  # type: ignore[assignment]

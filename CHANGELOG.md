@@ -720,3 +720,32 @@ Example exception message:
 - **Easier Debugging**: No need to dig into Error objects
 - **Cleaner Code**: No error checking boilerplate needed
 - **Better IDE Support**: Improved autocomplete and type checking
+## v1.1.3
+
+### Fixed – Typed responses instead of raw dicts
+
+- All non-collection responses are now deserialized with Pydantic and returned as typed models, not raw `dict`s. This removes several cases where function signatures claimed to return models but actually returned JSON.
+
+### Changed – Text-to-CAD model lookup return type
+
+- `ml.get_text_to_cad_model_for_user()` now returns `TextToCadResponse` (a discriminated union RootModel) rather than a raw `dict` or an untyped `Union` dump.
+
+### Migration
+
+- Old behavior (returned `dict` or treated as `Union[TextToCad, TextToCadIteration, TextToCadMultiFileIteration]`):
+
+  ```python
+  result = client.ml.get_text_to_cad_model_for_user(id=some_id)
+  # used result like a dict or tried to guess the shape
+  ```
+
+- New behavior (typed RootModel):
+
+  ```python
+  from kittycad.models.text_to_cad_response import TextToCadResponse
+
+  resp: TextToCadResponse = client.ml.get_text_to_cad_model_for_user(id=some_id)
+  model = resp.root  # one of: TextToCad | TextToCadIteration | TextToCadMultiFileIteration
+  ```
+
+- Why: The OpenAPI spec defines the response as `TextToCadResponse` (a discriminated `oneOf`). Returning the wrapper ensures reliable, validated parsing and a stable API.

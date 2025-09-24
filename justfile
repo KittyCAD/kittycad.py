@@ -18,8 +18,16 @@ lint: install
     uv run ruff check --fix .
     uv run ruff format
 
+# Format code
+fmt: install
+    uv run ruff format
+
 # Run type checking
 typecheck: install
+    uv run mypy .
+
+# Alias: run mypy type checks
+types: install
     uv run mypy .
 
 # Generate documentation

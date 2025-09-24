@@ -201,7 +201,7 @@
           "ml"
         ],
         "summary": "Generate a CAD model from text.",
-        "description": "Because our source of truth for the resulting model is a STEP file, you will always have STEP file contents when you list your generated models. Any other formats you request here will also be returned when you list your generated models.\n\nThis operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint.\n\nOne thing to note, if you hit the cache, this endpoint will return right away. So you only have to wait if the status is not `Completed` or `Failed`.",
+        "description": "Because our source of truth for the resulting model is a STEP file, you will always have STEP file contents when you list your generated parts. Any other formats you request here will also be returned when you list your generated parts.\n\nThis operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint.\n\nOne thing to note, if you hit the cache, this endpoint will return right away. So you only have to wait if the status is not `Completed` or `Failed`.",
         "operationId": "create_text_to_cad",
         "parameters": [
           {
@@ -4764,240 +4764,6 @@
         }
       }
     },
-    "/ml-prompts": {
-      "get": {
-        "tags": [
-          "ml",
-          "hidden"
-        ],
-        "summary": "List all ML prompts.",
-        "description": "For text-to-cad prompts, this will always return the STEP file contents as well as the format the user originally requested.\n\nThis endpoint requires authentication by a Zoo employee.\n\nThe ML prompts are returned in order of creation, with the most recently created ML prompts first.",
-        "operationId": "list_ml_prompts",
-        "parameters": [
-          {
-            "in": "query",
-            "name": "limit",
-            "description": "Maximum number of items returned by a single call",
-            "schema": {
-              "nullable": true,
-              "type": "integer",
-              "format": "uint32",
-              "minimum": 1
-            }
-          },
-          {
-            "in": "query",
-            "name": "page_token",
-            "description": "Token returned by previous call to retrieve the subsequent page",
-            "schema": {
-              "nullable": true,
-              "type": "string"
-            }
-          },
-          {
-            "in": "query",
-            "name": "sort_by",
-            "schema": {
-              "$ref": "#/components/schemas/CreatedAtSortMode"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "headers": {
-              "Access-Control-Allow-Credentials": {
-                "description": "Access-Control-Allow-Credentials header.",
-                "style": "simple",
-                "schema": {
-                  "nullable": true,
-                  "type": "string"
-                }
-              },
-              "Access-Control-Allow-Headers": {
-                "description": "Access-Control-Allow-Headers header. This is a comma-separated list of headers.",
-                "style": "simple",
-                "schema": {
-                  "nullable": true,
-                  "type": "string"
-                }
-              },
-              "Access-Control-Allow-Methods": {
-                "description": "Access-Control-Allow-Methods header.",
-                "style": "simple",
-                "schema": {
-                  "nullable": true,
-                  "type": "string"
-                }
-              },
-              "Access-Control-Allow-Origin": {
-                "description": "Access-Control-Allow-Origin header.",
-                "style": "simple",
-                "schema": {
-                  "nullable": true,
-                  "type": "string"
-                }
-              },
-              "Content-Location": {
-                "description": "The Content-Location header for responses that are not the final destination. This is used to indicate where the resource can be found, when it is finished.",
-                "style": "simple",
-                "schema": {
-                  "nullable": true,
-                  "type": "string"
-                }
-              },
-              "Location": {
-                "description": "The location header for redirects and letting users know if there is a websocket they can listen to for status updates on their operation.",
-                "style": "simple",
-                "schema": {
-                  "nullable": true,
-                  "type": "string"
-                }
-              },
-              "Set-Cookie": {
-                "description": "Set-Cookie header.",
-                "style": "simple",
-                "schema": {
-                  "nullable": true,
-                  "type": "string"
-                }
-              },
-              "X-Api-Call-Id": {
-                "description": "ID for this request. We return it so that users can report this to us and help us debug their problems.",
-                "style": "simple",
-                "required": true,
-                "schema": {
-                  "type": "string"
-                }
-              }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/MlPromptResultsPage"
-                }
-              }
-            }
-          },
-          "4XX": {
-            "$ref": "#/components/responses/Error"
-          },
-          "5XX": {
-            "$ref": "#/components/responses/Error"
-          }
-        },
-        "x-dropshot-pagination": {
-          "required": []
-        }
-      }
-    },
-    "/ml-prompts/{id}": {
-      "get": {
-        "tags": [
-          "ml",
-          "hidden"
-        ],
-        "summary": "Get a ML prompt.",
-        "description": "This endpoint requires authentication by a Zoo employee.",
-        "operationId": "get_ml_prompt",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "description": "The id of the model to give feedback to.",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "uuid"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "headers": {
-              "Access-Control-Allow-Credentials": {
-                "description": "Access-Control-Allow-Credentials header.",
-                "style": "simple",
-                "schema": {
-                  "nullable": true,
-                  "type": "string"
-                }
-              },
-              "Access-Control-Allow-Headers": {
-                "description": "Access-Control-Allow-Headers header. This is a comma-separated list of headers.",
-                "style": "simple",
-                "schema": {
-                  "nullable": true,
-                  "type": "string"
-                }
-              },
-              "Access-Control-Allow-Methods": {
-                "description": "Access-Control-Allow-Methods header.",
-                "style": "simple",
-                "schema": {
-                  "nullable": true,
-                  "type": "string"
-                }
-              },
-              "Access-Control-Allow-Origin": {
-                "description": "Access-Control-Allow-Origin header.",
-                "style": "simple",
-                "schema": {
-                  "nullable": true,
-                  "type": "string"
-                }
-              },
-              "Content-Location": {
-                "description": "The Content-Location header for responses that are not the final destination. This is used to indicate where the resource can be found, when it is finished.",
-                "style": "simple",
-                "schema": {
-                  "nullable": true,
-                  "type": "string"
-                }
-              },
-              "Location": {
-                "description": "The location header for redirects and letting users know if there is a websocket they can listen to for status updates on their operation.",
-                "style": "simple",
-                "schema": {
-                  "nullable": true,
-                  "type": "string"
-                }
-              },
-              "Set-Cookie": {
-                "description": "Set-Cookie header.",
-                "style": "simple",
-                "schema": {
-                  "nullable": true,
-                  "type": "string"
-                }
-              },
-              "X-Api-Call-Id": {
-                "description": "ID for this request. We return it so that users can report this to us and help us debug their problems.",
-                "style": "simple",
-                "required": true,
-                "schema": {
-                  "type": "string"
-                }
-              }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/MlPrompt"
-                }
-              }
-            }
-          },
-          "4XX": {
-            "$ref": "#/components/responses/Error"
-          },
-          "5XX": {
-            "$ref": "#/components/responses/Error"
-          }
-        }
-      }
-    },
     "/ml/conversations": {
       "get": {
         "tags": [
@@ -5710,7 +5476,7 @@
           "ml"
         ],
         "summary": "Iterate on a multi-file CAD model with a prompt.",
-        "description": "This endpoint can iterate on multi-file models.\n\nEven if you give specific ranges to edit, the model might change more than just those in order to make the changes you requested without breaking the code.\n\nYou always get the whole code back, even if you only changed a small part of it. This endpoint will always return all the code back, including files that were not changed. If your original source code imported a stl/gltf/step/etc file, the output will not include that file since the model will never change non-kcl files. The endpoint will only return the kcl files that were changed.\n\nThis operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint.\n\nInput filepaths will be normalized and re-canonicalized to be under the current working directory -- so returned paths may differ from provided paths, and care must be taken when handling user provided paths.",
+        "description": "This endpoint can iterate on multi-file projects.\n\nEven if you give specific ranges to edit, the model might change more than just those in order to make the changes you requested without breaking the code.\n\nYou always get the whole code back, even if you only changed a small part of it. This endpoint will always return all the code back, including files that were not changed. If your original source code imported a stl/gltf/step/etc file, the output will not include that file since the model will never change non-kcl files. The endpoint will only return the kcl files that were changed.\n\nThis operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint.\n\nInput filepaths will be normalized and re-canonicalized to be under the current working directory -- so returned paths may differ from provided paths, and care must be taken when handling user provided paths.",
         "operationId": "create_text_to_cad_multi_file_iteration",
         "requestBody": {
           "description": "Iteration on a multi-file CAD model",
@@ -5881,6 +5647,240 @@
                 "required": true,
                 "schema": {
                   "type": "string"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/Error"
+          },
+          "5XX": {
+            "$ref": "#/components/responses/Error"
+          }
+        }
+      }
+    },
+    "/ml-prompts": {
+      "get": {
+        "tags": [
+          "ml",
+          "hidden"
+        ],
+        "summary": "List all ML prompts.",
+        "description": "For text-to-cad prompts, this will always return the STEP file contents as well as the format the user originally requested.\n\nThis endpoint requires authentication by a Zoo employee.\n\nThe ML prompts are returned in order of creation, with the most recently created ML prompts first.",
+        "operationId": "list_ml_prompts",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "limit",
+            "description": "Maximum number of items returned by a single call",
+            "schema": {
+              "nullable": true,
+              "type": "integer",
+              "format": "uint32",
+              "minimum": 1
+            }
+          },
+          {
+            "in": "query",
+            "name": "page_token",
+            "description": "Token returned by previous call to retrieve the subsequent page",
+            "schema": {
+              "nullable": true,
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "sort_by",
+            "schema": {
+              "$ref": "#/components/schemas/CreatedAtSortMode"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "Access-Control-Allow-Credentials": {
+                "description": "Access-Control-Allow-Credentials header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Headers": {
+                "description": "Access-Control-Allow-Headers header. This is a comma-separated list of headers.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Methods": {
+                "description": "Access-Control-Allow-Methods header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Origin": {
+                "description": "Access-Control-Allow-Origin header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Content-Location": {
+                "description": "The Content-Location header for responses that are not the final destination. This is used to indicate where the resource can be found, when it is finished.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Location": {
+                "description": "The location header for redirects and letting users know if there is a websocket they can listen to for status updates on their operation.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Set-Cookie": {
+                "description": "Set-Cookie header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "X-Api-Call-Id": {
+                "description": "ID for this request. We return it so that users can report this to us and help us debug their problems.",
+                "style": "simple",
+                "required": true,
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MlPromptResultsPage"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/Error"
+          },
+          "5XX": {
+            "$ref": "#/components/responses/Error"
+          }
+        },
+        "x-dropshot-pagination": {
+          "required": []
+        }
+      }
+    },
+    "/ml-prompts/{id}": {
+      "get": {
+        "tags": [
+          "ml",
+          "hidden"
+        ],
+        "summary": "Get a ML prompt.",
+        "description": "This endpoint requires authentication by a Zoo employee.",
+        "operationId": "get_ml_prompt",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "The id of the model to give feedback to.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "Access-Control-Allow-Credentials": {
+                "description": "Access-Control-Allow-Credentials header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Headers": {
+                "description": "Access-Control-Allow-Headers header. This is a comma-separated list of headers.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Methods": {
+                "description": "Access-Control-Allow-Methods header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Origin": {
+                "description": "Access-Control-Allow-Origin header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Content-Location": {
+                "description": "The Content-Location header for responses that are not the final destination. This is used to indicate where the resource can be found, when it is finished.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Location": {
+                "description": "The location header for redirects and letting users know if there is a websocket they can listen to for status updates on their operation.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Set-Cookie": {
+                "description": "Set-Cookie header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "X-Api-Call-Id": {
+                "description": "ID for this request. We return it so that users can report this to us and help us debug their problems.",
+                "style": "simple",
+                "required": true,
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MlPrompt"
                 }
               }
             }
@@ -18870,9 +18870,9 @@
         "tags": [
           "ml"
         ],
-        "summary": "List text-to-CAD models you've generated.",
-        "description": "This will always return the STEP file contents as well as the format the user originally requested.\n\nThis endpoint requires authentication by any Zoo user. It returns the text-to-CAD models for the authenticated user.\n\nThe text-to-CAD models are returned in order of creation, with the most recently created text-to-CAD models first.",
-        "operationId": "list_text_to_cad_models_for_user",
+        "summary": "List text-to-CAD parts you've generated.",
+        "description": "This will always return the STEP file contents as well as the format the user originally requested.\n\nThis endpoint requires authentication by any Zoo user. It returns the text-to-CAD parts for the authenticated user.\n\nThe text-to-CAD parts are returned in order of creation, with the most recently created text-to-CAD parts first.",
+        "operationId": "list_text_to_cad_parts_for_user",
         "parameters": [
           {
             "in": "query",
@@ -18912,7 +18912,7 @@
           {
             "in": "query",
             "name": "no_models",
-            "description": "If we should return the model file contents or just the metadata.",
+            "description": "If we should return the part contents or just the metadata.",
             "schema": {
               "nullable": true,
               "type": "boolean"
@@ -19015,7 +19015,7 @@
         ],
         "summary": "Get a text-to-CAD response.",
         "description": "This endpoint requires authentication by any Zoo user. The user must be the owner of the text-to-CAD model.",
-        "operationId": "get_text_to_cad_model_for_user",
+        "operationId": "get_text_to_cad_parts_for_user",
         "parameters": [
           {
             "in": "path",
@@ -19119,7 +19119,7 @@
         ],
         "summary": "Give feedback to a specific ML response.",
         "description": "This can be a text-to-CAD creation or iteration.\n\nThis endpoint requires authentication by any Zoo user. The user must be the owner of the ML response, in order to give feedback.",
-        "operationId": "create_text_to_cad_model_feedback",
+        "operationId": "create_text_to_cad_part_feedback",
         "parameters": [
           {
             "in": "path",
@@ -19225,7 +19225,7 @@
         ],
         "summary": "OPTIONS endpoint.",
         "description": "This is necessary for some preflight requests, specifically POST, PUT, and DELETE.",
-        "operationId": "options_text_to_cad_model_feedback",
+        "operationId": "options_text_to_cad_part_feedback",
         "parameters": [
           {
             "in": "path",
@@ -19441,239 +19441,6 @@
         },
         "x-dropshot-pagination": {
           "required": []
-        }
-      }
-    },
-    "/users-extended": {
-      "get": {
-        "tags": [
-          "users",
-          "hidden"
-        ],
-        "summary": "List users with extended information.",
-        "description": "This endpoint requires authentication by a Zoo employee. The users are returned in order of creation, with the most recently created users first.",
-        "operationId": "list_users_extended",
-        "parameters": [
-          {
-            "in": "query",
-            "name": "limit",
-            "description": "Maximum number of items returned by a single call",
-            "schema": {
-              "nullable": true,
-              "type": "integer",
-              "format": "uint32",
-              "minimum": 1
-            }
-          },
-          {
-            "in": "query",
-            "name": "page_token",
-            "description": "Token returned by previous call to retrieve the subsequent page",
-            "schema": {
-              "nullable": true,
-              "type": "string"
-            }
-          },
-          {
-            "in": "query",
-            "name": "sort_by",
-            "schema": {
-              "$ref": "#/components/schemas/CreatedAtSortMode"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "headers": {
-              "Access-Control-Allow-Credentials": {
-                "description": "Access-Control-Allow-Credentials header.",
-                "style": "simple",
-                "schema": {
-                  "nullable": true,
-                  "type": "string"
-                }
-              },
-              "Access-Control-Allow-Headers": {
-                "description": "Access-Control-Allow-Headers header. This is a comma-separated list of headers.",
-                "style": "simple",
-                "schema": {
-                  "nullable": true,
-                  "type": "string"
-                }
-              },
-              "Access-Control-Allow-Methods": {
-                "description": "Access-Control-Allow-Methods header.",
-                "style": "simple",
-                "schema": {
-                  "nullable": true,
-                  "type": "string"
-                }
-              },
-              "Access-Control-Allow-Origin": {
-                "description": "Access-Control-Allow-Origin header.",
-                "style": "simple",
-                "schema": {
-                  "nullable": true,
-                  "type": "string"
-                }
-              },
-              "Content-Location": {
-                "description": "The Content-Location header for responses that are not the final destination. This is used to indicate where the resource can be found, when it is finished.",
-                "style": "simple",
-                "schema": {
-                  "nullable": true,
-                  "type": "string"
-                }
-              },
-              "Location": {
-                "description": "The location header for redirects and letting users know if there is a websocket they can listen to for status updates on their operation.",
-                "style": "simple",
-                "schema": {
-                  "nullable": true,
-                  "type": "string"
-                }
-              },
-              "Set-Cookie": {
-                "description": "Set-Cookie header.",
-                "style": "simple",
-                "schema": {
-                  "nullable": true,
-                  "type": "string"
-                }
-              },
-              "X-Api-Call-Id": {
-                "description": "ID for this request. We return it so that users can report this to us and help us debug their problems.",
-                "style": "simple",
-                "required": true,
-                "schema": {
-                  "type": "string"
-                }
-              }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ExtendedUserResultsPage"
-                }
-              }
-            }
-          },
-          "4XX": {
-            "$ref": "#/components/responses/Error"
-          },
-          "5XX": {
-            "$ref": "#/components/responses/Error"
-          }
-        },
-        "x-dropshot-pagination": {
-          "required": []
-        }
-      }
-    },
-    "/users-extended/{id}": {
-      "get": {
-        "tags": [
-          "users",
-          "hidden"
-        ],
-        "summary": "Get extended information about a user.",
-        "description": "To get information about yourself, use `/users-extended/me` as the endpoint. By doing so you will get the user information for the authenticated user.\n\nAlternatively, to get information about the authenticated user, use `/user/extended` endpoint.",
-        "operationId": "get_user_extended",
-        "parameters": [
-          {
-            "in": "path",
-            "name": "id",
-            "description": "The user's identifier (uuid or email).",
-            "required": true,
-            "schema": {
-              "$ref": "#/components/schemas/UserIdentifier"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "headers": {
-              "Access-Control-Allow-Credentials": {
-                "description": "Access-Control-Allow-Credentials header.",
-                "style": "simple",
-                "schema": {
-                  "nullable": true,
-                  "type": "string"
-                }
-              },
-              "Access-Control-Allow-Headers": {
-                "description": "Access-Control-Allow-Headers header. This is a comma-separated list of headers.",
-                "style": "simple",
-                "schema": {
-                  "nullable": true,
-                  "type": "string"
-                }
-              },
-              "Access-Control-Allow-Methods": {
-                "description": "Access-Control-Allow-Methods header.",
-                "style": "simple",
-                "schema": {
-                  "nullable": true,
-                  "type": "string"
-                }
-              },
-              "Access-Control-Allow-Origin": {
-                "description": "Access-Control-Allow-Origin header.",
-                "style": "simple",
-                "schema": {
-                  "nullable": true,
-                  "type": "string"
-                }
-              },
-              "Content-Location": {
-                "description": "The Content-Location header for responses that are not the final destination. This is used to indicate where the resource can be found, when it is finished.",
-                "style": "simple",
-                "schema": {
-                  "nullable": true,
-                  "type": "string"
-                }
-              },
-              "Location": {
-                "description": "The location header for redirects and letting users know if there is a websocket they can listen to for status updates on their operation.",
-                "style": "simple",
-                "schema": {
-                  "nullable": true,
-                  "type": "string"
-                }
-              },
-              "Set-Cookie": {
-                "description": "Set-Cookie header.",
-                "style": "simple",
-                "schema": {
-                  "nullable": true,
-                  "type": "string"
-                }
-              },
-              "X-Api-Call-Id": {
-                "description": "ID for this request. We return it so that users can report this to us and help us debug their problems.",
-                "style": "simple",
-                "required": true,
-                "schema": {
-                  "type": "string"
-                }
-              }
-            },
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ExtendedUser"
-                }
-              }
-            }
-          },
-          "4XX": {
-            "$ref": "#/components/responses/Error"
-          },
-          "5XX": {
-            "$ref": "#/components/responses/Error"
-          }
         }
       }
     },
@@ -20463,6 +20230,239 @@
         }
       }
     },
+    "/users-extended": {
+      "get": {
+        "tags": [
+          "users",
+          "hidden"
+        ],
+        "summary": "List users with extended information.",
+        "description": "This endpoint requires authentication by a Zoo employee. The users are returned in order of creation, with the most recently created users first.",
+        "operationId": "list_users_extended",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "limit",
+            "description": "Maximum number of items returned by a single call",
+            "schema": {
+              "nullable": true,
+              "type": "integer",
+              "format": "uint32",
+              "minimum": 1
+            }
+          },
+          {
+            "in": "query",
+            "name": "page_token",
+            "description": "Token returned by previous call to retrieve the subsequent page",
+            "schema": {
+              "nullable": true,
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "sort_by",
+            "schema": {
+              "$ref": "#/components/schemas/CreatedAtSortMode"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "Access-Control-Allow-Credentials": {
+                "description": "Access-Control-Allow-Credentials header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Headers": {
+                "description": "Access-Control-Allow-Headers header. This is a comma-separated list of headers.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Methods": {
+                "description": "Access-Control-Allow-Methods header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Origin": {
+                "description": "Access-Control-Allow-Origin header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Content-Location": {
+                "description": "The Content-Location header for responses that are not the final destination. This is used to indicate where the resource can be found, when it is finished.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Location": {
+                "description": "The location header for redirects and letting users know if there is a websocket they can listen to for status updates on their operation.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Set-Cookie": {
+                "description": "Set-Cookie header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "X-Api-Call-Id": {
+                "description": "ID for this request. We return it so that users can report this to us and help us debug their problems.",
+                "style": "simple",
+                "required": true,
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExtendedUserResultsPage"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/Error"
+          },
+          "5XX": {
+            "$ref": "#/components/responses/Error"
+          }
+        },
+        "x-dropshot-pagination": {
+          "required": []
+        }
+      }
+    },
+    "/users-extended/{id}": {
+      "get": {
+        "tags": [
+          "users",
+          "hidden"
+        ],
+        "summary": "Get extended information about a user.",
+        "description": "To get information about yourself, use `/users-extended/me` as the endpoint. By doing so you will get the user information for the authenticated user.\n\nAlternatively, to get information about the authenticated user, use `/user/extended` endpoint.",
+        "operationId": "get_user_extended",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "The user's identifier (uuid or email).",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/UserIdentifier"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "Access-Control-Allow-Credentials": {
+                "description": "Access-Control-Allow-Credentials header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Headers": {
+                "description": "Access-Control-Allow-Headers header. This is a comma-separated list of headers.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Methods": {
+                "description": "Access-Control-Allow-Methods header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Origin": {
+                "description": "Access-Control-Allow-Origin header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Content-Location": {
+                "description": "The Content-Location header for responses that are not the final destination. This is used to indicate where the resource can be found, when it is finished.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Location": {
+                "description": "The location header for redirects and letting users know if there is a websocket they can listen to for status updates on their operation.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Set-Cookie": {
+                "description": "Set-Cookie header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "X-Api-Call-Id": {
+                "description": "ID for this request. We return it so that users can report this to us and help us debug their problems.",
+                "style": "simple",
+                "required": true,
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExtendedUser"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/Error"
+          },
+          "5XX": {
+            "$ref": "#/components/responses/Error"
+          }
+        }
+      }
+    },
     "/website/form": {
       "put": {
         "tags": [
@@ -20856,7 +20856,29 @@
           "ml"
         ],
         "summary": "Open a websocket to prompt the ML copilot.",
+        "description": "This endpoint accepts typed query parameters via `MlCopilotQuery`. See the field documentation on that struct for details, including replay behavior and wire format.",
         "operationId": "ml_copilot_ws",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "conversation_id",
+            "description": "Conversation to replay (UUID). Required when `replay` is `true`.",
+            "schema": {
+              "nullable": true,
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "in": "query",
+            "name": "replay",
+            "description": "If `true`, emit BSON Replay for the specified conversation and continue.",
+            "schema": {
+              "nullable": true,
+              "type": "boolean"
+            }
+          }
+        ],
         "requestBody": {
           "description": "Websocket requests",
           "content": {
@@ -21415,53 +21437,6 @@
         "required": [
           "count",
           "query"
-        ]
-      },
-      "ApiCallQueryGroupBy": {
-        "description": "The field of an API call to group by.",
-        "oneOf": [
-          {
-            "description": "The email of the user that requested the API call.",
-            "type": "string",
-            "enum": [
-              "email"
-            ]
-          },
-          {
-            "description": "The HTTP method of the API call.",
-            "type": "string",
-            "enum": [
-              "method"
-            ]
-          },
-          {
-            "description": "The endpoint of the API call.",
-            "type": "string",
-            "enum": [
-              "endpoint"
-            ]
-          },
-          {
-            "description": "The user ID of the user that requested the API call.",
-            "type": "string",
-            "enum": [
-              "user_id"
-            ]
-          },
-          {
-            "description": "The origin of the API call. This is parsed from the `Origin` header.",
-            "type": "string",
-            "enum": [
-              "origin"
-            ]
-          },
-          {
-            "description": "The IP address of the user making the API call.",
-            "type": "string",
-            "enum": [
-              "ip_address"
-            ]
-          }
         ]
       },
       "ApiCallStatus": {
@@ -23655,42 +23630,6 @@
           "face_id"
         ]
       },
-      "CodeLanguage": {
-        "description": "The language code is written in.\n\n<details><summary>JSON schema</summary>\n\n```json { \"description\": \"The language code is written in.\", \"oneOf\": [ { \"description\": \"The `go` programming language.\", \"type\": \"string\", \"enum\": [ \"go\" ] }, { \"description\": \"The `python` programming language.\", \"type\": \"string\", \"enum\": [ \"python\" ] }, { \"description\": \"The `node` programming language.\", \"type\": \"string\", \"enum\": [ \"node\" ] } ] } ``` </details>",
-        "oneOf": [
-          {
-            "description": "The `go` programming language.",
-            "type": "string",
-            "enum": [
-              "go"
-            ]
-          },
-          {
-            "description": "The `python` programming language.",
-            "type": "string",
-            "enum": [
-              "python"
-            ]
-          },
-          {
-            "description": "The `node` programming language.",
-            "type": "string",
-            "enum": [
-              "node"
-            ]
-          }
-        ]
-      },
-      "CodeOption": {
-        "description": "Code option for running and verifying kcl.\n\n<details><summary>JSON schema</summary>\n\n```json { \"title\": \"CodeOption\", \"description\": \"Code option for running and verifying kcl.\", \"type\": \"string\", \"enum\": [ \"parse\", \"execute\", \"cleanup\", \"mock_execute\" ] } ``` </details>",
-        "type": "string",
-        "enum": [
-          "parse",
-          "execute",
-          "cleanup",
-          "mock_execute"
-        ]
-      },
       "CodeOutput": {
         "description": "Output of the code being executed.\n\n<details><summary>JSON schema</summary>\n\n```json { \"description\": \"Output of the code being executed.\", \"type\": \"object\", \"properties\": { \"output_files\": { \"description\": \"The contents of the files requested if they were passed.\", \"type\": \"array\", \"items\": { \"$ref\": \"#/components/schemas/OutputFile\" } }, \"stderr\": { \"description\": \"The stderr of the code.\", \"default\": \"\", \"type\": \"string\" }, \"stdout\": { \"description\": \"The stdout of the code.\", \"default\": \"\", \"type\": \"string\" } } } ``` </details>",
         "type": "object",
@@ -23989,25 +23928,6 @@
         "required": [
           "key",
           "url"
-        ]
-      },
-      "CreatedAtSortMode": {
-        "description": "Supported set of sort modes for scanning by created_at only.\n\nCurrently, we only support scanning in ascending order.",
-        "oneOf": [
-          {
-            "description": "Sort in increasing order of \"created_at\".",
-            "type": "string",
-            "enum": [
-              "created_at_ascending"
-            ]
-          },
-          {
-            "description": "Sort in decreasing order of \"created_at\".",
-            "type": "string",
-            "enum": [
-              "created_at_descending"
-            ]
-          }
         ]
       },
       "CrmData": {
@@ -27675,6 +27595,13 @@
                   }
                 }
               },
+              "forced_tools": {
+                "description": "The user can force specific tools to be used for this message.",
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/MlCopilotTool"
+                }
+              },
               "project_name": {
                 "nullable": true,
                 "description": "The project name, if any. This can be used to associate the message with a specific project.",
@@ -27728,6 +27655,50 @@
       "MlCopilotServerMessage": {
         "description": "The types of messages that can be sent by the server to the client.",
         "oneOf": [
+          {
+            "description": "Session metadata sent by the server right after authentication.\n\nSemantics: - This message is NOT persisted in the database and will NEVER appear in a subsequent `Replay` message. However, we do have the `api_call_id` in the database. - Timing: sent immediately after a client is authenticated on a websocket. Useful for correlating logs and traces.",
+            "type": "object",
+            "properties": {
+              "session_data": {
+                "type": "object",
+                "properties": {
+                  "api_call_id": {
+                    "description": "The API call id associated with this websocket session.",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "api_call_id"
+                ]
+              }
+            },
+            "required": [
+              "session_data"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "description": "The ID of the conversation, which can be used to track the session.",
+            "type": "object",
+            "properties": {
+              "conversation_id": {
+                "type": "object",
+                "properties": {
+                  "conversation_id": {
+                    "description": "The unique identifier for the conversation.",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "conversation_id"
+                ]
+              }
+            },
+            "required": [
+              "conversation_id"
+            ],
+            "additionalProperties": false
+          },
           {
             "description": "Delta of the response, e.g. a chunk of text/tokens.",
             "type": "object",
@@ -27834,12 +27805,68 @@
             "additionalProperties": false
           },
           {
+            "description": "Replay containing raw bytes for previously-saved messages for a conversation. Includes server messages and client `User` messages.\n\nInvariants: - Includes server messages: `Info`, `Error`, `Reasoning(..)`, `ToolOutput { .. }`, and `EndOfStream { .. }`. - Also includes client `User` messages. - The following are NEVER included: `SessionData`, `ConversationId`, or `Delta`. - Ordering is stable: messages are ordered by prompt creation time within the conversation, then by the per-prompt `seq` value (monotonically increasing as seen in the original stream).\n\nWire format: - Each element is canonical serialized bytes (typically JSON) for either a `MlCopilotServerMessage` or a `MlCopilotClientMessage::User`. - When delivered as an initial replay over the websocket (upon `?replay=true&conversation_id=<uuid>`), the server sends a single WebSocket Binary frame containing a BSON-encoded document of this enum: `Replay { messages }`.",
+            "type": "object",
+            "properties": {
+              "replay": {
+                "type": "object",
+                "properties": {
+                  "messages": {
+                    "description": "Canonical bytes (usually JSON) for each message, ordered by prompt creation time, then message sequence number.",
+                    "type": "array",
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "type": "integer",
+                        "format": "uint8",
+                        "minimum": 0
+                      }
+                    }
+                  }
+                },
+                "required": [
+                  "messages"
+                ]
+              }
+            },
+            "required": [
+              "replay"
+            ],
+            "additionalProperties": false
+          },
+          {
             "description": "Marks the end of a streamed answer.",
             "type": "object",
             "properties": {
               "end_of_stream": {
                 "type": "object",
                 "properties": {
+                  "completed_at": {
+                    "nullable": true,
+                    "description": "This indicates the time that the server has finished processing the request. This can be used by the client to measure the total time taken for the request. Although this might be passed in other contexts, outside of copilot mode, it is only relevant in copilot mode.",
+                    "type": "string",
+                    "format": "date-time"
+                  },
+                  "conversation_id": {
+                    "nullable": true,
+                    "description": "The conversation id for this session.",
+                    "type": "string"
+                  },
+                  "id": {
+                    "nullable": true,
+                    "description": "The ML prompt id for this turn.",
+                    "allOf": [
+                      {
+                        "$ref": "#/components/schemas/Uuid"
+                      }
+                    ]
+                  },
+                  "started_at": {
+                    "nullable": true,
+                    "description": "This indicates the time that the server had started processing the request. This can be used by the client to measure the total time taken for the request. Although this might be passed in other contexts, outside of copilot mode, it is only relevant in copilot mode.",
+                    "type": "string",
+                    "format": "date-time"
+                  },
                   "whole_response": {
                     "nullable": true,
                     "description": "The whole response text, which is the final output of the AI. This is only relevant if in copilot mode, where the AI is expected to return the whole response at once.",
@@ -27870,6 +27897,39 @@
             "type": "string",
             "enum": [
               "bye"
+            ]
+          }
+        ]
+      },
+      "MlCopilotTool": {
+        "description": "The tools that can be used by the ML Copilot.",
+        "oneOf": [
+          {
+            "description": "The tool for generating or editing KCL code based on user prompts.",
+            "type": "string",
+            "enum": [
+              "edit_kcl_code"
+            ]
+          },
+          {
+            "description": "The tool for generating CAD models from textual descriptions.",
+            "type": "string",
+            "enum": [
+              "text_to_cad"
+            ]
+          },
+          {
+            "description": "The tool for querying a mechanical knowledge base.",
+            "type": "string",
+            "enum": [
+              "mechanical_knowledge_base"
+            ]
+          },
+          {
+            "description": "The tool for searching the web for information.",
+            "type": "string",
+            "enum": [
+              "web_search"
             ]
           }
         ]
@@ -27987,6 +28047,12 @@
             "description": "The prompt.",
             "type": "string"
           },
+          "seconds": {
+            "nullable": true,
+            "description": "Sum of EndOfStream durations, in seconds. Nullable to allow lazy backfill.",
+            "type": "integer",
+            "format": "int64"
+          },
           "started_at": {
             "nullable": true,
             "title": "DateTime",
@@ -28056,6 +28122,11 @@
             "items": {
               "$ref": "#/components/schemas/SourceRangePrompt"
             }
+          },
+          "upstream_conversation_id": {
+            "nullable": true,
+            "description": "The upstream conversation ID, if any.",
+            "type": "string"
           }
         }
       },
@@ -28109,6 +28180,13 @@
             "type": "string",
             "enum": [
               "text_to_kcl_multi_file_iteration"
+            ]
+          },
+          {
+            "description": "Copilot chat/assist prompts.",
+            "type": "string",
+            "enum": [
+              "copilot"
             ]
           }
         ]
@@ -36994,15 +37072,6 @@
           "message"
         ]
       },
-      "PostEffectType": {
-        "description": "Post effect type",
-        "type": "string",
-        "enum": [
-          "phosphor",
-          "ssao",
-          "noeffect"
-        ]
-      },
       "PrivacySettings": {
         "description": "Privacy settings for an org or user.",
         "type": "object",
@@ -37086,6 +37155,26 @@
                 "type": "string",
                 "enum": [
                   "text"
+                ]
+              }
+            },
+            "required": [
+              "content",
+              "type"
+            ]
+          },
+          {
+            "description": "Markdown formatted reasoning.",
+            "type": "object",
+            "properties": {
+              "content": {
+                "description": "The content of the reasoning.",
+                "type": "string"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "markdown"
                 ]
               }
             },
@@ -37457,7 +37546,7 @@
         "properties": {
           "acs_url": {
             "title": "String",
-            "description": "The ACS (Assertion Consumer Service) url.",
+            "description": "The ACS (Assertion Consumer Service) URL.",
             "type": "string",
             "format": "uri"
           },
@@ -37507,7 +37596,7 @@
           },
           "slo_url": {
             "title": "String",
-            "description": "The SLO (Single Logout) url.",
+            "description": "The SLO (Single Logout) URL.",
             "type": "string",
             "format": "uri"
           },
@@ -38748,7 +38837,7 @@
         ]
       },
       "TextToCadCreateBody": {
-        "description": "Body for generating models from text.",
+        "description": "Body for generating parts from text.",
         "type": "object",
         "properties": {
           "kcl_version": {
@@ -38894,7 +38983,7 @@
         ]
       },
       "TextToCadIterationBody": {
-        "description": "Body for generating models from text.",
+        "description": "Body for generating parts from text.",
         "type": "object",
         "properties": {
           "kcl_version": {
@@ -39595,14 +39684,14 @@
           "rotation": {
             "description": "Rotate the replica about the specified rotation axis and origin. Defaults to no rotation.",
             "default": {
-              "angle": {
-                "unit": "degrees",
-                "value": 0.0
-              },
               "axis": {
                 "x": 0.0,
                 "y": 0.0,
                 "z": 1.0
+              },
+              "angle": {
+                "unit": "degrees",
+                "value": 0.0
               },
               "origin": {
                 "type": "local"
@@ -41805,9 +41894,6 @@
           "updated_at"
         ]
       },
-      "UserIdentifier": {
-        "type": "string"
-      },
       "UserOrgInfo": {
         "description": "A user's information about an org, including their role.",
         "type": "object",
@@ -42483,6 +42569,120 @@
         },
         "required": [
           "settings"
+        ]
+      },
+      "ApiCallQueryGroupBy": {
+        "description": "The field of an API call to group by.",
+        "oneOf": [
+          {
+            "description": "The email of the user that requested the API call.",
+            "type": "string",
+            "enum": [
+              "email"
+            ]
+          },
+          {
+            "description": "The HTTP method of the API call.",
+            "type": "string",
+            "enum": [
+              "method"
+            ]
+          },
+          {
+            "description": "The endpoint of the API call.",
+            "type": "string",
+            "enum": [
+              "endpoint"
+            ]
+          },
+          {
+            "description": "The user ID of the user that requested the API call.",
+            "type": "string",
+            "enum": [
+              "user_id"
+            ]
+          },
+          {
+            "description": "The origin of the API call. This is parsed from the `Origin` header.",
+            "type": "string",
+            "enum": [
+              "origin"
+            ]
+          },
+          {
+            "description": "The IP address of the user making the API call.",
+            "type": "string",
+            "enum": [
+              "ip_address"
+            ]
+          }
+        ]
+      },
+      "CreatedAtSortMode": {
+        "description": "Supported set of sort modes for scanning by created_at only.\n\nCurrently, we only support scanning in ascending order.",
+        "oneOf": [
+          {
+            "description": "Sort in increasing order of \"created_at\".",
+            "type": "string",
+            "enum": [
+              "created_at_ascending"
+            ]
+          },
+          {
+            "description": "Sort in decreasing order of \"created_at\".",
+            "type": "string",
+            "enum": [
+              "created_at_descending"
+            ]
+          }
+        ]
+      },
+      "CodeLanguage": {
+        "description": "The language code is written in.\n\n<details><summary>JSON schema</summary>\n\n```json { \"description\": \"The language code is written in.\", \"oneOf\": [ { \"description\": \"The `go` programming language.\", \"type\": \"string\", \"enum\": [ \"go\" ] }, { \"description\": \"The `python` programming language.\", \"type\": \"string\", \"enum\": [ \"python\" ] }, { \"description\": \"The `node` programming language.\", \"type\": \"string\", \"enum\": [ \"node\" ] } ] } ``` </details>",
+        "oneOf": [
+          {
+            "description": "The `go` programming language.",
+            "type": "string",
+            "enum": [
+              "go"
+            ]
+          },
+          {
+            "description": "The `python` programming language.",
+            "type": "string",
+            "enum": [
+              "python"
+            ]
+          },
+          {
+            "description": "The `node` programming language.",
+            "type": "string",
+            "enum": [
+              "node"
+            ]
+          }
+        ]
+      },
+      "CodeOption": {
+        "description": "Code option for running and verifying kcl.\n\n<details><summary>JSON schema</summary>\n\n```json { \"title\": \"CodeOption\", \"description\": \"Code option for running and verifying kcl.\", \"type\": \"string\", \"enum\": [ \"parse\", \"execute\", \"cleanup\", \"mock_execute\" ] } ``` </details>",
+        "type": "string",
+        "enum": [
+          "parse",
+          "execute",
+          "cleanup",
+          "mock_execute"
+        ]
+      },
+      "UserIdentifier": {
+        "type": "string"
+      },
+      "PostEffectType": {
+        "description": "Post effect type",
+        "type": "string",
+        "enum": [
+          "phosphor",
+          "ssao",
+          "noeffect"
         ]
       }
     },

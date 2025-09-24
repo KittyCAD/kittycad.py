@@ -1,0 +1,26 @@
+name: win-ca-smoke
+
+permissions:
+  contents: read
+
+on:
+  pull_request:
+  push:
+    branches: [ main, master ]
+
+jobs:
+  smoke:
+    strategy:
+      fail-fast: false
+      matrix:
+        node: [20, 22]
+    uses: kittycad/gh-action-win-ca/.github/workflows/win-ca-smoke.yml@main
+    with:
+      node-version: ${{ matrix.node }}
+      setup-python: true
+      install-command: |
+        uv sync --extra dev
+      pre-test-command: uv run pytest kittycad/tests/test_win_ca_smoke.py --maxfail=1 --disable-warnings -q
+      post-test-command: uv run pytest kittycad/tests/test_win_ca_smoke.py --maxfail=1 --disable-warnings -q
+      pre-step-extra-env: '{"WIN_CA_EXPECT_SUCCESS":"0","WIN_CA_HOST":"https://127.0.0.1:4443"}'
+      post-step-extra-env: '{"WIN_CA_EXPECT_SUCCESS":"1","WIN_CA_HOST":"https://127.0.0.1:4443"}'

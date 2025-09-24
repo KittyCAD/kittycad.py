@@ -1,6 +1,6 @@
 import datetime
 from pathlib import Path
-from typing import Dict, List, Optional, Union
+from typing import Dict, List
 
 import pytest
 
@@ -12,6 +12,7 @@ from kittycad.models import (
     ApiToken,
     AppClientInfo,
     AsyncApiCall,
+    AsyncApiCallOutput,
     AuthApiKeyResponse,
     CodeOutput,
     Conversation,
@@ -82,7 +83,7 @@ from kittycad.models.direction import Direction
 from kittycad.models.email_authentication_form import EmailAuthenticationForm
 from kittycad.models.enterprise_subscription_tier_price import (
     EnterpriseSubscriptionTierPrice,
-    OptionFlat,
+    OptionPerUser,
 )
 from kittycad.models.event import Event, OptionModelingAppEvent
 from kittycad.models.file_export_format import FileExportFormat
@@ -91,12 +92,14 @@ from kittycad.models.idp_metadata_source import (
     IdpMetadataSource,
     OptionBase64EncodedXml,
 )
-from kittycad.models.input_format3d import InputFormat3d, OptionFbx
+from kittycad.models.input_format3d import InputFormat3d, OptionGltf
 from kittycad.models.inquiry_form import InquiryForm
 from kittycad.models.inquiry_type import InquiryType
 from kittycad.models.kcl_code_completion_params import KclCodeCompletionParams
 from kittycad.models.kcl_code_completion_request import KclCodeCompletionRequest
-from kittycad.models.ml_copilot_client_message import OptionUser
+from kittycad.models.ml_copilot_client_message import OptionSystem, OptionUser
+from kittycad.models.ml_copilot_system_command import MlCopilotSystemCommand
+from kittycad.models.ml_copilot_tool import MlCopilotTool
 from kittycad.models.ml_feedback import MlFeedback
 from kittycad.models.modeling_app_event_type import ModelingAppEventType
 from kittycad.models.modeling_app_individual_subscription_tier import (
@@ -106,13 +109,13 @@ from kittycad.models.modeling_app_organization_subscription_tier import (
     ModelingAppOrganizationSubscriptionTier,
 )
 from kittycad.models.org_details import OrgDetails
-from kittycad.models.output_format3d import OptionObj, OutputFormat3d
+from kittycad.models.output_format3d import OptionPly, OutputFormat3d
 from kittycad.models.plan_interval import PlanInterval
+from kittycad.models.ply_storage import PlyStorage
 from kittycad.models.post_effect_type import PostEffectType
 from kittycad.models.privacy_settings import PrivacySettings
-from kittycad.models.rtc_sdp_type import RtcSdpType
-from kittycad.models.rtc_session_description import RtcSessionDescription
 from kittycad.models.saml_identity_provider_create import SamlIdentityProviderCreate
+from kittycad.models.selection import OptionMeshByIndex, Selection
 from kittycad.models.service_account_uuid import ServiceAccountUuid
 from kittycad.models.session_uuid import SessionUuid
 from kittycad.models.source_position import SourcePosition
@@ -147,7 +150,9 @@ from kittycad.models.update_user import UpdateUser
 from kittycad.models.user_identifier import UserIdentifier
 from kittycad.models.user_org_role import UserOrgRole
 from kittycad.models.uuid import Uuid
-from kittycad.models.web_socket_request import OptionSdpOffer
+from kittycad.models.web_socket_request import (
+    OptionHeaders as WebSocketRequestOptionHeaders,
+)
 from kittycad.models.zoo_product_subscriptions_org_request import (
     ZooProductSubscriptionsOrgRequest,
 )
@@ -381,33 +386,9 @@ async def test_list_async_operations_async():
 def test_get_async_operation():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: Optional[
-        Union[
-            FileConversion,
-            FileCenterOfMass,
-            FileMass,
-            FileVolume,
-            FileDensity,
-            FileSurfaceArea,
-            TextToCad,
-            TextToCadIteration,
-            TextToCadMultiFileIteration,
-        ]
-    ] = client.api_calls.get_async_operation(id="<string>")
+    result: AsyncApiCallOutput = client.api_calls.get_async_operation(id="<string>")
 
-    body: Optional[
-        Union[
-            FileConversion,
-            FileCenterOfMass,
-            FileMass,
-            FileVolume,
-            FileDensity,
-            FileSurfaceArea,
-            TextToCad,
-            TextToCadIteration,
-            TextToCadMultiFileIteration,
-        ]
-    ] = result
+    body: AsyncApiCallOutput = result
     print(body)
 
 
@@ -417,19 +398,9 @@ def test_get_async_operation():
 async def test_get_async_operation_async():
     client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: Optional[
-        Union[
-            FileConversion,
-            FileCenterOfMass,
-            FileMass,
-            FileVolume,
-            FileDensity,
-            FileSurfaceArea,
-            TextToCad,
-            TextToCadIteration,
-            TextToCadMultiFileIteration,
-        ]
-    ] = await client.api_calls.get_async_operation(id="<string>")
+    result: AsyncApiCallOutput = await client.api_calls.get_async_operation(
+        id="<string>"
+    )
 
 
 @pytest.mark.skip
@@ -655,7 +626,7 @@ def test_create_file_conversion_options():
     result: FileConversion = client.file.create_file_conversion_options(
         body=ConversionParams(
             output_format=OutputFormat3d(
-                OptionObj(
+                OptionPly(
                     coords=System(
                         forward=AxisDirectionPair(
                             axis=Axis.Y,
@@ -666,10 +637,16 @@ def test_create_file_conversion_options():
                             direction=Direction.POSITIVE,
                         ),
                     ),
+                    selection=Selection(
+                        OptionMeshByIndex(
+                            index=10,
+                        )
+                    ),
+                    storage=PlyStorage.ASCII,
                     units=UnitLength.CM,
                 )
             ),
-            src_format=InputFormat3d(OptionFbx()),
+            src_format=InputFormat3d(OptionGltf()),
         ),
         file_attachments={
             "main.kcl": Path("path/to/main.kcl"),
@@ -690,7 +667,7 @@ async def test_create_file_conversion_options_async():
     result: FileConversion = await client.file.create_file_conversion_options(
         body=ConversionParams(
             output_format=OutputFormat3d(
-                OptionObj(
+                OptionPly(
                     coords=System(
                         forward=AxisDirectionPair(
                             axis=Axis.Y,
@@ -701,10 +678,16 @@ async def test_create_file_conversion_options_async():
                             direction=Direction.POSITIVE,
                         ),
                     ),
+                    selection=Selection(
+                        OptionMeshByIndex(
+                            index=10,
+                        )
+                    ),
+                    storage=PlyStorage.ASCII,
                     units=UnitLength.CM,
                 )
             ),
-            src_format=InputFormat3d(OptionFbx()),
+            src_format=InputFormat3d(OptionGltf()),
         ),
         file_attachments={
             "main.kcl": Path("path/to/main.kcl"),
@@ -2058,7 +2041,7 @@ def test_update_enterprise_pricing_for_org():
     result: ZooProductSubscriptions = client.orgs.update_enterprise_pricing_for_org(
         id=Uuid("<string>"),
         body=EnterpriseSubscriptionTierPrice(
-            OptionFlat(
+            OptionPerUser(
                 interval=PlanInterval.DAY,
                 price=3.14,
             )
@@ -2079,7 +2062,7 @@ async def test_update_enterprise_pricing_for_org_async():
         await client.orgs.update_enterprise_pricing_for_org(
             id=Uuid("<string>"),
             body=EnterpriseSubscriptionTierPrice(
-                OptionFlat(
+                OptionPerUser(
                     interval=PlanInterval.DAY,
                     price=3.14,
                 )
@@ -3292,12 +3275,12 @@ async def test_update_user_shortlink_async():
 
 
 @pytest.mark.skip
-def test_list_text_to_cad_models_for_user():
+def test_list_text_to_cad_parts_for_user():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     # Iterate through all pages automatically
     item: TextToCadResponse
-    for item in client.ml.list_text_to_cad_models_for_user(
+    for item in client.ml.list_text_to_cad_parts_for_user(
         sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
         conversation_id=Uuid("<string>"),
         limit=None,
@@ -3310,11 +3293,11 @@ def test_list_text_to_cad_models_for_user():
 # OR run async
 @pytest.mark.asyncio
 @pytest.mark.skip
-async def test_list_text_to_cad_models_for_user_async():
+async def test_list_text_to_cad_parts_for_user_async():
     client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     # Iterate through all pages automatically
-    iterator = client.ml.list_text_to_cad_models_for_user(
+    iterator = client.ml.list_text_to_cad_parts_for_user(
         sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
         conversation_id=Uuid("<string>"),
         limit=None,
@@ -3327,35 +3310,31 @@ async def test_list_text_to_cad_models_for_user_async():
 
 
 @pytest.mark.skip
-def test_get_text_to_cad_model_for_user():
+def test_get_text_to_cad_parts_for_user():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: Optional[
-        Union[TextToCad, TextToCadIteration, TextToCadMultiFileIteration]
-    ] = client.ml.get_text_to_cad_model_for_user(id="<string>")
+    result: TextToCadResponse = client.ml.get_text_to_cad_parts_for_user(id="<string>")
 
-    body: Optional[
-        Union[TextToCad, TextToCadIteration, TextToCadMultiFileIteration]
-    ] = result
+    body: TextToCadResponse = result
     print(body)
 
 
 # OR run async
 @pytest.mark.asyncio
 @pytest.mark.skip
-async def test_get_text_to_cad_model_for_user_async():
+async def test_get_text_to_cad_parts_for_user_async():
     client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: Optional[
-        Union[TextToCad, TextToCadIteration, TextToCadMultiFileIteration]
-    ] = await client.ml.get_text_to_cad_model_for_user(id="<string>")
+    result: TextToCadResponse = await client.ml.get_text_to_cad_parts_for_user(
+        id="<string>"
+    )
 
 
 @pytest.mark.skip
-def test_create_text_to_cad_model_feedback():
+def test_create_text_to_cad_part_feedback():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    client.ml.create_text_to_cad_model_feedback(
+    client.ml.create_text_to_cad_part_feedback(
         id="<string>", feedback=MlFeedback.THUMBS_UP
     )
 
@@ -3363,10 +3342,10 @@ def test_create_text_to_cad_model_feedback():
 # OR run async
 @pytest.mark.asyncio
 @pytest.mark.skip
-async def test_create_text_to_cad_model_feedback_async():
+async def test_create_text_to_cad_part_feedback_async():
     client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    await client.ml.create_text_to_cad_model_feedback(
+    await client.ml.create_text_to_cad_part_feedback(
         id="<string>", feedback=MlFeedback.THUMBS_UP
     )
 
@@ -3669,13 +3648,14 @@ def test_ml_copilot_ws():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     # Connect to the websocket.
-    with client.ml.ml_copilot_ws() as websocket:
+    with client.ml.ml_copilot_ws(conversation_id=None, replay=None) as websocket:
         # Send a message.
         websocket.send(
             MlCopilotClientMessage(
                 OptionUser(
                     content="<string>",
                     current_files={"<string>": b"<bytes>"},
+                    forced_tools=[MlCopilotTool.EDIT_KCL_CODE],
                     source_ranges=[
                         SourceRangePrompt(
                             prompt="<string>",
@@ -3707,7 +3687,7 @@ async def test_ml_copilot_ws_async():
     client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     # Connect to the websocket.
-    websocket = await client.ml.ml_copilot_ws()
+    websocket = await client.ml.ml_copilot_ws(conversation_id=None, replay=None)
 
     # Send a message.
     await websocket.send("{}")
@@ -3726,24 +3706,8 @@ def test_ml_reasoning_ws():
         # Send a message.
         websocket.send(
             MlCopilotClientMessage(
-                OptionUser(
-                    content="<string>",
-                    current_files={"<string>": b"<bytes>"},
-                    source_ranges=[
-                        SourceRangePrompt(
-                            prompt="<string>",
-                            range=SourceRange(
-                                end=SourcePosition(
-                                    column=10,
-                                    line=10,
-                                ),
-                                start=SourcePosition(
-                                    column=10,
-                                    line=10,
-                                ),
-                            ),
-                        )
-                    ],
+                OptionSystem(
+                    command=MlCopilotSystemCommand.NEW,
                 )
             )
         )
@@ -3790,11 +3754,8 @@ def test_modeling_commands_ws():
         # Send a message.
         websocket.send(
             WebSocketRequest(
-                OptionSdpOffer(
-                    offer=RtcSessionDescription(
-                        sdp="<string>",
-                        type=RtcSdpType.UNSPECIFIED,
-                    ),
+                WebSocketRequestOptionHeaders(
+                    headers={"<string>": "<string>"},
                 )
             )
         )
