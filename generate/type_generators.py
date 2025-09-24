@@ -557,48 +557,37 @@ def generate_one_of_type(path: str, name: str, schema: dict, data: dict):
                 flattened_schema["required"] = required_fields
 
             extra_imports = None
-            if not alias_imports_needed:
-                extra_imports = [
-                    "from pydantic import model_serializer, model_validator\n"
-                ]
-                alias_imports_needed = True
-
+            extra_body_lines = []
             wrapped_key = outer_name
-            extra_body_lines = [
-                '    @model_validator(mode="before")',
-                "    @classmethod",
-                "    def _unwrap(cls, data):",
-                "        if isinstance(data, dict) and '"
-                + wrapped_key
-                + "' in data and isinstance(data['"
-                + wrapped_key
-                + "'], dict):",
-                "            return data['" + wrapped_key + "']",
-                "        return data",
-            ]
 
             if wrap_entire_payload:
+                if not alias_imports_needed:
+                    extra_imports = [
+                        "from pydantic import model_serializer, model_validator\n"
+                    ]
+                    alias_imports_needed = True
+
+                extra_body_lines.extend(
+                    [
+                        '    @model_validator(mode="before")',
+                        "    @classmethod",
+                        "    def _unwrap(cls, data):",
+                        "        if isinstance(data, dict) and '"
+                        + wrapped_key
+                        + "' in data and isinstance(data['"
+                        + wrapped_key
+                        + "'], dict):",
+                        "            return data['" + wrapped_key + "']",
+                        "        return data",
+                    ]
+                )
+
                 extra_body_lines.extend(
                     [
                         '    @model_serializer(mode="wrap")',
                         "    def _wrap(self, handler, info):",
                         "        payload = handler(self, info)",
                         "        return {'" + wrapped_key + "': payload}",
-                    ]
-                )
-            else:
-                extra_body_lines.extend(
-                    [
-                        '    @model_serializer(mode="wrap")',
-                        "    def _wrap(self, handler, info):",
-                        "        payload = handler(self, info)",
-                        "        if isinstance(payload, dict) and '"
-                        + wrapped_key
-                        + "' in payload:",
-                        "            value = payload['" + wrapped_key + "']",
-                        "        else:",
-                        "            value = payload",
-                        "        return {'" + wrapped_key + "': value}",
                     ]
                 )
 
