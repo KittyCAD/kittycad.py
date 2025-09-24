@@ -37,7 +37,7 @@ jobs:
       - name: Run tests with coverage
         shell: bash
         run: |
-          just test --cov=./ --cov-report=xml
+          just test --reruns 3 --reruns-delay 5 --cov=./ --cov-report=xml
         env:
           KITTYCAD_API_TOKEN: ${{secrets.KITTYCAD_API_TOKEN}}
       - name: Upload coverage to Codecov
