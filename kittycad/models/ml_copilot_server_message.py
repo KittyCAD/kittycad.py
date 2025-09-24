@@ -156,30 +156,6 @@ class Reasoning(KittyCadBaseModel):
 
     reasoning: ReasoningMessage
 
-    @model_validator(mode="before")
-    @classmethod
-    def _unwrap(cls, data):
-        if (
-            isinstance(data, dict)
-            and "reasoning" in data
-            and isinstance(data["reasoning"], dict)
-        ):
-            return data["reasoning"]
-
-        return data
-
-    @model_serializer(mode="wrap")
-    def _wrap(self, handler, info):
-        payload = handler(self, info)
-
-        if isinstance(payload, dict) and "reasoning" in payload:
-            value = payload["reasoning"]
-
-        else:
-            value = payload
-
-        return {"reasoning": value}
-
 
 class Replay(KittyCadBaseModel):
     """Replay containing raw bytes for previously-saved messages for a conversation. Includes server messages and client `User` messages.
