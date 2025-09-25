@@ -20,7 +20,7 @@ async def test_assets_kcl_project_roundtrip_outputs_match_inputs_async():
 
     - Uploads every .kcl file under assets/test_kcl_project (preserving relative paths)
     - Calls async create_text_to_cad_multi_file_iteration
-    - Polls async get_text_to_cad_parts_for_user until Completed/Failed
+    - Polls async get_text_to_cad_part_for_user until Completed/Failed
     - Asserts the number of outputs equals the number of input attachments and equals 3
     """
 
@@ -56,7 +56,7 @@ async def test_assets_kcl_project_roundtrip_outputs_match_inputs_async():
         deadline = time.time() + 180  # allow up to 3 minutes
         last_status = None
         while time.time() < deadline:
-            result = await client.ml.get_text_to_cad_parts_for_user(id=str(created.id))
+            result = await client.ml.get_text_to_cad_part_for_user(id=str(created.id))
             root = result.root
             last_status = str(root.status)
 

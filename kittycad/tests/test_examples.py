@@ -3286,6 +3286,7 @@ def test_list_text_to_cad_parts_for_user():
         limit=None,
         page_token=None,
         no_models=None,
+        no_parts=None,
     ):
         print(item)
 
@@ -3303,6 +3304,7 @@ async def test_list_text_to_cad_parts_for_user_async():
         limit=None,
         page_token=None,
         no_models=None,
+        no_parts=None,
     )
     item: TextToCadResponse
     async for item in iterator:
@@ -3310,10 +3312,10 @@ async def test_list_text_to_cad_parts_for_user_async():
 
 
 @pytest.mark.skip
-def test_get_text_to_cad_parts_for_user():
+def test_get_text_to_cad_part_for_user():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: TextToCadResponse = client.ml.get_text_to_cad_parts_for_user(id="<string>")
+    result: TextToCadResponse = client.ml.get_text_to_cad_part_for_user(id="<string>")
 
     body: TextToCadResponse = result
     print(body)
@@ -3322,10 +3324,10 @@ def test_get_text_to_cad_parts_for_user():
 # OR run async
 @pytest.mark.asyncio
 @pytest.mark.skip
-async def test_get_text_to_cad_parts_for_user_async():
+async def test_get_text_to_cad_part_for_user_async():
     client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: TextToCadResponse = await client.ml.get_text_to_cad_parts_for_user(
+    result: TextToCadResponse = await client.ml.get_text_to_cad_part_for_user(
         id="<string>"
     )
 

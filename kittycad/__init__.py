@@ -1108,6 +1108,7 @@ class MlAPI:
         sort_by: Optional[CreatedAtSortMode] = None,
         conversation_id: Optional[Uuid] = None,
         no_models: Optional[bool] = None,
+        no_parts: Optional[bool] = None,
     ) -> "SyncPageIterator":
         """This will always return the STEP file contents as well as the format the user originally requested.
 
@@ -1145,6 +1146,9 @@ class MlAPI:
 
         if no_models is not None:
             kwargs["no_models"] = no_models
+
+        if no_parts is not None:
+            kwargs["no_parts"] = no_parts
 
         def fetch_page(**kw):
             return self._fetch_page_list_text_to_cad_parts_for_user(**kw)
@@ -1194,6 +1198,12 @@ class MlAPI:
             else:
                 url = url + "?no_models=" + str(kwargs["no_models"]).lower()
 
+        if "no_parts" in kwargs and kwargs["no_parts"] is not None:
+            if "?" in url:
+                url = url + "&no_parts=" + str(kwargs["no_parts"]).lower()
+            else:
+                url = url + "?no_parts=" + str(kwargs["no_parts"]).lower()
+
         # Pagination parameters (limit, page_token) are already handled above as regular query params
 
         _client = self.client.get_http_client()
@@ -1214,7 +1224,7 @@ class MlAPI:
         # Validate into a Pydantic model (supports BaseModel/RootModel)
         return TextToCadResponseResultsPage.model_validate(json_data)
 
-    def get_text_to_cad_parts_for_user(
+    def get_text_to_cad_part_for_user(
         self,
         id: str,
     ) -> TextToCadResponse:
@@ -1765,6 +1775,7 @@ class AsyncMlAPI:
         sort_by: Optional[CreatedAtSortMode] = None,
         conversation_id: Optional[Uuid] = None,
         no_models: Optional[bool] = None,
+        no_parts: Optional[bool] = None,
     ) -> "AsyncPageIterator":
         """This will always return the STEP file contents as well as the format the user originally requested.
 
@@ -1802,6 +1813,9 @@ class AsyncMlAPI:
 
         if no_models is not None:
             kwargs["no_models"] = no_models
+
+        if no_parts is not None:
+            kwargs["no_parts"] = no_parts
 
         async def fetch_page(**kw):
             return await self._fetch_page_list_text_to_cad_parts_for_user(**kw)
@@ -1851,6 +1865,12 @@ class AsyncMlAPI:
             else:
                 url = url + "?no_models=" + str(kwargs["no_models"]).lower()
 
+        if "no_parts" in kwargs and kwargs["no_parts"] is not None:
+            if "?" in url:
+                url = url + "&no_parts=" + str(kwargs["no_parts"]).lower()
+            else:
+                url = url + "?no_parts=" + str(kwargs["no_parts"]).lower()
+
         # Pagination parameters (limit, page_token) are already handled above as regular query params
 
         _client = self.client.get_http_client()
@@ -1871,7 +1891,7 @@ class AsyncMlAPI:
         # Validate into a Pydantic model (supports BaseModel/RootModel)
         return TextToCadResponseResultsPage.model_validate(json_data)
 
-    async def get_text_to_cad_parts_for_user(
+    async def get_text_to_cad_part_for_user(
         self,
         id: str,
     ) -> TextToCadResponse:
