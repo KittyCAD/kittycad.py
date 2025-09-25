@@ -980,7 +980,7 @@ def test_text_to_cad():
     while (
         body.status == ApiCallStatus.IN_PROGRESS or body.status == ApiCallStatus.QUEUED
     ) and time.time() - start_time < 120:
-        result_status = client.ml.get_text_to_cad_parts_for_user(
+        result_status = client.ml.get_text_to_cad_part_for_user(
             id=body.id,
         )
 

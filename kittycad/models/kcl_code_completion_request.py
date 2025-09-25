@@ -11,6 +11,8 @@ class KclCodeCompletionRequest(KittyCadBaseModel):
 
     max_tokens: Optional[int] = None
 
+    model_version: Optional[str] = None
+
     n: Optional[int] = None
 
     nwo: Optional[str] = None

@@ -8,6 +8,8 @@ class TextToCadCreateBody(KittyCadBaseModel):
 
     kcl_version: Optional[str] = None
 
+    model_version: Optional[str] = None
+
     project_name: Optional[str] = None
 
     prompt: str
