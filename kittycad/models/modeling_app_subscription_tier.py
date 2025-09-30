@@ -27,7 +27,7 @@ class ModelingAppSubscriptionTier(KittyCadBaseModel):
 
     monthly_pay_as_you_go_api_credits: int = 0
 
-    monthly_pay_as_you_go_api_credits_monetary_value: float
+    monthly_pay_as_you_go_api_credits_monetary_value: float = 0.0
 
     name: ModelingAppSubscriptionTierName
 

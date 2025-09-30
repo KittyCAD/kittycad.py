@@ -41,6 +41,8 @@ class ApiCallWithPrice(KittyCadBaseModel):
 
     response_body: Optional[str] = None
 
+    seconds: Optional[int] = None
+
     started_at: Optional[datetime.datetime] = None
 
     status_code: Optional[int] = None
