@@ -801,7 +801,7 @@ class MlAPI:
 
         A STEP file does not have feature tree data, so it will not work. A sldprt file does have feature tree data, so it will work.
 
-        This endpoint is designed to worj with any native proprietary CAD format, for example: - SolidWorks (.sldprt) - Creo (.prt) - Catia (.catpart) - NX (.prt) - Fusion 360 (.f3d)
+        This endpoint is designed to work with any native proprietary CAD format, for example: - SolidWorks (.sldprt) - Creo (.prt) - Catia (.catpart) - NX (.prt) - Fusion 360 (.f3d)
 
         This endpoint is deterministic, it preserves the original design intent by using the feature tree data. This endpoint does not use any machine learning or AI.
 
@@ -1476,7 +1476,7 @@ class AsyncMlAPI:
 
         A STEP file does not have feature tree data, so it will not work. A sldprt file does have feature tree data, so it will work.
 
-        This endpoint is designed to worj with any native proprietary CAD format, for example: - SolidWorks (.sldprt) - Creo (.prt) - Catia (.catpart) - NX (.prt) - Fusion 360 (.f3d)
+        This endpoint is designed to work with any native proprietary CAD format, for example: - SolidWorks (.sldprt) - Creo (.prt) - Catia (.catpart) - NX (.prt) - Fusion 360 (.f3d)
 
         This endpoint is deterministic, it preserves the original design intent by using the feature tree data. This endpoint does not use any machine learning or AI.
 
