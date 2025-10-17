@@ -6,8 +6,13 @@ from .add_org_member import AddOrgMember
 from .address_details import AddressDetails
 from .adjacency_info import AdjacencyInfo
 from .angle import Angle
+from .annotation_basic_dimension import AnnotationBasicDimension
+from .annotation_feature_control import AnnotationFeatureControl
+from .annotation_feature_tag import AnnotationFeatureTag
 from .annotation_line_end import AnnotationLineEnd
 from .annotation_line_end_options import AnnotationLineEndOptions
+from .annotation_mbd_basic_dimension import AnnotationMbdBasicDimension
+from .annotation_mbd_control_frame import AnnotationMbdControlFrame
 from .annotation_options import AnnotationOptions
 from .annotation_text_alignment_x import AnnotationTextAlignmentX
 from .annotation_text_alignment_y import AnnotationTextAlignmentY
@@ -75,6 +80,7 @@ from .customer import Customer
 from .customer_balance import CustomerBalance
 from .cut_strategy import CutStrategy
 from .cut_type import CutType
+from .cut_type_v2 import CutTypeV2
 from .default_camera_center_to_scene import DefaultCameraCenterToScene
 from .default_camera_center_to_selection import DefaultCameraCenterToSelection
 from .default_camera_focus_on import DefaultCameraFocusOn
@@ -136,6 +142,8 @@ from .extended_user import ExtendedUser
 from .extended_user_results_page import ExtendedUserResultsPage
 from .extrude import Extrude
 from .extrude_method import ExtrudeMethod
+from .extrude_reference import ExtrudeReference
+from .extrude_to_reference import ExtrudeToReference
 from .extruded_face_info import ExtrudedFaceInfo
 from .extrusion_face_cap_type import ExtrusionFaceCapType
 from .extrusion_face_info import ExtrusionFaceInfo
@@ -188,6 +196,7 @@ from .make_axes_gizmo import MakeAxesGizmo
 from .make_offset_path import MakeOffsetPath
 from .make_plane import MakePlane
 from .mass import Mass
+from .mbd_symbol import MbdSymbol
 from .method import Method
 from .ml_copilot_client_message import MlCopilotClientMessage
 from .ml_copilot_server_message import MlCopilotServerMessage
@@ -310,6 +319,7 @@ from .shortlink_results_page import ShortlinkResultsPage
 from .side_face import SideFace
 from .sketch_mode_disable import SketchModeDisable
 from .solid2d_add_hole import Solid2dAddHole
+from .solid3d_cut_edges import Solid3dCutEdges
 from .solid3d_fillet_edge import Solid3dFilletEdge
 from .solid3d_get_adjacency_info import Solid3dGetAdjacencyInfo
 from .solid3d_get_all_edge_faces import Solid3dGetAllEdgeFaces

@@ -71,7 +71,6 @@ from kittycad.models.api_call_status import ApiCallStatus
 from kittycad.models.api_token_uuid import ApiTokenUuid
 from kittycad.models.axis import Axis
 from kittycad.models.axis_direction_pair import AxisDirectionPair
-from kittycad.models.base64data import Base64Data
 from kittycad.models.billing_info import BillingInfo
 from kittycad.models.code_language import CodeLanguage
 from kittycad.models.code_option import CodeOption
@@ -88,11 +87,8 @@ from kittycad.models.enterprise_subscription_tier_price import (
 from kittycad.models.event import Event, OptionModelingAppEvent
 from kittycad.models.file_export_format import FileExportFormat
 from kittycad.models.file_import_format import FileImportFormat
-from kittycad.models.idp_metadata_source import (
-    IdpMetadataSource,
-    OptionBase64EncodedXml,
-)
-from kittycad.models.input_format3d import InputFormat3d, OptionGltf
+from kittycad.models.idp_metadata_source import IdpMetadataSource, OptionUrl
+from kittycad.models.input_format3d import InputFormat3d, OptionSldprt
 from kittycad.models.inquiry_form import InquiryForm
 from kittycad.models.inquiry_type import InquiryType
 from kittycad.models.kcl_code_completion_params import KclCodeCompletionParams
@@ -114,8 +110,9 @@ from kittycad.models.plan_interval import PlanInterval
 from kittycad.models.ply_storage import PlyStorage
 from kittycad.models.post_effect_type import PostEffectType
 from kittycad.models.privacy_settings import PrivacySettings
+from kittycad.models.rtc_ice_candidate_init import RtcIceCandidateInit
 from kittycad.models.saml_identity_provider_create import SamlIdentityProviderCreate
-from kittycad.models.selection import OptionMeshByIndex, Selection
+from kittycad.models.selection import OptionDefaultScene, Selection
 from kittycad.models.service_account_uuid import ServiceAccountUuid
 from kittycad.models.session_uuid import SessionUuid
 from kittycad.models.source_position import SourcePosition
@@ -150,9 +147,7 @@ from kittycad.models.update_user import UpdateUser
 from kittycad.models.user_identifier import UserIdentifier
 from kittycad.models.user_org_role import UserOrgRole
 from kittycad.models.uuid import Uuid
-from kittycad.models.web_socket_request import (
-    OptionHeaders as WebSocketRequestOptionHeaders,
-)
+from kittycad.models.web_socket_request import OptionTrickleIce
 from kittycad.models.zoo_product_subscriptions_org_request import (
     ZooProductSubscriptionsOrgRequest,
 )
@@ -637,16 +632,16 @@ def test_create_file_conversion_options():
                             direction=Direction.POSITIVE,
                         ),
                     ),
-                    selection=Selection(
-                        OptionMeshByIndex(
-                            index=10,
-                        )
-                    ),
+                    selection=Selection(OptionDefaultScene()),
                     storage=PlyStorage.ASCII,
                     units=UnitLength.CM,
                 )
             ),
-            src_format=InputFormat3d(OptionGltf()),
+            src_format=InputFormat3d(
+                OptionSldprt(
+                    split_closed_faces=False,
+                )
+            ),
         ),
         file_attachments={
             "main.kcl": Path("path/to/main.kcl"),
@@ -678,16 +673,16 @@ async def test_create_file_conversion_options_async():
                             direction=Direction.POSITIVE,
                         ),
                     ),
-                    selection=Selection(
-                        OptionMeshByIndex(
-                            index=10,
-                        )
-                    ),
+                    selection=Selection(OptionDefaultScene()),
                     storage=PlyStorage.ASCII,
                     units=UnitLength.CM,
                 )
             ),
-            src_format=InputFormat3d(OptionGltf()),
+            src_format=InputFormat3d(
+                OptionSldprt(
+                    split_closed_faces=False,
+                )
+            ),
         ),
         file_attachments={
             "main.kcl": Path("path/to/main.kcl"),
@@ -1798,8 +1793,8 @@ def test_create_org_saml_idp():
         body=SamlIdentityProviderCreate(
             idp_entity_id="<string>",
             idp_metadata_source=IdpMetadataSource(
-                OptionBase64EncodedXml(
-                    data=Base64Data(b"<bytes>"),
+                OptionUrl(
+                    url="<string>",
                 )
             ),
             technical_contact_email="<string>",
@@ -1820,8 +1815,8 @@ async def test_create_org_saml_idp_async():
         body=SamlIdentityProviderCreate(
             idp_entity_id="<string>",
             idp_metadata_source=IdpMetadataSource(
-                OptionBase64EncodedXml(
-                    data=Base64Data(b"<bytes>"),
+                OptionUrl(
+                    url="<string>",
                 )
             ),
             technical_contact_email="<string>",
@@ -1837,8 +1832,8 @@ def test_update_org_saml_idp():
         body=SamlIdentityProviderCreate(
             idp_entity_id="<string>",
             idp_metadata_source=IdpMetadataSource(
-                OptionBase64EncodedXml(
-                    data=Base64Data(b"<bytes>"),
+                OptionUrl(
+                    url="<string>",
                 )
             ),
             technical_contact_email="<string>",
@@ -1859,8 +1854,8 @@ async def test_update_org_saml_idp_async():
         body=SamlIdentityProviderCreate(
             idp_entity_id="<string>",
             idp_metadata_source=IdpMetadataSource(
-                OptionBase64EncodedXml(
-                    data=Base64Data(b"<bytes>"),
+                OptionUrl(
+                    url="<string>",
                 )
             ),
             technical_contact_email="<string>",
@@ -3756,8 +3751,10 @@ def test_modeling_commands_ws():
         # Send a message.
         websocket.send(
             WebSocketRequest(
-                WebSocketRequestOptionHeaders(
-                    headers={"<string>": "<string>"},
+                OptionTrickleIce(
+                    candidate=RtcIceCandidateInit(
+                        candidate="<string>",
+                    ),
                 )
             )
         )
