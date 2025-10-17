@@ -60,6 +60,7 @@ from ..models.export2d import Export2d
 from ..models.export3d import Export3d
 from ..models.extend_path import ExtendPath
 from ..models.extrude import Extrude
+from ..models.extrude_to_reference import ExtrudeToReference
 from ..models.extrusion_face_info import ExtrusionFaceInfo
 from ..models.face_edge_info import FaceEdgeInfo
 from ..models.face_get_center import FaceGetCenter
@@ -124,6 +125,7 @@ from ..models.set_selection_type import SetSelectionType
 from ..models.set_tool import SetTool
 from ..models.sketch_mode_disable import SketchModeDisable
 from ..models.solid2d_add_hole import Solid2dAddHole
+from ..models.solid3d_cut_edges import Solid3dCutEdges
 from ..models.solid3d_fillet_edge import Solid3dFilletEdge
 from ..models.solid3d_get_adjacency_info import Solid3dGetAdjacencyInfo
 from ..models.solid3d_get_all_edge_faces import Solid3dGetAllEdgeFaces
@@ -190,6 +192,14 @@ class OptionExtrude(KittyCadBaseModel):
     data: Extrude
 
     type: Literal["extrude"] = "extrude"
+
+
+class OptionExtrudeToReference(KittyCadBaseModel):
+    """"""
+
+    data: ExtrudeToReference
+
+    type: Literal["extrude_to_reference"] = "extrude_to_reference"
 
 
 class OptionTwistExtrude(KittyCadBaseModel):
@@ -360,6 +370,14 @@ class OptionSolid3dFilletEdge(KittyCadBaseModel):
     data: Solid3dFilletEdge
 
     type: Literal["solid3d_fillet_edge"] = "solid3d_fillet_edge"
+
+
+class OptionSolid3dCutEdges(KittyCadBaseModel):
+    """"""
+
+    data: Solid3dCutEdges
+
+    type: Literal["solid3d_cut_edges"] = "solid3d_cut_edges"
 
 
 class OptionSendObject(KittyCadBaseModel):
@@ -1271,6 +1289,7 @@ OkModelingCmdResponse = RootModel[
             OptionMovePathPen,
             OptionExtendPath,
             OptionExtrude,
+            OptionExtrudeToReference,
             OptionTwistExtrude,
             OptionSweep,
             OptionRevolve,
@@ -1292,6 +1311,7 @@ OkModelingCmdResponse = RootModel[
             OptionObjectSetMaterialParamsPbr,
             OptionSolid2dAddHole,
             OptionSolid3dFilletEdge,
+            OptionSolid3dCutEdges,
             OptionSendObject,
             OptionEntitySetOpacity,
             OptionEntityFade,

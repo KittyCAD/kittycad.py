@@ -8,5 +8,7 @@ class AnnotationLineEnd(str, Enum):
 
     ARROW = "arrow"
 
+    DOT = "dot"
+
     def __str__(self) -> str:
         return str(self.value)
