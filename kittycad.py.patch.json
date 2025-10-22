@@ -995,7 +995,7 @@
     "op": "add",
     "path": "/paths/~1user~1payment~1methods~1{id}/delete/x-python",
     "value": {
-      "example": "\n\ndef example_delete_payment_method_for_user():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    client.payments.delete_payment_method_for_user(id=\"<string>\")\n\n",
+      "example": "\n\ndef example_delete_payment_method_for_user():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    client.payments.delete_payment_method_for_user(id=\"<string>\",\n        force=False)\n\n",
       "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD.payments"
     }
   },

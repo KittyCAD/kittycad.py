@@ -7597,10 +7597,18 @@ class PaymentsAPI:
     def delete_payment_method_for_user(
         self,
         id: str,
+        *,
+        force: Optional[bool] = None,
     ):
         """This endpoint requires authentication by any Zoo user. It deletes the specified payment method for the authenticated user."""
 
         url = "{}/user/payment/methods/{id}".format(self.client.base_url, id=id)
+
+        if force is not None:
+            if "?" in url:
+                url = url + "&force=" + str(force).lower()
+            else:
+                url = url + "?force=" + str(force).lower()
 
         _client = self.client.get_http_client()
 
@@ -8476,10 +8484,18 @@ class AsyncPaymentsAPI:
     async def delete_payment_method_for_user(
         self,
         id: str,
+        *,
+        force: Optional[bool] = None,
     ):
         """This endpoint requires authentication by any Zoo user. It deletes the specified payment method for the authenticated user."""
 
         url = "{}/user/payment/methods/{id}".format(self.client.base_url, id=id)
+
+        if force is not None:
+            if "?" in url:
+                url = url + "&force=" + str(force).lower()
+            else:
+                url = url + "?force=" + str(force).lower()
 
         _client = self.client.get_http_client()
 
