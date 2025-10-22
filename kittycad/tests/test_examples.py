@@ -2987,7 +2987,7 @@ async def test_list_payment_methods_for_user_async():
 def test_delete_payment_method_for_user():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    client.payments.delete_payment_method_for_user(id="<string>")
+    client.payments.delete_payment_method_for_user(id="<string>", force=False)
 
 
 # OR run async
@@ -2996,7 +2996,7 @@ def test_delete_payment_method_for_user():
 async def test_delete_payment_method_for_user_async():
     client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    await client.payments.delete_payment_method_for_user(id="<string>")
+    await client.payments.delete_payment_method_for_user(id="<string>", force=False)
 
 
 @pytest.mark.skip
