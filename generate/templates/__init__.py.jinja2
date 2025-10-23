@@ -147,7 +147,7 @@ class WebSocket{{ func_name|to_pascal_case }}:
         {% if func_info.ws_request_is_dict %}
         self.ws.send(json.dumps(data))
         {% else %}
-        self.ws.send(json.dumps(data.model_dump()))
+        self.ws.send(json.dumps(data.model_dump(exclude_none=True)))
         {% endif %}
 
     def send_binary(self, data: {{ func_info.ws_request_type }}):
@@ -155,7 +155,7 @@ class WebSocket{{ func_name|to_pascal_case }}:
         {% if func_info.ws_request_is_dict %}
         self.ws.send(bson.encode(data))
         {% else %}
-        self.ws.send(bson.encode(data.model_dump()))
+        self.ws.send(bson.encode(data.model_dump(exclude_none=True)))
         {% endif %}
 
     def recv(self) -> {{ func_info.ws_response_type }}:

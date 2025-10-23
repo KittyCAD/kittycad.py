@@ -12247,12 +12247,12 @@ class WebSocketMlCopilotWs:
     def send(self, data: MlCopilotClientMessage):
         """Send data to the websocket."""
 
-        self.ws.send(json.dumps(data.model_dump()))
+        self.ws.send(json.dumps(data.model_dump(exclude_none=True)))
 
     def send_binary(self, data: MlCopilotClientMessage):
         """Send data as bson to the websocket."""
 
-        self.ws.send(bson.encode(data.model_dump()))
+        self.ws.send(bson.encode(data.model_dump(exclude_none=True)))
 
     def recv(self) -> MlCopilotServerMessage:
         """Receive data from the websocket."""
@@ -12317,12 +12317,12 @@ class WebSocketMlReasoningWs:
     def send(self, data: MlCopilotClientMessage):
         """Send data to the websocket."""
 
-        self.ws.send(json.dumps(data.model_dump()))
+        self.ws.send(json.dumps(data.model_dump(exclude_none=True)))
 
     def send_binary(self, data: MlCopilotClientMessage):
         """Send data as bson to the websocket."""
 
-        self.ws.send(bson.encode(data.model_dump()))
+        self.ws.send(bson.encode(data.model_dump(exclude_none=True)))
 
     def recv(self) -> MlCopilotServerMessage:
         """Receive data from the websocket."""
@@ -12525,12 +12525,12 @@ class WebSocketModelingCommandsWs:
     def send(self, data: WebSocketRequest):
         """Send data to the websocket."""
 
-        self.ws.send(json.dumps(data.model_dump()))
+        self.ws.send(json.dumps(data.model_dump(exclude_none=True)))
 
     def send_binary(self, data: WebSocketRequest):
         """Send data as bson to the websocket."""
 
-        self.ws.send(bson.encode(data.model_dump()))
+        self.ws.send(bson.encode(data.model_dump(exclude_none=True)))
 
     def recv(self) -> WebSocketResponse:
         """Receive data from the websocket."""
