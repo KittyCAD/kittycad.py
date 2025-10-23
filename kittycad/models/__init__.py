@@ -3,6 +3,7 @@
 from .account_provider import AccountProvider
 from .add_hole_from_offset import AddHoleFromOffset
 from .add_org_member import AddOrgMember
+from .address import Address
 from .address_details import AddressDetails
 from .adjacency_info import AdjacencyInfo
 from .angle import Angle
@@ -236,6 +237,8 @@ from .ok_web_socket_response_data import OkWebSocketResponseData
 from .opposite_for_angle import OppositeForAngle
 from .opposite_for_length_unit import OppositeForLengthUnit
 from .org import Org
+from .org_address import OrgAddress
+from .org_admin_details import OrgAdminDetails
 from .org_details import OrgDetails
 from .org_member import OrgMember
 from .org_member_results_page import OrgMemberResultsPage
@@ -394,6 +397,7 @@ from .update_payment_balance import UpdatePaymentBalance
 from .update_shortlink_request import UpdateShortlinkRequest
 from .update_user import UpdateUser
 from .user import User
+from .user_admin_details import UserAdminDetails
 from .user_identifier import UserIdentifier
 from .user_org_info import UserOrgInfo
 from .user_org_role import UserOrgRole

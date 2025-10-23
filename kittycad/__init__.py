@@ -91,6 +91,7 @@ from .models.ml_prompt import MlPrompt
 from .models.ml_prompt_results_page import MlPromptResultsPage
 from .models.oauth2_client_info import OAuth2ClientInfo
 from .models.org import Org
+from .models.org_admin_details import OrgAdminDetails
 from .models.org_details import OrgDetails
 from .models.org_member import OrgMember
 from .models.org_member_results_page import OrgMemberResultsPage
@@ -153,6 +154,7 @@ from .models.update_payment_balance import UpdatePaymentBalance
 from .models.update_shortlink_request import UpdateShortlinkRequest
 from .models.update_user import UpdateUser
 from .models.user import User
+from .models.user_admin_details import UserAdminDetails
 from .models.user_identifier import UserIdentifier
 from .models.user_org_info import UserOrgInfo
 from .models.user_org_role import UserOrgRole
@@ -6101,6 +6103,34 @@ class OrgsAPI:
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return Org.model_validate(json_data)
 
+    def org_admin_details_get(
+        self,
+        id: Uuid,
+    ) -> OrgAdminDetails:
+        """Zoo admins can retrieve extended information about any organization, while non-admins receive a 404 to avoid leaking existence."""
+
+        url = "{}/orgs/{id}/admin/details".format(self.client.base_url, id=id)
+
+        _client = self.client.get_http_client()
+
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return OrgAdminDetails.model_validate(json_data)
+
     def update_enterprise_pricing_for_org(
         self,
         id: Uuid,
@@ -6857,6 +6887,34 @@ class AsyncOrgsAPI:
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return Org.model_validate(json_data)
+
+    async def org_admin_details_get(
+        self,
+        id: Uuid,
+    ) -> OrgAdminDetails:
+        """Zoo admins can retrieve extended information about any organization, while non-admins receive a 404 to avoid leaking existence."""
+
+        url = "{}/orgs/{id}/admin/details".format(self.client.base_url, id=id)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return OrgAdminDetails.model_validate(json_data)
 
     async def update_enterprise_pricing_for_org(
         self,
@@ -10706,6 +10764,34 @@ class UsersAPI:
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return User.model_validate(json_data)
 
+    def user_admin_details_get(
+        self,
+        id: UserIdentifier,
+    ) -> UserAdminDetails:
+        """Zoo admins can retrieve extended information about any user, while non-admins receive a 404 to avoid leaking the existence of the resource."""
+
+        url = "{}/users/{id}/admin/details".format(self.client.base_url, id=id)
+
+        _client = self.client.get_http_client()
+
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return UserAdminDetails.model_validate(json_data)
+
     def update_subscription_for_user(
         self,
         id: UserIdentifier,
@@ -11460,6 +11546,34 @@ class AsyncUsersAPI:
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return User.model_validate(json_data)
+
+    async def user_admin_details_get(
+        self,
+        id: UserIdentifier,
+    ) -> UserAdminDetails:
+        """Zoo admins can retrieve extended information about any user, while non-admins receive a 404 to avoid leaking the existence of the resource."""
+
+        url = "{}/users/{id}/admin/details".format(self.client.base_url, id=id)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from ..response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return UserAdminDetails.model_validate(json_data)
 
     async def update_subscription_for_user(
         self,

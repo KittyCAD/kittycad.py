@@ -34,6 +34,7 @@ from kittycad.models import (
     MlCopilotClientMessage,
     MlPrompt,
     Org,
+    OrgAdminDetails,
     OrgMember,
     PaymentIntent,
     PaymentMethod,
@@ -60,6 +61,7 @@ from kittycad.models import (
     UnitTorqueConversion,
     UnitVolumeConversion,
     User,
+    UserAdminDetails,
     UserOrgInfo,
     VerificationTokenResponse,
     WebSocketRequest,
@@ -2030,6 +2032,27 @@ async def test_get_any_org_async():
 
 
 @pytest.mark.skip
+def test_org_admin_details_get():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: OrgAdminDetails = client.orgs.org_admin_details_get(id=Uuid("<string>"))
+
+    body: OrgAdminDetails = result
+    print(body)
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_org_admin_details_get_async():
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: OrgAdminDetails = await client.orgs.org_admin_details_get(
+        id=Uuid("<string>")
+    )
+
+
+@pytest.mark.skip
 def test_update_enterprise_pricing_for_org():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
@@ -3439,6 +3462,29 @@ async def test_get_user_async():
     client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     result: User = await client.users.get_user(id=UserIdentifier("<string>"))
+
+
+@pytest.mark.skip
+def test_user_admin_details_get():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: UserAdminDetails = client.users.user_admin_details_get(
+        id=UserIdentifier("<string>")
+    )
+
+    body: UserAdminDetails = result
+    print(body)
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_user_admin_details_get_async():
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: UserAdminDetails = await client.users.user_admin_details_get(
+        id=UserIdentifier("<string>")
+    )
 
 
 @pytest.mark.skip
