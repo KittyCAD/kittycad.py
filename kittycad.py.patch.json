@@ -353,6 +353,14 @@
   },
   {
     "op": "add",
+    "path": "/paths/~1orgs~1{id}~1admin~1details/get/x-python",
+    "value": {
+      "example": "from kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models import OrgAdminDetails\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_org_admin_details_get():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    result: OrgAdminDetails = client.orgs.org_admin_details_get(id=Uuid(\"<string>\"))\n\n\n    body: OrgAdminDetails = result\n    print(body)\n\n",
+      "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD.orgs"
+    }
+  },
+  {
+    "op": "add",
     "path": "/paths/~1orgs~1{id}~1enterprise~1pricing/put/x-python",
     "value": {
       "example": "from kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models.enterprise_subscription_tier_price import OptionPerUser\nfrom kittycad.models.plan_interval import PlanInterval\nfrom kittycad.models.enterprise_subscription_tier_price import EnterpriseSubscriptionTierPrice\nfrom kittycad.models import ZooProductSubscriptions\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_update_enterprise_pricing_for_org():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    result: ZooProductSubscriptions = client.orgs.update_enterprise_pricing_for_org(id=Uuid(\"<string>\"),\n        body=EnterpriseSubscriptionTierPrice(OptionPerUser(\n        interval=PlanInterval.DAY,\n        price=3.14,\n        )))\n\n\n    body: ZooProductSubscriptions = result\n    print(body)\n\n",
@@ -804,6 +812,14 @@
     "path": "/paths/~1users~1{id}/get/x-python",
     "value": {
       "example": "from kittycad.models.user_identifier import UserIdentifier\nfrom kittycad.models import User\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_get_user():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    result: User = client.users.get_user(id=UserIdentifier(\"<string>\"))\n\n\n    body: User = result\n    print(body)\n\n",
+      "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD.users"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/paths/~1users~1{id}~1admin~1details/get/x-python",
+    "value": {
+      "example": "from kittycad.models.user_identifier import UserIdentifier\nfrom kittycad.models import UserAdminDetails\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_user_admin_details_get():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    result: UserAdminDetails = client.users.user_admin_details_get(id=UserIdentifier(\"<string>\"))\n\n\n    body: UserAdminDetails = result\n    print(body)\n\n",
       "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD.users"
     }
   },
