@@ -523,7 +523,7 @@
     "op": "add",
     "path": "/paths/~1org~1payment~1subscriptions/post/x-python",
     "value": {
-      "example": "from kittycad.models.zoo_product_subscriptions_org_request import ZooProductSubscriptionsOrgRequest\nfrom kittycad.models.modeling_app_organization_subscription_tier import ModelingAppOrganizationSubscriptionTier\nfrom kittycad.models import ZooProductSubscriptions\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_create_org_subscription():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    result: ZooProductSubscriptions = client.payments.create_org_subscription(body=ZooProductSubscriptionsOrgRequest(\n        modeling_app=ModelingAppOrganizationSubscriptionTier.TEAM,\n        ))\n\n\n    body: ZooProductSubscriptions = result\n    print(body)\n\n",
+      "example": "from kittycad.models.zoo_product_subscriptions_org_request import ZooProductSubscriptionsOrgRequest\nfrom kittycad.models import ZooProductSubscriptions\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_create_org_subscription():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    result: ZooProductSubscriptions = client.payments.create_org_subscription(body=ZooProductSubscriptionsOrgRequest(\n        modeling_app=\"<string>\",\n        ))\n\n\n    body: ZooProductSubscriptions = result\n    print(body)\n\n",
       "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD.payments"
     }
   },
@@ -531,7 +531,7 @@
     "op": "add",
     "path": "/paths/~1org~1payment~1subscriptions/put/x-python",
     "value": {
-      "example": "from kittycad.models.zoo_product_subscriptions_org_request import ZooProductSubscriptionsOrgRequest\nfrom kittycad.models.modeling_app_organization_subscription_tier import ModelingAppOrganizationSubscriptionTier\nfrom kittycad.models import ZooProductSubscriptions\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_update_org_subscription():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    result: ZooProductSubscriptions = client.payments.update_org_subscription(body=ZooProductSubscriptionsOrgRequest(\n        modeling_app=ModelingAppOrganizationSubscriptionTier.TEAM,\n        ))\n\n\n    body: ZooProductSubscriptions = result\n    print(body)\n\n",
+      "example": "from kittycad.models.zoo_product_subscriptions_org_request import ZooProductSubscriptionsOrgRequest\nfrom kittycad.models import ZooProductSubscriptions\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_update_org_subscription():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    result: ZooProductSubscriptions = client.payments.update_org_subscription(body=ZooProductSubscriptionsOrgRequest(\n        modeling_app=\"<string>\",\n        ))\n\n\n    body: ZooProductSubscriptions = result\n    print(body)\n\n",
       "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD.payments"
     }
   },
@@ -851,7 +851,7 @@
     "op": "add",
     "path": "/paths/~1users~1{id}~1payment~1subscriptions/put/x-python",
     "value": {
-      "example": "from kittycad.models.user_identifier import UserIdentifier\nfrom kittycad.models.zoo_product_subscriptions_user_request import ZooProductSubscriptionsUserRequest\nfrom kittycad.models.modeling_app_individual_subscription_tier import ModelingAppIndividualSubscriptionTier\nfrom kittycad.models import ZooProductSubscriptions\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_update_subscription_for_user():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    result: ZooProductSubscriptions = client.users.update_subscription_for_user(id=UserIdentifier(\"<string>\"),\n        body=ZooProductSubscriptionsUserRequest(\n        modeling_app=ModelingAppIndividualSubscriptionTier.FREE,\n        ))\n\n\n    body: ZooProductSubscriptions = result\n    print(body)\n\n",
+      "example": "from kittycad.models.user_identifier import UserIdentifier\nfrom kittycad.models.zoo_product_subscriptions_user_request import ZooProductSubscriptionsUserRequest\nfrom kittycad.models import ZooProductSubscriptions\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_update_subscription_for_user():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    result: ZooProductSubscriptions = client.users.update_subscription_for_user(id=UserIdentifier(\"<string>\"),\n        body=ZooProductSubscriptionsUserRequest(\n        modeling_app=\"<string>\",\n        ))\n\n\n    body: ZooProductSubscriptions = result\n    print(body)\n\n",
       "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD.users"
     }
   },
@@ -1027,7 +1027,7 @@
     "op": "add",
     "path": "/paths/~1user~1payment~1subscriptions/post/x-python",
     "value": {
-      "example": "from kittycad.models.zoo_product_subscriptions_user_request import ZooProductSubscriptionsUserRequest\nfrom kittycad.models.modeling_app_individual_subscription_tier import ModelingAppIndividualSubscriptionTier\nfrom kittycad.models import ZooProductSubscriptions\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_create_user_subscription():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    result: ZooProductSubscriptions = client.payments.create_user_subscription(body=ZooProductSubscriptionsUserRequest(\n        modeling_app=ModelingAppIndividualSubscriptionTier.FREE,\n        ))\n\n\n    body: ZooProductSubscriptions = result\n    print(body)\n\n",
+      "example": "from kittycad.models.zoo_product_subscriptions_user_request import ZooProductSubscriptionsUserRequest\nfrom kittycad.models import ZooProductSubscriptions\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_create_user_subscription():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    result: ZooProductSubscriptions = client.payments.create_user_subscription(body=ZooProductSubscriptionsUserRequest(\n        modeling_app=\"<string>\",\n        ))\n\n\n    body: ZooProductSubscriptions = result\n    print(body)\n\n",
       "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD.payments"
     }
   },
@@ -1035,7 +1035,7 @@
     "op": "add",
     "path": "/paths/~1user~1payment~1subscriptions/put/x-python",
     "value": {
-      "example": "from kittycad.models.zoo_product_subscriptions_user_request import ZooProductSubscriptionsUserRequest\nfrom kittycad.models.modeling_app_individual_subscription_tier import ModelingAppIndividualSubscriptionTier\nfrom kittycad.models import ZooProductSubscriptions\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_update_user_subscription():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    result: ZooProductSubscriptions = client.payments.update_user_subscription(body=ZooProductSubscriptionsUserRequest(\n        modeling_app=ModelingAppIndividualSubscriptionTier.FREE,\n        ))\n\n\n    body: ZooProductSubscriptions = result\n    print(body)\n\n",
+      "example": "from kittycad.models.zoo_product_subscriptions_user_request import ZooProductSubscriptionsUserRequest\nfrom kittycad.models import ZooProductSubscriptions\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_update_user_subscription():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    result: ZooProductSubscriptions = client.payments.update_user_subscription(body=ZooProductSubscriptionsUserRequest(\n        modeling_app=\"<string>\",\n        ))\n\n\n    body: ZooProductSubscriptions = result\n    print(body)\n\n",
       "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD.payments"
     }
   },

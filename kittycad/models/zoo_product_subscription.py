@@ -2,7 +2,6 @@ from typing import List, Optional
 
 from ..models.api_endpoint import ApiEndpoint
 from ..models.modeling_app_share_links import ModelingAppShareLinks
-from ..models.modeling_app_subscription_tier_name import ModelingAppSubscriptionTierName
 from ..models.subscription_tier_feature import SubscriptionTierFeature
 from ..models.subscription_tier_price import SubscriptionTierPrice
 from ..models.subscription_tier_type import SubscriptionTierType
@@ -21,6 +20,8 @@ class ZooProductSubscription(KittyCadBaseModel):
 
     description: str
 
+    display_name: str = ""
+
     endpoints_included: Optional[List[ApiEndpoint]] = None
 
     features: Optional[List[SubscriptionTierFeature]] = None
@@ -29,7 +30,7 @@ class ZooProductSubscription(KittyCadBaseModel):
 
     monthly_pay_as_you_go_api_credits_monetary_value: float = 0.0
 
-    name: ModelingAppSubscriptionTierName
+    name: str
 
     pay_as_you_go_api_credit_price: float = 0.0
 
