@@ -3,8 +3,10 @@ from typing import Dict, List, Literal, Optional, Union
 from pydantic import Field, RootModel
 from typing_extensions import Annotated
 
+from ..models.ml_copilot_supported_models import MlCopilotSupportedModels
 from ..models.ml_copilot_system_command import MlCopilotSystemCommand
 from ..models.ml_copilot_tool import MlCopilotTool
+from ..models.ml_reasoning_effort import MlReasoningEffort
 from ..models.source_range_prompt import SourceRangePrompt
 from .base import KittyCadBaseModel
 
@@ -26,7 +28,11 @@ class OptionUser(KittyCadBaseModel):
 
     forced_tools: Optional[List[MlCopilotTool]] = None
 
+    model: Optional[MlCopilotSupportedModels] = None
+
     project_name: Optional[str] = None
+
+    reasoning_effort: Optional[MlReasoningEffort] = None
 
     source_ranges: Optional[List[SourceRangePrompt]] = None
 

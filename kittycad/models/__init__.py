@@ -201,6 +201,7 @@ from .mbd_symbol import MbdSymbol
 from .method import Method
 from .ml_copilot_client_message import MlCopilotClientMessage
 from .ml_copilot_server_message import MlCopilotServerMessage
+from .ml_copilot_supported_models import MlCopilotSupportedModels
 from .ml_copilot_system_command import MlCopilotSystemCommand
 from .ml_copilot_tool import MlCopilotTool
 from .ml_feedback import MlFeedback
@@ -208,17 +209,11 @@ from .ml_prompt import MlPrompt
 from .ml_prompt_metadata import MlPromptMetadata
 from .ml_prompt_results_page import MlPromptResultsPage
 from .ml_prompt_type import MlPromptType
+from .ml_reasoning_effort import MlReasoningEffort
 from .ml_tool_result import MlToolResult
 from .modeling_app_event_type import ModelingAppEventType
-from .modeling_app_individual_subscription_tier import (
-    ModelingAppIndividualSubscriptionTier,
-)
-from .modeling_app_organization_subscription_tier import (
-    ModelingAppOrganizationSubscriptionTier,
-)
 from .modeling_app_share_links import ModelingAppShareLinks
 from .modeling_app_subscription_tier import ModelingAppSubscriptionTier
-from .modeling_app_subscription_tier_name import ModelingAppSubscriptionTierName
 from .modeling_cmd import ModelingCmd
 from .modeling_cmd_id import ModelingCmdId
 from .modeling_cmd_req import ModelingCmdReq

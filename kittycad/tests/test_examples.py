@@ -100,12 +100,6 @@ from kittycad.models.ml_copilot_system_command import MlCopilotSystemCommand
 from kittycad.models.ml_copilot_tool import MlCopilotTool
 from kittycad.models.ml_feedback import MlFeedback
 from kittycad.models.modeling_app_event_type import ModelingAppEventType
-from kittycad.models.modeling_app_individual_subscription_tier import (
-    ModelingAppIndividualSubscriptionTier,
-)
-from kittycad.models.modeling_app_organization_subscription_tier import (
-    ModelingAppOrganizationSubscriptionTier,
-)
 from kittycad.models.org_details import OrgDetails
 from kittycad.models.output_format3d import OptionPly, OutputFormat3d
 from kittycad.models.plan_interval import PlanInterval
@@ -1642,7 +1636,7 @@ def test_create_org_subscription():
 
     result: ZooProductSubscriptions = client.payments.create_org_subscription(
         body=ZooProductSubscriptionsOrgRequest(
-            modeling_app=ModelingAppOrganizationSubscriptionTier.TEAM,
+            modeling_app="<string>",
         )
     )
 
@@ -1658,7 +1652,7 @@ async def test_create_org_subscription_async():
 
     result: ZooProductSubscriptions = await client.payments.create_org_subscription(
         body=ZooProductSubscriptionsOrgRequest(
-            modeling_app=ModelingAppOrganizationSubscriptionTier.TEAM,
+            modeling_app="<string>",
         )
     )
 
@@ -1669,7 +1663,7 @@ def test_update_org_subscription():
 
     result: ZooProductSubscriptions = client.payments.update_org_subscription(
         body=ZooProductSubscriptionsOrgRequest(
-            modeling_app=ModelingAppOrganizationSubscriptionTier.TEAM,
+            modeling_app="<string>",
         )
     )
 
@@ -1685,7 +1679,7 @@ async def test_update_org_subscription_async():
 
     result: ZooProductSubscriptions = await client.payments.update_org_subscription(
         body=ZooProductSubscriptionsOrgRequest(
-            modeling_app=ModelingAppOrganizationSubscriptionTier.TEAM,
+            modeling_app="<string>",
         )
     )
 
@@ -3047,7 +3041,7 @@ def test_create_user_subscription():
 
     result: ZooProductSubscriptions = client.payments.create_user_subscription(
         body=ZooProductSubscriptionsUserRequest(
-            modeling_app=ModelingAppIndividualSubscriptionTier.FREE,
+            modeling_app="<string>",
         )
     )
 
@@ -3063,7 +3057,7 @@ async def test_create_user_subscription_async():
 
     result: ZooProductSubscriptions = await client.payments.create_user_subscription(
         body=ZooProductSubscriptionsUserRequest(
-            modeling_app=ModelingAppIndividualSubscriptionTier.FREE,
+            modeling_app="<string>",
         )
     )
 
@@ -3074,7 +3068,7 @@ def test_update_user_subscription():
 
     result: ZooProductSubscriptions = client.payments.update_user_subscription(
         body=ZooProductSubscriptionsUserRequest(
-            modeling_app=ModelingAppIndividualSubscriptionTier.FREE,
+            modeling_app="<string>",
         )
     )
 
@@ -3090,7 +3084,7 @@ async def test_update_user_subscription_async():
 
     result: ZooProductSubscriptions = await client.payments.update_user_subscription(
         body=ZooProductSubscriptionsUserRequest(
-            modeling_app=ModelingAppIndividualSubscriptionTier.FREE,
+            modeling_app="<string>",
         )
     )
 
@@ -3577,7 +3571,7 @@ def test_update_subscription_for_user():
     result: ZooProductSubscriptions = client.users.update_subscription_for_user(
         id=UserIdentifier("<string>"),
         body=ZooProductSubscriptionsUserRequest(
-            modeling_app=ModelingAppIndividualSubscriptionTier.FREE,
+            modeling_app="<string>",
         ),
     )
 
@@ -3594,7 +3588,7 @@ async def test_update_subscription_for_user_async():
     result: ZooProductSubscriptions = await client.users.update_subscription_for_user(
         id=UserIdentifier("<string>"),
         body=ZooProductSubscriptionsUserRequest(
-            modeling_app=ModelingAppIndividualSubscriptionTier.FREE,
+            modeling_app="<string>",
         ),
     )
 
