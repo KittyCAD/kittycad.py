@@ -3,6 +3,7 @@ from typing import Dict, List, Literal, Optional, Union
 from pydantic import Field, RootModel
 from typing_extensions import Annotated
 
+from ..models.ml_copilot_mode import MlCopilotMode
 from ..models.ml_copilot_supported_models import MlCopilotSupportedModels
 from ..models.ml_copilot_system_command import MlCopilotSystemCommand
 from ..models.ml_copilot_tool import MlCopilotTool
@@ -27,6 +28,8 @@ class OptionUser(KittyCadBaseModel):
     current_files: Optional[Dict[str, bytes]] = None
 
     forced_tools: Optional[List[MlCopilotTool]] = None
+
+    mode: Optional[MlCopilotMode] = None
 
     model: Optional[MlCopilotSupportedModels] = None
 

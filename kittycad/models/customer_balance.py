@@ -1,7 +1,6 @@
 import datetime
 from typing import Optional
 
-from ..models.subscription_tier_price import SubscriptionTierPrice
 from ..models.zoo_product_subscriptions import ZooProductSubscriptions
 from .base import KittyCadBaseModel
 
@@ -12,8 +11,6 @@ class CustomerBalance(KittyCadBaseModel):
     This holds information about the financial balance for the customer."""
 
     created_at: datetime.datetime
-
-    modeling_app_enterprise_price: Optional[SubscriptionTierPrice] = None
 
     monthly_api_credits_remaining: int
 
