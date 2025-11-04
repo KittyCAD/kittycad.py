@@ -7101,7 +7101,7 @@ class PaymentsAPI:
         *,
         include_total_due: Optional[bool] = None,
     ) -> CustomerBalance:
-        """This endpoint requires authentication by an org admin. It gets the balance information for the authenticated user's org."""
+        """This endpoint requires authentication by any member of an org. It gets the balance information for the authenticated user's org."""
 
         url = "{}/org/payment/balance".format(self.client.base_url)
 
@@ -7241,7 +7241,7 @@ class PaymentsAPI:
     def get_org_subscription(
         self,
     ) -> ZooProductSubscriptions:
-        """This endpoint requires authentication by an org admin. It gets the subscription for the authenticated user's org."""
+        """This endpoint requires authentication by any member of an org. It gets the subscription for the authenticated user's org."""
 
         url = "{}/org/payment/subscriptions".format(self.client.base_url)
 
@@ -7988,7 +7988,7 @@ class AsyncPaymentsAPI:
         *,
         include_total_due: Optional[bool] = None,
     ) -> CustomerBalance:
-        """This endpoint requires authentication by an org admin. It gets the balance information for the authenticated user's org."""
+        """This endpoint requires authentication by any member of an org. It gets the balance information for the authenticated user's org."""
 
         url = "{}/org/payment/balance".format(self.client.base_url)
 
@@ -8128,7 +8128,7 @@ class AsyncPaymentsAPI:
     async def get_org_subscription(
         self,
     ) -> ZooProductSubscriptions:
-        """This endpoint requires authentication by an org admin. It gets the subscription for the authenticated user's org."""
+        """This endpoint requires authentication by any member of an org. It gets the subscription for the authenticated user's org."""
 
         url = "{}/org/payment/subscriptions".format(self.client.base_url)
 
