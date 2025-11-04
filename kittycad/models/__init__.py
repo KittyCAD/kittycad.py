@@ -200,6 +200,7 @@ from .mass import Mass
 from .mbd_symbol import MbdSymbol
 from .method import Method
 from .ml_copilot_client_message import MlCopilotClientMessage
+from .ml_copilot_mode import MlCopilotMode
 from .ml_copilot_server_message import MlCopilotServerMessage
 from .ml_copilot_supported_models import MlCopilotSupportedModels
 from .ml_copilot_system_command import MlCopilotSystemCommand
