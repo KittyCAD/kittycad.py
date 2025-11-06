@@ -27902,11 +27902,6 @@
             "default": false,
             "type": "boolean"
           },
-          "payment_intent_id": {
-            "nullable": true,
-            "description": "Identifier for the payment intent backing this invoice.",
-            "type": "string"
-          },
           "pdf": {
             "nullable": true,
             "description": "The link to download the PDF for the invoice.",
@@ -28903,10 +28898,10 @@
             ]
           },
           {
-            "description": "o3",
+            "description": "o3-mini",
             "type": "string",
             "enum": [
-              "o3"
+              "o3_mini"
             ]
           }
         ]
@@ -33202,6 +33197,44 @@
             ]
           },
           {
+            "description": "Get the ids of a given entity type.",
+            "type": "object",
+            "properties": {
+              "filter": {
+                "description": "The entity types to be queried.",
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/EntityType"
+                }
+              },
+              "skip": {
+                "description": "Skip the first n returned ids. If multiple filters are provided, this skip will apply to each filter individually.",
+                "type": "integer",
+                "format": "uint32",
+                "minimum": 0
+              },
+              "take": {
+                "description": "Take n ids after any ids skipped. This value must be greater than zero and not exceed 1000. If multiple filters are provided, this take will apply to each filter individually. If there are fewer than `take` items of the provided filter type then the returned list's length will be the smaller value.",
+                "type": "integer",
+                "format": "uint32",
+                "minimum": 1,
+                "maximum": 1000
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "scene_get_entity_ids"
+                ]
+              }
+            },
+            "required": [
+              "filter",
+              "skip",
+              "take",
+              "type"
+            ]
+          },
+          {
             "description": "Use orthographic projection.",
             "type": "object",
             "properties": {
@@ -35548,6 +35581,24 @@
                 "type": "string",
                 "enum": [
                   "get_entity_type"
+                ]
+              }
+            },
+            "required": [
+              "data",
+              "type"
+            ]
+          },
+          {
+            "type": "object",
+            "properties": {
+              "data": {
+                "$ref": "#/components/schemas/SceneGetEntityIds"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "scene_get_entity_ids"
                 ]
               }
             },
@@ -38919,6 +38970,26 @@
       "SceneClearAll": {
         "description": "The response from the `SceneClearAll` endpoint.",
         "type": "object"
+      },
+      "SceneGetEntityIds": {
+        "description": "The response from the `SceneGetEntityIds` command.",
+        "type": "object",
+        "properties": {
+          "entity_ids": {
+            "description": "The ids of the requested entities.",
+            "type": "array",
+            "items": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "uuid"
+              }
+            }
+          }
+        },
+        "required": [
+          "entity_ids"
+        ]
       },
       "SceneSelectionType": {
         "description": "The type of scene selection change",
