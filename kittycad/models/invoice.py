@@ -45,8 +45,6 @@ class Invoice(KittyCadBaseModel):
 
     paid: bool = False
 
-    payment_intent_id: Optional[str] = None
-
     pdf: Optional[str] = None
 
     receipt_number: Optional[str] = None

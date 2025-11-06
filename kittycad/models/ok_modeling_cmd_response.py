@@ -105,6 +105,7 @@ from ..models.remove_scene_objects import RemoveSceneObjects
 from ..models.revolve import Revolve
 from ..models.revolve_about_edge import RevolveAboutEdge
 from ..models.scene_clear_all import SceneClearAll
+from ..models.scene_get_entity_ids import SceneGetEntityIds
 from ..models.select_add import SelectAdd
 from ..models.select_clear import SelectClear
 from ..models.select_get import SelectGet
@@ -894,6 +895,14 @@ class OptionGetEntityType(KittyCadBaseModel):
     type: Literal["get_entity_type"] = "get_entity_type"
 
 
+class OptionSceneGetEntityIds(KittyCadBaseModel):
+    """"""
+
+    data: SceneGetEntityIds
+
+    type: Literal["scene_get_entity_ids"] = "scene_get_entity_ids"
+
+
 class OptionCurveGetControlPoints(KittyCadBaseModel):
     """"""
 
@@ -1376,6 +1385,7 @@ OkModelingCmdResponse = RootModel[
             OptionSolid3dGetPrevAdjacentEdge,
             OptionSolid3dGetCommonEdge,
             OptionGetEntityType,
+            OptionSceneGetEntityIds,
             OptionCurveGetControlPoints,
             OptionProjectEntityToPlane,
             OptionProjectPointsToPlane,

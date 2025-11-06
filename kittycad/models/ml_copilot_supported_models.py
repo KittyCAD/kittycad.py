@@ -20,9 +20,9 @@ class MlCopilotSupportedModels(str, Enum):
 
     GPT5 = "gpt5"
 
-    """# o3"""  # noqa: E501
+    """# o3-mini"""  # noqa: E501
 
-    O3 = "o3"
+    O3_MINI = "o3_mini"
 
     def __str__(self) -> str:
         return str(self.value)
