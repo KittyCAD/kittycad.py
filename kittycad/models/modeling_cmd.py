@@ -1248,6 +1248,18 @@ class OptionSetSelectionFilter(KittyCadBaseModel):
     type: Literal["set_selection_filter"] = "set_selection_filter"
 
 
+class OptionSceneGetEntityIds(KittyCadBaseModel):
+    """Get the ids of a given entity type."""
+
+    filter: List[EntityType]
+
+    skip: int
+
+    take: int
+
+    type: Literal["scene_get_entity_ids"] = "scene_get_entity_ids"
+
+
 class OptionDefaultCameraSetOrthographic(KittyCadBaseModel):
     """Use orthographic projection."""
 
@@ -1555,6 +1567,7 @@ ModelingCmd = RootModel[
             OptionDefaultCameraFocusOn,
             OptionSetSelectionType,
             OptionSetSelectionFilter,
+            OptionSceneGetEntityIds,
             OptionDefaultCameraSetOrthographic,
             OptionDefaultCameraSetPerspective,
             OptionDefaultCameraCenterToSelection,

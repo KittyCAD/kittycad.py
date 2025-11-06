@@ -287,6 +287,7 @@ from .rtc_session_description import RtcSessionDescription
 from .saml_identity_provider import SamlIdentityProvider
 from .saml_identity_provider_create import SamlIdentityProviderCreate
 from .scene_clear_all import SceneClearAll
+from .scene_get_entity_ids import SceneGetEntityIds
 from .scene_selection_type import SceneSelectionType
 from .scene_tool_type import SceneToolType
 from .select_add import SelectAdd
