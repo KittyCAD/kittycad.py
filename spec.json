@@ -27836,6 +27836,16 @@
             "default": false,
             "type": "boolean"
           },
+          "billing_reason": {
+            "nullable": true,
+            "description": "Why this invoice was created (e.g. `subscription_cycle`).",
+            "type": "string"
+          },
+          "collection_method": {
+            "nullable": true,
+            "description": "Invoice collection method as returned by Stripe.",
+            "type": "string"
+          },
           "created_at": {
             "description": "Time at which the object was created.",
             "type": "string",
@@ -27924,6 +27934,11 @@
                 "$ref": "#/components/schemas/InvoiceStatus"
               }
             ]
+          },
+          "subscription_id": {
+            "nullable": true,
+            "description": "Subscription ID tied to this invoice, when available.",
+            "type": "string"
           },
           "subtotal": {
             "title": "double",
@@ -43940,13 +43955,6 @@
             "type": "string",
             "enum": [
               "modeling_app"
-            ]
-          },
-          {
-            "description": "The Diff Chrome Extension.",
-            "type": "string",
-            "enum": [
-              "diff_chrome_extension"
             ]
           },
           {
