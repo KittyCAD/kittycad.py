@@ -19,6 +19,8 @@ from kittycad.models import (
     CreateShortlinkResponse,
     Customer,
     CustomerBalance,
+    CustomModel,
+    DatasetS3Policies,
     DiscountCode,
     ExtendedUser,
     FileCenterOfMass,
@@ -35,6 +37,11 @@ from kittycad.models import (
     MlPrompt,
     Org,
     OrgAdminDetails,
+    OrgDataset,
+    OrgDatasetConversionStatsResponse,
+    OrgDatasetFileConversion,
+    OrgDatasetFileConversionDetails,
+    OrgDatasetFileConversionSummary,
     OrgMember,
     PaymentIntent,
     PaymentMethod,
@@ -73,52 +80,50 @@ from kittycad.models.api_call_status import ApiCallStatus
 from kittycad.models.api_token_uuid import ApiTokenUuid
 from kittycad.models.axis import Axis
 from kittycad.models.axis_direction_pair import AxisDirectionPair
-from kittycad.models.base64data import Base64Data
 from kittycad.models.billing_info import BillingInfo
 from kittycad.models.code_language import CodeLanguage
 from kittycad.models.code_option import CodeOption
 from kittycad.models.conversion_params import ConversionParams
+from kittycad.models.create_custom_model import CreateCustomModel
+from kittycad.models.create_org_dataset import CreateOrgDataset
 from kittycad.models.create_shortlink_request import CreateShortlinkRequest
 from kittycad.models.created_at_sort_mode import CreatedAtSortMode
 from kittycad.models.crm_data import CrmData
 from kittycad.models.direction import Direction
 from kittycad.models.email_authentication_form import EmailAuthenticationForm
-from kittycad.models.enterprise_subscription_tier_price import (
-    EnterpriseSubscriptionTierPrice,
-    OptionFlat,
-)
 from kittycad.models.event import Event, OptionModelingAppEvent
 from kittycad.models.file_export_format import FileExportFormat
 from kittycad.models.file_import_format import FileImportFormat
-from kittycad.models.gltf_presentation import GltfPresentation
-from kittycad.models.gltf_storage import GltfStorage
-from kittycad.models.idp_metadata_source import (
-    IdpMetadataSource,
-    OptionBase64EncodedXml,
-)
-from kittycad.models.input_format3d import InputFormat3d, OptionStl
+from kittycad.models.idp_metadata_source import IdpMetadataSource, OptionUrl
+from kittycad.models.input_format3d import InputFormat3d, OptionSldprt
 from kittycad.models.inquiry_form import InquiryForm
 from kittycad.models.inquiry_type import InquiryType
 from kittycad.models.kcl_code_completion_params import KclCodeCompletionParams
 from kittycad.models.kcl_code_completion_request import KclCodeCompletionRequest
-from kittycad.models.ml_copilot_client_message import OptionHeaders, OptionSystem
+from kittycad.models.ml_copilot_client_message import OptionSystem, OptionUser
 from kittycad.models.ml_copilot_system_command import MlCopilotSystemCommand
+from kittycad.models.ml_copilot_tool import MlCopilotTool
 from kittycad.models.ml_feedback import MlFeedback
 from kittycad.models.modeling_app_event_type import ModelingAppEventType
+from kittycad.models.org_dataset_source import OrgDatasetSource
 from kittycad.models.org_details import OrgDetails
-from kittycad.models.output_format3d import OptionGltf, OutputFormat3d
+from kittycad.models.output_format3d import OptionPly, OutputFormat3d
 from kittycad.models.plan_interval import PlanInterval
+from kittycad.models.ply_storage import PlyStorage
 from kittycad.models.post_effect_type import PostEffectType
 from kittycad.models.privacy_settings import PrivacySettings
 from kittycad.models.rtc_ice_candidate_init import RtcIceCandidateInit
 from kittycad.models.saml_identity_provider_create import SamlIdentityProviderCreate
+from kittycad.models.selection import OptionDefaultScene, Selection
 from kittycad.models.service_account_uuid import ServiceAccountUuid
 from kittycad.models.session_uuid import SessionUuid
 from kittycad.models.source_position import SourcePosition
 from kittycad.models.source_range import SourceRange
 from kittycad.models.source_range_prompt import SourceRangePrompt
+from kittycad.models.storage_provider import StorageProvider
 from kittycad.models.store_coupon_params import StoreCouponParams
 from kittycad.models.subscribe import Subscribe
+from kittycad.models.subscription_tier_price import OptionPerUser, SubscriptionTierPrice
 from kittycad.models.system import System
 from kittycad.models.text_to_cad_create_body import TextToCadCreateBody
 from kittycad.models.text_to_cad_iteration_body import TextToCadIterationBody
@@ -139,7 +144,9 @@ from kittycad.models.unit_pressure import UnitPressure
 from kittycad.models.unit_temperature import UnitTemperature
 from kittycad.models.unit_torque import UnitTorque
 from kittycad.models.unit_volume import UnitVolume
+from kittycad.models.update_custom_model import UpdateCustomModel
 from kittycad.models.update_member_to_org_body import UpdateMemberToOrgBody
+from kittycad.models.update_org_dataset import UpdateOrgDataset
 from kittycad.models.update_payment_balance import UpdatePaymentBalance
 from kittycad.models.update_shortlink_request import UpdateShortlinkRequest
 from kittycad.models.update_user import UpdateUser
@@ -620,13 +627,7 @@ def test_create_file_conversion_options():
     result: FileConversion = client.file.create_file_conversion_options(
         body=ConversionParams(
             output_format=OutputFormat3d(
-                OptionGltf(
-                    presentation=GltfPresentation.COMPACT,
-                    storage=GltfStorage.BINARY,
-                )
-            ),
-            src_format=InputFormat3d(
-                OptionStl(
+                OptionPly(
                     coords=System(
                         forward=AxisDirectionPair(
                             axis=Axis.Y,
@@ -637,7 +638,14 @@ def test_create_file_conversion_options():
                             direction=Direction.POSITIVE,
                         ),
                     ),
+                    selection=Selection(OptionDefaultScene()),
+                    storage=PlyStorage.ASCII,
                     units=UnitLength.CM,
+                )
+            ),
+            src_format=InputFormat3d(
+                OptionSldprt(
+                    split_closed_faces=False,
                 )
             ),
         ),
@@ -660,13 +668,7 @@ async def test_create_file_conversion_options_async():
     result: FileConversion = await client.file.create_file_conversion_options(
         body=ConversionParams(
             output_format=OutputFormat3d(
-                OptionGltf(
-                    presentation=GltfPresentation.COMPACT,
-                    storage=GltfStorage.BINARY,
-                )
-            ),
-            src_format=InputFormat3d(
-                OptionStl(
+                OptionPly(
                     coords=System(
                         forward=AxisDirectionPair(
                             axis=Axis.Y,
@@ -677,7 +679,14 @@ async def test_create_file_conversion_options_async():
                             direction=Direction.POSITIVE,
                         ),
                     ),
+                    selection=Selection(OptionDefaultScene()),
+                    storage=PlyStorage.ASCII,
                     units=UnitLength.CM,
+                )
+            ),
+            src_format=InputFormat3d(
+                OptionSldprt(
+                    split_closed_faces=False,
                 )
             ),
         ),
@@ -988,6 +997,100 @@ async def test_create_proprietary_to_kcl_async():
 
 
 @pytest.mark.skip
+def test_create_custom_model():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: CustomModel = client.ml.create_custom_model(
+        body=CreateCustomModel(
+            dataset_ids=[Uuid("<string>")],
+            name="<string>",
+        )
+    )
+
+    body: CustomModel = result
+    print(body)
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_create_custom_model_async():
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: CustomModel = await client.ml.create_custom_model(
+        body=CreateCustomModel(
+            dataset_ids=[Uuid("<string>")],
+            name="<string>",
+        )
+    )
+
+
+@pytest.mark.skip
+def test_get_custom_model():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: CustomModel = client.ml.get_custom_model(id=Uuid("<string>"))
+
+    body: CustomModel = result
+    print(body)
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_get_custom_model_async():
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: CustomModel = await client.ml.get_custom_model(id=Uuid("<string>"))
+
+
+@pytest.mark.skip
+def test_update_custom_model():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: CustomModel = client.ml.update_custom_model(
+        id=Uuid("<string>"), body=UpdateCustomModel()
+    )
+
+    body: CustomModel = result
+    print(body)
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_update_custom_model_async():
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: CustomModel = await client.ml.update_custom_model(
+        id=Uuid("<string>"), body=UpdateCustomModel()
+    )
+
+
+@pytest.mark.skip
+def test_list_org_datasets_for_model():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: List[OrgDataset] = client.ml.list_org_datasets_for_model(
+        id=Uuid("<string>")
+    )
+
+    body: List[OrgDataset] = result
+    print(body)
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_list_org_datasets_for_model_async():
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: List[OrgDataset] = await client.ml.list_org_datasets_for_model(
+        id=Uuid("<string>")
+    )
+
+
+@pytest.mark.skip
 def test_create_kcl_code_completions():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
@@ -1294,6 +1397,258 @@ async def test_get_api_call_for_org_async():
 
     result: ApiCallWithPrice = await client.api_calls.get_api_call_for_org(
         id="<string>"
+    )
+
+
+@pytest.mark.skip
+def test_org_dataset_s3_policies():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: DatasetS3Policies = client.orgs.org_dataset_s3_policies(
+        role_arn="<string>", uri="<string>"
+    )
+
+    body: DatasetS3Policies = result
+    print(body)
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_org_dataset_s3_policies_async():
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: DatasetS3Policies = await client.orgs.org_dataset_s3_policies(
+        role_arn="<string>", uri="<string>"
+    )
+
+
+@pytest.mark.skip
+def test_list_org_datasets():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    # Iterate through all pages automatically
+    item: OrgDataset
+    for item in client.orgs.list_org_datasets(
+        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING, limit=None, page_token=None
+    ):
+        print(item)
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_list_org_datasets_async():
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    # Iterate through all pages automatically
+    iterator = client.orgs.list_org_datasets(
+        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING, limit=None, page_token=None
+    )
+    item: OrgDataset
+    async for item in iterator:
+        print(item)
+
+
+@pytest.mark.skip
+def test_create_org_dataset():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: OrgDataset = client.orgs.create_org_dataset(
+        body=CreateOrgDataset(
+            name="<string>",
+            source=OrgDatasetSource(
+                access_role_arn="<string>",
+                provider=StorageProvider.S3,
+                uri="<string>",
+            ),
+        )
+    )
+
+    body: OrgDataset = result
+    print(body)
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_create_org_dataset_async():
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: OrgDataset = await client.orgs.create_org_dataset(
+        body=CreateOrgDataset(
+            name="<string>",
+            source=OrgDatasetSource(
+                access_role_arn="<string>",
+                provider=StorageProvider.S3,
+                uri="<string>",
+            ),
+        )
+    )
+
+
+@pytest.mark.skip
+def test_get_org_dataset():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: OrgDataset = client.orgs.get_org_dataset(id=Uuid("<string>"))
+
+    body: OrgDataset = result
+    print(body)
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_get_org_dataset_async():
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: OrgDataset = await client.orgs.get_org_dataset(id=Uuid("<string>"))
+
+
+@pytest.mark.skip
+def test_update_org_dataset():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: OrgDataset = client.orgs.update_org_dataset(
+        id=Uuid("<string>"), body=UpdateOrgDataset()
+    )
+
+    body: OrgDataset = result
+    print(body)
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_update_org_dataset_async():
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: OrgDataset = await client.orgs.update_org_dataset(
+        id=Uuid("<string>"), body=UpdateOrgDataset()
+    )
+
+
+@pytest.mark.skip
+def test_list_org_dataset_conversions():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    # Iterate through all pages automatically
+    item: OrgDatasetFileConversionSummary
+    for item in client.orgs.list_org_dataset_conversions(
+        id=Uuid("<string>"),
+        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
+        limit=None,
+        page_token=None,
+    ):
+        print(item)
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_list_org_dataset_conversions_async():
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    # Iterate through all pages automatically
+    iterator = client.orgs.list_org_dataset_conversions(
+        id=Uuid("<string>"),
+        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
+        limit=None,
+        page_token=None,
+    )
+    item: OrgDatasetFileConversionSummary
+    async for item in iterator:
+        print(item)
+
+
+@pytest.mark.skip
+def test_get_org_dataset_conversion():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: OrgDatasetFileConversionDetails = client.orgs.get_org_dataset_conversion(
+        conversion_id=Uuid("<string>"), id=Uuid("<string>")
+    )
+
+    body: OrgDatasetFileConversionDetails = result
+    print(body)
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_get_org_dataset_conversion_async():
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: OrgDatasetFileConversionDetails = (
+        await client.orgs.get_org_dataset_conversion(
+            conversion_id=Uuid("<string>"), id=Uuid("<string>")
+        )
+    )
+
+
+@pytest.mark.skip
+def test_retry_org_dataset_conversion():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: OrgDatasetFileConversion = client.orgs.retry_org_dataset_conversion(
+        conversion_id=Uuid("<string>"), id=Uuid("<string>")
+    )
+
+    body: OrgDatasetFileConversion = result
+    print(body)
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_retry_org_dataset_conversion_async():
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: OrgDatasetFileConversion = await client.orgs.retry_org_dataset_conversion(
+        conversion_id=Uuid("<string>"), id=Uuid("<string>")
+    )
+
+
+@pytest.mark.skip
+def test_rescan_org_dataset():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: OrgDataset = client.orgs.rescan_org_dataset(id=Uuid("<string>"))
+
+    body: OrgDataset = result
+    print(body)
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_rescan_org_dataset_async():
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: OrgDataset = await client.orgs.rescan_org_dataset(id=Uuid("<string>"))
+
+
+@pytest.mark.skip
+def test_get_org_dataset_conversion_stats():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: OrgDatasetConversionStatsResponse = (
+        client.orgs.get_org_dataset_conversion_stats(id=Uuid("<string>"))
+    )
+
+    body: OrgDatasetConversionStatsResponse = result
+    print(body)
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_get_org_dataset_conversion_stats_async():
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: OrgDatasetConversionStatsResponse = (
+        await client.orgs.get_org_dataset_conversion_stats(id=Uuid("<string>"))
     )
 
 
@@ -1790,8 +2145,8 @@ def test_create_org_saml_idp():
         body=SamlIdentityProviderCreate(
             idp_entity_id="<string>",
             idp_metadata_source=IdpMetadataSource(
-                OptionBase64EncodedXml(
-                    data=Base64Data(b"<bytes>"),
+                OptionUrl(
+                    url="<string>",
                 )
             ),
             technical_contact_email="<string>",
@@ -1812,8 +2167,8 @@ async def test_create_org_saml_idp_async():
         body=SamlIdentityProviderCreate(
             idp_entity_id="<string>",
             idp_metadata_source=IdpMetadataSource(
-                OptionBase64EncodedXml(
-                    data=Base64Data(b"<bytes>"),
+                OptionUrl(
+                    url="<string>",
                 )
             ),
             technical_contact_email="<string>",
@@ -1829,8 +2184,8 @@ def test_update_org_saml_idp():
         body=SamlIdentityProviderCreate(
             idp_entity_id="<string>",
             idp_metadata_source=IdpMetadataSource(
-                OptionBase64EncodedXml(
-                    data=Base64Data(b"<bytes>"),
+                OptionUrl(
+                    url="<string>",
                 )
             ),
             technical_contact_email="<string>",
@@ -1851,8 +2206,8 @@ async def test_update_org_saml_idp_async():
         body=SamlIdentityProviderCreate(
             idp_entity_id="<string>",
             idp_metadata_source=IdpMetadataSource(
-                OptionBase64EncodedXml(
-                    data=Base64Data(b"<bytes>"),
+                OptionUrl(
+                    url="<string>",
                 )
             ),
             technical_contact_email="<string>",
@@ -2053,8 +2408,8 @@ def test_update_enterprise_pricing_for_org():
 
     result: ZooProductSubscriptions = client.orgs.update_enterprise_pricing_for_org(
         id=Uuid("<string>"),
-        body=EnterpriseSubscriptionTierPrice(
-            OptionFlat(
+        body=SubscriptionTierPrice(
+            OptionPerUser(
                 interval=PlanInterval.DAY,
                 price=3.14,
             )
@@ -2074,8 +2429,8 @@ async def test_update_enterprise_pricing_for_org_async():
     result: ZooProductSubscriptions = (
         await client.orgs.update_enterprise_pricing_for_org(
             id=Uuid("<string>"),
-            body=EnterpriseSubscriptionTierPrice(
-                OptionFlat(
+            body=SubscriptionTierPrice(
+                OptionPerUser(
                     interval=PlanInterval.DAY,
                     price=3.14,
                 )
@@ -3690,8 +4045,25 @@ def test_ml_copilot_ws():
         # Send a message.
         websocket.send(
             MlCopilotClientMessage(
-                OptionHeaders(
-                    headers={"<string>": "<string>"},
+                OptionUser(
+                    content="<string>",
+                    current_files={"<string>": b"<bytes>"},
+                    forced_tools=[MlCopilotTool.EDIT_KCL_CODE],
+                    source_ranges=[
+                        SourceRangePrompt(
+                            prompt="<string>",
+                            range=SourceRange(
+                                end=SourcePosition(
+                                    column=10,
+                                    line=10,
+                                ),
+                                start=SourcePosition(
+                                    column=10,
+                                    line=10,
+                                ),
+                            ),
+                        )
+                    ],
                 )
             )
         )

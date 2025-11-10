@@ -231,6 +231,40 @@ Ml API
 Orgs API
 --------
 
+**list_org_datasets**
+    List every dataset that belongs to the caller's organization.
+    
+    Returns: ``SyncPageIterator[OrgDataset]``
+    
+    Example:
+    
+    .. code-block:: python
+    
+        # Sync
+        for item in client.orgs.list_org_datasets():
+            print(item)
+            
+        # Async  
+        async for item in client.orgs.list_org_datasets():
+            print(item)
+
+**list_org_dataset_conversions**
+    List the file conversions that have been processed for a given dataset owned by the caller's org.
+    
+    Returns: ``SyncPageIterator[OrgDatasetFileConversionSummary]``
+    
+    Example:
+    
+    .. code-block:: python
+    
+        # Sync
+        for item in client.orgs.list_org_dataset_conversions():
+            print(item)
+            
+        # Async  
+        async for item in client.orgs.list_org_dataset_conversions():
+            print(item)
+
 **list_org_members**
     List members of your org.
     
