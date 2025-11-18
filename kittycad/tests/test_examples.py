@@ -107,9 +107,8 @@ from kittycad.models.ml_feedback import MlFeedback
 from kittycad.models.modeling_app_event_type import ModelingAppEventType
 from kittycad.models.org_dataset_source import OrgDatasetSource
 from kittycad.models.org_details import OrgDetails
-from kittycad.models.output_format3d import OptionPly, OutputFormat3d
+from kittycad.models.output_format3d import OptionStl, OutputFormat3d
 from kittycad.models.plan_interval import PlanInterval
-from kittycad.models.ply_storage import PlyStorage
 from kittycad.models.post_effect_type import PostEffectType
 from kittycad.models.privacy_settings import PrivacySettings
 from kittycad.models.rtc_ice_candidate_init import RtcIceCandidateInit
@@ -120,6 +119,7 @@ from kittycad.models.session_uuid import SessionUuid
 from kittycad.models.source_position import SourcePosition
 from kittycad.models.source_range import SourceRange
 from kittycad.models.source_range_prompt import SourceRangePrompt
+from kittycad.models.stl_storage import StlStorage
 from kittycad.models.storage_provider import StorageProvider
 from kittycad.models.store_coupon_params import StoreCouponParams
 from kittycad.models.subscribe import Subscribe
@@ -627,7 +627,7 @@ def test_create_file_conversion_options():
     result: FileConversion = client.file.create_file_conversion_options(
         body=ConversionParams(
             output_format=OutputFormat3d(
-                OptionPly(
+                OptionStl(
                     coords=System(
                         forward=AxisDirectionPair(
                             axis=Axis.Y,
@@ -639,7 +639,7 @@ def test_create_file_conversion_options():
                         ),
                     ),
                     selection=Selection(OptionDefaultScene()),
-                    storage=PlyStorage.ASCII,
+                    storage=StlStorage.ASCII,
                     units=UnitLength.CM,
                 )
             ),
@@ -668,7 +668,7 @@ async def test_create_file_conversion_options_async():
     result: FileConversion = await client.file.create_file_conversion_options(
         body=ConversionParams(
             output_format=OutputFormat3d(
-                OptionPly(
+                OptionStl(
                     coords=System(
                         forward=AxisDirectionPair(
                             axis=Axis.Y,
@@ -680,7 +680,7 @@ async def test_create_file_conversion_options_async():
                         ),
                     ),
                     selection=Selection(OptionDefaultScene()),
-                    storage=PlyStorage.ASCII,
+                    storage=StlStorage.ASCII,
                     units=UnitLength.CM,
                 )
             ),

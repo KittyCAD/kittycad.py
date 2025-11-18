@@ -1,5 +1,5 @@
 import datetime
-from typing import List, Optional, Union
+from typing import Dict, List, Optional, Union
 
 from pydantic import RootModel, model_serializer, model_validator
 
@@ -151,6 +151,30 @@ class Info(KittyCadBaseModel):
         return {"info": payload}
 
 
+class ProjectUpdated(KittyCadBaseModel):
+    """Notification that the KCL project has been updated."""
+
+    files: Dict[str, str]
+
+    @model_validator(mode="before")
+    @classmethod
+    def _unwrap(cls, data):
+        if (
+            isinstance(data, dict)
+            and "project_updated" in data
+            and isinstance(data["project_updated"], dict)
+        ):
+            return data["project_updated"]
+
+        return data
+
+    @model_serializer(mode="wrap")
+    def _wrap(self, handler, info):
+        payload = handler(self, info)
+
+        return {"project_updated": payload}
+
+
 class Reasoning(KittyCadBaseModel):
     """Assistant reasoning / chain-of-thought (if you expose it)."""
 
@@ -160,7 +184,7 @@ class Reasoning(KittyCadBaseModel):
 class Replay(KittyCadBaseModel):
     """Replay containing raw bytes for previously-saved messages for a conversation. Includes server messages and client `User` messages.
 
-    Invariants: - Includes server messages: `Info`, `Error`, `Reasoning(..)`, `ToolOutput { .. }`, and `EndOfStream { .. }`. - Also includes client `User` messages. - The following are NEVER included: `SessionData`, `ConversationId`, or `Delta`. - Ordering is stable: messages are ordered by prompt creation time within the conversation, then by the per-prompt `seq` value (monotonically increasing as seen in the original stream).
+    Invariants: - Includes server messages: `Info`, `Error`, `Reasoning(..)`, `ToolOutput { .. }`, `ProjectUpdated { .. }`, and `EndOfStream { .. }`. - Also includes client `User` messages. - The following are NEVER included: `SessionData`, `ConversationId`, or `Delta`. - Ordering is stable: messages are ordered by prompt creation time within the conversation, then by the per-prompt `seq` value (monotonically increasing as seen in the original stream).
 
     Wire format: - Each element is canonical serialized bytes (typically JSON) for either a `MlCopilotServerMessage` or a `MlCopilotClientMessage::User`. - When delivered as an initial replay over the websocket (upon `?replay=true&conversation_id=<uuid>`), the server sends a single WebSocket Binary frame containing a BSON-encoded document of this enum: `Replay { messages }`."""
 
@@ -225,6 +249,7 @@ MlCopilotServerMessage = RootModel[
         ToolOutput,
         Error,
         Info,
+        ProjectUpdated,
         Reasoning,
         Replay,
         EndOfStream,
