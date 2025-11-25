@@ -213,7 +213,7 @@ class MetaAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -242,7 +242,7 @@ class MetaAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -283,7 +283,7 @@ class MetaAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -304,7 +304,7 @@ class MetaAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -335,7 +335,7 @@ class MetaAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -361,7 +361,7 @@ class MetaAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -388,7 +388,7 @@ class MetaAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -415,7 +415,7 @@ class MetaAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -451,7 +451,7 @@ class AsyncMetaAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -480,7 +480,7 @@ class AsyncMetaAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -521,7 +521,7 @@ class AsyncMetaAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -542,7 +542,7 @@ class AsyncMetaAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -573,7 +573,7 @@ class AsyncMetaAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -599,7 +599,7 @@ class AsyncMetaAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -626,7 +626,7 @@ class AsyncMetaAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -653,7 +653,7 @@ class AsyncMetaAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -706,7 +706,7 @@ class MlAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -826,7 +826,7 @@ class MlAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -965,7 +965,7 @@ class MlAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -994,7 +994,7 @@ class MlAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -1022,7 +1022,7 @@ class MlAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -1052,7 +1052,7 @@ class MlAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -1080,7 +1080,7 @@ class MlAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -1111,7 +1111,7 @@ class MlAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -1146,7 +1146,7 @@ class MlAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -1231,7 +1231,7 @@ class MlAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -1383,7 +1383,7 @@ class MlAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -1420,7 +1420,7 @@ class MlAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -1498,7 +1498,7 @@ class AsyncMlAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -1618,7 +1618,7 @@ class AsyncMlAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -1757,7 +1757,7 @@ class AsyncMlAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -1786,7 +1786,7 @@ class AsyncMlAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -1814,7 +1814,7 @@ class AsyncMlAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -1844,7 +1844,7 @@ class AsyncMlAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -1872,7 +1872,7 @@ class AsyncMlAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -1903,7 +1903,7 @@ class AsyncMlAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -1938,7 +1938,7 @@ class AsyncMlAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -2023,7 +2023,7 @@ class AsyncMlAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -2175,7 +2175,7 @@ class AsyncMlAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -2212,7 +2212,7 @@ class AsyncMlAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -2309,7 +2309,7 @@ class ApiCallsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -2431,7 +2431,7 @@ class ApiCallsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -2565,7 +2565,7 @@ class ApiCallsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -2685,7 +2685,7 @@ class ApiCallsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -2803,7 +2803,7 @@ class ApiCallsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -2943,7 +2943,7 @@ class AsyncApiCallsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -3065,7 +3065,7 @@ class AsyncApiCallsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -3201,7 +3201,7 @@ class AsyncApiCallsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -3323,7 +3323,7 @@ class AsyncApiCallsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -3443,7 +3443,7 @@ class AsyncApiCallsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -3578,7 +3578,7 @@ class AppsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -3601,7 +3601,7 @@ class AppsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -3630,7 +3630,7 @@ class AppsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -3660,7 +3660,7 @@ class AsyncAppsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -3683,7 +3683,7 @@ class AsyncAppsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -3712,7 +3712,7 @@ class AsyncAppsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -3740,7 +3740,7 @@ class HiddenAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -3769,7 +3769,7 @@ class HiddenAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -3818,7 +3818,7 @@ class HiddenAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -3850,7 +3850,7 @@ class HiddenAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -3882,7 +3882,7 @@ class HiddenAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -3908,7 +3908,7 @@ class HiddenAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -3929,7 +3929,7 @@ class HiddenAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -3951,7 +3951,7 @@ class HiddenAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -3979,7 +3979,7 @@ class AsyncHiddenAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -4008,7 +4008,7 @@ class AsyncHiddenAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -4057,7 +4057,7 @@ class AsyncHiddenAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -4089,7 +4089,7 @@ class AsyncHiddenAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -4121,7 +4121,7 @@ class AsyncHiddenAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -4147,7 +4147,7 @@ class AsyncHiddenAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -4168,7 +4168,7 @@ class AsyncHiddenAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -4190,7 +4190,7 @@ class AsyncHiddenAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -4243,7 +4243,7 @@ class FileAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -4324,7 +4324,7 @@ class FileAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -4363,7 +4363,7 @@ class FileAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -4429,7 +4429,7 @@ class FileAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -4495,7 +4495,7 @@ class FileAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -4547,7 +4547,7 @@ class FileAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -4599,7 +4599,7 @@ class FileAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -4658,7 +4658,7 @@ class AsyncFileAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -4739,7 +4739,7 @@ class AsyncFileAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -4778,7 +4778,7 @@ class AsyncFileAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -4844,7 +4844,7 @@ class AsyncFileAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -4910,7 +4910,7 @@ class AsyncFileAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -4962,7 +4962,7 @@ class AsyncFileAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -5014,7 +5014,7 @@ class AsyncFileAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -5059,7 +5059,7 @@ class ExecutorAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -5117,7 +5117,7 @@ class AsyncExecutorAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -5175,7 +5175,7 @@ class Oauth2API:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -5198,7 +5198,7 @@ class Oauth2API:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -5221,7 +5221,7 @@ class Oauth2API:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -5257,7 +5257,7 @@ class Oauth2API:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -5310,7 +5310,7 @@ class Oauth2API:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -5336,7 +5336,7 @@ class Oauth2API:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -5368,7 +5368,7 @@ class Oauth2API:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -5397,7 +5397,7 @@ class Oauth2API:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -5427,7 +5427,7 @@ class AsyncOauth2API:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -5450,7 +5450,7 @@ class AsyncOauth2API:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -5473,7 +5473,7 @@ class AsyncOauth2API:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -5509,7 +5509,7 @@ class AsyncOauth2API:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -5562,7 +5562,7 @@ class AsyncOauth2API:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -5588,7 +5588,7 @@ class AsyncOauth2API:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -5620,7 +5620,7 @@ class AsyncOauth2API:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -5649,7 +5649,7 @@ class AsyncOauth2API:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -5677,7 +5677,7 @@ class OrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -5706,7 +5706,7 @@ class OrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -5735,7 +5735,7 @@ class OrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -5766,7 +5766,7 @@ class OrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -5801,7 +5801,7 @@ class OrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -5918,7 +5918,7 @@ class OrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -5946,7 +5946,7 @@ class OrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -5976,7 +5976,7 @@ class OrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -6100,7 +6100,7 @@ class OrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -6131,7 +6131,7 @@ class OrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -6159,7 +6159,7 @@ class OrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -6187,7 +6187,7 @@ class OrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -6322,7 +6322,7 @@ class OrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -6350,7 +6350,7 @@ class OrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -6380,7 +6380,7 @@ class OrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -6408,7 +6408,7 @@ class OrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -6429,7 +6429,7 @@ class OrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -6458,7 +6458,7 @@ class OrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -6485,7 +6485,7 @@ class OrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -6514,7 +6514,7 @@ class OrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -6543,7 +6543,7 @@ class OrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -6570,7 +6570,7 @@ class OrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -6768,7 +6768,7 @@ class OrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -6796,7 +6796,7 @@ class OrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -6826,7 +6826,7 @@ class OrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -6855,7 +6855,7 @@ class OrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -6889,7 +6889,7 @@ class AsyncOrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -6918,7 +6918,7 @@ class AsyncOrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -6947,7 +6947,7 @@ class AsyncOrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -6978,7 +6978,7 @@ class AsyncOrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -7013,7 +7013,7 @@ class AsyncOrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -7130,7 +7130,7 @@ class AsyncOrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -7158,7 +7158,7 @@ class AsyncOrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -7188,7 +7188,7 @@ class AsyncOrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -7312,7 +7312,7 @@ class AsyncOrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -7343,7 +7343,7 @@ class AsyncOrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -7371,7 +7371,7 @@ class AsyncOrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -7399,7 +7399,7 @@ class AsyncOrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -7534,7 +7534,7 @@ class AsyncOrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -7562,7 +7562,7 @@ class AsyncOrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -7592,7 +7592,7 @@ class AsyncOrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -7620,7 +7620,7 @@ class AsyncOrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -7641,7 +7641,7 @@ class AsyncOrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -7670,7 +7670,7 @@ class AsyncOrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -7697,7 +7697,7 @@ class AsyncOrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -7726,7 +7726,7 @@ class AsyncOrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -7755,7 +7755,7 @@ class AsyncOrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -7782,7 +7782,7 @@ class AsyncOrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -7980,7 +7980,7 @@ class AsyncOrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -8008,7 +8008,7 @@ class AsyncOrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -8038,7 +8038,7 @@ class AsyncOrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -8067,7 +8067,7 @@ class AsyncOrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -8103,7 +8103,7 @@ class PaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -8134,7 +8134,7 @@ class PaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -8165,7 +8165,7 @@ class PaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -8194,7 +8194,7 @@ class PaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -8223,7 +8223,7 @@ class PaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -8250,7 +8250,7 @@ class PaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -8277,7 +8277,7 @@ class PaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -8306,7 +8306,7 @@ class PaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -8336,7 +8336,7 @@ class PaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -8357,7 +8357,7 @@ class PaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -8386,7 +8386,7 @@ class PaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -8415,7 +8415,7 @@ class PaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -8442,7 +8442,7 @@ class PaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -8472,7 +8472,7 @@ class PaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -8510,7 +8510,7 @@ class PaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -8539,7 +8539,7 @@ class PaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -8570,7 +8570,7 @@ class PaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -8601,7 +8601,7 @@ class PaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -8630,7 +8630,7 @@ class PaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -8659,7 +8659,7 @@ class PaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -8686,7 +8686,7 @@ class PaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -8713,7 +8713,7 @@ class PaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -8742,7 +8742,7 @@ class PaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -8780,7 +8780,7 @@ class PaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -8801,7 +8801,7 @@ class PaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -8830,7 +8830,7 @@ class PaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -8859,7 +8859,7 @@ class PaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -8886,7 +8886,7 @@ class PaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -8916,7 +8916,7 @@ class PaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -8954,7 +8954,7 @@ class PaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -8990,7 +8990,7 @@ class AsyncPaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -9021,7 +9021,7 @@ class AsyncPaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -9052,7 +9052,7 @@ class AsyncPaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -9081,7 +9081,7 @@ class AsyncPaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -9110,7 +9110,7 @@ class AsyncPaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -9137,7 +9137,7 @@ class AsyncPaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -9164,7 +9164,7 @@ class AsyncPaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -9193,7 +9193,7 @@ class AsyncPaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -9223,7 +9223,7 @@ class AsyncPaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -9244,7 +9244,7 @@ class AsyncPaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -9273,7 +9273,7 @@ class AsyncPaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -9302,7 +9302,7 @@ class AsyncPaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -9329,7 +9329,7 @@ class AsyncPaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -9359,7 +9359,7 @@ class AsyncPaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -9397,7 +9397,7 @@ class AsyncPaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -9426,7 +9426,7 @@ class AsyncPaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -9457,7 +9457,7 @@ class AsyncPaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -9488,7 +9488,7 @@ class AsyncPaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -9517,7 +9517,7 @@ class AsyncPaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -9546,7 +9546,7 @@ class AsyncPaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -9573,7 +9573,7 @@ class AsyncPaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -9600,7 +9600,7 @@ class AsyncPaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -9629,7 +9629,7 @@ class AsyncPaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -9667,7 +9667,7 @@ class AsyncPaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -9688,7 +9688,7 @@ class AsyncPaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -9717,7 +9717,7 @@ class AsyncPaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -9746,7 +9746,7 @@ class AsyncPaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -9773,7 +9773,7 @@ class AsyncPaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -9803,7 +9803,7 @@ class AsyncPaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -9841,7 +9841,7 @@ class AsyncPaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -9975,7 +9975,7 @@ class ServiceAccountsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -10005,7 +10005,7 @@ class ServiceAccountsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -10037,7 +10037,7 @@ class ServiceAccountsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -10165,7 +10165,7 @@ class AsyncServiceAccountsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -10195,7 +10195,7 @@ class AsyncServiceAccountsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -10227,7 +10227,7 @@ class AsyncServiceAccountsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -10257,7 +10257,7 @@ class StoreAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -10293,7 +10293,7 @@ class AsyncStoreAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -10338,7 +10338,7 @@ class UnitAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -10376,7 +10376,7 @@ class UnitAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -10414,7 +10414,7 @@ class UnitAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -10452,7 +10452,7 @@ class UnitAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -10490,7 +10490,7 @@ class UnitAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -10528,7 +10528,7 @@ class UnitAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -10566,7 +10566,7 @@ class UnitAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -10604,7 +10604,7 @@ class UnitAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -10642,7 +10642,7 @@ class UnitAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -10680,7 +10680,7 @@ class UnitAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -10718,7 +10718,7 @@ class UnitAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -10756,7 +10756,7 @@ class UnitAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -10794,7 +10794,7 @@ class UnitAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -10839,7 +10839,7 @@ class AsyncUnitAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -10877,7 +10877,7 @@ class AsyncUnitAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -10915,7 +10915,7 @@ class AsyncUnitAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -10953,7 +10953,7 @@ class AsyncUnitAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -10991,7 +10991,7 @@ class AsyncUnitAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -11029,7 +11029,7 @@ class AsyncUnitAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -11067,7 +11067,7 @@ class AsyncUnitAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -11105,7 +11105,7 @@ class AsyncUnitAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -11143,7 +11143,7 @@ class AsyncUnitAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -11181,7 +11181,7 @@ class AsyncUnitAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -11219,7 +11219,7 @@ class AsyncUnitAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -11257,7 +11257,7 @@ class AsyncUnitAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -11295,7 +11295,7 @@ class AsyncUnitAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -11331,7 +11331,7 @@ class UsersAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -11360,7 +11360,7 @@ class UsersAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -11389,7 +11389,7 @@ class UsersAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -11412,7 +11412,7 @@ class UsersAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -11435,7 +11435,7 @@ class UsersAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -11464,7 +11464,7 @@ class UsersAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -11487,7 +11487,7 @@ class UsersAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -11516,7 +11516,7 @@ class UsersAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -11545,7 +11545,7 @@ class UsersAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -11573,7 +11573,7 @@ class UsersAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -11690,7 +11690,7 @@ class UsersAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -11722,7 +11722,7 @@ class UsersAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -11744,7 +11744,7 @@ class UsersAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -11944,7 +11944,7 @@ class UsersAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -11974,7 +11974,7 @@ class UsersAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -12002,7 +12002,7 @@ class UsersAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -12032,7 +12032,7 @@ class UsersAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -12061,7 +12061,7 @@ class UsersAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -12084,7 +12084,7 @@ class UsersAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -12114,7 +12114,7 @@ class AsyncUsersAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -12143,7 +12143,7 @@ class AsyncUsersAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -12172,7 +12172,7 @@ class AsyncUsersAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -12195,7 +12195,7 @@ class AsyncUsersAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -12218,7 +12218,7 @@ class AsyncUsersAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -12247,7 +12247,7 @@ class AsyncUsersAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -12270,7 +12270,7 @@ class AsyncUsersAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -12299,7 +12299,7 @@ class AsyncUsersAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -12328,7 +12328,7 @@ class AsyncUsersAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -12356,7 +12356,7 @@ class AsyncUsersAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -12473,7 +12473,7 @@ class AsyncUsersAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -12505,7 +12505,7 @@ class AsyncUsersAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -12527,7 +12527,7 @@ class AsyncUsersAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -12729,7 +12729,7 @@ class AsyncUsersAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -12759,7 +12759,7 @@ class AsyncUsersAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -12787,7 +12787,7 @@ class AsyncUsersAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -12817,7 +12817,7 @@ class AsyncUsersAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -12846,7 +12846,7 @@ class AsyncUsersAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -12869,7 +12869,7 @@ class AsyncUsersAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -12995,7 +12995,7 @@ class ApiTokensAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -13023,7 +13023,7 @@ class ApiTokensAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -13053,7 +13053,7 @@ class ApiTokensAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -13181,7 +13181,7 @@ class AsyncApiTokensAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -13209,7 +13209,7 @@ class AsyncApiTokensAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -13239,7 +13239,7 @@ class AsyncApiTokensAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
