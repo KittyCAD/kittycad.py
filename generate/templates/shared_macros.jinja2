@@ -117,9 +117,9 @@
    
    Args:
      response_type: Expected response type for deserialization
-     import_path: Import path for raise_for_status (default: ..response_helpers)
+     import_path: Import path for raise_for_status (default: kittycad.response_helpers)
 #}
-{% macro parse_response(response_type, import_path="..response_helpers") -%}
+{% macro parse_response(response_type, import_path="kittycad.response_helpers") -%}
         if not response.is_success:
             from {{ import_path }} import raise_for_status
             raise_for_status(response)
