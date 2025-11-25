@@ -52,7 +52,7 @@
         {% endif %}
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
             raise_for_status(response)
         
         {% if response_type and response_type != "" %}
