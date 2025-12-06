@@ -120,6 +120,7 @@ from ..models.set_grid_auto_scale import SetGridAutoScale
 from ..models.set_grid_reference_plane import SetGridReferencePlane
 from ..models.set_grid_scale import SetGridScale
 from ..models.set_object_transform import SetObjectTransform
+from ..models.set_order_independent_transparency import SetOrderIndependentTransparency
 from ..models.set_scene_units import SetSceneUnits
 from ..models.set_selection_filter import SetSelectionFilter
 from ..models.set_selection_type import SetSelectionType
@@ -1289,6 +1290,16 @@ class OptionSetGridAutoScale(KittyCadBaseModel):
     type: Literal["set_grid_auto_scale"] = "set_grid_auto_scale"
 
 
+class OptionSetOrderIndependentTransparency(KittyCadBaseModel):
+    """"""
+
+    data: SetOrderIndependentTransparency
+
+    type: Literal["set_order_independent_transparency"] = (
+        "set_order_independent_transparency"
+    )
+
+
 OkModelingCmdResponse = RootModel[
     Annotated[
         Union[
@@ -1434,6 +1445,7 @@ OkModelingCmdResponse = RootModel[
             OptionBooleanSubtract,
             OptionSetGridScale,
             OptionSetGridAutoScale,
+            OptionSetOrderIndependentTransparency,
         ],
         Field(discriminator="type"),
     ]
