@@ -78,8 +78,7 @@ from kittycad.models.add_org_member import AddOrgMember
 from kittycad.models.api_call_query_group_by import ApiCallQueryGroupBy
 from kittycad.models.api_call_status import ApiCallStatus
 from kittycad.models.api_token_uuid import ApiTokenUuid
-from kittycad.models.axis import Axis
-from kittycad.models.axis_direction_pair import AxisDirectionPair
+from kittycad.models.base64data import Base64Data
 from kittycad.models.billing_info import BillingInfo
 from kittycad.models.code_language import CodeLanguage
 from kittycad.models.code_option import CodeOption
@@ -89,42 +88,41 @@ from kittycad.models.create_org_dataset import CreateOrgDataset
 from kittycad.models.create_shortlink_request import CreateShortlinkRequest
 from kittycad.models.created_at_sort_mode import CreatedAtSortMode
 from kittycad.models.crm_data import CrmData
-from kittycad.models.direction import Direction
 from kittycad.models.email_authentication_form import EmailAuthenticationForm
 from kittycad.models.event import Event, OptionModelingAppEvent
+from kittycad.models.fbx_storage import FbxStorage
 from kittycad.models.file_export_format import FileExportFormat
 from kittycad.models.file_import_format import FileImportFormat
-from kittycad.models.idp_metadata_source import IdpMetadataSource, OptionUrl
+from kittycad.models.idp_metadata_source import (
+    IdpMetadataSource,
+    OptionBase64EncodedXml,
+    OptionUrl,
+)
 from kittycad.models.input_format3d import InputFormat3d, OptionSldprt
 from kittycad.models.inquiry_form import InquiryForm
 from kittycad.models.inquiry_type import InquiryType
 from kittycad.models.kcl_code_completion_params import KclCodeCompletionParams
 from kittycad.models.kcl_code_completion_request import KclCodeCompletionRequest
-from kittycad.models.ml_copilot_client_message import OptionSystem, OptionUser
-from kittycad.models.ml_copilot_system_command import MlCopilotSystemCommand
-from kittycad.models.ml_copilot_tool import MlCopilotTool
+from kittycad.models.ml_copilot_client_message import OptionHeaders
 from kittycad.models.ml_feedback import MlFeedback
 from kittycad.models.modeling_app_event_type import ModelingAppEventType
 from kittycad.models.org_dataset_source import OrgDatasetSource
 from kittycad.models.org_details import OrgDetails
-from kittycad.models.output_format3d import OptionStl, OutputFormat3d
+from kittycad.models.output_format3d import OptionFbx, OutputFormat3d
 from kittycad.models.plan_interval import PlanInterval
 from kittycad.models.post_effect_type import PostEffectType
 from kittycad.models.privacy_settings import PrivacySettings
 from kittycad.models.rtc_ice_candidate_init import RtcIceCandidateInit
 from kittycad.models.saml_identity_provider_create import SamlIdentityProviderCreate
-from kittycad.models.selection import OptionDefaultScene, Selection
 from kittycad.models.service_account_uuid import ServiceAccountUuid
 from kittycad.models.session_uuid import SessionUuid
 from kittycad.models.source_position import SourcePosition
 from kittycad.models.source_range import SourceRange
 from kittycad.models.source_range_prompt import SourceRangePrompt
-from kittycad.models.stl_storage import StlStorage
 from kittycad.models.storage_provider import StorageProvider
 from kittycad.models.store_coupon_params import StoreCouponParams
 from kittycad.models.subscribe import Subscribe
 from kittycad.models.subscription_tier_price import OptionPerUser, SubscriptionTierPrice
-from kittycad.models.system import System
 from kittycad.models.text_to_cad_create_body import TextToCadCreateBody
 from kittycad.models.text_to_cad_iteration_body import TextToCadIterationBody
 from kittycad.models.text_to_cad_multi_file_iteration_body import (
@@ -627,20 +625,8 @@ def test_create_file_conversion_options():
     result: FileConversion = client.file.create_file_conversion_options(
         body=ConversionParams(
             output_format=OutputFormat3d(
-                OptionStl(
-                    coords=System(
-                        forward=AxisDirectionPair(
-                            axis=Axis.Y,
-                            direction=Direction.POSITIVE,
-                        ),
-                        up=AxisDirectionPair(
-                            axis=Axis.Y,
-                            direction=Direction.POSITIVE,
-                        ),
-                    ),
-                    selection=Selection(OptionDefaultScene()),
-                    storage=StlStorage.ASCII,
-                    units=UnitLength.CM,
+                OptionFbx(
+                    storage=FbxStorage.ASCII,
                 )
             ),
             src_format=InputFormat3d(
@@ -668,20 +654,8 @@ async def test_create_file_conversion_options_async():
     result: FileConversion = await client.file.create_file_conversion_options(
         body=ConversionParams(
             output_format=OutputFormat3d(
-                OptionStl(
-                    coords=System(
-                        forward=AxisDirectionPair(
-                            axis=Axis.Y,
-                            direction=Direction.POSITIVE,
-                        ),
-                        up=AxisDirectionPair(
-                            axis=Axis.Y,
-                            direction=Direction.POSITIVE,
-                        ),
-                    ),
-                    selection=Selection(OptionDefaultScene()),
-                    storage=StlStorage.ASCII,
-                    units=UnitLength.CM,
+                OptionFbx(
+                    storage=FbxStorage.ASCII,
                 )
             ),
             src_format=InputFormat3d(
@@ -2184,8 +2158,8 @@ def test_update_org_saml_idp():
         body=SamlIdentityProviderCreate(
             idp_entity_id="<string>",
             idp_metadata_source=IdpMetadataSource(
-                OptionUrl(
-                    url="<string>",
+                OptionBase64EncodedXml(
+                    data=Base64Data(b"<bytes>"),
                 )
             ),
             technical_contact_email="<string>",
@@ -2206,8 +2180,8 @@ async def test_update_org_saml_idp_async():
         body=SamlIdentityProviderCreate(
             idp_entity_id="<string>",
             idp_metadata_source=IdpMetadataSource(
-                OptionUrl(
-                    url="<string>",
+                OptionBase64EncodedXml(
+                    data=Base64Data(b"<bytes>"),
                 )
             ),
             technical_contact_email="<string>",
@@ -4045,25 +4019,8 @@ def test_ml_copilot_ws():
         # Send a message.
         websocket.send(
             MlCopilotClientMessage(
-                OptionUser(
-                    content="<string>",
-                    current_files={"<string>": b"<bytes>"},
-                    forced_tools=[MlCopilotTool.EDIT_KCL_CODE],
-                    source_ranges=[
-                        SourceRangePrompt(
-                            prompt="<string>",
-                            range=SourceRange(
-                                end=SourcePosition(
-                                    column=10,
-                                    line=10,
-                                ),
-                                start=SourcePosition(
-                                    column=10,
-                                    line=10,
-                                ),
-                            ),
-                        )
-                    ],
+                OptionHeaders(
+                    headers={"<string>": "<string>"},
                 )
             )
         )
@@ -4099,8 +4056,8 @@ def test_ml_reasoning_ws():
         # Send a message.
         websocket.send(
             MlCopilotClientMessage(
-                OptionSystem(
-                    command=MlCopilotSystemCommand.NEW,
+                OptionHeaders(
+                    headers={"<string>": "<string>"},
                 )
             )
         )
@@ -4134,6 +4091,7 @@ def test_modeling_commands_ws():
     # Connect to the websocket.
     with client.modeling.modeling_commands_ws(
         fps=10,
+        order_independent_transparency=False,
         post_effect=PostEffectType.PHOSPHOR,
         show_grid=False,
         unlocked_framerate=False,
@@ -4169,6 +4127,7 @@ async def test_modeling_commands_ws_async():
     # Connect to the websocket.
     websocket = await client.modeling.modeling_commands_ws(
         fps=10,
+        order_independent_transparency=False,
         post_effect=PostEffectType.PHOSPHOR,
         show_grid=False,
         unlocked_framerate=False,

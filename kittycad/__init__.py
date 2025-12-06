@@ -13256,6 +13256,7 @@ class ModelingAPI:
         self,
         api_call_id: Optional[str] = None,
         fps: Optional[int] = None,
+        order_independent_transparency: Optional[bool] = None,
         pool: Optional[str] = None,
         post_effect: Optional[PostEffectType] = None,
         replay: Optional[str] = None,
@@ -13274,6 +13275,7 @@ class ModelingAPI:
         return WebSocketModelingCommandsWs(
             api_call_id=api_call_id,
             fps=fps,
+            order_independent_transparency=order_independent_transparency,
             pool=pool,
             post_effect=post_effect,
             replay=replay,
@@ -13298,6 +13300,7 @@ class AsyncModelingAPI:
         self,
         api_call_id: Optional[str] = None,
         fps: Optional[int] = None,
+        order_independent_transparency: Optional[bool] = None,
         pool: Optional[str] = None,
         post_effect: Optional[PostEffectType] = None,
         replay: Optional[str] = None,
@@ -13319,6 +13322,7 @@ class AsyncModelingAPI:
             *,
             api_call_id: Optional[str] = None,
             fps: Optional[int] = None,
+            order_independent_transparency: Optional[bool] = None,
             pool: Optional[str] = None,
             post_effect: Optional[PostEffectType] = None,
             replay: Optional[str] = None,
@@ -13343,6 +13347,20 @@ class AsyncModelingAPI:
                     url = url + "&fps=" + str(fps)
                 else:
                     url = url + "?fps=" + str(fps)
+
+            if order_independent_transparency is not None:
+                if "?" in url:
+                    url = (
+                        url
+                        + "&order_independent_transparency="
+                        + str(order_independent_transparency).lower()
+                    )
+                else:
+                    url = (
+                        url
+                        + "?order_independent_transparency="
+                        + str(order_independent_transparency).lower()
+                    )
 
             if pool is not None:
                 if "?" in url:
@@ -13631,6 +13649,7 @@ class WebSocketModelingCommandsWs:
         self,
         api_call_id: Optional[str] = None,
         fps: Optional[int] = None,
+        order_independent_transparency: Optional[bool] = None,
         pool: Optional[str] = None,
         post_effect: Optional[PostEffectType] = None,
         replay: Optional[str] = None,
@@ -13659,6 +13678,20 @@ class WebSocketModelingCommandsWs:
                 url = url + "&fps=" + str(fps)
             else:
                 url = url + "?fps=" + str(fps)
+
+        if order_independent_transparency is not None:
+            if "?" in url:
+                url = (
+                    url
+                    + "&order_independent_transparency="
+                    + str(order_independent_transparency).lower()
+                )
+            else:
+                url = (
+                    url
+                    + "?order_independent_transparency="
+                    + str(order_independent_transparency).lower()
+                )
 
         if pool is not None:
             if "?" in url:

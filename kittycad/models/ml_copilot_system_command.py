@@ -12,5 +12,9 @@ class MlCopilotSystemCommand(str, Enum):
 
     BYE = "bye"
 
+    """# Interrupt the current prompt that is being processed."""  # noqa: E501
+
+    INTERRUPT = "interrupt"
+
     def __str__(self) -> str:
         return str(self.value)
