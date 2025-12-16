@@ -24,5 +24,9 @@ class InvoiceStatus(str, Enum):
 
     VOID = "void"
 
+    """# Unknown."""  # noqa: E501
+
+    UNKNOWN = "unknown"
+
     def __str__(self) -> str:
         return str(self.value)

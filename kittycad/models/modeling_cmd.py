@@ -643,6 +643,8 @@ class OptionObjectSetMaterialParamsPbr(KittyCadBaseModel):
 
     ambient_occlusion: float
 
+    backface_color: Optional[Color] = None
+
     color: Color
 
     metalness: float
@@ -1452,6 +1454,16 @@ class OptionSetGridAutoScale(KittyCadBaseModel):
     type: Literal["set_grid_auto_scale"] = "set_grid_auto_scale"
 
 
+class OptionSetOrderIndependentTransparency(KittyCadBaseModel):
+    """Render transparent surfaces more accurately, but this might make rendering slower. Because it can interfere with runtime performance, it defaults to false."""
+
+    enabled: Optional[bool] = None
+
+    type: Literal["set_order_independent_transparency"] = (
+        "set_order_independent_transparency"
+    )
+
+
 ModelingCmd = RootModel[
     Annotated[
         Union[
@@ -1589,6 +1601,7 @@ ModelingCmd = RootModel[
             OptionSetGridReferencePlane,
             OptionSetGridScale,
             OptionSetGridAutoScale,
+            OptionSetOrderIndependentTransparency,
         ],
         Field(discriminator="type"),
     ]

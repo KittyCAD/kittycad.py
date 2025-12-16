@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import List, Optional
 
 from ..models.inquiry_type import InquiryType
 from .base import KittyCadBaseModel
@@ -6,6 +6,8 @@ from .base import KittyCadBaseModel
 
 class InquiryForm(KittyCadBaseModel):
     """The form for a public inquiry submission."""
+
+    cad_platforms: Optional[List[str]] = None
 
     company: Optional[str] = None
 
@@ -17,8 +19,12 @@ class InquiryForm(KittyCadBaseModel):
 
     inquiry_type: InquiryType
 
+    job_title: Optional[str] = None
+
     last_name: str
 
     message: str
+
+    num_cad_users: Optional[str] = None
 
     phone: Optional[str] = None

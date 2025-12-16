@@ -171,6 +171,7 @@ from .models.update_shortlink_request import UpdateShortlinkRequest
 from .models.update_user import UpdateUser
 from .models.user import User
 from .models.user_admin_details import UserAdminDetails
+from .models.user_feature_list import UserFeatureList
 from .models.user_identifier import UserIdentifier
 from .models.user_org_info import UserOrgInfo
 from .models.user_org_role import UserOrgRole
@@ -11447,6 +11448,33 @@ class UsersAPI:
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return ExtendedUser.model_validate(json_data)
 
+    def user_features_get(
+        self,
+    ) -> UserFeatureList:
+        """Returns only features that are marked as safe for exposure to clients and currently resolved to `true` for the requesting user (including org overrides)."""
+
+        url = "{}/user/features".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return UserFeatureList.model_validate(json_data)
+
     def put_user_form_self(
         self,
         body: InquiryForm,
@@ -12229,6 +12257,33 @@ class AsyncUsersAPI:
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return ExtendedUser.model_validate(json_data)
+
+    async def user_features_get(
+        self,
+    ) -> UserFeatureList:
+        """Returns only features that are marked as safe for exposure to clients and currently resolved to `true` for the requesting user (including org overrides)."""
+
+        url = "{}/user/features".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return UserFeatureList.model_validate(json_data)
 
     async def put_user_form_self(
         self,
@@ -13256,6 +13311,7 @@ class ModelingAPI:
         self,
         api_call_id: Optional[str] = None,
         fps: Optional[int] = None,
+        order_independent_transparency: Optional[bool] = None,
         pool: Optional[str] = None,
         post_effect: Optional[PostEffectType] = None,
         replay: Optional[str] = None,
@@ -13264,6 +13320,7 @@ class ModelingAPI:
         video_res_height: Optional[int] = None,
         video_res_width: Optional[int] = None,
         webrtc: Optional[bool] = None,
+        pr: Optional[int] = None,
         recv_timeout: Optional[float] = None,
         ws_factory: Optional[Callable[..., ClientConnectionSync]] = None,
     ) -> "WebSocketModelingCommandsWs":
@@ -13274,6 +13331,7 @@ class ModelingAPI:
         return WebSocketModelingCommandsWs(
             api_call_id=api_call_id,
             fps=fps,
+            order_independent_transparency=order_independent_transparency,
             pool=pool,
             post_effect=post_effect,
             replay=replay,
@@ -13282,6 +13340,7 @@ class ModelingAPI:
             video_res_height=video_res_height,
             video_res_width=video_res_width,
             webrtc=webrtc,
+            pr=pr,
             recv_timeout=recv_timeout,
             ws_factory=ws_factory,
             client=self.client,
@@ -13298,6 +13357,7 @@ class AsyncModelingAPI:
         self,
         api_call_id: Optional[str] = None,
         fps: Optional[int] = None,
+        order_independent_transparency: Optional[bool] = None,
         pool: Optional[str] = None,
         post_effect: Optional[PostEffectType] = None,
         replay: Optional[str] = None,
@@ -13306,6 +13366,7 @@ class AsyncModelingAPI:
         video_res_height: Optional[int] = None,
         video_res_width: Optional[int] = None,
         webrtc: Optional[bool] = None,
+        pr: Optional[int] = None,
     ):
         """Open a websocket which accepts modeling commands.
 
@@ -13319,6 +13380,7 @@ class AsyncModelingAPI:
             *,
             api_call_id: Optional[str] = None,
             fps: Optional[int] = None,
+            order_independent_transparency: Optional[bool] = None,
             pool: Optional[str] = None,
             post_effect: Optional[PostEffectType] = None,
             replay: Optional[str] = None,
@@ -13327,6 +13389,7 @@ class AsyncModelingAPI:
             video_res_height: Optional[int] = None,
             video_res_width: Optional[int] = None,
             webrtc: Optional[bool] = None,
+            pr: Optional[int] = None,
         ) -> ClientConnectionAsync:
             """Open a websocket which accepts modeling commands."""
 
@@ -13343,6 +13406,20 @@ class AsyncModelingAPI:
                     url = url + "&fps=" + str(fps)
                 else:
                     url = url + "?fps=" + str(fps)
+
+            if order_independent_transparency is not None:
+                if "?" in url:
+                    url = (
+                        url
+                        + "&order_independent_transparency="
+                        + str(order_independent_transparency).lower()
+                    )
+                else:
+                    url = (
+                        url
+                        + "?order_independent_transparency="
+                        + str(order_independent_transparency).lower()
+                    )
 
             if pool is not None:
                 if "?" in url:
@@ -13391,6 +13468,12 @@ class AsyncModelingAPI:
                     url = url + "&webrtc=" + str(webrtc).lower()
                 else:
                     url = url + "?webrtc=" + str(webrtc).lower()
+
+            if pr is not None:
+                if "?" in url:
+                    url = url + "&pr=" + str(pr)
+                else:
+                    url = url + "?pr=" + str(pr)
 
             return await ws_connect_async(
                 url.replace("http", "ws"),
@@ -13631,6 +13714,7 @@ class WebSocketModelingCommandsWs:
         self,
         api_call_id: Optional[str] = None,
         fps: Optional[int] = None,
+        order_independent_transparency: Optional[bool] = None,
         pool: Optional[str] = None,
         post_effect: Optional[PostEffectType] = None,
         replay: Optional[str] = None,
@@ -13639,6 +13723,7 @@ class WebSocketModelingCommandsWs:
         video_res_height: Optional[int] = None,
         video_res_width: Optional[int] = None,
         webrtc: Optional[bool] = None,
+        pr: Optional[int] = None,
         recv_timeout: Optional[float] = None,
         ws_factory: Optional[Callable[..., ClientConnectionSync]] = None,
         *,
@@ -13659,6 +13744,20 @@ class WebSocketModelingCommandsWs:
                 url = url + "&fps=" + str(fps)
             else:
                 url = url + "?fps=" + str(fps)
+
+        if order_independent_transparency is not None:
+            if "?" in url:
+                url = (
+                    url
+                    + "&order_independent_transparency="
+                    + str(order_independent_transparency).lower()
+                )
+            else:
+                url = (
+                    url
+                    + "?order_independent_transparency="
+                    + str(order_independent_transparency).lower()
+                )
 
         if pool is not None:
             if "?" in url:
@@ -13707,6 +13806,12 @@ class WebSocketModelingCommandsWs:
                 url = url + "&webrtc=" + str(webrtc).lower()
             else:
                 url = url + "?webrtc=" + str(webrtc).lower()
+
+        if pr is not None:
+            if "?" in url:
+                url = url + "&pr=" + str(pr)
+            else:
+                url = url + "?pr=" + str(pr)
 
         headers = client.get_headers()
         factory = ws_factory or ws_connect
