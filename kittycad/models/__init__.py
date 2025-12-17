@@ -324,6 +324,7 @@ from .set_grid_auto_scale import SetGridAutoScale
 from .set_grid_reference_plane import SetGridReferencePlane
 from .set_grid_scale import SetGridScale
 from .set_object_transform import SetObjectTransform
+from .set_order_independent_transparency import SetOrderIndependentTransparency
 from .set_scene_units import SetSceneUnits
 from .set_selection_filter import SetSelectionFilter
 from .set_selection_type import SetSelectionType
@@ -352,6 +353,7 @@ from .stl_storage import StlStorage
 from .storage_provider import StorageProvider
 from .store_coupon_params import StoreCouponParams
 from .subscribe import Subscribe
+from .subscription_action_type import SubscriptionActionType
 from .subscription_tier_feature import SubscriptionTierFeature
 from .subscription_tier_price import SubscriptionTierPrice
 from .subscription_tier_type import SubscriptionTierType
@@ -413,6 +415,8 @@ from .update_shortlink_request import UpdateShortlinkRequest
 from .update_user import UpdateUser
 from .user import User
 from .user_admin_details import UserAdminDetails
+from .user_feature_entry import UserFeatureEntry
+from .user_feature_list import UserFeatureList
 from .user_identifier import UserIdentifier
 from .user_org_info import UserOrgInfo
 from .user_org_role import UserOrgRole
