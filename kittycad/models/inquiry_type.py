@@ -4,6 +4,10 @@ from enum import Enum
 class InquiryType(str, Enum):
     """The type of inquiry."""  # noqa: E501
 
+    """# Inquiries related to pilots (on the enterprise page)."""  # noqa: E501
+
+    PILOT_INQUIRY = "pilot_inquiry"
+
     """# General inquiry about the service or product."""  # noqa: E501
 
     GENERAL_INQUIRY = "general_inquiry"
