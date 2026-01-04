@@ -11,6 +11,8 @@ class Org(KittyCadBaseModel):
 
     allow_users_in_domain_to_auto_join: Optional[bool] = None
 
+    aws_external_id: Optional[Uuid] = None
+
     billing_email: str
 
     billing_email_verified: Optional[datetime.datetime] = None

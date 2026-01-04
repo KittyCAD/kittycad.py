@@ -3,11 +3,17 @@
 from .account_provider import AccountProvider
 from .add_hole_from_offset import AddHoleFromOffset
 from .add_org_member import AddOrgMember
+from .address import Address
 from .address_details import AddressDetails
 from .adjacency_info import AdjacencyInfo
 from .angle import Angle
+from .annotation_basic_dimension import AnnotationBasicDimension
+from .annotation_feature_control import AnnotationFeatureControl
+from .annotation_feature_tag import AnnotationFeatureTag
 from .annotation_line_end import AnnotationLineEnd
 from .annotation_line_end_options import AnnotationLineEndOptions
+from .annotation_mbd_basic_dimension import AnnotationMbdBasicDimension
+from .annotation_mbd_control_frame import AnnotationMbdControlFrame
 from .annotation_options import AnnotationOptions
 from .annotation_text_alignment_x import AnnotationTextAlignmentX
 from .annotation_text_alignment_y import AnnotationTextAlignmentY
@@ -61,6 +67,8 @@ from .conversation_results_page import ConversationResultsPage
 from .conversion_params import ConversionParams
 from .country_code import CountryCode
 from .coupon import Coupon
+from .create_custom_model import CreateCustomModel
+from .create_org_dataset import CreateOrgDataset
 from .create_shortlink_request import CreateShortlinkRequest
 from .create_shortlink_response import CreateShortlinkResponse
 from .created_at_sort_mode import CreatedAtSortMode
@@ -71,10 +79,13 @@ from .curve_get_end_points import CurveGetEndPoints
 from .curve_get_type import CurveGetType
 from .curve_set_constraint import CurveSetConstraint
 from .curve_type import CurveType
+from .custom_model import CustomModel
 from .customer import Customer
 from .customer_balance import CustomerBalance
 from .cut_strategy import CutStrategy
 from .cut_type import CutType
+from .cut_type_v2 import CutTypeV2
+from .dataset_s3_policies import DatasetS3Policies
 from .default_camera_center_to_scene import DefaultCameraCenterToScene
 from .default_camera_center_to_selection import DefaultCameraCenterToSelection
 from .default_camera_focus_on import DefaultCameraFocusOn
@@ -105,7 +116,6 @@ from .empty import Empty
 from .enable_dry_run import EnableDryRun
 from .enable_sketch_mode import EnableSketchMode
 from .engine_util_evaluate_path import EngineUtilEvaluatePath
-from .enterprise_subscription_tier_price import EnterpriseSubscriptionTierPrice
 from .entity_circular_pattern import EntityCircularPattern
 from .entity_clone import EntityClone
 from .entity_fade import EntityFade
@@ -136,6 +146,8 @@ from .extended_user import ExtendedUser
 from .extended_user_results_page import ExtendedUserResultsPage
 from .extrude import Extrude
 from .extrude_method import ExtrudeMethod
+from .extrude_reference import ExtrudeReference
+from .extrude_to_reference import ExtrudeToReference
 from .extruded_face_info import ExtrudedFaceInfo
 from .extrusion_face_cap_type import ExtrusionFaceCapType
 from .extrusion_face_info import ExtrusionFaceInfo
@@ -188,9 +200,12 @@ from .make_axes_gizmo import MakeAxesGizmo
 from .make_offset_path import MakeOffsetPath
 from .make_plane import MakePlane
 from .mass import Mass
+from .mbd_symbol import MbdSymbol
 from .method import Method
 from .ml_copilot_client_message import MlCopilotClientMessage
+from .ml_copilot_mode import MlCopilotMode
 from .ml_copilot_server_message import MlCopilotServerMessage
+from .ml_copilot_supported_models import MlCopilotSupportedModels
 from .ml_copilot_system_command import MlCopilotSystemCommand
 from .ml_copilot_tool import MlCopilotTool
 from .ml_feedback import MlFeedback
@@ -198,17 +213,11 @@ from .ml_prompt import MlPrompt
 from .ml_prompt_metadata import MlPromptMetadata
 from .ml_prompt_results_page import MlPromptResultsPage
 from .ml_prompt_type import MlPromptType
+from .ml_reasoning_effort import MlReasoningEffort
 from .ml_tool_result import MlToolResult
 from .modeling_app_event_type import ModelingAppEventType
-from .modeling_app_individual_subscription_tier import (
-    ModelingAppIndividualSubscriptionTier,
-)
-from .modeling_app_organization_subscription_tier import (
-    ModelingAppOrganizationSubscriptionTier,
-)
 from .modeling_app_share_links import ModelingAppShareLinks
 from .modeling_app_subscription_tier import ModelingAppSubscriptionTier
-from .modeling_app_subscription_tier_name import ModelingAppSubscriptionTierName
 from .modeling_cmd import ModelingCmd
 from .modeling_cmd_id import ModelingCmdId
 from .modeling_cmd_req import ModelingCmdReq
@@ -227,6 +236,19 @@ from .ok_web_socket_response_data import OkWebSocketResponseData
 from .opposite_for_angle import OppositeForAngle
 from .opposite_for_length_unit import OppositeForLengthUnit
 from .org import Org
+from .org_address import OrgAddress
+from .org_admin_details import OrgAdminDetails
+from .org_dataset import OrgDataset
+from .org_dataset_conversion_stats_response import OrgDatasetConversionStatsResponse
+from .org_dataset_file_conversion import OrgDatasetFileConversion
+from .org_dataset_file_conversion_details import OrgDatasetFileConversionDetails
+from .org_dataset_file_conversion_status import OrgDatasetFileConversionStatus
+from .org_dataset_file_conversion_summary import OrgDatasetFileConversionSummary
+from .org_dataset_file_conversion_summary_results_page import (
+    OrgDatasetFileConversionSummaryResultsPage,
+)
+from .org_dataset_results_page import OrgDatasetResultsPage
+from .org_dataset_source import OrgDatasetSource
 from .org_details import OrgDetails
 from .org_member import OrgMember
 from .org_member_results_page import OrgMemberResultsPage
@@ -279,6 +301,7 @@ from .rtc_session_description import RtcSessionDescription
 from .saml_identity_provider import SamlIdentityProvider
 from .saml_identity_provider_create import SamlIdentityProviderCreate
 from .scene_clear_all import SceneClearAll
+from .scene_get_entity_ids import SceneGetEntityIds
 from .scene_selection_type import SceneSelectionType
 from .scene_tool_type import SceneToolType
 from .select_add import SelectAdd
@@ -301,6 +324,7 @@ from .set_grid_auto_scale import SetGridAutoScale
 from .set_grid_reference_plane import SetGridReferencePlane
 from .set_grid_scale import SetGridScale
 from .set_object_transform import SetObjectTransform
+from .set_order_independent_transparency import SetOrderIndependentTransparency
 from .set_scene_units import SetSceneUnits
 from .set_selection_filter import SetSelectionFilter
 from .set_selection_type import SetSelectionType
@@ -310,6 +334,7 @@ from .shortlink_results_page import ShortlinkResultsPage
 from .side_face import SideFace
 from .sketch_mode_disable import SketchModeDisable
 from .solid2d_add_hole import Solid2dAddHole
+from .solid3d_cut_edges import Solid3dCutEdges
 from .solid3d_fillet_edge import Solid3dFilletEdge
 from .solid3d_get_adjacency_info import Solid3dGetAdjacencyInfo
 from .solid3d_get_all_edge_faces import Solid3dGetAllEdgeFaces
@@ -325,8 +350,10 @@ from .source_range import SourceRange
 from .source_range_prompt import SourceRangePrompt
 from .start_path import StartPath
 from .stl_storage import StlStorage
+from .storage_provider import StorageProvider
 from .store_coupon_params import StoreCouponParams
 from .subscribe import Subscribe
+from .subscription_action_type import SubscriptionActionType
 from .subscription_tier_feature import SubscriptionTierFeature
 from .subscription_tier_price import SubscriptionTierPrice
 from .subscription_tier_type import SubscriptionTierType
@@ -379,11 +406,17 @@ from .unit_torque_conversion import UnitTorqueConversion
 from .unit_volume import UnitVolume
 from .unit_volume_conversion import UnitVolumeConversion
 from .update_annotation import UpdateAnnotation
+from .update_custom_model import UpdateCustomModel
 from .update_member_to_org_body import UpdateMemberToOrgBody
+from .update_org_dataset import UpdateOrgDataset
+from .update_org_dataset_source import UpdateOrgDatasetSource
 from .update_payment_balance import UpdatePaymentBalance
 from .update_shortlink_request import UpdateShortlinkRequest
 from .update_user import UpdateUser
 from .user import User
+from .user_admin_details import UserAdminDetails
+from .user_feature_entry import UserFeatureEntry
+from .user_feature_list import UserFeatureList
 from .user_identifier import UserIdentifier
 from .user_org_info import UserOrgInfo
 from .user_org_role import UserOrgRole

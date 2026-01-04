@@ -13,9 +13,11 @@ from ..models.color import Color
 from ..models.component_transform import ComponentTransform
 from ..models.cut_strategy import CutStrategy
 from ..models.cut_type import CutType
+from ..models.cut_type_v2 import CutTypeV2
 from ..models.distance_type import DistanceType
 from ..models.entity_type import EntityType
 from ..models.extrude_method import ExtrudeMethod
+from ..models.extrude_reference import ExtrudeReference
 from ..models.extruded_face_info import ExtrudedFaceInfo
 from ..models.image_format import ImageFormat
 from ..models.import_file import ImportFile
@@ -73,6 +75,8 @@ class OptionMovePathPen(KittyCadBaseModel):
 class OptionExtendPath(KittyCadBaseModel):
     """Extend a path by adding a new segment which starts at the path's \"pen\". If no \"pen\" location has been set before (via `MovePen`), then the pen is at the origin."""
 
+    label: Optional[str] = None
+
     path: ModelingCmdId
 
     segment: PathSegment
@@ -94,6 +98,20 @@ class OptionExtrude(KittyCadBaseModel):
     target: ModelingCmdId
 
     type: Literal["extrude"] = "extrude"
+
+
+class OptionExtrudeToReference(KittyCadBaseModel):
+    """Command for extruding a solid 2d to a reference geometry."""
+
+    extrude_method: ExtrudeMethod = "merge"  # type: ignore[assignment]
+
+    faces: Optional[ExtrudedFaceInfo] = None
+
+    reference: ExtrudeReference
+
+    target: ModelingCmdId
+
+    type: Literal["extrude_to_reference"] = "extrude_to_reference"
 
 
 class OptionTwistExtrude(KittyCadBaseModel):
@@ -445,7 +463,7 @@ class OptionEntityMakeHelix(KittyCadBaseModel):
 
     is_clockwise: bool
 
-    length: LengthUnit
+    length: Optional[LengthUnit] = None
 
     revolutions: float
 
@@ -625,6 +643,8 @@ class OptionObjectSetMaterialParamsPbr(KittyCadBaseModel):
 
     ambient_occlusion: float
 
+    backface_color: Optional[Color] = None
+
     color: Color
 
     metalness: float
@@ -742,6 +762,24 @@ class OptionSolid3dFilletEdge(KittyCadBaseModel):
     tolerance: LengthUnit
 
     type: Literal["solid3d_fillet_edge"] = "solid3d_fillet_edge"
+
+
+class OptionSolid3dCutEdges(KittyCadBaseModel):
+    """Cut the list of given edges with the given cut parameters."""
+
+    cut_type: CutTypeV2
+
+    edge_ids: List[str] = []
+
+    extra_face_ids: List[str] = []
+
+    object_id: str
+
+    strategy: CutStrategy = "automatic"  # type: ignore[assignment]
+
+    tolerance: LengthUnit
+
+    type: Literal["solid3d_cut_edges"] = "solid3d_cut_edges"
 
 
 class OptionFaceIsPlanar(KittyCadBaseModel):
@@ -1212,6 +1250,18 @@ class OptionSetSelectionFilter(KittyCadBaseModel):
     type: Literal["set_selection_filter"] = "set_selection_filter"
 
 
+class OptionSceneGetEntityIds(KittyCadBaseModel):
+    """Get the ids of a given entity type."""
+
+    filter: List[EntityType]
+
+    skip: int
+
+    take: int
+
+    type: Literal["scene_get_entity_ids"] = "scene_get_entity_ids"
+
+
 class OptionDefaultCameraSetOrthographic(KittyCadBaseModel):
     """Use orthographic projection."""
 
@@ -1404,6 +1454,16 @@ class OptionSetGridAutoScale(KittyCadBaseModel):
     type: Literal["set_grid_auto_scale"] = "set_grid_auto_scale"
 
 
+class OptionSetOrderIndependentTransparency(KittyCadBaseModel):
+    """Render transparent surfaces more accurately, but this might make rendering slower. Because it can interfere with runtime performance, it defaults to false."""
+
+    enabled: Optional[bool] = None
+
+    type: Literal["set_order_independent_transparency"] = (
+        "set_order_independent_transparency"
+    )
+
+
 ModelingCmd = RootModel[
     Annotated[
         Union[
@@ -1412,6 +1472,7 @@ ModelingCmd = RootModel[
             OptionMovePathPen,
             OptionExtendPath,
             OptionExtrude,
+            OptionExtrudeToReference,
             OptionTwistExtrude,
             OptionSweep,
             OptionRevolve,
@@ -1468,6 +1529,7 @@ ModelingCmd = RootModel[
             OptionSolid3dGetPrevAdjacentEdge,
             OptionSolid3dGetCommonEdge,
             OptionSolid3dFilletEdge,
+            OptionSolid3dCutEdges,
             OptionFaceIsPlanar,
             OptionFaceGetPosition,
             OptionFaceGetCenter,
@@ -1517,6 +1579,7 @@ ModelingCmd = RootModel[
             OptionDefaultCameraFocusOn,
             OptionSetSelectionType,
             OptionSetSelectionFilter,
+            OptionSceneGetEntityIds,
             OptionDefaultCameraSetOrthographic,
             OptionDefaultCameraSetPerspective,
             OptionDefaultCameraCenterToSelection,
@@ -1538,6 +1601,7 @@ ModelingCmd = RootModel[
             OptionSetGridReferencePlane,
             OptionSetGridScale,
             OptionSetGridAutoScale,
+            OptionSetOrderIndependentTransparency,
         ],
         Field(discriminator="type"),
     ]

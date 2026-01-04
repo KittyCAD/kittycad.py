@@ -21,6 +21,10 @@ class Invoice(KittyCadBaseModel):
 
     attempted: bool = False
 
+    billing_reason: Optional[str] = None
+
+    collection_method: Optional[str] = None
+
     created_at: datetime.datetime
 
     currency: Currency = "usd"  # type: ignore[assignment]
@@ -52,6 +56,8 @@ class Invoice(KittyCadBaseModel):
     statement_descriptor: Optional[str] = None
 
     status: Optional[InvoiceStatus] = None
+
+    subscription_id: Optional[str] = None
 
     subtotal: float = 0.0
 

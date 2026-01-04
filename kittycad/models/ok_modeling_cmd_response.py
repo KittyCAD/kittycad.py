@@ -60,6 +60,7 @@ from ..models.export2d import Export2d
 from ..models.export3d import Export3d
 from ..models.extend_path import ExtendPath
 from ..models.extrude import Extrude
+from ..models.extrude_to_reference import ExtrudeToReference
 from ..models.extrusion_face_info import ExtrusionFaceInfo
 from ..models.face_edge_info import FaceEdgeInfo
 from ..models.face_get_center import FaceGetCenter
@@ -104,6 +105,7 @@ from ..models.remove_scene_objects import RemoveSceneObjects
 from ..models.revolve import Revolve
 from ..models.revolve_about_edge import RevolveAboutEdge
 from ..models.scene_clear_all import SceneClearAll
+from ..models.scene_get_entity_ids import SceneGetEntityIds
 from ..models.select_add import SelectAdd
 from ..models.select_clear import SelectClear
 from ..models.select_get import SelectGet
@@ -118,12 +120,14 @@ from ..models.set_grid_auto_scale import SetGridAutoScale
 from ..models.set_grid_reference_plane import SetGridReferencePlane
 from ..models.set_grid_scale import SetGridScale
 from ..models.set_object_transform import SetObjectTransform
+from ..models.set_order_independent_transparency import SetOrderIndependentTransparency
 from ..models.set_scene_units import SetSceneUnits
 from ..models.set_selection_filter import SetSelectionFilter
 from ..models.set_selection_type import SetSelectionType
 from ..models.set_tool import SetTool
 from ..models.sketch_mode_disable import SketchModeDisable
 from ..models.solid2d_add_hole import Solid2dAddHole
+from ..models.solid3d_cut_edges import Solid3dCutEdges
 from ..models.solid3d_fillet_edge import Solid3dFilletEdge
 from ..models.solid3d_get_adjacency_info import Solid3dGetAdjacencyInfo
 from ..models.solid3d_get_all_edge_faces import Solid3dGetAllEdgeFaces
@@ -190,6 +194,14 @@ class OptionExtrude(KittyCadBaseModel):
     data: Extrude
 
     type: Literal["extrude"] = "extrude"
+
+
+class OptionExtrudeToReference(KittyCadBaseModel):
+    """"""
+
+    data: ExtrudeToReference
+
+    type: Literal["extrude_to_reference"] = "extrude_to_reference"
 
 
 class OptionTwistExtrude(KittyCadBaseModel):
@@ -360,6 +372,14 @@ class OptionSolid3dFilletEdge(KittyCadBaseModel):
     data: Solid3dFilletEdge
 
     type: Literal["solid3d_fillet_edge"] = "solid3d_fillet_edge"
+
+
+class OptionSolid3dCutEdges(KittyCadBaseModel):
+    """"""
+
+    data: Solid3dCutEdges
+
+    type: Literal["solid3d_cut_edges"] = "solid3d_cut_edges"
 
 
 class OptionSendObject(KittyCadBaseModel):
@@ -876,6 +896,14 @@ class OptionGetEntityType(KittyCadBaseModel):
     type: Literal["get_entity_type"] = "get_entity_type"
 
 
+class OptionSceneGetEntityIds(KittyCadBaseModel):
+    """"""
+
+    data: SceneGetEntityIds
+
+    type: Literal["scene_get_entity_ids"] = "scene_get_entity_ids"
+
+
 class OptionCurveGetControlPoints(KittyCadBaseModel):
     """"""
 
@@ -1262,6 +1290,16 @@ class OptionSetGridAutoScale(KittyCadBaseModel):
     type: Literal["set_grid_auto_scale"] = "set_grid_auto_scale"
 
 
+class OptionSetOrderIndependentTransparency(KittyCadBaseModel):
+    """"""
+
+    data: SetOrderIndependentTransparency
+
+    type: Literal["set_order_independent_transparency"] = (
+        "set_order_independent_transparency"
+    )
+
+
 OkModelingCmdResponse = RootModel[
     Annotated[
         Union[
@@ -1271,6 +1309,7 @@ OkModelingCmdResponse = RootModel[
             OptionMovePathPen,
             OptionExtendPath,
             OptionExtrude,
+            OptionExtrudeToReference,
             OptionTwistExtrude,
             OptionSweep,
             OptionRevolve,
@@ -1292,6 +1331,7 @@ OkModelingCmdResponse = RootModel[
             OptionObjectSetMaterialParamsPbr,
             OptionSolid2dAddHole,
             OptionSolid3dFilletEdge,
+            OptionSolid3dCutEdges,
             OptionSendObject,
             OptionEntitySetOpacity,
             OptionEntityFade,
@@ -1356,6 +1396,7 @@ OkModelingCmdResponse = RootModel[
             OptionSolid3dGetPrevAdjacentEdge,
             OptionSolid3dGetCommonEdge,
             OptionGetEntityType,
+            OptionSceneGetEntityIds,
             OptionCurveGetControlPoints,
             OptionProjectEntityToPlane,
             OptionProjectPointsToPlane,
@@ -1404,6 +1445,7 @@ OkModelingCmdResponse = RootModel[
             OptionBooleanSubtract,
             OptionSetGridScale,
             OptionSetGridAutoScale,
+            OptionSetOrderIndependentTransparency,
         ],
         Field(discriminator="type"),
     ]

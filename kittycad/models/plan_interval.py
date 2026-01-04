@@ -20,5 +20,9 @@ class PlanInterval(str, Enum):
 
     YEAR = "year"
 
+    """# Don't use."""  # noqa: E501
+
+    UNKNOWN = "unknown"
+
     def __str__(self) -> str:
         return str(self.value)

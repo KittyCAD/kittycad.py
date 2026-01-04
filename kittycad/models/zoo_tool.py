@@ -8,10 +8,6 @@ class ZooTool(str, Enum):
 
     MODELING_APP = "modeling_app"
 
-    """# The Diff Chrome Extension."""  # noqa: E501
-
-    DIFF_CHROME_EXTENSION = "diff_chrome_extension"
-
     """# The Text-to-CAD UI."""  # noqa: E501
 
     TEXT_TO_CAD = "text_to_cad"
