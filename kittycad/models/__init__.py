@@ -65,6 +65,7 @@ from .component_transform import ComponentTransform
 from .conversation import Conversation
 from .conversation_results_page import ConversationResultsPage
 from .conversion_params import ConversionParams
+from .conversion_sort_mode import ConversionSortMode
 from .country_code import CountryCode
 from .coupon import Coupon
 from .create_custom_model import CreateCustomModel
@@ -249,6 +250,7 @@ from .org_dataset_file_conversion_summary_results_page import (
 )
 from .org_dataset_results_page import OrgDatasetResultsPage
 from .org_dataset_source import OrgDatasetSource
+from .org_dataset_status import OrgDatasetStatus
 from .org_details import OrgDetails
 from .org_member import OrgMember
 from .org_member_results_page import OrgMemberResultsPage
@@ -284,6 +286,7 @@ from .point3d import Point3d
 from .point4d import Point4d
 from .pong import Pong
 from .post_effect_type import PostEffectType
+from .price_upsert_request import PriceUpsertRequest
 from .privacy_settings import PrivacySettings
 from .project_entity_to_plane import ProjectEntityToPlane
 from .project_points_to_plane import ProjectPointsToPlane
@@ -354,6 +357,8 @@ from .storage_provider import StorageProvider
 from .store_coupon_params import StoreCouponParams
 from .subscribe import Subscribe
 from .subscription_action_type import SubscriptionActionType
+from .subscription_plan_billing_model import SubscriptionPlanBillingModel
+from .subscription_plan_price_record import SubscriptionPlanPriceRecord
 from .subscription_tier_feature import SubscriptionTierFeature
 from .subscription_tier_price import SubscriptionTierPrice
 from .subscription_tier_type import SubscriptionTierType
@@ -415,6 +420,7 @@ from .update_shortlink_request import UpdateShortlinkRequest
 from .update_user import UpdateUser
 from .user import User
 from .user_admin_details import UserAdminDetails
+from .user_feature import UserFeature
 from .user_feature_entry import UserFeatureEntry
 from .user_feature_list import UserFeatureList
 from .user_identifier import UserIdentifier

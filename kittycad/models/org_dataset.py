@@ -1,6 +1,7 @@
 import datetime
 from typing import Optional
 
+from ..models.org_dataset_status import OrgDatasetStatus
 from ..models.storage_provider import StorageProvider
 from ..models.uuid import Uuid
 from .base import KittyCadBaseModel
@@ -24,6 +25,8 @@ class OrgDataset(KittyCadBaseModel):
     org_id: Uuid
 
     source_uri: str
+
+    status: OrgDatasetStatus
 
     storage_provider: StorageProvider
 
