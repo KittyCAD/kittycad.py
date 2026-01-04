@@ -55,6 +55,7 @@ from .models.code_option import CodeOption
 from .models.code_output import CodeOutput
 from .models.conversation_results_page import ConversationResultsPage
 from .models.conversion_params import ConversionParams
+from .models.conversion_sort_mode import ConversionSortMode
 from .models.create_custom_model import CreateCustomModel
 from .models.create_org_dataset import CreateOrgDataset
 from .models.create_shortlink_request import CreateShortlinkRequest
@@ -113,6 +114,7 @@ from .models.payment_intent import PaymentIntent
 from .models.payment_method import PaymentMethod
 from .models.pong import Pong
 from .models.post_effect_type import PostEffectType
+from .models.price_upsert_request import PriceUpsertRequest
 from .models.privacy_settings import PrivacySettings
 from .models.saml_identity_provider import SamlIdentityProvider
 from .models.saml_identity_provider_create import SamlIdentityProviderCreate
@@ -124,7 +126,7 @@ from .models.session_uuid import SessionUuid
 from .models.shortlink_results_page import ShortlinkResultsPage
 from .models.store_coupon_params import StoreCouponParams
 from .models.subscribe import Subscribe
-from .models.subscription_tier_price import SubscriptionTierPrice
+from .models.subscription_plan_price_record import SubscriptionPlanPriceRecord
 from .models.text_to_cad import TextToCad
 from .models.text_to_cad_create_body import TextToCadCreateBody
 from .models.text_to_cad_iteration import TextToCadIteration
@@ -1431,6 +1433,7 @@ class MlAPI:
         self,
         conversation_id: Optional[str] = None,
         replay: Optional[bool] = None,
+        pr: Optional[int] = None,
         recv_timeout: Optional[float] = None,
         ws_factory: Optional[Callable[..., ClientConnectionSync]] = None,
     ) -> "WebSocketMlCopilotWs":
@@ -1441,6 +1444,7 @@ class MlAPI:
         return WebSocketMlCopilotWs(
             conversation_id=conversation_id,
             replay=replay,
+            pr=pr,
             recv_timeout=recv_timeout,
             ws_factory=ws_factory,
             client=self.client,
@@ -2220,7 +2224,10 @@ class AsyncMlAPI:
         return response.json() if response.content else None
 
     async def ml_copilot_ws(
-        self, conversation_id: Optional[str] = None, replay: Optional[bool] = None
+        self,
+        conversation_id: Optional[str] = None,
+        replay: Optional[bool] = None,
+        pr: Optional[int] = None,
     ):
         """Open a websocket to prompt the ML copilot.
 
@@ -2234,6 +2241,7 @@ class AsyncMlAPI:
             *,
             conversation_id: Optional[str] = None,
             replay: Optional[bool] = None,
+            pr: Optional[int] = None,
         ) -> ClientConnectionAsync:
             """Open a websocket to prompt the ML copilot."""
 
@@ -2250,6 +2258,12 @@ class AsyncMlAPI:
                     url = url + "&replay=" + str(replay).lower()
                 else:
                     url = url + "?replay=" + str(replay).lower()
+
+            if pr is not None:
+                if "?" in url:
+                    url = url + "&pr=" + str(pr)
+                else:
+                    url = url + "?pr=" + str(pr)
 
             return await ws_connect_async(
                 url.replace("http", "ws"),
@@ -5989,13 +6003,37 @@ class OrgsAPI:
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return OrgDataset.model_validate(json_data)
 
+    def delete_org_dataset(
+        self,
+        id: Uuid,
+    ):
+        """This is a destructive operation that: - requires org admin authentication and the dataset must belong to the caller's org. - fails with a 409 Conflict if the dataset is still attached to any custom model. - deletes Zoo-managed artifacts for this dataset (converted outputs and embeddings). - does **not** delete or modify the customer's source bucket/prefix.
+
+        All internal artifact deletions are strict; if any cleanup fails, the request fails."""
+
+        url = "{}/org/datasets/{id}".format(self.client.base_url, id=id)
+
+        _client = self.client.get_http_client()
+
+        response = _client.delete(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
     def list_org_dataset_conversions(
         self,
         id: Uuid,
         *,
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
-        sort_by: Optional[CreatedAtSortMode] = None,
+        sort_by: Optional[ConversionSortMode] = None,
     ) -> "SyncPageIterator":
         """List the file conversions that have been processed for a given dataset owned by the caller's org.
 
@@ -6809,36 +6847,6 @@ class OrgsAPI:
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return OrgAdminDetails.model_validate(json_data)
 
-    def update_enterprise_pricing_for_org(
-        self,
-        id: Uuid,
-        body: SubscriptionTierPrice,
-    ) -> ZooProductSubscriptions:
-        """You must be a Zoo admin to perform this request."""
-
-        url = "{}/orgs/{id}/enterprise/pricing".format(self.client.base_url, id=id)
-
-        _client = self.client.get_http_client()
-
-        response = _client.put(
-            url=url,
-            headers=self.client.get_headers(),
-            content=body.model_dump_json(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return ZooProductSubscriptions.model_validate(json_data)
-
     def get_user_org(
         self,
     ) -> UserOrgInfo:
@@ -7201,13 +7209,37 @@ class AsyncOrgsAPI:
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return OrgDataset.model_validate(json_data)
 
+    async def delete_org_dataset(
+        self,
+        id: Uuid,
+    ):
+        """This is a destructive operation that: - requires org admin authentication and the dataset must belong to the caller's org. - fails with a 409 Conflict if the dataset is still attached to any custom model. - deletes Zoo-managed artifacts for this dataset (converted outputs and embeddings). - does **not** delete or modify the customer's source bucket/prefix.
+
+        All internal artifact deletions are strict; if any cleanup fails, the request fails."""
+
+        url = "{}/org/datasets/{id}".format(self.client.base_url, id=id)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.delete(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
     def list_org_dataset_conversions(
         self,
         id: Uuid,
         *,
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
-        sort_by: Optional[CreatedAtSortMode] = None,
+        sort_by: Optional[ConversionSortMode] = None,
     ) -> "AsyncPageIterator":
         """List the file conversions that have been processed for a given dataset owned by the caller's org.
 
@@ -8021,36 +8053,6 @@ class AsyncOrgsAPI:
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return OrgAdminDetails.model_validate(json_data)
 
-    async def update_enterprise_pricing_for_org(
-        self,
-        id: Uuid,
-        body: SubscriptionTierPrice,
-    ) -> ZooProductSubscriptions:
-        """You must be a Zoo admin to perform this request."""
-
-        url = "{}/orgs/{id}/enterprise/pricing".format(self.client.base_url, id=id)
-
-        _client = self.client.get_http_client()
-
-        response = await _client.put(
-            url=url,
-            headers=self.client.get_headers(),
-            content=body.model_dump_json(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return ZooProductSubscriptions.model_validate(json_data)
-
     async def get_user_org(
         self,
     ) -> UserOrgInfo:
@@ -8523,6 +8525,68 @@ class PaymentsAPI:
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return CustomerBalance.model_validate(json_data)
 
+    def update_org_subscription_for_any_org(
+        self,
+        id: Uuid,
+        body: ZooProductSubscriptionsOrgRequest,
+    ) -> ZooProductSubscriptions:
+        """This endpoint requires authentication by a Zoo admin. It updates the subscription for the specified org."""
+
+        url = "{}/orgs/{id}/payment/subscriptions".format(self.client.base_url, id=id)
+
+        _client = self.client.get_http_client()
+
+        response = _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return ZooProductSubscriptions.model_validate(json_data)
+
+    def upsert_subscription_plan_price(
+        self,
+        slug: str,
+        body: PriceUpsertRequest,
+    ) -> SubscriptionPlanPriceRecord:
+        """You must be a Zoo admin to perform this request."""
+
+        url = "{}/subscription-plans/{slug}/prices".format(
+            self.client.base_url, slug=slug
+        )
+
+        _client = self.client.get_http_client()
+
+        response = _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return SubscriptionPlanPriceRecord.model_validate(json_data)
+
     def get_payment_information_for_user(
         self,
     ) -> Customer:
@@ -8776,6 +8840,28 @@ class PaymentsAPI:
         _client = self.client.get_http_client()
 
         response = _client.delete(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    def set_default_payment_method_for_user(
+        self,
+        id: str,
+    ):
+        """This endpoint requires authentication by any Zoo user. It sets the default payment method for the authenticated user."""
+
+        url = "{}/user/payment/methods/{id}/default".format(self.client.base_url, id=id)
+
+        _client = self.client.get_http_client()
+
+        response = _client.post(
             url=url,
             headers=self.client.get_headers(),
         )
@@ -9410,6 +9496,68 @@ class AsyncPaymentsAPI:
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return CustomerBalance.model_validate(json_data)
 
+    async def update_org_subscription_for_any_org(
+        self,
+        id: Uuid,
+        body: ZooProductSubscriptionsOrgRequest,
+    ) -> ZooProductSubscriptions:
+        """This endpoint requires authentication by a Zoo admin. It updates the subscription for the specified org."""
+
+        url = "{}/orgs/{id}/payment/subscriptions".format(self.client.base_url, id=id)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return ZooProductSubscriptions.model_validate(json_data)
+
+    async def upsert_subscription_plan_price(
+        self,
+        slug: str,
+        body: PriceUpsertRequest,
+    ) -> SubscriptionPlanPriceRecord:
+        """You must be a Zoo admin to perform this request."""
+
+        url = "{}/subscription-plans/{slug}/prices".format(
+            self.client.base_url, slug=slug
+        )
+
+        _client = self.client.get_http_client()
+
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return SubscriptionPlanPriceRecord.model_validate(json_data)
+
     async def get_payment_information_for_user(
         self,
     ) -> Customer:
@@ -9663,6 +9811,28 @@ class AsyncPaymentsAPI:
         _client = self.client.get_http_client()
 
         response = await _client.delete(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    async def set_default_payment_method_for_user(
+        self,
+        id: str,
+    ):
+        """This endpoint requires authentication by any Zoo user. It sets the default payment method for the authenticated user."""
+
+        url = "{}/user/payment/methods/{id}/default".format(self.client.base_url, id=id)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
         )
@@ -13492,6 +13662,7 @@ class WebSocketMlCopilotWs:
         self,
         conversation_id: Optional[str] = None,
         replay: Optional[bool] = None,
+        pr: Optional[int] = None,
         recv_timeout: Optional[float] = None,
         ws_factory: Optional[Callable[..., ClientConnectionSync]] = None,
         *,
@@ -13512,6 +13683,12 @@ class WebSocketMlCopilotWs:
                 url = url + "&replay=" + str(replay).lower()
             else:
                 url = url + "?replay=" + str(replay).lower()
+
+        if pr is not None:
+            if "?" in url:
+                url = url + "&pr=" + str(pr)
+            else:
+                url = url + "?pr=" + str(pr)
 
         headers = client.get_headers()
         factory = ws_factory or ws_connect

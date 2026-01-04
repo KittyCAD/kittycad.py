@@ -50,6 +50,7 @@ from kittycad.models import (
     ServiceAccount,
     Session,
     Shortlink,
+    SubscriptionPlanPriceRecord,
     TextToCad,
     TextToCadIteration,
     TextToCadMultiFileIteration,
@@ -84,6 +85,7 @@ from kittycad.models.billing_info import BillingInfo
 from kittycad.models.code_language import CodeLanguage
 from kittycad.models.code_option import CodeOption
 from kittycad.models.conversion_params import ConversionParams
+from kittycad.models.conversion_sort_mode import ConversionSortMode
 from kittycad.models.create_custom_model import CreateCustomModel
 from kittycad.models.create_org_dataset import CreateOrgDataset
 from kittycad.models.create_shortlink_request import CreateShortlinkRequest
@@ -104,7 +106,8 @@ from kittycad.models.inquiry_form import InquiryForm
 from kittycad.models.inquiry_type import InquiryType
 from kittycad.models.kcl_code_completion_params import KclCodeCompletionParams
 from kittycad.models.kcl_code_completion_request import KclCodeCompletionRequest
-from kittycad.models.ml_copilot_client_message import OptionHeaders
+from kittycad.models.ml_copilot_client_message import OptionHeaders, OptionUser
+from kittycad.models.ml_copilot_tool import MlCopilotTool
 from kittycad.models.ml_feedback import MlFeedback
 from kittycad.models.modeling_app_event_type import ModelingAppEventType
 from kittycad.models.org_dataset_source import OrgDatasetSource
@@ -112,6 +115,7 @@ from kittycad.models.org_details import OrgDetails
 from kittycad.models.output_format3d import OptionFbx, OutputFormat3d
 from kittycad.models.plan_interval import PlanInterval
 from kittycad.models.post_effect_type import PostEffectType
+from kittycad.models.price_upsert_request import PriceUpsertRequest
 from kittycad.models.privacy_settings import PrivacySettings
 from kittycad.models.rtc_ice_candidate_init import RtcIceCandidateInit
 from kittycad.models.saml_identity_provider_create import SamlIdentityProviderCreate
@@ -123,7 +127,7 @@ from kittycad.models.source_range_prompt import SourceRangePrompt
 from kittycad.models.storage_provider import StorageProvider
 from kittycad.models.store_coupon_params import StoreCouponParams
 from kittycad.models.subscribe import Subscribe
-from kittycad.models.subscription_tier_price import OptionPerUser, SubscriptionTierPrice
+from kittycad.models.subscription_plan_billing_model import SubscriptionPlanBillingModel
 from kittycad.models.text_to_cad_create_body import TextToCadCreateBody
 from kittycad.models.text_to_cad_iteration_body import TextToCadIterationBody
 from kittycad.models.text_to_cad_multi_file_iteration_body import (
@@ -1463,6 +1467,22 @@ async def test_create_org_dataset_async():
 
 
 @pytest.mark.skip
+def test_delete_org_dataset():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    client.orgs.delete_org_dataset(id=Uuid("<string>"))
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_delete_org_dataset_async():
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    await client.orgs.delete_org_dataset(id=Uuid("<string>"))
+
+
+@pytest.mark.skip
 def test_get_org_dataset():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
@@ -1512,7 +1532,7 @@ def test_list_org_dataset_conversions():
     item: OrgDatasetFileConversionSummary
     for item in client.orgs.list_org_dataset_conversions(
         id=Uuid("<string>"),
-        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
+        sort_by=ConversionSortMode.CREATED_AT_ASCENDING,
         limit=None,
         page_token=None,
     ):
@@ -1528,7 +1548,7 @@ async def test_list_org_dataset_conversions_async():
     # Iterate through all pages automatically
     iterator = client.orgs.list_org_dataset_conversions(
         id=Uuid("<string>"),
-        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
+        sort_by=ConversionSortMode.CREATED_AT_ASCENDING,
         limit=None,
         page_token=None,
     )
@@ -2378,43 +2398,6 @@ async def test_org_admin_details_get_async():
 
 
 @pytest.mark.skip
-def test_update_enterprise_pricing_for_org():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
-
-    result: ZooProductSubscriptions = client.orgs.update_enterprise_pricing_for_org(
-        id=Uuid("<string>"),
-        body=SubscriptionTierPrice(
-            OptionPerUser(
-                interval=PlanInterval.DAY,
-                price=3.14,
-            )
-        ),
-    )
-
-    body: ZooProductSubscriptions = result
-    print(body)
-
-
-# OR run async
-@pytest.mark.asyncio
-@pytest.mark.skip
-async def test_update_enterprise_pricing_for_org_async():
-    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
-
-    result: ZooProductSubscriptions = (
-        await client.orgs.update_enterprise_pricing_for_org(
-            id=Uuid("<string>"),
-            body=SubscriptionTierPrice(
-                OptionPerUser(
-                    interval=PlanInterval.DAY,
-                    price=3.14,
-                )
-            ),
-        )
-    )
-
-
-@pytest.mark.skip
 def test_get_payment_balance_for_any_org():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
@@ -2457,6 +2440,39 @@ async def test_update_payment_balance_for_any_org_async():
 
     result: CustomerBalance = await client.payments.update_payment_balance_for_any_org(
         id=Uuid("<string>"), include_total_due=False, body=UpdatePaymentBalance()
+    )
+
+
+@pytest.mark.skip
+def test_update_org_subscription_for_any_org():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: ZooProductSubscriptions = (
+        client.payments.update_org_subscription_for_any_org(
+            id=Uuid("<string>"),
+            body=ZooProductSubscriptionsOrgRequest(
+                modeling_app="<string>",
+            ),
+        )
+    )
+
+    body: ZooProductSubscriptions = result
+    print(body)
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_update_org_subscription_for_any_org_async():
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: ZooProductSubscriptions = (
+        await client.payments.update_org_subscription_for_any_org(
+            id=Uuid("<string>"),
+            body=ZooProductSubscriptionsOrgRequest(
+                modeling_app="<string>",
+            ),
+        )
     )
 
 
@@ -2521,6 +2537,45 @@ async def test_create_store_coupon_async():
     result: DiscountCode = await client.store.create_store_coupon(
         body=StoreCouponParams(
             percent_off=10,
+        )
+    )
+
+
+@pytest.mark.skip
+def test_upsert_subscription_plan_price():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: SubscriptionPlanPriceRecord = (
+        client.payments.upsert_subscription_plan_price(
+            slug="<string>",
+            body=PriceUpsertRequest(
+                active=False,
+                billing_model=SubscriptionPlanBillingModel.FLAT,
+                cadence=PlanInterval.DAY,
+                unit_amount=3.14,
+            ),
+        )
+    )
+
+    body: SubscriptionPlanPriceRecord = result
+    print(body)
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_upsert_subscription_plan_price_async():
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: SubscriptionPlanPriceRecord = (
+        await client.payments.upsert_subscription_plan_price(
+            slug="<string>",
+            body=PriceUpsertRequest(
+                active=False,
+                billing_model=SubscriptionPlanBillingModel.FLAT,
+                cadence=PlanInterval.DAY,
+                unit_amount=3.14,
+            ),
         )
     )
 
@@ -3367,6 +3422,22 @@ async def test_delete_payment_method_for_user_async():
 
 
 @pytest.mark.skip
+def test_set_default_payment_method_for_user():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    client.payments.set_default_payment_method_for_user(id="<string>")
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_set_default_payment_method_for_user_async():
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    await client.payments.set_default_payment_method_for_user(id="<string>")
+
+
+@pytest.mark.skip
 def test_get_user_subscription():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
@@ -4035,12 +4106,31 @@ def test_ml_copilot_ws():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     # Connect to the websocket.
-    with client.ml.ml_copilot_ws(conversation_id=None, replay=None) as websocket:
+    with client.ml.ml_copilot_ws(
+        conversation_id=None, replay=None, pr=None
+    ) as websocket:
         # Send a message.
         websocket.send(
             MlCopilotClientMessage(
-                OptionHeaders(
-                    headers={"<string>": "<string>"},
+                OptionUser(
+                    content="<string>",
+                    current_files={"<string>": b"<bytes>"},
+                    forced_tools=[MlCopilotTool.EDIT_KCL_CODE],
+                    source_ranges=[
+                        SourceRangePrompt(
+                            prompt="<string>",
+                            range=SourceRange(
+                                end=SourcePosition(
+                                    column=10,
+                                    line=10,
+                                ),
+                                start=SourcePosition(
+                                    column=10,
+                                    line=10,
+                                ),
+                            ),
+                        )
+                    ],
                 )
             )
         )
@@ -4057,7 +4147,9 @@ async def test_ml_copilot_ws_async():
     client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     # Connect to the websocket.
-    websocket = await client.ml.ml_copilot_ws(conversation_id=None, replay=None)
+    websocket = await client.ml.ml_copilot_ws(
+        conversation_id=None, replay=None, pr=None
+    )
 
     # Send a message.
     await websocket.send("{}")
