@@ -55,18 +55,21 @@ from .models.code_option import CodeOption
 from .models.code_output import CodeOutput
 from .models.conversation_results_page import ConversationResultsPage
 from .models.conversion_params import ConversionParams
+from .models.create_custom_model import CreateCustomModel
+from .models.create_org_dataset import CreateOrgDataset
 from .models.create_shortlink_request import CreateShortlinkRequest
 from .models.create_shortlink_response import CreateShortlinkResponse
 from .models.created_at_sort_mode import CreatedAtSortMode
 from .models.crm_data import CrmData
+from .models.custom_model import CustomModel
 from .models.customer import Customer
 from .models.customer_balance import CustomerBalance
+from .models.dataset_s3_policies import DatasetS3Policies
 from .models.device_access_token_request_form import DeviceAccessTokenRequestForm
 from .models.device_auth_confirm_params import DeviceAuthConfirmParams
 from .models.device_auth_request_form import DeviceAuthRequestForm
 from .models.discount_code import DiscountCode
 from .models.email_authentication_form import EmailAuthenticationForm
-from .models.enterprise_subscription_tier_price import EnterpriseSubscriptionTierPrice
 from .models.event import Event
 from .models.extended_user import ExtendedUser
 from .models.extended_user_results_page import ExtendedUserResultsPage
@@ -92,6 +95,16 @@ from .models.ml_prompt_results_page import MlPromptResultsPage
 from .models.oauth2_client_info import OAuth2ClientInfo
 from .models.org import Org
 from .models.org_admin_details import OrgAdminDetails
+from .models.org_dataset import OrgDataset
+from .models.org_dataset_conversion_stats_response import (
+    OrgDatasetConversionStatsResponse,
+)
+from .models.org_dataset_file_conversion import OrgDatasetFileConversion
+from .models.org_dataset_file_conversion_details import OrgDatasetFileConversionDetails
+from .models.org_dataset_file_conversion_summary_results_page import (
+    OrgDatasetFileConversionSummaryResultsPage,
+)
+from .models.org_dataset_results_page import OrgDatasetResultsPage
 from .models.org_details import OrgDetails
 from .models.org_member import OrgMember
 from .models.org_member_results_page import OrgMemberResultsPage
@@ -111,6 +124,7 @@ from .models.session_uuid import SessionUuid
 from .models.shortlink_results_page import ShortlinkResultsPage
 from .models.store_coupon_params import StoreCouponParams
 from .models.subscribe import Subscribe
+from .models.subscription_tier_price import SubscriptionTierPrice
 from .models.text_to_cad import TextToCad
 from .models.text_to_cad_create_body import TextToCadCreateBody
 from .models.text_to_cad_iteration import TextToCadIteration
@@ -149,12 +163,15 @@ from .models.unit_torque import UnitTorque
 from .models.unit_torque_conversion import UnitTorqueConversion
 from .models.unit_volume import UnitVolume
 from .models.unit_volume_conversion import UnitVolumeConversion
+from .models.update_custom_model import UpdateCustomModel
 from .models.update_member_to_org_body import UpdateMemberToOrgBody
+from .models.update_org_dataset import UpdateOrgDataset
 from .models.update_payment_balance import UpdatePaymentBalance
 from .models.update_shortlink_request import UpdateShortlinkRequest
 from .models.update_user import UpdateUser
 from .models.user import User
 from .models.user_admin_details import UserAdminDetails
+from .models.user_feature_list import UserFeatureList
 from .models.user_identifier import UserIdentifier
 from .models.user_org_info import UserOrgInfo
 from .models.user_org_role import UserOrgRole
@@ -197,7 +214,7 @@ class MetaAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -226,7 +243,7 @@ class MetaAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -267,7 +284,7 @@ class MetaAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -288,7 +305,7 @@ class MetaAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -319,7 +336,7 @@ class MetaAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -345,7 +362,7 @@ class MetaAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -372,7 +389,7 @@ class MetaAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -399,7 +416,7 @@ class MetaAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -435,7 +452,7 @@ class AsyncMetaAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -464,7 +481,7 @@ class AsyncMetaAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -505,7 +522,7 @@ class AsyncMetaAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -526,7 +543,7 @@ class AsyncMetaAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -557,7 +574,7 @@ class AsyncMetaAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -583,7 +600,7 @@ class AsyncMetaAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -610,7 +627,7 @@ class AsyncMetaAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -637,7 +654,7 @@ class AsyncMetaAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -690,7 +707,7 @@ class MlAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -701,6 +718,126 @@ class MlAPI:
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return TextToCad.model_validate(json_data)
+
+    def list_ml_prompts(
+        self,
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+        sort_by: Optional[CreatedAtSortMode] = None,
+    ) -> "SyncPageIterator":
+        """For text-to-cad prompts, this will always return the STEP file contents as well as the format the user originally requested.
+
+        This endpoint requires authentication by a Zoo employee.
+
+        The ML prompts are returned in order of creation, with the most recently created ML prompts first.
+
+                Returns an iterator that automatically handles pagination.
+                Iterate over all items across all pages:
+
+                    for item in client.ml-prompts.list_ml_prompts():
+                        print(item)
+        """
+
+        from typing import Any, Dict
+
+        from kittycad.pagination import SyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
+
+        if limit is not None:
+            kwargs["limit"] = limit
+
+        if page_token is not None:
+            kwargs["page_token"] = page_token
+
+        if sort_by is not None:
+            kwargs["sort_by"] = sort_by
+
+        def fetch_page(**kw):
+            return self._fetch_page_list_ml_prompts(**kw)
+
+        # Create the page iterator
+        return SyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    def _fetch_page_list_ml_prompts(self, **kwargs) -> MlPromptResultsPage:
+        """Internal method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/ml-prompts".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+        # Validate into a Pydantic model (supports BaseModel/RootModel)
+        return MlPromptResultsPage.model_validate(json_data)
+
+    def get_ml_prompt(
+        self,
+        id: str,
+    ) -> MlPrompt:
+        """This endpoint requires authentication by a Zoo employee."""
+
+        url = "{}/ml-prompts/{id}".format(self.client.base_url, id=id)
+
+        _client = self.client.get_http_client()
+
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return MlPrompt.model_validate(json_data)
 
     def list_conversations_for_user(
         self,
@@ -829,7 +966,7 @@ class MlAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -840,6 +977,123 @@ class MlAPI:
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return KclModel.model_validate(json_data)
+
+    def create_custom_model(
+        self,
+        body: CreateCustomModel,
+    ) -> CustomModel:
+        """Dataset readiness is enforced via `OrgDatasetFileConversion::status_counts_for_datasets`: - At least one conversion must have status `success`. - No conversions may remain in `queued`. If even a single file is still queued the dataset is treated as “not ready for training.” - A dataset consisting only of `canceled` or `error_*` entries is rejected because there’s nothing usable."""
+
+        url = "{}/ml/custom/models".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return CustomModel.model_validate(json_data)
+
+    def get_custom_model(
+        self,
+        id: Uuid,
+    ) -> CustomModel:
+        """Retrieve the details of a single custom ML model so long as it belongs to the caller’s organization."""
+
+        url = "{}/ml/custom/models/{id}".format(self.client.base_url, id=id)
+
+        _client = self.client.get_http_client()
+
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return CustomModel.model_validate(json_data)
+
+    def update_custom_model(
+        self,
+        id: Uuid,
+        body: UpdateCustomModel,
+    ) -> CustomModel:
+        """Update mutable metadata (name, system prompt) for a custom ML model owned by the caller's organization."""
+
+        url = "{}/ml/custom/models/{id}".format(self.client.base_url, id=id)
+
+        _client = self.client.get_http_client()
+
+        response = _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return CustomModel.model_validate(json_data)
+
+    def list_org_datasets_for_model(
+        self,
+        id: Uuid,
+    ) -> List[OrgDataset]:
+        """List the org datasets that are currently attached to a custom ML model owned by the caller’s organization."""
+
+        url = "{}/ml/custom/models/{id}/datasets".format(self.client.base_url, id=id)
+
+        _client = self.client.get_http_client()
+
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into annotated/collection/union types using TypeAdapter
+        from pydantic import TypeAdapter
+
+        return TypeAdapter(List[OrgDataset]).validate_python(json_data)
 
     def create_kcl_code_completions(
         self,
@@ -858,7 +1112,7 @@ class MlAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -893,7 +1147,7 @@ class MlAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -978,7 +1232,7 @@ class MlAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -989,126 +1243,6 @@ class MlAPI:
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return TextToCadMultiFileIteration.model_validate(json_data)
-
-    def list_ml_prompts(
-        self,
-        *,
-        limit: Optional[int] = None,
-        page_token: Optional[str] = None,
-        sort_by: Optional[CreatedAtSortMode] = None,
-    ) -> "SyncPageIterator":
-        """For text-to-cad prompts, this will always return the STEP file contents as well as the format the user originally requested.
-
-        This endpoint requires authentication by a Zoo employee.
-
-        The ML prompts are returned in order of creation, with the most recently created ML prompts first.
-
-                Returns an iterator that automatically handles pagination.
-                Iterate over all items across all pages:
-
-                    for item in client.ml-prompts.list_ml_prompts():
-                        print(item)
-        """
-
-        from typing import Any, Dict
-
-        from kittycad.pagination import SyncPageIterator
-
-        # Store path parameters in closure for later use
-
-        # Create arguments dict, filtering out None values
-        kwargs: Dict[str, Any] = {}
-
-        if limit is not None:
-            kwargs["limit"] = limit
-
-        if page_token is not None:
-            kwargs["page_token"] = page_token
-
-        if sort_by is not None:
-            kwargs["sort_by"] = sort_by
-
-        def fetch_page(**kw):
-            return self._fetch_page_list_ml_prompts(**kw)
-
-        # Create the page iterator
-        return SyncPageIterator(
-            page_fetcher=fetch_page,
-            initial_kwargs=kwargs,
-        )
-
-    def _fetch_page_list_ml_prompts(self, **kwargs) -> MlPromptResultsPage:
-        """Internal method to fetch a single page."""
-        # Build URL with path parameters
-        url = "{}/ml-prompts".format(self.client.base_url)
-
-        # Add query parameters
-
-        if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
-
-        if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
-
-        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(kwargs["sort_by"])
-            else:
-                url = url + "?sort_by=" + str(kwargs["sort_by"])
-
-        # Pagination parameters (limit, page_token) are already handled above as regular query params
-
-        _client = self.client.get_http_client()
-        response = _client.get(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-        # Validate into a Pydantic model (supports BaseModel/RootModel)
-        return MlPromptResultsPage.model_validate(json_data)
-
-    def get_ml_prompt(
-        self,
-        id: str,
-    ) -> MlPrompt:
-        """This endpoint requires authentication by a Zoo employee."""
-
-        url = "{}/ml-prompts/{id}".format(self.client.base_url, id=id)
-
-        _client = self.client.get_http_client()
-
-        response = _client.get(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from ..response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return MlPrompt.model_validate(json_data)
 
     def list_text_to_cad_parts_for_user(
         self,
@@ -1250,7 +1384,7 @@ class MlAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -1287,7 +1421,7 @@ class MlAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -1365,7 +1499,7 @@ class AsyncMlAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -1376,6 +1510,126 @@ class AsyncMlAPI:
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return TextToCad.model_validate(json_data)
+
+    def list_ml_prompts(
+        self,
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+        sort_by: Optional[CreatedAtSortMode] = None,
+    ) -> "AsyncPageIterator":
+        """For text-to-cad prompts, this will always return the STEP file contents as well as the format the user originally requested.
+
+        This endpoint requires authentication by a Zoo employee.
+
+        The ML prompts are returned in order of creation, with the most recently created ML prompts first.
+
+                Returns an async iterator that automatically handles pagination.
+                Iterate over all items across all pages:
+
+                    async for item in client.ml-prompts.list_ml_prompts():
+                        print(item)
+        """
+
+        from typing import Any, Dict
+
+        from kittycad.pagination import AsyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
+
+        if limit is not None:
+            kwargs["limit"] = limit
+
+        if page_token is not None:
+            kwargs["page_token"] = page_token
+
+        if sort_by is not None:
+            kwargs["sort_by"] = sort_by
+
+        async def fetch_page(**kw):
+            return await self._fetch_page_list_ml_prompts(**kw)
+
+        # Create the async page iterator
+        return AsyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    async def _fetch_page_list_ml_prompts(self, **kwargs) -> MlPromptResultsPage:
+        """Internal async method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/ml-prompts".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+        # Validate into a Pydantic model (supports BaseModel/RootModel)
+        return MlPromptResultsPage.model_validate(json_data)
+
+    async def get_ml_prompt(
+        self,
+        id: str,
+    ) -> MlPrompt:
+        """This endpoint requires authentication by a Zoo employee."""
+
+        url = "{}/ml-prompts/{id}".format(self.client.base_url, id=id)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return MlPrompt.model_validate(json_data)
 
     def list_conversations_for_user(
         self,
@@ -1504,7 +1758,7 @@ class AsyncMlAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -1515,6 +1769,123 @@ class AsyncMlAPI:
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return KclModel.model_validate(json_data)
+
+    async def create_custom_model(
+        self,
+        body: CreateCustomModel,
+    ) -> CustomModel:
+        """Dataset readiness is enforced via `OrgDatasetFileConversion::status_counts_for_datasets`: - At least one conversion must have status `success`. - No conversions may remain in `queued`. If even a single file is still queued the dataset is treated as “not ready for training.” - A dataset consisting only of `canceled` or `error_*` entries is rejected because there’s nothing usable."""
+
+        url = "{}/ml/custom/models".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return CustomModel.model_validate(json_data)
+
+    async def get_custom_model(
+        self,
+        id: Uuid,
+    ) -> CustomModel:
+        """Retrieve the details of a single custom ML model so long as it belongs to the caller’s organization."""
+
+        url = "{}/ml/custom/models/{id}".format(self.client.base_url, id=id)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return CustomModel.model_validate(json_data)
+
+    async def update_custom_model(
+        self,
+        id: Uuid,
+        body: UpdateCustomModel,
+    ) -> CustomModel:
+        """Update mutable metadata (name, system prompt) for a custom ML model owned by the caller's organization."""
+
+        url = "{}/ml/custom/models/{id}".format(self.client.base_url, id=id)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return CustomModel.model_validate(json_data)
+
+    async def list_org_datasets_for_model(
+        self,
+        id: Uuid,
+    ) -> List[OrgDataset]:
+        """List the org datasets that are currently attached to a custom ML model owned by the caller’s organization."""
+
+        url = "{}/ml/custom/models/{id}/datasets".format(self.client.base_url, id=id)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into annotated/collection/union types using TypeAdapter
+        from pydantic import TypeAdapter
+
+        return TypeAdapter(List[OrgDataset]).validate_python(json_data)
 
     async def create_kcl_code_completions(
         self,
@@ -1533,7 +1904,7 @@ class AsyncMlAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -1568,7 +1939,7 @@ class AsyncMlAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -1653,7 +2024,7 @@ class AsyncMlAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -1664,126 +2035,6 @@ class AsyncMlAPI:
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return TextToCadMultiFileIteration.model_validate(json_data)
-
-    def list_ml_prompts(
-        self,
-        *,
-        limit: Optional[int] = None,
-        page_token: Optional[str] = None,
-        sort_by: Optional[CreatedAtSortMode] = None,
-    ) -> "AsyncPageIterator":
-        """For text-to-cad prompts, this will always return the STEP file contents as well as the format the user originally requested.
-
-        This endpoint requires authentication by a Zoo employee.
-
-        The ML prompts are returned in order of creation, with the most recently created ML prompts first.
-
-                Returns an async iterator that automatically handles pagination.
-                Iterate over all items across all pages:
-
-                    async for item in client.ml-prompts.list_ml_prompts():
-                        print(item)
-        """
-
-        from typing import Any, Dict
-
-        from kittycad.pagination import AsyncPageIterator
-
-        # Store path parameters in closure for later use
-
-        # Create arguments dict, filtering out None values
-        kwargs: Dict[str, Any] = {}
-
-        if limit is not None:
-            kwargs["limit"] = limit
-
-        if page_token is not None:
-            kwargs["page_token"] = page_token
-
-        if sort_by is not None:
-            kwargs["sort_by"] = sort_by
-
-        async def fetch_page(**kw):
-            return await self._fetch_page_list_ml_prompts(**kw)
-
-        # Create the async page iterator
-        return AsyncPageIterator(
-            page_fetcher=fetch_page,
-            initial_kwargs=kwargs,
-        )
-
-    async def _fetch_page_list_ml_prompts(self, **kwargs) -> MlPromptResultsPage:
-        """Internal async method to fetch a single page."""
-        # Build URL with path parameters
-        url = "{}/ml-prompts".format(self.client.base_url)
-
-        # Add query parameters
-
-        if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
-
-        if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
-
-        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(kwargs["sort_by"])
-            else:
-                url = url + "?sort_by=" + str(kwargs["sort_by"])
-
-        # Pagination parameters (limit, page_token) are already handled above as regular query params
-
-        _client = self.client.get_http_client()
-        response = await _client.get(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-        # Validate into a Pydantic model (supports BaseModel/RootModel)
-        return MlPromptResultsPage.model_validate(json_data)
-
-    async def get_ml_prompt(
-        self,
-        id: str,
-    ) -> MlPrompt:
-        """This endpoint requires authentication by a Zoo employee."""
-
-        url = "{}/ml-prompts/{id}".format(self.client.base_url, id=id)
-
-        _client = self.client.get_http_client()
-
-        response = await _client.get(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from ..response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return MlPrompt.model_validate(json_data)
 
     def list_text_to_cad_parts_for_user(
         self,
@@ -1925,7 +2176,7 @@ class AsyncMlAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -1962,7 +2213,7 @@ class AsyncMlAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -2059,7 +2310,7 @@ class ApiCallsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -2181,7 +2432,7 @@ class ApiCallsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -2315,7 +2566,7 @@ class ApiCallsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -2435,7 +2686,7 @@ class ApiCallsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -2553,7 +2804,7 @@ class ApiCallsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -2693,7 +2944,7 @@ class AsyncApiCallsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -2815,7 +3066,7 @@ class AsyncApiCallsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -2951,7 +3202,7 @@ class AsyncApiCallsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -3073,7 +3324,7 @@ class AsyncApiCallsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -3193,7 +3444,7 @@ class AsyncApiCallsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -3328,7 +3579,7 @@ class AppsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -3351,7 +3602,7 @@ class AppsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -3380,7 +3631,7 @@ class AppsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -3410,7 +3661,7 @@ class AsyncAppsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -3433,7 +3684,7 @@ class AsyncAppsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -3462,7 +3713,7 @@ class AsyncAppsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -3490,7 +3741,7 @@ class HiddenAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -3519,7 +3770,7 @@ class HiddenAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -3568,7 +3819,7 @@ class HiddenAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -3600,7 +3851,7 @@ class HiddenAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -3632,7 +3883,7 @@ class HiddenAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -3658,7 +3909,7 @@ class HiddenAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -3679,7 +3930,7 @@ class HiddenAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -3701,7 +3952,7 @@ class HiddenAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -3729,7 +3980,7 @@ class AsyncHiddenAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -3758,7 +4009,7 @@ class AsyncHiddenAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -3807,7 +4058,7 @@ class AsyncHiddenAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -3839,7 +4090,7 @@ class AsyncHiddenAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -3871,7 +4122,7 @@ class AsyncHiddenAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -3897,7 +4148,7 @@ class AsyncHiddenAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -3918,7 +4169,7 @@ class AsyncHiddenAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -3940,7 +4191,7 @@ class AsyncHiddenAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -3993,7 +4244,7 @@ class FileAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -4074,7 +4325,7 @@ class FileAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -4113,7 +4364,7 @@ class FileAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -4179,7 +4430,7 @@ class FileAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -4245,7 +4496,7 @@ class FileAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -4297,7 +4548,7 @@ class FileAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -4349,7 +4600,7 @@ class FileAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -4408,7 +4659,7 @@ class AsyncFileAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -4489,7 +4740,7 @@ class AsyncFileAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -4528,7 +4779,7 @@ class AsyncFileAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -4594,7 +4845,7 @@ class AsyncFileAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -4660,7 +4911,7 @@ class AsyncFileAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -4712,7 +4963,7 @@ class AsyncFileAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -4764,7 +5015,7 @@ class AsyncFileAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -4809,7 +5060,7 @@ class ExecutorAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -4867,7 +5118,7 @@ class AsyncExecutorAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -4925,7 +5176,7 @@ class Oauth2API:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -4948,7 +5199,7 @@ class Oauth2API:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -4971,7 +5222,7 @@ class Oauth2API:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -5007,7 +5258,7 @@ class Oauth2API:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -5060,7 +5311,7 @@ class Oauth2API:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -5086,7 +5337,7 @@ class Oauth2API:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -5118,7 +5369,7 @@ class Oauth2API:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -5147,7 +5398,7 @@ class Oauth2API:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -5177,7 +5428,7 @@ class AsyncOauth2API:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -5200,7 +5451,7 @@ class AsyncOauth2API:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -5223,7 +5474,7 @@ class AsyncOauth2API:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -5259,7 +5510,7 @@ class AsyncOauth2API:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -5312,7 +5563,7 @@ class AsyncOauth2API:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -5338,7 +5589,7 @@ class AsyncOauth2API:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -5370,7 +5621,7 @@ class AsyncOauth2API:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -5399,7 +5650,7 @@ class AsyncOauth2API:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -5427,7 +5678,7 @@ class OrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -5456,7 +5707,7 @@ class OrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -5485,7 +5736,7 @@ class OrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -5516,11 +5767,438 @@ class OrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
         return response.json() if response.content else None
+
+    def org_dataset_s3_policies(
+        self,
+        role_arn: str,
+        uri: str,
+    ) -> DatasetS3Policies:
+        """Return the IAM policies customers should apply when onboarding an S3 dataset."""
+
+        url = "{}/org/dataset/s3/policies".format(self.client.base_url)
+
+        if role_arn is not None:
+            if "?" in url:
+                url = url + "&role_arn=" + str(role_arn)
+            else:
+                url = url + "?role_arn=" + str(role_arn)
+
+        if uri is not None:
+            if "?" in url:
+                url = url + "&uri=" + str(uri)
+            else:
+                url = url + "?uri=" + str(uri)
+
+        _client = self.client.get_http_client()
+
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return DatasetS3Policies.model_validate(json_data)
+
+    def list_org_datasets(
+        self,
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+        sort_by: Optional[CreatedAtSortMode] = None,
+    ) -> "SyncPageIterator":
+        """List every dataset that belongs to the caller's organization.
+
+        Returns an iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            for item in client.org.list_org_datasets():
+                print(item)
+        """
+
+        from typing import Any, Dict
+
+        from kittycad.pagination import SyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
+
+        if limit is not None:
+            kwargs["limit"] = limit
+
+        if page_token is not None:
+            kwargs["page_token"] = page_token
+
+        if sort_by is not None:
+            kwargs["sort_by"] = sort_by
+
+        def fetch_page(**kw):
+            return self._fetch_page_list_org_datasets(**kw)
+
+        # Create the page iterator
+        return SyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    def _fetch_page_list_org_datasets(self, **kwargs) -> OrgDatasetResultsPage:
+        """Internal method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/org/datasets".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+        # Validate into a Pydantic model (supports BaseModel/RootModel)
+        return OrgDatasetResultsPage.model_validate(json_data)
+
+    def create_org_dataset(
+        self,
+        body: CreateOrgDataset,
+    ) -> OrgDataset:
+        """If the dataset lives in S3, call `/org/dataset/s3/policies` first so you can generate the trust, permission, and bucket policies scoped to your dataset before invoking this endpoint."""
+
+        url = "{}/org/datasets".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return OrgDataset.model_validate(json_data)
+
+    def get_org_dataset(
+        self,
+        id: Uuid,
+    ) -> OrgDataset:
+        """Fetch a single dataset by id so long as it belongs to the authenticated org."""
+
+        url = "{}/org/datasets/{id}".format(self.client.base_url, id=id)
+
+        _client = self.client.get_http_client()
+
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return OrgDataset.model_validate(json_data)
+
+    def update_org_dataset(
+        self,
+        id: Uuid,
+        body: UpdateOrgDataset,
+    ) -> OrgDataset:
+        """IMPORTANT: Use this endpoint to fix connectivity to the same underlying storage location (e.g. rotating credentials or correcting a typo). Do not repoint an existing dataset at a completely different bucket or provider—create a new dataset instead so conversions in flight keep their original source. This warning applies to every storage backend, not just S3."""
+
+        url = "{}/org/datasets/{id}".format(self.client.base_url, id=id)
+
+        _client = self.client.get_http_client()
+
+        response = _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return OrgDataset.model_validate(json_data)
+
+    def list_org_dataset_conversions(
+        self,
+        id: Uuid,
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+        sort_by: Optional[CreatedAtSortMode] = None,
+    ) -> "SyncPageIterator":
+        """List the file conversions that have been processed for a given dataset owned by the caller's org.
+
+        Returns an iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            for item in client.org.list_org_dataset_conversions():
+                print(item)
+        """
+
+        from typing import Any, Dict
+
+        from kittycad.pagination import SyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        _id = id
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
+
+        if limit is not None:
+            kwargs["limit"] = limit
+
+        if page_token is not None:
+            kwargs["page_token"] = page_token
+
+        if sort_by is not None:
+            kwargs["sort_by"] = sort_by
+
+        def fetch_page(**kw):
+            return self._fetch_page_list_org_dataset_conversions(id=_id, **kw)
+
+        # Create the page iterator
+        return SyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    def _fetch_page_list_org_dataset_conversions(
+        self, id: Uuid, **kwargs
+    ) -> OrgDatasetFileConversionSummaryResultsPage:
+        """Internal method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/org/datasets/{id}/conversions".format(self.client.base_url, id=id)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+        # Validate into a Pydantic model (supports BaseModel/RootModel)
+        return OrgDatasetFileConversionSummaryResultsPage.model_validate(json_data)
+
+    def get_org_dataset_conversion(
+        self,
+        conversion_id: Uuid,
+        id: Uuid,
+    ) -> OrgDatasetFileConversionDetails:
+        """Fetch the metadata and converted output for a single dataset conversion."""
+
+        url = "{}/org/datasets/{id}/conversions/{conversion_id}".format(
+            self.client.base_url, conversion_id=conversion_id, id=id
+        )
+
+        _client = self.client.get_http_client()
+
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return OrgDatasetFileConversionDetails.model_validate(json_data)
+
+    def retry_org_dataset_conversion(
+        self,
+        conversion_id: Uuid,
+        id: Uuid,
+    ) -> OrgDatasetFileConversion:
+        """Retry a specific dataset conversion that failed previously for the caller's org."""
+
+        url = "{}/org/datasets/{id}/conversions/{conversion_id}/retry".format(
+            self.client.base_url, conversion_id=conversion_id, id=id
+        )
+
+        _client = self.client.get_http_client()
+
+        response = _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return OrgDatasetFileConversion.model_validate(json_data)
+
+    def rescan_org_dataset(
+        self,
+        id: Uuid,
+    ) -> OrgDataset:
+        """Request a rescan of a dataset that belongs to the caller's org."""
+
+        url = "{}/org/datasets/{id}/rescan".format(self.client.base_url, id=id)
+
+        _client = self.client.get_http_client()
+
+        response = _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return OrgDataset.model_validate(json_data)
+
+    def get_org_dataset_conversion_stats(
+        self,
+        id: Uuid,
+    ) -> OrgDatasetConversionStatsResponse:
+        """Return aggregate conversion stats for a dataset owned by the caller's org."""
+
+        url = "{}/org/datasets/{id}/stats".format(self.client.base_url, id=id)
+
+        _client = self.client.get_http_client()
+
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return OrgDatasetConversionStatsResponse.model_validate(json_data)
 
     def list_org_members(
         self,
@@ -5645,7 +6323,7 @@ class OrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -5673,7 +6351,7 @@ class OrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -5703,7 +6381,7 @@ class OrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -5731,7 +6409,7 @@ class OrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -5752,7 +6430,7 @@ class OrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -5781,7 +6459,7 @@ class OrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -5808,7 +6486,7 @@ class OrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -5837,7 +6515,7 @@ class OrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -5866,7 +6544,7 @@ class OrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -5893,7 +6571,7 @@ class OrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -6091,7 +6769,7 @@ class OrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -6119,7 +6797,7 @@ class OrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -6134,7 +6812,7 @@ class OrgsAPI:
     def update_enterprise_pricing_for_org(
         self,
         id: Uuid,
-        body: EnterpriseSubscriptionTierPrice,
+        body: SubscriptionTierPrice,
     ) -> ZooProductSubscriptions:
         """You must be a Zoo admin to perform this request."""
 
@@ -6149,7 +6827,7 @@ class OrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -6178,7 +6856,7 @@ class OrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -6212,7 +6890,7 @@ class AsyncOrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -6241,7 +6919,7 @@ class AsyncOrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -6270,7 +6948,7 @@ class AsyncOrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -6301,11 +6979,438 @@ class AsyncOrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
         return response.json() if response.content else None
+
+    async def org_dataset_s3_policies(
+        self,
+        role_arn: str,
+        uri: str,
+    ) -> DatasetS3Policies:
+        """Return the IAM policies customers should apply when onboarding an S3 dataset."""
+
+        url = "{}/org/dataset/s3/policies".format(self.client.base_url)
+
+        if role_arn is not None:
+            if "?" in url:
+                url = url + "&role_arn=" + str(role_arn)
+            else:
+                url = url + "?role_arn=" + str(role_arn)
+
+        if uri is not None:
+            if "?" in url:
+                url = url + "&uri=" + str(uri)
+            else:
+                url = url + "?uri=" + str(uri)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return DatasetS3Policies.model_validate(json_data)
+
+    def list_org_datasets(
+        self,
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+        sort_by: Optional[CreatedAtSortMode] = None,
+    ) -> "AsyncPageIterator":
+        """List every dataset that belongs to the caller's organization.
+
+        Returns an async iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            async for item in client.org.list_org_datasets():
+                print(item)
+        """
+
+        from typing import Any, Dict
+
+        from kittycad.pagination import AsyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
+
+        if limit is not None:
+            kwargs["limit"] = limit
+
+        if page_token is not None:
+            kwargs["page_token"] = page_token
+
+        if sort_by is not None:
+            kwargs["sort_by"] = sort_by
+
+        async def fetch_page(**kw):
+            return await self._fetch_page_list_org_datasets(**kw)
+
+        # Create the async page iterator
+        return AsyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    async def _fetch_page_list_org_datasets(self, **kwargs) -> OrgDatasetResultsPage:
+        """Internal async method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/org/datasets".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+        # Validate into a Pydantic model (supports BaseModel/RootModel)
+        return OrgDatasetResultsPage.model_validate(json_data)
+
+    async def create_org_dataset(
+        self,
+        body: CreateOrgDataset,
+    ) -> OrgDataset:
+        """If the dataset lives in S3, call `/org/dataset/s3/policies` first so you can generate the trust, permission, and bucket policies scoped to your dataset before invoking this endpoint."""
+
+        url = "{}/org/datasets".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return OrgDataset.model_validate(json_data)
+
+    async def get_org_dataset(
+        self,
+        id: Uuid,
+    ) -> OrgDataset:
+        """Fetch a single dataset by id so long as it belongs to the authenticated org."""
+
+        url = "{}/org/datasets/{id}".format(self.client.base_url, id=id)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return OrgDataset.model_validate(json_data)
+
+    async def update_org_dataset(
+        self,
+        id: Uuid,
+        body: UpdateOrgDataset,
+    ) -> OrgDataset:
+        """IMPORTANT: Use this endpoint to fix connectivity to the same underlying storage location (e.g. rotating credentials or correcting a typo). Do not repoint an existing dataset at a completely different bucket or provider—create a new dataset instead so conversions in flight keep their original source. This warning applies to every storage backend, not just S3."""
+
+        url = "{}/org/datasets/{id}".format(self.client.base_url, id=id)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return OrgDataset.model_validate(json_data)
+
+    def list_org_dataset_conversions(
+        self,
+        id: Uuid,
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+        sort_by: Optional[CreatedAtSortMode] = None,
+    ) -> "AsyncPageIterator":
+        """List the file conversions that have been processed for a given dataset owned by the caller's org.
+
+        Returns an async iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            async for item in client.org.list_org_dataset_conversions():
+                print(item)
+        """
+
+        from typing import Any, Dict
+
+        from kittycad.pagination import AsyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        _id = id
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
+
+        if limit is not None:
+            kwargs["limit"] = limit
+
+        if page_token is not None:
+            kwargs["page_token"] = page_token
+
+        if sort_by is not None:
+            kwargs["sort_by"] = sort_by
+
+        async def fetch_page(**kw):
+            return await self._fetch_page_list_org_dataset_conversions(id=_id, **kw)
+
+        # Create the async page iterator
+        return AsyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    async def _fetch_page_list_org_dataset_conversions(
+        self, id: Uuid, **kwargs
+    ) -> OrgDatasetFileConversionSummaryResultsPage:
+        """Internal async method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/org/datasets/{id}/conversions".format(self.client.base_url, id=id)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+        # Validate into a Pydantic model (supports BaseModel/RootModel)
+        return OrgDatasetFileConversionSummaryResultsPage.model_validate(json_data)
+
+    async def get_org_dataset_conversion(
+        self,
+        conversion_id: Uuid,
+        id: Uuid,
+    ) -> OrgDatasetFileConversionDetails:
+        """Fetch the metadata and converted output for a single dataset conversion."""
+
+        url = "{}/org/datasets/{id}/conversions/{conversion_id}".format(
+            self.client.base_url, conversion_id=conversion_id, id=id
+        )
+
+        _client = self.client.get_http_client()
+
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return OrgDatasetFileConversionDetails.model_validate(json_data)
+
+    async def retry_org_dataset_conversion(
+        self,
+        conversion_id: Uuid,
+        id: Uuid,
+    ) -> OrgDatasetFileConversion:
+        """Retry a specific dataset conversion that failed previously for the caller's org."""
+
+        url = "{}/org/datasets/{id}/conversions/{conversion_id}/retry".format(
+            self.client.base_url, conversion_id=conversion_id, id=id
+        )
+
+        _client = self.client.get_http_client()
+
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return OrgDatasetFileConversion.model_validate(json_data)
+
+    async def rescan_org_dataset(
+        self,
+        id: Uuid,
+    ) -> OrgDataset:
+        """Request a rescan of a dataset that belongs to the caller's org."""
+
+        url = "{}/org/datasets/{id}/rescan".format(self.client.base_url, id=id)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return OrgDataset.model_validate(json_data)
+
+    async def get_org_dataset_conversion_stats(
+        self,
+        id: Uuid,
+    ) -> OrgDatasetConversionStatsResponse:
+        """Return aggregate conversion stats for a dataset owned by the caller's org."""
+
+        url = "{}/org/datasets/{id}/stats".format(self.client.base_url, id=id)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return OrgDatasetConversionStatsResponse.model_validate(json_data)
 
     def list_org_members(
         self,
@@ -6430,7 +7535,7 @@ class AsyncOrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -6458,7 +7563,7 @@ class AsyncOrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -6488,7 +7593,7 @@ class AsyncOrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -6516,7 +7621,7 @@ class AsyncOrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -6537,7 +7642,7 @@ class AsyncOrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -6566,7 +7671,7 @@ class AsyncOrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -6593,7 +7698,7 @@ class AsyncOrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -6622,7 +7727,7 @@ class AsyncOrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -6651,7 +7756,7 @@ class AsyncOrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -6678,7 +7783,7 @@ class AsyncOrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -6876,7 +7981,7 @@ class AsyncOrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -6904,7 +8009,7 @@ class AsyncOrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -6919,7 +8024,7 @@ class AsyncOrgsAPI:
     async def update_enterprise_pricing_for_org(
         self,
         id: Uuid,
-        body: EnterpriseSubscriptionTierPrice,
+        body: SubscriptionTierPrice,
     ) -> ZooProductSubscriptions:
         """You must be a Zoo admin to perform this request."""
 
@@ -6934,7 +8039,7 @@ class AsyncOrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -6963,7 +8068,7 @@ class AsyncOrgsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -6999,7 +8104,7 @@ class PaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -7030,7 +8135,7 @@ class PaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -7061,7 +8166,7 @@ class PaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -7090,7 +8195,7 @@ class PaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -7119,7 +8224,7 @@ class PaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -7146,7 +8251,7 @@ class PaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -7173,7 +8278,7 @@ class PaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -7202,7 +8307,7 @@ class PaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -7232,7 +8337,7 @@ class PaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -7253,7 +8358,7 @@ class PaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -7282,7 +8387,7 @@ class PaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -7311,7 +8416,7 @@ class PaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -7338,7 +8443,7 @@ class PaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -7368,7 +8473,7 @@ class PaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -7406,7 +8511,7 @@ class PaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -7435,7 +8540,7 @@ class PaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -7466,7 +8571,7 @@ class PaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -7497,7 +8602,7 @@ class PaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -7526,7 +8631,7 @@ class PaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -7555,7 +8660,7 @@ class PaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -7582,7 +8687,7 @@ class PaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -7609,7 +8714,7 @@ class PaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -7638,7 +8743,7 @@ class PaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -7676,7 +8781,7 @@ class PaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -7697,7 +8802,7 @@ class PaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -7726,7 +8831,7 @@ class PaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -7755,7 +8860,7 @@ class PaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -7782,7 +8887,7 @@ class PaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -7812,7 +8917,7 @@ class PaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -7850,7 +8955,7 @@ class PaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -7886,7 +8991,7 @@ class AsyncPaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -7917,7 +9022,7 @@ class AsyncPaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -7948,7 +9053,7 @@ class AsyncPaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -7977,7 +9082,7 @@ class AsyncPaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -8006,7 +9111,7 @@ class AsyncPaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -8033,7 +9138,7 @@ class AsyncPaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -8060,7 +9165,7 @@ class AsyncPaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -8089,7 +9194,7 @@ class AsyncPaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -8119,7 +9224,7 @@ class AsyncPaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -8140,7 +9245,7 @@ class AsyncPaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -8169,7 +9274,7 @@ class AsyncPaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -8198,7 +9303,7 @@ class AsyncPaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -8225,7 +9330,7 @@ class AsyncPaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -8255,7 +9360,7 @@ class AsyncPaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -8293,7 +9398,7 @@ class AsyncPaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -8322,7 +9427,7 @@ class AsyncPaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -8353,7 +9458,7 @@ class AsyncPaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -8384,7 +9489,7 @@ class AsyncPaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -8413,7 +9518,7 @@ class AsyncPaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -8442,7 +9547,7 @@ class AsyncPaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -8469,7 +9574,7 @@ class AsyncPaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -8496,7 +9601,7 @@ class AsyncPaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -8525,7 +9630,7 @@ class AsyncPaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -8563,7 +9668,7 @@ class AsyncPaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -8584,7 +9689,7 @@ class AsyncPaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -8613,7 +9718,7 @@ class AsyncPaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -8642,7 +9747,7 @@ class AsyncPaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -8669,7 +9774,7 @@ class AsyncPaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -8699,7 +9804,7 @@ class AsyncPaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -8737,7 +9842,7 @@ class AsyncPaymentsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -8871,7 +9976,7 @@ class ServiceAccountsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -8901,7 +10006,7 @@ class ServiceAccountsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -8933,7 +10038,7 @@ class ServiceAccountsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -9061,7 +10166,7 @@ class AsyncServiceAccountsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -9091,7 +10196,7 @@ class AsyncServiceAccountsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -9123,7 +10228,7 @@ class AsyncServiceAccountsAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -9153,7 +10258,7 @@ class StoreAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -9189,7 +10294,7 @@ class AsyncStoreAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -9234,7 +10339,7 @@ class UnitAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -9272,7 +10377,7 @@ class UnitAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -9310,7 +10415,7 @@ class UnitAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -9348,7 +10453,7 @@ class UnitAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -9386,7 +10491,7 @@ class UnitAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -9424,7 +10529,7 @@ class UnitAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -9462,7 +10567,7 @@ class UnitAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -9500,7 +10605,7 @@ class UnitAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -9538,7 +10643,7 @@ class UnitAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -9576,7 +10681,7 @@ class UnitAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -9614,7 +10719,7 @@ class UnitAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -9652,7 +10757,7 @@ class UnitAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -9690,7 +10795,7 @@ class UnitAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -9735,7 +10840,7 @@ class AsyncUnitAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -9773,7 +10878,7 @@ class AsyncUnitAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -9811,7 +10916,7 @@ class AsyncUnitAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -9849,7 +10954,7 @@ class AsyncUnitAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -9887,7 +10992,7 @@ class AsyncUnitAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -9925,7 +11030,7 @@ class AsyncUnitAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -9963,7 +11068,7 @@ class AsyncUnitAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -10001,7 +11106,7 @@ class AsyncUnitAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -10039,7 +11144,7 @@ class AsyncUnitAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -10077,7 +11182,7 @@ class AsyncUnitAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -10115,7 +11220,7 @@ class AsyncUnitAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -10153,7 +11258,7 @@ class AsyncUnitAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -10191,7 +11296,7 @@ class AsyncUnitAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -10227,7 +11332,7 @@ class UsersAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -10256,7 +11361,7 @@ class UsersAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -10285,7 +11390,7 @@ class UsersAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -10308,7 +11413,7 @@ class UsersAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -10331,7 +11436,7 @@ class UsersAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -10342,6 +11447,33 @@ class UsersAPI:
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return ExtendedUser.model_validate(json_data)
+
+    def user_features_get(
+        self,
+    ) -> UserFeatureList:
+        """Returns only features that are marked as safe for exposure to clients and currently resolved to `true` for the requesting user (including org overrides)."""
+
+        url = "{}/user/features".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return UserFeatureList.model_validate(json_data)
 
     def put_user_form_self(
         self,
@@ -10360,7 +11492,7 @@ class UsersAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -10383,7 +11515,7 @@ class UsersAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -10412,7 +11544,7 @@ class UsersAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -10441,7 +11573,7 @@ class UsersAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -10469,7 +11601,7 @@ class UsersAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -10586,7 +11718,7 @@ class UsersAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -10618,7 +11750,7 @@ class UsersAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -10640,7 +11772,7 @@ class UsersAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -10733,94 +11865,6 @@ class UsersAPI:
         json_data = response.json()
         # Validate into a Pydantic model (supports BaseModel/RootModel)
         return UserResultsPage.model_validate(json_data)
-
-    def get_user(
-        self,
-        id: UserIdentifier,
-    ) -> User:
-        """To get information about yourself, use `/users/me` as the endpoint. By doing so you will get the user information for the authenticated user.
-
-        Alternatively, to get information about the authenticated user, use `/user` endpoint."""
-
-        url = "{}/users/{id}".format(self.client.base_url, id=id)
-
-        _client = self.client.get_http_client()
-
-        response = _client.get(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from ..response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return User.model_validate(json_data)
-
-    def user_admin_details_get(
-        self,
-        id: UserIdentifier,
-    ) -> UserAdminDetails:
-        """Zoo admins can retrieve extended information about any user, while non-admins receive a 404 to avoid leaking the existence of the resource."""
-
-        url = "{}/users/{id}/admin/details".format(self.client.base_url, id=id)
-
-        _client = self.client.get_http_client()
-
-        response = _client.get(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from ..response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return UserAdminDetails.model_validate(json_data)
-
-    def update_subscription_for_user(
-        self,
-        id: UserIdentifier,
-        body: ZooProductSubscriptionsUserRequest,
-    ) -> ZooProductSubscriptions:
-        """You must be a Zoo admin to perform this request."""
-
-        url = "{}/users/{id}/payment/subscriptions".format(self.client.base_url, id=id)
-
-        _client = self.client.get_http_client()
-
-        response = _client.put(
-            url=url,
-            headers=self.client.get_headers(),
-            content=body.model_dump_json(),
-        )
-
-        if not response.is_success:
-            from ..response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return ZooProductSubscriptions.model_validate(json_data)
 
     def list_users_extended(
         self,
@@ -10928,7 +11972,7 @@ class UsersAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -10939,6 +11983,94 @@ class UsersAPI:
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return ExtendedUser.model_validate(json_data)
+
+    def get_user(
+        self,
+        id: UserIdentifier,
+    ) -> User:
+        """To get information about yourself, use `/users/me` as the endpoint. By doing so you will get the user information for the authenticated user.
+
+        Alternatively, to get information about the authenticated user, use `/user` endpoint."""
+
+        url = "{}/users/{id}".format(self.client.base_url, id=id)
+
+        _client = self.client.get_http_client()
+
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return User.model_validate(json_data)
+
+    def user_admin_details_get(
+        self,
+        id: UserIdentifier,
+    ) -> UserAdminDetails:
+        """Zoo admins can retrieve extended information about any user, while non-admins receive a 404 to avoid leaking the existence of the resource."""
+
+        url = "{}/users/{id}/admin/details".format(self.client.base_url, id=id)
+
+        _client = self.client.get_http_client()
+
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return UserAdminDetails.model_validate(json_data)
+
+    def update_subscription_for_user(
+        self,
+        id: UserIdentifier,
+        body: ZooProductSubscriptionsUserRequest,
+    ) -> ZooProductSubscriptions:
+        """You must be a Zoo admin to perform this request."""
+
+        url = "{}/users/{id}/payment/subscriptions".format(self.client.base_url, id=id)
+
+        _client = self.client.get_http_client()
+
+        response = _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return ZooProductSubscriptions.model_validate(json_data)
 
     def put_public_form(
         self,
@@ -10957,7 +12089,7 @@ class UsersAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -10980,7 +12112,7 @@ class UsersAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -11010,7 +12142,7 @@ class AsyncUsersAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -11039,7 +12171,7 @@ class AsyncUsersAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -11068,7 +12200,7 @@ class AsyncUsersAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -11091,7 +12223,7 @@ class AsyncUsersAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -11114,7 +12246,7 @@ class AsyncUsersAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -11125,6 +12257,33 @@ class AsyncUsersAPI:
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return ExtendedUser.model_validate(json_data)
+
+    async def user_features_get(
+        self,
+    ) -> UserFeatureList:
+        """Returns only features that are marked as safe for exposure to clients and currently resolved to `true` for the requesting user (including org overrides)."""
+
+        url = "{}/user/features".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return UserFeatureList.model_validate(json_data)
 
     async def put_user_form_self(
         self,
@@ -11143,7 +12302,7 @@ class AsyncUsersAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -11166,7 +12325,7 @@ class AsyncUsersAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -11195,7 +12354,7 @@ class AsyncUsersAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -11224,7 +12383,7 @@ class AsyncUsersAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -11252,7 +12411,7 @@ class AsyncUsersAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -11369,7 +12528,7 @@ class AsyncUsersAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -11401,7 +12560,7 @@ class AsyncUsersAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -11423,7 +12582,7 @@ class AsyncUsersAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -11516,94 +12675,6 @@ class AsyncUsersAPI:
         json_data = response.json()
         # Validate into a Pydantic model (supports BaseModel/RootModel)
         return UserResultsPage.model_validate(json_data)
-
-    async def get_user(
-        self,
-        id: UserIdentifier,
-    ) -> User:
-        """To get information about yourself, use `/users/me` as the endpoint. By doing so you will get the user information for the authenticated user.
-
-        Alternatively, to get information about the authenticated user, use `/user` endpoint."""
-
-        url = "{}/users/{id}".format(self.client.base_url, id=id)
-
-        _client = self.client.get_http_client()
-
-        response = await _client.get(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from ..response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return User.model_validate(json_data)
-
-    async def user_admin_details_get(
-        self,
-        id: UserIdentifier,
-    ) -> UserAdminDetails:
-        """Zoo admins can retrieve extended information about any user, while non-admins receive a 404 to avoid leaking the existence of the resource."""
-
-        url = "{}/users/{id}/admin/details".format(self.client.base_url, id=id)
-
-        _client = self.client.get_http_client()
-
-        response = await _client.get(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from ..response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return UserAdminDetails.model_validate(json_data)
-
-    async def update_subscription_for_user(
-        self,
-        id: UserIdentifier,
-        body: ZooProductSubscriptionsUserRequest,
-    ) -> ZooProductSubscriptions:
-        """You must be a Zoo admin to perform this request."""
-
-        url = "{}/users/{id}/payment/subscriptions".format(self.client.base_url, id=id)
-
-        _client = self.client.get_http_client()
-
-        response = await _client.put(
-            url=url,
-            headers=self.client.get_headers(),
-            content=body.model_dump_json(),
-        )
-
-        if not response.is_success:
-            from ..response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return ZooProductSubscriptions.model_validate(json_data)
 
     def list_users_extended(
         self,
@@ -11713,7 +12784,7 @@ class AsyncUsersAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -11724,6 +12795,94 @@ class AsyncUsersAPI:
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return ExtendedUser.model_validate(json_data)
+
+    async def get_user(
+        self,
+        id: UserIdentifier,
+    ) -> User:
+        """To get information about yourself, use `/users/me` as the endpoint. By doing so you will get the user information for the authenticated user.
+
+        Alternatively, to get information about the authenticated user, use `/user` endpoint."""
+
+        url = "{}/users/{id}".format(self.client.base_url, id=id)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return User.model_validate(json_data)
+
+    async def user_admin_details_get(
+        self,
+        id: UserIdentifier,
+    ) -> UserAdminDetails:
+        """Zoo admins can retrieve extended information about any user, while non-admins receive a 404 to avoid leaking the existence of the resource."""
+
+        url = "{}/users/{id}/admin/details".format(self.client.base_url, id=id)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return UserAdminDetails.model_validate(json_data)
+
+    async def update_subscription_for_user(
+        self,
+        id: UserIdentifier,
+        body: ZooProductSubscriptionsUserRequest,
+    ) -> ZooProductSubscriptions:
+        """You must be a Zoo admin to perform this request."""
+
+        url = "{}/users/{id}/payment/subscriptions".format(self.client.base_url, id=id)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return ZooProductSubscriptions.model_validate(json_data)
 
     async def put_public_form(
         self,
@@ -11742,7 +12901,7 @@ class AsyncUsersAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -11765,7 +12924,7 @@ class AsyncUsersAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -11891,7 +13050,7 @@ class ApiTokensAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -11919,7 +13078,7 @@ class ApiTokensAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -11949,7 +13108,7 @@ class ApiTokensAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -12077,7 +13236,7 @@ class AsyncApiTokensAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -12105,7 +13264,7 @@ class AsyncApiTokensAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -12135,7 +13294,7 @@ class AsyncApiTokensAPI:
         )
 
         if not response.is_success:
-            from ..response_helpers import raise_for_status
+            from kittycad.response_helpers import raise_for_status
 
             raise_for_status(response)
 
@@ -12152,6 +13311,7 @@ class ModelingAPI:
         self,
         api_call_id: Optional[str] = None,
         fps: Optional[int] = None,
+        order_independent_transparency: Optional[bool] = None,
         pool: Optional[str] = None,
         post_effect: Optional[PostEffectType] = None,
         replay: Optional[str] = None,
@@ -12160,6 +13320,7 @@ class ModelingAPI:
         video_res_height: Optional[int] = None,
         video_res_width: Optional[int] = None,
         webrtc: Optional[bool] = None,
+        pr: Optional[int] = None,
         recv_timeout: Optional[float] = None,
         ws_factory: Optional[Callable[..., ClientConnectionSync]] = None,
     ) -> "WebSocketModelingCommandsWs":
@@ -12170,6 +13331,7 @@ class ModelingAPI:
         return WebSocketModelingCommandsWs(
             api_call_id=api_call_id,
             fps=fps,
+            order_independent_transparency=order_independent_transparency,
             pool=pool,
             post_effect=post_effect,
             replay=replay,
@@ -12178,6 +13340,7 @@ class ModelingAPI:
             video_res_height=video_res_height,
             video_res_width=video_res_width,
             webrtc=webrtc,
+            pr=pr,
             recv_timeout=recv_timeout,
             ws_factory=ws_factory,
             client=self.client,
@@ -12194,6 +13357,7 @@ class AsyncModelingAPI:
         self,
         api_call_id: Optional[str] = None,
         fps: Optional[int] = None,
+        order_independent_transparency: Optional[bool] = None,
         pool: Optional[str] = None,
         post_effect: Optional[PostEffectType] = None,
         replay: Optional[str] = None,
@@ -12202,6 +13366,7 @@ class AsyncModelingAPI:
         video_res_height: Optional[int] = None,
         video_res_width: Optional[int] = None,
         webrtc: Optional[bool] = None,
+        pr: Optional[int] = None,
     ):
         """Open a websocket which accepts modeling commands.
 
@@ -12215,6 +13380,7 @@ class AsyncModelingAPI:
             *,
             api_call_id: Optional[str] = None,
             fps: Optional[int] = None,
+            order_independent_transparency: Optional[bool] = None,
             pool: Optional[str] = None,
             post_effect: Optional[PostEffectType] = None,
             replay: Optional[str] = None,
@@ -12223,6 +13389,7 @@ class AsyncModelingAPI:
             video_res_height: Optional[int] = None,
             video_res_width: Optional[int] = None,
             webrtc: Optional[bool] = None,
+            pr: Optional[int] = None,
         ) -> ClientConnectionAsync:
             """Open a websocket which accepts modeling commands."""
 
@@ -12239,6 +13406,20 @@ class AsyncModelingAPI:
                     url = url + "&fps=" + str(fps)
                 else:
                     url = url + "?fps=" + str(fps)
+
+            if order_independent_transparency is not None:
+                if "?" in url:
+                    url = (
+                        url
+                        + "&order_independent_transparency="
+                        + str(order_independent_transparency).lower()
+                    )
+                else:
+                    url = (
+                        url
+                        + "?order_independent_transparency="
+                        + str(order_independent_transparency).lower()
+                    )
 
             if pool is not None:
                 if "?" in url:
@@ -12287,6 +13468,12 @@ class AsyncModelingAPI:
                     url = url + "&webrtc=" + str(webrtc).lower()
                 else:
                     url = url + "?webrtc=" + str(webrtc).lower()
+
+            if pr is not None:
+                if "?" in url:
+                    url = url + "&pr=" + str(pr)
+                else:
+                    url = url + "?pr=" + str(pr)
 
             return await ws_connect_async(
                 url.replace("http", "ws"),
@@ -12527,6 +13714,7 @@ class WebSocketModelingCommandsWs:
         self,
         api_call_id: Optional[str] = None,
         fps: Optional[int] = None,
+        order_independent_transparency: Optional[bool] = None,
         pool: Optional[str] = None,
         post_effect: Optional[PostEffectType] = None,
         replay: Optional[str] = None,
@@ -12535,6 +13723,7 @@ class WebSocketModelingCommandsWs:
         video_res_height: Optional[int] = None,
         video_res_width: Optional[int] = None,
         webrtc: Optional[bool] = None,
+        pr: Optional[int] = None,
         recv_timeout: Optional[float] = None,
         ws_factory: Optional[Callable[..., ClientConnectionSync]] = None,
         *,
@@ -12555,6 +13744,20 @@ class WebSocketModelingCommandsWs:
                 url = url + "&fps=" + str(fps)
             else:
                 url = url + "?fps=" + str(fps)
+
+        if order_independent_transparency is not None:
+            if "?" in url:
+                url = (
+                    url
+                    + "&order_independent_transparency="
+                    + str(order_independent_transparency).lower()
+                )
+            else:
+                url = (
+                    url
+                    + "?order_independent_transparency="
+                    + str(order_independent_transparency).lower()
+                )
 
         if pool is not None:
             if "?" in url:
@@ -12603,6 +13806,12 @@ class WebSocketModelingCommandsWs:
                 url = url + "&webrtc=" + str(webrtc).lower()
             else:
                 url = url + "?webrtc=" + str(webrtc).lower()
+
+        if pr is not None:
+            if "?" in url:
+                url = url + "&pr=" + str(pr)
+            else:
+                url = url + "?pr=" + str(pr)
 
         headers = client.get_headers()
         factory = ws_factory or ws_connect

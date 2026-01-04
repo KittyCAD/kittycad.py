@@ -26,6 +26,10 @@ class ModelingAppSubscriptionTier(KittyCadBaseModel):
 
     features: Optional[List[SubscriptionTierFeature]] = None
 
+    is_custom_quote: bool = False
+
+    ml_custom_models: bool = False
+
     monthly_pay_as_you_go_api_credits: int = 0
 
     monthly_pay_as_you_go_api_credits_monetary_value: float = 0.0

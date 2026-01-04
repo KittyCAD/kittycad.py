@@ -29,6 +29,20 @@ from kittycad.models import ApiCallWithPriceResultsPage
 from kittycad.pagination import AsyncPageIterator, SyncPageIterator
 
 
+class TestResponseHelperImports:
+    """Ensure generated clients import response helpers from valid module paths."""
+
+    def test_client_uses_package_scoped_response_helper_imports(self):
+        import kittycad
+
+        client_file = Path(kittycad.__file__)
+        content = client_file.read_text()
+
+        # The generator should never emit parent-relative imports in the package root.
+        assert "..response_helpers" not in content
+        assert "from kittycad.response_helpers import raise_for_status" in content
+
+
 class TestMultipartEndpoints:
     """Test multipart endpoints produce upload_* with file: SyncUpload, correct multipart code."""
 

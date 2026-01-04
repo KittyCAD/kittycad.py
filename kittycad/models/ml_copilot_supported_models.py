@@ -24,5 +24,17 @@ class MlCopilotSupportedModels(str, Enum):
 
     O3_MINI = "o3_mini"
 
+    """# azure o3-mini"""  # noqa: E501
+
+    AZURE_O3_MINI = "azure_o3_mini"
+
+    """# azure gpt-4o"""  # noqa: E501
+
+    AZURE_GPT4O = "azure_gpt4o"
+
+    """# azure gpt-4o-mini"""  # noqa: E501
+
+    AZURE_GPT4O_MINI = "azure_gpt4o_mini"
+
     def __str__(self) -> str:
         return str(self.value)
