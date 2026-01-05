@@ -6,6 +6,7 @@ from typing_extensions import Annotated
 from ..models.angle import Angle
 from ..models.annotation_options import AnnotationOptions
 from ..models.annotation_type import AnnotationType
+from ..models.body_type import BodyType
 from ..models.camera_drag_interaction_type import CameraDragInteractionType
 from ..models.camera_movement import CameraMovement
 from ..models.camera_view_state import CameraViewState
@@ -87,6 +88,8 @@ class OptionExtendPath(KittyCadBaseModel):
 class OptionExtrude(KittyCadBaseModel):
     """Command for extruding a solid 2d."""
 
+    body_type: BodyType = "solid"  # type: ignore[assignment]
+
     distance: LengthUnit
 
     extrude_method: ExtrudeMethod = "merge"  # type: ignore[assignment]
@@ -103,6 +106,8 @@ class OptionExtrude(KittyCadBaseModel):
 class OptionExtrudeToReference(KittyCadBaseModel):
     """Command for extruding a solid 2d to a reference geometry."""
 
+    body_type: BodyType = "solid"  # type: ignore[assignment]
+
     extrude_method: ExtrudeMethod = "merge"  # type: ignore[assignment]
 
     faces: Optional[ExtrudedFaceInfo] = None
@@ -118,6 +123,8 @@ class OptionTwistExtrude(KittyCadBaseModel):
     """Command for twist extruding a solid 2d."""
 
     angle_step_size: Angle = {"unit": "degrees", "value": 15.0}  # type: ignore[assignment]
+
+    body_type: BodyType = "solid"  # type: ignore[assignment]
 
     center_2d: Point2d = {"x": 0.0, "y": 0.0}  # type: ignore[assignment]
 
@@ -159,6 +166,8 @@ class OptionRevolve(KittyCadBaseModel):
 
     axis_is_2d: bool
 
+    body_type: BodyType = "solid"  # type: ignore[assignment]
+
     opposite: OppositeForAngle = "None"  # type: ignore[assignment]
 
     origin: Point3d
@@ -188,6 +197,8 @@ class OptionRevolveAboutEdge(KittyCadBaseModel):
     """Command for revolving a solid 2d about a brep edge"""
 
     angle: Angle
+
+    body_type: BodyType = "solid"  # type: ignore[assignment]
 
     edge_id: str
 
@@ -974,6 +985,8 @@ class OptionSetCurrentToolProperties(KittyCadBaseModel):
 
 class OptionSetDefaultSystemProperties(KittyCadBaseModel):
     """Set the default system properties used when a specific property isn't set."""
+
+    backface_color: Optional[Color] = None
 
     color: Optional[Color] = None
 

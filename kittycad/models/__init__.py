@@ -42,6 +42,7 @@ from .base import KittyCadBaseModel
 from .batch_response import BatchResponse
 from .billing_info import BillingInfo
 from .block_reason import BlockReason
+from .body_type import BodyType
 from .boolean_intersection import BooleanIntersection
 from .boolean_subtract import BooleanSubtract
 from .boolean_union import BooleanUnion
