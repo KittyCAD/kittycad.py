@@ -51,6 +51,11 @@ class OptionSldprt(KittyCadBaseModel):
 class OptionStep(KittyCadBaseModel):
     """ISO 10303-21 (STEP) format."""
 
+    coords: System = {
+        "forward": {"axis": "y", "direction": "negative"},
+        "up": {"axis": "z", "direction": "positive"},
+    }  # type: ignore[assignment]
+
     split_closed_faces: bool = False
 
     type: Literal["step"] = "step"
