@@ -123,7 +123,7 @@
     "op": "add",
     "path": "/paths/~1auth~1saml~1org~1{org_id}~1login/get/x-python",
     "value": {
-      "example": "from kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\ndef example_get_auth_saml_by_org():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    client.hidden.get_auth_saml_by_org(org_id=Uuid(\"<string>\"),\n        callback_url=None)\n\n",
+      "example": "from kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models.lenient_url import LenientUrl\ndef example_get_auth_saml_by_org():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    client.hidden.get_auth_saml_by_org(org_id=Uuid(\"<string>\"),\n        callback_url=LenientUrl(\"<string>\"))\n\n",
       "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD.hidden"
     }
   },
@@ -131,7 +131,7 @@
     "op": "add",
     "path": "/paths/~1auth~1saml~1provider~1{provider_id}~1login/get/x-python",
     "value": {
-      "example": "from kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\ndef example_get_auth_saml():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    client.hidden.get_auth_saml(provider_id=Uuid(\"<string>\"),\n        callback_url=None)\n\n",
+      "example": "from kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models.lenient_url import LenientUrl\ndef example_get_auth_saml():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    client.hidden.get_auth_saml(provider_id=Uuid(\"<string>\"),\n        callback_url=LenientUrl(\"<string>\"))\n\n",
       "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD.hidden"
     }
   },
