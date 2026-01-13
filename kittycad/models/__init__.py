@@ -197,6 +197,7 @@ from .kcl_code_completion_request import KclCodeCompletionRequest
 from .kcl_code_completion_response import KclCodeCompletionResponse
 from .kcl_model import KclModel
 from .length_unit import LengthUnit
+from .lenient_url import LenientUrl
 from .loft import Loft
 from .make_axes_gizmo import MakeAxesGizmo
 from .make_offset_path import MakeOffsetPath

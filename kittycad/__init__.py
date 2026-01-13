@@ -88,6 +88,7 @@ from .models.ip_addr_info import IpAddrInfo
 from .models.kcl_code_completion_request import KclCodeCompletionRequest
 from .models.kcl_code_completion_response import KclCodeCompletionResponse
 from .models.kcl_model import KclModel
+from .models.lenient_url import LenientUrl
 from .models.ml_copilot_client_message import MlCopilotClientMessage
 from .models.ml_copilot_server_message import MlCopilotServerMessage
 from .models.ml_feedback import MlFeedback
@@ -3843,7 +3844,7 @@ class HiddenAPI:
         self,
         org_id: Uuid,
         *,
-        callback_url: Optional[str] = None,
+        callback_url: Optional[LenientUrl] = None,
     ):
         """Redirects the browser straight to the org’s SAML IdP."""
 
@@ -3875,7 +3876,7 @@ class HiddenAPI:
         self,
         provider_id: Uuid,
         *,
-        callback_url: Optional[str] = None,
+        callback_url: Optional[LenientUrl] = None,
     ):
         """The UI uses this to avoid having to ask the API anything about the IdP. It already knows the SAML IdP ID from the path, so it can just link to this path and rely on the API to redirect to the actual IdP."""
 
@@ -4082,7 +4083,7 @@ class AsyncHiddenAPI:
         self,
         org_id: Uuid,
         *,
-        callback_url: Optional[str] = None,
+        callback_url: Optional[LenientUrl] = None,
     ):
         """Redirects the browser straight to the org’s SAML IdP."""
 
@@ -4114,7 +4115,7 @@ class AsyncHiddenAPI:
         self,
         provider_id: Uuid,
         *,
-        callback_url: Optional[str] = None,
+        callback_url: Optional[LenientUrl] = None,
     ):
         """The UI uses this to avoid having to ask the API anything about the IdP. It already knows the SAML IdP ID from the path, so it can just link to this path and rely on the API to redirect to the actual IdP."""
 

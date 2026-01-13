@@ -106,6 +106,7 @@ from kittycad.models.inquiry_form import InquiryForm
 from kittycad.models.inquiry_type import InquiryType
 from kittycad.models.kcl_code_completion_params import KclCodeCompletionParams
 from kittycad.models.kcl_code_completion_request import KclCodeCompletionRequest
+from kittycad.models.lenient_url import LenientUrl
 from kittycad.models.ml_copilot_client_message import OptionHeaders, OptionUser
 from kittycad.models.ml_copilot_tool import MlCopilotTool
 from kittycad.models.ml_feedback import MlFeedback
@@ -477,7 +478,9 @@ async def test_auth_email_callback_async():
 def test_get_auth_saml_by_org():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    client.hidden.get_auth_saml_by_org(org_id=Uuid("<string>"), callback_url=None)
+    client.hidden.get_auth_saml_by_org(
+        org_id=Uuid("<string>"), callback_url=LenientUrl("<string>")
+    )
 
 
 # OR run async
@@ -486,14 +489,18 @@ def test_get_auth_saml_by_org():
 async def test_get_auth_saml_by_org_async():
     client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    await client.hidden.get_auth_saml_by_org(org_id=Uuid("<string>"), callback_url=None)
+    await client.hidden.get_auth_saml_by_org(
+        org_id=Uuid("<string>"), callback_url=LenientUrl("<string>")
+    )
 
 
 @pytest.mark.skip
 def test_get_auth_saml():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    client.hidden.get_auth_saml(provider_id=Uuid("<string>"), callback_url=None)
+    client.hidden.get_auth_saml(
+        provider_id=Uuid("<string>"), callback_url=LenientUrl("<string>")
+    )
 
 
 # OR run async
@@ -502,7 +509,9 @@ def test_get_auth_saml():
 async def test_get_auth_saml_async():
     client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    await client.hidden.get_auth_saml(provider_id=Uuid("<string>"), callback_url=None)
+    await client.hidden.get_auth_saml(
+        provider_id=Uuid("<string>"), callback_url=LenientUrl("<string>")
+    )
 
 
 @pytest.mark.skip
