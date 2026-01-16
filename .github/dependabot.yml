@@ -3,17 +3,6 @@
 # the ciso repository.
 
 version: 2
-registries:
-  files:
-    type: python-index
-    url: https://files.astralhosted.com
-    username: __token__
-    password: ${{ secrets.PYX_TOKEN }}
-  zoo-pyx:
-    type: python-index
-    url: https://api.pyx.dev/simple/zoo/main
-    username: __token__
-    password: ${{ secrets.PYX_TOKEN }}
 updates:
 - package-ecosystem: github-actions
   directory: /
@@ -30,24 +19,12 @@ updates:
       update-types:
       - minor
       - patch
-    security-major:
-      applies-to: security-updates
-      exclude-patterns:
-      - kittycad*
-      update-types:
-      - major
     patch:
       applies-to: version-updates
       exclude-patterns:
       - kittycad*
       update-types:
       - patch
-    major:
-      applies-to: version-updates
-      exclude-patterns:
-      - kittycad*
-      update-types:
-      - major
     minor:
       applies-to: version-updates
       exclude-patterns:
@@ -76,24 +53,12 @@ updates:
       update-types:
       - minor
       - patch
-    security-major:
-      applies-to: security-updates
-      exclude-patterns:
-      - kittycad*
-      update-types:
-      - major
     patch:
       applies-to: version-updates
       exclude-patterns:
       - kittycad*
       update-types:
       - patch
-    major:
-      applies-to: version-updates
-      exclude-patterns:
-      - kittycad*
-      update-types:
-      - major
     minor:
       applies-to: version-updates
       exclude-patterns:
