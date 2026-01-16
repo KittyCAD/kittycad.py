@@ -19,24 +19,12 @@ updates:
       update-types:
       - minor
       - patch
-    security-major:
-      applies-to: security-updates
-      exclude-patterns:
-      - kittycad*
-      update-types:
-      - major
     patch:
       applies-to: version-updates
       exclude-patterns:
       - kittycad*
       update-types:
       - patch
-    major:
-      applies-to: version-updates
-      exclude-patterns:
-      - kittycad*
-      update-types:
-      - major
     minor:
       applies-to: version-updates
       exclude-patterns:
@@ -50,7 +38,7 @@ updates:
     - '*kcl*'
     - '*zoo*'
     - '*kittycad*'
-- package-ecosystem: pip
+- package-ecosystem: uv
   directory: /
   schedule:
     interval: weekly
@@ -65,24 +53,12 @@ updates:
       update-types:
       - minor
       - patch
-    security-major:
-      applies-to: security-updates
-      exclude-patterns:
-      - kittycad*
-      update-types:
-      - major
     patch:
       applies-to: version-updates
       exclude-patterns:
       - kittycad*
       update-types:
       - patch
-    major:
-      applies-to: version-updates
-      exclude-patterns:
-      - kittycad*
-      update-types:
-      - major
     minor:
       applies-to: version-updates
       exclude-patterns:
