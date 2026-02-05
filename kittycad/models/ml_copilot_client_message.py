@@ -3,6 +3,7 @@ from typing import Dict, List, Literal, Optional, Union
 from pydantic import Field, RootModel
 from typing_extensions import Annotated
 
+from ..models.ml_copilot_file import MlCopilotFile
 from ..models.ml_copilot_mode import MlCopilotMode
 from ..models.ml_copilot_supported_models import MlCopilotSupportedModels
 from ..models.ml_copilot_system_command import MlCopilotSystemCommand
@@ -22,6 +23,8 @@ class OptionHeaders(KittyCadBaseModel):
 
 class OptionUser(KittyCadBaseModel):
     """The user message, which contains the content of the user's input."""
+
+    additional_files: Optional[List[MlCopilotFile]] = None
 
     content: str
 

@@ -24,6 +24,8 @@ class AnnotationFeatureControl(KittyCadBaseModel):
 
     font_scale: float
 
+    leader_scale: float = 1.0
+
     leader_type: AnnotationLineEnd
 
     offset: Point2d

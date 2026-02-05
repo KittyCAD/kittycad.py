@@ -5,6 +5,7 @@ from typing_extensions import Annotated
 
 from ..models.add_hole_from_offset import AddHoleFromOffset
 from ..models.adjacency_info import AdjacencyInfo
+from ..models.boolean_imprint import BooleanImprint
 from ..models.boolean_intersection import BooleanIntersection
 from ..models.boolean_subtract import BooleanSubtract
 from ..models.boolean_union import BooleanUnion
@@ -14,6 +15,7 @@ from ..models.camera_drag_start import CameraDragStart
 from ..models.center_of_mass import CenterOfMass
 from ..models.close_path import ClosePath
 from ..models.complementary_edges import ComplementaryEdges
+from ..models.create_region import CreateRegion
 from ..models.curve_get_control_points import CurveGetControlPoints
 from ..models.curve_get_end_points import CurveGetEndPoints
 from ..models.curve_get_type import CurveGetType
@@ -40,12 +42,15 @@ from ..models.enable_sketch_mode import EnableSketchMode
 from ..models.engine_util_evaluate_path import EngineUtilEvaluatePath
 from ..models.entity_circular_pattern import EntityCircularPattern
 from ..models.entity_clone import EntityClone
+from ..models.entity_delete_children import EntityDeleteChildren
 from ..models.entity_fade import EntityFade
 from ..models.entity_get_all_child_uuids import EntityGetAllChildUuids
 from ..models.entity_get_child_uuid import EntityGetChildUuid
 from ..models.entity_get_distance import EntityGetDistance
+from ..models.entity_get_index import EntityGetIndex
 from ..models.entity_get_num_children import EntityGetNumChildren
 from ..models.entity_get_parent_id import EntityGetParentId
+from ..models.entity_get_primitive_index import EntityGetPrimitiveIndex
 from ..models.entity_get_sketch_paths import EntityGetSketchPaths
 from ..models.entity_linear_pattern import EntityLinearPattern
 from ..models.entity_linear_pattern_transform import EntityLinearPatternTransform
@@ -109,6 +114,7 @@ from ..models.scene_get_entity_ids import SceneGetEntityIds
 from ..models.select_add import SelectAdd
 from ..models.select_clear import SelectClear
 from ..models.select_get import SelectGet
+from ..models.select_region_from_point import SelectRegionFromPoint
 from ..models.select_remove import SelectRemove
 from ..models.select_replace import SelectReplace
 from ..models.select_with_point import SelectWithPoint
@@ -129,14 +135,20 @@ from ..models.sketch_mode_disable import SketchModeDisable
 from ..models.solid2d_add_hole import Solid2dAddHole
 from ..models.solid3d_cut_edges import Solid3dCutEdges
 from ..models.solid3d_fillet_edge import Solid3dFilletEdge
+from ..models.solid3d_flip import Solid3dFlip
+from ..models.solid3d_flip_face import Solid3dFlipFace
 from ..models.solid3d_get_adjacency_info import Solid3dGetAdjacencyInfo
 from ..models.solid3d_get_all_edge_faces import Solid3dGetAllEdgeFaces
 from ..models.solid3d_get_all_opposite_edges import Solid3dGetAllOppositeEdges
+from ..models.solid3d_get_body_type import Solid3dGetBodyType
 from ..models.solid3d_get_common_edge import Solid3dGetCommonEdge
+from ..models.solid3d_get_edge_uuid import Solid3dGetEdgeUuid
 from ..models.solid3d_get_extrusion_face_info import Solid3dGetExtrusionFaceInfo
+from ..models.solid3d_get_face_uuid import Solid3dGetFaceUuid
 from ..models.solid3d_get_next_adjacent_edge import Solid3dGetNextAdjacentEdge
 from ..models.solid3d_get_opposite_edge import Solid3dGetOppositeEdge
 from ..models.solid3d_get_prev_adjacent_edge import Solid3dGetPrevAdjacentEdge
+from ..models.solid3d_join import Solid3dJoin
 from ..models.solid3d_shell_face import Solid3dShellFace
 from ..models.start_path import StartPath
 from ..models.surface_area import SurfaceArea
@@ -234,6 +246,38 @@ class OptionSolid3dShellFace(KittyCadBaseModel):
     data: Solid3dShellFace
 
     type: Literal["solid3d_shell_face"] = "solid3d_shell_face"
+
+
+class OptionSolid3dJoin(KittyCadBaseModel):
+    """"""
+
+    data: Solid3dJoin
+
+    type: Literal["solid3d_join"] = "solid3d_join"
+
+
+class OptionSolid3dGetEdgeUuid(KittyCadBaseModel):
+    """"""
+
+    data: Solid3dGetEdgeUuid
+
+    type: Literal["solid3d_get_edge_uuid"] = "solid3d_get_edge_uuid"
+
+
+class OptionSolid3dGetFaceUuid(KittyCadBaseModel):
+    """"""
+
+    data: Solid3dGetFaceUuid
+
+    type: Literal["solid3d_get_face_uuid"] = "solid3d_get_face_uuid"
+
+
+class OptionSolid3dGetBodyType(KittyCadBaseModel):
+    """"""
+
+    data: Solid3dGetBodyType
+
+    type: Literal["solid3d_get_body_type"] = "solid3d_get_body_type"
 
 
 class OptionRevolveAboutEdge(KittyCadBaseModel):
@@ -664,6 +708,30 @@ class OptionEntityGetChildUuid(KittyCadBaseModel):
     type: Literal["entity_get_child_uuid"] = "entity_get_child_uuid"
 
 
+class OptionEntityGetIndex(KittyCadBaseModel):
+    """"""
+
+    data: EntityGetIndex
+
+    type: Literal["entity_get_index"] = "entity_get_index"
+
+
+class OptionEntityGetPrimitiveIndex(KittyCadBaseModel):
+    """"""
+
+    data: EntityGetPrimitiveIndex
+
+    type: Literal["entity_get_primitive_index"] = "entity_get_primitive_index"
+
+
+class OptionEntityDeleteChildren(KittyCadBaseModel):
+    """"""
+
+    data: EntityDeleteChildren
+
+    type: Literal["entity_delete_children"] = "entity_delete_children"
+
+
 class OptionEntityGetNumChildren(KittyCadBaseModel):
     """"""
 
@@ -846,6 +914,22 @@ class OptionSolid3dGetAllEdgeFaces(KittyCadBaseModel):
     data: Solid3dGetAllEdgeFaces
 
     type: Literal["solid3d_get_all_edge_faces"] = "solid3d_get_all_edge_faces"
+
+
+class OptionSolid3dFlip(KittyCadBaseModel):
+    """"""
+
+    data: Solid3dFlip
+
+    type: Literal["solid3d_flip"] = "solid3d_flip"
+
+
+class OptionSolid3dFlipFace(KittyCadBaseModel):
+    """"""
+
+    data: Solid3dFlipFace
+
+    type: Literal["solid3d_flip_face"] = "solid3d_flip_face"
 
 
 class OptionSolid3dGetAllOppositeEdges(KittyCadBaseModel):
@@ -1274,6 +1358,14 @@ class OptionBooleanSubtract(KittyCadBaseModel):
     type: Literal["boolean_subtract"] = "boolean_subtract"
 
 
+class OptionBooleanImprint(KittyCadBaseModel):
+    """"""
+
+    data: BooleanImprint
+
+    type: Literal["boolean_imprint"] = "boolean_imprint"
+
+
 class OptionSetGridScale(KittyCadBaseModel):
     """"""
 
@@ -1300,6 +1392,22 @@ class OptionSetOrderIndependentTransparency(KittyCadBaseModel):
     )
 
 
+class OptionCreateRegion(KittyCadBaseModel):
+    """"""
+
+    data: CreateRegion
+
+    type: Literal["create_region"] = "create_region"
+
+
+class OptionSelectRegionFromPoint(KittyCadBaseModel):
+    """"""
+
+    data: SelectRegionFromPoint
+
+    type: Literal["select_region_from_point"] = "select_region_from_point"
+
+
 OkModelingCmdResponse = RootModel[
     Annotated[
         Union[
@@ -1314,6 +1422,10 @@ OkModelingCmdResponse = RootModel[
             OptionSweep,
             OptionRevolve,
             OptionSolid3dShellFace,
+            OptionSolid3dJoin,
+            OptionSolid3dGetEdgeUuid,
+            OptionSolid3dGetFaceUuid,
+            OptionSolid3dGetBodyType,
             OptionRevolveAboutEdge,
             OptionCameraDragStart,
             OptionDefaultCameraLookAt,
@@ -1367,6 +1479,9 @@ OkModelingCmdResponse = RootModel[
             OptionSelectWithPoint,
             OptionHighlightSetEntity,
             OptionEntityGetChildUuid,
+            OptionEntityGetIndex,
+            OptionEntityGetPrimitiveIndex,
+            OptionEntityDeleteChildren,
             OptionEntityGetNumChildren,
             OptionEntityGetParentId,
             OptionEntityGetAllChildUuids,
@@ -1390,6 +1505,8 @@ OkModelingCmdResponse = RootModel[
             OptionSelectGet,
             OptionSolid3dGetAdjacencyInfo,
             OptionSolid3dGetAllEdgeFaces,
+            OptionSolid3dFlip,
+            OptionSolid3dFlipFace,
             OptionSolid3dGetAllOppositeEdges,
             OptionSolid3dGetOppositeEdge,
             OptionSolid3dGetNextAdjacentEdge,
@@ -1443,9 +1560,12 @@ OkModelingCmdResponse = RootModel[
             OptionBooleanUnion,
             OptionBooleanIntersection,
             OptionBooleanSubtract,
+            OptionBooleanImprint,
             OptionSetGridScale,
             OptionSetGridAutoScale,
             OptionSetOrderIndependentTransparency,
+            OptionCreateRegion,
+            OptionSelectRegionFromPoint,
         ],
         Field(discriminator="type"),
     ]
