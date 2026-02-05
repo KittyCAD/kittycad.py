@@ -6,6 +6,8 @@ from .base import KittyCadBaseModel
 class AnnotationBasicDimension(KittyCadBaseModel):
     """Parameters for defining an MBD Basic Dimension Annotation state which is measured between two positions in 3D"""
 
+    arrow_scale: float = 1.0
+
     dimension: AnnotationMbdBasicDimension
 
     font_point_size: int

@@ -96,6 +96,8 @@ class OptionExtrude(KittyCadBaseModel):
 
     faces: Optional[ExtrudedFaceInfo] = None
 
+    merge_coplanar_faces: Optional[bool] = None
+
     opposite: OppositeForLengthUnit = "None"  # type: ignore[assignment]
 
     target: ModelingCmdId
@@ -193,6 +195,42 @@ class OptionSolid3dShellFace(KittyCadBaseModel):
     type: Literal["solid3d_shell_face"] = "solid3d_shell_face"
 
 
+class OptionSolid3dJoin(KittyCadBaseModel):
+    """Command for joining a Surface (non-manifold) body back to a Solid. All of the surfaces should already be contained within the body mated topologically. This operation should be the final step after a sequence of Solid modeling commands such as BooleanImprint, EntityDeleteChildren, Solid3dFlipFace If successful, the new body type will become \"Solid\"."""
+
+    object_id: str
+
+    type: Literal["solid3d_join"] = "solid3d_join"
+
+
+class OptionSolid3dGetEdgeUuid(KittyCadBaseModel):
+    """What is the UUID of this body's n-th edge?"""
+
+    edge_index: int
+
+    object_id: str
+
+    type: Literal["solid3d_get_edge_uuid"] = "solid3d_get_edge_uuid"
+
+
+class OptionSolid3dGetFaceUuid(KittyCadBaseModel):
+    """What is the UUID of this body's n-th face?"""
+
+    face_index: int
+
+    object_id: str
+
+    type: Literal["solid3d_get_face_uuid"] = "solid3d_get_face_uuid"
+
+
+class OptionSolid3dGetBodyType(KittyCadBaseModel):
+    """Retrieves the body type."""
+
+    object_id: str
+
+    type: Literal["solid3d_get_body_type"] = "solid3d_get_body_type"
+
+
 class OptionRevolveAboutEdge(KittyCadBaseModel):
     """Command for revolving a solid 2d about a brep edge"""
 
@@ -217,6 +255,8 @@ class OptionLoft(KittyCadBaseModel):
     base_curve_index: Optional[int] = None
 
     bez_approximate_rational: bool
+
+    body_type: BodyType = "solid"  # type: ignore[assignment]
 
     section_ids: List[str]
 
@@ -385,6 +425,32 @@ class OptionEntityGetChildUuid(KittyCadBaseModel):
     entity_id: str
 
     type: Literal["entity_get_child_uuid"] = "entity_get_child_uuid"
+
+
+class OptionEntityGetIndex(KittyCadBaseModel):
+    """What is this entity's child index within its parent"""
+
+    entity_id: str
+
+    type: Literal["entity_get_index"] = "entity_get_index"
+
+
+class OptionEntityGetPrimitiveIndex(KittyCadBaseModel):
+    """What is this edge or face entity's primitive index within its parent body's edges or faces array respectively"""
+
+    entity_id: str
+
+    type: Literal["entity_get_primitive_index"] = "entity_get_primitive_index"
+
+
+class OptionEntityDeleteChildren(KittyCadBaseModel):
+    """Attempts to delete children entity from an entity. Note that this API may change the body type of certain entities from Solid to Surface."""
+
+    child_entity_ids: List[str]
+
+    entity_id: str
+
+    type: Literal["entity_delete_children"] = "entity_delete_children"
 
 
 class OptionEntityGetAllChildUuids(KittyCadBaseModel):
@@ -683,6 +749,24 @@ class OptionSolid3dGetAllEdgeFaces(KittyCadBaseModel):
     object_id: str
 
     type: Literal["solid3d_get_all_edge_faces"] = "solid3d_get_all_edge_faces"
+
+
+class OptionSolid3dFlip(KittyCadBaseModel):
+    """Flips (reverses) a brep that is \"inside-out\"."""
+
+    object_id: str
+
+    type: Literal["solid3d_flip"] = "solid3d_flip"
+
+
+class OptionSolid3dFlipFace(KittyCadBaseModel):
+    """Flips (reverses) a face.  If the solid3d body type is \"Solid\", then body type will become non-manifold (\"Surface\")."""
+
+    face_id: str
+
+    object_id: str
+
+    type: Literal["solid3d_flip_face"] = "solid3d_flip_face"
 
 
 class OptionSolid2dAddHole(KittyCadBaseModel):
@@ -1419,6 +1503,16 @@ class OptionBooleanSubtract(KittyCadBaseModel):
     type: Literal["boolean_subtract"] = "boolean_subtract"
 
 
+class OptionBooleanImprint(KittyCadBaseModel):
+    """Create a new non-manifold body by intersecting all the input bodies, cutting and splitting all the faces at the intersection boundaries."""
+
+    body_ids: List[str]
+
+    tolerance: LengthUnit
+
+    type: Literal["boolean_imprint"] = "boolean_imprint"
+
+
 class OptionMakeOffsetPath(KittyCadBaseModel):
     """Make a new path by offsetting an object by a given distance. The new path's ID will be the ID of this command."""
 
@@ -1477,6 +1571,30 @@ class OptionSetOrderIndependentTransparency(KittyCadBaseModel):
     )
 
 
+class OptionCreateRegion(KittyCadBaseModel):
+    """Create a region bounded by the intersection of various paths. The region should have an ID taken from the ID of the 'CreateRegion' modeling command."""
+
+    curve_clockwise: bool = False
+
+    intersection_index: int = -1
+
+    intersection_segment: str
+
+    object_id: str
+
+    segment: str
+
+    type: Literal["create_region"] = "create_region"
+
+
+class OptionSelectRegionFromPoint(KittyCadBaseModel):
+    """The user clicked on a point in the window, returns the region the user clicked on, if any."""
+
+    selected_at_window: Point2d
+
+    type: Literal["select_region_from_point"] = "select_region_from_point"
+
+
 ModelingCmd = RootModel[
     Annotated[
         Union[
@@ -1490,6 +1608,10 @@ ModelingCmd = RootModel[
             OptionSweep,
             OptionRevolve,
             OptionSolid3dShellFace,
+            OptionSolid3dJoin,
+            OptionSolid3dGetEdgeUuid,
+            OptionSolid3dGetFaceUuid,
+            OptionSolid3dGetBodyType,
             OptionRevolveAboutEdge,
             OptionLoft,
             OptionClosePath,
@@ -1508,6 +1630,9 @@ ModelingCmd = RootModel[
             OptionEntityGetParentId,
             OptionEntityGetNumChildren,
             OptionEntityGetChildUuid,
+            OptionEntityGetIndex,
+            OptionEntityGetPrimitiveIndex,
+            OptionEntityDeleteChildren,
             OptionEntityGetAllChildUuids,
             OptionEntityGetSketchPaths,
             OptionEntityGetDistance,
@@ -1535,6 +1660,8 @@ ModelingCmd = RootModel[
             OptionObjectSetMaterialParamsPbr,
             OptionGetEntityType,
             OptionSolid3dGetAllEdgeFaces,
+            OptionSolid3dFlip,
+            OptionSolid3dFlipFace,
             OptionSolid2dAddHole,
             OptionSolid3dGetAllOppositeEdges,
             OptionSolid3dGetOppositeEdge,
@@ -1609,12 +1736,15 @@ ModelingCmd = RootModel[
             OptionBooleanUnion,
             OptionBooleanIntersection,
             OptionBooleanSubtract,
+            OptionBooleanImprint,
             OptionMakeOffsetPath,
             OptionAddHoleFromOffset,
             OptionSetGridReferencePlane,
             OptionSetGridScale,
             OptionSetGridAutoScale,
             OptionSetOrderIndependentTransparency,
+            OptionCreateRegion,
+            OptionSelectRegionFromPoint,
         ],
         Field(discriminator="type"),
     ]

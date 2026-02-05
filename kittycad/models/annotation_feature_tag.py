@@ -16,6 +16,8 @@ class AnnotationFeatureTag(KittyCadBaseModel):
 
     key: str
 
+    leader_scale: float = 1.0
+
     leader_type: AnnotationLineEnd
 
     offset: Point2d

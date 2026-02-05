@@ -10039,7 +10039,7 @@ class ServiceAccountsAPI:
         page_token: Optional[str] = None,
         sort_by: Optional[CreatedAtSortMode] = None,
     ) -> "SyncPageIterator":
-        """This endpoint requires authentication by an org admin. It returns the service accounts for the organization.
+        """This endpoint requires authentication by an org member. It returns the service accounts for the organization.
 
         The service accounts are returned in order of creation, with the most recently created service accounts first.
 
@@ -10129,7 +10129,7 @@ class ServiceAccountsAPI:
         *,
         label: Optional[str] = None,
     ) -> ServiceAccount:
-        """This endpoint requires authentication by an org admin. It creates a new service account for the organization."""
+        """This endpoint requires authentication by an org member. It creates a new service account for the organization."""
 
         url = "{}/org/service-accounts".format(self.client.base_url)
 
@@ -10163,7 +10163,7 @@ class ServiceAccountsAPI:
         self,
         token: ServiceAccountUuid,
     ) -> ServiceAccount:
-        """This endpoint requires authentication by an org admin. It returns details of the requested service account for the organization."""
+        """This endpoint requires authentication by an org member. It returns details of the requested service account for the organization."""
 
         url = "{}/org/service-accounts/{token}".format(
             self.client.base_url, token=token
@@ -10193,7 +10193,7 @@ class ServiceAccountsAPI:
         self,
         token: ServiceAccountUuid,
     ):
-        """This endpoint requires authentication by an org admin. It deletes the requested service account for the organization.
+        """This endpoint requires authentication by an org member. It deletes the requested service account for the organization.
 
         This endpoint does not actually delete the service account from the database. It merely marks the token as invalid. We still want to keep the service account in the database for historical purposes."""
 
@@ -10229,7 +10229,7 @@ class AsyncServiceAccountsAPI:
         page_token: Optional[str] = None,
         sort_by: Optional[CreatedAtSortMode] = None,
     ) -> "AsyncPageIterator":
-        """This endpoint requires authentication by an org admin. It returns the service accounts for the organization.
+        """This endpoint requires authentication by an org member. It returns the service accounts for the organization.
 
         The service accounts are returned in order of creation, with the most recently created service accounts first.
 
@@ -10319,7 +10319,7 @@ class AsyncServiceAccountsAPI:
         *,
         label: Optional[str] = None,
     ) -> ServiceAccount:
-        """This endpoint requires authentication by an org admin. It creates a new service account for the organization."""
+        """This endpoint requires authentication by an org member. It creates a new service account for the organization."""
 
         url = "{}/org/service-accounts".format(self.client.base_url)
 
@@ -10353,7 +10353,7 @@ class AsyncServiceAccountsAPI:
         self,
         token: ServiceAccountUuid,
     ) -> ServiceAccount:
-        """This endpoint requires authentication by an org admin. It returns details of the requested service account for the organization."""
+        """This endpoint requires authentication by an org member. It returns details of the requested service account for the organization."""
 
         url = "{}/org/service-accounts/{token}".format(
             self.client.base_url, token=token
@@ -10383,7 +10383,7 @@ class AsyncServiceAccountsAPI:
         self,
         token: ServiceAccountUuid,
     ):
-        """This endpoint requires authentication by an org admin. It deletes the requested service account for the organization.
+        """This endpoint requires authentication by an org member. It deletes the requested service account for the organization.
 
         This endpoint does not actually delete the service account from the database. It merely marks the token as invalid. We still want to keep the service account in the database for historical purposes."""
 

@@ -3,6 +3,7 @@ from typing import Dict, List, Optional, Union
 
 from pydantic import RootModel, model_serializer, model_validator
 
+from ..models.ml_copilot_file import MlCopilotFile
 from ..models.ml_tool_result import MlToolResult
 from ..models.reasoning_message import ReasoningMessage
 from ..models.uuid import Uuid
@@ -151,6 +152,30 @@ class Info(KittyCadBaseModel):
         return {"info": payload}
 
 
+class BackendShutdown(KittyCadBaseModel):
+    """Notification that the backend is shutting down."""
+
+    reason: Optional[str] = None
+
+    @model_validator(mode="before")
+    @classmethod
+    def _unwrap(cls, data):
+        if (
+            isinstance(data, dict)
+            and "backend_shutdown" in data
+            and isinstance(data["backend_shutdown"], dict)
+        ):
+            return data["backend_shutdown"]
+
+        return data
+
+    @model_serializer(mode="wrap")
+    def _wrap(self, handler, info):
+        payload = handler(self, info)
+
+        return {"backend_shutdown": payload}
+
+
 class ProjectUpdated(KittyCadBaseModel):
     """Notification that the KCL project has been updated."""
 
@@ -184,7 +209,7 @@ class Reasoning(KittyCadBaseModel):
 class Replay(KittyCadBaseModel):
     """Replay containing raw bytes for previously-saved messages for a conversation. Includes server messages and client `User` messages.
 
-    Invariants: - Includes server messages: `Info`, `Error`, `Reasoning(..)`, `ToolOutput { .. }`, `ProjectUpdated { .. }`, and `EndOfStream { .. }`. - Also includes client `User` messages. - The following are NEVER included: `SessionData`, `ConversationId`, or `Delta`. - Ordering is stable: messages are ordered by prompt creation time within the conversation, then by the per-prompt `seq` value (monotonically increasing as seen in the original stream).
+    Invariants: - Includes server messages: `Info`, `Error`, `Reasoning(..)`, `ToolOutput { .. }`, `ProjectUpdated { .. }`, and `EndOfStream { .. }`. - Also includes client `User` messages. - The following are NEVER included: `SessionData`, `ConversationId`, `Delta`, or `BackendShutdown`. - Ordering is stable: messages are ordered by prompt creation time within the conversation, then by the per-prompt `seq` value (monotonically increasing as seen in the original stream).
 
     Wire format: - Each element is canonical serialized bytes (typically JSON) for either a `MlCopilotServerMessage` or a `MlCopilotClientMessage::User`. - When delivered as an initial replay over the websocket (upon `?replay=true&conversation_id=<uuid>`), the server sends a single WebSocket Binary frame containing a MsgPack-encoded document of this enum: `Replay { messages }`."""
 
@@ -241,6 +266,30 @@ class EndOfStream(KittyCadBaseModel):
         return {"end_of_stream": payload}
 
 
+class Files(KittyCadBaseModel):
+    """Files sent from the server to the client."""
+
+    files: List[MlCopilotFile]
+
+    @model_validator(mode="before")
+    @classmethod
+    def _unwrap(cls, data):
+        if (
+            isinstance(data, dict)
+            and "files" in data
+            and isinstance(data["files"], dict)
+        ):
+            return data["files"]
+
+        return data
+
+    @model_serializer(mode="wrap")
+    def _wrap(self, handler, info):
+        payload = handler(self, info)
+
+        return {"files": payload}
+
+
 MlCopilotServerMessage = RootModel[
     Union[
         SessionData,
@@ -249,9 +298,11 @@ MlCopilotServerMessage = RootModel[
         ToolOutput,
         Error,
         Info,
+        BackendShutdown,
         ProjectUpdated,
         Reasoning,
         Replay,
         EndOfStream,
+        Files,
     ]
 ]
