@@ -8,6 +8,8 @@ class MlCopilotFile(KittyCadBaseModel):
 
     data: bytes
 
+    data_ref: Optional[str] = None
+
     metadata: Optional[Dict[str, str]] = None
 
     mimetype: str
