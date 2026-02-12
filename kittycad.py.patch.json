@@ -443,7 +443,7 @@
     "op": "add",
     "path": "/paths/~1org~1datasets/post/x-python",
     "value": {
-      "example": "from kittycad.models.create_org_dataset import CreateOrgDataset\nfrom kittycad.models.org_dataset_source import OrgDatasetSource\nfrom kittycad.models.storage_provider import StorageProvider\nfrom kittycad.models import OrgDataset\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_create_org_dataset():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    result: OrgDataset = client.orgs.create_org_dataset(body=CreateOrgDataset(\n        name=\"<string>\",\n        source=OrgDatasetSource(\n        access_role_arn=\"<string>\",\n        provider=StorageProvider.S3,\n        uri=\"<string>\",\n        ),\n        ))\n\n\n    body: OrgDataset = result\n    print(body)\n\n",
+      "example": "from kittycad.models.create_org_dataset import CreateOrgDataset\nfrom kittycad.models.org_dataset_source import OrgDatasetSource\nfrom kittycad.models.storage_provider import StorageProvider\nfrom kittycad.models import OrgDataset\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_create_org_dataset():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    result: OrgDataset = client.orgs.create_org_dataset(body=CreateOrgDataset(\n        name=\"<string>\",\n        source=OrgDatasetSource(\n        provider=StorageProvider.S3,\n        ),\n        ))\n\n\n    body: OrgDataset = result\n    print(body)\n\n",
       "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD.orgs"
     }
   },
@@ -508,6 +508,14 @@
     "path": "/paths/~1org~1datasets~1{id}~1stats/get/x-python",
     "value": {
       "example": "from kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models import OrgDatasetConversionStatsResponse\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_get_org_dataset_conversion_stats():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    result: OrgDatasetConversionStatsResponse = client.orgs.get_org_dataset_conversion_stats(id=Uuid(\"<string>\"))\n\n\n    body: OrgDatasetConversionStatsResponse = result\n    print(body)\n\n",
+      "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD.orgs"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/paths/~1org~1datasets~1{id}~1uploads/post/x-python",
+    "value": {
+      "example": "from kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models import UploadOrgDatasetFilesResponse\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_upload_org_dataset_files():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    result: UploadOrgDatasetFilesResponse = client.orgs.upload_org_dataset_files(id=Uuid(\"<string>\"))\n\n\n    body: UploadOrgDatasetFilesResponse = result\n    print(body)\n\n",
       "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD.orgs"
     }
   },

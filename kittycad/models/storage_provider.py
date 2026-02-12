@@ -8,5 +8,9 @@ class StorageProvider(str, Enum):
 
     S3 = "s3"
 
+    """# Zoo-managed dataset storage backed by the API's internal object store."""  # noqa: E501
+
+    ZOO_MANAGED = "zoo_managed"
+
     def __str__(self) -> str:
         return str(self.value)

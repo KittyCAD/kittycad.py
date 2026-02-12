@@ -68,6 +68,7 @@ from kittycad.models import (
     UnitTemperatureConversion,
     UnitTorqueConversion,
     UnitVolumeConversion,
+    UploadOrgDatasetFilesResponse,
     User,
     UserAdminDetails,
     UserFeatureList,
@@ -1500,9 +1501,7 @@ def test_create_org_dataset():
         body=CreateOrgDataset(
             name="<string>",
             source=OrgDatasetSource(
-                access_role_arn="<string>",
                 provider=StorageProvider.S3,
-                uri="<string>",
             ),
         )
     )
@@ -1521,9 +1520,7 @@ async def test_create_org_dataset_async():
         body=CreateOrgDataset(
             name="<string>",
             source=OrgDatasetSource(
-                access_role_arn="<string>",
                 provider=StorageProvider.S3,
-                uri="<string>",
             ),
         )
     )
@@ -1707,6 +1704,29 @@ async def test_get_org_dataset_conversion_stats_async():
 
     result: OrgDatasetConversionStatsResponse = (
         await client.orgs.get_org_dataset_conversion_stats(id=Uuid("<string>"))
+    )
+
+
+@pytest.mark.skip
+def test_upload_org_dataset_files():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: UploadOrgDatasetFilesResponse = client.orgs.upload_org_dataset_files(
+        id=Uuid("<string>")
+    )
+
+    body: UploadOrgDatasetFilesResponse = result
+    print(body)
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_upload_org_dataset_files_async():
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: UploadOrgDatasetFilesResponse = await client.orgs.upload_org_dataset_files(
+        id=Uuid("<string>")
     )
 
 
