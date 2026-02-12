@@ -172,6 +172,7 @@ from .models.update_org_dataset import UpdateOrgDataset
 from .models.update_payment_balance import UpdatePaymentBalance
 from .models.update_shortlink_request import UpdateShortlinkRequest
 from .models.update_user import UpdateUser
+from .models.upload_org_dataset_files_response import UploadOrgDatasetFilesResponse
 from .models.user import User
 from .models.user_admin_details import UserAdminDetails
 from .models.user_feature_list import UserFeatureList
@@ -6239,6 +6240,34 @@ class OrgsAPI:
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return OrgDatasetConversionStatsResponse.model_validate(json_data)
 
+    def upload_org_dataset_files(
+        self,
+        id: Uuid,
+    ) -> UploadOrgDatasetFilesResponse:
+        """This endpoint accepts `multipart/form-data` where each file part becomes a source object in the dataset. Paths are normalized and must be relative."""
+
+        url = "{}/org/datasets/{id}/uploads".format(self.client.base_url, id=id)
+
+        _client = self.client.get_http_client()
+
+        response = _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return UploadOrgDatasetFilesResponse.model_validate(json_data)
+
     def list_org_members(
         self,
         *,
@@ -7444,6 +7473,34 @@ class AsyncOrgsAPI:
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return OrgDatasetConversionStatsResponse.model_validate(json_data)
+
+    async def upload_org_dataset_files(
+        self,
+        id: Uuid,
+    ) -> UploadOrgDatasetFilesResponse:
+        """This endpoint accepts `multipart/form-data` where each file part becomes a source object in the dataset. Paths are normalized and must be relative."""
+
+        url = "{}/org/datasets/{id}/uploads".format(self.client.base_url, id=id)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return UploadOrgDatasetFilesResponse.model_validate(json_data)
 
     def list_org_members(
         self,
