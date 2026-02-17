@@ -1,6 +1,6 @@
 """Tests for pagination functionality."""
 
-from typing import AsyncIterator, Iterator, List, Optional
+from typing import AsyncIterator, Iterator, List, Optional, cast
 from unittest.mock import AsyncMock, Mock
 
 import pytest
@@ -759,14 +759,14 @@ def test_sync_pagination_integration_user_api_calls():
     # Create client with real API token
     client = KittyCAD()
     try:
+        # Verify we got a SyncPageIterator
+        from kittycad.models.api_call_with_price import ApiCallWithPrice
+        from kittycad.pagination import SyncPageIterator
+
         # Call paginated endpoint - now returns SyncPageIterator
         iterator = client.api_calls.user_list_api_calls(  # type: ignore[attr-defined]
             limit=10,  # Small page size to test pagination
         )
-
-        # Verify we got a SyncPageIterator
-        from kittycad.models.api_call_with_price import ApiCallWithPrice
-        from kittycad.pagination import SyncPageIterator
 
         assert isinstance(iterator, SyncPageIterator), (
             f"Expected SyncPageIterator, got {type(iterator)}"
@@ -776,8 +776,9 @@ def test_sync_pagination_integration_user_api_calls():
         # This validates the API contract that our pagination system depends on
         item_count = 0
         collected_ids: set[str] = set()  # Track unique IDs
+        typed_iterator = cast(Iterator[ApiCallWithPrice], iterator)
         item: ApiCallWithPrice
-        for item in iterator:
+        for item in typed_iterator:
             item_count += 1
             item_id = str(item.id)
 
@@ -818,14 +819,14 @@ async def test_async_pagination_integration_user_api_calls():
     # Create async client with real API token
     client = AsyncKittyCAD()
     try:
+        # Verify we got an AsyncPageIterator
+        from kittycad.models.api_call_with_price import ApiCallWithPrice
+        from kittycad.pagination import AsyncPageIterator
+
         # Call paginated endpoint - now returns AsyncPageIterator directly
         iterator = client.api_calls.user_list_api_calls(  # type: ignore[attr-defined]
             limit=10,  # Small page size to test pagination
         )
-
-        # Verify we got an AsyncPageIterator
-        from kittycad.models.api_call_with_price import ApiCallWithPrice
-        from kittycad.pagination import AsyncPageIterator
 
         assert isinstance(iterator, AsyncPageIterator), (
             f"Expected AsyncPageIterator, got {type(iterator)}"
@@ -835,8 +836,9 @@ async def test_async_pagination_integration_user_api_calls():
         # This validates the API contract that our pagination system depends on
         item_count = 0
         collected_ids: set[str] = set()  # Track unique IDs
+        typed_iterator = cast(AsyncIterator[ApiCallWithPrice], iterator)
         item: ApiCallWithPrice
-        async for item in iterator:
+        async for item in typed_iterator:
             item_count += 1
             item_id = str(item.id)
 
