@@ -499,7 +499,15 @@
     "op": "add",
     "path": "/paths/~1org~1datasets~1{id}~1rescan/post/x-python",
     "value": {
-      "example": "from kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models import OrgDataset\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_rescan_org_dataset():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    result: OrgDataset = client.orgs.rescan_org_dataset(id=Uuid(\"<string>\"))\n\n\n    body: OrgDataset = result\n    print(body)\n\n",
+      "example": "from kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models import OrgDataset\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_rescan_org_dataset():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    result: OrgDataset = client.orgs.rescan_org_dataset(id=Uuid(\"<string>\"),\n        statuses=None)\n\n\n    body: OrgDataset = result\n    print(body)\n\n",
+      "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD.orgs"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/paths/~1org~1datasets~1{id}~1search~1conversions/get/x-python",
+    "value": {
+      "example": "from kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models.conversion_sort_mode import ConversionSortMode\nfrom kittycad.models import OrgDatasetFileConversionSummaryResultsPage\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\n\n\nfrom kittycad.models import OrgDatasetFileConversionSummary\ndef example_search_org_dataset_conversions():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    # Iterate through all pages automatically\n    item: OrgDatasetFileConversionSummary\n    for item in client.orgs.search_org_dataset_conversions(id=Uuid(\"<string>\"),\n        q=\"<string>\",\n        sort_by=ConversionSortMode.CREATED_AT_ASCENDING,\n        limit=None,\n        page_token=None):\n        print(item)\n\n",
       "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD.orgs"
     }
   },

@@ -6187,10 +6187,18 @@ class OrgsAPI:
     def rescan_org_dataset(
         self,
         id: Uuid,
+        *,
+        statuses: Optional[str] = None,
     ) -> OrgDataset:
         """Request a rescan of a dataset that belongs to the caller's org."""
 
         url = "{}/org/datasets/{id}/rescan".format(self.client.base_url, id=id)
+
+        if statuses is not None:
+            if "?" in url:
+                url = url + "&statuses=" + str(statuses)
+            else:
+                url = url + "?statuses=" + str(statuses)
 
         _client = self.client.get_http_client()
 
@@ -6211,6 +6219,111 @@ class OrgsAPI:
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return OrgDataset.model_validate(json_data)
+
+    def search_org_dataset_conversions(
+        self,
+        id: Uuid,
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+        q: Optional[str] = None,
+        sort_by: Optional[ConversionSortMode] = None,
+    ) -> "SyncPageIterator":
+        """Supports partial and full matching and may return multiple results.
+
+        Returns an iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            for item in client.org.search_org_dataset_conversions():
+                print(item)
+        """
+
+        from typing import Any, Dict
+
+        from kittycad.pagination import SyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        _id = id
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
+
+        if limit is not None:
+            kwargs["limit"] = limit
+
+        if page_token is not None:
+            kwargs["page_token"] = page_token
+
+        if q is not None:
+            kwargs["q"] = q
+
+        if sort_by is not None:
+            kwargs["sort_by"] = sort_by
+
+        def fetch_page(**kw):
+            return self._fetch_page_search_org_dataset_conversions(id=_id, **kw)
+
+        # Create the page iterator
+        return SyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    def _fetch_page_search_org_dataset_conversions(
+        self, id: Uuid, **kwargs
+    ) -> OrgDatasetFileConversionSummaryResultsPage:
+        """Internal method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/org/datasets/{id}/search/conversions".format(
+            self.client.base_url, id=id
+        )
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "q" in kwargs and kwargs["q"] is not None:
+            if "?" in url:
+                url = url + "&q=" + str(kwargs["q"])
+            else:
+                url = url + "?q=" + str(kwargs["q"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+        # Validate into a Pydantic model (supports BaseModel/RootModel)
+        return OrgDatasetFileConversionSummaryResultsPage.model_validate(json_data)
 
     def get_org_dataset_conversion_stats(
         self,
@@ -7421,10 +7534,18 @@ class AsyncOrgsAPI:
     async def rescan_org_dataset(
         self,
         id: Uuid,
+        *,
+        statuses: Optional[str] = None,
     ) -> OrgDataset:
         """Request a rescan of a dataset that belongs to the caller's org."""
 
         url = "{}/org/datasets/{id}/rescan".format(self.client.base_url, id=id)
+
+        if statuses is not None:
+            if "?" in url:
+                url = url + "&statuses=" + str(statuses)
+            else:
+                url = url + "?statuses=" + str(statuses)
 
         _client = self.client.get_http_client()
 
@@ -7445,6 +7566,111 @@ class AsyncOrgsAPI:
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return OrgDataset.model_validate(json_data)
+
+    def search_org_dataset_conversions(
+        self,
+        id: Uuid,
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+        q: Optional[str] = None,
+        sort_by: Optional[ConversionSortMode] = None,
+    ) -> "AsyncPageIterator":
+        """Supports partial and full matching and may return multiple results.
+
+        Returns an async iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            async for item in client.org.search_org_dataset_conversions():
+                print(item)
+        """
+
+        from typing import Any, Dict
+
+        from kittycad.pagination import AsyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        _id = id
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
+
+        if limit is not None:
+            kwargs["limit"] = limit
+
+        if page_token is not None:
+            kwargs["page_token"] = page_token
+
+        if q is not None:
+            kwargs["q"] = q
+
+        if sort_by is not None:
+            kwargs["sort_by"] = sort_by
+
+        async def fetch_page(**kw):
+            return await self._fetch_page_search_org_dataset_conversions(id=_id, **kw)
+
+        # Create the async page iterator
+        return AsyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    async def _fetch_page_search_org_dataset_conversions(
+        self, id: Uuid, **kwargs
+    ) -> OrgDatasetFileConversionSummaryResultsPage:
+        """Internal async method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/org/datasets/{id}/search/conversions".format(
+            self.client.base_url, id=id
+        )
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "q" in kwargs and kwargs["q"] is not None:
+            if "?" in url:
+                url = url + "&q=" + str(kwargs["q"])
+            else:
+                url = url + "?q=" + str(kwargs["q"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+        # Validate into a Pydantic model (supports BaseModel/RootModel)
+        return OrgDatasetFileConversionSummaryResultsPage.model_validate(json_data)
 
     async def get_org_dataset_conversion_stats(
         self,

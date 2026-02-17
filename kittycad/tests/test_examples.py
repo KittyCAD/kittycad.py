@@ -1669,7 +1669,9 @@ async def test_retry_org_dataset_conversion_async():
 def test_rescan_org_dataset():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: OrgDataset = client.orgs.rescan_org_dataset(id=Uuid("<string>"))
+    result: OrgDataset = client.orgs.rescan_org_dataset(
+        id=Uuid("<string>"), statuses=None
+    )
 
     body: OrgDataset = result
     print(body)
@@ -1681,7 +1683,44 @@ def test_rescan_org_dataset():
 async def test_rescan_org_dataset_async():
     client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: OrgDataset = await client.orgs.rescan_org_dataset(id=Uuid("<string>"))
+    result: OrgDataset = await client.orgs.rescan_org_dataset(
+        id=Uuid("<string>"), statuses=None
+    )
+
+
+@pytest.mark.skip
+def test_search_org_dataset_conversions():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    # Iterate through all pages automatically
+    item: OrgDatasetFileConversionSummary
+    for item in client.orgs.search_org_dataset_conversions(
+        id=Uuid("<string>"),
+        q="<string>",
+        sort_by=ConversionSortMode.CREATED_AT_ASCENDING,
+        limit=None,
+        page_token=None,
+    ):
+        print(item)
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_search_org_dataset_conversions_async():
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    # Iterate through all pages automatically
+    iterator = client.orgs.search_org_dataset_conversions(
+        id=Uuid("<string>"),
+        q="<string>",
+        sort_by=ConversionSortMode.CREATED_AT_ASCENDING,
+        limit=None,
+        page_token=None,
+    )
+    item: OrgDatasetFileConversionSummary
+    async for item in iterator:
+        print(item)
 
 
 @pytest.mark.skip
