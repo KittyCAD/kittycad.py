@@ -1,6 +1,6 @@
 """Tests for pagination functionality."""
 
-from typing import AsyncIterator, Iterator, List, Optional
+from typing import AsyncIterator, Iterator, List, Optional, cast
 from unittest.mock import AsyncMock, Mock
 
 import pytest
@@ -754,145 +754,237 @@ async def test_async_page_iterator_large_dataset():
     assert mock_fetcher.call_count == expected_pages
 
 
-# Integration tests with real API calls
-def test_sync_pagination_integration_text_to_cad():
-    """Integration test for sync pagination with real text-to-cad API calls."""
+def test_sync_pagination_integration_user_api_calls():
+    """Integration test for sync pagination with real user API call data."""
     # Create client with real API token
     client = KittyCAD()
+    try:
+        # Verify we got a SyncPageIterator
+        from kittycad.models.api_call_with_price import ApiCallWithPrice
+        from kittycad.pagination import SyncPageIterator
 
-    # Call paginated endpoint - now returns SyncPageIterator
-    iterator = client.ml.list_text_to_cad_parts_for_user(  # type: ignore[attr-defined]
-        limit=10,  # Small page size to test pagination
-    )
-
-    # Verify we got a SyncPageIterator
-    from kittycad.models.text_to_cad_response import TextToCadResponse
-    from kittycad.pagination import SyncPageIterator
-
-    assert isinstance(iterator, SyncPageIterator), (
-        f"Expected SyncPageIterator, got {type(iterator)}"
-    )
-
-    # Test that we can iterate over the paginated results
-    # This validates the API contract that our pagination system depends on
-    item_count = 0
-    collected_ids: set[str] = set()  # Track unique IDs
-    item: TextToCadResponse
-    for item in iterator:
-        item_count += 1
-        # TextToCadResponse is a RootModel Union, so should have .root or .model_dump
-        assert hasattr(item, "root") or hasattr(item, "model_dump"), (
-            "Items should be valid TextToCadResponse models"
+        # Call paginated endpoint - now returns SyncPageIterator
+        iterator = client.api_calls.user_list_api_calls(  # type: ignore[attr-defined]
+            limit=10,  # Small page size to test pagination
         )
 
-        # Extract ID from the TextToCadResponse (which is a RootModel)
-        if hasattr(item, "root"):
-            # RootModel - get the underlying object
-            underlying_obj = item.root  # type: ignore[attr-defined]
-            item_id = str(underlying_obj.id)  # type: ignore[attr-defined]
-        else:
-            # Fallback - get id directly if possible
-            item_id = str(getattr(item, "id", f"unknown_{item_count}"))
-
-        # Verify this ID is unique
-        assert item_id not in collected_ids, (
-            f"Duplicate ID found: {item_id} (item #{item_count}). "
-            f"Previously seen IDs: {sorted(collected_ids)}"
+        assert isinstance(iterator, SyncPageIterator), (
+            f"Expected SyncPageIterator, got {type(iterator)}"
         )
-        collected_ids.add(item_id)
 
-        # Show which "page" this item likely came from (since limit=10)
-        expected_page = ((item_count - 1) // 10) + 1
-        print(f"Item #{item_count} (page ~{expected_page}): ID = {item_id}")
+        # Test that we can iterate over the paginated results
+        # This validates the API contract that our pagination system depends on
+        item_count = 0
+        collected_ids: set[str] = set()  # Track unique IDs
+        typed_iterator = cast(Iterator[ApiCallWithPrice], iterator)
+        item: ApiCallWithPrice
+        for item in typed_iterator:
+            item_count += 1
+            item_id = str(item.id)
 
-        # Don't iterate through all items in integration test, just verify it works
-        if item_count >= 12:
-            break
+            # Verify this ID is unique
+            assert item_id not in collected_ids, (
+                f"Duplicate ID found: {item_id} (item #{item_count}). "
+                f"Previously seen IDs: {sorted(collected_ids)}"
+            )
+            collected_ids.add(item_id)
 
-    # Verify we got 12 unique items
-    assert item_count >= 12, f"Should have at least 12 items, got {item_count}"
-    assert len(collected_ids) >= 12, (
-        f"Should have at least 12 unique IDs, got {len(collected_ids)}"
-    )
-    assert len(collected_ids) == item_count, (
-        f"All {item_count} items should have unique IDs, but got {len(collected_ids)} unique IDs"
-    )
+            # Show which "page" this item likely came from (since limit=10)
+            expected_page = ((item_count - 1) // 10) + 1
+            print(f"Item #{item_count} (page ~{expected_page}): ID = {item_id}")
 
-    print(
-        f"✅ Successfully validated {item_count} items with {len(collected_ids)} unique IDs"
-    )
+            # Don't iterate through all items in integration test, just verify it works
+            if item_count >= 12:
+                break
+
+        # Verify we got 12 unique items
+        assert item_count >= 12, f"Should have at least 12 items, got {item_count}"
+        assert len(collected_ids) >= 12, (
+            f"Should have at least 12 unique IDs, got {len(collected_ids)}"
+        )
+        assert len(collected_ids) == item_count, (
+            f"All {item_count} items should have unique IDs, but got {len(collected_ids)} unique IDs"
+        )
+
+        print(
+            f"✅ Successfully validated {item_count} items with {len(collected_ids)} unique IDs"
+        )
+    finally:
+        client.close()
 
 
 @pytest.mark.asyncio
-async def test_async_pagination_integration_text_to_cad():
-    """Integration test for async pagination with real text-to-cad API calls."""
+async def test_async_pagination_integration_user_api_calls():
+    """Integration test for async pagination with real user API call data."""
     # Create async client with real API token
     client = AsyncKittyCAD()
+    try:
+        # Verify we got an AsyncPageIterator
+        from kittycad.models.api_call_with_price import ApiCallWithPrice
+        from kittycad.pagination import AsyncPageIterator
 
-    # Call paginated endpoint - now returns AsyncPageIterator directly
-    iterator = client.ml.list_text_to_cad_parts_for_user(  # type: ignore[attr-defined]
-        limit=10,  # Small page size to test pagination
-    )
-
-    # Verify we got an AsyncPageIterator
-    from kittycad.models.text_to_cad_response import TextToCadResponse
-    from kittycad.pagination import AsyncPageIterator
-
-    assert isinstance(iterator, AsyncPageIterator), (
-        f"Expected AsyncPageIterator, got {type(iterator)}"
-    )
-
-    # Test that we can iterate over the paginated results
-    # This validates the API contract that our pagination system depends on
-    item_count = 0
-    collected_ids: set[str] = set()  # Track unique IDs
-    item: TextToCadResponse
-    async for item in iterator:
-        item_count += 1
-        # TextToCadResponse is a RootModel Union, so should have .root or .model_dump
-        assert hasattr(item, "root") or hasattr(item, "model_dump"), (
-            "Items should be valid TextToCadResponse models"
+        # Call paginated endpoint - now returns AsyncPageIterator directly
+        iterator = client.api_calls.user_list_api_calls(  # type: ignore[attr-defined]
+            limit=10,  # Small page size to test pagination
         )
 
-        # Extract ID from the TextToCadResponse (which is a RootModel)
-        if hasattr(item, "root"):
-            # RootModel - get the underlying object
-            underlying_obj = item.root  # type: ignore[attr-defined]
-            item_id = str(underlying_obj.id)  # type: ignore[attr-defined]
-        else:
-            # Fallback - get id directly if possible
-            item_id = str(getattr(item, "id", f"unknown_{item_count}"))
-
-        # Verify this ID is unique
-        assert item_id not in collected_ids, (
-            f"Duplicate ID found: {item_id} (item #{item_count}). "
-            f"Previously seen IDs: {sorted(collected_ids)}"
+        assert isinstance(iterator, AsyncPageIterator), (
+            f"Expected AsyncPageIterator, got {type(iterator)}"
         )
-        collected_ids.add(item_id)
 
-        # Show which "page" this item likely came from (since limit=10)
-        expected_page = ((item_count - 1) // 10) + 1
-        print(f"Async Item #{item_count} (page ~{expected_page}): ID = {item_id}")
+        # Test that we can iterate over the paginated results
+        # This validates the API contract that our pagination system depends on
+        item_count = 0
+        collected_ids: set[str] = set()  # Track unique IDs
+        typed_iterator = cast(AsyncIterator[ApiCallWithPrice], iterator)
+        item: ApiCallWithPrice
+        async for item in typed_iterator:
+            item_count += 1
+            item_id = str(item.id)
 
-        # Don't iterate through all items in integration test, just verify it works
-        if item_count >= 12:
-            break
+            # Verify this ID is unique
+            assert item_id not in collected_ids, (
+                f"Duplicate ID found: {item_id} (item #{item_count}). "
+                f"Previously seen IDs: {sorted(collected_ids)}"
+            )
+            collected_ids.add(item_id)
 
-    # Verify we got 12 unique items
-    assert item_count >= 12, f"Should have at least 12 items, got {item_count}"
-    assert len(collected_ids) >= 12, (
-        f"Should have at least 12 unique IDs, got {len(collected_ids)}"
-    )
-    assert len(collected_ids) == item_count, (
-        f"All {item_count} items should have unique IDs, but got {len(collected_ids)} unique IDs"
-    )
+            # Show which "page" this item likely came from (since limit=10)
+            expected_page = ((item_count - 1) // 10) + 1
+            print(f"Async Item #{item_count} (page ~{expected_page}): ID = {item_id}")
 
-    print(
-        f"✅ Async: Successfully validated {item_count} items with {len(collected_ids)} unique IDs"
-    )
+            # Don't iterate through all items in integration test, just verify it works
+            if item_count >= 12:
+                break
 
-    # Clean up the async client
-    await client.aclose()
+        # Verify we got 12 unique items
+        assert item_count >= 12, f"Should have at least 12 items, got {item_count}"
+        assert len(collected_ids) >= 12, (
+            f"Should have at least 12 unique IDs, got {len(collected_ids)}"
+        )
+        assert len(collected_ids) == item_count, (
+            f"All {item_count} items should have unique IDs, but got {len(collected_ids)} unique IDs"
+        )
+
+        print(
+            f"✅ Async: Successfully validated {item_count} items with {len(collected_ids)} unique IDs"
+        )
+    finally:
+        # Clean up the async client
+        await client.aclose()
+
+
+@pytest.mark.skip(
+    reason="Temporarily disabled: GET /user/text-to-cad returns 500 (verified 2026-02-17). Re-enable after API fix."
+)
+def test_sync_pagination_integration_text_to_cad():
+    """Integration test for sync pagination with real text-to-cad API calls."""
+    client = KittyCAD()
+    try:
+        iterator = client.ml.list_text_to_cad_parts_for_user(  # type: ignore[attr-defined]
+            limit=10,
+        )
+
+        from kittycad.models.text_to_cad_response import TextToCadResponse
+        from kittycad.pagination import SyncPageIterator
+
+        assert isinstance(iterator, SyncPageIterator), (
+            f"Expected SyncPageIterator, got {type(iterator)}"
+        )
+
+        item_count = 0
+        collected_ids: set[str] = set()
+        item: TextToCadResponse
+        for item in iterator:
+            item_count += 1
+            assert hasattr(item, "root") or hasattr(item, "model_dump"), (
+                "Items should be valid TextToCadResponse models"
+            )
+
+            if hasattr(item, "root"):
+                underlying_obj = item.root  # type: ignore[attr-defined]
+                item_id = str(underlying_obj.id)  # type: ignore[attr-defined]
+            else:
+                item_id = str(getattr(item, "id", f"unknown_{item_count}"))
+
+            assert item_id not in collected_ids, (
+                f"Duplicate ID found: {item_id} (item #{item_count}). "
+                f"Previously seen IDs: {sorted(collected_ids)}"
+            )
+            collected_ids.add(item_id)
+
+            expected_page = ((item_count - 1) // 10) + 1
+            print(f"Item #{item_count} (page ~{expected_page}): ID = {item_id}")
+
+            if item_count >= 12:
+                break
+
+        assert item_count >= 12, f"Should have at least 12 items, got {item_count}"
+        assert len(collected_ids) >= 12, (
+            f"Should have at least 12 unique IDs, got {len(collected_ids)}"
+        )
+        assert len(collected_ids) == item_count, (
+            f"All {item_count} items should have unique IDs, but got {len(collected_ids)} unique IDs"
+        )
+    finally:
+        client.close()
+
+
+@pytest.mark.asyncio
+@pytest.mark.skip(
+    reason="Temporarily disabled: GET /user/text-to-cad returns 500 (verified 2026-02-17). Re-enable after API fix."
+)
+async def test_async_pagination_integration_text_to_cad():
+    """Integration test for async pagination with real text-to-cad API calls."""
+    client = AsyncKittyCAD()
+    try:
+        iterator = client.ml.list_text_to_cad_parts_for_user(  # type: ignore[attr-defined]
+            limit=10,
+        )
+
+        from kittycad.models.text_to_cad_response import TextToCadResponse
+        from kittycad.pagination import AsyncPageIterator
+
+        assert isinstance(iterator, AsyncPageIterator), (
+            f"Expected AsyncPageIterator, got {type(iterator)}"
+        )
+
+        item_count = 0
+        collected_ids: set[str] = set()
+        item: TextToCadResponse
+        async for item in iterator:
+            item_count += 1
+            assert hasattr(item, "root") or hasattr(item, "model_dump"), (
+                "Items should be valid TextToCadResponse models"
+            )
+
+            if hasattr(item, "root"):
+                underlying_obj = item.root  # type: ignore[attr-defined]
+                item_id = str(underlying_obj.id)  # type: ignore[attr-defined]
+            else:
+                item_id = str(getattr(item, "id", f"unknown_{item_count}"))
+
+            assert item_id not in collected_ids, (
+                f"Duplicate ID found: {item_id} (item #{item_count}). "
+                f"Previously seen IDs: {sorted(collected_ids)}"
+            )
+            collected_ids.add(item_id)
+
+            expected_page = ((item_count - 1) // 10) + 1
+            print(f"Async Item #{item_count} (page ~{expected_page}): ID = {item_id}")
+
+            if item_count >= 12:
+                break
+
+        assert item_count >= 12, f"Should have at least 12 items, got {item_count}"
+        assert len(collected_ids) >= 12, (
+            f"Should have at least 12 unique IDs, got {len(collected_ids)}"
+        )
+        assert len(collected_ids) == item_count, (
+            f"All {item_count} items should have unique IDs, but got {len(collected_ids)} unique IDs"
+        )
+    finally:
+        await client.aclose()
 
 
 def test_pagination_url_parameters_no_duplication():

@@ -265,6 +265,23 @@ Orgs API
         async for item in client.orgs.list_org_dataset_conversions():
             print(item)
 
+**search_org_dataset_conversions**
+    Search dataset conversions by conversion ID or file path.
+    
+    Returns: ``SyncPageIterator[OrgDatasetFileConversionSummary]``
+    
+    Example:
+    
+    .. code-block:: python
+    
+        # Sync
+        for item in client.orgs.search_org_dataset_conversions():
+            print(item)
+            
+        # Async  
+        async for item in client.orgs.search_org_dataset_conversions():
+            print(item)
+
 **list_org_members**
     List members of your org.
     
