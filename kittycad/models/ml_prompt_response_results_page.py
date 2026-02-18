@@ -1,12 +1,12 @@
 from typing import List, Optional
 
-from ..models.ml_prompt import MlPrompt
+from ..models.ml_prompt_response import MlPromptResponse
 from .base import KittyCadBaseModel
 
 
-class MlPromptResultsPage(KittyCadBaseModel):
+class MlPromptResponseResultsPage(KittyCadBaseModel):
     """A single page of results"""
 
-    items: List[MlPrompt]
+    items: List[MlPromptResponse]
 
     next_page: Optional[str] = None

@@ -9,8 +9,8 @@ from ..models.uuid import Uuid
 from .base import KittyCadBaseModel
 
 
-class MlPrompt(KittyCadBaseModel):
-    """A ML prompt."""
+class MlPromptResponse(KittyCadBaseModel):
+    """ML prompt response payload for admin endpoints. This schema intentionally excludes internal linkage fields."""
 
     completed_at: Optional[datetime.datetime] = None
 

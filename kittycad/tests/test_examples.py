@@ -34,7 +34,7 @@ from kittycad.models import (
     KclCodeCompletionResponse,
     KclModel,
     MlCopilotClientMessage,
-    MlPrompt,
+    MlPromptResponse,
     Org,
     OrgAdminDetails,
     OrgDataset,
@@ -949,7 +949,7 @@ def test_list_ml_prompts():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     # Iterate through all pages automatically
-    item: MlPrompt
+    item: MlPromptResponse
     for item in client.ml.list_ml_prompts(
         sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING, limit=None, page_token=None
     ):
@@ -966,7 +966,7 @@ async def test_list_ml_prompts_async():
     iterator = client.ml.list_ml_prompts(
         sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING, limit=None, page_token=None
     )
-    item: MlPrompt
+    item: MlPromptResponse
     async for item in iterator:
         print(item)
 
@@ -975,9 +975,9 @@ async def test_list_ml_prompts_async():
 def test_get_ml_prompt():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: MlPrompt = client.ml.get_ml_prompt(id="<string>")
+    result: MlPromptResponse = client.ml.get_ml_prompt(id="<string>")
 
-    body: MlPrompt = result
+    body: MlPromptResponse = result
     print(body)
 
 
@@ -987,7 +987,7 @@ def test_get_ml_prompt():
 async def test_get_ml_prompt_async():
     client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: MlPrompt = await client.ml.get_ml_prompt(id="<string>")
+    result: MlPromptResponse = await client.ml.get_ml_prompt(id="<string>")
 
 
 @pytest.mark.skip
