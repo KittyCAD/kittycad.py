@@ -249,14 +249,15 @@ from .org_address import OrgAddress
 from .org_admin_details import OrgAdminDetails
 from .org_dataset import OrgDataset
 from .org_dataset_conversion_stats_response import OrgDatasetConversionStatsResponse
-from .org_dataset_file_conversion import OrgDatasetFileConversion
 from .org_dataset_file_conversion_details import OrgDatasetFileConversionDetails
+from .org_dataset_file_conversion_phase import OrgDatasetFileConversionPhase
 from .org_dataset_file_conversion_status import OrgDatasetFileConversionStatus
 from .org_dataset_file_conversion_summary import OrgDatasetFileConversionSummary
 from .org_dataset_file_conversion_summary_results_page import (
     OrgDatasetFileConversionSummaryResultsPage,
 )
 from .org_dataset_results_page import OrgDatasetResultsPage
+from .org_dataset_snapshot_image import OrgDatasetSnapshotImage
 from .org_dataset_source import OrgDatasetSource
 from .org_dataset_status import OrgDatasetStatus
 from .org_details import OrgDetails

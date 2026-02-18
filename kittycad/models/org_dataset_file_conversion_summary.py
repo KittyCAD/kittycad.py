@@ -1,6 +1,7 @@
 import datetime
-from typing import Optional
+from typing import Any, Optional
 
+from ..models.org_dataset_file_conversion_phase import OrgDatasetFileConversionPhase
 from ..models.org_dataset_file_conversion_status import OrgDatasetFileConversionStatus
 from ..models.uuid import Uuid
 from .base import KittyCadBaseModel
@@ -24,6 +25,12 @@ class OrgDatasetFileConversionSummary(KittyCadBaseModel):
     id: Uuid
 
     importer_version: Optional[str] = None
+
+    metadata: Optional[Any] = None
+
+    phase: OrgDatasetFileConversionPhase
+
+    phase_index: int
 
     started_at: Optional[datetime.datetime] = None
 
