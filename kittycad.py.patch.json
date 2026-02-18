@@ -489,17 +489,17 @@
   },
   {
     "op": "add",
-    "path": "/paths/~1org~1datasets~1{id}~1conversions~1{conversion_id}~1retry/post/x-python",
+    "path": "/paths/~1org~1datasets~1{id}~1conversions~1{conversion_id}~1retrigger/post/x-python",
     "value": {
-      "example": "from kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models import OrgDatasetFileConversion\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_retry_org_dataset_conversion():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    result: OrgDatasetFileConversion = client.orgs.retry_org_dataset_conversion(conversion_id=Uuid(\"<string>\"),\n        id=Uuid(\"<string>\"))\n\n\n    body: OrgDatasetFileConversion = result\n    print(body)\n\n",
+      "example": "from kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\ndef example_retrigger_org_dataset_conversion():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    client.orgs.retrigger_org_dataset_conversion(conversion_id=Uuid(\"<string>\"),\n        id=Uuid(\"<string>\"))\n\n",
       "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD.orgs"
     }
   },
   {
     "op": "add",
-    "path": "/paths/~1org~1datasets~1{id}~1rescan/post/x-python",
+    "path": "/paths/~1org~1datasets~1{id}~1retrigger/post/x-python",
     "value": {
-      "example": "from kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models import OrgDataset\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_rescan_org_dataset():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    result: OrgDataset = client.orgs.rescan_org_dataset(id=Uuid(\"<string>\"),\n        statuses=None)\n\n\n    body: OrgDataset = result\n    print(body)\n\n",
+      "example": "from kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\ndef example_retrigger_org_dataset():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    client.orgs.retrigger_org_dataset(id=Uuid(\"<string>\"),\n        statuses=None)\n\n",
       "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD.orgs"
     }
   },

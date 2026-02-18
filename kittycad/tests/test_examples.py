@@ -39,7 +39,6 @@ from kittycad.models import (
     OrgAdminDetails,
     OrgDataset,
     OrgDatasetConversionStatsResponse,
-    OrgDatasetFileConversion,
     OrgDatasetFileConversionDetails,
     OrgDatasetFileConversionSummary,
     OrgMember,
@@ -1643,49 +1642,39 @@ async def test_get_org_dataset_conversion_async():
 
 
 @pytest.mark.skip
-def test_retry_org_dataset_conversion():
+def test_retrigger_org_dataset_conversion():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: OrgDatasetFileConversion = client.orgs.retry_org_dataset_conversion(
+    client.orgs.retrigger_org_dataset_conversion(
         conversion_id=Uuid("<string>"), id=Uuid("<string>")
     )
-
-    body: OrgDatasetFileConversion = result
-    print(body)
 
 
 # OR run async
 @pytest.mark.asyncio
 @pytest.mark.skip
-async def test_retry_org_dataset_conversion_async():
+async def test_retrigger_org_dataset_conversion_async():
     client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: OrgDatasetFileConversion = await client.orgs.retry_org_dataset_conversion(
+    await client.orgs.retrigger_org_dataset_conversion(
         conversion_id=Uuid("<string>"), id=Uuid("<string>")
     )
 
 
 @pytest.mark.skip
-def test_rescan_org_dataset():
+def test_retrigger_org_dataset():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: OrgDataset = client.orgs.rescan_org_dataset(
-        id=Uuid("<string>"), statuses=None
-    )
-
-    body: OrgDataset = result
-    print(body)
+    client.orgs.retrigger_org_dataset(id=Uuid("<string>"), statuses=None)
 
 
 # OR run async
 @pytest.mark.asyncio
 @pytest.mark.skip
-async def test_rescan_org_dataset_async():
+async def test_retrigger_org_dataset_async():
     client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: OrgDataset = await client.orgs.rescan_org_dataset(
-        id=Uuid("<string>"), statuses=None
-    )
+    await client.orgs.retrigger_org_dataset(id=Uuid("<string>"), statuses=None)
 
 
 @pytest.mark.skip

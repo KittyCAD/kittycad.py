@@ -101,7 +101,6 @@ from .models.org_dataset import OrgDataset
 from .models.org_dataset_conversion_stats_response import (
     OrgDatasetConversionStatsResponse,
 )
-from .models.org_dataset_file_conversion import OrgDatasetFileConversion
 from .models.org_dataset_file_conversion_details import OrgDatasetFileConversionDetails
 from .models.org_dataset_file_conversion_summary_results_page import (
     OrgDatasetFileConversionSummaryResultsPage,
@@ -6037,7 +6036,7 @@ class OrgsAPI:
         page_token: Optional[str] = None,
         sort_by: Optional[ConversionSortMode] = None,
     ) -> "SyncPageIterator":
-        """List the file conversions that have been processed for a given dataset owned by the caller's org.
+        """This endpoint returns lightweight conversion summaries only (including `phase` and `phase_index`), and intentionally omits converted KCL output and snapshot image payloads for speed.
 
         Returns an iterator that automatically handles pagination.
         Iterate over all items across all pages:
@@ -6127,7 +6126,7 @@ class OrgsAPI:
         conversion_id: Uuid,
         id: Uuid,
     ) -> OrgDatasetFileConversionDetails:
-        """Fetch the metadata and converted output for a single dataset conversion."""
+        """Unlike list/search endpoints, this returns the full conversion payload: latest output text plus decoded snapshot image payloads for original, raw-KCL, and salon-KCL stages."""
 
         url = "{}/org/datasets/{id}/conversions/{conversion_id}".format(
             self.client.base_url, conversion_id=conversion_id, id=id
@@ -6153,14 +6152,14 @@ class OrgsAPI:
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return OrgDatasetFileConversionDetails.model_validate(json_data)
 
-    def retry_org_dataset_conversion(
+    def retrigger_org_dataset_conversion(
         self,
         conversion_id: Uuid,
         id: Uuid,
-    ) -> OrgDatasetFileConversion:
-        """Retry a specific dataset conversion that failed previously for the caller's org."""
+    ):
+        """Retrigger a specific dataset conversion for the caller's org."""
 
-        url = "{}/org/datasets/{id}/conversions/{conversion_id}/retry".format(
+        url = "{}/org/datasets/{id}/conversions/{conversion_id}/retrigger".format(
             self.client.base_url, conversion_id=conversion_id, id=id
         )
 
@@ -6176,23 +6175,17 @@ class OrgsAPI:
 
             raise_for_status(response)
 
-        if not response.content:
-            return None  # type: ignore
+        return response.json() if response.content else None
 
-        json_data = response.json()
-
-        # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return OrgDatasetFileConversion.model_validate(json_data)
-
-    def rescan_org_dataset(
+    def retrigger_org_dataset(
         self,
         id: Uuid,
         *,
         statuses: Optional[str] = None,
-    ) -> OrgDataset:
-        """Request a rescan of a dataset that belongs to the caller's org."""
+    ):
+        """Request a retrigger of conversions for a dataset that belongs to the caller's org."""
 
-        url = "{}/org/datasets/{id}/rescan".format(self.client.base_url, id=id)
+        url = "{}/org/datasets/{id}/retrigger".format(self.client.base_url, id=id)
 
         if statuses is not None:
             if "?" in url:
@@ -6212,13 +6205,7 @@ class OrgsAPI:
 
             raise_for_status(response)
 
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return OrgDataset.model_validate(json_data)
+        return response.json() if response.content else None
 
     def search_org_dataset_conversions(
         self,
@@ -7384,7 +7371,7 @@ class AsyncOrgsAPI:
         page_token: Optional[str] = None,
         sort_by: Optional[ConversionSortMode] = None,
     ) -> "AsyncPageIterator":
-        """List the file conversions that have been processed for a given dataset owned by the caller's org.
+        """This endpoint returns lightweight conversion summaries only (including `phase` and `phase_index`), and intentionally omits converted KCL output and snapshot image payloads for speed.
 
         Returns an async iterator that automatically handles pagination.
         Iterate over all items across all pages:
@@ -7474,7 +7461,7 @@ class AsyncOrgsAPI:
         conversion_id: Uuid,
         id: Uuid,
     ) -> OrgDatasetFileConversionDetails:
-        """Fetch the metadata and converted output for a single dataset conversion."""
+        """Unlike list/search endpoints, this returns the full conversion payload: latest output text plus decoded snapshot image payloads for original, raw-KCL, and salon-KCL stages."""
 
         url = "{}/org/datasets/{id}/conversions/{conversion_id}".format(
             self.client.base_url, conversion_id=conversion_id, id=id
@@ -7500,14 +7487,14 @@ class AsyncOrgsAPI:
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return OrgDatasetFileConversionDetails.model_validate(json_data)
 
-    async def retry_org_dataset_conversion(
+    async def retrigger_org_dataset_conversion(
         self,
         conversion_id: Uuid,
         id: Uuid,
-    ) -> OrgDatasetFileConversion:
-        """Retry a specific dataset conversion that failed previously for the caller's org."""
+    ):
+        """Retrigger a specific dataset conversion for the caller's org."""
 
-        url = "{}/org/datasets/{id}/conversions/{conversion_id}/retry".format(
+        url = "{}/org/datasets/{id}/conversions/{conversion_id}/retrigger".format(
             self.client.base_url, conversion_id=conversion_id, id=id
         )
 
@@ -7523,23 +7510,17 @@ class AsyncOrgsAPI:
 
             raise_for_status(response)
 
-        if not response.content:
-            return None  # type: ignore
+        return response.json() if response.content else None
 
-        json_data = response.json()
-
-        # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return OrgDatasetFileConversion.model_validate(json_data)
-
-    async def rescan_org_dataset(
+    async def retrigger_org_dataset(
         self,
         id: Uuid,
         *,
         statuses: Optional[str] = None,
-    ) -> OrgDataset:
-        """Request a rescan of a dataset that belongs to the caller's org."""
+    ):
+        """Request a retrigger of conversions for a dataset that belongs to the caller's org."""
 
-        url = "{}/org/datasets/{id}/rescan".format(self.client.base_url, id=id)
+        url = "{}/org/datasets/{id}/retrigger".format(self.client.base_url, id=id)
 
         if statuses is not None:
             if "?" in url:
@@ -7559,13 +7540,7 @@ class AsyncOrgsAPI:
 
             raise_for_status(response)
 
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return OrgDataset.model_validate(json_data)
+        return response.json() if response.content else None
 
     def search_org_dataset_conversions(
         self,
