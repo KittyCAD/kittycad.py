@@ -6032,11 +6032,12 @@ class OrgsAPI:
         self,
         id: Uuid,
         *,
+        filter: Optional[str] = None,
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
         sort_by: Optional[ConversionSortMode] = None,
     ) -> "SyncPageIterator":
-        """This endpoint returns lightweight conversion summaries only (including `phase`), and intentionally omits converted KCL output and snapshot image payloads for speed.
+        """This endpoint returns lightweight conversion summaries only (including `phase`), and intentionally omits converted KCL output and snapshot image payloads for speed. Use the optional `filter` query parameter to filter results (example: `?filter=status:success`).
 
         Returns an iterator that automatically handles pagination.
         Iterate over all items across all pages:
@@ -6055,6 +6056,9 @@ class OrgsAPI:
 
         # Create arguments dict, filtering out None values
         kwargs: Dict[str, Any] = {}
+
+        if filter is not None:
+            kwargs["filter"] = filter
 
         if limit is not None:
             kwargs["limit"] = limit
@@ -6082,6 +6086,12 @@ class OrgsAPI:
         url = "{}/org/datasets/{id}/conversions".format(self.client.base_url, id=id)
 
         # Add query parameters
+
+        if "filter" in kwargs and kwargs["filter"] is not None:
+            if "?" in url:
+                url = url + "&filter=" + str(kwargs["filter"])
+            else:
+                url = url + "?filter=" + str(kwargs["filter"])
 
         if "limit" in kwargs and kwargs["limit"] is not None:
             if "?" in url:
@@ -7367,11 +7377,12 @@ class AsyncOrgsAPI:
         self,
         id: Uuid,
         *,
+        filter: Optional[str] = None,
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
         sort_by: Optional[ConversionSortMode] = None,
     ) -> "AsyncPageIterator":
-        """This endpoint returns lightweight conversion summaries only (including `phase`), and intentionally omits converted KCL output and snapshot image payloads for speed.
+        """This endpoint returns lightweight conversion summaries only (including `phase`), and intentionally omits converted KCL output and snapshot image payloads for speed. Use the optional `filter` query parameter to filter results (example: `?filter=status:success`).
 
         Returns an async iterator that automatically handles pagination.
         Iterate over all items across all pages:
@@ -7390,6 +7401,9 @@ class AsyncOrgsAPI:
 
         # Create arguments dict, filtering out None values
         kwargs: Dict[str, Any] = {}
+
+        if filter is not None:
+            kwargs["filter"] = filter
 
         if limit is not None:
             kwargs["limit"] = limit
@@ -7417,6 +7431,12 @@ class AsyncOrgsAPI:
         url = "{}/org/datasets/{id}/conversions".format(self.client.base_url, id=id)
 
         # Add query parameters
+
+        if "filter" in kwargs and kwargs["filter"] is not None:
+            if "?" in url:
+                url = url + "&filter=" + str(kwargs["filter"])
+            else:
+                url = url + "?filter=" + str(kwargs["filter"])
 
         if "limit" in kwargs and kwargs["limit"] is not None:
             if "?" in url:
