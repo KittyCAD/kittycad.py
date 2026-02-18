@@ -218,9 +218,9 @@ from .ml_copilot_supported_models import MlCopilotSupportedModels
 from .ml_copilot_system_command import MlCopilotSystemCommand
 from .ml_copilot_tool import MlCopilotTool
 from .ml_feedback import MlFeedback
-from .ml_prompt import MlPrompt
 from .ml_prompt_metadata import MlPromptMetadata
-from .ml_prompt_results_page import MlPromptResultsPage
+from .ml_prompt_response import MlPromptResponse
+from .ml_prompt_response_results_page import MlPromptResponseResultsPage
 from .ml_prompt_type import MlPromptType
 from .ml_reasoning_effort import MlReasoningEffort
 from .ml_tool_result import MlToolResult

@@ -251,7 +251,7 @@
     "op": "add",
     "path": "/paths/~1ml-prompts/get/x-python",
     "value": {
-      "example": "from kittycad.models.created_at_sort_mode import CreatedAtSortMode\nfrom kittycad.models import MlPromptResultsPage\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\n\n\nfrom kittycad.models import MlPrompt\ndef example_list_ml_prompts():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    # Iterate through all pages automatically\n    item: MlPrompt\n    for item in client.ml.list_ml_prompts(sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,\n        limit=None,\n        page_token=None):\n        print(item)\n\n",
+      "example": "from kittycad.models.created_at_sort_mode import CreatedAtSortMode\nfrom kittycad.models import MlPromptResponseResultsPage\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\n\n\nfrom kittycad.models import MlPromptResponse\ndef example_list_ml_prompts():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    # Iterate through all pages automatically\n    item: MlPromptResponse\n    for item in client.ml.list_ml_prompts(sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,\n        limit=None,\n        page_token=None):\n        print(item)\n\n",
       "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD.ml"
     }
   },
@@ -259,7 +259,7 @@
     "op": "add",
     "path": "/paths/~1ml-prompts~1{id}/get/x-python",
     "value": {
-      "example": "from kittycad.models import MlPrompt\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_get_ml_prompt():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    result: MlPrompt = client.ml.get_ml_prompt(id=\"<string>\")\n\n\n    body: MlPrompt = result\n    print(body)\n\n",
+      "example": "from kittycad.models import MlPromptResponse\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_get_ml_prompt():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    result: MlPromptResponse = client.ml.get_ml_prompt(id=\"<string>\")\n\n\n    body: MlPromptResponse = result\n    print(body)\n\n",
       "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD.ml"
     }
   },

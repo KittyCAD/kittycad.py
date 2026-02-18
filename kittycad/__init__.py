@@ -92,8 +92,8 @@ from .models.lenient_url import LenientUrl
 from .models.ml_copilot_client_message import MlCopilotClientMessage
 from .models.ml_copilot_server_message import MlCopilotServerMessage
 from .models.ml_feedback import MlFeedback
-from .models.ml_prompt import MlPrompt
-from .models.ml_prompt_results_page import MlPromptResultsPage
+from .models.ml_prompt_response import MlPromptResponse
+from .models.ml_prompt_response_results_page import MlPromptResponseResultsPage
 from .models.oauth2_client_info import OAuth2ClientInfo
 from .models.org import Org
 from .models.org_admin_details import OrgAdminDetails
@@ -769,7 +769,7 @@ class MlAPI:
             initial_kwargs=kwargs,
         )
 
-    def _fetch_page_list_ml_prompts(self, **kwargs) -> MlPromptResultsPage:
+    def _fetch_page_list_ml_prompts(self, **kwargs) -> MlPromptResponseResultsPage:
         """Internal method to fetch a single page."""
         # Build URL with path parameters
         url = "{}/ml-prompts".format(self.client.base_url)
@@ -812,12 +812,12 @@ class MlAPI:
 
         json_data = response.json()
         # Validate into a Pydantic model (supports BaseModel/RootModel)
-        return MlPromptResultsPage.model_validate(json_data)
+        return MlPromptResponseResultsPage.model_validate(json_data)
 
     def get_ml_prompt(
         self,
         id: str,
-    ) -> MlPrompt:
+    ) -> MlPromptResponse:
         """This endpoint requires authentication by a Zoo employee."""
 
         url = "{}/ml-prompts/{id}".format(self.client.base_url, id=id)
@@ -840,7 +840,7 @@ class MlAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return MlPrompt.model_validate(json_data)
+        return MlPromptResponse.model_validate(json_data)
 
     def list_conversations_for_user(
         self,
@@ -1563,7 +1563,9 @@ class AsyncMlAPI:
             initial_kwargs=kwargs,
         )
 
-    async def _fetch_page_list_ml_prompts(self, **kwargs) -> MlPromptResultsPage:
+    async def _fetch_page_list_ml_prompts(
+        self, **kwargs
+    ) -> MlPromptResponseResultsPage:
         """Internal async method to fetch a single page."""
         # Build URL with path parameters
         url = "{}/ml-prompts".format(self.client.base_url)
@@ -1606,12 +1608,12 @@ class AsyncMlAPI:
 
         json_data = response.json()
         # Validate into a Pydantic model (supports BaseModel/RootModel)
-        return MlPromptResultsPage.model_validate(json_data)
+        return MlPromptResponseResultsPage.model_validate(json_data)
 
     async def get_ml_prompt(
         self,
         id: str,
-    ) -> MlPrompt:
+    ) -> MlPromptResponse:
         """This endpoint requires authentication by a Zoo employee."""
 
         url = "{}/ml-prompts/{id}".format(self.client.base_url, id=id)
@@ -1634,7 +1636,7 @@ class AsyncMlAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return MlPrompt.model_validate(json_data)
+        return MlPromptResponse.model_validate(json_data)
 
     def list_conversations_for_user(
         self,

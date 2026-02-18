@@ -179,7 +179,7 @@ Ml API
 **list_ml_prompts**
     List all ML prompts.
     
-    Returns: ``SyncPageIterator[MlPrompt]``
+    Returns: ``SyncPageIterator[MlPromptResponse]``
     
     Example:
     
