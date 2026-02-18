@@ -30,8 +30,6 @@ class OrgDatasetFileConversionSummary(KittyCadBaseModel):
 
     phase: OrgDatasetFileConversionPhase
 
-    phase_index: int
-
     started_at: Optional[datetime.datetime] = None
 
     status: OrgDatasetFileConversionStatus

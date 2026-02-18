@@ -6036,7 +6036,7 @@ class OrgsAPI:
         page_token: Optional[str] = None,
         sort_by: Optional[ConversionSortMode] = None,
     ) -> "SyncPageIterator":
-        """This endpoint returns lightweight conversion summaries only (including `phase` and `phase_index`), and intentionally omits converted KCL output and snapshot image payloads for speed.
+        """This endpoint returns lightweight conversion summaries only (including `phase`), and intentionally omits converted KCL output and snapshot image payloads for speed.
 
         Returns an iterator that automatically handles pagination.
         Iterate over all items across all pages:
@@ -6216,7 +6216,7 @@ class OrgsAPI:
         q: Optional[str] = None,
         sort_by: Optional[ConversionSortMode] = None,
     ) -> "SyncPageIterator":
-        """Supports partial and full matching and may return multiple results.
+        """Supports exact conversion-ID matching and fuzzy file-path matching.
 
         Returns an iterator that automatically handles pagination.
         Iterate over all items across all pages:
@@ -7371,7 +7371,7 @@ class AsyncOrgsAPI:
         page_token: Optional[str] = None,
         sort_by: Optional[ConversionSortMode] = None,
     ) -> "AsyncPageIterator":
-        """This endpoint returns lightweight conversion summaries only (including `phase` and `phase_index`), and intentionally omits converted KCL output and snapshot image payloads for speed.
+        """This endpoint returns lightweight conversion summaries only (including `phase`), and intentionally omits converted KCL output and snapshot image payloads for speed.
 
         Returns an async iterator that automatically handles pagination.
         Iterate over all items across all pages:
@@ -7551,7 +7551,7 @@ class AsyncOrgsAPI:
         q: Optional[str] = None,
         sort_by: Optional[ConversionSortMode] = None,
     ) -> "AsyncPageIterator":
-        """Supports partial and full matching and may return multiple results.
+        """Supports exact conversion-ID matching and fuzzy file-path matching.
 
         Returns an async iterator that automatically handles pagination.
         Iterate over all items across all pages:
