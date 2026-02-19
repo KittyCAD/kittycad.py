@@ -1644,6 +1644,26 @@ async def test_get_org_dataset_conversion_async():
 
 
 @pytest.mark.skip
+def test_download_org_dataset_conversion_original():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    client.orgs.download_org_dataset_conversion_original(
+        conversion_id=Uuid("<string>"), id=Uuid("<string>")
+    )
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_download_org_dataset_conversion_original_async():
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    await client.orgs.download_org_dataset_conversion_original(
+        conversion_id=Uuid("<string>"), id=Uuid("<string>")
+    )
+
+
+@pytest.mark.skip
 def test_retrigger_org_dataset_conversion():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 

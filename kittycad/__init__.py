@@ -6164,6 +6164,31 @@ class OrgsAPI:
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return OrgDatasetFileConversionDetails.model_validate(json_data)
 
+    def download_org_dataset_conversion_original(
+        self,
+        conversion_id: Uuid,
+        id: Uuid,
+    ):
+        """Download the original source file for a specific dataset conversion."""
+
+        url = "{}/org/datasets/{id}/conversions/{conversion_id}/original".format(
+            self.client.base_url, conversion_id=conversion_id, id=id
+        )
+
+        _client = self.client.get_http_client()
+
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
     def retrigger_org_dataset_conversion(
         self,
         conversion_id: Uuid,
@@ -7508,6 +7533,31 @@ class AsyncOrgsAPI:
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return OrgDatasetFileConversionDetails.model_validate(json_data)
+
+    async def download_org_dataset_conversion_original(
+        self,
+        conversion_id: Uuid,
+        id: Uuid,
+    ):
+        """Download the original source file for a specific dataset conversion."""
+
+        url = "{}/org/datasets/{id}/conversions/{conversion_id}/original".format(
+            self.client.base_url, conversion_id=conversion_id, id=id
+        )
+
+        _client = self.client.get_http_client()
+
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
 
     async def retrigger_org_dataset_conversion(
         self,

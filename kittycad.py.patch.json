@@ -489,6 +489,14 @@
   },
   {
     "op": "add",
+    "path": "/paths/~1org~1datasets~1{id}~1conversions~1{conversion_id}~1original/get/x-python",
+    "value": {
+      "example": "from kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\ndef example_download_org_dataset_conversion_original():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    client.orgs.download_org_dataset_conversion_original(conversion_id=Uuid(\"<string>\"),\n        id=Uuid(\"<string>\"))\n\n",
+      "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD.orgs"
+    }
+  },
+  {
+    "op": "add",
     "path": "/paths/~1org~1datasets~1{id}~1conversions~1{conversion_id}~1retrigger/post/x-python",
     "value": {
       "example": "from kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\ndef example_retrigger_org_dataset_conversion():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    client.orgs.retrigger_org_dataset_conversion(conversion_id=Uuid(\"<string>\"),\n        id=Uuid(\"<string>\"))\n\n",
