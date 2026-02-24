@@ -1345,6 +1345,14 @@
   },
   {
     "op": "add",
+    "path": "/paths/~1website~1email-marketing-consent~1request/put/x-python",
+    "value": {
+      "example": "from kittycad.models.subscribe import Subscribe\ndef example_put_public_email_marketing_consent_request():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    client.users.put_public_email_marketing_consent_request(body=Subscribe(\n        email=\"<string>\",\n        ))\n\n",
+      "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD.users"
+    }
+  },
+  {
+    "op": "add",
     "path": "/paths/~1website~1form/put/x-python",
     "value": {
       "example": "from kittycad.models.inquiry_form import InquiryForm\nfrom kittycad.models.inquiry_type import InquiryType\ndef example_put_public_form():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    client.users.put_public_form(body=InquiryForm(\n        email=\"<string>\",\n        first_name=\"<string>\",\n        inquiry_type=InquiryType.PILOT_INQUIRY,\n        last_name=\"<string>\",\n        message=\"<string>\",\n        ))\n\n",

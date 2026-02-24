@@ -12711,6 +12711,29 @@ class UsersAPI:
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return ZooProductSubscriptions.model_validate(json_data)
 
+    def put_public_email_marketing_consent_request(
+        self,
+        body: Subscribe,
+    ):
+        """Requests public email marketing consent for an email address."""
+
+        url = "{}/website/email-marketing-consent/request".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
     def put_public_form(
         self,
         body: InquiryForm,
@@ -12738,7 +12761,7 @@ class UsersAPI:
         self,
         body: Subscribe,
     ):
-        """Subscribes a user to the newsletter."""
+        """Legacy compatibility path while clients migrate to `/website/email-marketing-consent/request`."""
 
         url = "{}/website/subscribe".format(self.client.base_url)
 
@@ -13613,6 +13636,29 @@ class AsyncUsersAPI:
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return ZooProductSubscriptions.model_validate(json_data)
 
+    async def put_public_email_marketing_consent_request(
+        self,
+        body: Subscribe,
+    ):
+        """Requests public email marketing consent for an email address."""
+
+        url = "{}/website/email-marketing-consent/request".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
     async def put_public_form(
         self,
         body: InquiryForm,
@@ -13640,7 +13686,7 @@ class AsyncUsersAPI:
         self,
         body: Subscribe,
     ):
-        """Subscribes a user to the newsletter."""
+        """Legacy compatibility path while clients migrate to `/website/email-marketing-consent/request`."""
 
         url = "{}/website/subscribe".format(self.client.base_url)
 
