@@ -5,6 +5,24 @@ All notable changes to the KittyCAD Python SDK will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## v1.3.2
+
+### Added
+
+- Added ergonomic async-operation polling helpers on the client:
+  - `KittyCAD.wait_for_async_operation(operation_id, timeout_seconds=..., poll_interval_seconds=...)`
+  - `await AsyncKittyCAD.wait_for_async_operation(operation_id, timeout_seconds=..., poll_interval_seconds=...)`
+- These helpers unwrap operation payloads for you and normalize status handling, so callers no longer need to inspect internal `RootModel` wrappers while waiting for completion.
+
+### Fixed
+
+- Fixed async file-conversion test behavior to use a valid conversion pair (`obj` -> `stl`) and stable fixture input.
+- Fixed polling behavior in tests to correctly handle `/async/operations/{id}` responses that return wrapped payload models.
+
+### Migration
+
+- No action required. If you currently poll async operation status manually, you can simplify your code by switching to `wait_for_async_operation(...)`.
+
 ## v1.2.5
 
 ### Added
