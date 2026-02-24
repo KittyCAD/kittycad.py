@@ -6,6 +6,7 @@ from typing_extensions import Annotated
 from ..models.angle import Angle
 from ..models.annotation_options import AnnotationOptions
 from ..models.annotation_type import AnnotationType
+from ..models.blend_type import BlendType
 from ..models.body_type import BodyType
 from ..models.camera_drag_interaction_type import CameraDragInteractionType
 from ..models.camera_movement import CameraMovement
@@ -38,6 +39,7 @@ from ..models.point3d import Point3d
 from ..models.relative_to import RelativeTo
 from ..models.scene_selection_type import SceneSelectionType
 from ..models.scene_tool_type import SceneToolType
+from ..models.surface_edge_reference import SurfaceEdgeReference
 from ..models.transform import Transform
 from ..models.unit_area import UnitArea
 from ..models.unit_density import UnitDensity
@@ -146,6 +148,8 @@ class OptionTwistExtrude(KittyCadBaseModel):
 class OptionSweep(KittyCadBaseModel):
     """Extrude the object along a path."""
 
+    body_type: BodyType = "solid"  # type: ignore[assignment]
+
     relative_to: RelativeTo = "sketch_plane"  # type: ignore[assignment]
 
     sectional: bool
@@ -201,6 +205,16 @@ class OptionSolid3dJoin(KittyCadBaseModel):
     object_id: str
 
     type: Literal["solid3d_join"] = "solid3d_join"
+
+
+class OptionSurfaceBlend(KittyCadBaseModel):
+    """Command for creating a blend between the edge of two given surfaces"""
+
+    blend_type: BlendType = "tangent"  # type: ignore[assignment]
+
+    surfaces: List[SurfaceEdgeReference]
+
+    type: Literal["surface_blend"] = "surface_blend"
 
 
 class OptionSolid3dGetEdgeUuid(KittyCadBaseModel):
@@ -1474,6 +1488,8 @@ class OptionSetObjectTransform(KittyCadBaseModel):
 class OptionBooleanUnion(KittyCadBaseModel):
     """Create a new solid from combining other smaller solids. In other words, every part of the input solids will be included in the output solid."""
 
+    separate_bodies: bool = False
+
     solid_ids: List[str]
 
     tolerance: LengthUnit
@@ -1484,6 +1500,8 @@ class OptionBooleanUnion(KittyCadBaseModel):
 class OptionBooleanIntersection(KittyCadBaseModel):
     """Create a new solid from intersecting several other solids. In other words, the part of the input solids where they all overlap will be the output solid."""
 
+    separate_bodies: bool = False
+
     solid_ids: List[str]
 
     tolerance: LengthUnit
@@ -1493,6 +1511,8 @@ class OptionBooleanIntersection(KittyCadBaseModel):
 
 class OptionBooleanSubtract(KittyCadBaseModel):
     """Create a new solid from subtracting several other solids. The 'target' is what will be cut from. The 'tool' is what will be cut out from 'target'."""
+
+    separate_bodies: bool = False
 
     target_ids: List[str]
 
@@ -1507,6 +1527,8 @@ class OptionBooleanImprint(KittyCadBaseModel):
     """Create a new non-manifold body by intersecting all the input bodies, cutting and splitting all the faces at the intersection boundaries."""
 
     body_ids: List[str]
+
+    separate_bodies: bool = False
 
     tolerance: LengthUnit
 
@@ -1609,6 +1631,7 @@ ModelingCmd = RootModel[
             OptionRevolve,
             OptionSolid3dShellFace,
             OptionSolid3dJoin,
+            OptionSurfaceBlend,
             OptionSolid3dGetEdgeUuid,
             OptionSolid3dGetFaceUuid,
             OptionSolid3dGetBodyType,

@@ -152,6 +152,7 @@ from ..models.solid3d_join import Solid3dJoin
 from ..models.solid3d_shell_face import Solid3dShellFace
 from ..models.start_path import StartPath
 from ..models.surface_area import SurfaceArea
+from ..models.surface_blend import SurfaceBlend
 from ..models.sweep import Sweep
 from ..models.take_snapshot import TakeSnapshot
 from ..models.twist_extrude import TwistExtrude
@@ -254,6 +255,14 @@ class OptionSolid3dJoin(KittyCadBaseModel):
     data: Solid3dJoin
 
     type: Literal["solid3d_join"] = "solid3d_join"
+
+
+class OptionSurfaceBlend(KittyCadBaseModel):
+    """"""
+
+    data: SurfaceBlend
+
+    type: Literal["surface_blend"] = "surface_blend"
 
 
 class OptionSolid3dGetEdgeUuid(KittyCadBaseModel):
@@ -1423,6 +1432,7 @@ OkModelingCmdResponse = RootModel[
             OptionRevolve,
             OptionSolid3dShellFace,
             OptionSolid3dJoin,
+            OptionSurfaceBlend,
             OptionSolid3dGetEdgeUuid,
             OptionSolid3dGetFaceUuid,
             OptionSolid3dGetBodyType,

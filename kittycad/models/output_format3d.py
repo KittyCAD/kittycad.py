@@ -9,6 +9,7 @@ from ..models.gltf_presentation import GltfPresentation
 from ..models.gltf_storage import GltfStorage
 from ..models.ply_storage import PlyStorage
 from ..models.selection import Selection
+from ..models.step_presentation import StepPresentation
 from ..models.stl_storage import StlStorage
 from ..models.system import System
 from ..models.unit_length import UnitLength
@@ -62,11 +63,18 @@ class OptionPly(KittyCadBaseModel):
 class OptionStep(KittyCadBaseModel):
     """ISO 10303-21 (STEP) format."""
 
-    coords: System
+    coords: System = {
+        "forward": {"axis": "y", "direction": "negative"},
+        "up": {"axis": "z", "direction": "positive"},
+    }  # type: ignore[assignment]
 
     created: Optional[datetime.datetime] = None
 
+    presentation: StepPresentation = "pretty"  # type: ignore[assignment]
+
     type: Literal["step"] = "step"
+
+    units: UnitLength = "m"  # type: ignore[assignment]
 
 
 class OptionStl(KittyCadBaseModel):
