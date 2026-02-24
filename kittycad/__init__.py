@@ -71,6 +71,8 @@ from .models.device_auth_confirm_params import DeviceAuthConfirmParams
 from .models.device_auth_request_form import DeviceAuthRequestForm
 from .models.discount_code import DiscountCode
 from .models.email_authentication_form import EmailAuthenticationForm
+from .models.email_marketing_confirm_token_body import EmailMarketingConfirmTokenBody
+from .models.email_marketing_consent_state import EmailMarketingConsentState
 from .models.event import Event
 from .models.extended_user import ExtendedUser
 from .models.extended_user_results_page import ExtendedUserResultsPage
@@ -3799,6 +3801,29 @@ class HiddenAPI:
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return VerificationTokenResponse.model_validate(json_data)
 
+    def auth_email_marketing_confirm_post(
+        self,
+        body: EmailMarketingConfirmTokenBody,
+    ):
+        """Consume a confirmation token and finalize double opt-in."""
+
+        url = "{}/auth/email-marketing/confirm".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
     def auth_email_callback(
         self,
         email: str,
@@ -4037,6 +4062,29 @@ class AsyncHiddenAPI:
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return VerificationTokenResponse.model_validate(json_data)
+
+    async def auth_email_marketing_confirm_post(
+        self,
+        body: EmailMarketingConfirmTokenBody,
+    ):
+        """Consume a confirmation token and finalize double opt-in."""
+
+        url = "{}/auth/email-marketing/confirm".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
 
     async def auth_email_callback(
         self,
@@ -11920,6 +11968,96 @@ class UsersAPI:
 
         return response.json() if response.content else None
 
+    def user_email_marketing_consent_get(
+        self,
+    ) -> EmailMarketingConsentState:
+        """Get email marketing consent state for the authenticated user."""
+
+        url = "{}/user/email-marketing-consent".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return EmailMarketingConsentState.model_validate(json_data)
+
+    def user_email_marketing_consent_decline_post(
+        self,
+    ):
+        """Record explicit decline for email marketing consent."""
+
+        url = "{}/user/email-marketing-consent/decline".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    def user_email_marketing_consent_request_post(
+        self,
+    ):
+        """Request email marketing opt-in and send a confirmation email."""
+
+        url = "{}/user/email-marketing-consent/request".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    def user_email_marketing_consent_seen_post(
+        self,
+    ):
+        """Mark the email-marketing modal as seen/dismissed for the authenticated user."""
+
+        url = "{}/user/email-marketing-consent/seen".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
     def get_user_self_extended(
         self,
     ) -> ExtendedUser:
@@ -12721,6 +12859,96 @@ class AsyncUsersAPI:
             url=url,
             headers=self.client.get_headers(),
             content=body.model_dump_json(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    async def user_email_marketing_consent_get(
+        self,
+    ) -> EmailMarketingConsentState:
+        """Get email marketing consent state for the authenticated user."""
+
+        url = "{}/user/email-marketing-consent".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return EmailMarketingConsentState.model_validate(json_data)
+
+    async def user_email_marketing_consent_decline_post(
+        self,
+    ):
+        """Record explicit decline for email marketing consent."""
+
+        url = "{}/user/email-marketing-consent/decline".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    async def user_email_marketing_consent_request_post(
+        self,
+    ):
+        """Request email marketing opt-in and send a confirmation email."""
+
+        url = "{}/user/email-marketing-consent/request".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    async def user_email_marketing_consent_seen_post(
+        self,
+    ):
+        """Mark the email-marketing modal as seen/dismissed for the authenticated user."""
+
+        url = "{}/user/email-marketing-consent/seen".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
         )
 
         if not response.is_success:

@@ -4,11 +4,22 @@ import json
 import logging
 import os
 import re
-from typing import List
+from typing import Dict, List, Tuple, TypedDict
 
 import jsonpatch
 
-from .utils import extract_imports_from_examples, format_file_with_ruff
+try:
+    from .utils import (
+        extract_imports_from_examples,
+        format_file_with_ruff,
+        to_pascal_case,
+    )
+except ImportError:
+    from utils import (
+        extract_imports_from_examples,
+        format_file_with_ruff,
+        to_pascal_case,
+    )
 
 
 def generate_examples_tests(cwd: str, examples: List[str]):
@@ -39,36 +50,108 @@ def generate_examples_tests(cwd: str, examples: List[str]):
     f.write("\n\n".join(examples_without_imports))
     f.close()
 
-    _alias_conflicting_option_headers(examples_test_path)
+    _alias_conflicting_model_imports(examples_test_path)
 
     # Post-process with ruff to clean up imports and formatting
     format_file_with_ruff(examples_test_path)
 
 
-def _alias_conflicting_option_headers(examples_test_path: str) -> None:
-    """Alias clashing OptionHeaders imports so tests stay lint-clean."""
+_MODEL_IMPORT_PATTERN = re.compile(
+    r"^from kittycad\.models\.(?P<module>[a-z0-9_]+) import (?P<imports>.+)$"
+)
+
+
+class _ParsedImportLine(TypedDict):
+    module_name: str
+    imported_names: List[str]
+
+
+def _parse_import_name(import_name: str) -> Tuple[str, str]:
+    """Split an import segment into (name, alias)."""
+
+    name, alias_separator, alias = import_name.partition(" as ")
+    if not alias_separator:
+        return import_name.strip(), ""
+    return name.strip(), alias.strip()
+
+
+def _alias_conflicting_model_imports(examples_test_path: str) -> None:
+    """Alias clashing model imports in generated examples tests.
+
+    Some schema unions define the same option class name in different modules
+    (e.g. input_format3d.OptionPly vs output_format3d.OptionPly). Ruff flags this
+    as F811, so alias all but the first import and update the matching wrapper
+    constructor usage to point at the alias.
+    """
 
     with open(examples_test_path, "r") as file:
         content = file.read()
 
-    original_import = "from kittycad.models.web_socket_request import OptionHeaders"
-    alias_import = (
-        "from kittycad.models.web_socket_request import OptionHeaders as "
-        "WebSocketRequestOptionHeaders"
-    )
+    lines = content.splitlines()
+    parsed_model_import_lines: Dict[int, _ParsedImportLine] = {}
+    imported_name_occurrences: Dict[str, List[Tuple[int, str]]] = {}
 
-    if original_import not in content:
-        return
+    for index, line in enumerate(lines):
+        stripped_line = line.strip()
+        match = _MODEL_IMPORT_PATTERN.match(stripped_line)
+        if match is None:
+            continue
 
-    # Alias the import line for the websocket variant
-    content = content.replace(original_import, alias_import, 1)
+        module_name = match.group("module")
+        imported_names = [name.strip() for name in match.group("imports").split(",")]
+        parsed_model_import_lines[index] = {
+            "module_name": module_name,
+            "imported_names": imported_names,
+        }
 
-    # Update usages to reference the aliased name while preserving whitespace
-    content = re.sub(
-        r"WebSocketRequest\((\s*)OptionHeaders",
-        r"WebSocketRequest(\1WebSocketRequestOptionHeaders",
-        content,
-    )
+        for import_name in imported_names:
+            symbol_name, _ = _parse_import_name(import_name)
+            imported_name_occurrences.setdefault(symbol_name, []).append(
+                (index, module_name)
+            )
+
+    # Tracks which wrapper constructors should swap Symbol -> AliasedSymbol.
+    # Tuple format: (wrapper_class_name, symbol_name, alias_name)
+    replacement_rules: List[Tuple[str, str, str]] = []
+
+    for symbol_name, occurrences in imported_name_occurrences.items():
+        if len(occurrences) < 2:
+            continue
+
+        for occurrence_index, (line_index, module_name) in enumerate(occurrences):
+            if occurrence_index == 0:
+                continue
+
+            wrapper_class_name = to_pascal_case(module_name)
+            alias_name = f"{wrapper_class_name}{symbol_name}"
+
+            parsed_line = parsed_model_import_lines[line_index]
+            aliased_import_names: List[str] = []
+            for import_name in parsed_line["imported_names"]:
+                imported_symbol_name, _ = _parse_import_name(import_name)
+                if imported_symbol_name == symbol_name:
+                    aliased_import_names.append(f"{symbol_name} as {alias_name}")
+                else:
+                    aliased_import_names.append(import_name)
+
+            parsed_line["imported_names"] = aliased_import_names
+            replacement_rules.append((wrapper_class_name, symbol_name, alias_name))
+
+    for line_index, parsed_line in parsed_model_import_lines.items():
+        module_name = parsed_line["module_name"]
+        imported_names = parsed_line["imported_names"]
+        lines[line_index] = (
+            f"from kittycad.models.{module_name} import {', '.join(imported_names)}"
+        )
+
+    content = "\n".join(lines)
+
+    for wrapper_class_name, symbol_name, alias_name in replacement_rules:
+        content = re.sub(
+            rf"({wrapper_class_name}\(\s*){symbol_name}\b",
+            rf"\1{alias_name}",
+            content,
+        )
 
     with open(examples_test_path, "w") as file:
         file.write(content)

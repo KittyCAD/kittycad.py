@@ -41,6 +41,7 @@ from .axis_direction_pair import AxisDirectionPair
 from .base import KittyCadBaseModel
 from .batch_response import BatchResponse
 from .billing_info import BillingInfo
+from .blend_type import BlendType
 from .block_reason import BlockReason
 from .body_type import BodyType
 from .boolean_imprint import BooleanImprint
@@ -116,6 +117,9 @@ from .dxf_storage import DxfStorage
 from .edge_info import EdgeInfo
 from .edge_lines_visible import EdgeLinesVisible
 from .email_authentication_form import EmailAuthenticationForm
+from .email_marketing_confirm_token_body import EmailMarketingConfirmTokenBody
+from .email_marketing_consent_state import EmailMarketingConsentState
+from .email_marketing_consent_status import EmailMarketingConsentStatus
 from .empty import Empty
 from .enable_dry_run import EnableDryRun
 from .enable_sketch_mode import EnableSketchMode
@@ -173,6 +177,7 @@ from .file_import_format import FileImportFormat
 from .file_mass import FileMass
 from .file_surface_area import FileSurfaceArea
 from .file_volume import FileVolume
+from .fraction_of_edge import FractionOfEdge
 from .get_entity_type import GetEntityType
 from .get_num_objects import GetNumObjects
 from .get_sketch_mode_plane import GetSketchModePlane
@@ -369,6 +374,7 @@ from .source_position import SourcePosition
 from .source_range import SourceRange
 from .source_range_prompt import SourceRangePrompt
 from .start_path import StartPath
+from .step_presentation import StepPresentation
 from .stl_storage import StlStorage
 from .storage_provider import StorageProvider
 from .store_coupon_params import StoreCouponParams
@@ -383,6 +389,8 @@ from .subscription_training_data_behavior import SubscriptionTrainingDataBehavio
 from .success_web_socket_response import SuccessWebSocketResponse
 from .support_tier import SupportTier
 from .surface_area import SurfaceArea
+from .surface_blend import SurfaceBlend
+from .surface_edge_reference import SurfaceEdgeReference
 from .sweep import Sweep
 from .system import System
 from .take_snapshot import TakeSnapshot

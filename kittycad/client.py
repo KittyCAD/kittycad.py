@@ -1,11 +1,41 @@
 import ssl
-from typing import Dict, Optional, Self, Union
+import time
+from typing import Any, Dict, Optional, Self, Tuple, Union
 
 import attr
 import httpx
 import truststore
 
 DEFAULT_BASE_URL = "https://api.zoo.dev"
+
+
+def _normalize_operation_status(status_value: Any) -> str:
+    """Normalize async operation status values to lowercase strings."""
+
+    if hasattr(status_value, "value"):
+        status_value = status_value.value
+
+    if status_value is None:
+        return "unknown"
+
+    return str(status_value).lower()
+
+
+def _extract_operation_payload_and_status(result: Any) -> Tuple[Any, str]:
+    """Extract operation payload and normalized status from model/dict/RootModel."""
+
+    if isinstance(result, dict):
+        return result, _normalize_operation_status(result.get("status"))
+
+    payload = result.root if hasattr(result, "root") else result
+
+    if isinstance(payload, dict):
+        return payload, _normalize_operation_status(payload.get("status"))
+
+    if hasattr(payload, "status"):
+        return payload, _normalize_operation_status(getattr(payload, "status"))
+
+    return payload, "unknown"
 
 
 @attr.s(auto_attribs=True)
@@ -74,6 +104,34 @@ class Client:
         if self.http_client is not None:
             self.http_client.close()
             self.http_client = None
+
+    def wait_for_async_operation(
+        self,
+        operation_id: str,
+        timeout_seconds: float = 60.0,
+        poll_interval_seconds: float = 2.0,
+    ) -> Any:
+        """Poll `/async/operations/{id}` until status is completed/failed or timeout.
+
+        Returns the unwrapped operation payload model when available.
+        """
+
+        api_calls = getattr(self, "api_calls", None)
+        if api_calls is None or not hasattr(api_calls, "get_async_operation"):
+            raise RuntimeError(
+                "`wait_for_async_operation` requires a KittyCAD client instance."
+            )
+
+        end_time = time.time() + timeout_seconds
+        result = api_calls.get_async_operation(id=operation_id)
+        payload, status = _extract_operation_payload_and_status(result)
+
+        while status not in {"completed", "failed"} and time.time() < end_time:
+            time.sleep(poll_interval_seconds)
+            result = api_calls.get_async_operation(id=operation_id)
+            payload, status = _extract_operation_payload_and_status(result)
+
+        return payload
 
     def __enter__(self) -> Self:
         """Context manager entry"""
@@ -150,6 +208,36 @@ class AsyncClient:
         if self.http_client is not None:
             await self.http_client.aclose()
             self.http_client = None
+
+    async def wait_for_async_operation(
+        self,
+        operation_id: str,
+        timeout_seconds: float = 60.0,
+        poll_interval_seconds: float = 2.0,
+    ) -> Any:
+        """Async poll `/async/operations/{id}` until status is completed/failed or timeout.
+
+        Returns the unwrapped operation payload model when available.
+        """
+
+        import asyncio
+
+        api_calls = getattr(self, "api_calls", None)
+        if api_calls is None or not hasattr(api_calls, "get_async_operation"):
+            raise RuntimeError(
+                "`wait_for_async_operation` requires an AsyncKittyCAD client instance."
+            )
+
+        end_time = time.time() + timeout_seconds
+        result = await api_calls.get_async_operation(id=operation_id)
+        payload, status = _extract_operation_payload_and_status(result)
+
+        while status not in {"completed", "failed"} and time.time() < end_time:
+            await asyncio.sleep(poll_interval_seconds)
+            result = await api_calls.get_async_operation(id=operation_id)
+            payload, status = _extract_operation_payload_and_status(result)
+
+        return payload
 
     async def __aenter__(self) -> Self:
         """Async context manager entry"""

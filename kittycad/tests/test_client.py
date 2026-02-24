@@ -45,7 +45,12 @@ from kittycad.models.modeling_cmd import (
     OptionStartPath,
     OptionTakeSnapshot,
 )
-from kittycad.models.output_format3d import OptionObj as OutputOptionObj
+from kittycad.models.output_format3d import (
+    OptionObj as OutputOptionObj,
+    OptionStl as OutputOptionStl,
+)
+from kittycad.models.selection import OptionDefaultScene, Selection
+from kittycad.models.stl_storage import StlStorage
 from kittycad.models.web_socket_request import OptionModelingCmdReq
 from kittycad.types import Unset
 
@@ -63,60 +68,18 @@ def _poll_for_completion(
     Returns:
         Completed FileConversion object
     """
-    import time
-
-    start_time = time.time()
-
     # Handle both completed and in-progress cases
     if fc.status == ApiCallStatus.COMPLETED:
         # Already completed, no need to poll
         return fc
 
-    # Need to poll for completion
-    current_status: ApiCallStatus = fc.status
-    body = fc
-
-    while (
-        current_status == ApiCallStatus.IN_PROGRESS
-        or current_status == ApiCallStatus.QUEUED
-        or current_status == ApiCallStatus.UPLOADED
-    ) and time.time() - start_time < timeout_seconds:
-        time.sleep(2)  # Wait 2 seconds between polls
-        result_status = client.api_calls.get_async_operation(id=fc.id)
-
-        # Handle response from get_async_operation
-        if isinstance(result_status, dict):
-            status_str = result_status.get("status", "unknown")
-            print(f"FileConversion status: {status_str}")
-            # Convert string status to ApiCallStatus
-            if status_str == "completed":
-                current_status = ApiCallStatus.COMPLETED
-            elif status_str == "failed":
-                current_status = ApiCallStatus.FAILED
-            elif status_str == "in_progress":
-                current_status = ApiCallStatus.IN_PROGRESS
-            elif status_str == "queued":
-                current_status = ApiCallStatus.QUEUED
-            elif status_str == "uploaded":
-                current_status = ApiCallStatus.UPLOADED
-            else:
-                current_status = ApiCallStatus.FAILED  # Default for unknown
-
-            if current_status in [ApiCallStatus.COMPLETED, ApiCallStatus.FAILED]:
-                break
-        else:
-            if hasattr(result_status, "status"):
-                current_status = result_status.status
-                body = result_status
-                print(f"FileConversion status: {current_status}")
-
-    # If we exited the loop due to completion, get the final FileConversion object
-    if current_status == ApiCallStatus.COMPLETED:
-        # Get the final state of the FileConversion object
-        final_result = client.api_calls.get_async_operation(id=fc.id)
-        if not isinstance(final_result, dict):
-            body = final_result
-
+    body = client.wait_for_async_operation(
+        operation_id=fc.id,
+        timeout_seconds=timeout_seconds,
+        poll_interval_seconds=2.0,
+    )
+    if hasattr(body, "status"):
+        print(f"FileConversion status: {body.status}")
     return body
 
 
@@ -133,60 +96,18 @@ async def _poll_for_completion_async(
     Returns:
         Completed FileConversion object
     """
-    import time
-
-    start_time = time.time()
-
     # Handle both completed and in-progress cases
     if fc.status == ApiCallStatus.COMPLETED:
         # Already completed, no need to poll
         return fc
 
-    # Need to poll for completion
-    current_status: ApiCallStatus = fc.status
-    body = fc
-
-    while (
-        current_status == ApiCallStatus.IN_PROGRESS
-        or current_status == ApiCallStatus.QUEUED
-        or current_status == ApiCallStatus.UPLOADED
-    ) and time.time() - start_time < timeout_seconds:
-        time.sleep(2)  # Wait 2 seconds between polls
-        result_status = await client.api_calls.get_async_operation(id=fc.id)
-
-        # Handle response from get_async_operation
-        if isinstance(result_status, dict):
-            status_str = result_status.get("status", "unknown")
-            print(f"FileConversion status: {status_str}")
-            # Convert string status to ApiCallStatus
-            if status_str == "completed":
-                current_status = ApiCallStatus.COMPLETED
-            elif status_str == "failed":
-                current_status = ApiCallStatus.FAILED
-            elif status_str == "in_progress":
-                current_status = ApiCallStatus.IN_PROGRESS
-            elif status_str == "queued":
-                current_status = ApiCallStatus.QUEUED
-            elif status_str == "uploaded":
-                current_status = ApiCallStatus.UPLOADED
-            else:
-                current_status = ApiCallStatus.FAILED  # Default for unknown
-
-            if current_status in [ApiCallStatus.COMPLETED, ApiCallStatus.FAILED]:
-                break
-        else:
-            if hasattr(result_status, "status"):
-                current_status = result_status.status
-                body = result_status
-                print(f"FileConversion status: {current_status}")
-
-    # If we exited the loop due to completion, get the final FileConversion object
-    if current_status == ApiCallStatus.COMPLETED:
-        # Get the final state of the FileConversion object
-        final_result = await client.api_calls.get_async_operation(id=fc.id)
-        if not isinstance(final_result, dict):
-            body = final_result
-
+    body = await client.wait_for_async_operation(
+        operation_id=fc.id,
+        timeout_seconds=timeout_seconds,
+        poll_interval_seconds=2.0,
+    )
+    if hasattr(body, "status"):
+        print(f"FileConversion status: {body.status}")
     return body
 
 
@@ -521,7 +442,7 @@ async def test_file_conversion_options_obj_async():
     client = AsyncKittyCAD()
 
     dir_path = os.path.dirname(os.path.realpath(__file__))
-    file_path = os.path.join(dir_path, "../../assets/ORIGINALVOXEL-3.obj")
+    file_path = os.path.join(dir_path, "../../assets/testing.obj")
 
     # Test async create_file_conversion_options with OBJ input
     result = await client.file.create_file_conversion_options(
@@ -542,7 +463,7 @@ async def test_file_conversion_options_obj_async():
                 )
             ),
             output_format=OutputFormat3d(
-                OutputOptionObj(
+                OutputOptionStl(
                     coords=System(
                         forward=AxisDirectionPair(
                             axis=Axis.Y,
@@ -553,6 +474,8 @@ async def test_file_conversion_options_obj_async():
                             direction=Direction.POSITIVE,
                         ),
                     ),
+                    selection=Selection(OptionDefaultScene()),
+                    storage=StlStorage.BINARY,
                     units=UnitLength.MM,
                 )
             ),
