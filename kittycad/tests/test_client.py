@@ -2,7 +2,6 @@ import json
 import os
 import time
 import uuid
-from typing import Any
 
 import pytest
 from websockets.exceptions import ConnectionClosedError
@@ -56,42 +55,6 @@ from kittycad.models.web_socket_request import OptionModelingCmdReq
 from kittycad.types import Unset
 
 
-def _to_api_call_status(status_value: Any) -> ApiCallStatus:
-    """Normalize API status values into ApiCallStatus."""
-
-    if isinstance(status_value, ApiCallStatus):
-        return status_value
-
-    if isinstance(status_value, str):
-        normalized = status_value.lower()
-        if normalized == "completed":
-            return ApiCallStatus.COMPLETED
-        if normalized == "failed":
-            return ApiCallStatus.FAILED
-        if normalized == "in_progress":
-            return ApiCallStatus.IN_PROGRESS
-        if normalized == "queued":
-            return ApiCallStatus.QUEUED
-        if normalized == "uploaded":
-            return ApiCallStatus.UPLOADED
-
-    return ApiCallStatus.FAILED
-
-
-def _extract_conversion_status(result_status: Any, fallback_body: FileConversion):
-    """Extract conversion status/body from dict, model, or RootModel responses."""
-
-    if isinstance(result_status, dict):
-        status = _to_api_call_status(result_status.get("status", "unknown"))
-        return status, fallback_body
-
-    status_source = result_status.root if hasattr(result_status, "root") else result_status
-    if hasattr(status_source, "status"):
-        return _to_api_call_status(status_source.status), status_source
-
-    return ApiCallStatus.FAILED, fallback_body
-
-
 def _poll_for_completion(
     client, fc: FileConversion, timeout_seconds: int = 60
 ) -> FileConversion:
@@ -105,38 +68,18 @@ def _poll_for_completion(
     Returns:
         Completed FileConversion object
     """
-    import time
-
-    start_time = time.time()
-
     # Handle both completed and in-progress cases
     if fc.status == ApiCallStatus.COMPLETED:
         # Already completed, no need to poll
         return fc
 
-    # Need to poll for completion
-    current_status: ApiCallStatus = fc.status
-    body = fc
-
-    while (
-        current_status == ApiCallStatus.IN_PROGRESS
-        or current_status == ApiCallStatus.QUEUED
-        or current_status == ApiCallStatus.UPLOADED
-    ) and time.time() - start_time < timeout_seconds:
-        time.sleep(2)  # Wait 2 seconds between polls
-        result_status = client.api_calls.get_async_operation(id=fc.id)
-
-        current_status, body = _extract_conversion_status(result_status, body)
-        print(f"FileConversion status: {current_status}")
-        if current_status in [ApiCallStatus.COMPLETED, ApiCallStatus.FAILED]:
-            break
-
-    # If we exited the loop due to completion, get the final FileConversion object
-    if current_status == ApiCallStatus.COMPLETED:
-        # Get the final state of the FileConversion object
-        final_result = client.api_calls.get_async_operation(id=fc.id)
-        _, body = _extract_conversion_status(final_result, body)
-
+    body = client.wait_for_async_operation(
+        operation_id=fc.id,
+        timeout_seconds=timeout_seconds,
+        poll_interval_seconds=2.0,
+    )
+    if hasattr(body, "status"):
+        print(f"FileConversion status: {body.status}")
     return body
 
 
@@ -153,38 +96,18 @@ async def _poll_for_completion_async(
     Returns:
         Completed FileConversion object
     """
-    import time
-
-    start_time = time.time()
-
     # Handle both completed and in-progress cases
     if fc.status == ApiCallStatus.COMPLETED:
         # Already completed, no need to poll
         return fc
 
-    # Need to poll for completion
-    current_status: ApiCallStatus = fc.status
-    body = fc
-
-    while (
-        current_status == ApiCallStatus.IN_PROGRESS
-        or current_status == ApiCallStatus.QUEUED
-        or current_status == ApiCallStatus.UPLOADED
-    ) and time.time() - start_time < timeout_seconds:
-        time.sleep(2)  # Wait 2 seconds between polls
-        result_status = await client.api_calls.get_async_operation(id=fc.id)
-
-        current_status, body = _extract_conversion_status(result_status, body)
-        print(f"FileConversion status: {current_status}")
-        if current_status in [ApiCallStatus.COMPLETED, ApiCallStatus.FAILED]:
-            break
-
-    # If we exited the loop due to completion, get the final FileConversion object
-    if current_status == ApiCallStatus.COMPLETED:
-        # Get the final state of the FileConversion object
-        final_result = await client.api_calls.get_async_operation(id=fc.id)
-        _, body = _extract_conversion_status(final_result, body)
-
+    body = await client.wait_for_async_operation(
+        operation_id=fc.id,
+        timeout_seconds=timeout_seconds,
+        poll_interval_seconds=2.0,
+    )
+    if hasattr(body, "status"):
+        print(f"FileConversion status: {body.status}")
     return body
 
 
