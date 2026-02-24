@@ -4243,6 +4243,30 @@ async def test_update_subscription_for_user_async():
 
 
 @pytest.mark.skip
+def test_put_public_email_marketing_consent_request():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    client.users.put_public_email_marketing_consent_request(
+        body=Subscribe(
+            email="<string>",
+        )
+    )
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_put_public_email_marketing_consent_request_async():
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    await client.users.put_public_email_marketing_consent_request(
+        body=Subscribe(
+            email="<string>",
+        )
+    )
+
+
+@pytest.mark.skip
 def test_put_public_form():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
