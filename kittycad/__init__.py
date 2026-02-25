@@ -118,6 +118,9 @@ from .models.pong import Pong
 from .models.post_effect_type import PostEffectType
 from .models.price_upsert_request import PriceUpsertRequest
 from .models.privacy_settings import PrivacySettings
+from .models.public_email_marketing_consent_request import (
+    PublicEmailMarketingConsentRequest,
+)
 from .models.saml_identity_provider import SamlIdentityProvider
 from .models.saml_identity_provider_create import SamlIdentityProviderCreate
 from .models.service_account import ServiceAccount
@@ -127,7 +130,6 @@ from .models.session import Session
 from .models.session_uuid import SessionUuid
 from .models.shortlink_results_page import ShortlinkResultsPage
 from .models.store_coupon_params import StoreCouponParams
-from .models.subscribe import Subscribe
 from .models.subscription_plan_price_record import SubscriptionPlanPriceRecord
 from .models.text_to_cad import TextToCad
 from .models.text_to_cad_create_body import TextToCadCreateBody
@@ -6078,6 +6080,30 @@ class OrgsAPI:
 
         return response.json() if response.content else None
 
+    def download_org_dataset_successful_kcl_bulk(
+        self,
+        id: Uuid,
+    ):
+        """Bulk-download KCL outputs for successful dataset conversions."""
+
+        url = "{}/org/datasets/{id}/bulk-download/kcl".format(
+            self.client.base_url, id=id
+        )
+
+        _client = self.client.get_http_client()
+
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
     def list_org_dataset_conversions(
         self,
         id: Uuid,
@@ -7437,6 +7463,30 @@ class AsyncOrgsAPI:
         _client = self.client.get_http_client()
 
         response = await _client.delete(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    async def download_org_dataset_successful_kcl_bulk(
+        self,
+        id: Uuid,
+    ):
+        """Bulk-download KCL outputs for successful dataset conversions."""
+
+        url = "{}/org/datasets/{id}/bulk-download/kcl".format(
+            self.client.base_url, id=id
+        )
+
+        _client = self.client.get_http_client()
+
+        response = await _client.get(
             url=url,
             headers=self.client.get_headers(),
         )
@@ -12713,7 +12763,7 @@ class UsersAPI:
 
     def put_public_email_marketing_consent_request(
         self,
-        body: Subscribe,
+        body: PublicEmailMarketingConsentRequest,
     ):
         """Requests public email marketing consent for an email address."""
 
@@ -12741,29 +12791,6 @@ class UsersAPI:
         """users and is not authenticated."""
 
         url = "{}/website/form".format(self.client.base_url)
-
-        _client = self.client.get_http_client()
-
-        response = _client.put(
-            url=url,
-            headers=self.client.get_headers(),
-            content=body.model_dump_json(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        return response.json() if response.content else None
-
-    def put_public_subscribe(
-        self,
-        body: Subscribe,
-    ):
-        """Legacy compatibility path while clients migrate to `/website/email-marketing-consent/request`."""
-
-        url = "{}/website/subscribe".format(self.client.base_url)
 
         _client = self.client.get_http_client()
 
@@ -13638,7 +13665,7 @@ class AsyncUsersAPI:
 
     async def put_public_email_marketing_consent_request(
         self,
-        body: Subscribe,
+        body: PublicEmailMarketingConsentRequest,
     ):
         """Requests public email marketing consent for an email address."""
 
@@ -13666,29 +13693,6 @@ class AsyncUsersAPI:
         """users and is not authenticated."""
 
         url = "{}/website/form".format(self.client.base_url)
-
-        _client = self.client.get_http_client()
-
-        response = await _client.put(
-            url=url,
-            headers=self.client.get_headers(),
-            content=body.model_dump_json(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        return response.json() if response.content else None
-
-    async def put_public_subscribe(
-        self,
-        body: Subscribe,
-    ):
-        """Legacy compatibility path while clients migrate to `/website/email-marketing-consent/request`."""
-
-        url = "{}/website/subscribe".format(self.client.base_url)
 
         _client = self.client.get_http_client()
 

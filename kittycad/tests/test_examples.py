@@ -129,6 +129,9 @@ from kittycad.models.ply_storage import PlyStorage
 from kittycad.models.post_effect_type import PostEffectType
 from kittycad.models.price_upsert_request import PriceUpsertRequest
 from kittycad.models.privacy_settings import PrivacySettings
+from kittycad.models.public_email_marketing_consent_request import (
+    PublicEmailMarketingConsentRequest,
+)
 from kittycad.models.saml_identity_provider_create import SamlIdentityProviderCreate
 from kittycad.models.selection import OptionDefaultScene, Selection
 from kittycad.models.service_account_uuid import ServiceAccountUuid
@@ -138,7 +141,6 @@ from kittycad.models.source_range import SourceRange
 from kittycad.models.source_range_prompt import SourceRangePrompt
 from kittycad.models.storage_provider import StorageProvider
 from kittycad.models.store_coupon_params import StoreCouponParams
-from kittycad.models.subscribe import Subscribe
 from kittycad.models.subscription_plan_billing_model import SubscriptionPlanBillingModel
 from kittycad.models.system import System
 from kittycad.models.text_to_cad_create_body import TextToCadCreateBody
@@ -1607,6 +1609,22 @@ async def test_update_org_dataset_async():
     result: OrgDataset = await client.orgs.update_org_dataset(
         id=Uuid("<string>"), body=UpdateOrgDataset()
     )
+
+
+@pytest.mark.skip
+def test_download_org_dataset_successful_kcl_bulk():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    client.orgs.download_org_dataset_successful_kcl_bulk(id=Uuid("<string>"))
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_download_org_dataset_successful_kcl_bulk_async():
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    await client.orgs.download_org_dataset_successful_kcl_bulk(id=Uuid("<string>"))
 
 
 @pytest.mark.skip
@@ -4247,7 +4265,7 @@ def test_put_public_email_marketing_consent_request():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     client.users.put_public_email_marketing_consent_request(
-        body=Subscribe(
+        body=PublicEmailMarketingConsentRequest(
             email="<string>",
         )
     )
@@ -4260,7 +4278,7 @@ async def test_put_public_email_marketing_consent_request_async():
     client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     await client.users.put_public_email_marketing_consent_request(
-        body=Subscribe(
+        body=PublicEmailMarketingConsentRequest(
             email="<string>",
         )
     )
@@ -4294,30 +4312,6 @@ async def test_put_public_form_async():
             inquiry_type=InquiryType.PILOT_INQUIRY,
             last_name="<string>",
             message="<string>",
-        )
-    )
-
-
-@pytest.mark.skip
-def test_put_public_subscribe():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
-
-    client.users.put_public_subscribe(
-        body=Subscribe(
-            email="<string>",
-        )
-    )
-
-
-# OR run async
-@pytest.mark.asyncio
-@pytest.mark.skip
-async def test_put_public_subscribe_async():
-    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
-
-    await client.users.put_public_subscribe(
-        body=Subscribe(
-            email="<string>",
         )
     )
 

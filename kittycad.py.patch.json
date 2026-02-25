@@ -481,6 +481,14 @@
   },
   {
     "op": "add",
+    "path": "/paths/~1org~1datasets~1{id}~1bulk-download~1kcl/get/x-python",
+    "value": {
+      "example": "from kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\ndef example_download_org_dataset_successful_kcl_bulk():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    client.orgs.download_org_dataset_successful_kcl_bulk(id=Uuid(\"<string>\"))\n\n",
+      "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD.orgs"
+    }
+  },
+  {
+    "op": "add",
     "path": "/paths/~1org~1datasets~1{id}~1conversions/get/x-python",
     "value": {
       "example": "from kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models.conversion_sort_mode import ConversionSortMode\nfrom kittycad.models import OrgDatasetFileConversionSummaryResultsPage\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\n\n\nfrom kittycad.models import OrgDatasetFileConversionSummary\ndef example_list_org_dataset_conversions():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    # Iterate through all pages automatically\n    item: OrgDatasetFileConversionSummary\n    for item in client.orgs.list_org_dataset_conversions(id=Uuid(\"<string>\"),\n        sort_by=ConversionSortMode.CREATED_AT_ASCENDING,\n        filter=None,\n        limit=None,\n        page_token=None):\n        print(item)\n\n",
@@ -1347,7 +1355,7 @@
     "op": "add",
     "path": "/paths/~1website~1email-marketing-consent~1request/put/x-python",
     "value": {
-      "example": "from kittycad.models.subscribe import Subscribe\ndef example_put_public_email_marketing_consent_request():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    client.users.put_public_email_marketing_consent_request(body=Subscribe(\n        email=\"<string>\",\n        ))\n\n",
+      "example": "from kittycad.models.public_email_marketing_consent_request import PublicEmailMarketingConsentRequest\ndef example_put_public_email_marketing_consent_request():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    client.users.put_public_email_marketing_consent_request(body=PublicEmailMarketingConsentRequest(\n        email=\"<string>\",\n        ))\n\n",
       "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD.users"
     }
   },
@@ -1356,14 +1364,6 @@
     "path": "/paths/~1website~1form/put/x-python",
     "value": {
       "example": "from kittycad.models.inquiry_form import InquiryForm\nfrom kittycad.models.inquiry_type import InquiryType\ndef example_put_public_form():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    client.users.put_public_form(body=InquiryForm(\n        email=\"<string>\",\n        first_name=\"<string>\",\n        inquiry_type=InquiryType.PILOT_INQUIRY,\n        last_name=\"<string>\",\n        message=\"<string>\",\n        ))\n\n",
-      "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD.users"
-    }
-  },
-  {
-    "op": "add",
-    "path": "/paths/~1website~1subscribe/put/x-python",
-    "value": {
-      "example": "from kittycad.models.subscribe import Subscribe\ndef example_put_public_subscribe():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    client.users.put_public_subscribe(body=Subscribe(\n        email=\"<string>\",\n        ))\n\n",
       "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD.users"
     }
   },
