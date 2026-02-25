@@ -304,6 +304,7 @@ from .price_upsert_request import PriceUpsertRequest
 from .privacy_settings import PrivacySettings
 from .project_entity_to_plane import ProjectEntityToPlane
 from .project_points_to_plane import ProjectPointsToPlane
+from .public_email_marketing_consent_request import PublicEmailMarketingConsentRequest
 from .raw_file import RawFile
 from .reasoning_message import ReasoningMessage
 from .reconfigure_stream import ReconfigureStream
@@ -378,7 +379,6 @@ from .step_presentation import StepPresentation
 from .stl_storage import StlStorage
 from .storage_provider import StorageProvider
 from .store_coupon_params import StoreCouponParams
-from .subscribe import Subscribe
 from .subscription_action_type import SubscriptionActionType
 from .subscription_plan_billing_model import SubscriptionPlanBillingModel
 from .subscription_plan_price_record import SubscriptionPlanPriceRecord

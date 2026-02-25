@@ -35,11 +35,7 @@ class ApiCallWithPrice(KittyCadBaseModel):
 
     price: Optional[float] = None
 
-    request_body: Optional[str] = None
-
     request_query_params: Optional[str] = None
-
-    response_body: Optional[str] = None
 
     seconds: Optional[int] = None
 
