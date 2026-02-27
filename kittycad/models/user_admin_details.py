@@ -9,6 +9,12 @@ from .base import KittyCadBaseModel
 class UserAdminDetails(KittyCadBaseModel):
     """Extra admin-only details for a user."""
 
+    active_api_tokens_count: int
+
+    active_device_tokens_count: int
+
+    active_sessions_count: int
+
     address: Optional[Address] = None
 
     address_summary: Optional[str] = None
