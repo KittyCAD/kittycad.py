@@ -16,5 +16,9 @@ class MlReasoningEffort(str, Enum):
 
     HIGH = "high"
 
+    """# Xhigh reasoning"""  # noqa: E501
+
+    XHIGH = "xhigh"
+
     def __str__(self) -> str:
         return str(self.value)
