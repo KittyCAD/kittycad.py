@@ -132,6 +132,7 @@ from kittycad.models.privacy_settings import PrivacySettings
 from kittycad.models.public_email_marketing_consent_request import (
     PublicEmailMarketingConsentRequest,
 )
+from kittycad.models.sales_inquiry_type import SalesInquiryType
 from kittycad.models.saml_identity_provider_create import SamlIdentityProviderCreate
 from kittycad.models.selection import OptionDefaultScene, Selection
 from kittycad.models.service_account_uuid import ServiceAccountUuid
@@ -142,6 +143,7 @@ from kittycad.models.source_range_prompt import SourceRangePrompt
 from kittycad.models.storage_provider import StorageProvider
 from kittycad.models.store_coupon_params import StoreCouponParams
 from kittycad.models.subscription_plan_billing_model import SubscriptionPlanBillingModel
+from kittycad.models.support_inquiry_type import SupportInquiryType
 from kittycad.models.system import System
 from kittycad.models.text_to_cad_create_body import TextToCadCreateBody
 from kittycad.models.text_to_cad_iteration_body import TextToCadIterationBody
@@ -172,6 +174,8 @@ from kittycad.models.user_identifier import UserIdentifier
 from kittycad.models.user_org_role import UserOrgRole
 from kittycad.models.uuid import Uuid
 from kittycad.models.web_socket_request import OptionModelingCmdReq
+from kittycad.models.website_sales_form import WebsiteSalesForm
+from kittycad.models.website_support_form import WebsiteSupportForm
 from kittycad.models.zoo_product_subscriptions_org_request import (
     ZooProductSubscriptionsOrgRequest,
 )
@@ -4310,6 +4314,70 @@ async def test_put_public_form_async():
             email="<string>",
             first_name="<string>",
             inquiry_type=InquiryType.PILOT_INQUIRY,
+            last_name="<string>",
+            message="<string>",
+        )
+    )
+
+
+@pytest.mark.skip
+def test_put_public_sales_form():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    client.users.put_public_sales_form(
+        body=WebsiteSalesForm(
+            email="<string>",
+            first_name="<string>",
+            inquiry_type=SalesInquiryType.PILOT_INQUIRY,
+            last_name="<string>",
+            message="<string>",
+        )
+    )
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_put_public_sales_form_async():
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    await client.users.put_public_sales_form(
+        body=WebsiteSalesForm(
+            email="<string>",
+            first_name="<string>",
+            inquiry_type=SalesInquiryType.PILOT_INQUIRY,
+            last_name="<string>",
+            message="<string>",
+        )
+    )
+
+
+@pytest.mark.skip
+def test_put_public_support_form():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    client.users.put_public_support_form(
+        body=WebsiteSupportForm(
+            email="<string>",
+            first_name="<string>",
+            inquiry_type=SupportInquiryType.TECHNICAL_SUPPORT,
+            last_name="<string>",
+            message="<string>",
+        )
+    )
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_put_public_support_form_async():
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    await client.users.put_public_support_form(
+        body=WebsiteSupportForm(
+            email="<string>",
+            first_name="<string>",
+            inquiry_type=SupportInquiryType.TECHNICAL_SUPPORT,
             last_name="<string>",
             message="<string>",
         )

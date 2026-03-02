@@ -1369,6 +1369,22 @@
   },
   {
     "op": "add",
+    "path": "/paths/~1website~1forms~1sales/put/x-python",
+    "value": {
+      "example": "from kittycad.models.website_sales_form import WebsiteSalesForm\nfrom kittycad.models.sales_inquiry_type import SalesInquiryType\ndef example_put_public_sales_form():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    client.users.put_public_sales_form(body=WebsiteSalesForm(\n        email=\"<string>\",\n        first_name=\"<string>\",\n        inquiry_type=SalesInquiryType.PILOT_INQUIRY,\n        last_name=\"<string>\",\n        message=\"<string>\",\n        ))\n\n",
+      "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD.users"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/paths/~1website~1forms~1support/put/x-python",
+    "value": {
+      "example": "from kittycad.models.website_support_form import WebsiteSupportForm\nfrom kittycad.models.support_inquiry_type import SupportInquiryType\ndef example_put_public_support_form():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    client.users.put_public_support_form(body=WebsiteSupportForm(\n        email=\"<string>\",\n        first_name=\"<string>\",\n        inquiry_type=SupportInquiryType.TECHNICAL_SUPPORT,\n        last_name=\"<string>\",\n        message=\"<string>\",\n        ))\n\n",
+      "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD.users"
+    }
+  },
+  {
+    "op": "add",
     "path": "/paths/~1ws~1executor~1term/get/x-python",
     "value": {
       "example": "\n\ndef example_create_executor_term():\n            client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n            # Connect to the websocket.\n            with client.executor.create_executor_term() as websocket:\n\n                # Send a message.\n                websocket.send(\"{}\")\n\n                # Get the messages.\n                for message in websocket:\n                    print(message)\n\n        ",

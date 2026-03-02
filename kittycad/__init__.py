@@ -189,6 +189,8 @@ from .models.verification_token_response import VerificationTokenResponse
 # Import WebSocket-related models that may be referenced by endpoints
 from .models.web_socket_request import WebSocketRequest
 from .models.web_socket_response import WebSocketResponse
+from .models.website_sales_form import WebsiteSalesForm
+from .models.website_support_form import WebsiteSupportForm
 from .models.zoo_product_subscriptions import ZooProductSubscriptions
 from .models.zoo_product_subscriptions_org_request import (
     ZooProductSubscriptionsOrgRequest,
@@ -12807,6 +12809,52 @@ class UsersAPI:
 
         return response.json() if response.content else None
 
+    def put_public_sales_form(
+        self,
+        body: WebsiteSalesForm,
+    ):
+        """This endpoint accepts optional authentication."""
+
+        url = "{}/website/forms/sales".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    def put_public_support_form(
+        self,
+        body: WebsiteSupportForm,
+    ):
+        """This endpoint accepts optional authentication."""
+
+        url = "{}/website/forms/support".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
 
 class AsyncUsersAPI:
     """Async API for users endpoints"""
@@ -13693,6 +13741,52 @@ class AsyncUsersAPI:
         """users and is not authenticated."""
 
         url = "{}/website/form".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    async def put_public_sales_form(
+        self,
+        body: WebsiteSalesForm,
+    ):
+        """This endpoint accepts optional authentication."""
+
+        url = "{}/website/forms/sales".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    async def put_public_support_form(
+        self,
+        body: WebsiteSupportForm,
+    ):
+        """This endpoint accepts optional authentication."""
+
+        url = "{}/website/forms/support".format(self.client.base_url)
 
         _client = self.client.get_http_client()
 
