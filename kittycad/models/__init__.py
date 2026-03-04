@@ -48,6 +48,9 @@ from .boolean_imprint import BooleanImprint
 from .boolean_intersection import BooleanIntersection
 from .boolean_subtract import BooleanSubtract
 from .boolean_union import BooleanUnion
+from .cad_discovery_source import CadDiscoverySource
+from .cad_industry import CadIndustry
+from .cad_user_type import CadUserType
 from .camera_drag_end import CameraDragEnd
 from .camera_drag_interaction_type import CameraDragInteractionType
 from .camera_drag_move import CameraDragMove
@@ -63,6 +66,7 @@ from .code_language import CodeLanguage
 from .code_option import CodeOption
 from .code_output import CodeOutput
 from .color import Color
+from .company_size import CompanySize
 from .complementary_edges import ComplementaryEdges
 from .component_transform import ComponentTransform
 from .conversation import Conversation
@@ -448,6 +452,7 @@ from .update_user import UpdateUser
 from .upload_org_dataset_files_response import UploadOrgDatasetFilesResponse
 from .user import User
 from .user_admin_details import UserAdminDetails
+from .user_cad_info_admin_details import UserCadInfoAdminDetails
 from .user_feature import UserFeature
 from .user_feature_entry import UserFeatureEntry
 from .user_feature_list import UserFeatureList
@@ -461,6 +466,7 @@ from .view_isometric import ViewIsometric
 from .volume import Volume
 from .web_socket_request import WebSocketRequest
 from .web_socket_response import WebSocketResponse
+from .website_cad_user_info_form import WebsiteCadUserInfoForm
 from .website_sales_form import WebsiteSalesForm
 from .website_support_form import WebsiteSupportForm
 from .world_coordinate_system import WorldCoordinateSystem

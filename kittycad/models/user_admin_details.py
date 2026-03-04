@@ -3,6 +3,7 @@ from typing import List, Optional
 from ..models.address import Address
 from ..models.block_reason import BlockReason
 from ..models.payment_method import PaymentMethod
+from ..models.user_cad_info_admin_details import UserCadInfoAdminDetails
 from .base import KittyCadBaseModel
 
 
@@ -22,6 +23,8 @@ class UserAdminDetails(KittyCadBaseModel):
     block: Optional[BlockReason] = None
 
     block_message: Optional[str] = None
+
+    cad_user_info: Optional[UserCadInfoAdminDetails] = None
 
     hubspot_contact_url: Optional[str] = None
 
