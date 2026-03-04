@@ -174,6 +174,7 @@ from kittycad.models.user_identifier import UserIdentifier
 from kittycad.models.user_org_role import UserOrgRole
 from kittycad.models.uuid import Uuid
 from kittycad.models.web_socket_request import OptionModelingCmdReq
+from kittycad.models.website_cad_user_info_form import WebsiteCadUserInfoForm
 from kittycad.models.website_sales_form import WebsiteSalesForm
 from kittycad.models.website_support_form import WebsiteSupportForm
 from kittycad.models.zoo_product_subscriptions_org_request import (
@@ -4318,6 +4319,22 @@ async def test_put_public_form_async():
             message="<string>",
         )
     )
+
+
+@pytest.mark.skip
+def test_put_user_cad_user_info_form():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    client.users.put_user_cad_user_info_form(body=WebsiteCadUserInfoForm())
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_put_user_cad_user_info_form_async():
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    await client.users.put_user_cad_user_info_form(body=WebsiteCadUserInfoForm())
 
 
 @pytest.mark.skip

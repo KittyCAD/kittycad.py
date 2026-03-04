@@ -1369,6 +1369,14 @@
   },
   {
     "op": "add",
+    "path": "/paths/~1website~1forms~1cad-user-info/put/x-python",
+    "value": {
+      "example": "from kittycad.models.website_cad_user_info_form import WebsiteCadUserInfoForm\ndef example_put_user_cad_user_info_form():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    client.users.put_user_cad_user_info_form(body=WebsiteCadUserInfoForm())\n\n",
+      "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD.users"
+    }
+  },
+  {
+    "op": "add",
     "path": "/paths/~1website~1forms~1sales/put/x-python",
     "value": {
       "example": "from kittycad.models.website_sales_form import WebsiteSalesForm\nfrom kittycad.models.sales_inquiry_type import SalesInquiryType\ndef example_put_public_sales_form():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    client.users.put_public_sales_form(body=WebsiteSalesForm(\n        email=\"<string>\",\n        first_name=\"<string>\",\n        inquiry_type=SalesInquiryType.PILOT_INQUIRY,\n        last_name=\"<string>\",\n        message=\"<string>\",\n        ))\n\n",

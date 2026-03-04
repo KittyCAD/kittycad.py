@@ -189,6 +189,7 @@ from .models.verification_token_response import VerificationTokenResponse
 # Import WebSocket-related models that may be referenced by endpoints
 from .models.web_socket_request import WebSocketRequest
 from .models.web_socket_response import WebSocketResponse
+from .models.website_cad_user_info_form import WebsiteCadUserInfoForm
 from .models.website_sales_form import WebsiteSalesForm
 from .models.website_support_form import WebsiteSupportForm
 from .models.zoo_product_subscriptions import ZooProductSubscriptions
@@ -12809,6 +12810,29 @@ class UsersAPI:
 
         return response.json() if response.content else None
 
+    def put_user_cad_user_info_form(
+        self,
+        body: WebsiteCadUserInfoForm,
+    ):
+        """Stores authenticated CAD user info form data for the current user."""
+
+        url = "{}/website/forms/cad-user-info".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
     def put_public_sales_form(
         self,
         body: WebsiteSalesForm,
@@ -13741,6 +13765,29 @@ class AsyncUsersAPI:
         """users and is not authenticated."""
 
         url = "{}/website/form".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    async def put_user_cad_user_info_form(
+        self,
+        body: WebsiteCadUserInfoForm,
+    ):
+        """Stores authenticated CAD user info form data for the current user."""
+
+        url = "{}/website/forms/cad-user-info".format(self.client.base_url)
 
         _client = self.client.get_http_client()
 
