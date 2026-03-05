@@ -81,7 +81,6 @@ from .create_region import CreateRegion
 from .create_shortlink_request import CreateShortlinkRequest
 from .create_shortlink_response import CreateShortlinkResponse
 from .created_at_sort_mode import CreatedAtSortMode
-from .crm_data import CrmData
 from .currency import Currency
 from .curve_get_control_points import CurveGetControlPoints
 from .curve_get_end_points import CurveGetEndPoints
@@ -200,8 +199,6 @@ from .import_file import ImportFile
 from .import_files import ImportFiles
 from .imported_geometry import ImportedGeometry
 from .input_format3d import InputFormat3d
-from .inquiry_form import InquiryForm
-from .inquiry_type import InquiryType
 from .invoice import Invoice
 from .invoice_line_item import InvoiceLineItem
 from .invoice_status import InvoiceStatus

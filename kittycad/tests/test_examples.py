@@ -93,7 +93,6 @@ from kittycad.models.create_custom_model import CreateCustomModel
 from kittycad.models.create_org_dataset import CreateOrgDataset
 from kittycad.models.create_shortlink_request import CreateShortlinkRequest
 from kittycad.models.created_at_sort_mode import CreatedAtSortMode
-from kittycad.models.crm_data import CrmData
 from kittycad.models.direction import Direction
 from kittycad.models.email_authentication_form import EmailAuthenticationForm
 from kittycad.models.email_marketing_confirm_token_body import (
@@ -107,8 +106,6 @@ from kittycad.models.idp_metadata_source import (
     OptionBase64EncodedXml,
 )
 from kittycad.models.input_format3d import InputFormat3d, OptionPly
-from kittycad.models.inquiry_form import InquiryForm
-from kittycad.models.inquiry_type import InquiryType
 from kittycad.models.kcl_code_completion_params import KclCodeCompletionParams
 from kittycad.models.kcl_code_completion_request import KclCodeCompletionRequest
 from kittycad.models.lenient_url import LenientUrl
@@ -3291,22 +3288,6 @@ async def test_get_api_token_for_user_async():
 
 
 @pytest.mark.skip
-def test_patch_user_crm():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
-
-    client.users.patch_user_crm(body=CrmData())
-
-
-# OR run async
-@pytest.mark.asyncio
-@pytest.mark.skip
-async def test_patch_user_crm_async():
-    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
-
-    await client.users.patch_user_crm(body=CrmData())
-
-
-@pytest.mark.skip
 def test_user_email_marketing_consent_get():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
@@ -3411,38 +3392,6 @@ async def test_user_features_get_async():
     client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     result: UserFeatureList = await client.users.user_features_get()
-
-
-@pytest.mark.skip
-def test_put_user_form_self():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
-
-    client.users.put_user_form_self(
-        body=InquiryForm(
-            email="<string>",
-            first_name="<string>",
-            inquiry_type=InquiryType.PILOT_INQUIRY,
-            last_name="<string>",
-            message="<string>",
-        )
-    )
-
-
-# OR run async
-@pytest.mark.asyncio
-@pytest.mark.skip
-async def test_put_user_form_self_async():
-    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
-
-    await client.users.put_user_form_self(
-        body=InquiryForm(
-            email="<string>",
-            first_name="<string>",
-            inquiry_type=InquiryType.PILOT_INQUIRY,
-            last_name="<string>",
-            message="<string>",
-        )
-    )
 
 
 @pytest.mark.skip
@@ -4285,38 +4234,6 @@ async def test_put_public_email_marketing_consent_request_async():
     await client.users.put_public_email_marketing_consent_request(
         body=PublicEmailMarketingConsentRequest(
             email="<string>",
-        )
-    )
-
-
-@pytest.mark.skip
-def test_put_public_form():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
-
-    client.users.put_public_form(
-        body=InquiryForm(
-            email="<string>",
-            first_name="<string>",
-            inquiry_type=InquiryType.PILOT_INQUIRY,
-            last_name="<string>",
-            message="<string>",
-        )
-    )
-
-
-# OR run async
-@pytest.mark.asyncio
-@pytest.mark.skip
-async def test_put_public_form_async():
-    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
-
-    await client.users.put_public_form(
-        body=InquiryForm(
-            email="<string>",
-            first_name="<string>",
-            inquiry_type=InquiryType.PILOT_INQUIRY,
-            last_name="<string>",
-            message="<string>",
         )
     )
 

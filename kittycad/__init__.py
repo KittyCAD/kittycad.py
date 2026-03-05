@@ -61,7 +61,6 @@ from .models.create_org_dataset import CreateOrgDataset
 from .models.create_shortlink_request import CreateShortlinkRequest
 from .models.create_shortlink_response import CreateShortlinkResponse
 from .models.created_at_sort_mode import CreatedAtSortMode
-from .models.crm_data import CrmData
 from .models.custom_model import CustomModel
 from .models.customer import Customer
 from .models.customer_balance import CustomerBalance
@@ -84,7 +83,6 @@ from .models.file_import_format import FileImportFormat
 from .models.file_mass import FileMass
 from .models.file_surface_area import FileSurfaceArea
 from .models.file_volume import FileVolume
-from .models.inquiry_form import InquiryForm
 from .models.invoice import Invoice
 from .models.ip_addr_info import IpAddrInfo
 from .models.kcl_code_completion_request import KclCodeCompletionRequest
@@ -11998,29 +11996,6 @@ class UsersAPI:
 
         return response.json() if response.content else None
 
-    def patch_user_crm(
-        self,
-        body: CrmData,
-    ):
-        """Update properties in the CRM"""
-
-        url = "{}/user/crm".format(self.client.base_url)
-
-        _client = self.client.get_http_client()
-
-        response = _client.patch(
-            url=url,
-            headers=self.client.get_headers(),
-            content=body.model_dump_json(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        return response.json() if response.content else None
-
     def user_email_marketing_consent_get(
         self,
     ) -> EmailMarketingConsentState:
@@ -12166,29 +12141,6 @@ class UsersAPI:
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return UserFeatureList.model_validate(json_data)
-
-    def put_user_form_self(
-        self,
-        body: InquiryForm,
-    ):
-        """It gets attached to the user's account."""
-
-        url = "{}/user/form".format(self.client.base_url)
-
-        _client = self.client.get_http_client()
-
-        response = _client.put(
-            url=url,
-            headers=self.client.get_headers(),
-            content=body.model_dump_json(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        return response.json() if response.content else None
 
     def get_oauth2_providers_for_user(
         self,
@@ -12787,29 +12739,6 @@ class UsersAPI:
 
         return response.json() if response.content else None
 
-    def put_public_form(
-        self,
-        body: InquiryForm,
-    ):
-        """users and is not authenticated."""
-
-        url = "{}/website/form".format(self.client.base_url)
-
-        _client = self.client.get_http_client()
-
-        response = _client.put(
-            url=url,
-            headers=self.client.get_headers(),
-            content=body.model_dump_json(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        return response.json() if response.content else None
-
     def put_user_cad_user_info_form(
         self,
         body: WebsiteCadUserInfoForm,
@@ -12967,29 +12896,6 @@ class AsyncUsersAPI:
 
         return response.json() if response.content else None
 
-    async def patch_user_crm(
-        self,
-        body: CrmData,
-    ):
-        """Update properties in the CRM"""
-
-        url = "{}/user/crm".format(self.client.base_url)
-
-        _client = self.client.get_http_client()
-
-        response = await _client.patch(
-            url=url,
-            headers=self.client.get_headers(),
-            content=body.model_dump_json(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        return response.json() if response.content else None
-
     async def user_email_marketing_consent_get(
         self,
     ) -> EmailMarketingConsentState:
@@ -13135,29 +13041,6 @@ class AsyncUsersAPI:
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return UserFeatureList.model_validate(json_data)
-
-    async def put_user_form_self(
-        self,
-        body: InquiryForm,
-    ):
-        """It gets attached to the user's account."""
-
-        url = "{}/user/form".format(self.client.base_url)
-
-        _client = self.client.get_http_client()
-
-        response = await _client.put(
-            url=url,
-            headers=self.client.get_headers(),
-            content=body.model_dump_json(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        return response.json() if response.content else None
 
     async def get_oauth2_providers_for_user(
         self,
@@ -13742,29 +13625,6 @@ class AsyncUsersAPI:
         """Requests public email marketing consent for an email address."""
 
         url = "{}/website/email-marketing-consent/request".format(self.client.base_url)
-
-        _client = self.client.get_http_client()
-
-        response = await _client.put(
-            url=url,
-            headers=self.client.get_headers(),
-            content=body.model_dump_json(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        return response.json() if response.content else None
-
-    async def put_public_form(
-        self,
-        body: InquiryForm,
-    ):
-        """users and is not authenticated."""
-
-        url = "{}/website/form".format(self.client.base_url)
 
         _client = self.client.get_http_client()
 
