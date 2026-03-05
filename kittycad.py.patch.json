@@ -1073,14 +1073,6 @@
   },
   {
     "op": "add",
-    "path": "/paths/~1user~1crm/patch/x-python",
-    "value": {
-      "example": "from kittycad.models.crm_data import CrmData\ndef example_patch_user_crm():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    client.users.patch_user_crm(body=CrmData())\n\n",
-      "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD.users"
-    }
-  },
-  {
-    "op": "add",
     "path": "/paths/~1user~1email-marketing-consent/get/x-python",
     "value": {
       "example": "from kittycad.models import EmailMarketingConsentState\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_user_email_marketing_consent_get():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    result: EmailMarketingConsentState = client.users.user_email_marketing_consent_get()\n\n\n    body: EmailMarketingConsentState = result\n    print(body)\n\n",
@@ -1124,14 +1116,6 @@
     "path": "/paths/~1user~1features/get/x-python",
     "value": {
       "example": "from kittycad.models import UserFeatureList\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_user_features_get():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    result: UserFeatureList = client.users.user_features_get()\n\n\n    body: UserFeatureList = result\n    print(body)\n\n",
-      "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD.users"
-    }
-  },
-  {
-    "op": "add",
-    "path": "/paths/~1user~1form/put/x-python",
-    "value": {
-      "example": "from kittycad.models.inquiry_form import InquiryForm\nfrom kittycad.models.inquiry_type import InquiryType\ndef example_put_user_form_self():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    client.users.put_user_form_self(body=InquiryForm(\n        email=\"<string>\",\n        first_name=\"<string>\",\n        inquiry_type=InquiryType.PILOT_INQUIRY,\n        last_name=\"<string>\",\n        message=\"<string>\",\n        ))\n\n",
       "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD.users"
     }
   },
@@ -1356,14 +1340,6 @@
     "path": "/paths/~1website~1email-marketing-consent~1request/put/x-python",
     "value": {
       "example": "from kittycad.models.public_email_marketing_consent_request import PublicEmailMarketingConsentRequest\ndef example_put_public_email_marketing_consent_request():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    client.users.put_public_email_marketing_consent_request(body=PublicEmailMarketingConsentRequest(\n        email=\"<string>\",\n        ))\n\n",
-      "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD.users"
-    }
-  },
-  {
-    "op": "add",
-    "path": "/paths/~1website~1form/put/x-python",
-    "value": {
-      "example": "from kittycad.models.inquiry_form import InquiryForm\nfrom kittycad.models.inquiry_type import InquiryType\ndef example_put_public_form():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    client.users.put_public_form(body=InquiryForm(\n        email=\"<string>\",\n        first_name=\"<string>\",\n        inquiry_type=InquiryType.PILOT_INQUIRY,\n        last_name=\"<string>\",\n        message=\"<string>\",\n        ))\n\n",
       "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD.users"
     }
   },
