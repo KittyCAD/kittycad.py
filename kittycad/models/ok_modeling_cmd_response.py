@@ -9,13 +9,16 @@ from ..models.boolean_imprint import BooleanImprint
 from ..models.boolean_intersection import BooleanIntersection
 from ..models.boolean_subtract import BooleanSubtract
 from ..models.boolean_union import BooleanUnion
+from ..models.bounding_box import BoundingBox
 from ..models.camera_drag_end import CameraDragEnd
 from ..models.camera_drag_move import CameraDragMove
 from ..models.camera_drag_start import CameraDragStart
 from ..models.center_of_mass import CenterOfMass
 from ..models.close_path import ClosePath
+from ..models.closest_edge import ClosestEdge
 from ..models.complementary_edges import ComplementaryEdges
 from ..models.create_region import CreateRegion
+from ..models.create_region_from_query_point import CreateRegionFromQueryPoint
 from ..models.curve_get_control_points import CurveGetControlPoints
 from ..models.curve_get_end_points import CurveGetEndPoints
 from ..models.curve_get_type import CurveGetType
@@ -94,6 +97,7 @@ from ..models.new_annotation import NewAnnotation
 from ..models.object_bring_to_front import ObjectBringToFront
 from ..models.object_set_material_params_pbr import ObjectSetMaterialParamsPbr
 from ..models.object_visible import ObjectVisible
+from ..models.offset_surface import OffsetSurface
 from ..models.orient_to_face import OrientToFace
 from ..models.path_get_curve_uuid import PathGetCurveUuid
 from ..models.path_get_curve_uuids_for_vertices import PathGetCurveUuidsForVertices
@@ -106,6 +110,7 @@ from ..models.plane_set_color import PlaneSetColor
 from ..models.project_entity_to_plane import ProjectEntityToPlane
 from ..models.project_points_to_plane import ProjectPointsToPlane
 from ..models.reconfigure_stream import ReconfigureStream
+from ..models.region_get_query_point import RegionGetQueryPoint
 from ..models.remove_scene_objects import RemoveSceneObjects
 from ..models.revolve import Revolve
 from ..models.revolve_about_edge import RevolveAboutEdge
@@ -1409,12 +1414,52 @@ class OptionCreateRegion(KittyCadBaseModel):
     type: Literal["create_region"] = "create_region"
 
 
+class OptionCreateRegionFromQueryPoint(KittyCadBaseModel):
+    """"""
+
+    data: CreateRegionFromQueryPoint
+
+    type: Literal["create_region_from_query_point"] = "create_region_from_query_point"
+
+
+class OptionRegionGetQueryPoint(KittyCadBaseModel):
+    """"""
+
+    data: RegionGetQueryPoint
+
+    type: Literal["region_get_query_point"] = "region_get_query_point"
+
+
 class OptionSelectRegionFromPoint(KittyCadBaseModel):
     """"""
 
     data: SelectRegionFromPoint
 
     type: Literal["select_region_from_point"] = "select_region_from_point"
+
+
+class OptionBoundingBox(KittyCadBaseModel):
+    """"""
+
+    data: BoundingBox
+
+    type: Literal["bounding_box"] = "bounding_box"
+
+
+class OptionOffsetSurface(KittyCadBaseModel):
+    """"""
+
+    data: OffsetSurface
+
+    type: Literal["offset_surface"] = "offset_surface"
+
+
+class OptionClosestEdge(KittyCadBaseModel):
+    """"""
+
+    data: ClosestEdge
+
+    type: Literal["closest_edge"] = "closest_edge"
 
 
 OkModelingCmdResponse = RootModel[
@@ -1575,7 +1620,12 @@ OkModelingCmdResponse = RootModel[
             OptionSetGridAutoScale,
             OptionSetOrderIndependentTransparency,
             OptionCreateRegion,
+            OptionCreateRegionFromQueryPoint,
+            OptionRegionGetQueryPoint,
             OptionSelectRegionFromPoint,
+            OptionBoundingBox,
+            OptionOffsetSurface,
+            OptionClosestEdge,
         ],
         Field(discriminator="type"),
     ]

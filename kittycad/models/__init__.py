@@ -48,6 +48,7 @@ from .boolean_imprint import BooleanImprint
 from .boolean_intersection import BooleanIntersection
 from .boolean_subtract import BooleanSubtract
 from .boolean_union import BooleanUnion
+from .bounding_box import BoundingBox
 from .cad_discovery_source import CadDiscoverySource
 from .cad_industry import CadIndustry
 from .cad_user_type import CadUserType
@@ -62,6 +63,7 @@ from .card_details import CardDetails
 from .center_of_mass import CenterOfMass
 from .client_metrics import ClientMetrics
 from .close_path import ClosePath
+from .closest_edge import ClosestEdge
 from .code_language import CodeLanguage
 from .code_option import CodeOption
 from .code_output import CodeOutput
@@ -78,6 +80,7 @@ from .coupon import Coupon
 from .create_custom_model import CreateCustomModel
 from .create_org_dataset import CreateOrgDataset
 from .create_region import CreateRegion
+from .create_region_from_query_point import CreateRegionFromQueryPoint
 from .create_shortlink_request import CreateShortlinkRequest
 from .create_shortlink_response import CreateShortlinkResponse
 from .created_at_sort_mode import CreatedAtSortMode
@@ -246,6 +249,7 @@ from .oauth2_grant_type import OAuth2GrantType
 from .object_bring_to_front import ObjectBringToFront
 from .object_set_material_params_pbr import ObjectSetMaterialParamsPbr
 from .object_visible import ObjectVisible
+from .offset_surface import OffsetSurface
 from .ok_modeling_cmd_response import OkModelingCmdResponse
 from .ok_web_socket_response_data import OkWebSocketResponseData
 from .opposite_for_angle import OppositeForAngle
@@ -309,6 +313,7 @@ from .public_email_marketing_consent_request import PublicEmailMarketingConsentR
 from .raw_file import RawFile
 from .reasoning_message import ReasoningMessage
 from .reconfigure_stream import ReconfigureStream
+from .region_get_query_point import RegionGetQueryPoint
 from .relative_to import RelativeTo
 from .remove_scene_objects import RemoveSceneObjects
 from .revolve import Revolve
