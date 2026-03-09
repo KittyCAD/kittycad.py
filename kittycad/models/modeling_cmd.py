@@ -1528,9 +1528,13 @@ class OptionBooleanImprint(KittyCadBaseModel):
 
     body_ids: List[str]
 
+    keep_tools: bool = False
+
     separate_bodies: bool = False
 
     tolerance: LengthUnit
+
+    tool_ids: Optional[List[str]] = None
 
     type: Literal["boolean_imprint"] = "boolean_imprint"
 
@@ -1609,12 +1613,60 @@ class OptionCreateRegion(KittyCadBaseModel):
     type: Literal["create_region"] = "create_region"
 
 
+class OptionCreateRegionFromQueryPoint(KittyCadBaseModel):
+    """Create a region with a query point. The region should have an ID taken from the ID of the 'CreateRegionFromQueryPoint' modeling command."""
+
+    object_id: str
+
+    query_point: Point2d
+
+    type: Literal["create_region_from_query_point"] = "create_region_from_query_point"
+
+
+class OptionRegionGetQueryPoint(KittyCadBaseModel):
+    """Finds a suitable point inside the region for calling such that CreateRegionFromQueryPoint will generate an identical region."""
+
+    region_id: str
+
+    type: Literal["region_get_query_point"] = "region_get_query_point"
+
+
 class OptionSelectRegionFromPoint(KittyCadBaseModel):
     """The user clicked on a point in the window, returns the region the user clicked on, if any."""
 
     selected_at_window: Point2d
 
     type: Literal["select_region_from_point"] = "select_region_from_point"
+
+
+class OptionBoundingBox(KittyCadBaseModel):
+    """Get the smallest box that could contain the given parts."""
+
+    entity_ids: List[str]
+
+    type: Literal["bounding_box"] = "bounding_box"
+
+
+class OptionOffsetSurface(KittyCadBaseModel):
+    """Offset a surface by a given distance."""
+
+    distance: LengthUnit
+
+    flip: bool
+
+    surface_id: str
+
+    type: Literal["offset_surface"] = "offset_surface"
+
+
+class OptionClosestEdge(KittyCadBaseModel):
+    """Returns the closest edge to this point."""
+
+    closest_to: Point3d
+
+    object_id: Optional[str] = None
+
+    type: Literal["closest_edge"] = "closest_edge"
 
 
 ModelingCmd = RootModel[
@@ -1767,7 +1819,12 @@ ModelingCmd = RootModel[
             OptionSetGridAutoScale,
             OptionSetOrderIndependentTransparency,
             OptionCreateRegion,
+            OptionCreateRegionFromQueryPoint,
+            OptionRegionGetQueryPoint,
             OptionSelectRegionFromPoint,
+            OptionBoundingBox,
+            OptionOffsetSurface,
+            OptionClosestEdge,
         ],
         Field(discriminator="type"),
     ]
