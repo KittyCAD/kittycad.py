@@ -26,8 +26,6 @@ class UserAdminDetails(KittyCadBaseModel):
 
     cad_user_info: Optional[UserCadInfoAdminDetails] = None
 
-    hubspot_contact_url: Optional[str] = None
-
     payment_methods: List[PaymentMethod]
 
     payment_methods_summary: List[str]
