@@ -40,6 +40,8 @@ class OptionUser(KittyCadBaseModel):
 
     reasoning_effort: Optional[MlReasoningEffort] = None
 
+    sketch_solve: bool = False
+
     source_ranges: Optional[List[SourceRangePrompt]] = None
 
     type: Literal["user"] = "user"

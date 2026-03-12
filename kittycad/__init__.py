@@ -5472,6 +5472,42 @@ class Oauth2API:
 
         return response.json() if response.content else None
 
+    def verify_oauth_account_linking(
+        self,
+        token: str,
+        *,
+        callback_url: Optional[str] = None,
+    ):
+        """This endpoint is called when a user clicks the verification link sent to their email after attempting to log in with OAuth when an existing account with the same email was found. This endpoint validates the token, links the OAuth account to the user, and creates a session."""
+
+        url = "{}/oauth2/verify-account-linking".format(self.client.base_url)
+
+        if callback_url is not None:
+            if "?" in url:
+                url = url + "&callback_url=" + str(callback_url)
+            else:
+                url = url + "?callback_url=" + str(callback_url)
+
+        if token is not None:
+            if "?" in url:
+                url = url + "&token=" + str(token)
+            else:
+                url = url + "?token=" + str(token)
+
+        _client = self.client.get_http_client()
+
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
 
 class AsyncOauth2API:
     """Async API for oauth2 endpoints"""
@@ -5715,6 +5751,42 @@ class AsyncOauth2API:
             url=url,
             headers=self.client.get_headers(),
             content=body.model_dump_json(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    async def verify_oauth_account_linking(
+        self,
+        token: str,
+        *,
+        callback_url: Optional[str] = None,
+    ):
+        """This endpoint is called when a user clicks the verification link sent to their email after attempting to log in with OAuth when an existing account with the same email was found. This endpoint validates the token, links the OAuth account to the user, and creates a session."""
+
+        url = "{}/oauth2/verify-account-linking".format(self.client.base_url)
+
+        if callback_url is not None:
+            if "?" in url:
+                url = url + "&callback_url=" + str(callback_url)
+            else:
+                url = url + "?callback_url=" + str(callback_url)
+
+        if token is not None:
+            if "?" in url:
+                url = url + "&token=" + str(token)
+            else:
+                url = url + "?token=" + str(token)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
         )
 
         if not response.is_success:
