@@ -4348,6 +4348,7 @@ def test_ml_copilot_ws():
                     content="<string>",
                     current_files={"<string>": b"<bytes>"},
                     forced_tools=[MlCopilotTool.EDIT_KCL_CODE],
+                    sketch_solve=False,
                     source_ranges=[
                         SourceRangePrompt(
                             prompt="<string>",

@@ -32,5 +32,9 @@ class AccountProvider(str, Enum):
 
     TENCENT = "tencent"
 
+    """# Test provider for integration tests (only available during testing)."""  # noqa: E501
+
+    TEST_PROVIDER = "test_provider"
+
     def __str__(self) -> str:
         return str(self.value)
