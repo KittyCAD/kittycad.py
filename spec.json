@@ -17900,7 +17900,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/User"
+                  "$ref": "#/components/schemas/UserResponse"
                 }
               }
             }
@@ -18002,7 +18002,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/User"
+                  "$ref": "#/components/schemas/UserResponse"
                 }
               }
             }
@@ -23589,7 +23589,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UserResultsPage"
+                  "$ref": "#/components/schemas/UserResponseResultsPage"
                 }
               }
             }
@@ -23931,7 +23931,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/User"
+                  "$ref": "#/components/schemas/UserResponse"
                 }
               }
             }
@@ -50505,116 +50505,6 @@
           "uploaded_files"
         ]
       },
-      "User": {
-        "description": "A user.",
-        "type": "object",
-        "properties": {
-          "block": {
-            "nullable": true,
-            "description": "If the user should be blocked and the reason why.",
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/BlockReason"
-              }
-            ]
-          },
-          "can_train_on_data": {
-            "description": "If we can train on the user's data. If the user is a member of an organization, the organization's setting will override this.",
-            "default": false,
-            "type": "boolean"
-          },
-          "company": {
-            "description": "The user's company.",
-            "type": "string"
-          },
-          "created_at": {
-            "title": "DateTime",
-            "description": "The date and time the user was created.",
-            "type": "string",
-            "format": "date-time"
-          },
-          "deletion_scheduled": {
-            "description": "If the user is scheduled for deletion.",
-            "default": false,
-            "type": "boolean"
-          },
-          "discord": {
-            "description": "The user's Discord handle.",
-            "type": "string"
-          },
-          "email": {
-            "description": "The email address of the user.",
-            "type": "string",
-            "format": "email"
-          },
-          "email_verified": {
-            "nullable": true,
-            "title": "DateTime",
-            "description": "The date and time the email address was verified.",
-            "type": "string",
-            "format": "date-time"
-          },
-          "first_name": {
-            "description": "The user's first name.",
-            "type": "string"
-          },
-          "github": {
-            "description": "The user's GitHub handle.",
-            "type": "string"
-          },
-          "id": {
-            "description": "The unique identifier for the user.",
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/Uuid"
-              }
-            ]
-          },
-          "image": {
-            "title": "String",
-            "description": "The image avatar for the user. This is a URL.",
-            "type": "string",
-            "format": "uri"
-          },
-          "is_onboarded": {
-            "description": "If the user has finished onboarding.",
-            "default": false,
-            "type": "boolean"
-          },
-          "is_service_account": {
-            "description": "If the user is tied to a service account.",
-            "default": false,
-            "type": "boolean"
-          },
-          "last_name": {
-            "description": "The user's last name.",
-            "type": "string"
-          },
-          "name": {
-            "description": "The name of the user. This is auto populated at first from the authentication provider (if there was a name). It can be updated by the user by updating their `first_name` and `last_name` fields.",
-            "type": "string"
-          },
-          "phone": {
-            "title": "String",
-            "description": "The user's phone number.",
-            "default": "",
-            "type": "string",
-            "format": "phone"
-          },
-          "updated_at": {
-            "title": "DateTime",
-            "description": "The date and time the user was last updated.",
-            "type": "string",
-            "format": "date-time"
-          }
-        },
-        "required": [
-          "created_at",
-          "id",
-          "image",
-          "updated_at"
-        ]
-      },
       "UserAdminDetails": {
         "description": "Extra admin-only details for a user.",
         "type": "object",
@@ -50912,7 +50802,122 @@
           }
         ]
       },
-      "UserResultsPage": {
+      "UserResponse": {
+        "description": "Public user payload returned by the API.",
+        "type": "object",
+        "properties": {
+          "block": {
+            "nullable": true,
+            "description": "If the user should be blocked and the reason why.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/BlockReason"
+              }
+            ]
+          },
+          "block_message": {
+            "nullable": true,
+            "description": "Human-friendly block reason message.",
+            "type": "string"
+          },
+          "can_train_on_data": {
+            "description": "If we can train on the user's data. If the user is a member of an organization, the organization's setting will override this.",
+            "default": false,
+            "type": "boolean"
+          },
+          "company": {
+            "description": "The user's company.",
+            "type": "string"
+          },
+          "created_at": {
+            "title": "DateTime",
+            "description": "The date and time the user was created.",
+            "type": "string",
+            "format": "date-time"
+          },
+          "deletion_scheduled": {
+            "description": "If the user is scheduled for deletion.",
+            "default": false,
+            "type": "boolean"
+          },
+          "discord": {
+            "description": "The user's Discord handle.",
+            "type": "string"
+          },
+          "email": {
+            "description": "The email address of the user.",
+            "type": "string",
+            "format": "email"
+          },
+          "email_verified": {
+            "nullable": true,
+            "title": "DateTime",
+            "description": "The date and time the email address was verified.",
+            "type": "string",
+            "format": "date-time"
+          },
+          "first_name": {
+            "description": "The user's first name.",
+            "type": "string"
+          },
+          "github": {
+            "description": "The user's GitHub handle.",
+            "type": "string"
+          },
+          "id": {
+            "description": "The unique identifier for the user.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Uuid"
+              }
+            ]
+          },
+          "image": {
+            "title": "String",
+            "description": "The image avatar for the user. This is a URL.",
+            "type": "string",
+            "format": "uri"
+          },
+          "is_onboarded": {
+            "description": "If the user has finished onboarding.",
+            "default": false,
+            "type": "boolean"
+          },
+          "is_service_account": {
+            "description": "If the user is tied to a service account.",
+            "default": false,
+            "type": "boolean"
+          },
+          "last_name": {
+            "description": "The user's last name.",
+            "type": "string"
+          },
+          "name": {
+            "description": "The name of the user. This is auto populated at first from the authentication provider (if there was a name). It can be updated by the user by updating their `first_name` and `last_name` fields.",
+            "type": "string"
+          },
+          "phone": {
+            "title": "String",
+            "description": "The user's phone number.",
+            "default": "",
+            "type": "string",
+            "format": "phone"
+          },
+          "updated_at": {
+            "title": "DateTime",
+            "description": "The date and time the user was last updated.",
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "required": [
+          "created_at",
+          "id",
+          "image",
+          "updated_at"
+        ]
+      },
+      "UserResponseResultsPage": {
         "description": "A single page of results",
         "type": "object",
         "properties": {
@@ -50920,7 +50925,7 @@
             "description": "list of items on this page of results",
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/User"
+              "$ref": "#/components/schemas/UserResponse"
             }
           },
           "next_page": {
