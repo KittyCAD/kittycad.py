@@ -13,12 +13,28 @@ from ..models.source_range_prompt import SourceRangePrompt
 from .base import KittyCadBaseModel
 
 
+class OptionPing(KittyCadBaseModel):
+    """The client-to-server Ping to ensure the copilot protocol stays alive."""
+
+    type: Literal["ping"] = "ping"
+
+
 class OptionHeaders(KittyCadBaseModel):
     """Authentication header request."""
 
     headers: Dict[str, str]
 
     type: Literal["headers"] = "headers"
+
+
+class OptionProjectContext(KittyCadBaseModel):
+    """Updates the active project context without creating a new prompt."""
+
+    current_files: Optional[Dict[str, bytes]] = None
+
+    project_name: Optional[str] = None
+
+    type: Literal["project_context"] = "project_context"
 
 
 class OptionUser(KittyCadBaseModel):
@@ -58,7 +74,9 @@ class OptionSystem(KittyCadBaseModel):
 MlCopilotClientMessage = RootModel[
     Annotated[
         Union[
+            OptionPing,
             OptionHeaders,
+            OptionProjectContext,
             OptionUser,
             OptionSystem,
         ],

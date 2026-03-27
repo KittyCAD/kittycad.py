@@ -1,5 +1,5 @@
 import datetime
-from typing import Dict, List, Optional, Union
+from typing import Any, Dict, List, Optional, Union
 
 from pydantic import RootModel, model_serializer, model_validator
 
@@ -8,6 +8,12 @@ from ..models.ml_tool_result import MlToolResult
 from ..models.reasoning_message import ReasoningMessage
 from ..models.uuid import Uuid
 from .base import KittyCadBaseModel
+
+
+class Pong(KittyCadBaseModel):
+    """Pong response to a Ping message."""
+
+    pong: Dict[str, Any]
 
 
 class SessionData(KittyCadBaseModel):
@@ -292,6 +298,7 @@ class Files(KittyCadBaseModel):
 
 MlCopilotServerMessage = RootModel[
     Union[
+        Pong,
         SessionData,
         ConversationId,
         Delta,

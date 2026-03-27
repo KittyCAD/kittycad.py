@@ -1,12 +1,12 @@
 from typing import List, Optional
 
-from ..models.user import User
+from ..models.user_response import UserResponse
 from .base import KittyCadBaseModel
 
 
-class UserResultsPage(KittyCadBaseModel):
+class UserResponseResultsPage(KittyCadBaseModel):
     """A single page of results"""
 
-    items: List[User]
+    items: List[UserResponse]
 
     next_page: Optional[str] = None

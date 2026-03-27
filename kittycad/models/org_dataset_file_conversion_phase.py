@@ -20,31 +20,35 @@ class OrgDatasetFileConversionPhase(str, Enum):
 
     USER_PROVIDED_METADATA = "user_provided_metadata"
 
-    """# Phase index `4`: converting the source model into raw KCL."""  # noqa: E501
+    """# Phase index `4`: loading a persisted manual KCL override instead of regenerating KCL automatically."""  # noqa: E501
+
+    MANUAL_KCL_OVERRIDE = "manual_kcl_override"
+
+    """# Phase index `5`: converting the source model into raw KCL."""  # noqa: E501
 
     CONVERT_RAW_KCL = "convert_raw_kcl"
 
-    """# Phase index `5`: generating raw KCL metadata."""  # noqa: E501
+    """# Phase index `6`: generating raw KCL metadata."""  # noqa: E501
 
     ZOO_GENERATED_RAW_KCL_METADATA = "zoo_generated_raw_kcl_metadata"
 
-    """# Phase index `6`: creating a snapshot of the raw KCL result."""  # noqa: E501
+    """# Phase index `7`: creating a snapshot of the raw KCL result."""  # noqa: E501
 
     SNAPSHOT_RAW_KCL = "snapshot_raw_kcl"
 
-    """# Phase index `7`: running the salon/refactor step that produces polished KCL."""  # noqa: E501
+    """# Phase index `8`: running the salon/refactor step that produces polished KCL."""  # noqa: E501
 
     SALON = "salon"
 
-    """# Phase index `8`: generating salon KCL metadata."""  # noqa: E501
+    """# Phase index `9`: generating salon KCL metadata."""  # noqa: E501
 
     ZOO_GENERATED_SALON_KCL_METADATA = "zoo_generated_salon_kcl_metadata"
 
-    """# Phase index `9`: creating a snapshot of the salon/refactored KCL."""  # noqa: E501
+    """# Phase index `10`: creating a snapshot of the salon/refactored KCL."""  # noqa: E501
 
     SNAPSHOT_SALON_KCL = "snapshot_salon_kcl"
 
-    """# Phase index `10`: conversion finished successfully."""  # noqa: E501
+    """# Phase index `11`: conversion finished successfully."""  # noqa: E501
 
     COMPLETED = "completed"
 

@@ -6,10 +6,12 @@ from ..models.uuid import Uuid
 from .base import KittyCadBaseModel
 
 
-class User(KittyCadBaseModel):
-    """A user."""
+class UserResponse(KittyCadBaseModel):
+    """Public user payload returned by the API."""
 
     block: Optional[BlockReason] = None
+
+    block_message: Optional[str] = None
 
     can_train_on_data: bool = False
 
