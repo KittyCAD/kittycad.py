@@ -4,6 +4,7 @@ from typing import Dict, List, Optional
 from ..models.currency import Currency
 from ..models.discount import Discount
 from ..models.invoice_line_item import InvoiceLineItem
+from ..models.invoice_refund_status import InvoiceRefundStatus
 from ..models.invoice_status import InvoiceStatus
 from .base import KittyCadBaseModel
 
@@ -14,6 +15,8 @@ class Invoice(KittyCadBaseModel):
     amount_due: float = 0.0
 
     amount_paid: float = 0.0
+
+    amount_refunded: float = 0.0
 
     amount_remaining: float = 0.0
 
@@ -52,6 +55,8 @@ class Invoice(KittyCadBaseModel):
     pdf: Optional[str] = None
 
     receipt_number: Optional[str] = None
+
+    refund_status: Optional[InvoiceRefundStatus] = None
 
     statement_descriptor: Optional[str] = None
 

@@ -34,7 +34,7 @@ from kittycad.models import (
     UnitLength,
     UnitMass,
     UnitVolume,
-    User,
+    UserResponse,
     WebSocketRequest,
     WebSocketResponse,
 )
@@ -118,7 +118,7 @@ def test_get_session():
     # Get the session using modern pattern
     session = client.users.get_user_self()
 
-    assert isinstance(session, User)
+    assert isinstance(session, UserResponse)
 
     print(f"Session: {session}")
 
@@ -151,7 +151,7 @@ async def test_get_session_async():
     # Get the session using new async pattern
     session = await client.users.get_user_self()
 
-    assert isinstance(session, User)
+    assert isinstance(session, UserResponse)
 
     print(f"Session: {session}")
 

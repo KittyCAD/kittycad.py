@@ -27,6 +27,12 @@ class OrgDatasetFileConversionDetails(KittyCadBaseModel):
 
     importer_version: Optional[str] = None
 
+    manual_kcl_override: Optional[str] = None
+
+    manual_kcl_override_active: bool
+
+    manual_kcl_override_updated_at: Optional[datetime.datetime] = None
+
     metadata: Optional[Any] = None
 
     original_snapshot_images: List[OrgDatasetSnapshotImage]
