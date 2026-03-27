@@ -4,7 +4,11 @@ from enum import Enum
 class KclProjectPublicationStatus(str, Enum):
     """Publication workflow state for a KCL project."""  # noqa: E501
 
-    """# The project is not yet submitted for review."""  # noqa: E501
+    """# The project is owner-visible only and not intended for publication."""  # noqa: E501
+
+    PRIVATE = "private"
+
+    """# The project is being prepared for publication but is not yet submitted."""  # noqa: E501
 
     DRAFT = "draft"
 

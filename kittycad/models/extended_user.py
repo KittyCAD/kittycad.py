@@ -48,3 +48,5 @@ class ExtendedUser(KittyCadBaseModel):
     stripe_id: Optional[str] = None
 
     updated_at: datetime.datetime
+
+    username: str = ""

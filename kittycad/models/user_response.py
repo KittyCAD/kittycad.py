@@ -43,7 +43,7 @@ class UserResponse(KittyCadBaseModel):
 
     name: Optional[str] = None
 
-    username: Optional[str] = None
+    username: str = ""
 
     phone: str = ""
 
