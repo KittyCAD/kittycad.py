@@ -5,9 +5,9 @@ from pydantic_core import CoreSchema, core_schema
 
 
 class Currency(str):
-    """Currency is the list of supported currencies. Always lowercase.
+    """A billing currency code.
 
-    This comes from the Stripe API docs: For more details see <https://support.stripe.com/questions/which-currencies-does-stripe-support>."""
+    This is intentionally billing-owned instead of Stripe-owned, so contract and manual invoice flows can use the same validated type without reaching back into a provider-specific crate."""
 
     def __str__(self) -> str:
         return self

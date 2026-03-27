@@ -12580,7 +12580,7 @@ class UsersAPI:
         self,
         id: Uuid,
     ) -> ProjectResponse:
-        """Replace one of the authenticated user's draft projects."""
+        """Replace one of the authenticated user's projects."""
 
         url = "{}/user/projects/{id}".format(self.client.base_url, id=id)
 
@@ -13621,7 +13621,7 @@ class AsyncUsersAPI:
         self,
         id: Uuid,
     ) -> ProjectResponse:
-        """Replace one of the authenticated user's draft projects."""
+        """Replace one of the authenticated user's projects."""
 
         url = "{}/user/projects/{id}".format(self.client.base_url, id=id)
 
