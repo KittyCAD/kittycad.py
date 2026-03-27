@@ -78,6 +78,7 @@ from .conversion_sort_mode import ConversionSortMode
 from .country_code import CountryCode
 from .coupon import Coupon
 from .create_custom_model import CreateCustomModel
+from .create_o_auth2_app_request import CreateOAuth2AppRequest
 from .create_org_dataset import CreateOrgDataset
 from .create_region import CreateRegion
 from .create_region_from_query_point import CreateRegionFromQueryPoint
@@ -204,12 +205,16 @@ from .imported_geometry import ImportedGeometry
 from .input_format3d import InputFormat3d
 from .invoice import Invoice
 from .invoice_line_item import InvoiceLineItem
+from .invoice_refund_status import InvoiceRefundStatus
 from .invoice_status import InvoiceStatus
 from .ip_addr_info import IpAddrInfo
 from .kcl_code_completion_params import KclCodeCompletionParams
 from .kcl_code_completion_request import KclCodeCompletionRequest
 from .kcl_code_completion_response import KclCodeCompletionResponse
 from .kcl_model import KclModel
+from .kcl_project_file_role import KclProjectFileRole
+from .kcl_project_preview_status import KclProjectPreviewStatus
+from .kcl_project_publication_status import KclProjectPublicationStatus
 from .length_unit import LengthUnit
 from .lenient_url import LenientUrl
 from .loft import Loft
@@ -244,6 +249,10 @@ from .mouse_click import MouseClick
 from .mouse_move import MouseMove
 from .move_path_pen import MovePathPen
 from .new_annotation import NewAnnotation
+from .o_auth2_app_client_type import OAuth2AppClientType
+from .o_auth2_app_grant_type import OAuth2AppGrantType
+from .o_auth2_app_response import OAuth2AppResponse
+from .o_auth2_app_response_results_page import OAuth2AppResponseResultsPage
 from .oauth2_client_info import OAuth2ClientInfo
 from .oauth2_grant_type import OAuth2GrantType
 from .object_bring_to_front import ObjectBringToFront
@@ -267,6 +276,7 @@ from .org_dataset_file_conversion_summary_results_page import (
     OrgDatasetFileConversionSummaryResultsPage,
 )
 from .org_dataset_results_page import OrgDatasetResultsPage
+from .org_dataset_semantic_search_match import OrgDatasetSemanticSearchMatch
 from .org_dataset_snapshot_image import OrgDatasetSnapshotImage
 from .org_dataset_source import OrgDatasetSource
 from .org_dataset_status import OrgDatasetStatus
@@ -307,8 +317,12 @@ from .pong import Pong
 from .post_effect_type import PostEffectType
 from .price_upsert_request import PriceUpsertRequest
 from .privacy_settings import PrivacySettings
+from .project_category_response import ProjectCategoryResponse
 from .project_entity_to_plane import ProjectEntityToPlane
+from .project_file_response import ProjectFileResponse
 from .project_points_to_plane import ProjectPointsToPlane
+from .project_response import ProjectResponse
+from .project_summary_response import ProjectSummaryResponse
 from .public_email_marketing_consent_request import PublicEmailMarketingConsentRequest
 from .raw_file import RawFile
 from .reasoning_message import ReasoningMessage
@@ -446,13 +460,13 @@ from .unit_volume_conversion import UnitVolumeConversion
 from .update_annotation import UpdateAnnotation
 from .update_custom_model import UpdateCustomModel
 from .update_member_to_org_body import UpdateMemberToOrgBody
+from .update_o_auth2_app_request import UpdateOAuth2AppRequest
 from .update_org_dataset import UpdateOrgDataset
 from .update_org_dataset_source import UpdateOrgDatasetSource
 from .update_payment_balance import UpdatePaymentBalance
 from .update_shortlink_request import UpdateShortlinkRequest
 from .update_user import UpdateUser
 from .upload_org_dataset_files_response import UploadOrgDatasetFilesResponse
-from .user import User
 from .user_admin_details import UserAdminDetails
 from .user_cad_info_admin_details import UserCadInfoAdminDetails
 from .user_feature import UserFeature
@@ -461,7 +475,8 @@ from .user_feature_list import UserFeatureList
 from .user_identifier import UserIdentifier
 from .user_org_info import UserOrgInfo
 from .user_org_role import UserOrgRole
-from .user_results_page import UserResultsPage
+from .user_response import UserResponse
+from .user_response_results_page import UserResponseResultsPage
 from .uuid import Uuid
 from .verification_token_response import VerificationTokenResponse
 from .view_isometric import ViewIsometric

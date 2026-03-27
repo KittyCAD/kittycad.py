@@ -57,6 +57,7 @@ from .models.conversation_results_page import ConversationResultsPage
 from .models.conversion_params import ConversionParams
 from .models.conversion_sort_mode import ConversionSortMode
 from .models.create_custom_model import CreateCustomModel
+from .models.create_o_auth2_app_request import CreateOAuth2AppRequest
 from .models.create_org_dataset import CreateOrgDataset
 from .models.create_shortlink_request import CreateShortlinkRequest
 from .models.create_shortlink_response import CreateShortlinkResponse
@@ -94,6 +95,8 @@ from .models.ml_copilot_server_message import MlCopilotServerMessage
 from .models.ml_feedback import MlFeedback
 from .models.ml_prompt_response import MlPromptResponse
 from .models.ml_prompt_response_results_page import MlPromptResponseResultsPage
+from .models.o_auth2_app_response import OAuth2AppResponse
+from .models.o_auth2_app_response_results_page import OAuth2AppResponseResultsPage
 from .models.oauth2_client_info import OAuth2ClientInfo
 from .models.org import Org
 from .models.org_admin_details import OrgAdminDetails
@@ -106,6 +109,7 @@ from .models.org_dataset_file_conversion_summary_results_page import (
     OrgDatasetFileConversionSummaryResultsPage,
 )
 from .models.org_dataset_results_page import OrgDatasetResultsPage
+from .models.org_dataset_semantic_search_match import OrgDatasetSemanticSearchMatch
 from .models.org_details import OrgDetails
 from .models.org_member import OrgMember
 from .models.org_member_results_page import OrgMemberResultsPage
@@ -116,6 +120,9 @@ from .models.pong import Pong
 from .models.post_effect_type import PostEffectType
 from .models.price_upsert_request import PriceUpsertRequest
 from .models.privacy_settings import PrivacySettings
+from .models.project_category_response import ProjectCategoryResponse
+from .models.project_response import ProjectResponse
+from .models.project_summary_response import ProjectSummaryResponse
 from .models.public_email_marketing_consent_request import (
     PublicEmailMarketingConsentRequest,
 )
@@ -169,18 +176,19 @@ from .models.unit_volume import UnitVolume
 from .models.unit_volume_conversion import UnitVolumeConversion
 from .models.update_custom_model import UpdateCustomModel
 from .models.update_member_to_org_body import UpdateMemberToOrgBody
+from .models.update_o_auth2_app_request import UpdateOAuth2AppRequest
 from .models.update_org_dataset import UpdateOrgDataset
 from .models.update_payment_balance import UpdatePaymentBalance
 from .models.update_shortlink_request import UpdateShortlinkRequest
 from .models.update_user import UpdateUser
 from .models.upload_org_dataset_files_response import UploadOrgDatasetFilesResponse
-from .models.user import User
 from .models.user_admin_details import UserAdminDetails
 from .models.user_feature_list import UserFeatureList
 from .models.user_identifier import UserIdentifier
 from .models.user_org_info import UserOrgInfo
 from .models.user_org_role import UserOrgRole
-from .models.user_results_page import UserResultsPage
+from .models.user_response import UserResponse
+from .models.user_response_results_page import UserResponseResultsPage
 from .models.uuid import Uuid
 from .models.verification_token_response import VerificationTokenResponse
 
@@ -297,35 +305,6 @@ class MetaAPI:
             raise_for_status(response)
 
         return response.json() if response.content else None
-
-    def create_debug_uploads(
-        self,
-    ) -> List[str]:
-        """Do NOT send files here that you don't want to be public."""
-
-        url = "{}/debug/uploads".format(self.client.base_url)
-
-        _client = self.client.get_http_client()
-
-        response = _client.post(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into annotated/collection/union types using TypeAdapter
-        from pydantic import TypeAdapter
-
-        return TypeAdapter(List[str]).validate_python(json_data)
 
     def create_event(
         self,
@@ -535,35 +514,6 @@ class AsyncMetaAPI:
             raise_for_status(response)
 
         return response.json() if response.content else None
-
-    async def create_debug_uploads(
-        self,
-    ) -> List[str]:
-        """Do NOT send files here that you don't want to be public."""
-
-        url = "{}/debug/uploads".format(self.client.base_url)
-
-        _client = self.client.get_http_client()
-
-        response = await _client.post(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into annotated/collection/union types using TypeAdapter
-        from pydantic import TypeAdapter
-
-        return TypeAdapter(List[str]).validate_python(json_data)
 
     async def create_event(
         self,
@@ -5508,6 +5458,602 @@ class Oauth2API:
 
         return response.json() if response.content else None
 
+    def list_org_oauth2_apps(
+        self,
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+        sort_by: Optional[CreatedAtSortMode] = None,
+    ) -> "SyncPageIterator":
+        """This endpoint requires authentication by an org member. It lists the organization's active public OAuth apps.
+
+        Returns an iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            for item in client.org.list_org_oauth2_apps():
+                print(item)
+        """
+
+        from typing import Any, Dict
+
+        from kittycad.pagination import SyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
+
+        if limit is not None:
+            kwargs["limit"] = limit
+
+        if page_token is not None:
+            kwargs["page_token"] = page_token
+
+        if sort_by is not None:
+            kwargs["sort_by"] = sort_by
+
+        def fetch_page(**kw):
+            return self._fetch_page_list_org_oauth2_apps(**kw)
+
+        # Create the page iterator
+        return SyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    def _fetch_page_list_org_oauth2_apps(
+        self, **kwargs
+    ) -> OAuth2AppResponseResultsPage:
+        """Internal method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/org/oauth2/apps".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+        # Validate into a Pydantic model (supports BaseModel/RootModel)
+        return OAuth2AppResponseResultsPage.model_validate(json_data)
+
+    def create_org_oauth2_app(
+        self,
+        body: CreateOAuth2AppRequest,
+    ) -> OAuth2AppResponse:
+        """This endpoint requires authentication by an org admin. It creates an active public device-flow app owned by the authenticated organization."""
+
+        url = "{}/org/oauth2/apps".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return OAuth2AppResponse.model_validate(json_data)
+
+    def get_org_oauth2_app(
+        self,
+        client_id: Uuid,
+    ) -> OAuth2AppResponse:
+        """This endpoint requires authentication by an org member. It returns the organization's active public OAuth app by client ID."""
+
+        url = "{}/org/oauth2/apps/{client_id}".format(
+            self.client.base_url, client_id=client_id
+        )
+
+        _client = self.client.get_http_client()
+
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return OAuth2AppResponse.model_validate(json_data)
+
+    def update_org_oauth2_app(
+        self,
+        client_id: Uuid,
+        body: UpdateOAuth2AppRequest,
+    ) -> OAuth2AppResponse:
+        """This endpoint requires authentication by an org admin. It updates the name of the organization's active public OAuth app."""
+
+        url = "{}/org/oauth2/apps/{client_id}".format(
+            self.client.base_url, client_id=client_id
+        )
+
+        _client = self.client.get_http_client()
+
+        response = _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return OAuth2AppResponse.model_validate(json_data)
+
+    def delete_org_oauth2_app(
+        self,
+        client_id: Uuid,
+    ):
+        """This endpoint requires authentication by an org admin. It deactivates the organization's active public OAuth app."""
+
+        url = "{}/org/oauth2/apps/{client_id}".format(
+            self.client.base_url, client_id=client_id
+        )
+
+        _client = self.client.get_http_client()
+
+        response = _client.delete(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    def list_oauth2_apps_for_any_org(
+        self,
+        id: Uuid,
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+        sort_by: Optional[CreatedAtSortMode] = None,
+    ) -> "SyncPageIterator":
+        """This endpoint requires Zoo admin authentication. It returns the target organization's active OAuth apps for admin dashboard inspection.
+
+        Returns an iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            for item in client.orgs.list_oauth2_apps_for_any_org():
+                print(item)
+        """
+
+        from typing import Any, Dict
+
+        from kittycad.pagination import SyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        _id = id
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
+
+        if limit is not None:
+            kwargs["limit"] = limit
+
+        if page_token is not None:
+            kwargs["page_token"] = page_token
+
+        if sort_by is not None:
+            kwargs["sort_by"] = sort_by
+
+        def fetch_page(**kw):
+            return self._fetch_page_list_oauth2_apps_for_any_org(id=_id, **kw)
+
+        # Create the page iterator
+        return SyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    def _fetch_page_list_oauth2_apps_for_any_org(
+        self, id: Uuid, **kwargs
+    ) -> OAuth2AppResponseResultsPage:
+        """Internal method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/orgs/{id}/oauth2/apps".format(self.client.base_url, id=id)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+        # Validate into a Pydantic model (supports BaseModel/RootModel)
+        return OAuth2AppResponseResultsPage.model_validate(json_data)
+
+    def list_user_oauth2_apps(
+        self,
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+        sort_by: Optional[CreatedAtSortMode] = None,
+    ) -> "SyncPageIterator":
+        """This endpoint requires authentication by any Zoo user. It lists the authenticated user's active public OAuth apps.
+
+        Returns an iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            for item in client.user.list_user_oauth2_apps():
+                print(item)
+        """
+
+        from typing import Any, Dict
+
+        from kittycad.pagination import SyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
+
+        if limit is not None:
+            kwargs["limit"] = limit
+
+        if page_token is not None:
+            kwargs["page_token"] = page_token
+
+        if sort_by is not None:
+            kwargs["sort_by"] = sort_by
+
+        def fetch_page(**kw):
+            return self._fetch_page_list_user_oauth2_apps(**kw)
+
+        # Create the page iterator
+        return SyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    def _fetch_page_list_user_oauth2_apps(
+        self, **kwargs
+    ) -> OAuth2AppResponseResultsPage:
+        """Internal method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/user/oauth2/apps".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+        # Validate into a Pydantic model (supports BaseModel/RootModel)
+        return OAuth2AppResponseResultsPage.model_validate(json_data)
+
+    def create_user_oauth2_app(
+        self,
+        body: CreateOAuth2AppRequest,
+    ) -> OAuth2AppResponse:
+        """This endpoint requires authentication by any Zoo user. It creates an active public device-flow app owned by the authenticated user."""
+
+        url = "{}/user/oauth2/apps".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return OAuth2AppResponse.model_validate(json_data)
+
+    def get_user_oauth2_app(
+        self,
+        client_id: Uuid,
+    ) -> OAuth2AppResponse:
+        """This endpoint requires authentication by any Zoo user. It returns the authenticated user's active public OAuth app by client ID."""
+
+        url = "{}/user/oauth2/apps/{client_id}".format(
+            self.client.base_url, client_id=client_id
+        )
+
+        _client = self.client.get_http_client()
+
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return OAuth2AppResponse.model_validate(json_data)
+
+    def update_user_oauth2_app(
+        self,
+        client_id: Uuid,
+        body: UpdateOAuth2AppRequest,
+    ) -> OAuth2AppResponse:
+        """This endpoint requires authentication by any Zoo user. It updates the name of the authenticated user's active public OAuth app."""
+
+        url = "{}/user/oauth2/apps/{client_id}".format(
+            self.client.base_url, client_id=client_id
+        )
+
+        _client = self.client.get_http_client()
+
+        response = _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return OAuth2AppResponse.model_validate(json_data)
+
+    def delete_user_oauth2_app(
+        self,
+        client_id: Uuid,
+    ):
+        """This endpoint requires authentication by any Zoo user. It deactivates the authenticated user's active public OAuth app."""
+
+        url = "{}/user/oauth2/apps/{client_id}".format(
+            self.client.base_url, client_id=client_id
+        )
+
+        _client = self.client.get_http_client()
+
+        response = _client.delete(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    def list_oauth2_apps_for_any_user(
+        self,
+        id: UserIdentifier,
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+        sort_by: Optional[CreatedAtSortMode] = None,
+    ) -> "SyncPageIterator":
+        """This endpoint requires Zoo admin authentication. It returns the target user's active OAuth apps so the admin dashboard can inspect them without impersonating the user.
+
+        Returns an iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            for item in client.users.list_oauth2_apps_for_any_user():
+                print(item)
+        """
+
+        from typing import Any, Dict
+
+        from kittycad.pagination import SyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        _id = id
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
+
+        if limit is not None:
+            kwargs["limit"] = limit
+
+        if page_token is not None:
+            kwargs["page_token"] = page_token
+
+        if sort_by is not None:
+            kwargs["sort_by"] = sort_by
+
+        def fetch_page(**kw):
+            return self._fetch_page_list_oauth2_apps_for_any_user(id=_id, **kw)
+
+        # Create the page iterator
+        return SyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    def _fetch_page_list_oauth2_apps_for_any_user(
+        self, id: UserIdentifier, **kwargs
+    ) -> OAuth2AppResponseResultsPage:
+        """Internal method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/users/{id}/oauth2/apps".format(self.client.base_url, id=id)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+        # Validate into a Pydantic model (supports BaseModel/RootModel)
+        return OAuth2AppResponseResultsPage.model_validate(json_data)
+
 
 class AsyncOauth2API:
     """Async API for oauth2 endpoints"""
@@ -5795,6 +6341,602 @@ class AsyncOauth2API:
             raise_for_status(response)
 
         return response.json() if response.content else None
+
+    def list_org_oauth2_apps(
+        self,
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+        sort_by: Optional[CreatedAtSortMode] = None,
+    ) -> "AsyncPageIterator":
+        """This endpoint requires authentication by an org member. It lists the organization's active public OAuth apps.
+
+        Returns an async iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            async for item in client.org.list_org_oauth2_apps():
+                print(item)
+        """
+
+        from typing import Any, Dict
+
+        from kittycad.pagination import AsyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
+
+        if limit is not None:
+            kwargs["limit"] = limit
+
+        if page_token is not None:
+            kwargs["page_token"] = page_token
+
+        if sort_by is not None:
+            kwargs["sort_by"] = sort_by
+
+        async def fetch_page(**kw):
+            return await self._fetch_page_list_org_oauth2_apps(**kw)
+
+        # Create the async page iterator
+        return AsyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    async def _fetch_page_list_org_oauth2_apps(
+        self, **kwargs
+    ) -> OAuth2AppResponseResultsPage:
+        """Internal async method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/org/oauth2/apps".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+        # Validate into a Pydantic model (supports BaseModel/RootModel)
+        return OAuth2AppResponseResultsPage.model_validate(json_data)
+
+    async def create_org_oauth2_app(
+        self,
+        body: CreateOAuth2AppRequest,
+    ) -> OAuth2AppResponse:
+        """This endpoint requires authentication by an org admin. It creates an active public device-flow app owned by the authenticated organization."""
+
+        url = "{}/org/oauth2/apps".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return OAuth2AppResponse.model_validate(json_data)
+
+    async def get_org_oauth2_app(
+        self,
+        client_id: Uuid,
+    ) -> OAuth2AppResponse:
+        """This endpoint requires authentication by an org member. It returns the organization's active public OAuth app by client ID."""
+
+        url = "{}/org/oauth2/apps/{client_id}".format(
+            self.client.base_url, client_id=client_id
+        )
+
+        _client = self.client.get_http_client()
+
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return OAuth2AppResponse.model_validate(json_data)
+
+    async def update_org_oauth2_app(
+        self,
+        client_id: Uuid,
+        body: UpdateOAuth2AppRequest,
+    ) -> OAuth2AppResponse:
+        """This endpoint requires authentication by an org admin. It updates the name of the organization's active public OAuth app."""
+
+        url = "{}/org/oauth2/apps/{client_id}".format(
+            self.client.base_url, client_id=client_id
+        )
+
+        _client = self.client.get_http_client()
+
+        response = await _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return OAuth2AppResponse.model_validate(json_data)
+
+    async def delete_org_oauth2_app(
+        self,
+        client_id: Uuid,
+    ):
+        """This endpoint requires authentication by an org admin. It deactivates the organization's active public OAuth app."""
+
+        url = "{}/org/oauth2/apps/{client_id}".format(
+            self.client.base_url, client_id=client_id
+        )
+
+        _client = self.client.get_http_client()
+
+        response = await _client.delete(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    def list_oauth2_apps_for_any_org(
+        self,
+        id: Uuid,
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+        sort_by: Optional[CreatedAtSortMode] = None,
+    ) -> "AsyncPageIterator":
+        """This endpoint requires Zoo admin authentication. It returns the target organization's active OAuth apps for admin dashboard inspection.
+
+        Returns an async iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            async for item in client.orgs.list_oauth2_apps_for_any_org():
+                print(item)
+        """
+
+        from typing import Any, Dict
+
+        from kittycad.pagination import AsyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        _id = id
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
+
+        if limit is not None:
+            kwargs["limit"] = limit
+
+        if page_token is not None:
+            kwargs["page_token"] = page_token
+
+        if sort_by is not None:
+            kwargs["sort_by"] = sort_by
+
+        async def fetch_page(**kw):
+            return await self._fetch_page_list_oauth2_apps_for_any_org(id=_id, **kw)
+
+        # Create the async page iterator
+        return AsyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    async def _fetch_page_list_oauth2_apps_for_any_org(
+        self, id: Uuid, **kwargs
+    ) -> OAuth2AppResponseResultsPage:
+        """Internal async method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/orgs/{id}/oauth2/apps".format(self.client.base_url, id=id)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+        # Validate into a Pydantic model (supports BaseModel/RootModel)
+        return OAuth2AppResponseResultsPage.model_validate(json_data)
+
+    def list_user_oauth2_apps(
+        self,
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+        sort_by: Optional[CreatedAtSortMode] = None,
+    ) -> "AsyncPageIterator":
+        """This endpoint requires authentication by any Zoo user. It lists the authenticated user's active public OAuth apps.
+
+        Returns an async iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            async for item in client.user.list_user_oauth2_apps():
+                print(item)
+        """
+
+        from typing import Any, Dict
+
+        from kittycad.pagination import AsyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
+
+        if limit is not None:
+            kwargs["limit"] = limit
+
+        if page_token is not None:
+            kwargs["page_token"] = page_token
+
+        if sort_by is not None:
+            kwargs["sort_by"] = sort_by
+
+        async def fetch_page(**kw):
+            return await self._fetch_page_list_user_oauth2_apps(**kw)
+
+        # Create the async page iterator
+        return AsyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    async def _fetch_page_list_user_oauth2_apps(
+        self, **kwargs
+    ) -> OAuth2AppResponseResultsPage:
+        """Internal async method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/user/oauth2/apps".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+        # Validate into a Pydantic model (supports BaseModel/RootModel)
+        return OAuth2AppResponseResultsPage.model_validate(json_data)
+
+    async def create_user_oauth2_app(
+        self,
+        body: CreateOAuth2AppRequest,
+    ) -> OAuth2AppResponse:
+        """This endpoint requires authentication by any Zoo user. It creates an active public device-flow app owned by the authenticated user."""
+
+        url = "{}/user/oauth2/apps".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return OAuth2AppResponse.model_validate(json_data)
+
+    async def get_user_oauth2_app(
+        self,
+        client_id: Uuid,
+    ) -> OAuth2AppResponse:
+        """This endpoint requires authentication by any Zoo user. It returns the authenticated user's active public OAuth app by client ID."""
+
+        url = "{}/user/oauth2/apps/{client_id}".format(
+            self.client.base_url, client_id=client_id
+        )
+
+        _client = self.client.get_http_client()
+
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return OAuth2AppResponse.model_validate(json_data)
+
+    async def update_user_oauth2_app(
+        self,
+        client_id: Uuid,
+        body: UpdateOAuth2AppRequest,
+    ) -> OAuth2AppResponse:
+        """This endpoint requires authentication by any Zoo user. It updates the name of the authenticated user's active public OAuth app."""
+
+        url = "{}/user/oauth2/apps/{client_id}".format(
+            self.client.base_url, client_id=client_id
+        )
+
+        _client = self.client.get_http_client()
+
+        response = await _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return OAuth2AppResponse.model_validate(json_data)
+
+    async def delete_user_oauth2_app(
+        self,
+        client_id: Uuid,
+    ):
+        """This endpoint requires authentication by any Zoo user. It deactivates the authenticated user's active public OAuth app."""
+
+        url = "{}/user/oauth2/apps/{client_id}".format(
+            self.client.base_url, client_id=client_id
+        )
+
+        _client = self.client.get_http_client()
+
+        response = await _client.delete(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    def list_oauth2_apps_for_any_user(
+        self,
+        id: UserIdentifier,
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+        sort_by: Optional[CreatedAtSortMode] = None,
+    ) -> "AsyncPageIterator":
+        """This endpoint requires Zoo admin authentication. It returns the target user's active OAuth apps so the admin dashboard can inspect them without impersonating the user.
+
+        Returns an async iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            async for item in client.users.list_oauth2_apps_for_any_user():
+                print(item)
+        """
+
+        from typing import Any, Dict
+
+        from kittycad.pagination import AsyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        _id = id
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
+
+        if limit is not None:
+            kwargs["limit"] = limit
+
+        if page_token is not None:
+            kwargs["page_token"] = page_token
+
+        if sort_by is not None:
+            kwargs["sort_by"] = sort_by
+
+        async def fetch_page(**kw):
+            return await self._fetch_page_list_oauth2_apps_for_any_user(id=_id, **kw)
+
+        # Create the async page iterator
+        return AsyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    async def _fetch_page_list_oauth2_apps_for_any_user(
+        self, id: UserIdentifier, **kwargs
+    ) -> OAuth2AppResponseResultsPage:
+        """Internal async method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/users/{id}/oauth2/apps".format(self.client.base_url, id=id)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+        # Validate into a Pydantic model (supports BaseModel/RootModel)
+        return OAuth2AppResponseResultsPage.model_validate(json_data)
 
 
 class OrgsAPI:
@@ -6495,6 +7637,53 @@ class OrgsAPI:
         json_data = response.json()
         # Validate into a Pydantic model (supports BaseModel/RootModel)
         return OrgDatasetFileConversionSummaryResultsPage.model_validate(json_data)
+
+    def search_org_dataset_semantic(
+        self,
+        id: Uuid,
+        q: str,
+        *,
+        limit: Optional[int] = None,
+    ) -> List[OrgDatasetSemanticSearchMatch]:
+        """This embeds the query text with the org-dataset embedding model and returns top chunk matches ranked by cosine similarity."""
+
+        url = "{}/org/datasets/{id}/search/semantic".format(self.client.base_url, id=id)
+
+        if limit is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(limit)
+            else:
+                url = url + "?limit=" + str(limit)
+
+        if q is not None:
+            if "?" in url:
+                url = url + "&q=" + str(q)
+            else:
+                url = url + "?q=" + str(q)
+
+        _client = self.client.get_http_client()
+
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into annotated/collection/union types using TypeAdapter
+        from pydantic import TypeAdapter
+
+        return TypeAdapter(List[OrgDatasetSemanticSearchMatch]).validate_python(
+            json_data
+        )
 
     def get_org_dataset_conversion_stats(
         self,
@@ -7889,6 +9078,53 @@ class AsyncOrgsAPI:
         json_data = response.json()
         # Validate into a Pydantic model (supports BaseModel/RootModel)
         return OrgDatasetFileConversionSummaryResultsPage.model_validate(json_data)
+
+    async def search_org_dataset_semantic(
+        self,
+        id: Uuid,
+        q: str,
+        *,
+        limit: Optional[int] = None,
+    ) -> List[OrgDatasetSemanticSearchMatch]:
+        """This embeds the query text with the org-dataset embedding model and returns top chunk matches ranked by cosine similarity."""
+
+        url = "{}/org/datasets/{id}/search/semantic".format(self.client.base_url, id=id)
+
+        if limit is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(limit)
+            else:
+                url = url + "?limit=" + str(limit)
+
+        if q is not None:
+            if "?" in url:
+                url = url + "&q=" + str(q)
+            else:
+                url = url + "?q=" + str(q)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into annotated/collection/union types using TypeAdapter
+        from pydantic import TypeAdapter
+
+        return TypeAdapter(List[OrgDatasetSemanticSearchMatch]).validate_python(
+            json_data
+        )
 
     async def get_org_dataset_conversion_stats(
         self,
@@ -10907,6 +12143,2090 @@ class AsyncServiceAccountsAPI:
         return response.json() if response.content else None
 
 
+class UsersAPI:
+    """API for users endpoints"""
+
+    def __init__(self, client: Client) -> None:
+        self.client = client
+
+    def list_project_categories(
+        self,
+    ) -> List[ProjectCategoryResponse]:
+        """List the active categories available for project submissions."""
+
+        url = "{}/projects/categories".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into annotated/collection/union types using TypeAdapter
+        from pydantic import TypeAdapter
+
+        return TypeAdapter(List[ProjectCategoryResponse]).validate_python(json_data)
+
+    def get_user_self(
+        self,
+    ) -> UserResponse:
+        """Get the user information for the authenticated user.
+
+        Alternatively, you can also use the `/users/me` endpoint."""
+
+        url = "{}/user".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return UserResponse.model_validate(json_data)
+
+    def update_user_self(
+        self,
+        body: UpdateUser,
+    ) -> UserResponse:
+        """This endpoint requires authentication by any Zoo user. It updates information about the authenticated user."""
+
+        url = "{}/user".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return UserResponse.model_validate(json_data)
+
+    def delete_user_self(
+        self,
+    ):
+        """This endpoint requires authentication by any Zoo user. It deletes the authenticated user from Zoo's database.
+
+        This call will only succeed if all invoices associated with the user have been paid in full and there is no outstanding balance."""
+
+        url = "{}/user".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = _client.delete(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    def user_email_marketing_consent_get(
+        self,
+    ) -> EmailMarketingConsentState:
+        """Get email marketing consent state for the authenticated user."""
+
+        url = "{}/user/email-marketing-consent".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return EmailMarketingConsentState.model_validate(json_data)
+
+    def user_email_marketing_consent_decline_post(
+        self,
+    ):
+        """Record explicit decline for email marketing consent."""
+
+        url = "{}/user/email-marketing-consent/decline".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    def user_email_marketing_consent_request_post(
+        self,
+    ):
+        """Request email marketing opt-in and send a confirmation email."""
+
+        url = "{}/user/email-marketing-consent/request".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    def user_email_marketing_consent_seen_post(
+        self,
+    ):
+        """Mark the email-marketing modal as seen/dismissed for the authenticated user."""
+
+        url = "{}/user/email-marketing-consent/seen".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    def get_user_self_extended(
+        self,
+    ) -> ExtendedUser:
+        """Get the user information for the authenticated user.
+
+        Alternatively, you can also use the `/users-extended/me` endpoint."""
+
+        url = "{}/user/extended".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return ExtendedUser.model_validate(json_data)
+
+    def user_features_get(
+        self,
+    ) -> UserFeatureList:
+        """Returns only features that are marked as safe for exposure to clients and currently resolved to `true` for the requesting user (including org overrides)."""
+
+        url = "{}/user/features".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return UserFeatureList.model_validate(json_data)
+
+    def get_oauth2_providers_for_user(
+        self,
+    ) -> List[AccountProvider]:
+        """If this returns an empty array, then the user has not connected any OAuth2 providers and uses raw email authentication.
+
+        This endpoint requires authentication by any Zoo user. It gets the providers for the authenticated user."""
+
+        url = "{}/user/oauth2/providers".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into annotated/collection/union types using TypeAdapter
+        from pydantic import TypeAdapter
+
+        return TypeAdapter(List[AccountProvider]).validate_python(json_data)
+
+    def get_user_privacy_settings(
+        self,
+    ) -> PrivacySettings:
+        """This endpoint requires authentication by any Zoo user. It gets the privacy settings for the user."""
+
+        url = "{}/user/privacy".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return PrivacySettings.model_validate(json_data)
+
+    def update_user_privacy_settings(
+        self,
+        body: PrivacySettings,
+    ) -> PrivacySettings:
+        """This endpoint requires authentication by any Zoo user. It updates the privacy settings for the user."""
+
+        url = "{}/user/privacy".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return PrivacySettings.model_validate(json_data)
+
+    def list_user_projects(
+        self,
+    ) -> List[ProjectSummaryResponse]:
+        """List the authenticated user's projects."""
+
+        url = "{}/user/projects".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into annotated/collection/union types using TypeAdapter
+        from pydantic import TypeAdapter
+
+        return TypeAdapter(List[ProjectSummaryResponse]).validate_python(json_data)
+
+    def create_user_project(
+        self,
+    ) -> ProjectResponse:
+        """Create a draft project for the authenticated user."""
+
+        url = "{}/user/projects".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return ProjectResponse.model_validate(json_data)
+
+    def get_user_project(
+        self,
+        id: Uuid,
+    ) -> ProjectResponse:
+        """Get one of the authenticated user's projects."""
+
+        url = "{}/user/projects/{id}".format(self.client.base_url, id=id)
+
+        _client = self.client.get_http_client()
+
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return ProjectResponse.model_validate(json_data)
+
+    def update_user_project(
+        self,
+        id: Uuid,
+    ) -> ProjectResponse:
+        """Replace one of the authenticated user's draft projects."""
+
+        url = "{}/user/projects/{id}".format(self.client.base_url, id=id)
+
+        _client = self.client.get_http_client()
+
+        response = _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return ProjectResponse.model_validate(json_data)
+
+    def get_session_for_user(
+        self,
+        token: SessionUuid,
+    ) -> Session:
+        """This endpoint requires authentication by any Zoo user. It returns details of the requested API token for the user."""
+
+        url = "{}/user/session/{token}".format(self.client.base_url, token=token)
+
+        _client = self.client.get_http_client()
+
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return Session.model_validate(json_data)
+
+    def get_user_shortlinks(
+        self,
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+        sort_by: Optional[CreatedAtSortMode] = None,
+    ) -> "SyncPageIterator":
+        """This endpoint requires authentication by any Zoo user. It gets the shortlinks for the user.
+
+        Returns an iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            for item in client.user.get_user_shortlinks():
+                print(item)
+        """
+
+        from typing import Any, Dict
+
+        from kittycad.pagination import SyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
+
+        if limit is not None:
+            kwargs["limit"] = limit
+
+        if page_token is not None:
+            kwargs["page_token"] = page_token
+
+        if sort_by is not None:
+            kwargs["sort_by"] = sort_by
+
+        def fetch_page(**kw):
+            return self._fetch_page_get_user_shortlinks(**kw)
+
+        # Create the page iterator
+        return SyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    def _fetch_page_get_user_shortlinks(self, **kwargs) -> ShortlinkResultsPage:
+        """Internal method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/user/shortlinks".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+        # Validate into a Pydantic model (supports BaseModel/RootModel)
+        return ShortlinkResultsPage.model_validate(json_data)
+
+    def create_user_shortlink(
+        self,
+        body: CreateShortlinkRequest,
+    ) -> CreateShortlinkResponse:
+        """This endpoint requires authentication by any Zoo user. It creates a shortlink for the user."""
+
+        url = "{}/user/shortlinks".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return CreateShortlinkResponse.model_validate(json_data)
+
+    def update_user_shortlink(
+        self,
+        key: str,
+        body: UpdateShortlinkRequest,
+    ):
+        """This endpoint requires authentication by any Zoo user. It updates a shortlink for the user.
+
+        This endpoint really only allows you to change the `restrict_to_org` setting of a shortlink. Thus it is only useful for folks who are part of an org. If you are not part of an org, you will not be able to change the `restrict_to_org` status."""
+
+        url = "{}/user/shortlinks/{key}".format(self.client.base_url, key=key)
+
+        _client = self.client.get_http_client()
+
+        response = _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    def delete_user_shortlink(
+        self,
+        key: str,
+    ):
+        """This endpoint requires authentication by any Zoo user. It deletes a shortlink for the user."""
+
+        url = "{}/user/shortlinks/{key}".format(self.client.base_url, key=key)
+
+        _client = self.client.get_http_client()
+
+        response = _client.delete(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    def list_users(
+        self,
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+        sort_by: Optional[CreatedAtSortMode] = None,
+    ) -> "SyncPageIterator":
+        """This endpoint requires authentication by a Zoo employee. The users are returned in order of creation, with the most recently created users first.
+
+        Returns an iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            for item in client.users.list_users():
+                print(item)
+        """
+
+        from typing import Any, Dict
+
+        from kittycad.pagination import SyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
+
+        if limit is not None:
+            kwargs["limit"] = limit
+
+        if page_token is not None:
+            kwargs["page_token"] = page_token
+
+        if sort_by is not None:
+            kwargs["sort_by"] = sort_by
+
+        def fetch_page(**kw):
+            return self._fetch_page_list_users(**kw)
+
+        # Create the page iterator
+        return SyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    def _fetch_page_list_users(self, **kwargs) -> UserResponseResultsPage:
+        """Internal method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/users".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+        # Validate into a Pydantic model (supports BaseModel/RootModel)
+        return UserResponseResultsPage.model_validate(json_data)
+
+    def list_users_extended(
+        self,
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+        sort_by: Optional[CreatedAtSortMode] = None,
+    ) -> "SyncPageIterator":
+        """This endpoint requires authentication by a Zoo employee. The users are returned in order of creation, with the most recently created users first.
+
+        Returns an iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            for item in client.users-extended.list_users_extended():
+                print(item)
+        """
+
+        from typing import Any, Dict
+
+        from kittycad.pagination import SyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
+
+        if limit is not None:
+            kwargs["limit"] = limit
+
+        if page_token is not None:
+            kwargs["page_token"] = page_token
+
+        if sort_by is not None:
+            kwargs["sort_by"] = sort_by
+
+        def fetch_page(**kw):
+            return self._fetch_page_list_users_extended(**kw)
+
+        # Create the page iterator
+        return SyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    def _fetch_page_list_users_extended(self, **kwargs) -> ExtendedUserResultsPage:
+        """Internal method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/users-extended".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+        # Validate into a Pydantic model (supports BaseModel/RootModel)
+        return ExtendedUserResultsPage.model_validate(json_data)
+
+    def get_user_extended(
+        self,
+        id: UserIdentifier,
+    ) -> ExtendedUser:
+        """To get information about yourself, use `/users-extended/me` as the endpoint. By doing so you will get the user information for the authenticated user.
+
+        Alternatively, to get information about the authenticated user, use `/user/extended` endpoint."""
+
+        url = "{}/users-extended/{id}".format(self.client.base_url, id=id)
+
+        _client = self.client.get_http_client()
+
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return ExtendedUser.model_validate(json_data)
+
+    def get_user(
+        self,
+        id: UserIdentifier,
+    ) -> UserResponse:
+        """To get information about yourself, use `/users/me` as the endpoint. By doing so you will get the user information for the authenticated user.
+
+        Alternatively, to get information about the authenticated user, use `/user` endpoint."""
+
+        url = "{}/users/{id}".format(self.client.base_url, id=id)
+
+        _client = self.client.get_http_client()
+
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return UserResponse.model_validate(json_data)
+
+    def user_admin_details_get(
+        self,
+        id: UserIdentifier,
+    ) -> UserAdminDetails:
+        """Zoo admins can retrieve extended information about any user, while non-admins receive a 404 to avoid leaking the existence of the resource."""
+
+        url = "{}/users/{id}/admin/details".format(self.client.base_url, id=id)
+
+        _client = self.client.get_http_client()
+
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return UserAdminDetails.model_validate(json_data)
+
+    def update_subscription_for_user(
+        self,
+        id: UserIdentifier,
+        body: ZooProductSubscriptionsUserRequest,
+    ) -> ZooProductSubscriptions:
+        """You must be a Zoo admin to perform this request."""
+
+        url = "{}/users/{id}/payment/subscriptions".format(self.client.base_url, id=id)
+
+        _client = self.client.get_http_client()
+
+        response = _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return ZooProductSubscriptions.model_validate(json_data)
+
+    def put_public_email_marketing_consent_request(
+        self,
+        body: PublicEmailMarketingConsentRequest,
+    ):
+        """Requests public email marketing consent for an email address."""
+
+        url = "{}/website/email-marketing-consent/request".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    def put_user_cad_user_info_form(
+        self,
+        body: WebsiteCadUserInfoForm,
+    ):
+        """Stores authenticated CAD user info form data for the current user."""
+
+        url = "{}/website/forms/cad-user-info".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    def put_public_sales_form(
+        self,
+        body: WebsiteSalesForm,
+    ):
+        """This endpoint accepts optional authentication."""
+
+        url = "{}/website/forms/sales".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    def put_public_support_form(
+        self,
+        body: WebsiteSupportForm,
+    ):
+        """This endpoint accepts optional authentication."""
+
+        url = "{}/website/forms/support".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+
+class AsyncUsersAPI:
+    """Async API for users endpoints"""
+
+    def __init__(self, client: AsyncClient) -> None:
+        self.client = client
+
+    async def list_project_categories(
+        self,
+    ) -> List[ProjectCategoryResponse]:
+        """List the active categories available for project submissions."""
+
+        url = "{}/projects/categories".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into annotated/collection/union types using TypeAdapter
+        from pydantic import TypeAdapter
+
+        return TypeAdapter(List[ProjectCategoryResponse]).validate_python(json_data)
+
+    async def get_user_self(
+        self,
+    ) -> UserResponse:
+        """Get the user information for the authenticated user.
+
+        Alternatively, you can also use the `/users/me` endpoint."""
+
+        url = "{}/user".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return UserResponse.model_validate(json_data)
+
+    async def update_user_self(
+        self,
+        body: UpdateUser,
+    ) -> UserResponse:
+        """This endpoint requires authentication by any Zoo user. It updates information about the authenticated user."""
+
+        url = "{}/user".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return UserResponse.model_validate(json_data)
+
+    async def delete_user_self(
+        self,
+    ):
+        """This endpoint requires authentication by any Zoo user. It deletes the authenticated user from Zoo's database.
+
+        This call will only succeed if all invoices associated with the user have been paid in full and there is no outstanding balance."""
+
+        url = "{}/user".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.delete(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    async def user_email_marketing_consent_get(
+        self,
+    ) -> EmailMarketingConsentState:
+        """Get email marketing consent state for the authenticated user."""
+
+        url = "{}/user/email-marketing-consent".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return EmailMarketingConsentState.model_validate(json_data)
+
+    async def user_email_marketing_consent_decline_post(
+        self,
+    ):
+        """Record explicit decline for email marketing consent."""
+
+        url = "{}/user/email-marketing-consent/decline".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    async def user_email_marketing_consent_request_post(
+        self,
+    ):
+        """Request email marketing opt-in and send a confirmation email."""
+
+        url = "{}/user/email-marketing-consent/request".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    async def user_email_marketing_consent_seen_post(
+        self,
+    ):
+        """Mark the email-marketing modal as seen/dismissed for the authenticated user."""
+
+        url = "{}/user/email-marketing-consent/seen".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    async def get_user_self_extended(
+        self,
+    ) -> ExtendedUser:
+        """Get the user information for the authenticated user.
+
+        Alternatively, you can also use the `/users-extended/me` endpoint."""
+
+        url = "{}/user/extended".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return ExtendedUser.model_validate(json_data)
+
+    async def user_features_get(
+        self,
+    ) -> UserFeatureList:
+        """Returns only features that are marked as safe for exposure to clients and currently resolved to `true` for the requesting user (including org overrides)."""
+
+        url = "{}/user/features".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return UserFeatureList.model_validate(json_data)
+
+    async def get_oauth2_providers_for_user(
+        self,
+    ) -> List[AccountProvider]:
+        """If this returns an empty array, then the user has not connected any OAuth2 providers and uses raw email authentication.
+
+        This endpoint requires authentication by any Zoo user. It gets the providers for the authenticated user."""
+
+        url = "{}/user/oauth2/providers".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into annotated/collection/union types using TypeAdapter
+        from pydantic import TypeAdapter
+
+        return TypeAdapter(List[AccountProvider]).validate_python(json_data)
+
+    async def get_user_privacy_settings(
+        self,
+    ) -> PrivacySettings:
+        """This endpoint requires authentication by any Zoo user. It gets the privacy settings for the user."""
+
+        url = "{}/user/privacy".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return PrivacySettings.model_validate(json_data)
+
+    async def update_user_privacy_settings(
+        self,
+        body: PrivacySettings,
+    ) -> PrivacySettings:
+        """This endpoint requires authentication by any Zoo user. It updates the privacy settings for the user."""
+
+        url = "{}/user/privacy".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return PrivacySettings.model_validate(json_data)
+
+    async def list_user_projects(
+        self,
+    ) -> List[ProjectSummaryResponse]:
+        """List the authenticated user's projects."""
+
+        url = "{}/user/projects".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into annotated/collection/union types using TypeAdapter
+        from pydantic import TypeAdapter
+
+        return TypeAdapter(List[ProjectSummaryResponse]).validate_python(json_data)
+
+    async def create_user_project(
+        self,
+    ) -> ProjectResponse:
+        """Create a draft project for the authenticated user."""
+
+        url = "{}/user/projects".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return ProjectResponse.model_validate(json_data)
+
+    async def get_user_project(
+        self,
+        id: Uuid,
+    ) -> ProjectResponse:
+        """Get one of the authenticated user's projects."""
+
+        url = "{}/user/projects/{id}".format(self.client.base_url, id=id)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return ProjectResponse.model_validate(json_data)
+
+    async def update_user_project(
+        self,
+        id: Uuid,
+    ) -> ProjectResponse:
+        """Replace one of the authenticated user's draft projects."""
+
+        url = "{}/user/projects/{id}".format(self.client.base_url, id=id)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return ProjectResponse.model_validate(json_data)
+
+    async def get_session_for_user(
+        self,
+        token: SessionUuid,
+    ) -> Session:
+        """This endpoint requires authentication by any Zoo user. It returns details of the requested API token for the user."""
+
+        url = "{}/user/session/{token}".format(self.client.base_url, token=token)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return Session.model_validate(json_data)
+
+    def get_user_shortlinks(
+        self,
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+        sort_by: Optional[CreatedAtSortMode] = None,
+    ) -> "AsyncPageIterator":
+        """This endpoint requires authentication by any Zoo user. It gets the shortlinks for the user.
+
+        Returns an async iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            async for item in client.user.get_user_shortlinks():
+                print(item)
+        """
+
+        from typing import Any, Dict
+
+        from kittycad.pagination import AsyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
+
+        if limit is not None:
+            kwargs["limit"] = limit
+
+        if page_token is not None:
+            kwargs["page_token"] = page_token
+
+        if sort_by is not None:
+            kwargs["sort_by"] = sort_by
+
+        async def fetch_page(**kw):
+            return await self._fetch_page_get_user_shortlinks(**kw)
+
+        # Create the async page iterator
+        return AsyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    async def _fetch_page_get_user_shortlinks(self, **kwargs) -> ShortlinkResultsPage:
+        """Internal async method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/user/shortlinks".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+        # Validate into a Pydantic model (supports BaseModel/RootModel)
+        return ShortlinkResultsPage.model_validate(json_data)
+
+    async def create_user_shortlink(
+        self,
+        body: CreateShortlinkRequest,
+    ) -> CreateShortlinkResponse:
+        """This endpoint requires authentication by any Zoo user. It creates a shortlink for the user."""
+
+        url = "{}/user/shortlinks".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return CreateShortlinkResponse.model_validate(json_data)
+
+    async def update_user_shortlink(
+        self,
+        key: str,
+        body: UpdateShortlinkRequest,
+    ):
+        """This endpoint requires authentication by any Zoo user. It updates a shortlink for the user.
+
+        This endpoint really only allows you to change the `restrict_to_org` setting of a shortlink. Thus it is only useful for folks who are part of an org. If you are not part of an org, you will not be able to change the `restrict_to_org` status."""
+
+        url = "{}/user/shortlinks/{key}".format(self.client.base_url, key=key)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    async def delete_user_shortlink(
+        self,
+        key: str,
+    ):
+        """This endpoint requires authentication by any Zoo user. It deletes a shortlink for the user."""
+
+        url = "{}/user/shortlinks/{key}".format(self.client.base_url, key=key)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.delete(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    def list_users(
+        self,
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+        sort_by: Optional[CreatedAtSortMode] = None,
+    ) -> "AsyncPageIterator":
+        """This endpoint requires authentication by a Zoo employee. The users are returned in order of creation, with the most recently created users first.
+
+        Returns an async iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            async for item in client.users.list_users():
+                print(item)
+        """
+
+        from typing import Any, Dict
+
+        from kittycad.pagination import AsyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
+
+        if limit is not None:
+            kwargs["limit"] = limit
+
+        if page_token is not None:
+            kwargs["page_token"] = page_token
+
+        if sort_by is not None:
+            kwargs["sort_by"] = sort_by
+
+        async def fetch_page(**kw):
+            return await self._fetch_page_list_users(**kw)
+
+        # Create the async page iterator
+        return AsyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    async def _fetch_page_list_users(self, **kwargs) -> UserResponseResultsPage:
+        """Internal async method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/users".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+        # Validate into a Pydantic model (supports BaseModel/RootModel)
+        return UserResponseResultsPage.model_validate(json_data)
+
+    def list_users_extended(
+        self,
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+        sort_by: Optional[CreatedAtSortMode] = None,
+    ) -> "AsyncPageIterator":
+        """This endpoint requires authentication by a Zoo employee. The users are returned in order of creation, with the most recently created users first.
+
+        Returns an async iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            async for item in client.users-extended.list_users_extended():
+                print(item)
+        """
+
+        from typing import Any, Dict
+
+        from kittycad.pagination import AsyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
+
+        if limit is not None:
+            kwargs["limit"] = limit
+
+        if page_token is not None:
+            kwargs["page_token"] = page_token
+
+        if sort_by is not None:
+            kwargs["sort_by"] = sort_by
+
+        async def fetch_page(**kw):
+            return await self._fetch_page_list_users_extended(**kw)
+
+        # Create the async page iterator
+        return AsyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    async def _fetch_page_list_users_extended(
+        self, **kwargs
+    ) -> ExtendedUserResultsPage:
+        """Internal async method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/users-extended".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+        # Validate into a Pydantic model (supports BaseModel/RootModel)
+        return ExtendedUserResultsPage.model_validate(json_data)
+
+    async def get_user_extended(
+        self,
+        id: UserIdentifier,
+    ) -> ExtendedUser:
+        """To get information about yourself, use `/users-extended/me` as the endpoint. By doing so you will get the user information for the authenticated user.
+
+        Alternatively, to get information about the authenticated user, use `/user/extended` endpoint."""
+
+        url = "{}/users-extended/{id}".format(self.client.base_url, id=id)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return ExtendedUser.model_validate(json_data)
+
+    async def get_user(
+        self,
+        id: UserIdentifier,
+    ) -> UserResponse:
+        """To get information about yourself, use `/users/me` as the endpoint. By doing so you will get the user information for the authenticated user.
+
+        Alternatively, to get information about the authenticated user, use `/user` endpoint."""
+
+        url = "{}/users/{id}".format(self.client.base_url, id=id)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return UserResponse.model_validate(json_data)
+
+    async def user_admin_details_get(
+        self,
+        id: UserIdentifier,
+    ) -> UserAdminDetails:
+        """Zoo admins can retrieve extended information about any user, while non-admins receive a 404 to avoid leaking the existence of the resource."""
+
+        url = "{}/users/{id}/admin/details".format(self.client.base_url, id=id)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return UserAdminDetails.model_validate(json_data)
+
+    async def update_subscription_for_user(
+        self,
+        id: UserIdentifier,
+        body: ZooProductSubscriptionsUserRequest,
+    ) -> ZooProductSubscriptions:
+        """You must be a Zoo admin to perform this request."""
+
+        url = "{}/users/{id}/payment/subscriptions".format(self.client.base_url, id=id)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return ZooProductSubscriptions.model_validate(json_data)
+
+    async def put_public_email_marketing_consent_request(
+        self,
+        body: PublicEmailMarketingConsentRequest,
+    ):
+        """Requests public email marketing consent for an email address."""
+
+        url = "{}/website/email-marketing-consent/request".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    async def put_user_cad_user_info_form(
+        self,
+        body: WebsiteCadUserInfoForm,
+    ):
+        """Stores authenticated CAD user info form data for the current user."""
+
+        url = "{}/website/forms/cad-user-info".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    async def put_public_sales_form(
+        self,
+        body: WebsiteSalesForm,
+    ):
+        """This endpoint accepts optional authentication."""
+
+        url = "{}/website/forms/sales".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    async def put_public_support_form(
+        self,
+        body: WebsiteSupportForm,
+    ):
+        """This endpoint accepts optional authentication."""
+
+        url = "{}/website/forms/support".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body.model_dump_json(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+
 class StoreAPI:
     """API for store endpoints"""
 
@@ -11981,1808 +15301,6 @@ class AsyncUnitAPI:
         return UnitVolumeConversion.model_validate(json_data)
 
 
-class UsersAPI:
-    """API for users endpoints"""
-
-    def __init__(self, client: Client) -> None:
-        self.client = client
-
-    def get_user_self(
-        self,
-    ) -> User:
-        """Get the user information for the authenticated user.
-
-        Alternatively, you can also use the `/users/me` endpoint."""
-
-        url = "{}/user".format(self.client.base_url)
-
-        _client = self.client.get_http_client()
-
-        response = _client.get(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return User.model_validate(json_data)
-
-    def update_user_self(
-        self,
-        body: UpdateUser,
-    ) -> User:
-        """This endpoint requires authentication by any Zoo user. It updates information about the authenticated user."""
-
-        url = "{}/user".format(self.client.base_url)
-
-        _client = self.client.get_http_client()
-
-        response = _client.put(
-            url=url,
-            headers=self.client.get_headers(),
-            content=body.model_dump_json(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return User.model_validate(json_data)
-
-    def delete_user_self(
-        self,
-    ):
-        """This endpoint requires authentication by any Zoo user. It deletes the authenticated user from Zoo's database.
-
-        This call will only succeed if all invoices associated with the user have been paid in full and there is no outstanding balance."""
-
-        url = "{}/user".format(self.client.base_url)
-
-        _client = self.client.get_http_client()
-
-        response = _client.delete(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        return response.json() if response.content else None
-
-    def user_email_marketing_consent_get(
-        self,
-    ) -> EmailMarketingConsentState:
-        """Get email marketing consent state for the authenticated user."""
-
-        url = "{}/user/email-marketing-consent".format(self.client.base_url)
-
-        _client = self.client.get_http_client()
-
-        response = _client.get(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return EmailMarketingConsentState.model_validate(json_data)
-
-    def user_email_marketing_consent_decline_post(
-        self,
-    ):
-        """Record explicit decline for email marketing consent."""
-
-        url = "{}/user/email-marketing-consent/decline".format(self.client.base_url)
-
-        _client = self.client.get_http_client()
-
-        response = _client.post(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        return response.json() if response.content else None
-
-    def user_email_marketing_consent_request_post(
-        self,
-    ):
-        """Request email marketing opt-in and send a confirmation email."""
-
-        url = "{}/user/email-marketing-consent/request".format(self.client.base_url)
-
-        _client = self.client.get_http_client()
-
-        response = _client.post(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        return response.json() if response.content else None
-
-    def user_email_marketing_consent_seen_post(
-        self,
-    ):
-        """Mark the email-marketing modal as seen/dismissed for the authenticated user."""
-
-        url = "{}/user/email-marketing-consent/seen".format(self.client.base_url)
-
-        _client = self.client.get_http_client()
-
-        response = _client.post(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        return response.json() if response.content else None
-
-    def get_user_self_extended(
-        self,
-    ) -> ExtendedUser:
-        """Get the user information for the authenticated user.
-
-        Alternatively, you can also use the `/users-extended/me` endpoint."""
-
-        url = "{}/user/extended".format(self.client.base_url)
-
-        _client = self.client.get_http_client()
-
-        response = _client.get(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return ExtendedUser.model_validate(json_data)
-
-    def user_features_get(
-        self,
-    ) -> UserFeatureList:
-        """Returns only features that are marked as safe for exposure to clients and currently resolved to `true` for the requesting user (including org overrides)."""
-
-        url = "{}/user/features".format(self.client.base_url)
-
-        _client = self.client.get_http_client()
-
-        response = _client.get(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return UserFeatureList.model_validate(json_data)
-
-    def get_oauth2_providers_for_user(
-        self,
-    ) -> List[AccountProvider]:
-        """If this returns an empty array, then the user has not connected any OAuth2 providers and uses raw email authentication.
-
-        This endpoint requires authentication by any Zoo user. It gets the providers for the authenticated user."""
-
-        url = "{}/user/oauth2/providers".format(self.client.base_url)
-
-        _client = self.client.get_http_client()
-
-        response = _client.get(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into annotated/collection/union types using TypeAdapter
-        from pydantic import TypeAdapter
-
-        return TypeAdapter(List[AccountProvider]).validate_python(json_data)
-
-    def get_user_privacy_settings(
-        self,
-    ) -> PrivacySettings:
-        """This endpoint requires authentication by any Zoo user. It gets the privacy settings for the user."""
-
-        url = "{}/user/privacy".format(self.client.base_url)
-
-        _client = self.client.get_http_client()
-
-        response = _client.get(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return PrivacySettings.model_validate(json_data)
-
-    def update_user_privacy_settings(
-        self,
-        body: PrivacySettings,
-    ) -> PrivacySettings:
-        """This endpoint requires authentication by any Zoo user. It updates the privacy settings for the user."""
-
-        url = "{}/user/privacy".format(self.client.base_url)
-
-        _client = self.client.get_http_client()
-
-        response = _client.put(
-            url=url,
-            headers=self.client.get_headers(),
-            content=body.model_dump_json(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return PrivacySettings.model_validate(json_data)
-
-    def get_session_for_user(
-        self,
-        token: SessionUuid,
-    ) -> Session:
-        """This endpoint requires authentication by any Zoo user. It returns details of the requested API token for the user."""
-
-        url = "{}/user/session/{token}".format(self.client.base_url, token=token)
-
-        _client = self.client.get_http_client()
-
-        response = _client.get(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return Session.model_validate(json_data)
-
-    def get_user_shortlinks(
-        self,
-        *,
-        limit: Optional[int] = None,
-        page_token: Optional[str] = None,
-        sort_by: Optional[CreatedAtSortMode] = None,
-    ) -> "SyncPageIterator":
-        """This endpoint requires authentication by any Zoo user. It gets the shortlinks for the user.
-
-        Returns an iterator that automatically handles pagination.
-        Iterate over all items across all pages:
-
-            for item in client.user.get_user_shortlinks():
-                print(item)
-        """
-
-        from typing import Any, Dict
-
-        from kittycad.pagination import SyncPageIterator
-
-        # Store path parameters in closure for later use
-
-        # Create arguments dict, filtering out None values
-        kwargs: Dict[str, Any] = {}
-
-        if limit is not None:
-            kwargs["limit"] = limit
-
-        if page_token is not None:
-            kwargs["page_token"] = page_token
-
-        if sort_by is not None:
-            kwargs["sort_by"] = sort_by
-
-        def fetch_page(**kw):
-            return self._fetch_page_get_user_shortlinks(**kw)
-
-        # Create the page iterator
-        return SyncPageIterator(
-            page_fetcher=fetch_page,
-            initial_kwargs=kwargs,
-        )
-
-    def _fetch_page_get_user_shortlinks(self, **kwargs) -> ShortlinkResultsPage:
-        """Internal method to fetch a single page."""
-        # Build URL with path parameters
-        url = "{}/user/shortlinks".format(self.client.base_url)
-
-        # Add query parameters
-
-        if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
-
-        if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
-
-        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(kwargs["sort_by"])
-            else:
-                url = url + "?sort_by=" + str(kwargs["sort_by"])
-
-        # Pagination parameters (limit, page_token) are already handled above as regular query params
-
-        _client = self.client.get_http_client()
-        response = _client.get(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-        # Validate into a Pydantic model (supports BaseModel/RootModel)
-        return ShortlinkResultsPage.model_validate(json_data)
-
-    def create_user_shortlink(
-        self,
-        body: CreateShortlinkRequest,
-    ) -> CreateShortlinkResponse:
-        """This endpoint requires authentication by any Zoo user. It creates a shortlink for the user."""
-
-        url = "{}/user/shortlinks".format(self.client.base_url)
-
-        _client = self.client.get_http_client()
-
-        response = _client.post(
-            url=url,
-            headers=self.client.get_headers(),
-            content=body.model_dump_json(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return CreateShortlinkResponse.model_validate(json_data)
-
-    def update_user_shortlink(
-        self,
-        key: str,
-        body: UpdateShortlinkRequest,
-    ):
-        """This endpoint requires authentication by any Zoo user. It updates a shortlink for the user.
-
-        This endpoint really only allows you to change the `restrict_to_org` setting of a shortlink. Thus it is only useful for folks who are part of an org. If you are not part of an org, you will not be able to change the `restrict_to_org` status."""
-
-        url = "{}/user/shortlinks/{key}".format(self.client.base_url, key=key)
-
-        _client = self.client.get_http_client()
-
-        response = _client.put(
-            url=url,
-            headers=self.client.get_headers(),
-            content=body.model_dump_json(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        return response.json() if response.content else None
-
-    def delete_user_shortlink(
-        self,
-        key: str,
-    ):
-        """This endpoint requires authentication by any Zoo user. It deletes a shortlink for the user."""
-
-        url = "{}/user/shortlinks/{key}".format(self.client.base_url, key=key)
-
-        _client = self.client.get_http_client()
-
-        response = _client.delete(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        return response.json() if response.content else None
-
-    def list_users(
-        self,
-        *,
-        limit: Optional[int] = None,
-        page_token: Optional[str] = None,
-        sort_by: Optional[CreatedAtSortMode] = None,
-    ) -> "SyncPageIterator":
-        """This endpoint requires authentication by a Zoo employee. The users are returned in order of creation, with the most recently created users first.
-
-        Returns an iterator that automatically handles pagination.
-        Iterate over all items across all pages:
-
-            for item in client.users.list_users():
-                print(item)
-        """
-
-        from typing import Any, Dict
-
-        from kittycad.pagination import SyncPageIterator
-
-        # Store path parameters in closure for later use
-
-        # Create arguments dict, filtering out None values
-        kwargs: Dict[str, Any] = {}
-
-        if limit is not None:
-            kwargs["limit"] = limit
-
-        if page_token is not None:
-            kwargs["page_token"] = page_token
-
-        if sort_by is not None:
-            kwargs["sort_by"] = sort_by
-
-        def fetch_page(**kw):
-            return self._fetch_page_list_users(**kw)
-
-        # Create the page iterator
-        return SyncPageIterator(
-            page_fetcher=fetch_page,
-            initial_kwargs=kwargs,
-        )
-
-    def _fetch_page_list_users(self, **kwargs) -> UserResultsPage:
-        """Internal method to fetch a single page."""
-        # Build URL with path parameters
-        url = "{}/users".format(self.client.base_url)
-
-        # Add query parameters
-
-        if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
-
-        if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
-
-        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(kwargs["sort_by"])
-            else:
-                url = url + "?sort_by=" + str(kwargs["sort_by"])
-
-        # Pagination parameters (limit, page_token) are already handled above as regular query params
-
-        _client = self.client.get_http_client()
-        response = _client.get(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-        # Validate into a Pydantic model (supports BaseModel/RootModel)
-        return UserResultsPage.model_validate(json_data)
-
-    def list_users_extended(
-        self,
-        *,
-        limit: Optional[int] = None,
-        page_token: Optional[str] = None,
-        sort_by: Optional[CreatedAtSortMode] = None,
-    ) -> "SyncPageIterator":
-        """This endpoint requires authentication by a Zoo employee. The users are returned in order of creation, with the most recently created users first.
-
-        Returns an iterator that automatically handles pagination.
-        Iterate over all items across all pages:
-
-            for item in client.users-extended.list_users_extended():
-                print(item)
-        """
-
-        from typing import Any, Dict
-
-        from kittycad.pagination import SyncPageIterator
-
-        # Store path parameters in closure for later use
-
-        # Create arguments dict, filtering out None values
-        kwargs: Dict[str, Any] = {}
-
-        if limit is not None:
-            kwargs["limit"] = limit
-
-        if page_token is not None:
-            kwargs["page_token"] = page_token
-
-        if sort_by is not None:
-            kwargs["sort_by"] = sort_by
-
-        def fetch_page(**kw):
-            return self._fetch_page_list_users_extended(**kw)
-
-        # Create the page iterator
-        return SyncPageIterator(
-            page_fetcher=fetch_page,
-            initial_kwargs=kwargs,
-        )
-
-    def _fetch_page_list_users_extended(self, **kwargs) -> ExtendedUserResultsPage:
-        """Internal method to fetch a single page."""
-        # Build URL with path parameters
-        url = "{}/users-extended".format(self.client.base_url)
-
-        # Add query parameters
-
-        if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
-
-        if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
-
-        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(kwargs["sort_by"])
-            else:
-                url = url + "?sort_by=" + str(kwargs["sort_by"])
-
-        # Pagination parameters (limit, page_token) are already handled above as regular query params
-
-        _client = self.client.get_http_client()
-        response = _client.get(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-        # Validate into a Pydantic model (supports BaseModel/RootModel)
-        return ExtendedUserResultsPage.model_validate(json_data)
-
-    def get_user_extended(
-        self,
-        id: UserIdentifier,
-    ) -> ExtendedUser:
-        """To get information about yourself, use `/users-extended/me` as the endpoint. By doing so you will get the user information for the authenticated user.
-
-        Alternatively, to get information about the authenticated user, use `/user/extended` endpoint."""
-
-        url = "{}/users-extended/{id}".format(self.client.base_url, id=id)
-
-        _client = self.client.get_http_client()
-
-        response = _client.get(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return ExtendedUser.model_validate(json_data)
-
-    def get_user(
-        self,
-        id: UserIdentifier,
-    ) -> User:
-        """To get information about yourself, use `/users/me` as the endpoint. By doing so you will get the user information for the authenticated user.
-
-        Alternatively, to get information about the authenticated user, use `/user` endpoint."""
-
-        url = "{}/users/{id}".format(self.client.base_url, id=id)
-
-        _client = self.client.get_http_client()
-
-        response = _client.get(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return User.model_validate(json_data)
-
-    def user_admin_details_get(
-        self,
-        id: UserIdentifier,
-    ) -> UserAdminDetails:
-        """Zoo admins can retrieve extended information about any user, while non-admins receive a 404 to avoid leaking the existence of the resource."""
-
-        url = "{}/users/{id}/admin/details".format(self.client.base_url, id=id)
-
-        _client = self.client.get_http_client()
-
-        response = _client.get(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return UserAdminDetails.model_validate(json_data)
-
-    def update_subscription_for_user(
-        self,
-        id: UserIdentifier,
-        body: ZooProductSubscriptionsUserRequest,
-    ) -> ZooProductSubscriptions:
-        """You must be a Zoo admin to perform this request."""
-
-        url = "{}/users/{id}/payment/subscriptions".format(self.client.base_url, id=id)
-
-        _client = self.client.get_http_client()
-
-        response = _client.put(
-            url=url,
-            headers=self.client.get_headers(),
-            content=body.model_dump_json(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return ZooProductSubscriptions.model_validate(json_data)
-
-    def put_public_email_marketing_consent_request(
-        self,
-        body: PublicEmailMarketingConsentRequest,
-    ):
-        """Requests public email marketing consent for an email address."""
-
-        url = "{}/website/email-marketing-consent/request".format(self.client.base_url)
-
-        _client = self.client.get_http_client()
-
-        response = _client.put(
-            url=url,
-            headers=self.client.get_headers(),
-            content=body.model_dump_json(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        return response.json() if response.content else None
-
-    def put_user_cad_user_info_form(
-        self,
-        body: WebsiteCadUserInfoForm,
-    ):
-        """Stores authenticated CAD user info form data for the current user."""
-
-        url = "{}/website/forms/cad-user-info".format(self.client.base_url)
-
-        _client = self.client.get_http_client()
-
-        response = _client.put(
-            url=url,
-            headers=self.client.get_headers(),
-            content=body.model_dump_json(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        return response.json() if response.content else None
-
-    def put_public_sales_form(
-        self,
-        body: WebsiteSalesForm,
-    ):
-        """This endpoint accepts optional authentication."""
-
-        url = "{}/website/forms/sales".format(self.client.base_url)
-
-        _client = self.client.get_http_client()
-
-        response = _client.put(
-            url=url,
-            headers=self.client.get_headers(),
-            content=body.model_dump_json(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        return response.json() if response.content else None
-
-    def put_public_support_form(
-        self,
-        body: WebsiteSupportForm,
-    ):
-        """This endpoint accepts optional authentication."""
-
-        url = "{}/website/forms/support".format(self.client.base_url)
-
-        _client = self.client.get_http_client()
-
-        response = _client.put(
-            url=url,
-            headers=self.client.get_headers(),
-            content=body.model_dump_json(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        return response.json() if response.content else None
-
-
-class AsyncUsersAPI:
-    """Async API for users endpoints"""
-
-    def __init__(self, client: AsyncClient) -> None:
-        self.client = client
-
-    async def get_user_self(
-        self,
-    ) -> User:
-        """Get the user information for the authenticated user.
-
-        Alternatively, you can also use the `/users/me` endpoint."""
-
-        url = "{}/user".format(self.client.base_url)
-
-        _client = self.client.get_http_client()
-
-        response = await _client.get(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return User.model_validate(json_data)
-
-    async def update_user_self(
-        self,
-        body: UpdateUser,
-    ) -> User:
-        """This endpoint requires authentication by any Zoo user. It updates information about the authenticated user."""
-
-        url = "{}/user".format(self.client.base_url)
-
-        _client = self.client.get_http_client()
-
-        response = await _client.put(
-            url=url,
-            headers=self.client.get_headers(),
-            content=body.model_dump_json(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return User.model_validate(json_data)
-
-    async def delete_user_self(
-        self,
-    ):
-        """This endpoint requires authentication by any Zoo user. It deletes the authenticated user from Zoo's database.
-
-        This call will only succeed if all invoices associated with the user have been paid in full and there is no outstanding balance."""
-
-        url = "{}/user".format(self.client.base_url)
-
-        _client = self.client.get_http_client()
-
-        response = await _client.delete(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        return response.json() if response.content else None
-
-    async def user_email_marketing_consent_get(
-        self,
-    ) -> EmailMarketingConsentState:
-        """Get email marketing consent state for the authenticated user."""
-
-        url = "{}/user/email-marketing-consent".format(self.client.base_url)
-
-        _client = self.client.get_http_client()
-
-        response = await _client.get(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return EmailMarketingConsentState.model_validate(json_data)
-
-    async def user_email_marketing_consent_decline_post(
-        self,
-    ):
-        """Record explicit decline for email marketing consent."""
-
-        url = "{}/user/email-marketing-consent/decline".format(self.client.base_url)
-
-        _client = self.client.get_http_client()
-
-        response = await _client.post(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        return response.json() if response.content else None
-
-    async def user_email_marketing_consent_request_post(
-        self,
-    ):
-        """Request email marketing opt-in and send a confirmation email."""
-
-        url = "{}/user/email-marketing-consent/request".format(self.client.base_url)
-
-        _client = self.client.get_http_client()
-
-        response = await _client.post(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        return response.json() if response.content else None
-
-    async def user_email_marketing_consent_seen_post(
-        self,
-    ):
-        """Mark the email-marketing modal as seen/dismissed for the authenticated user."""
-
-        url = "{}/user/email-marketing-consent/seen".format(self.client.base_url)
-
-        _client = self.client.get_http_client()
-
-        response = await _client.post(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        return response.json() if response.content else None
-
-    async def get_user_self_extended(
-        self,
-    ) -> ExtendedUser:
-        """Get the user information for the authenticated user.
-
-        Alternatively, you can also use the `/users-extended/me` endpoint."""
-
-        url = "{}/user/extended".format(self.client.base_url)
-
-        _client = self.client.get_http_client()
-
-        response = await _client.get(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return ExtendedUser.model_validate(json_data)
-
-    async def user_features_get(
-        self,
-    ) -> UserFeatureList:
-        """Returns only features that are marked as safe for exposure to clients and currently resolved to `true` for the requesting user (including org overrides)."""
-
-        url = "{}/user/features".format(self.client.base_url)
-
-        _client = self.client.get_http_client()
-
-        response = await _client.get(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return UserFeatureList.model_validate(json_data)
-
-    async def get_oauth2_providers_for_user(
-        self,
-    ) -> List[AccountProvider]:
-        """If this returns an empty array, then the user has not connected any OAuth2 providers and uses raw email authentication.
-
-        This endpoint requires authentication by any Zoo user. It gets the providers for the authenticated user."""
-
-        url = "{}/user/oauth2/providers".format(self.client.base_url)
-
-        _client = self.client.get_http_client()
-
-        response = await _client.get(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into annotated/collection/union types using TypeAdapter
-        from pydantic import TypeAdapter
-
-        return TypeAdapter(List[AccountProvider]).validate_python(json_data)
-
-    async def get_user_privacy_settings(
-        self,
-    ) -> PrivacySettings:
-        """This endpoint requires authentication by any Zoo user. It gets the privacy settings for the user."""
-
-        url = "{}/user/privacy".format(self.client.base_url)
-
-        _client = self.client.get_http_client()
-
-        response = await _client.get(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return PrivacySettings.model_validate(json_data)
-
-    async def update_user_privacy_settings(
-        self,
-        body: PrivacySettings,
-    ) -> PrivacySettings:
-        """This endpoint requires authentication by any Zoo user. It updates the privacy settings for the user."""
-
-        url = "{}/user/privacy".format(self.client.base_url)
-
-        _client = self.client.get_http_client()
-
-        response = await _client.put(
-            url=url,
-            headers=self.client.get_headers(),
-            content=body.model_dump_json(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return PrivacySettings.model_validate(json_data)
-
-    async def get_session_for_user(
-        self,
-        token: SessionUuid,
-    ) -> Session:
-        """This endpoint requires authentication by any Zoo user. It returns details of the requested API token for the user."""
-
-        url = "{}/user/session/{token}".format(self.client.base_url, token=token)
-
-        _client = self.client.get_http_client()
-
-        response = await _client.get(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return Session.model_validate(json_data)
-
-    def get_user_shortlinks(
-        self,
-        *,
-        limit: Optional[int] = None,
-        page_token: Optional[str] = None,
-        sort_by: Optional[CreatedAtSortMode] = None,
-    ) -> "AsyncPageIterator":
-        """This endpoint requires authentication by any Zoo user. It gets the shortlinks for the user.
-
-        Returns an async iterator that automatically handles pagination.
-        Iterate over all items across all pages:
-
-            async for item in client.user.get_user_shortlinks():
-                print(item)
-        """
-
-        from typing import Any, Dict
-
-        from kittycad.pagination import AsyncPageIterator
-
-        # Store path parameters in closure for later use
-
-        # Create arguments dict, filtering out None values
-        kwargs: Dict[str, Any] = {}
-
-        if limit is not None:
-            kwargs["limit"] = limit
-
-        if page_token is not None:
-            kwargs["page_token"] = page_token
-
-        if sort_by is not None:
-            kwargs["sort_by"] = sort_by
-
-        async def fetch_page(**kw):
-            return await self._fetch_page_get_user_shortlinks(**kw)
-
-        # Create the async page iterator
-        return AsyncPageIterator(
-            page_fetcher=fetch_page,
-            initial_kwargs=kwargs,
-        )
-
-    async def _fetch_page_get_user_shortlinks(self, **kwargs) -> ShortlinkResultsPage:
-        """Internal async method to fetch a single page."""
-        # Build URL with path parameters
-        url = "{}/user/shortlinks".format(self.client.base_url)
-
-        # Add query parameters
-
-        if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
-
-        if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
-
-        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(kwargs["sort_by"])
-            else:
-                url = url + "?sort_by=" + str(kwargs["sort_by"])
-
-        # Pagination parameters (limit, page_token) are already handled above as regular query params
-
-        _client = self.client.get_http_client()
-        response = await _client.get(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-        # Validate into a Pydantic model (supports BaseModel/RootModel)
-        return ShortlinkResultsPage.model_validate(json_data)
-
-    async def create_user_shortlink(
-        self,
-        body: CreateShortlinkRequest,
-    ) -> CreateShortlinkResponse:
-        """This endpoint requires authentication by any Zoo user. It creates a shortlink for the user."""
-
-        url = "{}/user/shortlinks".format(self.client.base_url)
-
-        _client = self.client.get_http_client()
-
-        response = await _client.post(
-            url=url,
-            headers=self.client.get_headers(),
-            content=body.model_dump_json(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return CreateShortlinkResponse.model_validate(json_data)
-
-    async def update_user_shortlink(
-        self,
-        key: str,
-        body: UpdateShortlinkRequest,
-    ):
-        """This endpoint requires authentication by any Zoo user. It updates a shortlink for the user.
-
-        This endpoint really only allows you to change the `restrict_to_org` setting of a shortlink. Thus it is only useful for folks who are part of an org. If you are not part of an org, you will not be able to change the `restrict_to_org` status."""
-
-        url = "{}/user/shortlinks/{key}".format(self.client.base_url, key=key)
-
-        _client = self.client.get_http_client()
-
-        response = await _client.put(
-            url=url,
-            headers=self.client.get_headers(),
-            content=body.model_dump_json(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        return response.json() if response.content else None
-
-    async def delete_user_shortlink(
-        self,
-        key: str,
-    ):
-        """This endpoint requires authentication by any Zoo user. It deletes a shortlink for the user."""
-
-        url = "{}/user/shortlinks/{key}".format(self.client.base_url, key=key)
-
-        _client = self.client.get_http_client()
-
-        response = await _client.delete(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        return response.json() if response.content else None
-
-    def list_users(
-        self,
-        *,
-        limit: Optional[int] = None,
-        page_token: Optional[str] = None,
-        sort_by: Optional[CreatedAtSortMode] = None,
-    ) -> "AsyncPageIterator":
-        """This endpoint requires authentication by a Zoo employee. The users are returned in order of creation, with the most recently created users first.
-
-        Returns an async iterator that automatically handles pagination.
-        Iterate over all items across all pages:
-
-            async for item in client.users.list_users():
-                print(item)
-        """
-
-        from typing import Any, Dict
-
-        from kittycad.pagination import AsyncPageIterator
-
-        # Store path parameters in closure for later use
-
-        # Create arguments dict, filtering out None values
-        kwargs: Dict[str, Any] = {}
-
-        if limit is not None:
-            kwargs["limit"] = limit
-
-        if page_token is not None:
-            kwargs["page_token"] = page_token
-
-        if sort_by is not None:
-            kwargs["sort_by"] = sort_by
-
-        async def fetch_page(**kw):
-            return await self._fetch_page_list_users(**kw)
-
-        # Create the async page iterator
-        return AsyncPageIterator(
-            page_fetcher=fetch_page,
-            initial_kwargs=kwargs,
-        )
-
-    async def _fetch_page_list_users(self, **kwargs) -> UserResultsPage:
-        """Internal async method to fetch a single page."""
-        # Build URL with path parameters
-        url = "{}/users".format(self.client.base_url)
-
-        # Add query parameters
-
-        if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
-
-        if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
-
-        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(kwargs["sort_by"])
-            else:
-                url = url + "?sort_by=" + str(kwargs["sort_by"])
-
-        # Pagination parameters (limit, page_token) are already handled above as regular query params
-
-        _client = self.client.get_http_client()
-        response = await _client.get(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-        # Validate into a Pydantic model (supports BaseModel/RootModel)
-        return UserResultsPage.model_validate(json_data)
-
-    def list_users_extended(
-        self,
-        *,
-        limit: Optional[int] = None,
-        page_token: Optional[str] = None,
-        sort_by: Optional[CreatedAtSortMode] = None,
-    ) -> "AsyncPageIterator":
-        """This endpoint requires authentication by a Zoo employee. The users are returned in order of creation, with the most recently created users first.
-
-        Returns an async iterator that automatically handles pagination.
-        Iterate over all items across all pages:
-
-            async for item in client.users-extended.list_users_extended():
-                print(item)
-        """
-
-        from typing import Any, Dict
-
-        from kittycad.pagination import AsyncPageIterator
-
-        # Store path parameters in closure for later use
-
-        # Create arguments dict, filtering out None values
-        kwargs: Dict[str, Any] = {}
-
-        if limit is not None:
-            kwargs["limit"] = limit
-
-        if page_token is not None:
-            kwargs["page_token"] = page_token
-
-        if sort_by is not None:
-            kwargs["sort_by"] = sort_by
-
-        async def fetch_page(**kw):
-            return await self._fetch_page_list_users_extended(**kw)
-
-        # Create the async page iterator
-        return AsyncPageIterator(
-            page_fetcher=fetch_page,
-            initial_kwargs=kwargs,
-        )
-
-    async def _fetch_page_list_users_extended(
-        self, **kwargs
-    ) -> ExtendedUserResultsPage:
-        """Internal async method to fetch a single page."""
-        # Build URL with path parameters
-        url = "{}/users-extended".format(self.client.base_url)
-
-        # Add query parameters
-
-        if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
-
-        if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
-
-        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(kwargs["sort_by"])
-            else:
-                url = url + "?sort_by=" + str(kwargs["sort_by"])
-
-        # Pagination parameters (limit, page_token) are already handled above as regular query params
-
-        _client = self.client.get_http_client()
-        response = await _client.get(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-        # Validate into a Pydantic model (supports BaseModel/RootModel)
-        return ExtendedUserResultsPage.model_validate(json_data)
-
-    async def get_user_extended(
-        self,
-        id: UserIdentifier,
-    ) -> ExtendedUser:
-        """To get information about yourself, use `/users-extended/me` as the endpoint. By doing so you will get the user information for the authenticated user.
-
-        Alternatively, to get information about the authenticated user, use `/user/extended` endpoint."""
-
-        url = "{}/users-extended/{id}".format(self.client.base_url, id=id)
-
-        _client = self.client.get_http_client()
-
-        response = await _client.get(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return ExtendedUser.model_validate(json_data)
-
-    async def get_user(
-        self,
-        id: UserIdentifier,
-    ) -> User:
-        """To get information about yourself, use `/users/me` as the endpoint. By doing so you will get the user information for the authenticated user.
-
-        Alternatively, to get information about the authenticated user, use `/user` endpoint."""
-
-        url = "{}/users/{id}".format(self.client.base_url, id=id)
-
-        _client = self.client.get_http_client()
-
-        response = await _client.get(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return User.model_validate(json_data)
-
-    async def user_admin_details_get(
-        self,
-        id: UserIdentifier,
-    ) -> UserAdminDetails:
-        """Zoo admins can retrieve extended information about any user, while non-admins receive a 404 to avoid leaking the existence of the resource."""
-
-        url = "{}/users/{id}/admin/details".format(self.client.base_url, id=id)
-
-        _client = self.client.get_http_client()
-
-        response = await _client.get(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return UserAdminDetails.model_validate(json_data)
-
-    async def update_subscription_for_user(
-        self,
-        id: UserIdentifier,
-        body: ZooProductSubscriptionsUserRequest,
-    ) -> ZooProductSubscriptions:
-        """You must be a Zoo admin to perform this request."""
-
-        url = "{}/users/{id}/payment/subscriptions".format(self.client.base_url, id=id)
-
-        _client = self.client.get_http_client()
-
-        response = await _client.put(
-            url=url,
-            headers=self.client.get_headers(),
-            content=body.model_dump_json(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return ZooProductSubscriptions.model_validate(json_data)
-
-    async def put_public_email_marketing_consent_request(
-        self,
-        body: PublicEmailMarketingConsentRequest,
-    ):
-        """Requests public email marketing consent for an email address."""
-
-        url = "{}/website/email-marketing-consent/request".format(self.client.base_url)
-
-        _client = self.client.get_http_client()
-
-        response = await _client.put(
-            url=url,
-            headers=self.client.get_headers(),
-            content=body.model_dump_json(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        return response.json() if response.content else None
-
-    async def put_user_cad_user_info_form(
-        self,
-        body: WebsiteCadUserInfoForm,
-    ):
-        """Stores authenticated CAD user info form data for the current user."""
-
-        url = "{}/website/forms/cad-user-info".format(self.client.base_url)
-
-        _client = self.client.get_http_client()
-
-        response = await _client.put(
-            url=url,
-            headers=self.client.get_headers(),
-            content=body.model_dump_json(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        return response.json() if response.content else None
-
-    async def put_public_sales_form(
-        self,
-        body: WebsiteSalesForm,
-    ):
-        """This endpoint accepts optional authentication."""
-
-        url = "{}/website/forms/sales".format(self.client.base_url)
-
-        _client = self.client.get_http_client()
-
-        response = await _client.put(
-            url=url,
-            headers=self.client.get_headers(),
-            content=body.model_dump_json(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        return response.json() if response.content else None
-
-    async def put_public_support_form(
-        self,
-        body: WebsiteSupportForm,
-    ):
-        """This endpoint accepts optional authentication."""
-
-        url = "{}/website/forms/support".format(self.client.base_url)
-
-        _client = self.client.get_http_client()
-
-        response = await _client.put(
-            url=url,
-            headers=self.client.get_headers(),
-            content=body.model_dump_json(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        return response.json() if response.content else None
-
-
 class ApiTokensAPI:
     """API for api_tokens endpoints"""
 
@@ -14771,13 +16289,13 @@ class KittyCAD(Client):
         service_accounts: ServiceAccountsAPI - Access to service_accounts endpoints
 
 
+        users: UsersAPI - Access to users endpoints
+
+
         store: StoreAPI - Access to store endpoints
 
 
         unit: UnitAPI - Access to unit endpoints
-
-
-        users: UsersAPI - Access to users endpoints
 
 
         api_tokens: ApiTokensAPI - Access to api_tokens endpoints
@@ -14811,11 +16329,11 @@ class KittyCAD(Client):
 
     service_accounts: "ServiceAccountsAPI"
 
+    users: "UsersAPI"
+
     store: "StoreAPI"
 
     unit: "UnitAPI"
-
-    users: "UsersAPI"
 
     api_tokens: "ApiTokensAPI"
 
@@ -14862,11 +16380,11 @@ class KittyCAD(Client):
 
         self.service_accounts: ServiceAccountsAPI = ServiceAccountsAPI(self)
 
+        self.users: UsersAPI = UsersAPI(self)
+
         self.store: StoreAPI = StoreAPI(self)
 
         self.unit: UnitAPI = UnitAPI(self)
-
-        self.users: UsersAPI = UsersAPI(self)
 
         self.api_tokens: ApiTokensAPI = ApiTokensAPI(self)
 
@@ -14925,13 +16443,13 @@ class AsyncKittyCAD(AsyncClient):
         service_accounts: AsyncServiceAccountsAPI - Access to service_accounts endpoints
 
 
+        users: AsyncUsersAPI - Access to users endpoints
+
+
         store: AsyncStoreAPI - Access to store endpoints
 
 
         unit: AsyncUnitAPI - Access to unit endpoints
-
-
-        users: AsyncUsersAPI - Access to users endpoints
 
 
         api_tokens: AsyncApiTokensAPI - Access to api_tokens endpoints
@@ -14965,11 +16483,11 @@ class AsyncKittyCAD(AsyncClient):
 
     service_accounts: "AsyncServiceAccountsAPI"
 
+    users: "AsyncUsersAPI"
+
     store: "AsyncStoreAPI"
 
     unit: "AsyncUnitAPI"
-
-    users: "AsyncUsersAPI"
 
     api_tokens: "AsyncApiTokensAPI"
 
@@ -15016,11 +16534,11 @@ class AsyncKittyCAD(AsyncClient):
 
         self.service_accounts: AsyncServiceAccountsAPI = AsyncServiceAccountsAPI(self)
 
+        self.users: AsyncUsersAPI = AsyncUsersAPI(self)
+
         self.store: AsyncStoreAPI = AsyncStoreAPI(self)
 
         self.unit: AsyncUnitAPI = AsyncUnitAPI(self)
-
-        self.users: AsyncUsersAPI = AsyncUsersAPI(self)
 
         self.api_tokens: AsyncApiTokensAPI = AsyncApiTokensAPI(self)
 

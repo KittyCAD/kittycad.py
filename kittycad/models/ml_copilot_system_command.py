@@ -12,6 +12,10 @@ class MlCopilotSystemCommand(str, Enum):
 
     BYE = "bye"
 
+    """# Continue a previously-started turn after the client reconnects."""  # noqa: E501
+
+    CONTINUE = "continue"
+
     """# Interrupt the current prompt that is being processed."""  # noqa: E501
 
     INTERRUPT = "interrupt"

@@ -46810,6 +46810,10 @@
             "description": "The name of the user. This is auto populated at first from the authentication provider (if there was a name). It can be updated by the user by updating their `first_name` and `last_name` fields.",
             "type": "string"
           },
+          "username": {
+            "description": "The user's username or handle.",
+            "type": "string"
+          },
           "phone": {
             "title": "String",
             "description": "The user's phone number.",
@@ -54093,6 +54097,10 @@
           },
           "name": {
             "description": "The name of the user. This is auto populated at first from the authentication provider (if there was a name). It can be updated by the user by updating their `first_name` and `last_name` fields.",
+            "type": "string"
+          },
+          "username": {
+            "description": "The user's username or handle.",
             "type": "string"
           },
           "phone": {

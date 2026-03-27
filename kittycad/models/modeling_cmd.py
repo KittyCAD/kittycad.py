@@ -162,6 +162,8 @@ class OptionSweep(KittyCadBaseModel):
 
     type: Literal["sweep"] = "sweep"
 
+    version: Optional[int] = None
+
 
 class OptionRevolve(KittyCadBaseModel):
     """Command for revolving a solid 2d."""
@@ -1643,6 +1645,8 @@ class OptionBoundingBox(KittyCadBaseModel):
     """Get the smallest box that could contain the given parts."""
 
     entity_ids: List[str]
+
+    output_unit: UnitLength = "mm"  # type: ignore[assignment]
 
     type: Literal["bounding_box"] = "bounding_box"
 

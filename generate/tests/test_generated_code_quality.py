@@ -11,6 +11,7 @@ This module tests that the generated SDK maintains high-quality, Pythonic patter
 
 import ast
 import inspect
+import json
 import sys
 from pathlib import Path
 
@@ -27,6 +28,25 @@ from kittycad.models import (
     Uuid,
     ZooTool,
 )
+
+
+def _load_paginated_operation_ids() -> set[str]:
+    spec_path = Path(__file__).parent.parent.parent / "spec.json"
+    with spec_path.open("r") as handle:
+        spec = json.load(handle)
+    paginated_ops: set[str] = set()
+    for path_item in spec.get("paths", {}).values():
+        for operation in path_item.values():
+            if not isinstance(operation, dict):
+                continue
+            if "x-dropshot-pagination" in operation:
+                operation_id = operation.get("operationId")
+                if isinstance(operation_id, str):
+                    paginated_ops.add(operation_id)
+    return paginated_ops
+
+
+PAGINATED_OPERATION_IDS = _load_paginated_operation_ids()
 
 
 class TestTypeHintsAndSignatures:
@@ -107,6 +127,8 @@ class TestTypeHintsAndSignatures:
                     )
 
         for api_section, method_name, method in potential_paginated_methods:
+            if method_name not in PAGINATED_OPERATION_IDS:
+                continue
             sig = inspect.signature(method)
 
             # Paginated methods should return iterator types

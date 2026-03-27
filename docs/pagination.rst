@@ -228,6 +228,78 @@ Ml API
             print(item)
 
 
+Oauth2 API
+----------
+
+**list_org_oauth2_apps**
+    List org OAuth apps.
+    
+    Returns: ``SyncPageIterator[OAuth2AppResponse]``
+    
+    Example:
+    
+    .. code-block:: python
+    
+        # Sync
+        for item in client.oauth2.list_org_oauth2_apps():
+            print(item)
+            
+        # Async  
+        async for item in client.oauth2.list_org_oauth2_apps():
+            print(item)
+
+**list_oauth2_apps_for_any_org**
+    List OAuth 2.0 apps owned by an organization.
+    
+    Returns: ``SyncPageIterator[OAuth2AppResponse]``
+    
+    Example:
+    
+    .. code-block:: python
+    
+        # Sync
+        for item in client.oauth2.list_oauth2_apps_for_any_org():
+            print(item)
+            
+        # Async  
+        async for item in client.oauth2.list_oauth2_apps_for_any_org():
+            print(item)
+
+**list_user_oauth2_apps**
+    List personal OAuth apps.
+    
+    Returns: ``SyncPageIterator[OAuth2AppResponse]``
+    
+    Example:
+    
+    .. code-block:: python
+    
+        # Sync
+        for item in client.oauth2.list_user_oauth2_apps():
+            print(item)
+            
+        # Async  
+        async for item in client.oauth2.list_user_oauth2_apps():
+            print(item)
+
+**list_oauth2_apps_for_any_user**
+    List OAuth 2.0 apps owned by a user.
+    
+    Returns: ``SyncPageIterator[OAuth2AppResponse]``
+    
+    Example:
+    
+    .. code-block:: python
+    
+        # Sync
+        for item in client.oauth2.list_oauth2_apps_for_any_user():
+            print(item)
+            
+        # Async  
+        async for item in client.oauth2.list_oauth2_apps_for_any_user():
+            print(item)
+
+
 Orgs API
 --------
 
@@ -378,7 +450,7 @@ Users API
 **list_users**
     List users.
     
-    Returns: ``SyncPageIterator[User]``
+    Returns: ``SyncPageIterator[UserResponse]``
     
     Example:
     
