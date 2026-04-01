@@ -25007,6 +25007,36 @@
         }
       }
     },
+    "/user/projects/{id}/download": {
+      "get": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Download one of the authenticated user's projects as a tar archive.",
+        "operationId": "download_user_project",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "The identifier.",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Uuid"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "*/*": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
     "/user/session/{token}": {
       "get": {
         "tags": [
@@ -29650,7 +29680,6 @@
           "ip_address": {
             "title": "String",
             "description": "The ip address of the origin.",
-            "default": "",
             "type": "string",
             "format": "ip"
           },
@@ -37081,7 +37110,6 @@
           "ip": {
             "title": "String",
             "description": "IP address of the user.",
-            "default": "",
             "type": "string",
             "format": "ip"
           },
