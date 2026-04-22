@@ -32,6 +32,40 @@ def generate_examples_tests(cwd: str, examples: List[str]):
         examples
     )
 
+    # Deduplicate imports - remove specific imports if they're in a bulk import
+    # Separate bulk imports from specific imports
+    bulk_imports = []  # from kittycad.models import Foo
+    specific_imports = []  # from kittycad.models.foo import Foo
+    other_imports = []
+    bulk_imported_names = set()
+
+    for imp in consolidated_imports:
+        if imp.startswith("from kittycad.models.") and " import " in imp:
+            # This is a specific module import
+            specific_imports.append(imp)
+        elif imp.startswith("from kittycad.models import "):
+            # This is a bulk import from __init__.py
+            bulk_imports.append(imp)
+            # Extract the name
+            import_name = imp.split(" import ")[-1].strip()
+            base_name = import_name.split(" as ")[0].strip()
+            bulk_imported_names.add(base_name)
+        else:
+            other_imports.append(imp)
+
+    # Filter out specific imports that duplicate bulk imports
+    deduplicated_specific = []
+    for imp in specific_imports:
+        import_name = imp.split(" import ")[-1].strip()
+        base_name = import_name.split(" as ")[0].strip()
+        if base_name in bulk_imported_names:
+            # Skip this duplicate - it's already in the bulk import
+            continue
+        deduplicated_specific.append(imp)
+
+    # Combine all imports
+    deduplicated_imports = other_imports + bulk_imports + deduplicated_specific
+
     # Write all the examples to a file.
     f = open(examples_test_path, "w")
 
@@ -41,9 +75,9 @@ def generate_examples_tests(cwd: str, examples: List[str]):
     f.write("from typing import Dict, Optional, Union\n")
     f.write("from kittycad import KittyCAD\n\n")
 
-    # Write consolidated imports from examples
-    if consolidated_imports:
-        f.write("\n".join(consolidated_imports))
+    # Write deduplicated imports from examples
+    if deduplicated_imports:
+        f.write("\n".join(deduplicated_imports))
         f.write("\n\n")
 
     # Write examples without their individual imports
@@ -82,6 +116,9 @@ def _alias_conflicting_model_imports(examples_test_path: str) -> None:
     (e.g. input_format3d.OptionPly vs output_format3d.OptionPly). Ruff flags this
     as F811, so alias all but the first import and update the matching wrapper
     constructor usage to point at the alias.
+
+    Also removes redundant specific imports when the same name is already imported
+    from the bulk kittycad.models import.
     """
 
     with open(examples_test_path, "r") as file:
@@ -91,6 +128,7 @@ def _alias_conflicting_model_imports(examples_test_path: str) -> None:
     parsed_model_import_lines: Dict[int, _ParsedImportLine] = {}
     imported_name_occurrences: Dict[str, List[Tuple[int, str]]] = {}
 
+    # Parse specific model imports and track duplicates
     for index, line in enumerate(lines):
         stripped_line = line.strip()
         match = _MODEL_IMPORT_PATTERN.match(stripped_line)
