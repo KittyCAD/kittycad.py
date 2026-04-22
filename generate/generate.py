@@ -221,8 +221,29 @@ def generate_type_and_example_python(
                 parameter_type = "str"
                 parameter_example = '"<string>"'
         elif schema["type"] == "integer":
-            parameter_type = "int"
-            parameter_example = "10"
+            if name != "":
+                # This is a named integer type (e.g., BillingQuantity)
+                parameter_type = name
+                if import_path is None:
+                    example_imports = example_imports + (
+                        "from kittycad.models."
+                        + camel_to_snake(parameter_type)
+                        + " import "
+                        + parameter_type
+                        + "\n"
+                    )
+                else:
+                    example_imports = example_imports + (
+                        "from kittycad.models."
+                        + ip
+                        + " import "
+                        + parameter_type
+                        + "\n"
+                    )
+                parameter_example = parameter_type + "(10)"
+            else:
+                parameter_type = "int"
+                parameter_example = "10"
         elif schema["type"] == "boolean":
             parameter_type = "bool"
             parameter_example = "False"

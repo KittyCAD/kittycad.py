@@ -4,8 +4,8 @@ from pydantic import GetCoreSchemaHandler
 from pydantic_core import CoreSchema, core_schema
 
 
-class DeviceAccessTokenUuid(str):
-    """An auth token. A uuid with a prefix of dev-"""
+class BillingExternalCustomerId(str):
+    """Provider-owned customer reference for downstream invoicing systems."""
 
     def __str__(self) -> str:
         return self

@@ -24,4 +24,6 @@ class OAuth2AppResponse(KittyCadBaseModel):
 
     name: str
 
+    redirect_uris: List[str]
+
     updated_at: datetime.datetime

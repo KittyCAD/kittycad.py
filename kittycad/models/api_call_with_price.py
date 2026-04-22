@@ -23,7 +23,7 @@ class ApiCallWithPrice(KittyCadBaseModel):
 
     id: Uuid
 
-    ip_address: str = ""
+    ip_address: Optional[str] = None
 
     method: Method
 

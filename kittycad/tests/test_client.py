@@ -594,23 +594,6 @@ def test_file_center_of_mass():
     assert fv.status == ApiCallStatus.COMPLETED
 
 
-def test_list_users():
-    # Create our client
-    client = KittyCAD()
-
-    # List users using modern pattern
-    response = client.users.list_users_extended(
-        sort_by=CreatedAtSortMode.CREATED_AT_DESCENDING, limit=10
-    )
-
-    # Now returns SyncPageIterator instead of ExtendedUserResultsPage
-    from kittycad.pagination import SyncPageIterator
-
-    assert isinstance(response, SyncPageIterator)
-
-    print(f"ExtendedUserResultsPage: {response}")
-
-
 def test_websocket_recv_timeout_defaults_and_override():
     recorded_connections = []
 

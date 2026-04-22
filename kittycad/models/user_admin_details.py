@@ -26,6 +26,8 @@ class UserAdminDetails(KittyCadBaseModel):
 
     cad_user_info: Optional[UserCadInfoAdminDetails] = None
 
+    never_block: bool
+
     payment_methods: List[PaymentMethod]
 
     payment_methods_summary: List[str]

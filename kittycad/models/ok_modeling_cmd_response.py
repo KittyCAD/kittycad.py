@@ -154,6 +154,7 @@ from ..models.solid3d_get_next_adjacent_edge import Solid3dGetNextAdjacentEdge
 from ..models.solid3d_get_opposite_edge import Solid3dGetOppositeEdge
 from ..models.solid3d_get_prev_adjacent_edge import Solid3dGetPrevAdjacentEdge
 from ..models.solid3d_join import Solid3dJoin
+from ..models.solid3d_multi_join import Solid3dMultiJoin
 from ..models.solid3d_shell_face import Solid3dShellFace
 from ..models.start_path import StartPath
 from ..models.surface_area import SurfaceArea
@@ -260,6 +261,14 @@ class OptionSolid3dJoin(KittyCadBaseModel):
     data: Solid3dJoin
 
     type: Literal["solid3d_join"] = "solid3d_join"
+
+
+class OptionSolid3dMultiJoin(KittyCadBaseModel):
+    """"""
+
+    data: Solid3dMultiJoin
+
+    type: Literal["solid3d_multi_join"] = "solid3d_multi_join"
 
 
 class OptionSurfaceBlend(KittyCadBaseModel):
@@ -1477,6 +1486,7 @@ OkModelingCmdResponse = RootModel[
             OptionRevolve,
             OptionSolid3dShellFace,
             OptionSolid3dJoin,
+            OptionSolid3dMultiJoin,
             OptionSurfaceBlend,
             OptionSolid3dGetEdgeUuid,
             OptionSolid3dGetFaceUuid,

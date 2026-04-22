@@ -66,40 +66,6 @@ The following endpoints support automatic pagination:
 Api Calls API
 -------------
 
-**list_api_calls**
-    List API calls.
-    
-    Returns: ``SyncPageIterator[ApiCallWithPrice]``
-    
-    Example:
-    
-    .. code-block:: python
-    
-        # Sync
-        for item in client.api_calls.list_api_calls():
-            print(item)
-            
-        # Async  
-        async for item in client.api_calls.list_api_calls():
-            print(item)
-
-**list_async_operations**
-    List async operations.
-    
-    Returns: ``SyncPageIterator[AsyncApiCall]``
-    
-    Example:
-    
-    .. code-block:: python
-    
-        # Sync
-        for item in client.api_calls.list_async_operations():
-            print(item)
-            
-        # Async  
-        async for item in client.api_calls.list_async_operations():
-            print(item)
-
 **org_list_api_calls**
     List API calls for your org.
     
@@ -175,23 +141,6 @@ Api Tokens API
 
 Ml API
 ------
-
-**list_ml_prompts**
-    List all ML prompts.
-    
-    Returns: ``SyncPageIterator[MlPromptResponse]``
-    
-    Example:
-    
-    .. code-block:: python
-    
-        # Sync
-        for item in client.ml.list_ml_prompts():
-            print(item)
-            
-        # Async  
-        async for item in client.ml.list_ml_prompts():
-            print(item)
 
 **list_conversations_for_user**
     List conversations
@@ -388,21 +337,42 @@ Orgs API
         async for item in client.orgs.get_org_shortlinks():
             print(item)
 
-**list_orgs**
-    List orgs.
+
+Payments API
+------------
+
+**list_invoices_for_org**
+    List invoices for your org.
     
-    Returns: ``SyncPageIterator[Org]``
+    Returns: ``SyncPageIterator[Invoice]``
     
     Example:
     
     .. code-block:: python
     
         # Sync
-        for item in client.orgs.list_orgs():
+        for item in client.payments.list_invoices_for_org():
             print(item)
             
         # Async  
-        async for item in client.orgs.list_orgs():
+        async for item in client.payments.list_invoices_for_org():
+            print(item)
+
+**list_invoices_for_user**
+    List invoices for your user.
+    
+    Returns: ``SyncPageIterator[Invoice]``
+    
+    Example:
+    
+    .. code-block:: python
+    
+        # Sync
+        for item in client.payments.list_invoices_for_user():
+            print(item)
+            
+        # Async  
+        async for item in client.payments.list_invoices_for_user():
             print(item)
 
 
@@ -445,40 +415,6 @@ Users API
             
         # Async  
         async for item in client.users.get_user_shortlinks():
-            print(item)
-
-**list_users**
-    List users.
-    
-    Returns: ``SyncPageIterator[UserResponse]``
-    
-    Example:
-    
-    .. code-block:: python
-    
-        # Sync
-        for item in client.users.list_users():
-            print(item)
-            
-        # Async  
-        async for item in client.users.list_users():
-            print(item)
-
-**list_users_extended**
-    List users with extended information.
-    
-    Returns: ``SyncPageIterator[ExtendedUser]``
-    
-    Example:
-    
-    .. code-block:: python
-    
-        # Sync
-        for item in client.users.list_users_extended():
-            print(item)
-            
-        # Async  
-        async for item in client.users.list_users_extended():
             print(item)
 
 
