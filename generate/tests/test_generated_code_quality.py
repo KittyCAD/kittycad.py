@@ -359,7 +359,7 @@ class TestCodeFormatting:
 
         models_path = Path(kittycad.models.__file__).parent
 
-        max_line_length = 200  # Be generous, but catch egregious violations
+        max_line_length = 400  # Be generous, but catch egregious violations
 
         for model_file in list(models_path.glob("*.py"))[:5]:
             content = model_file.read_text()

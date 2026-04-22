@@ -10,11 +10,14 @@ from kittycad.models.uuid import Uuid
 def test_optional_datetime_omitted_vs_null():
     """Test that optional datetime fields can be omitted from JSON or set to null."""
 
-    # Base data for ApiCallWithPrice without completed_at
+    # Base data for ApiCallWithPrice without completed_at (testing optional field)
     base_data: Dict[str, Any] = {
         "created_at": "2023-08-18T10:00:00Z",
         "id": "550e8400-e29b-41d4-a716-446655440000",
+        "method": "GET",
+        "token": "550e8400-e29b-41d4-a716-446655440002",
         "updated_at": "2023-08-18T10:05:00Z",
+        "user_agent": "test-agent",
         "user_id": "550e8400-e29b-41d4-a716-446655440001",
     }
 

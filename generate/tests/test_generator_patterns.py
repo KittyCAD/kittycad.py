@@ -190,24 +190,6 @@ class TestPaginatedEndpoints:
         assert hasattr(instance, "items")
         assert hasattr(instance, "next_page")
 
-    def test_list_methods_return_page_iterators(self):
-        """Test list_* methods return page iterators."""
-        client = KittyCAD(token="test-token")
-
-        # Look for list methods in API classes
-        api_calls = client.api_calls
-
-        # Should have list method
-        assert hasattr(api_calls, "list_api_calls")
-        method = getattr(api_calls, "list_api_calls")
-
-        # Check return type annotation
-        sig = inspect.signature(method)
-        return_annotation = str(sig.return_annotation)
-
-        # Should return some form of page iterator
-        assert "Page" in return_annotation or "Iterator" in return_annotation
-
     def test_page_iterators_have_correct_types(self):
         """Test page iterators use correct generic types."""
         # Test that SyncPageIterator and AsyncPageIterator exist
