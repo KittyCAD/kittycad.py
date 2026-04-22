@@ -209,6 +209,16 @@ class OptionSolid3dJoin(KittyCadBaseModel):
     type: Literal["solid3d_join"] = "solid3d_join"
 
 
+class OptionSolid3dMultiJoin(KittyCadBaseModel):
+    """Command for joining multiple Surfaces (non-manifold) to a Solid."""
+
+    object_ids: List[str]
+
+    tolerance: LengthUnit
+
+    type: Literal["solid3d_multi_join"] = "solid3d_multi_join"
+
+
 class OptionSurfaceBlend(KittyCadBaseModel):
     """Command for creating a blend between the edge of two given surfaces"""
 
@@ -874,6 +884,8 @@ class OptionSolid3dFilletEdge(KittyCadBaseModel):
 
     type: Literal["solid3d_fillet_edge"] = "solid3d_fillet_edge"
 
+    use_legacy: Optional[bool] = None
+
 
 class OptionSolid3dCutEdges(KittyCadBaseModel):
     """Cut the list of given edges with the given cut parameters."""
@@ -891,6 +903,8 @@ class OptionSolid3dCutEdges(KittyCadBaseModel):
     tolerance: LengthUnit
 
     type: Literal["solid3d_cut_edges"] = "solid3d_cut_edges"
+
+    use_legacy: Optional[bool] = None
 
 
 class OptionFaceIsPlanar(KittyCadBaseModel):
@@ -1089,6 +1103,10 @@ class OptionSetDefaultSystemProperties(KittyCadBaseModel):
     backface_color: Optional[Color] = None
 
     color: Optional[Color] = None
+
+    highlight_color: Optional[Color] = None
+
+    selection_color: Optional[Color] = None
 
     type: Literal["set_default_system_properties"] = "set_default_system_properties"
 
@@ -1498,6 +1516,8 @@ class OptionBooleanUnion(KittyCadBaseModel):
 
     type: Literal["boolean_union"] = "boolean_union"
 
+    use_legacy: Optional[bool] = None
+
 
 class OptionBooleanIntersection(KittyCadBaseModel):
     """Create a new solid from intersecting several other solids. In other words, the part of the input solids where they all overlap will be the output solid."""
@@ -1509,6 +1529,8 @@ class OptionBooleanIntersection(KittyCadBaseModel):
     tolerance: LengthUnit
 
     type: Literal["boolean_intersection"] = "boolean_intersection"
+
+    use_legacy: Optional[bool] = None
 
 
 class OptionBooleanSubtract(KittyCadBaseModel):
@@ -1523,6 +1545,8 @@ class OptionBooleanSubtract(KittyCadBaseModel):
     tool_ids: List[str]
 
     type: Literal["boolean_subtract"] = "boolean_subtract"
+
+    use_legacy: Optional[bool] = None
 
 
 class OptionBooleanImprint(KittyCadBaseModel):
@@ -1539,6 +1563,8 @@ class OptionBooleanImprint(KittyCadBaseModel):
     tool_ids: Optional[List[str]] = None
 
     type: Literal["boolean_imprint"] = "boolean_imprint"
+
+    use_legacy: Optional[bool] = None
 
 
 class OptionMakeOffsetPath(KittyCadBaseModel):
@@ -1687,6 +1713,7 @@ ModelingCmd = RootModel[
             OptionRevolve,
             OptionSolid3dShellFace,
             OptionSolid3dJoin,
+            OptionSolid3dMultiJoin,
             OptionSurfaceBlend,
             OptionSolid3dGetEdgeUuid,
             OptionSolid3dGetFaceUuid,

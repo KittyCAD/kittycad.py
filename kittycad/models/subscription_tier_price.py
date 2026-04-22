@@ -27,10 +27,10 @@ class OptionPerUser(KittyCadBaseModel):
     type: Literal["per_user"] = "per_user"
 
 
-class OptionEnterprise(KittyCadBaseModel):
-    """Enterprise: The price is not listed and the user needs to contact sales."""
+class OptionContract(KittyCadBaseModel):
+    """Contract-managed pricing. The price is not self-serve and the customer must contact sales."""
 
-    type: Literal["enterprise"] = "enterprise"
+    type: Literal["contract"] = "contract"
 
 
 SubscriptionTierPrice = RootModel[
@@ -38,7 +38,7 @@ SubscriptionTierPrice = RootModel[
         Union[
             OptionFlat,
             OptionPerUser,
-            OptionEnterprise,
+            OptionContract,
         ],
         Field(discriminator="type"),
     ]

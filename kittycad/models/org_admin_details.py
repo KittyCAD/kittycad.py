@@ -17,6 +17,8 @@ class OrgAdminDetails(KittyCadBaseModel):
 
     block_message: Optional[str] = None
 
+    never_block: bool
+
     payment_methods: List[PaymentMethod]
 
     payment_methods_summary: List[str]

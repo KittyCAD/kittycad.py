@@ -3,6 +3,7 @@ from typing import List, Optional
 
 from ..models.kcl_project_preview_status import KclProjectPreviewStatus
 from ..models.kcl_project_publication_status import KclProjectPublicationStatus
+from ..models.project_publication_info_response import ProjectPublicationInfoResponse
 from ..models.uuid import Uuid
 from .base import KittyCadBaseModel
 
@@ -22,15 +23,11 @@ class ProjectSummaryResponse(KittyCadBaseModel):
 
     preview_status: KclProjectPreviewStatus
 
-    primary_preview_height: Optional[int] = None
-
-    primary_preview_path: Optional[str] = None
-
-    primary_preview_version: Optional[str] = None
-
-    primary_preview_width: Optional[int] = None
+    preview_url: Optional[str] = None
 
     project_toml_path: str
+
+    publication: ProjectPublicationInfoResponse
 
     publication_status: KclProjectPublicationStatus
 

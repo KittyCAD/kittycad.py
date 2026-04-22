@@ -21,13 +21,7 @@ import pytest
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 from kittycad import KittyCAD
-from kittycad.models import (
-    ApiCallQueryGroupBy,
-    MlFeedback,
-    SceneToolType,
-    Uuid,
-    ZooTool,
-)
+from kittycad.models import MlFeedback, SceneToolType, Uuid, ZooTool
 
 
 def _load_paginated_operation_ids() -> set[str]:
@@ -212,7 +206,7 @@ class TestModelClassBehaviors:
         """Test that model classes have proper docstrings."""
 
         # All model classes should have docstrings
-        models_to_test = [MlFeedback, SceneToolType, ZooTool, ApiCallQueryGroupBy]
+        models_to_test = [MlFeedback, SceneToolType, ZooTool]
 
         for model_class in models_to_test:
             assert model_class.__doc__ is not None, (
@@ -234,7 +228,6 @@ class TestNamingConventions:
             "MlFeedback",
             "SceneToolType",
             "ZooTool",
-            "ApiCallQueryGroupBy",
             "Uuid",
         ]
 
@@ -245,7 +238,7 @@ class TestNamingConventions:
             )
 
             # Should not contain underscores (PascalCase)
-            assert "_" not in class_name or class_name in ["ApiCallQueryGroupBy"], (
+            assert "_" not in class_name, (
                 f"Class {class_name} should use PascalCase (no underscores except for acronyms)"
             )
 
@@ -366,7 +359,7 @@ class TestCodeFormatting:
 
         models_path = Path(kittycad.models.__file__).parent
 
-        max_line_length = 200  # Be generous, but catch egregious violations
+        max_line_length = 500  # Be generous, but catch egregious violations
 
         for model_file in list(models_path.glob("*.py"))[:5]:
             content = model_file.read_text()

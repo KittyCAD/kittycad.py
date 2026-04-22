@@ -20,6 +20,10 @@ class EmailMarketingConsentStatus(str, Enum):
 
     CONFIRMED = "confirmed"
 
+    """# Recipient later unsubscribed through an email unsubscribe flow."""  # noqa: E501
+
+    UNSUBSCRIBED = "unsubscribed"
+
     """# User explicitly declined."""  # noqa: E501
 
     DECLINED = "declined"

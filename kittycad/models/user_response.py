@@ -43,8 +43,8 @@ class UserResponse(KittyCadBaseModel):
 
     name: Optional[str] = None
 
-    username: str = ""
-
     phone: str = ""
 
     updated_at: datetime.datetime
+
+    username: str = ""

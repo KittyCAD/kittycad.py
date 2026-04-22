@@ -2,6 +2,7 @@ from typing import List, Optional
 
 from ..models.api_endpoint import ApiEndpoint
 from ..models.modeling_app_share_links import ModelingAppShareLinks
+from ..models.subscription_billing_mode import SubscriptionBillingMode
 from ..models.subscription_tier_feature import SubscriptionTierFeature
 from ..models.subscription_tier_price import SubscriptionTierPrice
 from ..models.subscription_tier_type import SubscriptionTierType
@@ -18,6 +19,8 @@ class ZooProductSubscription(KittyCadBaseModel):
 
     annual_discount: Optional[float] = None
 
+    billing_mode: SubscriptionBillingMode = "standard"  # type: ignore[assignment]
+
     description: str
 
     display_name: str = ""
@@ -25,8 +28,6 @@ class ZooProductSubscription(KittyCadBaseModel):
     endpoints_included: Optional[List[ApiEndpoint]] = None
 
     features: Optional[List[SubscriptionTierFeature]] = None
-
-    is_custom_quote: bool = False
 
     ml_custom_models: bool = False
 

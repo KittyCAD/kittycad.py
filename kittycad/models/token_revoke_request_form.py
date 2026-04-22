@@ -1,6 +1,5 @@
 from typing import Optional
 
-from ..models.device_access_token_uuid import DeviceAccessTokenUuid
 from .base import KittyCadBaseModel
 
 
@@ -11,4 +10,4 @@ class TokenRevokeRequestForm(KittyCadBaseModel):
 
     client_secret: Optional[str] = None
 
-    token: DeviceAccessTokenUuid
+    token: str

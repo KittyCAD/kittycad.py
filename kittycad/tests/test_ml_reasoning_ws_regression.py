@@ -64,6 +64,7 @@ def test_ml_reasoning_ws_recv_parses_reasoning_messages():
     assert fake_ws.timeouts[-1] == 60
 
 
+@pytest.mark.skip(reason="reasoning endpoint is misbehaving")
 def test_ml_reasoning_ws_real_round_trip() -> None:
     token = os.getenv("KITTYCAD_API_TOKEN")
     if not token:
