@@ -1,5 +1,6 @@
 import datetime
 import json
+from typing import Any, Dict
 
 from kittycad.models.api_call_with_price import ApiCallWithPrice
 from kittycad.models.method import Method
@@ -10,11 +11,10 @@ def test_optional_datetime_omitted_vs_null():
     """Test that optional datetime fields can be omitted from JSON or set to null."""
 
     # Base data for ApiCallWithPrice without completed_at
-    base_data = {
+    base_data: Dict[str, Any] = {
         "created_at": "2023-08-18T10:00:00Z",
         "id": "550e8400-e29b-41d4-a716-446655440000",
-        "method": "GET",
-        "started_at": "2023-08-18T10:00:00Z",
+        "updated_at": "2023-08-18T10:05:00Z",
         "user_id": "550e8400-e29b-41d4-a716-446655440001",
     }
 
@@ -40,7 +40,6 @@ def test_optional_datetime_omitted_vs_null():
 
     # Verify all three instances are otherwise identical
     assert call_omitted.id == call_with_null.id == call_with_datetime.id
-    assert call_omitted.method == call_with_null.method == call_with_datetime.method
 
 
 def test_optional_datetime_serialization():
@@ -52,11 +51,13 @@ def test_optional_datetime_serialization():
             2023, 8, 18, 10, 0, 0, tzinfo=datetime.timezone.utc
         ),
         id=Uuid("550e8400-e29b-41d4-a716-446655440000"),
-        method=Method.GET,
-        started_at=datetime.datetime(
-            2023, 8, 18, 10, 0, 0, tzinfo=datetime.timezone.utc
+        updated_at=datetime.datetime(
+            2023, 8, 18, 10, 5, 0, tzinfo=datetime.timezone.utc
         ),
+        token=Uuid("750e8400-e29b-41d4-a716-446655440000"),
+        method=Method.GET,
         user_id=Uuid("550e8400-e29b-41d4-a716-446655440001"),
+        user_agent="Firefox",
         completed_at=None,
     )
 
