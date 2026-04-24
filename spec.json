@@ -12724,6 +12724,190 @@
         }
       }
     },
+    "/org/payment/method-portal-link": {
+      "get": {
+        "tags": [
+          "payments"
+        ],
+        "summary": "Redirect to a fresh Stripe-hosted payment-method update link for your org.",
+        "description": "If the request is not authenticated, this redirects to website login with a callback back to this endpoint. If authenticated as an org admin, it creates a fresh hosted Stripe portal session and redirects the browser to it.",
+        "operationId": "redirect_payment_method_portal_link_for_org",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "return_url",
+            "description": "The URL Stripe should offer after the hosted flow completes.\n\nIf omitted, this defaults to the account page.",
+            "schema": {
+              "nullable": true,
+              "type": "string",
+              "format": "uri"
+            }
+          }
+        ],
+        "responses": {
+          "302": {
+            "description": "Temporary Redirect",
+            "headers": {
+              "Access-Control-Allow-Credentials": {
+                "description": "Access-Control-Allow-Credentials header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Headers": {
+                "description": "Access-Control-Allow-Headers header. This is a comma-separated list of headers.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Methods": {
+                "description": "Access-Control-Allow-Methods header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Origin": {
+                "description": "Access-Control-Allow-Origin header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Content-Location": {
+                "description": "The Content-Location header for responses that are not the final destination. This is used to indicate where the resource can be found, when it is finished.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Location": {
+                "description": "The location header for redirects and letting users know if there is a websocket they can listen to for status updates on their operation.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Set-Cookie": {
+                "description": "Set-Cookie header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "X-Api-Call-Id": {
+                "description": "ID for this request. We return it so that users can report this to us and help us debug their problems.",
+                "style": "simple",
+                "required": true,
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/Error"
+          },
+          "5XX": {
+            "$ref": "#/components/responses/Error"
+          }
+        }
+      },
+      "options": {
+        "tags": [
+          "hidden"
+        ],
+        "summary": "OPTIONS endpoint.",
+        "description": "This is necessary for some preflight requests, specifically POST, PUT, and DELETE.",
+        "operationId": "options_payment_method_portal_link_for_org",
+        "responses": {
+          "204": {
+            "description": "resource updated",
+            "headers": {
+              "Access-Control-Allow-Credentials": {
+                "description": "Access-Control-Allow-Credentials header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Headers": {
+                "description": "Access-Control-Allow-Headers header. This is a comma-separated list of headers.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Methods": {
+                "description": "Access-Control-Allow-Methods header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Origin": {
+                "description": "Access-Control-Allow-Origin header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Content-Location": {
+                "description": "The Content-Location header for responses that are not the final destination. This is used to indicate where the resource can be found, when it is finished.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Location": {
+                "description": "The location header for redirects and letting users know if there is a websocket they can listen to for status updates on their operation.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Set-Cookie": {
+                "description": "Set-Cookie header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "X-Api-Call-Id": {
+                "description": "ID for this request. We return it so that users can report this to us and help us debug their problems.",
+                "style": "simple",
+                "required": true,
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/Error"
+          },
+          "5XX": {
+            "$ref": "#/components/responses/Error"
+          }
+        }
+      }
+    },
     "/org/payment/methods": {
       "get": {
         "tags": [
@@ -23501,6 +23685,190 @@
         }
       }
     },
+    "/user/payment/method-portal-link": {
+      "get": {
+        "tags": [
+          "payments"
+        ],
+        "summary": "Redirect to a fresh Stripe-hosted payment-method update link for your user.",
+        "description": "If the request is not authenticated, this redirects to website login with a callback back to this endpoint. If authenticated, it creates a fresh hosted Stripe portal session and redirects the browser to it.",
+        "operationId": "redirect_payment_method_portal_link_for_user",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "return_url",
+            "description": "The URL Stripe should offer after the hosted flow completes.\n\nIf omitted, this defaults to the account page.",
+            "schema": {
+              "nullable": true,
+              "type": "string",
+              "format": "uri"
+            }
+          }
+        ],
+        "responses": {
+          "302": {
+            "description": "Temporary Redirect",
+            "headers": {
+              "Access-Control-Allow-Credentials": {
+                "description": "Access-Control-Allow-Credentials header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Headers": {
+                "description": "Access-Control-Allow-Headers header. This is a comma-separated list of headers.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Methods": {
+                "description": "Access-Control-Allow-Methods header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Origin": {
+                "description": "Access-Control-Allow-Origin header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Content-Location": {
+                "description": "The Content-Location header for responses that are not the final destination. This is used to indicate where the resource can be found, when it is finished.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Location": {
+                "description": "The location header for redirects and letting users know if there is a websocket they can listen to for status updates on their operation.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Set-Cookie": {
+                "description": "Set-Cookie header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "X-Api-Call-Id": {
+                "description": "ID for this request. We return it so that users can report this to us and help us debug their problems.",
+                "style": "simple",
+                "required": true,
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/Error"
+          },
+          "5XX": {
+            "$ref": "#/components/responses/Error"
+          }
+        }
+      },
+      "options": {
+        "tags": [
+          "hidden"
+        ],
+        "summary": "OPTIONS endpoint.",
+        "description": "This is necessary for some preflight requests, specifically POST, PUT, and DELETE.",
+        "operationId": "options_payment_method_portal_link_for_user",
+        "responses": {
+          "204": {
+            "description": "resource updated",
+            "headers": {
+              "Access-Control-Allow-Credentials": {
+                "description": "Access-Control-Allow-Credentials header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Headers": {
+                "description": "Access-Control-Allow-Headers header. This is a comma-separated list of headers.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Methods": {
+                "description": "Access-Control-Allow-Methods header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Origin": {
+                "description": "Access-Control-Allow-Origin header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Content-Location": {
+                "description": "The Content-Location header for responses that are not the final destination. This is used to indicate where the resource can be found, when it is finished.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Location": {
+                "description": "The location header for redirects and letting users know if there is a websocket they can listen to for status updates on their operation.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Set-Cookie": {
+                "description": "Set-Cookie header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "X-Api-Call-Id": {
+                "description": "ID for this request. We return it so that users can report this to us and help us debug their problems.",
+                "style": "simple",
+                "required": true,
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/Error"
+          },
+          "5XX": {
+            "$ref": "#/components/responses/Error"
+          }
+        }
+      }
+    },
     "/user/payment/methods": {
       "get": {
         "tags": [
@@ -33474,6 +33842,60 @@
           }
         ]
       },
+      "BodiesCreated": {
+        "description": "List of bodies that were created by an operation.",
+        "type": "object",
+        "properties": {
+          "bodies": {
+            "description": "All bodies created by this operation.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BodyCreated"
+            }
+          }
+        },
+        "required": [
+          "bodies"
+        ]
+      },
+      "BodiesUpdated": {
+        "description": "List of bodies that were updated by an operation.",
+        "type": "object",
+        "properties": {
+          "bodies": {
+            "description": "All bodies created by this operation.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BodyUpdated"
+            }
+          }
+        },
+        "required": [
+          "bodies"
+        ]
+      },
+      "BodyCreated": {
+        "description": "Details of a body that was created.",
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "The body's ID.",
+            "type": "string",
+            "format": "uuid"
+          },
+          "surfaces": {
+            "description": "Surfaces this body contains.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SurfaceCreated"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "surfaces"
+        ]
+      },
       "BodyType": {
         "description": "Body type determining if the operation will create a manifold (solid) body or a non-manifold collection of surfaces.",
         "oneOf": [
@@ -33491,6 +33913,28 @@
               "surface"
             ]
           }
+        ]
+      },
+      "BodyUpdated": {
+        "description": "Details of a body that was updated.",
+        "type": "object",
+        "properties": {
+          "id": {
+            "description": "The body's ID.",
+            "type": "string",
+            "format": "uuid"
+          },
+          "surfaces": {
+            "description": "Surfaces added to this body.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SurfaceCreated"
+            }
+          }
+        },
+        "required": [
+          "id",
+          "surfaces"
         ]
       },
       "BooleanImprint": {
@@ -36334,7 +36778,25 @@
       },
       "Extrude": {
         "description": "The response from the `Extrude` endpoint.",
-        "type": "object"
+        "type": "object",
+        "properties": {
+          "bodies_created": {
+            "description": "Any new bodies created by the request.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/BodiesCreated"
+              }
+            ]
+          },
+          "bodies_updated": {
+            "description": "Any existing bodies updated by the request.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/BodiesUpdated"
+              }
+            ]
+          }
+        }
       },
       "ExtrudeMethod": {
         "description": "Extrusion method determining if the extrusion will be part of the existing object or an entirely new object.",
@@ -36450,7 +36912,25 @@
       },
       "ExtrudeToReference": {
         "description": "The response from the `ExtrudeToReference` endpoint.",
-        "type": "object"
+        "type": "object",
+        "properties": {
+          "bodies_created": {
+            "description": "Any new bodies created by the request.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/BodiesCreated"
+              }
+            ]
+          },
+          "bodies_updated": {
+            "description": "Any existing bodies updated by the request.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/BodiesUpdated"
+              }
+            ]
+          }
+        }
       },
       "ExtrudedFaceInfo": {
         "description": "IDs for the extruded faces.",
@@ -51794,11 +52274,47 @@
       },
       "Revolve": {
         "description": "The response from the `Revolve` endpoint.",
-        "type": "object"
+        "type": "object",
+        "properties": {
+          "bodies_created": {
+            "description": "Any new bodies created by the request.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/BodiesCreated"
+              }
+            ]
+          },
+          "bodies_updated": {
+            "description": "Any existing bodies updated by the request.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/BodiesUpdated"
+              }
+            ]
+          }
+        }
       },
       "RevolveAboutEdge": {
         "description": "The response from the `RevolveAboutEdge` endpoint.",
-        "type": "object"
+        "type": "object",
+        "properties": {
+          "bodies_created": {
+            "description": "Any new bodies created by the request.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/BodiesCreated"
+              }
+            ]
+          },
+          "bodies_updated": {
+            "description": "Any existing bodies updated by the request.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/BodiesUpdated"
+              }
+            ]
+          }
+        }
       },
       "Rotation": {
         "description": "A rotation defined by an axis, origin of rotation, and an angle.",
@@ -53421,6 +53937,36 @@
         "description": "The response from the `SurfaceBlend` endpoint.",
         "type": "object"
       },
+      "SurfaceCreated": {
+        "description": "Details of a surface that was created under some body.",
+        "type": "object",
+        "properties": {
+          "from_segments": {
+            "description": "Which segment IDs was this surface swept from?",
+            "type": "array",
+            "items": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          "id": {
+            "description": "The surface's ID.",
+            "type": "string",
+            "format": "uuid"
+          },
+          "primitive_face_index": {
+            "description": "Which number face of the parent body is this?",
+            "type": "integer",
+            "format": "uint32",
+            "minimum": 0
+          }
+        },
+        "required": [
+          "from_segments",
+          "id",
+          "primitive_face_index"
+        ]
+      },
       "SurfaceEdgeReference": {
         "description": "An object id, that corresponds to a surface body, and a list of edges of the surface.",
         "type": "object",
@@ -53445,7 +53991,25 @@
       },
       "Sweep": {
         "description": "The response from the `Sweep` endpoint.",
-        "type": "object"
+        "type": "object",
+        "properties": {
+          "bodies_created": {
+            "description": "Any new bodies created by the request.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/BodiesCreated"
+              }
+            ]
+          },
+          "bodies_updated": {
+            "description": "Any existing bodies updated by the request.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/BodiesUpdated"
+              }
+            ]
+          }
+        }
       },
       "System": {
         "description": "Co-ordinate system definition.\n\nThe `up` axis must be orthogonal to the `forward` axis.\n\nSee [cglearn.eu] for background reading.\n\n[cglearn.eu](https://cglearn.eu/pub/computer-graphics/introduction-to-geometry#material-coordinate-systems-1)",
@@ -54585,7 +55149,25 @@
       },
       "TwistExtrude": {
         "description": "The response from the `TwistExtrude` endpoint.",
-        "type": "object"
+        "type": "object",
+        "properties": {
+          "bodies_created": {
+            "description": "Any new bodies created by the request.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/BodiesCreated"
+              }
+            ]
+          },
+          "bodies_updated": {
+            "description": "Any existing bodies updated by the request.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/BodiesUpdated"
+              }
+            ]
+          }
+        }
       },
       "UnitAngle": {
         "description": "The valid types of angle formats.",
