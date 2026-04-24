@@ -59,7 +59,11 @@ from .billing_unit import BillingUnit
 from .billing_unit_granularity import BillingUnitGranularity
 from .blend_type import BlendType
 from .block_reason import BlockReason
+from .bodies_created import BodiesCreated
+from .bodies_updated import BodiesUpdated
+from .body_created import BodyCreated
 from .body_type import BodyType
+from .body_updated import BodyUpdated
 from .boolean_imprint import BooleanImprint
 from .boolean_intersection import BooleanIntersection
 from .boolean_subtract import BooleanSubtract
@@ -442,6 +446,7 @@ from .support_inquiry_type import SupportInquiryType
 from .support_tier import SupportTier
 from .surface_area import SurfaceArea
 from .surface_blend import SurfaceBlend
+from .surface_created import SurfaceCreated
 from .surface_edge_reference import SurfaceEdgeReference
 from .sweep import Sweep
 from .system import System

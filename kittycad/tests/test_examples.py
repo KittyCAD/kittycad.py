@@ -2072,6 +2072,22 @@ async def test_list_invoices_for_org_async():
 
 
 @pytest.mark.skip
+def test_redirect_payment_method_portal_link_for_org():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    client.payments.redirect_payment_method_portal_link_for_org(return_url=None)
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_redirect_payment_method_portal_link_for_org_async():
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    await client.payments.redirect_payment_method_portal_link_for_org(return_url=None)
+
+
+@pytest.mark.skip
 def test_list_payment_methods_for_org():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
@@ -3993,6 +4009,22 @@ async def test_list_invoices_for_user_async():
     item: Invoice
     async for item in iterator:
         print(item)
+
+
+@pytest.mark.skip
+def test_redirect_payment_method_portal_link_for_user():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    client.payments.redirect_payment_method_portal_link_for_user(return_url=None)
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_redirect_payment_method_portal_link_for_user_async():
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    await client.payments.redirect_payment_method_portal_link_for_user(return_url=None)
 
 
 @pytest.mark.skip

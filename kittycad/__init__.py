@@ -9481,6 +9481,35 @@ class PaymentsAPI:
         # Validate into a Pydantic model (supports BaseModel/RootModel)
         return InvoiceResultsPage.model_validate(json_data)
 
+    def redirect_payment_method_portal_link_for_org(
+        self,
+        *,
+        return_url: Optional[str] = None,
+    ):
+        """If the request is not authenticated, this redirects to website login with a callback back to this endpoint. If authenticated as an org admin, it creates a fresh hosted Stripe portal session and redirects the browser to it."""
+
+        url = "{}/org/payment/method-portal-link".format(self.client.base_url)
+
+        if return_url is not None:
+            if "?" in url:
+                url = url + "&return_url=" + str(return_url)
+            else:
+                url = url + "?return_url=" + str(return_url)
+
+        _client = self.client.get_http_client()
+
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
     def list_payment_methods_for_org(
         self,
     ) -> List[PaymentMethod]:
@@ -10028,6 +10057,35 @@ class PaymentsAPI:
         # Validate into a Pydantic model (supports BaseModel/RootModel)
         return InvoiceResultsPage.model_validate(json_data)
 
+    def redirect_payment_method_portal_link_for_user(
+        self,
+        *,
+        return_url: Optional[str] = None,
+    ):
+        """If the request is not authenticated, this redirects to website login with a callback back to this endpoint. If authenticated, it creates a fresh hosted Stripe portal session and redirects the browser to it."""
+
+        url = "{}/user/payment/method-portal-link".format(self.client.base_url)
+
+        if return_url is not None:
+            if "?" in url:
+                url = url + "&return_url=" + str(return_url)
+            else:
+                url = url + "?return_url=" + str(return_url)
+
+        _client = self.client.get_http_client()
+
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
     def list_payment_methods_for_user(
         self,
     ) -> List[PaymentMethod]:
@@ -10549,6 +10607,35 @@ class AsyncPaymentsAPI:
         json_data = response.json()
         # Validate into a Pydantic model (supports BaseModel/RootModel)
         return InvoiceResultsPage.model_validate(json_data)
+
+    async def redirect_payment_method_portal_link_for_org(
+        self,
+        *,
+        return_url: Optional[str] = None,
+    ):
+        """If the request is not authenticated, this redirects to website login with a callback back to this endpoint. If authenticated as an org admin, it creates a fresh hosted Stripe portal session and redirects the browser to it."""
+
+        url = "{}/org/payment/method-portal-link".format(self.client.base_url)
+
+        if return_url is not None:
+            if "?" in url:
+                url = url + "&return_url=" + str(return_url)
+            else:
+                url = url + "?return_url=" + str(return_url)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
 
     async def list_payment_methods_for_org(
         self,
@@ -11096,6 +11183,35 @@ class AsyncPaymentsAPI:
         json_data = response.json()
         # Validate into a Pydantic model (supports BaseModel/RootModel)
         return InvoiceResultsPage.model_validate(json_data)
+
+    async def redirect_payment_method_portal_link_for_user(
+        self,
+        *,
+        return_url: Optional[str] = None,
+    ):
+        """If the request is not authenticated, this redirects to website login with a callback back to this endpoint. If authenticated, it creates a fresh hosted Stripe portal session and redirects the browser to it."""
+
+        url = "{}/user/payment/method-portal-link".format(self.client.base_url)
+
+        if return_url is not None:
+            if "?" in url:
+                url = url + "&return_url=" + str(return_url)
+            else:
+                url = url + "?return_url=" + str(return_url)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
 
     async def list_payment_methods_for_user(
         self,
