@@ -657,6 +657,14 @@
   },
   {
     "op": "add",
+    "path": "/paths/~1org~1payment~1method-portal-link/get/x-python",
+    "value": {
+      "example": "\n\ndef example_redirect_payment_method_portal_link_for_org():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    client.payments.redirect_payment_method_portal_link_for_org(return_url=None)\n\n",
+      "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD.payments"
+    }
+  },
+  {
+    "op": "add",
     "path": "/paths/~1org~1payment~1methods/get/x-python",
     "value": {
       "example": "from kittycad.models import PaymentMethod\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_list_payment_methods_for_org():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    result: List[PaymentMethod] = client.payments.list_payment_methods_for_org()\n\n\n    body: List[PaymentMethod] = result\n    print(body)\n\n",
@@ -1300,6 +1308,14 @@
     "path": "/paths/~1user~1payment~1invoices/get/x-python",
     "value": {
       "example": "from kittycad.models import InvoiceResultsPage\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\n\n\nfrom kittycad.models import Invoice\ndef example_list_invoices_for_user():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    # Iterate through all pages automatically\n    item: Invoice\n    for item in client.payments.list_invoices_for_user(limit=None,\n        page_token=None):\n        print(item)\n\n",
+      "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD.payments"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/paths/~1user~1payment~1method-portal-link/get/x-python",
+    "value": {
+      "example": "\n\ndef example_redirect_payment_method_portal_link_for_user():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    client.payments.redirect_payment_method_portal_link_for_user(return_url=None)\n\n",
       "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD.payments"
     }
   },
