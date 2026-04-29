@@ -24,6 +24,10 @@ class OrgDatasetFileConversionStatus(str, Enum):
 
     ERROR_USER = "error_user"
 
+    """# Conversion produced a raw KCL result whose geometry diverged from the source model beyond the accepted threshold."""  # noqa: E501
+
+    ERROR_GEOMETRY_MISMATCH = "error_geometry_mismatch"
+
     """# Conversion failed because we didn't know how to handle the file. The conversion should be retried with a new converter version."""  # noqa: E501
 
     ERROR_UNSUPPORTED = "error_unsupported"

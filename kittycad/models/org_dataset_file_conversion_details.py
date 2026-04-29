@@ -43,9 +43,13 @@ class OrgDatasetFileConversionDetails(KittyCadBaseModel):
 
     raw_kcl_output: Optional[str] = None
 
+    raw_kcl_similarity_score: Optional[float] = None
+
     raw_kcl_snapshot_images: List[OrgDatasetSnapshotImage]
 
     salon_kcl_output: Optional[str] = None
+
+    salon_kcl_similarity_score: Optional[float] = None
 
     salon_kcl_snapshot_images: List[OrgDatasetSnapshotImage]
 

@@ -34,6 +34,10 @@ class OrgDatasetFileConversionSummary(KittyCadBaseModel):
 
     phase: OrgDatasetFileConversionPhase
 
+    raw_kcl_similarity_score: Optional[float] = None
+
+    salon_kcl_similarity_score: Optional[float] = None
+
     started_at: Optional[datetime.datetime] = None
 
     status: OrgDatasetFileConversionStatus
