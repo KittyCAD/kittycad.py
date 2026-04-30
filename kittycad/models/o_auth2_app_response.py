@@ -3,6 +3,7 @@ from typing import List
 
 from ..models.o_auth2_app_client_type import OAuth2AppClientType
 from ..models.o_auth2_app_grant_type import OAuth2AppGrantType
+from ..models.o_auth2_app_mode import OAuth2AppMode
 from ..models.uuid import Uuid
 from .base import KittyCadBaseModel
 
@@ -21,6 +22,8 @@ class OAuth2AppResponse(KittyCadBaseModel):
     grant_types: List[OAuth2AppGrantType]
 
     is_active: bool
+
+    mode: OAuth2AppMode
 
     name: str
 

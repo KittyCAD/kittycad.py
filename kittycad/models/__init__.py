@@ -270,12 +270,16 @@ from .move_path_pen import MovePathPen
 from .new_annotation import NewAnnotation
 from .o_auth2_app_client_type import OAuth2AppClientType
 from .o_auth2_app_grant_type import OAuth2AppGrantType
+from .o_auth2_app_mode import OAuth2AppMode
 from .o_auth2_app_response import OAuth2AppResponse
 from .o_auth2_app_response_results_page import OAuth2AppResponseResultsPage
 from .o_auth2_authorization_code_uuid import OAuth2AuthorizationCodeUuid
+from .o_auth2_authorization_decision_response import OAuth2AuthorizationDecisionResponse
+from .o_auth2_authorization_request_response import OAuth2AuthorizationRequestResponse
 from .o_auth2_authorization_response_type import OAuth2AuthorizationResponseType
 from .o_auth2_code_challenge_method import OAuth2CodeChallengeMethod
 from .o_auth2_refresh_token_uuid import OAuth2RefreshTokenUuid
+from .o_auth2_scope import OAuth2Scope
 from .o_auth2_scopes import OAuth2Scopes
 from .o_auth2_token_grant_type import OAuth2TokenGrantType
 from .o_auth2_token_request_form import OAuth2TokenRequestForm
