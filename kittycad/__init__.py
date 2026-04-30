@@ -94,6 +94,12 @@ from .models.ml_copilot_server_message import MlCopilotServerMessage
 from .models.ml_feedback import MlFeedback
 from .models.o_auth2_app_response import OAuth2AppResponse
 from .models.o_auth2_app_response_results_page import OAuth2AppResponseResultsPage
+from .models.o_auth2_authorization_decision_response import (
+    OAuth2AuthorizationDecisionResponse,
+)
+from .models.o_auth2_authorization_request_response import (
+    OAuth2AuthorizationRequestResponse,
+)
 from .models.o_auth2_authorization_response_type import OAuth2AuthorizationResponseType
 from .models.o_auth2_code_challenge_method import OAuth2CodeChallengeMethod
 from .models.o_auth2_scopes import OAuth2Scopes
@@ -4505,6 +4511,96 @@ class Oauth2API:
     def __init__(self, client: Client) -> None:
         self.client = client
 
+    def get_oauth2_authorization_request(
+        self,
+        request_id: Uuid,
+    ) -> OAuth2AuthorizationRequestResponse:
+        """Get a pending OAuth 2.0 authorization request for the consent page."""
+
+        url = "{}/oauth2/authorization-requests/{request_id}".format(
+            self.client.base_url, request_id=request_id
+        )
+
+        _client = self.client.get_http_client()
+
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return OAuth2AuthorizationRequestResponse.model_validate(json_data)
+
+    def approve_oauth2_authorization_request(
+        self,
+        request_id: Uuid,
+    ) -> OAuth2AuthorizationDecisionResponse:
+        """Approve a pending OAuth 2.0 authorization request."""
+
+        url = "{}/oauth2/authorization-requests/{request_id}/approve".format(
+            self.client.base_url, request_id=request_id
+        )
+
+        _client = self.client.get_http_client()
+
+        response = _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return OAuth2AuthorizationDecisionResponse.model_validate(json_data)
+
+    def deny_oauth2_authorization_request(
+        self,
+        request_id: Uuid,
+    ) -> OAuth2AuthorizationDecisionResponse:
+        """Deny a pending OAuth 2.0 authorization request."""
+
+        url = "{}/oauth2/authorization-requests/{request_id}/deny".format(
+            self.client.base_url, request_id=request_id
+        )
+
+        _client = self.client.get_http_client()
+
+        response = _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return OAuth2AuthorizationDecisionResponse.model_validate(json_data)
+
     def oauth2_authorize(
         self,
         response_type: OAuth2AuthorizationResponseType,
@@ -5482,6 +5578,96 @@ class AsyncOauth2API:
 
     def __init__(self, client: AsyncClient) -> None:
         self.client = client
+
+    async def get_oauth2_authorization_request(
+        self,
+        request_id: Uuid,
+    ) -> OAuth2AuthorizationRequestResponse:
+        """Get a pending OAuth 2.0 authorization request for the consent page."""
+
+        url = "{}/oauth2/authorization-requests/{request_id}".format(
+            self.client.base_url, request_id=request_id
+        )
+
+        _client = self.client.get_http_client()
+
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return OAuth2AuthorizationRequestResponse.model_validate(json_data)
+
+    async def approve_oauth2_authorization_request(
+        self,
+        request_id: Uuid,
+    ) -> OAuth2AuthorizationDecisionResponse:
+        """Approve a pending OAuth 2.0 authorization request."""
+
+        url = "{}/oauth2/authorization-requests/{request_id}/approve".format(
+            self.client.base_url, request_id=request_id
+        )
+
+        _client = self.client.get_http_client()
+
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return OAuth2AuthorizationDecisionResponse.model_validate(json_data)
+
+    async def deny_oauth2_authorization_request(
+        self,
+        request_id: Uuid,
+    ) -> OAuth2AuthorizationDecisionResponse:
+        """Deny a pending OAuth 2.0 authorization request."""
+
+        url = "{}/oauth2/authorization-requests/{request_id}/deny".format(
+            self.client.base_url, request_id=request_id
+        )
+
+        _client = self.client.get_http_client()
+
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return OAuth2AuthorizationDecisionResponse.model_validate(json_data)
 
     async def oauth2_authorize(
         self,
