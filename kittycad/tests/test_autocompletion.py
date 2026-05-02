@@ -6,19 +6,33 @@ This test shows that the methods now have proper signatures instead of (*args, *
 IDEs will now provide full parameter hints and autocompletion.
 """
 
+from inspect import signature
+from typing import Any, cast
+
 from kittycad import KittyCAD
 from kittycad.models.post_effect_type import PostEffectType
 
 
+class FakeWebSocket:
+    def send(self, _data):
+        pass
+
+    def recv(self, timeout=None):
+        return "{}"
+
+    def close(self):
+        pass
+
+
 def test_client_creation():
     """Test that client can be created successfully."""
-    client = KittyCAD()
+    client = KittyCAD(token="test-token")
     assert client.base_url == "https://api.zoo.dev"
 
 
 def test_websocket_method_signature():
     """Test that WebSocket methods have proper signatures for autocompletion."""
-    client = KittyCAD()
+    client = KittyCAD(token="test-token")
 
     # This method call demonstrates full autocompletion with parameter names and types:
     ws = client.modeling.modeling_commands_ws(
@@ -33,6 +47,7 @@ def test_websocket_method_signature():
         api_call_id=None,  # IDE knows this is Optional[str]
         pool=None,  # IDE knows this is Optional[str]
         replay=None,  # IDE knows this is Optional[str]
+        ws_factory=cast(Any, lambda *args, **kwargs: FakeWebSocket()),
     )
 
     # Verify WebSocket was created successfully
@@ -47,7 +62,7 @@ def test_websocket_method_signature():
 
 def test_regular_api_method_signature():
     """Test that regular API methods have proper signatures."""
-    client = KittyCAD()
+    client = KittyCAD(token="test-token")
 
     # Regular API methods also have proper signatures (though they delegate to API files)
     # We can't actually call this without auth, but we can verify the method exists
@@ -61,6 +76,17 @@ def test_regular_api_method_signature():
 
 def test_environment_variable_support():
     """Test that client classes maintain environment variable support."""
-    client = KittyCAD()
+    client = KittyCAD(token="test-token")
     assert isinstance(client.base_url, str)
     assert len(client.base_url) > 0
+
+
+def test_websocket_signature_includes_expected_parameters():
+    """Test the method signature without opening a real websocket."""
+    client = KittyCAD(token="test-token")
+    params = signature(client.modeling.modeling_commands_ws).parameters
+
+    assert "fps" in params
+    assert "post_effect" in params
+    assert "show_grid" in params
+    assert "ws_factory" in params

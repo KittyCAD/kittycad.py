@@ -54,6 +54,11 @@ from kittycad.models.stl_storage import StlStorage
 from kittycad.models.web_socket_request import OptionModelingCmdReq
 from kittycad.types import Unset
 
+pytestmark = pytest.mark.skipif(
+    not (os.getenv("KITTYCAD_API_TOKEN") or os.getenv("ZOO_API_TOKEN")),
+    reason="requires KITTYCAD_API_TOKEN or ZOO_API_TOKEN",
+)
+
 
 def _poll_for_completion(
     client, fc: FileConversion, timeout_seconds: int = 60
