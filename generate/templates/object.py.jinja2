@@ -13,7 +13,7 @@ from .base64data import Base64Data
 {% endfor %}
 
 class {{ name }}(KittyCadBaseModel):
-    """{{ description }}"""
+    """{{ description | trim }}"""
     {% for field in fields %}
     {% if field.value %}
     {{ field.name }}: Literal[{{ field.value }}] = {{ field.value }}

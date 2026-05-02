@@ -17,6 +17,7 @@ class Fillet(KittyCadBaseModel):
     @model_validator(mode="before")
     @classmethod
     def _unwrap(cls, data):
+
         if (
             isinstance(data, dict)
             and "fillet" in data
@@ -28,6 +29,7 @@ class Fillet(KittyCadBaseModel):
 
     @model_serializer(mode="wrap")
     def _wrap(self, handler, info):
+
         payload = handler(self, info)
 
         return {"fillet": payload}
@@ -47,6 +49,7 @@ class Chamfer(KittyCadBaseModel):
     @model_validator(mode="before")
     @classmethod
     def _unwrap(cls, data):
+
         if (
             isinstance(data, dict)
             and "chamfer" in data
@@ -58,6 +61,7 @@ class Chamfer(KittyCadBaseModel):
 
     @model_serializer(mode="wrap")
     def _wrap(self, handler, info):
+
         payload = handler(self, info)
 
         return {"chamfer": payload}
@@ -71,6 +75,7 @@ class Custom(KittyCadBaseModel):
     @model_validator(mode="before")
     @classmethod
     def _unwrap(cls, data):
+
         if (
             isinstance(data, dict)
             and "custom" in data
@@ -82,6 +87,7 @@ class Custom(KittyCadBaseModel):
 
     @model_serializer(mode="wrap")
     def _wrap(self, handler, info):
+
         payload = handler(self, info)
 
         return {"custom": payload}

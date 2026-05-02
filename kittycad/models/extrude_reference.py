@@ -14,6 +14,7 @@ class EntityReference(KittyCadBaseModel):
     @model_validator(mode="before")
     @classmethod
     def _unwrap(cls, data):
+
         if (
             isinstance(data, dict)
             and "entity_reference" in data
@@ -25,6 +26,7 @@ class EntityReference(KittyCadBaseModel):
 
     @model_serializer(mode="wrap")
     def _wrap(self, handler, info):
+
         payload = handler(self, info)
 
         return {"entity_reference": payload}
@@ -40,6 +42,7 @@ class Axis(KittyCadBaseModel):
     @model_validator(mode="before")
     @classmethod
     def _unwrap(cls, data):
+
         if isinstance(data, dict) and "axis" in data and isinstance(data["axis"], dict):
             return data["axis"]
 
@@ -47,6 +50,7 @@ class Axis(KittyCadBaseModel):
 
     @model_serializer(mode="wrap")
     def _wrap(self, handler, info):
+
         payload = handler(self, info)
 
         return {"axis": payload}
@@ -60,6 +64,7 @@ class Point(KittyCadBaseModel):
     @model_validator(mode="before")
     @classmethod
     def _unwrap(cls, data):
+
         if (
             isinstance(data, dict)
             and "point" in data
@@ -71,6 +76,7 @@ class Point(KittyCadBaseModel):
 
     @model_serializer(mode="wrap")
     def _wrap(self, handler, info):
+
         payload = handler(self, info)
 
         return {"point": payload}

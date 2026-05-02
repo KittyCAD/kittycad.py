@@ -26,6 +26,7 @@ class SessionData(KittyCadBaseModel):
     @model_validator(mode="before")
     @classmethod
     def _unwrap(cls, data):
+
         if (
             isinstance(data, dict)
             and "session_data" in data
@@ -37,6 +38,7 @@ class SessionData(KittyCadBaseModel):
 
     @model_serializer(mode="wrap")
     def _wrap(self, handler, info):
+
         payload = handler(self, info)
 
         return {"session_data": payload}
@@ -50,6 +52,7 @@ class ConversationId(KittyCadBaseModel):
     @model_validator(mode="before")
     @classmethod
     def _unwrap(cls, data):
+
         if (
             isinstance(data, dict)
             and "conversation_id" in data
@@ -61,6 +64,7 @@ class ConversationId(KittyCadBaseModel):
 
     @model_serializer(mode="wrap")
     def _wrap(self, handler, info):
+
         payload = handler(self, info)
 
         return {"conversation_id": payload}
@@ -74,6 +78,7 @@ class Delta(KittyCadBaseModel):
     @model_validator(mode="before")
     @classmethod
     def _unwrap(cls, data):
+
         if (
             isinstance(data, dict)
             and "delta" in data
@@ -85,6 +90,7 @@ class Delta(KittyCadBaseModel):
 
     @model_serializer(mode="wrap")
     def _wrap(self, handler, info):
+
         payload = handler(self, info)
 
         return {"delta": payload}
@@ -98,6 +104,7 @@ class ToolOutput(KittyCadBaseModel):
     @model_validator(mode="before")
     @classmethod
     def _unwrap(cls, data):
+
         if (
             isinstance(data, dict)
             and "tool_output" in data
@@ -109,6 +116,7 @@ class ToolOutput(KittyCadBaseModel):
 
     @model_serializer(mode="wrap")
     def _wrap(self, handler, info):
+
         payload = handler(self, info)
 
         return {"tool_output": payload}
@@ -122,6 +130,7 @@ class Error(KittyCadBaseModel):
     @model_validator(mode="before")
     @classmethod
     def _unwrap(cls, data):
+
         if (
             isinstance(data, dict)
             and "error" in data
@@ -133,6 +142,7 @@ class Error(KittyCadBaseModel):
 
     @model_serializer(mode="wrap")
     def _wrap(self, handler, info):
+
         payload = handler(self, info)
 
         return {"error": payload}
@@ -146,6 +156,7 @@ class Info(KittyCadBaseModel):
     @model_validator(mode="before")
     @classmethod
     def _unwrap(cls, data):
+
         if isinstance(data, dict) and "info" in data and isinstance(data["info"], dict):
             return data["info"]
 
@@ -153,6 +164,7 @@ class Info(KittyCadBaseModel):
 
     @model_serializer(mode="wrap")
     def _wrap(self, handler, info):
+
         payload = handler(self, info)
 
         return {"info": payload}
@@ -166,6 +178,7 @@ class BackendShutdown(KittyCadBaseModel):
     @model_validator(mode="before")
     @classmethod
     def _unwrap(cls, data):
+
         if (
             isinstance(data, dict)
             and "backend_shutdown" in data
@@ -177,6 +190,7 @@ class BackendShutdown(KittyCadBaseModel):
 
     @model_serializer(mode="wrap")
     def _wrap(self, handler, info):
+
         payload = handler(self, info)
 
         return {"backend_shutdown": payload}
@@ -190,6 +204,7 @@ class ProjectUpdated(KittyCadBaseModel):
     @model_validator(mode="before")
     @classmethod
     def _unwrap(cls, data):
+
         if (
             isinstance(data, dict)
             and "project_updated" in data
@@ -201,6 +216,7 @@ class ProjectUpdated(KittyCadBaseModel):
 
     @model_serializer(mode="wrap")
     def _wrap(self, handler, info):
+
         payload = handler(self, info)
 
         return {"project_updated": payload}
@@ -224,6 +240,7 @@ class Replay(KittyCadBaseModel):
     @model_validator(mode="before")
     @classmethod
     def _unwrap(cls, data):
+
         if (
             isinstance(data, dict)
             and "replay" in data
@@ -235,6 +252,7 @@ class Replay(KittyCadBaseModel):
 
     @model_serializer(mode="wrap")
     def _wrap(self, handler, info):
+
         payload = handler(self, info)
 
         return {"replay": payload}
@@ -256,6 +274,7 @@ class EndOfStream(KittyCadBaseModel):
     @model_validator(mode="before")
     @classmethod
     def _unwrap(cls, data):
+
         if (
             isinstance(data, dict)
             and "end_of_stream" in data
@@ -267,6 +286,7 @@ class EndOfStream(KittyCadBaseModel):
 
     @model_serializer(mode="wrap")
     def _wrap(self, handler, info):
+
         payload = handler(self, info)
 
         return {"end_of_stream": payload}
@@ -280,6 +300,7 @@ class Files(KittyCadBaseModel):
     @model_validator(mode="before")
     @classmethod
     def _unwrap(cls, data):
+
         if (
             isinstance(data, dict)
             and "files" in data
@@ -291,6 +312,7 @@ class Files(KittyCadBaseModel):
 
     @model_serializer(mode="wrap")
     def _wrap(self, handler, info):
+
         payload = handler(self, info)
 
         return {"files": payload}
