@@ -1,3 +1,4 @@
+import os
 import time
 from pathlib import Path
 
@@ -8,6 +9,11 @@ from kittycad.models.api_call_status import ApiCallStatus
 from kittycad.models.async_api_call_output import OptionTextToCadMultiFileIteration
 from kittycad.models.text_to_cad_multi_file_iteration_body import (
     TextToCadMultiFileIterationBody,
+)
+
+pytestmark = pytest.mark.skipif(
+    not (os.getenv("KITTYCAD_API_TOKEN") or os.getenv("ZOO_API_TOKEN")),
+    reason="requires KITTYCAD_API_TOKEN or ZOO_API_TOKEN",
 )
 
 

@@ -1,4 +1,5 @@
 import asyncio
+import os
 import time
 from pathlib import Path
 from typing import Dict
@@ -12,6 +13,11 @@ from kittycad.models.text_to_cad_multi_file_iteration_body import (
     TextToCadMultiFileIterationBody,
 )
 from kittycad.models.text_to_cad_response import OptionTextToCadMultiFileIteration
+
+pytestmark = pytest.mark.skipif(
+    not (os.getenv("KITTYCAD_API_TOKEN") or os.getenv("ZOO_API_TOKEN")),
+    reason="requires KITTYCAD_API_TOKEN or ZOO_API_TOKEN",
+)
 
 
 @pytest.mark.asyncio

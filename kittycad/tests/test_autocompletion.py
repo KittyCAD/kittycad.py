@@ -12,13 +12,13 @@ from kittycad.models.post_effect_type import PostEffectType
 
 def test_client_creation():
     """Test that client can be created successfully."""
-    client = KittyCAD()
+    client = KittyCAD(token="test-token")
     assert client.base_url == "https://api.zoo.dev"
 
 
 def test_websocket_method_signature():
     """Test that WebSocket methods have proper signatures for autocompletion."""
-    client = KittyCAD()
+    client = KittyCAD(token="test-token")
 
     # This method call demonstrates full autocompletion with parameter names and types:
     ws = client.modeling.modeling_commands_ws(
@@ -47,7 +47,7 @@ def test_websocket_method_signature():
 
 def test_regular_api_method_signature():
     """Test that regular API methods have proper signatures."""
-    client = KittyCAD()
+    client = KittyCAD(token="test-token")
 
     # Regular API methods also have proper signatures (though they delegate to API files)
     # We can't actually call this without auth, but we can verify the method exists
@@ -61,6 +61,6 @@ def test_regular_api_method_signature():
 
 def test_environment_variable_support():
     """Test that client classes maintain environment variable support."""
-    client = KittyCAD()
+    client = KittyCAD(token="test-token")
     assert isinstance(client.base_url, str)
     assert len(client.base_url) > 0

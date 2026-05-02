@@ -1,5 +1,6 @@
 """Tests for pagination functionality."""
 
+import os
 from typing import AsyncIterator, Iterator, List, Optional, cast
 from unittest.mock import AsyncMock, Mock
 
@@ -8,6 +9,11 @@ from pydantic import BaseModel
 
 from kittycad import AsyncKittyCAD, KittyCAD
 from kittycad.pagination import AsyncPageIterator, SyncPageIterator
+
+requires_api_token = pytest.mark.skipif(
+    not (os.getenv("KITTYCAD_API_TOKEN") or os.getenv("ZOO_API_TOKEN")),
+    reason="requires KITTYCAD_API_TOKEN or ZOO_API_TOKEN",
+)
 
 
 # Mock data models for testing
@@ -754,6 +760,7 @@ async def test_async_page_iterator_large_dataset():
     assert mock_fetcher.call_count == expected_pages
 
 
+@requires_api_token
 def test_sync_pagination_integration_user_api_calls():
     """Integration test for sync pagination with real user API call data."""
     # Create client with real API token
@@ -814,6 +821,7 @@ def test_sync_pagination_integration_user_api_calls():
 
 
 @pytest.mark.asyncio
+@requires_api_token
 async def test_async_pagination_integration_user_api_calls():
     """Integration test for async pagination with real user API call data."""
     # Create async client with real API token
@@ -995,7 +1003,7 @@ def test_pagination_url_parameters_no_duplication():
     from kittycad.pagination import SyncPageIterator
 
     # Create a mock client to intercept HTTP requests
-    client = KittyCAD()
+    client = KittyCAD(token="test-token")
 
     # Mock the HTTP client to capture URLs for each request
     captured_urls = []
@@ -1090,7 +1098,7 @@ def test_pagination_explicit_page_token():
     from kittycad.pagination import SyncPageIterator
 
     # Create a mock client to intercept HTTP requests
-    client = KittyCAD()
+    client = KittyCAD(token="test-token")
 
     # Mock the HTTP client to capture the URL
     captured_url = None
