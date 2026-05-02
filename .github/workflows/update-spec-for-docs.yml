@@ -13,13 +13,14 @@ concurrency:
 jobs:
   update-spec:
     name: update-spec
+    if: ${{ github.event_name != 'pull_request' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/create-github-app-token@v3
         id: app-token
         with:
           # required
-          app-id: ${{ secrets.GH_ORG_APP_ID }}
+          client-id: ${{ secrets.GH_ORG_APP_ID }}
           private-key: ${{ secrets.GH_ORG_APP_PRIVATE_KEY }}
           owner: ${{ github.repository_owner }}
       - uses: actions/checkout@v4
@@ -85,5 +86,4 @@ jobs:
               --base main || true
         env:
           GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
-
 
