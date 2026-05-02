@@ -747,7 +747,7 @@ def generate_object_type_code(
 
     description = ""
     if "description" in schema:
-        description = schema["description"].replace('"', '\\"')
+        description = schema["description"].strip().replace('"', '\\"')
 
     imports: List[str] = []
     if extra_imports:
