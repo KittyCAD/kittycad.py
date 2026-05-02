@@ -14,8 +14,11 @@ jobs:
   update-spec:
     name: update-spec
     runs-on: ubuntu-latest
+    env:
+      HAS_GH_ORG_APP_CREDS: ${{ secrets.GH_ORG_APP_ID != '' && secrets.GH_ORG_APP_PRIVATE_KEY != '' }}
     steps:
       - uses: actions/create-github-app-token@v3
+        if: ${{ env.HAS_GH_ORG_APP_CREDS == 'true' }}
         id: app-token
         with:
           # required
@@ -34,7 +37,7 @@ jobs:
           enable-cache: true
           cache-dependency-glob: "uv.lock"
       - name: Install just
-        uses: extractions/setup-just@v3
+        uses: extractions/setup-just@v4
       - name: just generate
         shell: bash
         run: |
@@ -45,7 +48,7 @@ jobs:
       - name: Ensure no files changed
         shell: bash
         run: |
-          if [[ `git status --porcelain kittycad/` ]]; then
+          if [[ $(git status --porcelain kittycad/) ]]; then
             echo "Files changed, exiting";
             exit 1;
           else
@@ -54,16 +57,19 @@ jobs:
           fi
       # Checkout the docs repo since we will want to update the files there.
       - uses: actions/checkout@v4
+        if: ${{ env.HAS_GH_ORG_APP_CREDS == 'true' }}
         with:
           repository: 'kittycad/website'
           path: 'docs'
           token: ${{ steps.app-token.outputs.token }}
       - name: move spec to docs
+        if: ${{ env.HAS_GH_ORG_APP_CREDS == 'true' }}
         shell: bash
         run: |
           rm docs/kittycad.py.patch.json || true
           cp kittycad.py.patch.json docs/kittycad.py.patch.json
       - name: commit the changes in the docs repo
+        if: ${{ env.HAS_GH_ORG_APP_CREDS == 'true' }}
         shell: bash
         run: |
           cd docs
@@ -85,5 +91,3 @@ jobs:
               --base main || true
         env:
           GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
-
-

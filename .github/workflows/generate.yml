@@ -14,12 +14,14 @@ jobs:
     # Check if the PR is not from a fork
     if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
     runs-on: ubuntu-latest
+    env:
+      HAS_GH_ORG_APP_CREDS: ${{ secrets.GH_ORG_APP_ID != '' && secrets.GH_ORG_APP_PRIVATE_KEY != '' }}
     steps:
       - uses: actions/checkout@v4
         with:
           ref: ${{ github.event.pull_request.head.ref }}
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: '3.13'
       - name: Install uv
@@ -29,7 +31,7 @@ jobs:
           enable-cache: true
           cache-dependency-glob: "uv.lock"
       - name: Install just
-        uses: extractions/setup-just@v3
+        uses: extractions/setup-just@v4
       - name: Run generate
         shell: bash
         run: |
@@ -37,6 +39,7 @@ jobs:
         env:
           KITTYCAD_API_TOKEN: ${{secrets.KITTYCAD_API_TOKEN}}
       - name: Commit generated API files
+        if: ${{ env.HAS_GH_ORG_APP_CREDS == 'true' }}
         uses: KittyCAD/gha-actions-public/pr-commit@main
         with:
           app-id: ${{ secrets.GH_ORG_APP_ID }}
