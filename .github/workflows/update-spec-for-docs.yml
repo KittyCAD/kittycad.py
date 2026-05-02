@@ -34,7 +34,7 @@ jobs:
           enable-cache: true
           cache-dependency-glob: "uv.lock"
       - name: Install just
-        uses: extractions/setup-just@v3
+        uses: extractions/setup-just@v4
       - name: just generate
         shell: bash
         run: |
