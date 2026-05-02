@@ -1,0 +1,7 @@
+coverage:
+  status:
+    project:
+      default:
+        # Generated API updates can move whole-project coverage slightly even
+        # when the current PR covers all modified lines.
+        threshold: 0.2%
