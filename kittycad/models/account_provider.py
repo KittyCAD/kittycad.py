@@ -16,6 +16,10 @@ class AccountProvider(str, Enum):
 
     GOOGLE = "google"
 
+    """# The ZooCorp account provider (aka https://auth.corp.zoo.dev)."""  # noqa: E501
+
+    ZOO_CORP = "zoo_corp"
+
     """# The GitHub account provider."""  # noqa: E501
 
     GITHUB = "github"
@@ -27,10 +31,6 @@ class AccountProvider(str, Enum):
     """# The SAML account provider."""  # noqa: E501
 
     SAML = "saml"
-
-    """# The Tencent QQ account provider."""  # noqa: E501
-
-    TENCENT = "tencent"
 
     """# Test provider for integration tests (only available during testing)."""  # noqa: E501
 
