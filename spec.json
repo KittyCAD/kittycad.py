@@ -24532,14 +24532,6 @@
             "schema": {
               "type": "string"
             }
-          },
-          {
-            "in": "query",
-            "name": "force",
-            "description": "Force deletion even when it is the last payment method on file.",
-            "schema": {
-              "type": "boolean"
-            }
           }
         ],
         "responses": {
