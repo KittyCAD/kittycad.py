@@ -40417,6 +40417,21 @@
             ]
           },
           {
+            "description": "Request available mode metadata for the copilot session.",
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "list_modes"
+                ]
+              }
+            },
+            "required": [
+              "type"
+            ]
+          },
+          {
             "description": "Authentication header request.",
             "type": "object",
             "properties": {
@@ -40642,6 +40657,34 @@
           }
         ]
       },
+      "MlCopilotModeOption": {
+        "description": "A client-facing ML copilot mode option.",
+        "type": "object",
+        "properties": {
+          "description": {
+            "description": "Human-readable display description.",
+            "type": "string"
+          },
+          "icon": {
+            "description": "Client icon identifier.",
+            "type": "string"
+          },
+          "id": {
+            "description": "Stable mode identifier to send in user messages.",
+            "type": "string"
+          },
+          "label": {
+            "description": "Human-readable display label.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "description",
+          "icon",
+          "id",
+          "label"
+        ]
+      },
       "MlCopilotServerMessage": {
         "description": "The types of messages that can be sent by the server to the client.",
         "oneOf": [
@@ -40791,6 +40834,36 @@
             },
             "required": [
               "info"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "description": "Available mode metadata for clients.",
+            "type": "object",
+            "properties": {
+              "modes_response": {
+                "type": "object",
+                "properties": {
+                  "default_mode": {
+                    "description": "Default mode identifier used when no mode is requested.",
+                    "type": "string"
+                  },
+                  "modes": {
+                    "description": "Available modes in configuration order.",
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/components/schemas/MlCopilotModeOption"
+                    }
+                  }
+                },
+                "required": [
+                  "default_mode",
+                  "modes"
+                ]
+              }
+            },
+            "required": [
+              "modes_response"
             ],
             "additionalProperties": false
           },
@@ -59035,6 +59108,7 @@
           "aquarium",
           "bodies_pane",
           "proprietary_to_kcl_conversion_beta",
+          "sketch_experimental_features",
           "web_app_file_browser"
         ]
       },
