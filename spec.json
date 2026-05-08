@@ -35719,6 +35719,11 @@
         "description": "Payload for creating an org dataset.",
         "type": "object",
         "properties": {
+          "description": {
+            "nullable": true,
+            "description": "Optional human-readable notes about the dataset.",
+            "type": "string"
+          },
           "name": {
             "description": "The dataset's display name.",
             "type": "string"
@@ -50795,6 +50800,11 @@
             "type": "string",
             "format": "date-time"
           },
+          "description": {
+            "nullable": true,
+            "description": "User-provided description for humans reviewing the dataset.",
+            "type": "string"
+          },
           "id": {
             "description": "The unique identifier for the dataset.",
             "allOf": [
@@ -58760,6 +58770,11 @@
         "description": "Payload for updating an org dataset.",
         "type": "object",
         "properties": {
+          "description": {
+            "nullable": true,
+            "description": "Optional description override. Null clears the description.",
+            "type": "string"
+          },
           "name": {
             "nullable": true,
             "description": "Optional new display name.",
