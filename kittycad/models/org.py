@@ -19,7 +19,7 @@ class Org(KittyCadBaseModel):
 
     block: Optional[BlockReason] = None
 
-    can_train_on_data: bool = False
+    can_train_on_data: Optional[bool] = False
 
     created_at: datetime.datetime
 
@@ -31,7 +31,7 @@ class Org(KittyCadBaseModel):
 
     name: Optional[str] = None
 
-    phone: str = ""
+    phone: Optional[str] = ""
 
     stripe_id: Optional[str] = None
 

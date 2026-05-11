@@ -111,6 +111,15 @@ async def _poll_for_completion_async(
     return body
 
 
+def _assert_file_conversion_options(
+    fc: FileConversion, src_option: type, output_option: type
+) -> None:
+    assert fc.src_format_options is not None
+    assert isinstance(fc.src_format_options.root, src_option)
+    assert fc.output_format_options is not None
+    assert isinstance(fc.output_format_options.root, output_option)
+
+
 def test_get_session():
     # Create our client
     client = KittyCAD()
@@ -340,6 +349,7 @@ def test_file_conversion_options_stl():
     )
 
     assert isinstance(fc, FileConversion)
+    _assert_file_conversion_options(fc, OptionStl, OutputOptionObj)
 
     print(f"FileConversion initial: {fc}")
 
@@ -352,6 +362,7 @@ def test_file_conversion_options_stl():
 
     # Check final status
     assert body.status == ApiCallStatus.COMPLETED
+    _assert_file_conversion_options(body, OptionStl, OutputOptionObj)
     print(f"FileConversion completed: {body}")
 
     assert not isinstance(body.outputs, Unset)
@@ -410,6 +421,7 @@ async def test_file_conversion_options_stl_async():
     )
 
     assert isinstance(result, FileConversion)
+    _assert_file_conversion_options(result, OptionStl, OutputOptionObj)
 
     fc: FileConversion = result
 
@@ -424,6 +436,7 @@ async def test_file_conversion_options_stl_async():
 
     # Check final status
     assert body.status == ApiCallStatus.COMPLETED
+    _assert_file_conversion_options(body, OptionStl, OutputOptionObj)
     print(f"FileConversion completed: {body}")
 
     assert not isinstance(body.outputs, Unset)
@@ -484,6 +497,7 @@ async def test_file_conversion_options_obj_async():
     )
 
     assert isinstance(result, FileConversion)
+    _assert_file_conversion_options(result, OptionObj, OutputOptionStl)
 
     fc: FileConversion = result
 
@@ -498,6 +512,7 @@ async def test_file_conversion_options_obj_async():
 
     # Check final status
     assert body.status == ApiCallStatus.COMPLETED
+    _assert_file_conversion_options(body, OptionObj, OutputOptionStl)
     print(f"FileConversion completed: {body}")
 
     assert not isinstance(body.outputs, Unset)

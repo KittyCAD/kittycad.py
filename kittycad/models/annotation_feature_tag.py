@@ -1,3 +1,5 @@
+from typing import Optional
+
 from ..models.annotation_line_end import AnnotationLineEnd
 from ..models.point2d import Point2d
 from .base import KittyCadBaseModel
@@ -16,7 +18,7 @@ class AnnotationFeatureTag(KittyCadBaseModel):
 
     key: str
 
-    leader_scale: float = 1.0
+    leader_scale: Optional[float] = 1.0
 
     leader_type: AnnotationLineEnd
 

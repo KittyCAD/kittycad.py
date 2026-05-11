@@ -107,7 +107,7 @@
         response = {% if is_async %}await {% endif %}_client.{{ method }}(
             url=url,
             headers=self.client.get_headers(),
-            {% if has_request_body %}{% if request_body_type != "bytes" %}content=body.model_dump_json(),{% else %}content=body,{% endif %}{% endif %}
+            {% if has_request_body %}{% if request_body_type != "bytes" %}content=serialize_request_body(body),{% else %}content=body,{% endif %}{% endif %}
         )
         {% endif %}
 {%- endmacro %}
@@ -130,7 +130,7 @@
             
         json_data = response.json()
         {% if not response_type.startswith(('dict', 'list', 'Union', 'RootModel')) %}
-        return {{ response_type }}(**json_data)
+        return {{ response_type }}.model_validate(json_data, extra="ignore")
         {% else %}
         return json_data
         {% endif %}

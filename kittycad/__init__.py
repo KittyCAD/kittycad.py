@@ -219,6 +219,7 @@ from .models.zoo_product_subscriptions_user_request import (
 )
 from .pagination import AsyncPageIterator, SyncPageIterator
 from .response_helpers import raise_for_status
+from .types import serialize_request_body
 
 
 class MetaAPI:
@@ -254,7 +255,7 @@ class MetaAPI:
         # Validate into annotated/collection/union types using TypeAdapter
         from pydantic import TypeAdapter
 
-        return TypeAdapter(Dict).validate_python(json_data)
+        return TypeAdapter(Dict).validate_python(json_data, extra="ignore")
 
     def get_ipinfo(
         self,
@@ -281,7 +282,7 @@ class MetaAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return IpAddrInfo.model_validate(json_data)
+        return IpAddrInfo.model_validate(json_data, extra="ignore")
 
     def community_sso(
         self,
@@ -348,7 +349,7 @@ class MetaAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return ApiToken.model_validate(json_data)
+        return ApiToken.model_validate(json_data, extra="ignore")
 
     def ping(
         self,
@@ -375,7 +376,7 @@ class MetaAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return Pong.model_validate(json_data)
+        return Pong.model_validate(json_data, extra="ignore")
 
     def get_pricing_subscriptions(
         self,
@@ -404,7 +405,7 @@ class MetaAPI:
         # Validate into annotated/collection/union types using TypeAdapter
         from pydantic import TypeAdapter
 
-        return TypeAdapter(Dict).validate_python(json_data)
+        return TypeAdapter(Dict).validate_python(json_data, extra="ignore")
 
 
 class AsyncMetaAPI:
@@ -440,7 +441,7 @@ class AsyncMetaAPI:
         # Validate into annotated/collection/union types using TypeAdapter
         from pydantic import TypeAdapter
 
-        return TypeAdapter(Dict).validate_python(json_data)
+        return TypeAdapter(Dict).validate_python(json_data, extra="ignore")
 
     async def get_ipinfo(
         self,
@@ -467,7 +468,7 @@ class AsyncMetaAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return IpAddrInfo.model_validate(json_data)
+        return IpAddrInfo.model_validate(json_data, extra="ignore")
 
     async def community_sso(
         self,
@@ -534,7 +535,7 @@ class AsyncMetaAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return ApiToken.model_validate(json_data)
+        return ApiToken.model_validate(json_data, extra="ignore")
 
     async def ping(
         self,
@@ -561,7 +562,7 @@ class AsyncMetaAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return Pong.model_validate(json_data)
+        return Pong.model_validate(json_data, extra="ignore")
 
     async def get_pricing_subscriptions(
         self,
@@ -590,7 +591,7 @@ class AsyncMetaAPI:
         # Validate into annotated/collection/union types using TypeAdapter
         from pydantic import TypeAdapter
 
-        return TypeAdapter(Dict).validate_python(json_data)
+        return TypeAdapter(Dict).validate_python(json_data, extra="ignore")
 
 
 class MlAPI:
@@ -627,7 +628,7 @@ class MlAPI:
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -641,7 +642,7 @@ class MlAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return TextToCad.model_validate(json_data)
+        return TextToCad.model_validate(json_data, extra="ignore")
 
     def list_conversations_for_user(
         self,
@@ -733,7 +734,7 @@ class MlAPI:
 
         json_data = response.json()
         # Validate into a Pydantic model (supports BaseModel/RootModel)
-        return ConversationResultsPage.model_validate(json_data)
+        return ConversationResultsPage.model_validate(json_data, extra="ignore")
 
     def create_proprietary_to_kcl(
         self,
@@ -780,7 +781,7 @@ class MlAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return KclModel.model_validate(json_data)
+        return KclModel.model_validate(json_data, extra="ignore")
 
     def create_custom_model(
         self,
@@ -795,7 +796,7 @@ class MlAPI:
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -809,7 +810,7 @@ class MlAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return CustomModel.model_validate(json_data)
+        return CustomModel.model_validate(json_data, extra="ignore")
 
     def get_custom_model(
         self,
@@ -837,7 +838,7 @@ class MlAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return CustomModel.model_validate(json_data)
+        return CustomModel.model_validate(json_data, extra="ignore")
 
     def update_custom_model(
         self,
@@ -853,7 +854,7 @@ class MlAPI:
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -867,7 +868,7 @@ class MlAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return CustomModel.model_validate(json_data)
+        return CustomModel.model_validate(json_data, extra="ignore")
 
     def list_org_datasets_for_model(
         self,
@@ -897,7 +898,7 @@ class MlAPI:
         # Validate into annotated/collection/union types using TypeAdapter
         from pydantic import TypeAdapter
 
-        return TypeAdapter(List[OrgDataset]).validate_python(json_data)
+        return TypeAdapter(List[OrgDataset]).validate_python(json_data, extra="ignore")
 
     def create_kcl_code_completions(
         self,
@@ -912,7 +913,7 @@ class MlAPI:
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -926,7 +927,7 @@ class MlAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return KclCodeCompletionResponse.model_validate(json_data)
+        return KclCodeCompletionResponse.model_validate(json_data, extra="ignore")
 
     def create_text_to_cad_iteration(
         self,
@@ -947,7 +948,7 @@ class MlAPI:
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -961,7 +962,7 @@ class MlAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return TextToCadIteration.model_validate(json_data)
+        return TextToCadIteration.model_validate(json_data, extra="ignore")
 
     def create_text_to_cad_multi_file_iteration(
         self,
@@ -1046,7 +1047,7 @@ class MlAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return TextToCadMultiFileIteration.model_validate(json_data)
+        return TextToCadMultiFileIteration.model_validate(json_data, extra="ignore")
 
     def list_text_to_cad_parts_for_user(
         self,
@@ -1170,7 +1171,7 @@ class MlAPI:
 
         json_data = response.json()
         # Validate into a Pydantic model (supports BaseModel/RootModel)
-        return TextToCadResponseResultsPage.model_validate(json_data)
+        return TextToCadResponseResultsPage.model_validate(json_data, extra="ignore")
 
     def get_text_to_cad_part_for_user(
         self,
@@ -1198,7 +1199,7 @@ class MlAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return TextToCadResponse.model_validate(json_data)
+        return TextToCadResponse.model_validate(json_data, extra="ignore")
 
     def create_text_to_cad_part_feedback(
         self,
@@ -1301,7 +1302,7 @@ class AsyncMlAPI:
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -1315,7 +1316,7 @@ class AsyncMlAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return TextToCad.model_validate(json_data)
+        return TextToCad.model_validate(json_data, extra="ignore")
 
     def list_conversations_for_user(
         self,
@@ -1407,7 +1408,7 @@ class AsyncMlAPI:
 
         json_data = response.json()
         # Validate into a Pydantic model (supports BaseModel/RootModel)
-        return ConversationResultsPage.model_validate(json_data)
+        return ConversationResultsPage.model_validate(json_data, extra="ignore")
 
     async def create_proprietary_to_kcl(
         self,
@@ -1454,7 +1455,7 @@ class AsyncMlAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return KclModel.model_validate(json_data)
+        return KclModel.model_validate(json_data, extra="ignore")
 
     async def create_custom_model(
         self,
@@ -1469,7 +1470,7 @@ class AsyncMlAPI:
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -1483,7 +1484,7 @@ class AsyncMlAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return CustomModel.model_validate(json_data)
+        return CustomModel.model_validate(json_data, extra="ignore")
 
     async def get_custom_model(
         self,
@@ -1511,7 +1512,7 @@ class AsyncMlAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return CustomModel.model_validate(json_data)
+        return CustomModel.model_validate(json_data, extra="ignore")
 
     async def update_custom_model(
         self,
@@ -1527,7 +1528,7 @@ class AsyncMlAPI:
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -1541,7 +1542,7 @@ class AsyncMlAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return CustomModel.model_validate(json_data)
+        return CustomModel.model_validate(json_data, extra="ignore")
 
     async def list_org_datasets_for_model(
         self,
@@ -1571,7 +1572,7 @@ class AsyncMlAPI:
         # Validate into annotated/collection/union types using TypeAdapter
         from pydantic import TypeAdapter
 
-        return TypeAdapter(List[OrgDataset]).validate_python(json_data)
+        return TypeAdapter(List[OrgDataset]).validate_python(json_data, extra="ignore")
 
     async def create_kcl_code_completions(
         self,
@@ -1586,7 +1587,7 @@ class AsyncMlAPI:
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -1600,7 +1601,7 @@ class AsyncMlAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return KclCodeCompletionResponse.model_validate(json_data)
+        return KclCodeCompletionResponse.model_validate(json_data, extra="ignore")
 
     async def create_text_to_cad_iteration(
         self,
@@ -1621,7 +1622,7 @@ class AsyncMlAPI:
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -1635,7 +1636,7 @@ class AsyncMlAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return TextToCadIteration.model_validate(json_data)
+        return TextToCadIteration.model_validate(json_data, extra="ignore")
 
     async def create_text_to_cad_multi_file_iteration(
         self,
@@ -1720,7 +1721,7 @@ class AsyncMlAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return TextToCadMultiFileIteration.model_validate(json_data)
+        return TextToCadMultiFileIteration.model_validate(json_data, extra="ignore")
 
     def list_text_to_cad_parts_for_user(
         self,
@@ -1844,7 +1845,7 @@ class AsyncMlAPI:
 
         json_data = response.json()
         # Validate into a Pydantic model (supports BaseModel/RootModel)
-        return TextToCadResponseResultsPage.model_validate(json_data)
+        return TextToCadResponseResultsPage.model_validate(json_data, extra="ignore")
 
     async def get_text_to_cad_part_for_user(
         self,
@@ -1872,7 +1873,7 @@ class AsyncMlAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return TextToCadResponse.model_validate(json_data)
+        return TextToCadResponse.model_validate(json_data, extra="ignore")
 
     async def create_text_to_cad_part_feedback(
         self,
@@ -2014,7 +2015,7 @@ class ApiCallsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return ApiCallWithPrice.model_validate(json_data)
+        return ApiCallWithPrice.model_validate(json_data, extra="ignore")
 
     def get_async_operation(
         self,
@@ -2048,7 +2049,7 @@ class ApiCallsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return AsyncApiCallOutput.model_validate(json_data)
+        return AsyncApiCallOutput.model_validate(json_data, extra="ignore")
 
     def org_list_api_calls(
         self,
@@ -2140,7 +2141,7 @@ class ApiCallsAPI:
 
         json_data = response.json()
         # Validate into a Pydantic model (supports BaseModel/RootModel)
-        return ApiCallWithPriceResultsPage.model_validate(json_data)
+        return ApiCallWithPriceResultsPage.model_validate(json_data, extra="ignore")
 
     def get_api_call_for_org(
         self,
@@ -2168,7 +2169,7 @@ class ApiCallsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return ApiCallWithPrice.model_validate(json_data)
+        return ApiCallWithPrice.model_validate(json_data, extra="ignore")
 
     def user_list_api_calls(
         self,
@@ -2258,7 +2259,7 @@ class ApiCallsAPI:
 
         json_data = response.json()
         # Validate into a Pydantic model (supports BaseModel/RootModel)
-        return ApiCallWithPriceResultsPage.model_validate(json_data)
+        return ApiCallWithPriceResultsPage.model_validate(json_data, extra="ignore")
 
     def get_api_call_for_user(
         self,
@@ -2286,7 +2287,7 @@ class ApiCallsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return ApiCallWithPrice.model_validate(json_data)
+        return ApiCallWithPrice.model_validate(json_data, extra="ignore")
 
     def list_api_calls_for_user(
         self,
@@ -2385,7 +2386,7 @@ class ApiCallsAPI:
 
         json_data = response.json()
         # Validate into a Pydantic model (supports BaseModel/RootModel)
-        return ApiCallWithPriceResultsPage.model_validate(json_data)
+        return ApiCallWithPriceResultsPage.model_validate(json_data, extra="ignore")
 
 
 class AsyncApiCallsAPI:
@@ -2424,7 +2425,7 @@ class AsyncApiCallsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return ApiCallWithPrice.model_validate(json_data)
+        return ApiCallWithPrice.model_validate(json_data, extra="ignore")
 
     async def get_async_operation(
         self,
@@ -2458,7 +2459,7 @@ class AsyncApiCallsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return AsyncApiCallOutput.model_validate(json_data)
+        return AsyncApiCallOutput.model_validate(json_data, extra="ignore")
 
     def org_list_api_calls(
         self,
@@ -2552,7 +2553,7 @@ class AsyncApiCallsAPI:
 
         json_data = response.json()
         # Validate into a Pydantic model (supports BaseModel/RootModel)
-        return ApiCallWithPriceResultsPage.model_validate(json_data)
+        return ApiCallWithPriceResultsPage.model_validate(json_data, extra="ignore")
 
     async def get_api_call_for_org(
         self,
@@ -2580,7 +2581,7 @@ class AsyncApiCallsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return ApiCallWithPrice.model_validate(json_data)
+        return ApiCallWithPrice.model_validate(json_data, extra="ignore")
 
     def user_list_api_calls(
         self,
@@ -2672,7 +2673,7 @@ class AsyncApiCallsAPI:
 
         json_data = response.json()
         # Validate into a Pydantic model (supports BaseModel/RootModel)
-        return ApiCallWithPriceResultsPage.model_validate(json_data)
+        return ApiCallWithPriceResultsPage.model_validate(json_data, extra="ignore")
 
     async def get_api_call_for_user(
         self,
@@ -2700,7 +2701,7 @@ class AsyncApiCallsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return ApiCallWithPrice.model_validate(json_data)
+        return ApiCallWithPrice.model_validate(json_data, extra="ignore")
 
     def list_api_calls_for_user(
         self,
@@ -2799,7 +2800,7 @@ class AsyncApiCallsAPI:
 
         json_data = response.json()
         # Validate into a Pydantic model (supports BaseModel/RootModel)
-        return ApiCallWithPriceResultsPage.model_validate(json_data)
+        return ApiCallWithPriceResultsPage.model_validate(json_data, extra="ignore")
 
 
 class AppsAPI:
@@ -2858,7 +2859,7 @@ class AppsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return AppClientInfo.model_validate(json_data)
+        return AppClientInfo.model_validate(json_data, extra="ignore")
 
     def apps_github_webhook(
         self,
@@ -2940,7 +2941,7 @@ class AsyncAppsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return AppClientInfo.model_validate(json_data)
+        return AppClientInfo.model_validate(json_data, extra="ignore")
 
     async def apps_github_webhook(
         self,
@@ -2997,7 +2998,7 @@ class HiddenAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return AuthApiKeyResponse.model_validate(json_data)
+        return AuthApiKeyResponse.model_validate(json_data, extra="ignore")
 
     def auth_email(
         self,
@@ -3012,7 +3013,7 @@ class HiddenAPI:
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -3026,7 +3027,7 @@ class HiddenAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return VerificationTokenResponse.model_validate(json_data)
+        return VerificationTokenResponse.model_validate(json_data, extra="ignore")
 
     def auth_email_marketing_confirm_post(
         self,
@@ -3041,7 +3042,7 @@ class HiddenAPI:
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -3289,7 +3290,7 @@ class AsyncHiddenAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return AuthApiKeyResponse.model_validate(json_data)
+        return AuthApiKeyResponse.model_validate(json_data, extra="ignore")
 
     async def auth_email(
         self,
@@ -3304,7 +3305,7 @@ class AsyncHiddenAPI:
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -3318,7 +3319,7 @@ class AsyncHiddenAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return VerificationTokenResponse.model_validate(json_data)
+        return VerificationTokenResponse.model_validate(json_data, extra="ignore")
 
     async def auth_email_marketing_confirm_post(
         self,
@@ -3333,7 +3334,7 @@ class AsyncHiddenAPI:
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -3606,7 +3607,7 @@ class FileAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return FileCenterOfMass.model_validate(json_data)
+        return FileCenterOfMass.model_validate(json_data, extra="ignore")
 
     def create_file_conversion_options(
         self,
@@ -3687,7 +3688,7 @@ class FileAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return FileConversion.model_validate(json_data)
+        return FileConversion.model_validate(json_data, extra="ignore")
 
     def create_file_conversion(
         self,
@@ -3726,7 +3727,7 @@ class FileAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return FileConversion.model_validate(json_data)
+        return FileConversion.model_validate(json_data, extra="ignore")
 
     def create_file_density(
         self,
@@ -3792,7 +3793,7 @@ class FileAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return FileDensity.model_validate(json_data)
+        return FileDensity.model_validate(json_data, extra="ignore")
 
     def create_file_mass(
         self,
@@ -3858,7 +3859,7 @@ class FileAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return FileMass.model_validate(json_data)
+        return FileMass.model_validate(json_data, extra="ignore")
 
     def create_file_surface_area(
         self,
@@ -3910,7 +3911,7 @@ class FileAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return FileSurfaceArea.model_validate(json_data)
+        return FileSurfaceArea.model_validate(json_data, extra="ignore")
 
     def create_file_volume(
         self,
@@ -3962,7 +3963,7 @@ class FileAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return FileVolume.model_validate(json_data)
+        return FileVolume.model_validate(json_data, extra="ignore")
 
 
 class AsyncFileAPI:
@@ -4021,7 +4022,7 @@ class AsyncFileAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return FileCenterOfMass.model_validate(json_data)
+        return FileCenterOfMass.model_validate(json_data, extra="ignore")
 
     async def create_file_conversion_options(
         self,
@@ -4102,7 +4103,7 @@ class AsyncFileAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return FileConversion.model_validate(json_data)
+        return FileConversion.model_validate(json_data, extra="ignore")
 
     async def create_file_conversion(
         self,
@@ -4141,7 +4142,7 @@ class AsyncFileAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return FileConversion.model_validate(json_data)
+        return FileConversion.model_validate(json_data, extra="ignore")
 
     async def create_file_density(
         self,
@@ -4207,7 +4208,7 @@ class AsyncFileAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return FileDensity.model_validate(json_data)
+        return FileDensity.model_validate(json_data, extra="ignore")
 
     async def create_file_mass(
         self,
@@ -4273,7 +4274,7 @@ class AsyncFileAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return FileMass.model_validate(json_data)
+        return FileMass.model_validate(json_data, extra="ignore")
 
     async def create_file_surface_area(
         self,
@@ -4325,7 +4326,7 @@ class AsyncFileAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return FileSurfaceArea.model_validate(json_data)
+        return FileSurfaceArea.model_validate(json_data, extra="ignore")
 
     async def create_file_volume(
         self,
@@ -4377,7 +4378,7 @@ class AsyncFileAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return FileVolume.model_validate(json_data)
+        return FileVolume.model_validate(json_data, extra="ignore")
 
 
 class ExecutorAPI:
@@ -4422,7 +4423,7 @@ class ExecutorAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return CodeOutput.model_validate(json_data)
+        return CodeOutput.model_validate(json_data, extra="ignore")
 
     def create_executor_term(
         self,
@@ -4480,7 +4481,7 @@ class AsyncExecutorAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return CodeOutput.model_validate(json_data)
+        return CodeOutput.model_validate(json_data, extra="ignore")
 
     async def create_executor_term(self):
         """Create a terminal.
@@ -4539,7 +4540,9 @@ class Oauth2API:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return OAuth2AuthorizationRequestResponse.model_validate(json_data)
+        return OAuth2AuthorizationRequestResponse.model_validate(
+            json_data, extra="ignore"
+        )
 
     def approve_oauth2_authorization_request(
         self,
@@ -4569,7 +4572,9 @@ class Oauth2API:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return OAuth2AuthorizationDecisionResponse.model_validate(json_data)
+        return OAuth2AuthorizationDecisionResponse.model_validate(
+            json_data, extra="ignore"
+        )
 
     def deny_oauth2_authorization_request(
         self,
@@ -4599,7 +4604,9 @@ class Oauth2API:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return OAuth2AuthorizationDecisionResponse.model_validate(json_data)
+        return OAuth2AuthorizationDecisionResponse.model_validate(
+            json_data, extra="ignore"
+        )
 
     def oauth2_authorize(
         self,
@@ -4685,7 +4692,7 @@ class Oauth2API:
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -4708,7 +4715,7 @@ class Oauth2API:
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -4731,7 +4738,7 @@ class Oauth2API:
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -4846,7 +4853,7 @@ class Oauth2API:
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -4892,7 +4899,7 @@ class Oauth2API:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return OAuth2ClientInfo.model_validate(json_data)
+        return OAuth2ClientInfo.model_validate(json_data, extra="ignore")
 
     def oauth2_token(
         self,
@@ -4907,7 +4914,7 @@ class Oauth2API:
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -4930,7 +4937,7 @@ class Oauth2API:
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -5064,7 +5071,7 @@ class Oauth2API:
 
         json_data = response.json()
         # Validate into a Pydantic model (supports BaseModel/RootModel)
-        return OAuth2AppResponseResultsPage.model_validate(json_data)
+        return OAuth2AppResponseResultsPage.model_validate(json_data, extra="ignore")
 
     def create_org_oauth2_app(
         self,
@@ -5079,7 +5086,7 @@ class Oauth2API:
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -5093,7 +5100,7 @@ class Oauth2API:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return OAuth2AppResponse.model_validate(json_data)
+        return OAuth2AppResponse.model_validate(json_data, extra="ignore")
 
     def get_org_oauth2_app(
         self,
@@ -5123,7 +5130,7 @@ class Oauth2API:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return OAuth2AppResponse.model_validate(json_data)
+        return OAuth2AppResponse.model_validate(json_data, extra="ignore")
 
     def update_org_oauth2_app(
         self,
@@ -5141,7 +5148,7 @@ class Oauth2API:
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -5155,7 +5162,7 @@ class Oauth2API:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return OAuth2AppResponse.model_validate(json_data)
+        return OAuth2AppResponse.model_validate(json_data, extra="ignore")
 
     def delete_org_oauth2_app(
         self,
@@ -5272,7 +5279,7 @@ class Oauth2API:
 
         json_data = response.json()
         # Validate into a Pydantic model (supports BaseModel/RootModel)
-        return OAuth2AppResponseResultsPage.model_validate(json_data)
+        return OAuth2AppResponseResultsPage.model_validate(json_data, extra="ignore")
 
     def list_user_oauth2_apps(
         self,
@@ -5362,7 +5369,7 @@ class Oauth2API:
 
         json_data = response.json()
         # Validate into a Pydantic model (supports BaseModel/RootModel)
-        return OAuth2AppResponseResultsPage.model_validate(json_data)
+        return OAuth2AppResponseResultsPage.model_validate(json_data, extra="ignore")
 
     def create_user_oauth2_app(
         self,
@@ -5377,7 +5384,7 @@ class Oauth2API:
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -5391,7 +5398,7 @@ class Oauth2API:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return OAuth2AppResponse.model_validate(json_data)
+        return OAuth2AppResponse.model_validate(json_data, extra="ignore")
 
     def get_user_oauth2_app(
         self,
@@ -5421,7 +5428,7 @@ class Oauth2API:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return OAuth2AppResponse.model_validate(json_data)
+        return OAuth2AppResponse.model_validate(json_data, extra="ignore")
 
     def update_user_oauth2_app(
         self,
@@ -5439,7 +5446,7 @@ class Oauth2API:
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -5453,7 +5460,7 @@ class Oauth2API:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return OAuth2AppResponse.model_validate(json_data)
+        return OAuth2AppResponse.model_validate(json_data, extra="ignore")
 
     def delete_user_oauth2_app(
         self,
@@ -5570,7 +5577,7 @@ class Oauth2API:
 
         json_data = response.json()
         # Validate into a Pydantic model (supports BaseModel/RootModel)
-        return OAuth2AppResponseResultsPage.model_validate(json_data)
+        return OAuth2AppResponseResultsPage.model_validate(json_data, extra="ignore")
 
 
 class AsyncOauth2API:
@@ -5607,7 +5614,9 @@ class AsyncOauth2API:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return OAuth2AuthorizationRequestResponse.model_validate(json_data)
+        return OAuth2AuthorizationRequestResponse.model_validate(
+            json_data, extra="ignore"
+        )
 
     async def approve_oauth2_authorization_request(
         self,
@@ -5637,7 +5646,9 @@ class AsyncOauth2API:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return OAuth2AuthorizationDecisionResponse.model_validate(json_data)
+        return OAuth2AuthorizationDecisionResponse.model_validate(
+            json_data, extra="ignore"
+        )
 
     async def deny_oauth2_authorization_request(
         self,
@@ -5667,7 +5678,9 @@ class AsyncOauth2API:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return OAuth2AuthorizationDecisionResponse.model_validate(json_data)
+        return OAuth2AuthorizationDecisionResponse.model_validate(
+            json_data, extra="ignore"
+        )
 
     async def oauth2_authorize(
         self,
@@ -5753,7 +5766,7 @@ class AsyncOauth2API:
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -5776,7 +5789,7 @@ class AsyncOauth2API:
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -5799,7 +5812,7 @@ class AsyncOauth2API:
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -5914,7 +5927,7 @@ class AsyncOauth2API:
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -5960,7 +5973,7 @@ class AsyncOauth2API:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return OAuth2ClientInfo.model_validate(json_data)
+        return OAuth2ClientInfo.model_validate(json_data, extra="ignore")
 
     async def oauth2_token(
         self,
@@ -5975,7 +5988,7 @@ class AsyncOauth2API:
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -5998,7 +6011,7 @@ class AsyncOauth2API:
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -6132,7 +6145,7 @@ class AsyncOauth2API:
 
         json_data = response.json()
         # Validate into a Pydantic model (supports BaseModel/RootModel)
-        return OAuth2AppResponseResultsPage.model_validate(json_data)
+        return OAuth2AppResponseResultsPage.model_validate(json_data, extra="ignore")
 
     async def create_org_oauth2_app(
         self,
@@ -6147,7 +6160,7 @@ class AsyncOauth2API:
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -6161,7 +6174,7 @@ class AsyncOauth2API:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return OAuth2AppResponse.model_validate(json_data)
+        return OAuth2AppResponse.model_validate(json_data, extra="ignore")
 
     async def get_org_oauth2_app(
         self,
@@ -6191,7 +6204,7 @@ class AsyncOauth2API:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return OAuth2AppResponse.model_validate(json_data)
+        return OAuth2AppResponse.model_validate(json_data, extra="ignore")
 
     async def update_org_oauth2_app(
         self,
@@ -6209,7 +6222,7 @@ class AsyncOauth2API:
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -6223,7 +6236,7 @@ class AsyncOauth2API:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return OAuth2AppResponse.model_validate(json_data)
+        return OAuth2AppResponse.model_validate(json_data, extra="ignore")
 
     async def delete_org_oauth2_app(
         self,
@@ -6340,7 +6353,7 @@ class AsyncOauth2API:
 
         json_data = response.json()
         # Validate into a Pydantic model (supports BaseModel/RootModel)
-        return OAuth2AppResponseResultsPage.model_validate(json_data)
+        return OAuth2AppResponseResultsPage.model_validate(json_data, extra="ignore")
 
     def list_user_oauth2_apps(
         self,
@@ -6430,7 +6443,7 @@ class AsyncOauth2API:
 
         json_data = response.json()
         # Validate into a Pydantic model (supports BaseModel/RootModel)
-        return OAuth2AppResponseResultsPage.model_validate(json_data)
+        return OAuth2AppResponseResultsPage.model_validate(json_data, extra="ignore")
 
     async def create_user_oauth2_app(
         self,
@@ -6445,7 +6458,7 @@ class AsyncOauth2API:
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -6459,7 +6472,7 @@ class AsyncOauth2API:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return OAuth2AppResponse.model_validate(json_data)
+        return OAuth2AppResponse.model_validate(json_data, extra="ignore")
 
     async def get_user_oauth2_app(
         self,
@@ -6489,7 +6502,7 @@ class AsyncOauth2API:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return OAuth2AppResponse.model_validate(json_data)
+        return OAuth2AppResponse.model_validate(json_data, extra="ignore")
 
     async def update_user_oauth2_app(
         self,
@@ -6507,7 +6520,7 @@ class AsyncOauth2API:
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -6521,7 +6534,7 @@ class AsyncOauth2API:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return OAuth2AppResponse.model_validate(json_data)
+        return OAuth2AppResponse.model_validate(json_data, extra="ignore")
 
     async def delete_user_oauth2_app(
         self,
@@ -6638,7 +6651,7 @@ class AsyncOauth2API:
 
         json_data = response.json()
         # Validate into a Pydantic model (supports BaseModel/RootModel)
-        return OAuth2AppResponseResultsPage.model_validate(json_data)
+        return OAuth2AppResponseResultsPage.model_validate(json_data, extra="ignore")
 
 
 class OrgsAPI:
@@ -6672,7 +6685,7 @@ class OrgsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return Org.model_validate(json_data)
+        return Org.model_validate(json_data, extra="ignore")
 
     def update_org(
         self,
@@ -6687,7 +6700,7 @@ class OrgsAPI:
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -6701,7 +6714,7 @@ class OrgsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return Org.model_validate(json_data)
+        return Org.model_validate(json_data, extra="ignore")
 
     def create_org(
         self,
@@ -6716,7 +6729,7 @@ class OrgsAPI:
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -6730,7 +6743,7 @@ class OrgsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return Org.model_validate(json_data)
+        return Org.model_validate(json_data, extra="ignore")
 
     def delete_org(
         self,
@@ -6796,7 +6809,7 @@ class OrgsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return DatasetS3Policies.model_validate(json_data)
+        return DatasetS3Policies.model_validate(json_data, extra="ignore")
 
     def list_org_datasets(
         self,
@@ -6884,7 +6897,7 @@ class OrgsAPI:
 
         json_data = response.json()
         # Validate into a Pydantic model (supports BaseModel/RootModel)
-        return OrgDatasetResultsPage.model_validate(json_data)
+        return OrgDatasetResultsPage.model_validate(json_data, extra="ignore")
 
     def create_org_dataset(
         self,
@@ -6899,7 +6912,7 @@ class OrgsAPI:
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -6913,7 +6926,7 @@ class OrgsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return OrgDataset.model_validate(json_data)
+        return OrgDataset.model_validate(json_data, extra="ignore")
 
     def get_org_dataset(
         self,
@@ -6941,7 +6954,7 @@ class OrgsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return OrgDataset.model_validate(json_data)
+        return OrgDataset.model_validate(json_data, extra="ignore")
 
     def update_org_dataset(
         self,
@@ -6957,7 +6970,7 @@ class OrgsAPI:
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -6971,7 +6984,7 @@ class OrgsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return OrgDataset.model_validate(json_data)
+        return OrgDataset.model_validate(json_data, extra="ignore")
 
     def delete_org_dataset(
         self,
@@ -7122,7 +7135,9 @@ class OrgsAPI:
 
         json_data = response.json()
         # Validate into a Pydantic model (supports BaseModel/RootModel)
-        return OrgDatasetFileConversionSummaryResultsPage.model_validate(json_data)
+        return OrgDatasetFileConversionSummaryResultsPage.model_validate(
+            json_data, extra="ignore"
+        )
 
     def get_org_dataset_conversion(
         self,
@@ -7153,7 +7168,7 @@ class OrgsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return OrgDatasetFileConversionDetails.model_validate(json_data)
+        return OrgDatasetFileConversionDetails.model_validate(json_data, extra="ignore")
 
     def download_org_dataset_conversion_original(
         self,
@@ -7338,7 +7353,9 @@ class OrgsAPI:
 
         json_data = response.json()
         # Validate into a Pydantic model (supports BaseModel/RootModel)
-        return OrgDatasetFileConversionSummaryResultsPage.model_validate(json_data)
+        return OrgDatasetFileConversionSummaryResultsPage.model_validate(
+            json_data, extra="ignore"
+        )
 
     def search_org_dataset_semantic(
         self,
@@ -7384,7 +7401,7 @@ class OrgsAPI:
         from pydantic import TypeAdapter
 
         return TypeAdapter(List[OrgDatasetSemanticSearchMatch]).validate_python(
-            json_data
+            json_data, extra="ignore"
         )
 
     def get_org_dataset_conversion_stats(
@@ -7413,7 +7430,9 @@ class OrgsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return OrgDatasetConversionStatsResponse.model_validate(json_data)
+        return OrgDatasetConversionStatsResponse.model_validate(
+            json_data, extra="ignore"
+        )
 
     def upload_org_dataset_files(
         self,
@@ -7441,7 +7460,7 @@ class OrgsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return UploadOrgDatasetFilesResponse.model_validate(json_data)
+        return UploadOrgDatasetFilesResponse.model_validate(json_data, extra="ignore")
 
     def list_org_members(
         self,
@@ -7539,7 +7558,7 @@ class OrgsAPI:
 
         json_data = response.json()
         # Validate into a Pydantic model (supports BaseModel/RootModel)
-        return OrgMemberResultsPage.model_validate(json_data)
+        return OrgMemberResultsPage.model_validate(json_data, extra="ignore")
 
     def create_org_member(
         self,
@@ -7562,7 +7581,7 @@ class OrgsAPI:
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -7576,7 +7595,7 @@ class OrgsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return OrgMember.model_validate(json_data)
+        return OrgMember.model_validate(json_data, extra="ignore")
 
     def get_org_member(
         self,
@@ -7604,7 +7623,7 @@ class OrgsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return OrgMember.model_validate(json_data)
+        return OrgMember.model_validate(json_data, extra="ignore")
 
     def update_org_member(
         self,
@@ -7620,7 +7639,7 @@ class OrgsAPI:
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -7634,7 +7653,7 @@ class OrgsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return OrgMember.model_validate(json_data)
+        return OrgMember.model_validate(json_data, extra="ignore")
 
     def delete_org_member(
         self,
@@ -7683,7 +7702,7 @@ class OrgsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return PrivacySettings.model_validate(json_data)
+        return PrivacySettings.model_validate(json_data, extra="ignore")
 
     def update_org_privacy_settings(
         self,
@@ -7698,7 +7717,7 @@ class OrgsAPI:
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -7712,7 +7731,7 @@ class OrgsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return PrivacySettings.model_validate(json_data)
+        return PrivacySettings.model_validate(json_data, extra="ignore")
 
     def get_org_saml_idp(
         self,
@@ -7739,7 +7758,7 @@ class OrgsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return SamlIdentityProvider.model_validate(json_data)
+        return SamlIdentityProvider.model_validate(json_data, extra="ignore")
 
     def update_org_saml_idp(
         self,
@@ -7754,7 +7773,7 @@ class OrgsAPI:
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -7768,7 +7787,7 @@ class OrgsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return SamlIdentityProvider.model_validate(json_data)
+        return SamlIdentityProvider.model_validate(json_data, extra="ignore")
 
     def create_org_saml_idp(
         self,
@@ -7783,7 +7802,7 @@ class OrgsAPI:
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -7797,7 +7816,7 @@ class OrgsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return SamlIdentityProvider.model_validate(json_data)
+        return SamlIdentityProvider.model_validate(json_data, extra="ignore")
 
     def delete_org_saml_idp(
         self,
@@ -7906,7 +7925,7 @@ class OrgsAPI:
 
         json_data = response.json()
         # Validate into a Pydantic model (supports BaseModel/RootModel)
-        return ShortlinkResultsPage.model_validate(json_data)
+        return ShortlinkResultsPage.model_validate(json_data, extra="ignore")
 
     def org_admin_details_get(
         self,
@@ -7934,7 +7953,7 @@ class OrgsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return OrgAdminDetails.model_validate(json_data)
+        return OrgAdminDetails.model_validate(json_data, extra="ignore")
 
     def get_billing_contract_for_any_org(
         self,
@@ -7962,7 +7981,7 @@ class OrgsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return BillingContractView.model_validate(json_data)
+        return BillingContractView.model_validate(json_data, extra="ignore")
 
     def upsert_billing_contract_for_any_org(
         self,
@@ -7978,7 +7997,7 @@ class OrgsAPI:
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -7992,7 +8011,7 @@ class OrgsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return BillingContractView.model_validate(json_data)
+        return BillingContractView.model_validate(json_data, extra="ignore")
 
     def get_user_org(
         self,
@@ -8021,7 +8040,7 @@ class OrgsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return UserOrgInfo.model_validate(json_data)
+        return UserOrgInfo.model_validate(json_data, extra="ignore")
 
 
 class AsyncOrgsAPI:
@@ -8055,7 +8074,7 @@ class AsyncOrgsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return Org.model_validate(json_data)
+        return Org.model_validate(json_data, extra="ignore")
 
     async def update_org(
         self,
@@ -8070,7 +8089,7 @@ class AsyncOrgsAPI:
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -8084,7 +8103,7 @@ class AsyncOrgsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return Org.model_validate(json_data)
+        return Org.model_validate(json_data, extra="ignore")
 
     async def create_org(
         self,
@@ -8099,7 +8118,7 @@ class AsyncOrgsAPI:
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -8113,7 +8132,7 @@ class AsyncOrgsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return Org.model_validate(json_data)
+        return Org.model_validate(json_data, extra="ignore")
 
     async def delete_org(
         self,
@@ -8179,7 +8198,7 @@ class AsyncOrgsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return DatasetS3Policies.model_validate(json_data)
+        return DatasetS3Policies.model_validate(json_data, extra="ignore")
 
     def list_org_datasets(
         self,
@@ -8267,7 +8286,7 @@ class AsyncOrgsAPI:
 
         json_data = response.json()
         # Validate into a Pydantic model (supports BaseModel/RootModel)
-        return OrgDatasetResultsPage.model_validate(json_data)
+        return OrgDatasetResultsPage.model_validate(json_data, extra="ignore")
 
     async def create_org_dataset(
         self,
@@ -8282,7 +8301,7 @@ class AsyncOrgsAPI:
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -8296,7 +8315,7 @@ class AsyncOrgsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return OrgDataset.model_validate(json_data)
+        return OrgDataset.model_validate(json_data, extra="ignore")
 
     async def get_org_dataset(
         self,
@@ -8324,7 +8343,7 @@ class AsyncOrgsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return OrgDataset.model_validate(json_data)
+        return OrgDataset.model_validate(json_data, extra="ignore")
 
     async def update_org_dataset(
         self,
@@ -8340,7 +8359,7 @@ class AsyncOrgsAPI:
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -8354,7 +8373,7 @@ class AsyncOrgsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return OrgDataset.model_validate(json_data)
+        return OrgDataset.model_validate(json_data, extra="ignore")
 
     async def delete_org_dataset(
         self,
@@ -8505,7 +8524,9 @@ class AsyncOrgsAPI:
 
         json_data = response.json()
         # Validate into a Pydantic model (supports BaseModel/RootModel)
-        return OrgDatasetFileConversionSummaryResultsPage.model_validate(json_data)
+        return OrgDatasetFileConversionSummaryResultsPage.model_validate(
+            json_data, extra="ignore"
+        )
 
     async def get_org_dataset_conversion(
         self,
@@ -8536,7 +8557,7 @@ class AsyncOrgsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return OrgDatasetFileConversionDetails.model_validate(json_data)
+        return OrgDatasetFileConversionDetails.model_validate(json_data, extra="ignore")
 
     async def download_org_dataset_conversion_original(
         self,
@@ -8721,7 +8742,9 @@ class AsyncOrgsAPI:
 
         json_data = response.json()
         # Validate into a Pydantic model (supports BaseModel/RootModel)
-        return OrgDatasetFileConversionSummaryResultsPage.model_validate(json_data)
+        return OrgDatasetFileConversionSummaryResultsPage.model_validate(
+            json_data, extra="ignore"
+        )
 
     async def search_org_dataset_semantic(
         self,
@@ -8767,7 +8790,7 @@ class AsyncOrgsAPI:
         from pydantic import TypeAdapter
 
         return TypeAdapter(List[OrgDatasetSemanticSearchMatch]).validate_python(
-            json_data
+            json_data, extra="ignore"
         )
 
     async def get_org_dataset_conversion_stats(
@@ -8796,7 +8819,9 @@ class AsyncOrgsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return OrgDatasetConversionStatsResponse.model_validate(json_data)
+        return OrgDatasetConversionStatsResponse.model_validate(
+            json_data, extra="ignore"
+        )
 
     async def upload_org_dataset_files(
         self,
@@ -8824,7 +8849,7 @@ class AsyncOrgsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return UploadOrgDatasetFilesResponse.model_validate(json_data)
+        return UploadOrgDatasetFilesResponse.model_validate(json_data, extra="ignore")
 
     def list_org_members(
         self,
@@ -8922,7 +8947,7 @@ class AsyncOrgsAPI:
 
         json_data = response.json()
         # Validate into a Pydantic model (supports BaseModel/RootModel)
-        return OrgMemberResultsPage.model_validate(json_data)
+        return OrgMemberResultsPage.model_validate(json_data, extra="ignore")
 
     async def create_org_member(
         self,
@@ -8945,7 +8970,7 @@ class AsyncOrgsAPI:
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -8959,7 +8984,7 @@ class AsyncOrgsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return OrgMember.model_validate(json_data)
+        return OrgMember.model_validate(json_data, extra="ignore")
 
     async def get_org_member(
         self,
@@ -8987,7 +9012,7 @@ class AsyncOrgsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return OrgMember.model_validate(json_data)
+        return OrgMember.model_validate(json_data, extra="ignore")
 
     async def update_org_member(
         self,
@@ -9003,7 +9028,7 @@ class AsyncOrgsAPI:
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -9017,7 +9042,7 @@ class AsyncOrgsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return OrgMember.model_validate(json_data)
+        return OrgMember.model_validate(json_data, extra="ignore")
 
     async def delete_org_member(
         self,
@@ -9066,7 +9091,7 @@ class AsyncOrgsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return PrivacySettings.model_validate(json_data)
+        return PrivacySettings.model_validate(json_data, extra="ignore")
 
     async def update_org_privacy_settings(
         self,
@@ -9081,7 +9106,7 @@ class AsyncOrgsAPI:
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -9095,7 +9120,7 @@ class AsyncOrgsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return PrivacySettings.model_validate(json_data)
+        return PrivacySettings.model_validate(json_data, extra="ignore")
 
     async def get_org_saml_idp(
         self,
@@ -9122,7 +9147,7 @@ class AsyncOrgsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return SamlIdentityProvider.model_validate(json_data)
+        return SamlIdentityProvider.model_validate(json_data, extra="ignore")
 
     async def update_org_saml_idp(
         self,
@@ -9137,7 +9162,7 @@ class AsyncOrgsAPI:
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -9151,7 +9176,7 @@ class AsyncOrgsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return SamlIdentityProvider.model_validate(json_data)
+        return SamlIdentityProvider.model_validate(json_data, extra="ignore")
 
     async def create_org_saml_idp(
         self,
@@ -9166,7 +9191,7 @@ class AsyncOrgsAPI:
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -9180,7 +9205,7 @@ class AsyncOrgsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return SamlIdentityProvider.model_validate(json_data)
+        return SamlIdentityProvider.model_validate(json_data, extra="ignore")
 
     async def delete_org_saml_idp(
         self,
@@ -9289,7 +9314,7 @@ class AsyncOrgsAPI:
 
         json_data = response.json()
         # Validate into a Pydantic model (supports BaseModel/RootModel)
-        return ShortlinkResultsPage.model_validate(json_data)
+        return ShortlinkResultsPage.model_validate(json_data, extra="ignore")
 
     async def org_admin_details_get(
         self,
@@ -9317,7 +9342,7 @@ class AsyncOrgsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return OrgAdminDetails.model_validate(json_data)
+        return OrgAdminDetails.model_validate(json_data, extra="ignore")
 
     async def get_billing_contract_for_any_org(
         self,
@@ -9345,7 +9370,7 @@ class AsyncOrgsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return BillingContractView.model_validate(json_data)
+        return BillingContractView.model_validate(json_data, extra="ignore")
 
     async def upsert_billing_contract_for_any_org(
         self,
@@ -9361,7 +9386,7 @@ class AsyncOrgsAPI:
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -9375,7 +9400,7 @@ class AsyncOrgsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return BillingContractView.model_validate(json_data)
+        return BillingContractView.model_validate(json_data, extra="ignore")
 
     async def get_user_org(
         self,
@@ -9404,7 +9429,7 @@ class AsyncOrgsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return UserOrgInfo.model_validate(json_data)
+        return UserOrgInfo.model_validate(json_data, extra="ignore")
 
 
 class PaymentsAPI:
@@ -9440,7 +9465,7 @@ class PaymentsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return Customer.model_validate(json_data)
+        return Customer.model_validate(json_data, extra="ignore")
 
     def update_payment_information_for_org(
         self,
@@ -9457,7 +9482,7 @@ class PaymentsAPI:
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -9471,7 +9496,7 @@ class PaymentsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return Customer.model_validate(json_data)
+        return Customer.model_validate(json_data, extra="ignore")
 
     def create_payment_information_for_org(
         self,
@@ -9488,7 +9513,7 @@ class PaymentsAPI:
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -9502,7 +9527,7 @@ class PaymentsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return Customer.model_validate(json_data)
+        return Customer.model_validate(json_data, extra="ignore")
 
     def delete_payment_information_for_org(
         self,
@@ -9560,7 +9585,7 @@ class PaymentsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return CustomerBalance.model_validate(json_data)
+        return CustomerBalance.model_validate(json_data, extra="ignore")
 
     def create_payment_intent_for_org(
         self,
@@ -9587,7 +9612,7 @@ class PaymentsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return PaymentIntent.model_validate(json_data)
+        return PaymentIntent.model_validate(json_data, extra="ignore")
 
     def list_invoices_for_org(
         self,
@@ -9665,7 +9690,7 @@ class PaymentsAPI:
 
         json_data = response.json()
         # Validate into a Pydantic model (supports BaseModel/RootModel)
-        return InvoiceResultsPage.model_validate(json_data)
+        return InvoiceResultsPage.model_validate(json_data, extra="ignore")
 
     def redirect_payment_method_portal_link_for_org(
         self,
@@ -9723,7 +9748,9 @@ class PaymentsAPI:
         # Validate into annotated/collection/union types using TypeAdapter
         from pydantic import TypeAdapter
 
-        return TypeAdapter(List[PaymentMethod]).validate_python(json_data)
+        return TypeAdapter(List[PaymentMethod]).validate_python(
+            json_data, extra="ignore"
+        )
 
     def delete_payment_method_for_org(
         self,
@@ -9772,7 +9799,7 @@ class PaymentsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return ZooProductSubscriptions.model_validate(json_data)
+        return ZooProductSubscriptions.model_validate(json_data, extra="ignore")
 
     def update_org_subscription(
         self,
@@ -9787,7 +9814,7 @@ class PaymentsAPI:
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -9801,7 +9828,7 @@ class PaymentsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return ZooProductSubscriptions.model_validate(json_data)
+        return ZooProductSubscriptions.model_validate(json_data, extra="ignore")
 
     def create_org_subscription(
         self,
@@ -9816,7 +9843,7 @@ class PaymentsAPI:
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -9830,7 +9857,7 @@ class PaymentsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return ZooProductSubscriptions.model_validate(json_data)
+        return ZooProductSubscriptions.model_validate(json_data, extra="ignore")
 
     def validate_customer_tax_information_for_org(
         self,
@@ -9887,7 +9914,7 @@ class PaymentsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return CustomerBalance.model_validate(json_data)
+        return CustomerBalance.model_validate(json_data, extra="ignore")
 
     def update_payment_balance_for_any_org(
         self,
@@ -9911,7 +9938,7 @@ class PaymentsAPI:
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -9925,7 +9952,7 @@ class PaymentsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return CustomerBalance.model_validate(json_data)
+        return CustomerBalance.model_validate(json_data, extra="ignore")
 
     def update_org_subscription_for_any_org(
         self,
@@ -9941,7 +9968,7 @@ class PaymentsAPI:
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -9955,7 +9982,7 @@ class PaymentsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return ZooProductSubscriptions.model_validate(json_data)
+        return ZooProductSubscriptions.model_validate(json_data, extra="ignore")
 
     def upsert_subscription_plan_price(
         self,
@@ -9973,7 +10000,7 @@ class PaymentsAPI:
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -9987,7 +10014,7 @@ class PaymentsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return SubscriptionPlanPriceRecord.model_validate(json_data)
+        return SubscriptionPlanPriceRecord.model_validate(json_data, extra="ignore")
 
     def get_payment_information_for_user(
         self,
@@ -10016,7 +10043,7 @@ class PaymentsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return Customer.model_validate(json_data)
+        return Customer.model_validate(json_data, extra="ignore")
 
     def update_payment_information_for_user(
         self,
@@ -10033,7 +10060,7 @@ class PaymentsAPI:
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -10047,7 +10074,7 @@ class PaymentsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return Customer.model_validate(json_data)
+        return Customer.model_validate(json_data, extra="ignore")
 
     def create_payment_information_for_user(
         self,
@@ -10064,7 +10091,7 @@ class PaymentsAPI:
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -10078,7 +10105,7 @@ class PaymentsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return Customer.model_validate(json_data)
+        return Customer.model_validate(json_data, extra="ignore")
 
     def delete_payment_information_for_user(
         self,
@@ -10136,7 +10163,7 @@ class PaymentsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return CustomerBalance.model_validate(json_data)
+        return CustomerBalance.model_validate(json_data, extra="ignore")
 
     def create_payment_intent_for_user(
         self,
@@ -10163,7 +10190,7 @@ class PaymentsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return PaymentIntent.model_validate(json_data)
+        return PaymentIntent.model_validate(json_data, extra="ignore")
 
     def list_invoices_for_user(
         self,
@@ -10241,7 +10268,7 @@ class PaymentsAPI:
 
         json_data = response.json()
         # Validate into a Pydantic model (supports BaseModel/RootModel)
-        return InvoiceResultsPage.model_validate(json_data)
+        return InvoiceResultsPage.model_validate(json_data, extra="ignore")
 
     def redirect_payment_method_portal_link_for_user(
         self,
@@ -10299,23 +10326,17 @@ class PaymentsAPI:
         # Validate into annotated/collection/union types using TypeAdapter
         from pydantic import TypeAdapter
 
-        return TypeAdapter(List[PaymentMethod]).validate_python(json_data)
+        return TypeAdapter(List[PaymentMethod]).validate_python(
+            json_data, extra="ignore"
+        )
 
     def delete_payment_method_for_user(
         self,
         id: str,
-        *,
-        force: Optional[bool] = None,
     ):
         """This endpoint requires authentication by any Zoo user. It deletes the specified payment method for the authenticated user."""
 
         url = "{}/user/payment/methods/{id}".format(self.client.base_url, id=id)
-
-        if force is not None:
-            if "?" in url:
-                url = url + "&force=" + str(force).lower()
-            else:
-                url = url + "?force=" + str(force).lower()
 
         _client = self.client.get_http_client()
 
@@ -10378,7 +10399,7 @@ class PaymentsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return ZooProductSubscriptions.model_validate(json_data)
+        return ZooProductSubscriptions.model_validate(json_data, extra="ignore")
 
     def update_user_subscription(
         self,
@@ -10393,7 +10414,7 @@ class PaymentsAPI:
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -10407,7 +10428,7 @@ class PaymentsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return ZooProductSubscriptions.model_validate(json_data)
+        return ZooProductSubscriptions.model_validate(json_data, extra="ignore")
 
     def create_user_subscription(
         self,
@@ -10422,7 +10443,7 @@ class PaymentsAPI:
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -10436,7 +10457,7 @@ class PaymentsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return ZooProductSubscriptions.model_validate(json_data)
+        return ZooProductSubscriptions.model_validate(json_data, extra="ignore")
 
     def validate_customer_tax_information_for_user(
         self,
@@ -10493,7 +10514,7 @@ class PaymentsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return CustomerBalance.model_validate(json_data)
+        return CustomerBalance.model_validate(json_data, extra="ignore")
 
     def update_payment_balance_for_any_user(
         self,
@@ -10517,7 +10538,7 @@ class PaymentsAPI:
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -10531,7 +10552,7 @@ class PaymentsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return CustomerBalance.model_validate(json_data)
+        return CustomerBalance.model_validate(json_data, extra="ignore")
 
 
 class AsyncPaymentsAPI:
@@ -10567,7 +10588,7 @@ class AsyncPaymentsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return Customer.model_validate(json_data)
+        return Customer.model_validate(json_data, extra="ignore")
 
     async def update_payment_information_for_org(
         self,
@@ -10584,7 +10605,7 @@ class AsyncPaymentsAPI:
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -10598,7 +10619,7 @@ class AsyncPaymentsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return Customer.model_validate(json_data)
+        return Customer.model_validate(json_data, extra="ignore")
 
     async def create_payment_information_for_org(
         self,
@@ -10615,7 +10636,7 @@ class AsyncPaymentsAPI:
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -10629,7 +10650,7 @@ class AsyncPaymentsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return Customer.model_validate(json_data)
+        return Customer.model_validate(json_data, extra="ignore")
 
     async def delete_payment_information_for_org(
         self,
@@ -10687,7 +10708,7 @@ class AsyncPaymentsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return CustomerBalance.model_validate(json_data)
+        return CustomerBalance.model_validate(json_data, extra="ignore")
 
     async def create_payment_intent_for_org(
         self,
@@ -10714,7 +10735,7 @@ class AsyncPaymentsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return PaymentIntent.model_validate(json_data)
+        return PaymentIntent.model_validate(json_data, extra="ignore")
 
     def list_invoices_for_org(
         self,
@@ -10792,7 +10813,7 @@ class AsyncPaymentsAPI:
 
         json_data = response.json()
         # Validate into a Pydantic model (supports BaseModel/RootModel)
-        return InvoiceResultsPage.model_validate(json_data)
+        return InvoiceResultsPage.model_validate(json_data, extra="ignore")
 
     async def redirect_payment_method_portal_link_for_org(
         self,
@@ -10850,7 +10871,9 @@ class AsyncPaymentsAPI:
         # Validate into annotated/collection/union types using TypeAdapter
         from pydantic import TypeAdapter
 
-        return TypeAdapter(List[PaymentMethod]).validate_python(json_data)
+        return TypeAdapter(List[PaymentMethod]).validate_python(
+            json_data, extra="ignore"
+        )
 
     async def delete_payment_method_for_org(
         self,
@@ -10899,7 +10922,7 @@ class AsyncPaymentsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return ZooProductSubscriptions.model_validate(json_data)
+        return ZooProductSubscriptions.model_validate(json_data, extra="ignore")
 
     async def update_org_subscription(
         self,
@@ -10914,7 +10937,7 @@ class AsyncPaymentsAPI:
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -10928,7 +10951,7 @@ class AsyncPaymentsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return ZooProductSubscriptions.model_validate(json_data)
+        return ZooProductSubscriptions.model_validate(json_data, extra="ignore")
 
     async def create_org_subscription(
         self,
@@ -10943,7 +10966,7 @@ class AsyncPaymentsAPI:
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -10957,7 +10980,7 @@ class AsyncPaymentsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return ZooProductSubscriptions.model_validate(json_data)
+        return ZooProductSubscriptions.model_validate(json_data, extra="ignore")
 
     async def validate_customer_tax_information_for_org(
         self,
@@ -11014,7 +11037,7 @@ class AsyncPaymentsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return CustomerBalance.model_validate(json_data)
+        return CustomerBalance.model_validate(json_data, extra="ignore")
 
     async def update_payment_balance_for_any_org(
         self,
@@ -11038,7 +11061,7 @@ class AsyncPaymentsAPI:
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -11052,7 +11075,7 @@ class AsyncPaymentsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return CustomerBalance.model_validate(json_data)
+        return CustomerBalance.model_validate(json_data, extra="ignore")
 
     async def update_org_subscription_for_any_org(
         self,
@@ -11068,7 +11091,7 @@ class AsyncPaymentsAPI:
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -11082,7 +11105,7 @@ class AsyncPaymentsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return ZooProductSubscriptions.model_validate(json_data)
+        return ZooProductSubscriptions.model_validate(json_data, extra="ignore")
 
     async def upsert_subscription_plan_price(
         self,
@@ -11100,7 +11123,7 @@ class AsyncPaymentsAPI:
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -11114,7 +11137,7 @@ class AsyncPaymentsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return SubscriptionPlanPriceRecord.model_validate(json_data)
+        return SubscriptionPlanPriceRecord.model_validate(json_data, extra="ignore")
 
     async def get_payment_information_for_user(
         self,
@@ -11143,7 +11166,7 @@ class AsyncPaymentsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return Customer.model_validate(json_data)
+        return Customer.model_validate(json_data, extra="ignore")
 
     async def update_payment_information_for_user(
         self,
@@ -11160,7 +11183,7 @@ class AsyncPaymentsAPI:
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -11174,7 +11197,7 @@ class AsyncPaymentsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return Customer.model_validate(json_data)
+        return Customer.model_validate(json_data, extra="ignore")
 
     async def create_payment_information_for_user(
         self,
@@ -11191,7 +11214,7 @@ class AsyncPaymentsAPI:
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -11205,7 +11228,7 @@ class AsyncPaymentsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return Customer.model_validate(json_data)
+        return Customer.model_validate(json_data, extra="ignore")
 
     async def delete_payment_information_for_user(
         self,
@@ -11263,7 +11286,7 @@ class AsyncPaymentsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return CustomerBalance.model_validate(json_data)
+        return CustomerBalance.model_validate(json_data, extra="ignore")
 
     async def create_payment_intent_for_user(
         self,
@@ -11290,7 +11313,7 @@ class AsyncPaymentsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return PaymentIntent.model_validate(json_data)
+        return PaymentIntent.model_validate(json_data, extra="ignore")
 
     def list_invoices_for_user(
         self,
@@ -11368,7 +11391,7 @@ class AsyncPaymentsAPI:
 
         json_data = response.json()
         # Validate into a Pydantic model (supports BaseModel/RootModel)
-        return InvoiceResultsPage.model_validate(json_data)
+        return InvoiceResultsPage.model_validate(json_data, extra="ignore")
 
     async def redirect_payment_method_portal_link_for_user(
         self,
@@ -11426,23 +11449,17 @@ class AsyncPaymentsAPI:
         # Validate into annotated/collection/union types using TypeAdapter
         from pydantic import TypeAdapter
 
-        return TypeAdapter(List[PaymentMethod]).validate_python(json_data)
+        return TypeAdapter(List[PaymentMethod]).validate_python(
+            json_data, extra="ignore"
+        )
 
     async def delete_payment_method_for_user(
         self,
         id: str,
-        *,
-        force: Optional[bool] = None,
     ):
         """This endpoint requires authentication by any Zoo user. It deletes the specified payment method for the authenticated user."""
 
         url = "{}/user/payment/methods/{id}".format(self.client.base_url, id=id)
-
-        if force is not None:
-            if "?" in url:
-                url = url + "&force=" + str(force).lower()
-            else:
-                url = url + "?force=" + str(force).lower()
 
         _client = self.client.get_http_client()
 
@@ -11505,7 +11522,7 @@ class AsyncPaymentsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return ZooProductSubscriptions.model_validate(json_data)
+        return ZooProductSubscriptions.model_validate(json_data, extra="ignore")
 
     async def update_user_subscription(
         self,
@@ -11520,7 +11537,7 @@ class AsyncPaymentsAPI:
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -11534,7 +11551,7 @@ class AsyncPaymentsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return ZooProductSubscriptions.model_validate(json_data)
+        return ZooProductSubscriptions.model_validate(json_data, extra="ignore")
 
     async def create_user_subscription(
         self,
@@ -11549,7 +11566,7 @@ class AsyncPaymentsAPI:
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -11563,7 +11580,7 @@ class AsyncPaymentsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return ZooProductSubscriptions.model_validate(json_data)
+        return ZooProductSubscriptions.model_validate(json_data, extra="ignore")
 
     async def validate_customer_tax_information_for_user(
         self,
@@ -11620,7 +11637,7 @@ class AsyncPaymentsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return CustomerBalance.model_validate(json_data)
+        return CustomerBalance.model_validate(json_data, extra="ignore")
 
     async def update_payment_balance_for_any_user(
         self,
@@ -11644,7 +11661,7 @@ class AsyncPaymentsAPI:
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -11658,7 +11675,7 @@ class AsyncPaymentsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return CustomerBalance.model_validate(json_data)
+        return CustomerBalance.model_validate(json_data, extra="ignore")
 
 
 class ServiceAccountsAPI:
@@ -11757,7 +11774,7 @@ class ServiceAccountsAPI:
 
         json_data = response.json()
         # Validate into a Pydantic model (supports BaseModel/RootModel)
-        return ServiceAccountResultsPage.model_validate(json_data)
+        return ServiceAccountResultsPage.model_validate(json_data, extra="ignore")
 
     def create_service_account_for_org(
         self,
@@ -11792,7 +11809,7 @@ class ServiceAccountsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return ServiceAccount.model_validate(json_data)
+        return ServiceAccount.model_validate(json_data, extra="ignore")
 
     def get_service_account_for_org(
         self,
@@ -11822,7 +11839,7 @@ class ServiceAccountsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return ServiceAccount.model_validate(json_data)
+        return ServiceAccount.model_validate(json_data, extra="ignore")
 
     def delete_service_account_for_org(
         self,
@@ -11947,7 +11964,7 @@ class AsyncServiceAccountsAPI:
 
         json_data = response.json()
         # Validate into a Pydantic model (supports BaseModel/RootModel)
-        return ServiceAccountResultsPage.model_validate(json_data)
+        return ServiceAccountResultsPage.model_validate(json_data, extra="ignore")
 
     async def create_service_account_for_org(
         self,
@@ -11982,7 +11999,7 @@ class AsyncServiceAccountsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return ServiceAccount.model_validate(json_data)
+        return ServiceAccount.model_validate(json_data, extra="ignore")
 
     async def get_service_account_for_org(
         self,
@@ -12012,7 +12029,7 @@ class AsyncServiceAccountsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return ServiceAccount.model_validate(json_data)
+        return ServiceAccount.model_validate(json_data, extra="ignore")
 
     async def delete_service_account_for_org(
         self,
@@ -12074,7 +12091,9 @@ class ProjectsAPI:
         # Validate into annotated/collection/union types using TypeAdapter
         from pydantic import TypeAdapter
 
-        return TypeAdapter(List[ProjectCategoryResponse]).validate_python(json_data)
+        return TypeAdapter(List[ProjectCategoryResponse]).validate_python(
+            json_data, extra="ignore"
+        )
 
     def list_public_projects(
         self,
@@ -12103,7 +12122,9 @@ class ProjectsAPI:
         # Validate into annotated/collection/union types using TypeAdapter
         from pydantic import TypeAdapter
 
-        return TypeAdapter(List[PublicProjectResponse]).validate_python(json_data)
+        return TypeAdapter(List[PublicProjectResponse]).validate_python(
+            json_data, extra="ignore"
+        )
 
     def get_public_project(
         self,
@@ -12131,7 +12152,7 @@ class ProjectsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return PublicProjectResponse.model_validate(json_data)
+        return PublicProjectResponse.model_validate(json_data, extra="ignore")
 
     def download_public_project(
         self,
@@ -12211,7 +12232,7 @@ class ProjectsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return PublicProjectVoteResponse.model_validate(json_data)
+        return PublicProjectVoteResponse.model_validate(json_data, extra="ignore")
 
     def delete_public_project_vote(
         self,
@@ -12239,7 +12260,7 @@ class ProjectsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return PublicProjectVoteResponse.model_validate(json_data)
+        return PublicProjectVoteResponse.model_validate(json_data, extra="ignore")
 
     def list_projects(
         self,
@@ -12268,7 +12289,9 @@ class ProjectsAPI:
         # Validate into annotated/collection/union types using TypeAdapter
         from pydantic import TypeAdapter
 
-        return TypeAdapter(List[ProjectSummaryResponse]).validate_python(json_data)
+        return TypeAdapter(List[ProjectSummaryResponse]).validate_python(
+            json_data, extra="ignore"
+        )
 
     def create_project(
         self,
@@ -12295,7 +12318,7 @@ class ProjectsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return ProjectResponse.model_validate(json_data)
+        return ProjectResponse.model_validate(json_data, extra="ignore")
 
     def get_project(
         self,
@@ -12323,7 +12346,7 @@ class ProjectsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return ProjectResponse.model_validate(json_data)
+        return ProjectResponse.model_validate(json_data, extra="ignore")
 
     def update_project(
         self,
@@ -12351,7 +12374,7 @@ class ProjectsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return ProjectResponse.model_validate(json_data)
+        return ProjectResponse.model_validate(json_data, extra="ignore")
 
     def delete_project(
         self,
@@ -12431,7 +12454,7 @@ class ProjectsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return ProjectResponse.model_validate(json_data)
+        return ProjectResponse.model_validate(json_data, extra="ignore")
 
     def list_project_share_links(
         self,
@@ -12461,7 +12484,9 @@ class ProjectsAPI:
         # Validate into annotated/collection/union types using TypeAdapter
         from pydantic import TypeAdapter
 
-        return TypeAdapter(List[ProjectShareLinkResponse]).validate_python(json_data)
+        return TypeAdapter(List[ProjectShareLinkResponse]).validate_python(
+            json_data, extra="ignore"
+        )
 
     def create_project_share_link(
         self,
@@ -12477,7 +12502,7 @@ class ProjectsAPI:
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -12491,7 +12516,7 @@ class ProjectsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return ProjectShareLinkResponse.model_validate(json_data)
+        return ProjectShareLinkResponse.model_validate(json_data, extra="ignore")
 
     def delete_project_share_link(
         self,
@@ -12574,7 +12599,9 @@ class AsyncProjectsAPI:
         # Validate into annotated/collection/union types using TypeAdapter
         from pydantic import TypeAdapter
 
-        return TypeAdapter(List[ProjectCategoryResponse]).validate_python(json_data)
+        return TypeAdapter(List[ProjectCategoryResponse]).validate_python(
+            json_data, extra="ignore"
+        )
 
     async def list_public_projects(
         self,
@@ -12603,7 +12630,9 @@ class AsyncProjectsAPI:
         # Validate into annotated/collection/union types using TypeAdapter
         from pydantic import TypeAdapter
 
-        return TypeAdapter(List[PublicProjectResponse]).validate_python(json_data)
+        return TypeAdapter(List[PublicProjectResponse]).validate_python(
+            json_data, extra="ignore"
+        )
 
     async def get_public_project(
         self,
@@ -12631,7 +12660,7 @@ class AsyncProjectsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return PublicProjectResponse.model_validate(json_data)
+        return PublicProjectResponse.model_validate(json_data, extra="ignore")
 
     async def download_public_project(
         self,
@@ -12711,7 +12740,7 @@ class AsyncProjectsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return PublicProjectVoteResponse.model_validate(json_data)
+        return PublicProjectVoteResponse.model_validate(json_data, extra="ignore")
 
     async def delete_public_project_vote(
         self,
@@ -12739,7 +12768,7 @@ class AsyncProjectsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return PublicProjectVoteResponse.model_validate(json_data)
+        return PublicProjectVoteResponse.model_validate(json_data, extra="ignore")
 
     async def list_projects(
         self,
@@ -12768,7 +12797,9 @@ class AsyncProjectsAPI:
         # Validate into annotated/collection/union types using TypeAdapter
         from pydantic import TypeAdapter
 
-        return TypeAdapter(List[ProjectSummaryResponse]).validate_python(json_data)
+        return TypeAdapter(List[ProjectSummaryResponse]).validate_python(
+            json_data, extra="ignore"
+        )
 
     async def create_project(
         self,
@@ -12795,7 +12826,7 @@ class AsyncProjectsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return ProjectResponse.model_validate(json_data)
+        return ProjectResponse.model_validate(json_data, extra="ignore")
 
     async def get_project(
         self,
@@ -12823,7 +12854,7 @@ class AsyncProjectsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return ProjectResponse.model_validate(json_data)
+        return ProjectResponse.model_validate(json_data, extra="ignore")
 
     async def update_project(
         self,
@@ -12851,7 +12882,7 @@ class AsyncProjectsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return ProjectResponse.model_validate(json_data)
+        return ProjectResponse.model_validate(json_data, extra="ignore")
 
     async def delete_project(
         self,
@@ -12931,7 +12962,7 @@ class AsyncProjectsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return ProjectResponse.model_validate(json_data)
+        return ProjectResponse.model_validate(json_data, extra="ignore")
 
     async def list_project_share_links(
         self,
@@ -12961,7 +12992,9 @@ class AsyncProjectsAPI:
         # Validate into annotated/collection/union types using TypeAdapter
         from pydantic import TypeAdapter
 
-        return TypeAdapter(List[ProjectShareLinkResponse]).validate_python(json_data)
+        return TypeAdapter(List[ProjectShareLinkResponse]).validate_python(
+            json_data, extra="ignore"
+        )
 
     async def create_project_share_link(
         self,
@@ -12977,7 +13010,7 @@ class AsyncProjectsAPI:
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -12991,7 +13024,7 @@ class AsyncProjectsAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return ProjectShareLinkResponse.model_validate(json_data)
+        return ProjectShareLinkResponse.model_validate(json_data, extra="ignore")
 
     async def delete_project_share_link(
         self,
@@ -13060,7 +13093,7 @@ class StoreAPI:
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -13074,7 +13107,7 @@ class StoreAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return DiscountCode.model_validate(json_data)
+        return DiscountCode.model_validate(json_data, extra="ignore")
 
 
 class AsyncStoreAPI:
@@ -13096,7 +13129,7 @@ class AsyncStoreAPI:
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -13110,7 +13143,7 @@ class AsyncStoreAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return DiscountCode.model_validate(json_data)
+        return DiscountCode.model_validate(json_data, extra="ignore")
 
 
 class UnitAPI:
@@ -13155,7 +13188,7 @@ class UnitAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return UnitAngleConversion.model_validate(json_data)
+        return UnitAngleConversion.model_validate(json_data, extra="ignore")
 
     def get_area_unit_conversion(
         self,
@@ -13193,7 +13226,7 @@ class UnitAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return UnitAreaConversion.model_validate(json_data)
+        return UnitAreaConversion.model_validate(json_data, extra="ignore")
 
     def get_current_unit_conversion(
         self,
@@ -13231,7 +13264,7 @@ class UnitAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return UnitCurrentConversion.model_validate(json_data)
+        return UnitCurrentConversion.model_validate(json_data, extra="ignore")
 
     def get_energy_unit_conversion(
         self,
@@ -13269,7 +13302,7 @@ class UnitAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return UnitEnergyConversion.model_validate(json_data)
+        return UnitEnergyConversion.model_validate(json_data, extra="ignore")
 
     def get_force_unit_conversion(
         self,
@@ -13307,7 +13340,7 @@ class UnitAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return UnitForceConversion.model_validate(json_data)
+        return UnitForceConversion.model_validate(json_data, extra="ignore")
 
     def get_frequency_unit_conversion(
         self,
@@ -13345,7 +13378,7 @@ class UnitAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return UnitFrequencyConversion.model_validate(json_data)
+        return UnitFrequencyConversion.model_validate(json_data, extra="ignore")
 
     def get_length_unit_conversion(
         self,
@@ -13383,7 +13416,7 @@ class UnitAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return UnitLengthConversion.model_validate(json_data)
+        return UnitLengthConversion.model_validate(json_data, extra="ignore")
 
     def get_mass_unit_conversion(
         self,
@@ -13421,7 +13454,7 @@ class UnitAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return UnitMassConversion.model_validate(json_data)
+        return UnitMassConversion.model_validate(json_data, extra="ignore")
 
     def get_power_unit_conversion(
         self,
@@ -13459,7 +13492,7 @@ class UnitAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return UnitPowerConversion.model_validate(json_data)
+        return UnitPowerConversion.model_validate(json_data, extra="ignore")
 
     def get_pressure_unit_conversion(
         self,
@@ -13497,7 +13530,7 @@ class UnitAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return UnitPressureConversion.model_validate(json_data)
+        return UnitPressureConversion.model_validate(json_data, extra="ignore")
 
     def get_temperature_unit_conversion(
         self,
@@ -13535,7 +13568,7 @@ class UnitAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return UnitTemperatureConversion.model_validate(json_data)
+        return UnitTemperatureConversion.model_validate(json_data, extra="ignore")
 
     def get_torque_unit_conversion(
         self,
@@ -13573,7 +13606,7 @@ class UnitAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return UnitTorqueConversion.model_validate(json_data)
+        return UnitTorqueConversion.model_validate(json_data, extra="ignore")
 
     def get_volume_unit_conversion(
         self,
@@ -13611,7 +13644,7 @@ class UnitAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return UnitVolumeConversion.model_validate(json_data)
+        return UnitVolumeConversion.model_validate(json_data, extra="ignore")
 
 
 class AsyncUnitAPI:
@@ -13656,7 +13689,7 @@ class AsyncUnitAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return UnitAngleConversion.model_validate(json_data)
+        return UnitAngleConversion.model_validate(json_data, extra="ignore")
 
     async def get_area_unit_conversion(
         self,
@@ -13694,7 +13727,7 @@ class AsyncUnitAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return UnitAreaConversion.model_validate(json_data)
+        return UnitAreaConversion.model_validate(json_data, extra="ignore")
 
     async def get_current_unit_conversion(
         self,
@@ -13732,7 +13765,7 @@ class AsyncUnitAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return UnitCurrentConversion.model_validate(json_data)
+        return UnitCurrentConversion.model_validate(json_data, extra="ignore")
 
     async def get_energy_unit_conversion(
         self,
@@ -13770,7 +13803,7 @@ class AsyncUnitAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return UnitEnergyConversion.model_validate(json_data)
+        return UnitEnergyConversion.model_validate(json_data, extra="ignore")
 
     async def get_force_unit_conversion(
         self,
@@ -13808,7 +13841,7 @@ class AsyncUnitAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return UnitForceConversion.model_validate(json_data)
+        return UnitForceConversion.model_validate(json_data, extra="ignore")
 
     async def get_frequency_unit_conversion(
         self,
@@ -13846,7 +13879,7 @@ class AsyncUnitAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return UnitFrequencyConversion.model_validate(json_data)
+        return UnitFrequencyConversion.model_validate(json_data, extra="ignore")
 
     async def get_length_unit_conversion(
         self,
@@ -13884,7 +13917,7 @@ class AsyncUnitAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return UnitLengthConversion.model_validate(json_data)
+        return UnitLengthConversion.model_validate(json_data, extra="ignore")
 
     async def get_mass_unit_conversion(
         self,
@@ -13922,7 +13955,7 @@ class AsyncUnitAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return UnitMassConversion.model_validate(json_data)
+        return UnitMassConversion.model_validate(json_data, extra="ignore")
 
     async def get_power_unit_conversion(
         self,
@@ -13960,7 +13993,7 @@ class AsyncUnitAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return UnitPowerConversion.model_validate(json_data)
+        return UnitPowerConversion.model_validate(json_data, extra="ignore")
 
     async def get_pressure_unit_conversion(
         self,
@@ -13998,7 +14031,7 @@ class AsyncUnitAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return UnitPressureConversion.model_validate(json_data)
+        return UnitPressureConversion.model_validate(json_data, extra="ignore")
 
     async def get_temperature_unit_conversion(
         self,
@@ -14036,7 +14069,7 @@ class AsyncUnitAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return UnitTemperatureConversion.model_validate(json_data)
+        return UnitTemperatureConversion.model_validate(json_data, extra="ignore")
 
     async def get_torque_unit_conversion(
         self,
@@ -14074,7 +14107,7 @@ class AsyncUnitAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return UnitTorqueConversion.model_validate(json_data)
+        return UnitTorqueConversion.model_validate(json_data, extra="ignore")
 
     async def get_volume_unit_conversion(
         self,
@@ -14112,7 +14145,7 @@ class AsyncUnitAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return UnitVolumeConversion.model_validate(json_data)
+        return UnitVolumeConversion.model_validate(json_data, extra="ignore")
 
 
 class UsersAPI:
@@ -14148,7 +14181,7 @@ class UsersAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return UserResponse.model_validate(json_data)
+        return UserResponse.model_validate(json_data, extra="ignore")
 
     def update_user_self(
         self,
@@ -14163,7 +14196,7 @@ class UsersAPI:
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -14177,7 +14210,7 @@ class UsersAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return UserResponse.model_validate(json_data)
+        return UserResponse.model_validate(json_data, extra="ignore")
 
     def delete_user_self(
         self,
@@ -14227,7 +14260,7 @@ class UsersAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return WebsiteCadUserInfoForm.model_validate(json_data)
+        return WebsiteCadUserInfoForm.model_validate(json_data, extra="ignore")
 
     def report_user_client_error(
         self,
@@ -14242,7 +14275,7 @@ class UsersAPI:
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -14256,7 +14289,7 @@ class UsersAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return ClientErrorReportAccepted.model_validate(json_data)
+        return ClientErrorReportAccepted.model_validate(json_data, extra="ignore")
 
     def user_email_marketing_consent_get(
         self,
@@ -14283,7 +14316,7 @@ class UsersAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return EmailMarketingConsentState.model_validate(json_data)
+        return EmailMarketingConsentState.model_validate(json_data, extra="ignore")
 
     def user_email_marketing_consent_decline_post(
         self,
@@ -14375,7 +14408,7 @@ class UsersAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return ExtendedUser.model_validate(json_data)
+        return ExtendedUser.model_validate(json_data, extra="ignore")
 
     def user_features_get(
         self,
@@ -14402,7 +14435,7 @@ class UsersAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return UserFeatureList.model_validate(json_data)
+        return UserFeatureList.model_validate(json_data, extra="ignore")
 
     def get_oauth2_providers_for_user(
         self,
@@ -14433,7 +14466,9 @@ class UsersAPI:
         # Validate into annotated/collection/union types using TypeAdapter
         from pydantic import TypeAdapter
 
-        return TypeAdapter(List[AccountProvider]).validate_python(json_data)
+        return TypeAdapter(List[AccountProvider]).validate_python(
+            json_data, extra="ignore"
+        )
 
     def get_user_privacy_settings(
         self,
@@ -14460,7 +14495,7 @@ class UsersAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return PrivacySettings.model_validate(json_data)
+        return PrivacySettings.model_validate(json_data, extra="ignore")
 
     def update_user_privacy_settings(
         self,
@@ -14475,7 +14510,7 @@ class UsersAPI:
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -14489,7 +14524,7 @@ class UsersAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return PrivacySettings.model_validate(json_data)
+        return PrivacySettings.model_validate(json_data, extra="ignore")
 
     def get_session_for_user(
         self,
@@ -14517,7 +14552,7 @@ class UsersAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return Session.model_validate(json_data)
+        return Session.model_validate(json_data, extra="ignore")
 
     def get_user_shortlinks(
         self,
@@ -14605,7 +14640,7 @@ class UsersAPI:
 
         json_data = response.json()
         # Validate into a Pydantic model (supports BaseModel/RootModel)
-        return ShortlinkResultsPage.model_validate(json_data)
+        return ShortlinkResultsPage.model_validate(json_data, extra="ignore")
 
     def create_user_shortlink(
         self,
@@ -14620,7 +14655,7 @@ class UsersAPI:
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -14634,7 +14669,7 @@ class UsersAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return CreateShortlinkResponse.model_validate(json_data)
+        return CreateShortlinkResponse.model_validate(json_data, extra="ignore")
 
     def update_user_shortlink(
         self,
@@ -14652,7 +14687,7 @@ class UsersAPI:
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -14712,7 +14747,7 @@ class UsersAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return ExtendedUser.model_validate(json_data)
+        return ExtendedUser.model_validate(json_data, extra="ignore")
 
     def get_user(
         self,
@@ -14742,7 +14777,7 @@ class UsersAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return UserResponse.model_validate(json_data)
+        return UserResponse.model_validate(json_data, extra="ignore")
 
     def user_admin_details_get(
         self,
@@ -14770,7 +14805,7 @@ class UsersAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return UserAdminDetails.model_validate(json_data)
+        return UserAdminDetails.model_validate(json_data, extra="ignore")
 
     def update_subscription_for_user(
         self,
@@ -14786,7 +14821,7 @@ class UsersAPI:
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -14800,7 +14835,7 @@ class UsersAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return ZooProductSubscriptions.model_validate(json_data)
+        return ZooProductSubscriptions.model_validate(json_data, extra="ignore")
 
     def put_public_email_marketing_consent_request(
         self,
@@ -14815,7 +14850,7 @@ class UsersAPI:
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -14841,7 +14876,7 @@ class UsersAPI:
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -14867,7 +14902,7 @@ class UsersAPI:
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -14890,7 +14925,7 @@ class UsersAPI:
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -14913,7 +14948,7 @@ class UsersAPI:
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -14936,7 +14971,7 @@ class UsersAPI:
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -14980,7 +15015,7 @@ class AsyncUsersAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return UserResponse.model_validate(json_data)
+        return UserResponse.model_validate(json_data, extra="ignore")
 
     async def update_user_self(
         self,
@@ -14995,7 +15030,7 @@ class AsyncUsersAPI:
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -15009,7 +15044,7 @@ class AsyncUsersAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return UserResponse.model_validate(json_data)
+        return UserResponse.model_validate(json_data, extra="ignore")
 
     async def delete_user_self(
         self,
@@ -15059,7 +15094,7 @@ class AsyncUsersAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return WebsiteCadUserInfoForm.model_validate(json_data)
+        return WebsiteCadUserInfoForm.model_validate(json_data, extra="ignore")
 
     async def report_user_client_error(
         self,
@@ -15074,7 +15109,7 @@ class AsyncUsersAPI:
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -15088,7 +15123,7 @@ class AsyncUsersAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return ClientErrorReportAccepted.model_validate(json_data)
+        return ClientErrorReportAccepted.model_validate(json_data, extra="ignore")
 
     async def user_email_marketing_consent_get(
         self,
@@ -15115,7 +15150,7 @@ class AsyncUsersAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return EmailMarketingConsentState.model_validate(json_data)
+        return EmailMarketingConsentState.model_validate(json_data, extra="ignore")
 
     async def user_email_marketing_consent_decline_post(
         self,
@@ -15207,7 +15242,7 @@ class AsyncUsersAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return ExtendedUser.model_validate(json_data)
+        return ExtendedUser.model_validate(json_data, extra="ignore")
 
     async def user_features_get(
         self,
@@ -15234,7 +15269,7 @@ class AsyncUsersAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return UserFeatureList.model_validate(json_data)
+        return UserFeatureList.model_validate(json_data, extra="ignore")
 
     async def get_oauth2_providers_for_user(
         self,
@@ -15265,7 +15300,9 @@ class AsyncUsersAPI:
         # Validate into annotated/collection/union types using TypeAdapter
         from pydantic import TypeAdapter
 
-        return TypeAdapter(List[AccountProvider]).validate_python(json_data)
+        return TypeAdapter(List[AccountProvider]).validate_python(
+            json_data, extra="ignore"
+        )
 
     async def get_user_privacy_settings(
         self,
@@ -15292,7 +15329,7 @@ class AsyncUsersAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return PrivacySettings.model_validate(json_data)
+        return PrivacySettings.model_validate(json_data, extra="ignore")
 
     async def update_user_privacy_settings(
         self,
@@ -15307,7 +15344,7 @@ class AsyncUsersAPI:
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -15321,7 +15358,7 @@ class AsyncUsersAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return PrivacySettings.model_validate(json_data)
+        return PrivacySettings.model_validate(json_data, extra="ignore")
 
     async def get_session_for_user(
         self,
@@ -15349,7 +15386,7 @@ class AsyncUsersAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return Session.model_validate(json_data)
+        return Session.model_validate(json_data, extra="ignore")
 
     def get_user_shortlinks(
         self,
@@ -15437,7 +15474,7 @@ class AsyncUsersAPI:
 
         json_data = response.json()
         # Validate into a Pydantic model (supports BaseModel/RootModel)
-        return ShortlinkResultsPage.model_validate(json_data)
+        return ShortlinkResultsPage.model_validate(json_data, extra="ignore")
 
     async def create_user_shortlink(
         self,
@@ -15452,7 +15489,7 @@ class AsyncUsersAPI:
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -15466,7 +15503,7 @@ class AsyncUsersAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return CreateShortlinkResponse.model_validate(json_data)
+        return CreateShortlinkResponse.model_validate(json_data, extra="ignore")
 
     async def update_user_shortlink(
         self,
@@ -15484,7 +15521,7 @@ class AsyncUsersAPI:
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -15544,7 +15581,7 @@ class AsyncUsersAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return ExtendedUser.model_validate(json_data)
+        return ExtendedUser.model_validate(json_data, extra="ignore")
 
     async def get_user(
         self,
@@ -15574,7 +15611,7 @@ class AsyncUsersAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return UserResponse.model_validate(json_data)
+        return UserResponse.model_validate(json_data, extra="ignore")
 
     async def user_admin_details_get(
         self,
@@ -15602,7 +15639,7 @@ class AsyncUsersAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return UserAdminDetails.model_validate(json_data)
+        return UserAdminDetails.model_validate(json_data, extra="ignore")
 
     async def update_subscription_for_user(
         self,
@@ -15618,7 +15655,7 @@ class AsyncUsersAPI:
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -15632,7 +15669,7 @@ class AsyncUsersAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return ZooProductSubscriptions.model_validate(json_data)
+        return ZooProductSubscriptions.model_validate(json_data, extra="ignore")
 
     async def put_public_email_marketing_consent_request(
         self,
@@ -15647,7 +15684,7 @@ class AsyncUsersAPI:
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -15673,7 +15710,7 @@ class AsyncUsersAPI:
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -15699,7 +15736,7 @@ class AsyncUsersAPI:
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -15722,7 +15759,7 @@ class AsyncUsersAPI:
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -15745,7 +15782,7 @@ class AsyncUsersAPI:
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -15768,7 +15805,7 @@ class AsyncUsersAPI:
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -15873,7 +15910,7 @@ class ApiTokensAPI:
 
         json_data = response.json()
         # Validate into a Pydantic model (supports BaseModel/RootModel)
-        return ApiTokenResultsPage.model_validate(json_data)
+        return ApiTokenResultsPage.model_validate(json_data, extra="ignore")
 
     def create_api_token_for_user(
         self,
@@ -15908,7 +15945,7 @@ class ApiTokensAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return ApiToken.model_validate(json_data)
+        return ApiToken.model_validate(json_data, extra="ignore")
 
     def get_api_token_for_user(
         self,
@@ -15936,7 +15973,7 @@ class ApiTokensAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return ApiToken.model_validate(json_data)
+        return ApiToken.model_validate(json_data, extra="ignore")
 
     def delete_api_token_for_user(
         self,
@@ -16059,7 +16096,7 @@ class AsyncApiTokensAPI:
 
         json_data = response.json()
         # Validate into a Pydantic model (supports BaseModel/RootModel)
-        return ApiTokenResultsPage.model_validate(json_data)
+        return ApiTokenResultsPage.model_validate(json_data, extra="ignore")
 
     async def create_api_token_for_user(
         self,
@@ -16094,7 +16131,7 @@ class AsyncApiTokensAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return ApiToken.model_validate(json_data)
+        return ApiToken.model_validate(json_data, extra="ignore")
 
     async def get_api_token_for_user(
         self,
@@ -16122,7 +16159,7 @@ class AsyncApiTokensAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return ApiToken.model_validate(json_data)
+        return ApiToken.model_validate(json_data, extra="ignore")
 
     async def delete_api_token_for_user(
         self,

@@ -4,6 +4,10 @@ from enum import Enum
 class UnitVolume(str, Enum):
     """The valid types of volume units."""  # noqa: E501
 
+    """# Cubic millimeters (mm³)"""  # noqa: E501
+
+    MM3 = "mm3"
+
     """# Cubic centimeters (cc or cm³) <https://en.wikipedia.org/wiki/Cubic_centimeter>"""  # noqa: E501
 
     CM3 = "cm3"

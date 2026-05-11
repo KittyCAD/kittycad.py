@@ -14,6 +14,7 @@ import httpx._multipart
 from ._file_inputs import prepare_upload_input
 from ._io_types import ProgressCallback, SyncUpload
 from ._progress import wrap_with_progress
+from .types import serialize_request_body
 
 
 class MultipartDict(dict):
@@ -407,7 +408,7 @@ def create_json_multipart_upload(
 
     if hasattr(json_body, "model_dump"):
         # Pydantic model
-        json_content = json_body.model_dump_json()
+        json_content = serialize_request_body(json_body)
     elif hasattr(json_body, "dict"):
         # Pydantic v1 model
         json_content = json.dumps(json_body.dict())

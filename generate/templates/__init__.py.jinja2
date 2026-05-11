@@ -20,6 +20,7 @@ from websockets.sync.client import (
 from .client import AsyncClient, Client
 from .pagination import AsyncPageIterator, SyncPageIterator
 from .response_helpers import raise_for_status
+from .types import serialize_request_body
 from .exceptions import (
     KittyCADError,
     KittyCADAPIError,

@@ -7,6 +7,8 @@ from .base import KittyCadBaseModel
 class UpdateOrgDataset(KittyCadBaseModel):
     """Payload for updating an org dataset."""
 
+    description: Optional[str] = None
+
     name: Optional[str] = None
 
     source: Optional[UpdateOrgDatasetSource] = None

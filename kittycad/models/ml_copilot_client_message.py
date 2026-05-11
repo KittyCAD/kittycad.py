@@ -19,6 +19,12 @@ class OptionPing(KittyCadBaseModel):
     type: Literal["ping"] = "ping"
 
 
+class OptionListModes(KittyCadBaseModel):
+    """Request available mode metadata for the copilot session."""
+
+    type: Literal["list_modes"] = "list_modes"
+
+
 class OptionHeaders(KittyCadBaseModel):
     """Authentication header request."""
 
@@ -73,6 +79,7 @@ MlCopilotClientMessage = RootModel[
     Annotated[
         Union[
             OptionPing,
+            OptionListModes,
             OptionHeaders,
             OptionProjectContext,
             OptionUser,

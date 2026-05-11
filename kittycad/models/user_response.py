@@ -13,13 +13,13 @@ class UserResponse(KittyCadBaseModel):
 
     block_message: Optional[str] = None
 
-    can_train_on_data: bool = False
+    can_train_on_data: Optional[bool] = False
 
     company: Optional[str] = None
 
     created_at: datetime.datetime
 
-    deletion_scheduled: bool = False
+    deletion_scheduled: Optional[bool] = False
 
     discord: Optional[str] = None
 
@@ -35,16 +35,16 @@ class UserResponse(KittyCadBaseModel):
 
     image: str
 
-    is_onboarded: bool = False
+    is_onboarded: Optional[bool] = False
 
-    is_service_account: bool = False
+    is_service_account: Optional[bool] = False
 
     last_name: Optional[str] = None
 
     name: Optional[str] = None
 
-    phone: str = ""
+    phone: Optional[str] = ""
 
     updated_at: datetime.datetime
 
-    username: str = ""
+    username: Optional[str] = ""

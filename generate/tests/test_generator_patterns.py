@@ -15,14 +15,9 @@ import ast
 import inspect
 import re
 import subprocess
-
-# Import the actual generated code to test it
-import sys
 from pathlib import Path
 
 import pytest
-
-sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 from kittycad import KittyCAD
 from kittycad.models import ApiCallWithPriceResultsPage
@@ -41,6 +36,33 @@ class TestResponseHelperImports:
         # The generator should never emit parent-relative imports in the package root.
         assert "..response_helpers" not in content
         assert "from kittycad.response_helpers import raise_for_status" in content
+
+
+class TestResponseValidation:
+    """Ensure generated clients tolerate additive response fields."""
+
+    def test_client_response_validation_ignores_extra_fields(self):
+        import kittycad
+
+        client_file = Path(kittycad.__file__)
+        content = client_file.read_text()
+
+        assert '.model_validate(json_data, extra="ignore")' in content
+        assert '.validate_python(json_data, extra="ignore")' in content
+
+
+class TestRequestSerialization:
+    """Ensure generated clients use SDK request serialization."""
+
+    def test_client_request_bodies_use_sdk_serializer(self):
+        import kittycad
+
+        client_file = Path(kittycad.__file__)
+        content = client_file.read_text()
+
+        assert "from .types import serialize_request_body" in content
+        assert "content=serialize_request_body(body)" in content
+        assert "content=body.model_dump_json(exclude_unset=True)" not in content
 
 
 class TestMultipartEndpoints:

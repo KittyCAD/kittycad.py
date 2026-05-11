@@ -19,25 +19,25 @@ class ZooProductSubscription(KittyCadBaseModel):
 
     annual_discount: Optional[float] = None
 
-    billing_mode: SubscriptionBillingMode = "standard"  # type: ignore[assignment]
+    billing_mode: Optional[SubscriptionBillingMode] = "standard"  # type: ignore[assignment]
 
     description: str
 
-    display_name: str = ""
+    display_name: Optional[str] = ""
 
     endpoints_included: Optional[List[ApiEndpoint]] = None
 
     features: Optional[List[SubscriptionTierFeature]] = None
 
-    ml_custom_models: bool = False
+    ml_custom_models: Optional[bool] = False
 
-    monthly_pay_as_you_go_api_credits: int = 0
+    monthly_pay_as_you_go_api_credits: Optional[int] = 0
 
-    monthly_pay_as_you_go_api_credits_monetary_value: float = 0.0
+    monthly_pay_as_you_go_api_credits_monetary_value: Optional[float] = 0.0
 
     name: str
 
-    pay_as_you_go_api_credit_price: float = 0.0
+    pay_as_you_go_api_credit_price: Optional[float] = 0.0
 
     price: SubscriptionTierPrice
 

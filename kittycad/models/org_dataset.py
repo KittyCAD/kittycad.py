@@ -14,6 +14,8 @@ class OrgDataset(KittyCadBaseModel):
 
     created_at: datetime.datetime
 
+    description: Optional[str] = None
+
     id: Uuid
 
     last_sync_error: Optional[str] = None

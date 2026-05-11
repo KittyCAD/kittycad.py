@@ -11,13 +11,11 @@ help catch unintended changes early in development.
 """
 
 import json
-import sys
 from pathlib import Path
 
 import pytest
 
-# Add the generate directory to the path
-sys.path.insert(0, str(Path(__file__).parent.parent))
+from generate.utils import camel_to_snake, to_pascal_case
 
 
 # Mock the generate_enum_type_code function for testing
@@ -41,23 +39,6 @@ def generate_enum_type_code(name: str, schema: dict) -> str:
     lines.append("        return str(self.value)")
 
     return "\n".join(lines)
-
-
-# Import utility functions that don't have problematic dependencies
-try:
-    from utils import camel_to_snake, to_pascal_case
-except ImportError:
-    # Provide simple implementations if import fails
-    def camel_to_snake(name: str) -> str:
-        """Simple implementation for testing."""
-        import re
-
-        s1 = re.sub("(.)([A-Z][a-z]+)", r"\1_\2", name)
-        return re.sub("([a-z0-9])([A-Z])", r"\1_\2", s1).lower()
-
-    def to_pascal_case(name: str) -> str:
-        """Simple implementation for testing."""
-        return "".join(word.capitalize() for word in name.split("_"))
 
 
 class TestGoldenFileGeneration:
@@ -302,7 +283,7 @@ class TestGoldenFileGeneration:
 
         for enum_value, expected_member_name in enum_value_tests:
             # Test the conversion function directly
-            from utils import camel_to_screaming_snake
+            from generate.utils import camel_to_screaming_snake
 
             actual_member_name = camel_to_screaming_snake(enum_value)
             assert actual_member_name == expected_member_name, (

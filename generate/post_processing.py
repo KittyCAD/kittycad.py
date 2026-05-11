@@ -8,18 +8,7 @@ from typing import Dict, List, Tuple, TypedDict
 
 import jsonpatch
 
-try:
-    from .utils import (
-        extract_imports_from_examples,
-        format_file_with_ruff,
-        to_pascal_case,
-    )
-except ImportError:
-    from utils import (
-        extract_imports_from_examples,
-        format_file_with_ruff,
-        to_pascal_case,
-    )
+from .utils import extract_imports_from_examples, format_file_with_ruff, to_pascal_case
 
 
 def generate_examples_tests(cwd: str, examples: List[str]):

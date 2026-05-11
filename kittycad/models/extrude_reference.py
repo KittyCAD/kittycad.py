@@ -1,15 +1,18 @@
-from typing import Union
+from typing import Optional, Union
 
 from pydantic import RootModel, model_serializer, model_validator
 
+from ..models.entity_reference import EntityReference as EntityReferenceModel
 from ..models.point3d import Point3d
 from .base import KittyCadBaseModel
 
 
 class EntityReference(KittyCadBaseModel):
-    """Extrudes along the normal of the top face until it is as close to the entity as possible. An entity can be a solid, a path, a face, etc."""
+    """Extrudes along the normal of the top face until it is as close to the entity as possible. An entity can be a solid, a path, a face, an edge (via `entity_reference`), etc."""
 
-    entity_id: str
+    entity_id: Optional[str] = None
+
+    entity_reference: Optional[EntityReferenceModel] = None
 
     @model_validator(mode="before")
     @classmethod
@@ -35,7 +38,7 @@ class Axis(KittyCadBaseModel):
 
     axis: Point3d
 
-    point: Point3d = {"x": 0.0, "y": 0.0, "z": 0.0}  # type: ignore[assignment]
+    point: Optional[Point3d] = {"x": 0.0, "y": 0.0, "z": 0.0}  # type: ignore[assignment]
 
     @model_validator(mode="before")
     @classmethod

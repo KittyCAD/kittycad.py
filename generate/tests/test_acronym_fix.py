@@ -1,14 +1,9 @@
 #!/usr/bin/env python3
 """Test script to verify the improved camel_to_snake function handles acronyms correctly."""
 
-import os
-import sys
-
 import pytest
 
-# Add the parent directory to the path to import generate modules
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
-from utils import camel_to_snake
+from generate.utils import camel_to_snake
 
 
 class TestAcronymHandling:

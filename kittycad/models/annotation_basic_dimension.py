@@ -1,3 +1,5 @@
+from typing import Optional
+
 from ..models.annotation_mbd_basic_dimension import AnnotationMbdBasicDimension
 from ..models.point2d import Point2d
 from .base import KittyCadBaseModel
@@ -6,7 +8,7 @@ from .base import KittyCadBaseModel
 class AnnotationBasicDimension(KittyCadBaseModel):
     """Parameters for defining an MBD Basic Dimension Annotation state which is measured between two positions in 3D"""
 
-    arrow_scale: float = 1.0
+    arrow_scale: Optional[float] = 1.0
 
     dimension: AnnotationMbdBasicDimension
 

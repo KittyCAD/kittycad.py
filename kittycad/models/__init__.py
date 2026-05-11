@@ -147,6 +147,7 @@ from .distance_type import DistanceType
 from .dxf_storage import DxfStorage
 from .edge_info import EdgeInfo
 from .edge_lines_visible import EdgeLinesVisible
+from .edge_specifier import EdgeSpecifier
 from .email_authentication_form import EmailAuthenticationForm
 from .email_marketing_confirm_token_body import EmailMarketingConfirmTokenBody
 from .email_marketing_consent_state import EmailMarketingConsentState
@@ -173,7 +174,9 @@ from .entity_make_helix import EntityMakeHelix
 from .entity_make_helix_from_edge import EntityMakeHelixFromEdge
 from .entity_make_helix_from_params import EntityMakeHelixFromParams
 from .entity_mirror import EntityMirror
+from .entity_mirror_across import EntityMirrorAcross
 from .entity_mirror_across_edge import EntityMirrorAcrossEdge
+from .entity_reference import EntityReference
 from .entity_set_opacity import EntitySetOpacity
 from .entity_type import EntityType
 from .error import Error
@@ -248,9 +251,11 @@ from .make_plane import MakePlane
 from .mass import Mass
 from .mbd_symbol import MbdSymbol
 from .method import Method
+from .mirror_across import MirrorAcross
 from .ml_copilot_client_message import MlCopilotClientMessage
 from .ml_copilot_file import MlCopilotFile
 from .ml_copilot_mode import MlCopilotMode
+from .ml_copilot_mode_option import MlCopilotModeOption
 from .ml_copilot_server_message import MlCopilotServerMessage
 from .ml_copilot_supported_models import MlCopilotSupportedModels
 from .ml_copilot_system_command import MlCopilotSystemCommand
@@ -345,6 +350,7 @@ from .point4d import Point4d
 from .pong import Pong
 from .post_effect_type import PostEffectType
 from .price_upsert_request import PriceUpsertRequest
+from .primitive_topology_fallback import PrimitiveTopologyFallback
 from .privacy_settings import PrivacySettings
 from .project_archive_format import ProjectArchiveFormat
 from .project_category_response import ProjectCategoryResponse
@@ -360,10 +366,13 @@ from .public_mailing_list_membership_request import PublicMailingListMembershipR
 from .public_project_owner_response import PublicProjectOwnerResponse
 from .public_project_response import PublicProjectResponse
 from .public_project_vote_response import PublicProjectVoteResponse
+from .query_entity_type import QueryEntityType
+from .query_entity_type_with_point import QueryEntityTypeWithPoint
 from .raw_file import RawFile
 from .reasoning_message import ReasoningMessage
 from .reconfigure_stream import ReconfigureStream
 from .region_get_query_point import RegionGetQueryPoint
+from .region_version import RegionVersion
 from .relative_to import RelativeTo
 from .remove_scene_objects import RemoveSceneObjects
 from .revolve import Revolve
@@ -381,6 +390,7 @@ from .scene_selection_type import SceneSelectionType
 from .scene_tool_type import SceneToolType
 from .select_add import SelectAdd
 from .select_clear import SelectClear
+from .select_entity import SelectEntity
 from .select_get import SelectGet
 from .select_region_from_point import SelectRegionFromPoint
 from .select_remove import SelectRemove
@@ -411,6 +421,7 @@ from .shortlink_results_page import ShortlinkResultsPage
 from .side_face import SideFace
 from .sketch_mode_disable import SketchModeDisable
 from .solid2d_add_hole import Solid2dAddHole
+from .solid3d_cut_edge_references import Solid3dCutEdgeReferences
 from .solid3d_cut_edges import Solid3dCutEdges
 from .solid3d_fillet_edge import Solid3dFilletEdge
 from .solid3d_flip import Solid3dFlip

@@ -10,7 +10,7 @@ from .utils import (
 
 
 def _generate_docstring_with_examples(
-    endpoint: dict, file_info: dict, request_body_type: str
+    endpoint: dict, file_info: dict, request_body_type: str | None
 ) -> str:
     """Generate docstring with usage examples for endpoints."""
     base_docs = endpoint.get("description", endpoint.get("summary", ""))

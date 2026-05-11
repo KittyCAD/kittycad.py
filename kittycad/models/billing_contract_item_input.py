@@ -11,7 +11,7 @@ from .base import KittyCadBaseModel
 class BillingContractItemInput(KittyCadBaseModel):
     """Serialized line-item payload for a contract definition."""
 
-    active: bool = True
+    active: Optional[bool] = True
 
     billing_unit_granularity: Optional[BillingUnitGranularity] = None
 
@@ -21,10 +21,10 @@ class BillingContractItemInput(KittyCadBaseModel):
 
     fixed_fee_amount: Optional[float] = None
 
-    is_commitment_eligible: bool = False
+    is_commitment_eligible: Optional[bool] = False
 
     kind: BillingItemKind
 
-    rate_tiers: List[BillingRateTierInput] = []
+    rate_tiers: Optional[List[BillingRateTierInput]] = []
 
     unit: BillingUnit

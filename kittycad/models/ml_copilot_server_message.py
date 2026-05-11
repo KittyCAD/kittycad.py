@@ -4,6 +4,7 @@ from typing import Any, Dict, List, Optional, Union
 from pydantic import RootModel, model_serializer, model_validator
 
 from ..models.ml_copilot_file import MlCopilotFile
+from ..models.ml_copilot_mode_option import MlCopilotModeOption
 from ..models.ml_tool_result import MlToolResult
 from ..models.reasoning_message import ReasoningMessage
 from ..models.uuid import Uuid
@@ -158,6 +159,32 @@ class Info(KittyCadBaseModel):
         return {"info": payload}
 
 
+class ModesResponse(KittyCadBaseModel):
+    """Available mode metadata for clients."""
+
+    default_mode: str
+
+    modes: List[MlCopilotModeOption]
+
+    @model_validator(mode="before")
+    @classmethod
+    def _unwrap(cls, data):
+        if (
+            isinstance(data, dict)
+            and "modes_response" in data
+            and isinstance(data["modes_response"], dict)
+        ):
+            return data["modes_response"]
+
+        return data
+
+    @model_serializer(mode="wrap")
+    def _wrap(self, handler, info):
+        payload = handler(self, info)
+
+        return {"modes_response": payload}
+
+
 class BackendShutdown(KittyCadBaseModel):
     """Notification that the backend is shutting down."""
 
@@ -305,6 +332,7 @@ MlCopilotServerMessage = RootModel[
         ToolOutput,
         Error,
         Info,
+        ModesResponse,
         BackendShutdown,
         ProjectUpdated,
         Reasoning,

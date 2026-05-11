@@ -12,13 +12,9 @@ This module tests that the generated SDK maintains high-quality, Pythonic patter
 import ast
 import inspect
 import json
-import sys
 from pathlib import Path
 
 import pytest
-
-# Import the generated SDK
-sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 from kittycad import KittyCAD
 from kittycad.models import MlFeedback, SceneToolType, Uuid, ZooTool

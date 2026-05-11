@@ -10,7 +10,7 @@ class Coupon(KittyCadBaseModel):
 
     id: Optional[str] = None
 
-    metadata: Dict[str, str] = {}
+    metadata: Optional[Dict[str, str]] = {}
 
     name: Optional[str] = None
 
