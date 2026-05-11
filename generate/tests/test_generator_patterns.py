@@ -51,6 +51,20 @@ class TestResponseValidation:
         assert '.validate_python(json_data, extra="ignore")' in content
 
 
+class TestRequestSerialization:
+    """Ensure generated clients use SDK request serialization."""
+
+    def test_client_request_bodies_use_sdk_serializer(self):
+        import kittycad
+
+        client_file = Path(kittycad.__file__)
+        content = client_file.read_text()
+
+        assert "from .types import serialize_request_body" in content
+        assert "content=serialize_request_body(body)" in content
+        assert "content=body.model_dump_json(exclude_unset=True)" not in content
+
+
 class TestMultipartEndpoints:
     """Test multipart endpoints produce upload_* with file: SyncUpload, correct multipart code."""
 

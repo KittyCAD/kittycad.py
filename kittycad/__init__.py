@@ -219,6 +219,7 @@ from .models.zoo_product_subscriptions_user_request import (
 )
 from .pagination import AsyncPageIterator, SyncPageIterator
 from .response_helpers import raise_for_status
+from .types import serialize_request_body
 
 
 class MetaAPI:
@@ -627,7 +628,7 @@ class MlAPI:
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -795,7 +796,7 @@ class MlAPI:
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -853,7 +854,7 @@ class MlAPI:
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -912,7 +913,7 @@ class MlAPI:
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -947,7 +948,7 @@ class MlAPI:
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -1301,7 +1302,7 @@ class AsyncMlAPI:
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -1469,7 +1470,7 @@ class AsyncMlAPI:
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -1527,7 +1528,7 @@ class AsyncMlAPI:
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -1586,7 +1587,7 @@ class AsyncMlAPI:
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -1621,7 +1622,7 @@ class AsyncMlAPI:
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -3012,7 +3013,7 @@ class HiddenAPI:
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -3041,7 +3042,7 @@ class HiddenAPI:
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -3304,7 +3305,7 @@ class AsyncHiddenAPI:
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -3333,7 +3334,7 @@ class AsyncHiddenAPI:
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -4691,7 +4692,7 @@ class Oauth2API:
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -4714,7 +4715,7 @@ class Oauth2API:
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -4737,7 +4738,7 @@ class Oauth2API:
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -4852,7 +4853,7 @@ class Oauth2API:
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -4913,7 +4914,7 @@ class Oauth2API:
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -4936,7 +4937,7 @@ class Oauth2API:
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -5085,7 +5086,7 @@ class Oauth2API:
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -5147,7 +5148,7 @@ class Oauth2API:
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -5383,7 +5384,7 @@ class Oauth2API:
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -5445,7 +5446,7 @@ class Oauth2API:
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -5765,7 +5766,7 @@ class AsyncOauth2API:
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -5788,7 +5789,7 @@ class AsyncOauth2API:
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -5811,7 +5812,7 @@ class AsyncOauth2API:
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -5926,7 +5927,7 @@ class AsyncOauth2API:
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -5987,7 +5988,7 @@ class AsyncOauth2API:
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -6010,7 +6011,7 @@ class AsyncOauth2API:
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -6159,7 +6160,7 @@ class AsyncOauth2API:
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -6221,7 +6222,7 @@ class AsyncOauth2API:
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -6457,7 +6458,7 @@ class AsyncOauth2API:
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -6519,7 +6520,7 @@ class AsyncOauth2API:
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -6699,7 +6700,7 @@ class OrgsAPI:
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -6728,7 +6729,7 @@ class OrgsAPI:
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -6911,7 +6912,7 @@ class OrgsAPI:
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -6969,7 +6970,7 @@ class OrgsAPI:
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -7580,7 +7581,7 @@ class OrgsAPI:
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -7638,7 +7639,7 @@ class OrgsAPI:
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -7716,7 +7717,7 @@ class OrgsAPI:
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -7772,7 +7773,7 @@ class OrgsAPI:
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -7801,7 +7802,7 @@ class OrgsAPI:
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -7996,7 +7997,7 @@ class OrgsAPI:
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -8088,7 +8089,7 @@ class AsyncOrgsAPI:
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -8117,7 +8118,7 @@ class AsyncOrgsAPI:
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -8300,7 +8301,7 @@ class AsyncOrgsAPI:
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -8358,7 +8359,7 @@ class AsyncOrgsAPI:
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -8969,7 +8970,7 @@ class AsyncOrgsAPI:
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -9027,7 +9028,7 @@ class AsyncOrgsAPI:
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -9105,7 +9106,7 @@ class AsyncOrgsAPI:
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -9161,7 +9162,7 @@ class AsyncOrgsAPI:
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -9190,7 +9191,7 @@ class AsyncOrgsAPI:
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -9385,7 +9386,7 @@ class AsyncOrgsAPI:
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -9481,7 +9482,7 @@ class PaymentsAPI:
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -9512,7 +9513,7 @@ class PaymentsAPI:
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -9813,7 +9814,7 @@ class PaymentsAPI:
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -9842,7 +9843,7 @@ class PaymentsAPI:
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -9937,7 +9938,7 @@ class PaymentsAPI:
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -9967,7 +9968,7 @@ class PaymentsAPI:
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -9999,7 +10000,7 @@ class PaymentsAPI:
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -10059,7 +10060,7 @@ class PaymentsAPI:
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -10090,7 +10091,7 @@ class PaymentsAPI:
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -10413,7 +10414,7 @@ class PaymentsAPI:
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -10442,7 +10443,7 @@ class PaymentsAPI:
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -10537,7 +10538,7 @@ class PaymentsAPI:
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -10604,7 +10605,7 @@ class AsyncPaymentsAPI:
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -10635,7 +10636,7 @@ class AsyncPaymentsAPI:
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -10936,7 +10937,7 @@ class AsyncPaymentsAPI:
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -10965,7 +10966,7 @@ class AsyncPaymentsAPI:
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -11060,7 +11061,7 @@ class AsyncPaymentsAPI:
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -11090,7 +11091,7 @@ class AsyncPaymentsAPI:
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -11122,7 +11123,7 @@ class AsyncPaymentsAPI:
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -11182,7 +11183,7 @@ class AsyncPaymentsAPI:
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -11213,7 +11214,7 @@ class AsyncPaymentsAPI:
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -11536,7 +11537,7 @@ class AsyncPaymentsAPI:
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -11565,7 +11566,7 @@ class AsyncPaymentsAPI:
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -11660,7 +11661,7 @@ class AsyncPaymentsAPI:
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -12501,7 +12502,7 @@ class ProjectsAPI:
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -13009,7 +13010,7 @@ class AsyncProjectsAPI:
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -13092,7 +13093,7 @@ class StoreAPI:
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -13128,7 +13129,7 @@ class AsyncStoreAPI:
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -14195,7 +14196,7 @@ class UsersAPI:
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -14274,7 +14275,7 @@ class UsersAPI:
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -14509,7 +14510,7 @@ class UsersAPI:
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -14654,7 +14655,7 @@ class UsersAPI:
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -14686,7 +14687,7 @@ class UsersAPI:
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -14820,7 +14821,7 @@ class UsersAPI:
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -14849,7 +14850,7 @@ class UsersAPI:
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -14875,7 +14876,7 @@ class UsersAPI:
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -14901,7 +14902,7 @@ class UsersAPI:
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -14924,7 +14925,7 @@ class UsersAPI:
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -14947,7 +14948,7 @@ class UsersAPI:
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -14970,7 +14971,7 @@ class UsersAPI:
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -15029,7 +15030,7 @@ class AsyncUsersAPI:
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -15108,7 +15109,7 @@ class AsyncUsersAPI:
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -15343,7 +15344,7 @@ class AsyncUsersAPI:
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -15488,7 +15489,7 @@ class AsyncUsersAPI:
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -15520,7 +15521,7 @@ class AsyncUsersAPI:
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -15654,7 +15655,7 @@ class AsyncUsersAPI:
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -15683,7 +15684,7 @@ class AsyncUsersAPI:
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -15709,7 +15710,7 @@ class AsyncUsersAPI:
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -15735,7 +15736,7 @@ class AsyncUsersAPI:
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -15758,7 +15759,7 @@ class AsyncUsersAPI:
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -15781,7 +15782,7 @@ class AsyncUsersAPI:
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -15804,7 +15805,7 @@ class AsyncUsersAPI:
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(exclude_unset=True),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
