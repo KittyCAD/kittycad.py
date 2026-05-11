@@ -97,4 +97,4 @@
             
         json_data = response.json()
         # Validate into a Pydantic model (supports BaseModel/RootModel)
-        return {{ response_type }}.model_validate(json_data)
+        return {{ response_type }}.model_validate(json_data, extra="ignore")

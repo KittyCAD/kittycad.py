@@ -38,6 +38,19 @@ class TestResponseHelperImports:
         assert "from kittycad.response_helpers import raise_for_status" in content
 
 
+class TestResponseValidation:
+    """Ensure generated clients tolerate additive response fields."""
+
+    def test_client_response_validation_ignores_extra_fields(self):
+        import kittycad
+
+        client_file = Path(kittycad.__file__)
+        content = client_file.read_text()
+
+        assert '.model_validate(json_data, extra="ignore")' in content
+        assert '.validate_python(json_data, extra="ignore")' in content
+
+
 class TestMultipartEndpoints:
     """Test multipart endpoints produce upload_* with file: SyncUpload, correct multipart code."""
 
