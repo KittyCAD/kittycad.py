@@ -40591,6 +40591,53 @@
               "command",
               "type"
             ]
+          },
+          {
+            "description": "Attachments returned by API in response to a backend `RequestAttachments` message.",
+            "type": "object",
+            "properties": {
+              "error": {
+                "nullable": true,
+                "description": "Error encountered while loading attachments, if any.",
+                "type": "string"
+              },
+              "files": {
+                "description": "Loaded attachment files. Empty when no matching attachments were found.",
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/MlCopilotFile"
+                }
+              },
+              "prompt_id": {
+                "nullable": true,
+                "description": "Prompt the attachments were loaded from.",
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Uuid"
+                  }
+                ]
+              },
+              "request_id": {
+                "nullable": true,
+                "description": "Optional backend-provided identifier to correlate request/response pairs.",
+                "type": "string"
+              },
+              "seq": {
+                "nullable": true,
+                "description": "Specific client message sequence, when requested.",
+                "type": "integer",
+                "format": "int32"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "attachment_response"
+                ]
+              }
+            },
+            "required": [
+              "type"
+            ]
           }
         ]
       },
@@ -40919,6 +40966,82 @@
             },
             "required": [
               "reasoning"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "description": "Backend-only request for API to reload client attachments from storage.\n\nAPI handles this message internally and responds upstream with `MlCopilotClientMessage::AttachmentResponse`; it is not forwarded to the browser.",
+            "type": "object",
+            "properties": {
+              "request_attachments": {
+                "type": "object",
+                "properties": {
+                  "conversation_id": {
+                    "nullable": true,
+                    "description": "Conversation to search for attachments. Used when prompt_id is not known.",
+                    "allOf": [
+                      {
+                        "$ref": "#/components/schemas/Uuid"
+                      }
+                    ]
+                  },
+                  "names": {
+                    "description": "Attachment names to load. Empty means load all attachments from the selected message(s).",
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "only_metadata": {
+                    "description": "If true, return attachment metadata without loading file contents.",
+                    "default": false,
+                    "type": "boolean"
+                  },
+                  "prompt_id": {
+                    "nullable": true,
+                    "description": "Prompt to load attachments from. Defaults to the active/resumed prompt.",
+                    "allOf": [
+                      {
+                        "$ref": "#/components/schemas/Uuid"
+                      }
+                    ]
+                  },
+                  "request_id": {
+                    "nullable": true,
+                    "description": "Optional backend-provided identifier to correlate request/response pairs.",
+                    "type": "string"
+                  },
+                  "seq": {
+                    "nullable": true,
+                    "description": "Specific client message sequence to inspect. Defaults to recent client messages.",
+                    "type": "integer",
+                    "format": "int32"
+                  }
+                }
+              }
+            },
+            "required": [
+              "request_attachments"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "description": "Notification that API finished loading all attachments for the conversation.",
+            "type": "object",
+            "properties": {
+              "attachments_loaded": {
+                "type": "object",
+                "properties": {
+                  "request_id": {
+                    "nullable": true,
+                    "description": "Optional backend-provided identifier to correlate request/response pairs.",
+                    "type": "string"
+                  }
+                }
+              }
+            },
+            "required": [
+              "attachments_loaded"
             ],
             "additionalProperties": false
           },

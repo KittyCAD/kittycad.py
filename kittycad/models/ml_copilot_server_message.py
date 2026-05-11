@@ -239,6 +239,66 @@ class Reasoning(KittyCadBaseModel):
     reasoning: ReasoningMessage
 
 
+class RequestAttachments(KittyCadBaseModel):
+    """Backend-only request for API to reload client attachments from storage.
+
+    API handles this message internally and responds upstream with `MlCopilotClientMessage::AttachmentResponse`; it is not forwarded to the browser."""
+
+    conversation_id: Optional[Uuid] = None
+
+    names: Optional[List[str]] = None
+
+    only_metadata: Optional[bool] = False
+
+    prompt_id: Optional[Uuid] = None
+
+    request_id: Optional[str] = None
+
+    seq: Optional[int] = None
+
+    @model_validator(mode="before")
+    @classmethod
+    def _unwrap(cls, data):
+        if (
+            isinstance(data, dict)
+            and "request_attachments" in data
+            and isinstance(data["request_attachments"], dict)
+        ):
+            return data["request_attachments"]
+
+        return data
+
+    @model_serializer(mode="wrap")
+    def _wrap(self, handler, info):
+        payload = handler(self, info)
+
+        return {"request_attachments": payload}
+
+
+class AttachmentsLoaded(KittyCadBaseModel):
+    """Notification that API finished loading all attachments for the conversation."""
+
+    request_id: Optional[str] = None
+
+    @model_validator(mode="before")
+    @classmethod
+    def _unwrap(cls, data):
+        if (
+            isinstance(data, dict)
+            and "attachments_loaded" in data
+            and isinstance(data["attachments_loaded"], dict)
+        ):
+            return data["attachments_loaded"]
+
+        return data
+
+    @model_serializer(mode="wrap")
+    def _wrap(self, handler, info):
+        payload = handler(self, info)
+
+        return {"attachments_loaded": payload}
+
+
 class Replay(KittyCadBaseModel):
     """Replay containing raw bytes for previously-saved messages for a conversation. Includes server messages and client `User` messages.
 
@@ -336,6 +396,8 @@ MlCopilotServerMessage = RootModel[
         BackendShutdown,
         ProjectUpdated,
         Reasoning,
+        RequestAttachments,
+        AttachmentsLoaded,
         Replay,
         EndOfStream,
         Files,
