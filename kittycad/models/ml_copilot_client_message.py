@@ -10,6 +10,7 @@ from ..models.ml_copilot_system_command import MlCopilotSystemCommand
 from ..models.ml_copilot_tool import MlCopilotTool
 from ..models.ml_reasoning_effort import MlReasoningEffort
 from ..models.source_range_prompt import SourceRangePrompt
+from ..models.uuid import Uuid
 from .base import KittyCadBaseModel
 
 
@@ -75,6 +76,22 @@ class OptionSystem(KittyCadBaseModel):
     type: Literal["system"] = "system"
 
 
+class OptionAttachmentResponse(KittyCadBaseModel):
+    """Attachments returned by API in response to a backend `RequestAttachments` message."""
+
+    error: Optional[str] = None
+
+    files: Optional[List[MlCopilotFile]] = None
+
+    prompt_id: Optional[Uuid] = None
+
+    request_id: Optional[str] = None
+
+    seq: Optional[int] = None
+
+    type: Literal["attachment_response"] = "attachment_response"
+
+
 MlCopilotClientMessage = RootModel[
     Annotated[
         Union[
@@ -84,6 +101,7 @@ MlCopilotClientMessage = RootModel[
             OptionProjectContext,
             OptionUser,
             OptionSystem,
+            OptionAttachmentResponse,
         ],
         Field(discriminator="type"),
     ]
