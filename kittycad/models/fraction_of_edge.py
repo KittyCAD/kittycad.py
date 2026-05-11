@@ -1,11 +1,16 @@
+from typing import Optional
+
+from ..models.edge_specifier import EdgeSpecifier
 from .base import KittyCadBaseModel
 
 
 class FractionOfEdge(KittyCadBaseModel):
     """An edge id and an upper and lower percentage bound of the edge."""
 
-    edge_id: str
+    edge_id: Optional[str] = None
 
-    lower_bound: float = 0.0
+    edge_specifier: Optional[EdgeSpecifier] = None
 
-    upper_bound: float = 1.0
+    lower_bound: Optional[float] = 0.0
+
+    upper_bound: Optional[float] = 1.0

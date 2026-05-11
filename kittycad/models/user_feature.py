@@ -6,7 +6,11 @@ class UserFeature(str, Enum):
 
     BODIES_PANE = "bodies_pane"
 
+    ENABLE_Z0006_LINT = "enable_z0006_lint"
+
     PROPRIETARY_TO_KCL_CONVERSION_BETA = "proprietary_to_kcl_conversion_beta"
+
+    SKETCH_EXPERIMENTAL_FEATURES = "sketch_experimental_features"
 
     WEB_APP_FILE_BROWSER = "web_app_file_browser"
 

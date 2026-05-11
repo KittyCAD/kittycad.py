@@ -627,7 +627,7 @@ class MlAPI:
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -795,7 +795,7 @@ class MlAPI:
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -853,7 +853,7 @@ class MlAPI:
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -912,7 +912,7 @@ class MlAPI:
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -947,7 +947,7 @@ class MlAPI:
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -1301,7 +1301,7 @@ class AsyncMlAPI:
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -1469,7 +1469,7 @@ class AsyncMlAPI:
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -1527,7 +1527,7 @@ class AsyncMlAPI:
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -1586,7 +1586,7 @@ class AsyncMlAPI:
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -1621,7 +1621,7 @@ class AsyncMlAPI:
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -3012,7 +3012,7 @@ class HiddenAPI:
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -3041,7 +3041,7 @@ class HiddenAPI:
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -3304,7 +3304,7 @@ class AsyncHiddenAPI:
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -3333,7 +3333,7 @@ class AsyncHiddenAPI:
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -4685,7 +4685,7 @@ class Oauth2API:
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -4708,7 +4708,7 @@ class Oauth2API:
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -4731,7 +4731,7 @@ class Oauth2API:
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -4846,7 +4846,7 @@ class Oauth2API:
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -4907,7 +4907,7 @@ class Oauth2API:
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -4930,7 +4930,7 @@ class Oauth2API:
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -5079,7 +5079,7 @@ class Oauth2API:
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -5141,7 +5141,7 @@ class Oauth2API:
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -5377,7 +5377,7 @@ class Oauth2API:
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -5439,7 +5439,7 @@ class Oauth2API:
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -5753,7 +5753,7 @@ class AsyncOauth2API:
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -5776,7 +5776,7 @@ class AsyncOauth2API:
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -5799,7 +5799,7 @@ class AsyncOauth2API:
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -5914,7 +5914,7 @@ class AsyncOauth2API:
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -5975,7 +5975,7 @@ class AsyncOauth2API:
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -5998,7 +5998,7 @@ class AsyncOauth2API:
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -6147,7 +6147,7 @@ class AsyncOauth2API:
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -6209,7 +6209,7 @@ class AsyncOauth2API:
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -6445,7 +6445,7 @@ class AsyncOauth2API:
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -6507,7 +6507,7 @@ class AsyncOauth2API:
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -6687,7 +6687,7 @@ class OrgsAPI:
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -6716,7 +6716,7 @@ class OrgsAPI:
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -6899,7 +6899,7 @@ class OrgsAPI:
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -6957,7 +6957,7 @@ class OrgsAPI:
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -7562,7 +7562,7 @@ class OrgsAPI:
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -7620,7 +7620,7 @@ class OrgsAPI:
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -7698,7 +7698,7 @@ class OrgsAPI:
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -7754,7 +7754,7 @@ class OrgsAPI:
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -7783,7 +7783,7 @@ class OrgsAPI:
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -7978,7 +7978,7 @@ class OrgsAPI:
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -8070,7 +8070,7 @@ class AsyncOrgsAPI:
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -8099,7 +8099,7 @@ class AsyncOrgsAPI:
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -8282,7 +8282,7 @@ class AsyncOrgsAPI:
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -8340,7 +8340,7 @@ class AsyncOrgsAPI:
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -8945,7 +8945,7 @@ class AsyncOrgsAPI:
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -9003,7 +9003,7 @@ class AsyncOrgsAPI:
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -9081,7 +9081,7 @@ class AsyncOrgsAPI:
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -9137,7 +9137,7 @@ class AsyncOrgsAPI:
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -9166,7 +9166,7 @@ class AsyncOrgsAPI:
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -9361,7 +9361,7 @@ class AsyncOrgsAPI:
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -9457,7 +9457,7 @@ class PaymentsAPI:
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -9488,7 +9488,7 @@ class PaymentsAPI:
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -9787,7 +9787,7 @@ class PaymentsAPI:
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -9816,7 +9816,7 @@ class PaymentsAPI:
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -9911,7 +9911,7 @@ class PaymentsAPI:
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -9941,7 +9941,7 @@ class PaymentsAPI:
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -9973,7 +9973,7 @@ class PaymentsAPI:
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -10033,7 +10033,7 @@ class PaymentsAPI:
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -10064,7 +10064,7 @@ class PaymentsAPI:
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -10304,18 +10304,10 @@ class PaymentsAPI:
     def delete_payment_method_for_user(
         self,
         id: str,
-        *,
-        force: Optional[bool] = None,
     ):
         """This endpoint requires authentication by any Zoo user. It deletes the specified payment method for the authenticated user."""
 
         url = "{}/user/payment/methods/{id}".format(self.client.base_url, id=id)
-
-        if force is not None:
-            if "?" in url:
-                url = url + "&force=" + str(force).lower()
-            else:
-                url = url + "?force=" + str(force).lower()
 
         _client = self.client.get_http_client()
 
@@ -10393,7 +10385,7 @@ class PaymentsAPI:
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -10422,7 +10414,7 @@ class PaymentsAPI:
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -10517,7 +10509,7 @@ class PaymentsAPI:
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -10584,7 +10576,7 @@ class AsyncPaymentsAPI:
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -10615,7 +10607,7 @@ class AsyncPaymentsAPI:
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -10914,7 +10906,7 @@ class AsyncPaymentsAPI:
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -10943,7 +10935,7 @@ class AsyncPaymentsAPI:
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -11038,7 +11030,7 @@ class AsyncPaymentsAPI:
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -11068,7 +11060,7 @@ class AsyncPaymentsAPI:
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -11100,7 +11092,7 @@ class AsyncPaymentsAPI:
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -11160,7 +11152,7 @@ class AsyncPaymentsAPI:
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -11191,7 +11183,7 @@ class AsyncPaymentsAPI:
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -11431,18 +11423,10 @@ class AsyncPaymentsAPI:
     async def delete_payment_method_for_user(
         self,
         id: str,
-        *,
-        force: Optional[bool] = None,
     ):
         """This endpoint requires authentication by any Zoo user. It deletes the specified payment method for the authenticated user."""
 
         url = "{}/user/payment/methods/{id}".format(self.client.base_url, id=id)
-
-        if force is not None:
-            if "?" in url:
-                url = url + "&force=" + str(force).lower()
-            else:
-                url = url + "?force=" + str(force).lower()
 
         _client = self.client.get_http_client()
 
@@ -11520,7 +11504,7 @@ class AsyncPaymentsAPI:
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -11549,7 +11533,7 @@ class AsyncPaymentsAPI:
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -11644,7 +11628,7 @@ class AsyncPaymentsAPI:
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -12477,7 +12461,7 @@ class ProjectsAPI:
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -12977,7 +12961,7 @@ class AsyncProjectsAPI:
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -13060,7 +13044,7 @@ class StoreAPI:
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -13096,7 +13080,7 @@ class AsyncStoreAPI:
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -14163,7 +14147,7 @@ class UsersAPI:
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -14242,7 +14226,7 @@ class UsersAPI:
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -14475,7 +14459,7 @@ class UsersAPI:
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -14620,7 +14604,7 @@ class UsersAPI:
         response = _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -14652,7 +14636,7 @@ class UsersAPI:
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -14786,7 +14770,7 @@ class UsersAPI:
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -14815,7 +14799,7 @@ class UsersAPI:
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -14841,7 +14825,7 @@ class UsersAPI:
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -14867,7 +14851,7 @@ class UsersAPI:
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -14890,7 +14874,7 @@ class UsersAPI:
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -14913,7 +14897,7 @@ class UsersAPI:
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -14936,7 +14920,7 @@ class UsersAPI:
         response = _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -14995,7 +14979,7 @@ class AsyncUsersAPI:
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -15074,7 +15058,7 @@ class AsyncUsersAPI:
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -15307,7 +15291,7 @@ class AsyncUsersAPI:
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -15452,7 +15436,7 @@ class AsyncUsersAPI:
         response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -15484,7 +15468,7 @@ class AsyncUsersAPI:
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -15618,7 +15602,7 @@ class AsyncUsersAPI:
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -15647,7 +15631,7 @@ class AsyncUsersAPI:
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -15673,7 +15657,7 @@ class AsyncUsersAPI:
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -15699,7 +15683,7 @@ class AsyncUsersAPI:
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -15722,7 +15706,7 @@ class AsyncUsersAPI:
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -15745,7 +15729,7 @@ class AsyncUsersAPI:
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:
@@ -15768,7 +15752,7 @@ class AsyncUsersAPI:
         response = await _client.put(
             url=url,
             headers=self.client.get_headers(),
-            content=body.model_dump_json(),
+            content=body.model_dump_json(exclude_unset=True),
         )
 
         if not response.is_success:

@@ -1,13 +1,8 @@
 """Tests for examples post-processing helpers."""
 
-import os
-import sys
 from pathlib import Path
 
-# Add the parent directory to the path to import generate modules.
-sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
-
-from post_processing import _alias_conflicting_model_imports
+from generate.post_processing import _alias_conflicting_model_imports
 
 
 def _write_test_file(tmp_path: Path, content: str) -> Path:

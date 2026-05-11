@@ -130,20 +130,22 @@ from kittycad.models.idp_metadata_source import (
     IdpMetadataSource,
     OptionBase64EncodedXml,
 )
-from kittycad.models.input_format3d import InputFormat3d, OptionGltf
+from kittycad.models.input_format3d import InputFormat3d, OptionStep
 from kittycad.models.kcl_code_completion_params import KclCodeCompletionParams
 from kittycad.models.kcl_code_completion_request import KclCodeCompletionRequest
 from kittycad.models.kcl_project_share_link_access_mode import (
     KclProjectShareLinkAccessMode,
 )
 from kittycad.models.lenient_url import LenientUrl
-from kittycad.models.ml_copilot_client_message import OptionProjectContext, OptionSystem
-from kittycad.models.ml_copilot_system_command import MlCopilotSystemCommand
+from kittycad.models.ml_copilot_client_message import OptionHeaders, OptionPing
 from kittycad.models.ml_feedback import MlFeedback
 from kittycad.models.o_auth2_app_grant_type import OAuth2AppGrantType
 from kittycad.models.org_dataset_source import OrgDatasetSource
 from kittycad.models.org_details import OrgDetails
-from kittycad.models.output_format3d import OptionStep, OutputFormat3d
+from kittycad.models.output_format3d import (
+    OptionStep as OutputFormat3dOptionStep,
+    OutputFormat3d,
+)
 from kittycad.models.plan_interval import PlanInterval
 from kittycad.models.post_effect_type import PostEffectType
 from kittycad.models.price_upsert_request import PriceUpsertRequest
@@ -155,8 +157,6 @@ from kittycad.models.public_email_marketing_consent_request import (
 from kittycad.models.public_mailing_list_membership_request import (
     PublicMailingListMembershipRequest,
 )
-from kittycad.models.rtc_sdp_type import RtcSdpType
-from kittycad.models.rtc_session_description import RtcSessionDescription
 from kittycad.models.sales_inquiry_type import SalesInquiryType
 from kittycad.models.saml_identity_provider_create import SamlIdentityProviderCreate
 from kittycad.models.service_account_uuid import ServiceAccountUuid
@@ -199,7 +199,9 @@ from kittycad.models.update_user import UpdateUser
 from kittycad.models.user_identifier import UserIdentifier
 from kittycad.models.user_org_role import UserOrgRole
 from kittycad.models.uuid import Uuid
-from kittycad.models.web_socket_request import OptionSdpOffer
+from kittycad.models.web_socket_request import (
+    OptionHeaders as WebSocketRequestOptionHeaders,
+)
 from kittycad.models.website_sales_form import WebsiteSalesForm
 from kittycad.models.website_support_form import WebsiteSupportForm
 from kittycad.models.zoo_product_subscriptions_org_request import (
@@ -569,7 +571,7 @@ def test_create_file_conversion_options():
     result: FileConversion = client.file.create_file_conversion_options(
         body=ConversionParams(
             output_format=OutputFormat3d(
-                OptionStep(
+                OutputFormat3dOptionStep(
                     coords=System(
                         forward=AxisDirectionPair(
                             axis=Axis.Y,
@@ -584,7 +586,21 @@ def test_create_file_conversion_options():
                     units=UnitLength.CM,
                 )
             ),
-            src_format=InputFormat3d(OptionGltf()),
+            src_format=InputFormat3d(
+                OptionStep(
+                    coords=System(
+                        forward=AxisDirectionPair(
+                            axis=Axis.Y,
+                            direction=Direction.POSITIVE,
+                        ),
+                        up=AxisDirectionPair(
+                            axis=Axis.Y,
+                            direction=Direction.POSITIVE,
+                        ),
+                    ),
+                    split_closed_faces=False,
+                )
+            ),
         ),
         file_attachments={
             "main.kcl": Path("path/to/main.kcl"),
@@ -605,7 +621,7 @@ async def test_create_file_conversion_options_async():
     result: FileConversion = await client.file.create_file_conversion_options(
         body=ConversionParams(
             output_format=OutputFormat3d(
-                OptionStep(
+                OutputFormat3dOptionStep(
                     coords=System(
                         forward=AxisDirectionPair(
                             axis=Axis.Y,
@@ -620,7 +636,21 @@ async def test_create_file_conversion_options_async():
                     units=UnitLength.CM,
                 )
             ),
-            src_format=InputFormat3d(OptionGltf()),
+            src_format=InputFormat3d(
+                OptionStep(
+                    coords=System(
+                        forward=AxisDirectionPair(
+                            axis=Axis.Y,
+                            direction=Direction.POSITIVE,
+                        ),
+                        up=AxisDirectionPair(
+                            axis=Axis.Y,
+                            direction=Direction.POSITIVE,
+                        ),
+                    ),
+                    split_closed_faces=False,
+                )
+            ),
         ),
         file_attachments={
             "main.kcl": Path("path/to/main.kcl"),
@@ -774,7 +804,7 @@ def test_create_file_volume():
 
     result: FileVolume = client.file.create_file_volume(
         src_format=FileImportFormat.FBX,
-        output_unit=UnitVolume.CM3,
+        output_unit=UnitVolume.MM3,
         body=bytes("some bytes", "utf-8"),
     )
 
@@ -790,7 +820,7 @@ async def test_create_file_volume_async():
 
     result: FileVolume = await client.file.create_file_volume(
         src_format=FileImportFormat.FBX,
-        output_unit=UnitVolume.CM3,
+        output_unit=UnitVolume.MM3,
         body=bytes("some bytes", "utf-8"),
     )
 
@@ -3311,7 +3341,7 @@ def test_get_volume_unit_conversion():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     result: UnitVolumeConversion = client.unit.get_volume_unit_conversion(
-        input_unit=UnitVolume.CM3, output_unit=UnitVolume.CM3, value=3.14
+        input_unit=UnitVolume.MM3, output_unit=UnitVolume.MM3, value=3.14
     )
 
     body: UnitVolumeConversion = result
@@ -3325,7 +3355,7 @@ async def test_get_volume_unit_conversion_async():
     client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     result: UnitVolumeConversion = await client.unit.get_volume_unit_conversion(
-        input_unit=UnitVolume.CM3, output_unit=UnitVolume.CM3, value=3.14
+        input_unit=UnitVolume.MM3, output_unit=UnitVolume.MM3, value=3.14
     )
 
 
@@ -4050,7 +4080,7 @@ async def test_list_payment_methods_for_user_async():
 def test_delete_payment_method_for_user():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    client.payments.delete_payment_method_for_user(id="<string>", force=False)
+    client.payments.delete_payment_method_for_user(id="<string>")
 
 
 # OR run async
@@ -4059,7 +4089,7 @@ def test_delete_payment_method_for_user():
 async def test_delete_payment_method_for_user_async():
     client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    await client.payments.delete_payment_method_for_user(id="<string>", force=False)
+    await client.payments.delete_payment_method_for_user(id="<string>")
 
 
 @pytest.mark.skip
@@ -5047,8 +5077,8 @@ def test_ml_copilot_ws():
         # Send a message.
         websocket.send(
             MlCopilotClientMessage(
-                OptionProjectContext(
-                    current_files={"<string>": b"<bytes>"},
+                OptionHeaders(
+                    headers={"<string>": "<string>"},
                 )
             )
         )
@@ -5084,13 +5114,7 @@ def test_ml_reasoning_ws():
     # Connect to the websocket.
     with client.ml.ml_reasoning_ws(id="<string>") as websocket:
         # Send a message.
-        websocket.send(
-            MlCopilotClientMessage(
-                OptionSystem(
-                    command=MlCopilotSystemCommand.NEW,
-                )
-            )
-        )
+        websocket.send(MlCopilotClientMessage(OptionPing()))
 
         # Get a message.
         message = websocket.recv()
@@ -5136,11 +5160,8 @@ def test_modeling_commands_ws():
         # Send a message.
         websocket.send(
             WebSocketRequest(
-                OptionSdpOffer(
-                    offer=RtcSessionDescription(
-                        sdp="<string>",
-                        type=RtcSdpType.UNSPECIFIED,
-                    ),
+                WebSocketRequestOptionHeaders(
+                    headers={"<string>": "<string>"},
                 )
             )
         )

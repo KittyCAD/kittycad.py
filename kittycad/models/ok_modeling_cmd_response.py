@@ -61,6 +61,7 @@ from ..models.entity_make_helix import EntityMakeHelix
 from ..models.entity_make_helix_from_edge import EntityMakeHelixFromEdge
 from ..models.entity_make_helix_from_params import EntityMakeHelixFromParams
 from ..models.entity_mirror import EntityMirror
+from ..models.entity_mirror_across import EntityMirrorAcross
 from ..models.entity_mirror_across_edge import EntityMirrorAcrossEdge
 from ..models.entity_set_opacity import EntitySetOpacity
 from ..models.export import Export
@@ -109,6 +110,8 @@ from ..models.plane_intersect_and_project import PlaneIntersectAndProject
 from ..models.plane_set_color import PlaneSetColor
 from ..models.project_entity_to_plane import ProjectEntityToPlane
 from ..models.project_points_to_plane import ProjectPointsToPlane
+from ..models.query_entity_type import QueryEntityType
+from ..models.query_entity_type_with_point import QueryEntityTypeWithPoint
 from ..models.reconfigure_stream import ReconfigureStream
 from ..models.region_get_query_point import RegionGetQueryPoint
 from ..models.remove_scene_objects import RemoveSceneObjects
@@ -118,6 +121,7 @@ from ..models.scene_clear_all import SceneClearAll
 from ..models.scene_get_entity_ids import SceneGetEntityIds
 from ..models.select_add import SelectAdd
 from ..models.select_clear import SelectClear
+from ..models.select_entity import SelectEntity
 from ..models.select_get import SelectGet
 from ..models.select_region_from_point import SelectRegionFromPoint
 from ..models.select_remove import SelectRemove
@@ -138,6 +142,7 @@ from ..models.set_selection_type import SetSelectionType
 from ..models.set_tool import SetTool
 from ..models.sketch_mode_disable import SketchModeDisable
 from ..models.solid2d_add_hole import Solid2dAddHole
+from ..models.solid3d_cut_edge_references import Solid3dCutEdgeReferences
 from ..models.solid3d_cut_edges import Solid3dCutEdges
 from ..models.solid3d_fillet_edge import Solid3dFilletEdge
 from ..models.solid3d_flip import Solid3dFlip
@@ -441,6 +446,14 @@ class OptionSolid3dFilletEdge(KittyCadBaseModel):
     type: Literal["solid3d_fillet_edge"] = "solid3d_fillet_edge"
 
 
+class OptionSolid3dCutEdgeReferences(KittyCadBaseModel):
+    """"""
+
+    data: Solid3dCutEdgeReferences
+
+    type: Literal["solid3d_cut_edge_references"] = "solid3d_cut_edge_references"
+
+
 class OptionSolid3dCutEdges(KittyCadBaseModel):
     """"""
 
@@ -683,6 +696,14 @@ class OptionSelectClear(KittyCadBaseModel):
     type: Literal["select_clear"] = "select_clear"
 
 
+class OptionSelectEntity(KittyCadBaseModel):
+    """"""
+
+    data: SelectEntity
+
+    type: Literal["select_entity"] = "select_entity"
+
+
 class OptionExport2d(KittyCadBaseModel):
     """"""
 
@@ -713,6 +734,22 @@ class OptionSelectWithPoint(KittyCadBaseModel):
     data: SelectWithPoint
 
     type: Literal["select_with_point"] = "select_with_point"
+
+
+class OptionQueryEntityTypeWithPoint(KittyCadBaseModel):
+    """"""
+
+    data: QueryEntityTypeWithPoint
+
+    type: Literal["query_entity_type_with_point"] = "query_entity_type_with_point"
+
+
+class OptionQueryEntityType(KittyCadBaseModel):
+    """"""
+
+    data: QueryEntityType
+
+    type: Literal["query_entity_type"] = "query_entity_type"
 
 
 class OptionHighlightSetEntity(KittyCadBaseModel):
@@ -1285,6 +1322,14 @@ class OptionEntityMirror(KittyCadBaseModel):
     type: Literal["entity_mirror"] = "entity_mirror"
 
 
+class OptionEntityMirrorAcross(KittyCadBaseModel):
+    """"""
+
+    data: EntityMirrorAcross
+
+    type: Literal["entity_mirror_across"] = "entity_mirror_across"
+
+
 class OptionEntityMirrorAcrossEdge(KittyCadBaseModel):
     """"""
 
@@ -1508,6 +1553,7 @@ OkModelingCmdResponse = RootModel[
             OptionObjectSetMaterialParamsPbr,
             OptionSolid2dAddHole,
             OptionSolid3dFilletEdge,
+            OptionSolid3dCutEdgeReferences,
             OptionSolid3dCutEdges,
             OptionSendObject,
             OptionEntitySetOpacity,
@@ -1538,10 +1584,13 @@ OkModelingCmdResponse = RootModel[
             OptionDefaultCameraCenterToSelection,
             OptionDefaultCameraCenterToScene,
             OptionSelectClear,
+            OptionSelectEntity,
             OptionExport2d,
             OptionExport3d,
             OptionExport,
             OptionSelectWithPoint,
+            OptionQueryEntityTypeWithPoint,
+            OptionQueryEntityType,
             OptionHighlightSetEntity,
             OptionEntityGetChildUuid,
             OptionEntityGetIndex,
@@ -1613,6 +1662,7 @@ OkModelingCmdResponse = RootModel[
             OptionEntityLinearPattern,
             OptionEntityCircularPattern,
             OptionEntityMirror,
+            OptionEntityMirrorAcross,
             OptionEntityMirrorAcrossEdge,
             OptionEntityMakeHelix,
             OptionEntityMakeHelixFromParams,

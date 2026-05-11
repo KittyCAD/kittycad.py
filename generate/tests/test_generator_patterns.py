@@ -15,14 +15,9 @@ import ast
 import inspect
 import re
 import subprocess
-
-# Import the actual generated code to test it
-import sys
 from pathlib import Path
 
 import pytest
-
-sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 from kittycad import KittyCAD
 from kittycad.models import ApiCallWithPriceResultsPage

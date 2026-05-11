@@ -3,6 +3,7 @@
 import logging
 import os
 import random
+import re
 from typing import Any, List, Optional
 
 from .schema_analysis import (
@@ -749,19 +750,38 @@ def generate_object_type_code(
     if "description" in schema:
         description = schema["description"].replace('"', '\\"')
 
+    class_name = to_pascal_case(name)
+    if is_option:
+        class_name = "Option" + class_name
+
     imports: List[str] = []
     if extra_imports:
         for extra_import in extra_imports:
             if extra_import not in imports:
                 imports.append(extra_import)
     refs = get_refs(schema)
+    ref_aliases: dict[str, str] = {}
     if imported_refs is None:
         imported_refs = set()
     for ref in refs:
         if ref not in imported_refs:
-            imports.append(
-                "from ..models." + camel_to_snake(ref) + " import " + ref + "\n"
-            )
+            imported_name = ref
+            if ref == class_name:
+                imported_name = ref + "Model"
+                ref_aliases[ref] = imported_name
+                imports.append(
+                    "from ..models."
+                    + camel_to_snake(ref)
+                    + " import "
+                    + ref
+                    + " as "
+                    + imported_name
+                    + "\n"
+                )
+            else:
+                imports.append(
+                    "from ..models." + camel_to_snake(ref) + " import " + ref + "\n"
+                )
             imported_refs.add(ref)
 
     if field_type_overrides is None:
@@ -826,6 +846,10 @@ def generate_object_type_code(
                     base_type = field_type_overrides[property_name]
                 else:
                     base_type = get_type_name(property_schema)
+                    for ref, alias in ref_aliases.items():
+                        base_type = re.sub(
+                            r"\b" + re.escape(ref) + r"\b", alias, base_type
+                        )
 
                 is_required = property_name in required
                 has_default = "default" in property_schema
@@ -838,15 +862,14 @@ def generate_object_type_code(
                     else:
                         default_literal = repr(default_value)
 
+                allows_null = property_schema.get("nullable", False)
+
                 type_hint = base_type
-                if not is_required:
-                    if has_default and default_value is not None:
-                        # Leave as base type; explicit default handles the missing case.
-                        pass
-                    else:
-                        type_hint = "Optional[" + base_type + "]"
-                        if default_literal is None:
-                            default_literal = "None"
+                if allows_null or not is_required:
+                    type_hint = "Optional[" + base_type + "]"
+
+                if not is_required and default_literal is None:
+                    default_literal = "None"
 
                 elif has_default and default_literal is None:
                     default_literal = "None"
@@ -890,9 +913,7 @@ def generate_object_type_code(
                 fields.append(field2)
 
     # Use surgical conversion to handle all naming conventions properly
-    name = to_pascal_case(name)
-    if is_option:
-        name = "Option" + name
+    name = class_name
     template_info: TemplateType = {
         "fields": fields,
         "description": description,

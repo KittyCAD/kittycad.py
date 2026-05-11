@@ -8,6 +8,6 @@ class CreateShortlinkRequest(KittyCadBaseModel):
 
     password: Optional[str] = None
 
-    restrict_to_org: bool = False
+    restrict_to_org: Optional[bool] = False
 
     url: str

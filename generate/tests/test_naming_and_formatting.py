@@ -13,15 +13,10 @@ maintains professional, Pythonic appearance.
 """
 
 import ast
-import sys
-from pathlib import Path
 
 import pytest
 
-# Import generator utilities
-sys.path.insert(0, str(Path(__file__).parent.parent))
-
-from utils import camel_to_screaming_snake, camel_to_snake, to_pascal_case
+from generate.utils import camel_to_screaming_snake, camel_to_snake, to_pascal_case
 
 
 class TestNamingConventions:

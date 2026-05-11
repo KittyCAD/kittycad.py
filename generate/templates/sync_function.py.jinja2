@@ -47,7 +47,7 @@
         response = _client.{{ method }}(
             url=url,
             headers=self.client.get_headers(),
-            {% if has_request_body %}{% if request_body_type != "bytes" %}content=body.model_dump_json(),{% else %}content=body,{% endif %}{% endif %}
+            {% if has_request_body %}{% if request_body_type != "bytes" %}content=body.model_dump_json(exclude_unset=True),{% else %}content=body,{% endif %}{% endif %}
         )
         {% endif %}
 

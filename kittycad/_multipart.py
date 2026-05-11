@@ -407,7 +407,7 @@ def create_json_multipart_upload(
 
     if hasattr(json_body, "model_dump"):
         # Pydantic model
-        json_content = json_body.model_dump_json()
+        json_content = json_body.model_dump_json(exclude_unset=True)
     elif hasattr(json_body, "dict"):
         # Pydantic v1 model
         json_content = json.dumps(json_body.dict())

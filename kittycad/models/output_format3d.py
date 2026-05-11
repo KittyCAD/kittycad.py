@@ -63,18 +63,18 @@ class OptionPly(KittyCadBaseModel):
 class OptionStep(KittyCadBaseModel):
     """ISO 10303-21 (STEP) format."""
 
-    coords: System = {
+    coords: Optional[System] = {
         "forward": {"axis": "y", "direction": "negative"},
         "up": {"axis": "z", "direction": "positive"},
     }  # type: ignore[assignment]
 
     created: Optional[datetime.datetime] = None
 
-    presentation: StepPresentation = "pretty"  # type: ignore[assignment]
+    presentation: Optional[StepPresentation] = "pretty"  # type: ignore[assignment]
 
     type: Literal["step"] = "step"
 
-    units: UnitLength = "m"  # type: ignore[assignment]
+    units: Optional[UnitLength] = "m"  # type: ignore[assignment]
 
 
 class OptionStl(KittyCadBaseModel):

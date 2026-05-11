@@ -10,6 +10,8 @@ class EntityType(str, Enum):
 
     PATH = "path"
 
+    SEGMENT = "segment"
+
     CURVE = "curve"
 
     SOLID2D = "solid2d"
@@ -23,6 +25,8 @@ class EntityType(str, Enum):
     PLANE = "plane"
 
     VERTEX = "vertex"
+
+    REGION = "region"
 
     def __str__(self) -> str:
         return str(self.value)
