@@ -7,8 +7,10 @@ import pytest
 from kittycad import AsyncKittyCAD, KittyCAD
 from kittycad.models import (
     AccountProvider,
+    AnnouncementList,
     ApiCallWithPrice,
     ApiToken,
+    ApiTokenWithFullToken,
     AppClientInfo,
     AsyncApiCallOutput,
     AuthApiKeyResponse,
@@ -37,13 +39,13 @@ from kittycad.models import (
     MlCopilotClientMessage,
     OAuth2AppResponse,
     Org,
-    OrgAdminDetails,
     OrgDataset,
     OrgDatasetConversionStatsResponse,
     OrgDatasetFileConversionDetails,
     OrgDatasetFileConversionSummary,
     OrgDatasetSemanticSearchMatch,
     OrgMember,
+    OrgSkillResponse,
     PaymentIntent,
     PaymentMethod,
     Pong,
@@ -131,23 +133,21 @@ from kittycad.models.idp_metadata_source import (
     OptionBase64EncodedXml,
     OptionUrl,
 )
-from kittycad.models.input_format3d import InputFormat3d, OptionGltf
+from kittycad.models.input_format3d import InputFormat3d, OptionCreo
 from kittycad.models.kcl_code_completion_params import KclCodeCompletionParams
 from kittycad.models.kcl_code_completion_request import KclCodeCompletionRequest
 from kittycad.models.kcl_project_share_link_access_mode import (
     KclProjectShareLinkAccessMode,
 )
 from kittycad.models.lenient_url import LenientUrl
-from kittycad.models.ml_copilot_client_message import OptionSystem
-from kittycad.models.ml_copilot_system_command import MlCopilotSystemCommand
+from kittycad.models.ml_copilot_client_message import OptionPing
 from kittycad.models.ml_feedback import MlFeedback
-from kittycad.models.modeling_cmd import ModelingCmd, OptionObjectBringToFront
-from kittycad.models.modeling_cmd_id import ModelingCmdId
 from kittycad.models.o_auth2_app_grant_type import OAuth2AppGrantType
 from kittycad.models.org_dataset_source import OrgDatasetSource
 from kittycad.models.org_details import OrgDetails
-from kittycad.models.output_format3d import OptionStep, OutputFormat3d
+from kittycad.models.output_format3d import OptionPly, OutputFormat3d
 from kittycad.models.plan_interval import PlanInterval
+from kittycad.models.ply_storage import PlyStorage
 from kittycad.models.post_effect_type import PostEffectType
 from kittycad.models.price_upsert_request import PriceUpsertRequest
 from kittycad.models.privacy_settings import PrivacySettings
@@ -158,14 +158,15 @@ from kittycad.models.public_email_marketing_consent_request import (
 from kittycad.models.public_mailing_list_membership_request import (
     PublicMailingListMembershipRequest,
 )
+from kittycad.models.rtc_ice_candidate_init import RtcIceCandidateInit
 from kittycad.models.sales_inquiry_type import SalesInquiryType
 from kittycad.models.saml_identity_provider_create import SamlIdentityProviderCreate
+from kittycad.models.selection import OptionDefaultScene, Selection
 from kittycad.models.service_account_uuid import ServiceAccountUuid
 from kittycad.models.session_uuid import SessionUuid
 from kittycad.models.source_position import SourcePosition
 from kittycad.models.source_range import SourceRange
 from kittycad.models.source_range_prompt import SourceRangePrompt
-from kittycad.models.step_presentation import StepPresentation
 from kittycad.models.storage_provider import StorageProvider
 from kittycad.models.store_coupon_params import StoreCouponParams
 from kittycad.models.subscription_plan_billing_model import SubscriptionPlanBillingModel
@@ -200,7 +201,7 @@ from kittycad.models.update_user import UpdateUser
 from kittycad.models.user_identifier import UserIdentifier
 from kittycad.models.user_org_role import UserOrgRole
 from kittycad.models.uuid import Uuid
-from kittycad.models.web_socket_request import OptionModelingCmdReq
+from kittycad.models.web_socket_request import OptionTrickleIce
 from kittycad.models.website_sales_form import WebsiteSalesForm
 from kittycad.models.website_support_form import WebsiteSupportForm
 from kittycad.models.zoo_product_subscriptions_org_request import (
@@ -277,6 +278,25 @@ async def test_create_text_to_cad_async():
             prompt="<string>",
         ),
     )
+
+
+@pytest.mark.skip
+def test_get_announcements():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: AnnouncementList = client.meta.get_announcements()
+
+    body: AnnouncementList = result
+    print(body)
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_get_announcements_async():
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: AnnouncementList = await client.meta.get_announcements()
 
 
 @pytest.mark.skip
@@ -541,7 +561,7 @@ def test_create_file_center_of_mass():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     result: FileCenterOfMass = client.file.create_file_center_of_mass(
-        src_format=FileImportFormat.FBX,
+        src_format=FileImportFormat.ACIS,
         output_unit=UnitLength.CM,
         body=bytes("some bytes", "utf-8"),
     )
@@ -557,7 +577,7 @@ async def test_create_file_center_of_mass_async():
     client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     result: FileCenterOfMass = await client.file.create_file_center_of_mass(
-        src_format=FileImportFormat.FBX,
+        src_format=FileImportFormat.ACIS,
         output_unit=UnitLength.CM,
         body=bytes("some bytes", "utf-8"),
     )
@@ -570,7 +590,7 @@ def test_create_file_conversion_options():
     result: FileConversion = client.file.create_file_conversion_options(
         body=ConversionParams(
             output_format=OutputFormat3d(
-                OptionStep(
+                OptionPly(
                     coords=System(
                         forward=AxisDirectionPair(
                             axis=Axis.Y,
@@ -581,11 +601,26 @@ def test_create_file_conversion_options():
                             direction=Direction.POSITIVE,
                         ),
                     ),
-                    presentation=StepPresentation.COMPACT,
+                    selection=Selection(OptionDefaultScene()),
+                    storage=PlyStorage.ASCII,
                     units=UnitLength.CM,
                 )
             ),
-            src_format=InputFormat3d(OptionGltf()),
+            src_format=InputFormat3d(
+                OptionCreo(
+                    coords=System(
+                        forward=AxisDirectionPair(
+                            axis=Axis.Y,
+                            direction=Direction.POSITIVE,
+                        ),
+                        up=AxisDirectionPair(
+                            axis=Axis.Y,
+                            direction=Direction.POSITIVE,
+                        ),
+                    ),
+                    split_closed_faces=False,
+                )
+            ),
         ),
         file_attachments={
             "main.kcl": Path("path/to/main.kcl"),
@@ -606,7 +641,7 @@ async def test_create_file_conversion_options_async():
     result: FileConversion = await client.file.create_file_conversion_options(
         body=ConversionParams(
             output_format=OutputFormat3d(
-                OptionStep(
+                OptionPly(
                     coords=System(
                         forward=AxisDirectionPair(
                             axis=Axis.Y,
@@ -617,11 +652,26 @@ async def test_create_file_conversion_options_async():
                             direction=Direction.POSITIVE,
                         ),
                     ),
-                    presentation=StepPresentation.COMPACT,
+                    selection=Selection(OptionDefaultScene()),
+                    storage=PlyStorage.ASCII,
                     units=UnitLength.CM,
                 )
             ),
-            src_format=InputFormat3d(OptionGltf()),
+            src_format=InputFormat3d(
+                OptionCreo(
+                    coords=System(
+                        forward=AxisDirectionPair(
+                            axis=Axis.Y,
+                            direction=Direction.POSITIVE,
+                        ),
+                        up=AxisDirectionPair(
+                            axis=Axis.Y,
+                            direction=Direction.POSITIVE,
+                        ),
+                    ),
+                    split_closed_faces=False,
+                )
+            ),
         ),
         file_attachments={
             "main.kcl": Path("path/to/main.kcl"),
@@ -635,7 +685,7 @@ def test_create_file_conversion():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     result: FileConversion = client.file.create_file_conversion(
-        src_format=FileImportFormat.FBX,
+        src_format=FileImportFormat.ACIS,
         output_format=FileExportFormat.FBX,
         body=bytes("some bytes", "utf-8"),
     )
@@ -651,7 +701,7 @@ async def test_create_file_conversion_async():
     client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     result: FileConversion = await client.file.create_file_conversion(
-        src_format=FileImportFormat.FBX,
+        src_format=FileImportFormat.ACIS,
         output_format=FileExportFormat.FBX,
         body=bytes("some bytes", "utf-8"),
     )
@@ -662,7 +712,7 @@ def test_create_file_density():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     result: FileDensity = client.file.create_file_density(
-        src_format=FileImportFormat.FBX,
+        src_format=FileImportFormat.ACIS,
         material_mass=3.14,
         material_mass_unit=UnitMass.G,
         output_unit=UnitDensity.LB_FT3,
@@ -680,7 +730,7 @@ async def test_create_file_density_async():
     client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     result: FileDensity = await client.file.create_file_density(
-        src_format=FileImportFormat.FBX,
+        src_format=FileImportFormat.ACIS,
         material_mass=3.14,
         material_mass_unit=UnitMass.G,
         output_unit=UnitDensity.LB_FT3,
@@ -716,7 +766,7 @@ def test_create_file_mass():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     result: FileMass = client.file.create_file_mass(
-        src_format=FileImportFormat.FBX,
+        src_format=FileImportFormat.ACIS,
         material_density=3.14,
         material_density_unit=UnitDensity.LB_FT3,
         output_unit=UnitMass.G,
@@ -734,7 +784,7 @@ async def test_create_file_mass_async():
     client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     result: FileMass = await client.file.create_file_mass(
-        src_format=FileImportFormat.FBX,
+        src_format=FileImportFormat.ACIS,
         material_density=3.14,
         material_density_unit=UnitDensity.LB_FT3,
         output_unit=UnitMass.G,
@@ -747,7 +797,7 @@ def test_create_file_surface_area():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     result: FileSurfaceArea = client.file.create_file_surface_area(
-        src_format=FileImportFormat.FBX,
+        src_format=FileImportFormat.ACIS,
         output_unit=UnitArea.CM2,
         body=bytes("some bytes", "utf-8"),
     )
@@ -763,7 +813,7 @@ async def test_create_file_surface_area_async():
     client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     result: FileSurfaceArea = await client.file.create_file_surface_area(
-        src_format=FileImportFormat.FBX,
+        src_format=FileImportFormat.ACIS,
         output_unit=UnitArea.CM2,
         body=bytes("some bytes", "utf-8"),
     )
@@ -774,7 +824,7 @@ def test_create_file_volume():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     result: FileVolume = client.file.create_file_volume(
-        src_format=FileImportFormat.FBX,
+        src_format=FileImportFormat.ACIS,
         output_unit=UnitVolume.MM3,
         body=bytes("some bytes", "utf-8"),
     )
@@ -790,7 +840,7 @@ async def test_create_file_volume_async():
     client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     result: FileVolume = await client.file.create_file_volume(
-        src_format=FileImportFormat.FBX,
+        src_format=FileImportFormat.ACIS,
         output_unit=UnitVolume.MM3,
         body=bytes("some bytes", "utf-8"),
     )
@@ -1344,6 +1394,7 @@ def test_create_org_dataset():
     result: OrgDataset = client.orgs.create_org_dataset(
         body=CreateOrgDataset(
             name="<string>",
+            require_raw_kcl_similarity_score_for_success=False,
             source=OrgDatasetSource(
                 provider=StorageProvider.S3,
             ),
@@ -1363,6 +1414,7 @@ async def test_create_org_dataset_async():
     result: OrgDataset = await client.orgs.create_org_dataset(
         body=CreateOrgDataset(
             name="<string>",
+            require_raw_kcl_similarity_score_for_success=False,
             source=OrgDatasetSource(
                 provider=StorageProvider.S3,
             ),
@@ -2301,8 +2353,8 @@ def test_create_org_saml_idp():
         body=SamlIdentityProviderCreate(
             idp_entity_id="<string>",
             idp_metadata_source=IdpMetadataSource(
-                OptionUrl(
-                    url="<string>",
+                OptionBase64EncodedXml(
+                    data=Base64Data(b"<bytes>"),
                 )
             ),
             technical_contact_email="<string>",
@@ -2323,8 +2375,8 @@ async def test_create_org_saml_idp_async():
         body=SamlIdentityProviderCreate(
             idp_entity_id="<string>",
             idp_metadata_source=IdpMetadataSource(
-                OptionUrl(
-                    url="<string>",
+                OptionBase64EncodedXml(
+                    data=Base64Data(b"<bytes>"),
                 )
             ),
             technical_contact_email="<string>",
@@ -2340,8 +2392,8 @@ def test_update_org_saml_idp():
         body=SamlIdentityProviderCreate(
             idp_entity_id="<string>",
             idp_metadata_source=IdpMetadataSource(
-                OptionBase64EncodedXml(
-                    data=Base64Data(b"<bytes>"),
+                OptionUrl(
+                    url="<string>",
                 )
             ),
             technical_contact_email="<string>",
@@ -2362,8 +2414,8 @@ async def test_update_org_saml_idp_async():
         body=SamlIdentityProviderCreate(
             idp_entity_id="<string>",
             idp_metadata_source=IdpMetadataSource(
-                OptionBase64EncodedXml(
-                    data=Base64Data(b"<bytes>"),
+                OptionUrl(
+                    url="<string>",
                 )
             ),
             technical_contact_email="<string>",
@@ -2425,9 +2477,7 @@ async def test_create_service_account_for_org_async():
 def test_delete_service_account_for_org():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    client.service_accounts.delete_service_account_for_org(
-        token=ServiceAccountUuid("<string>")
-    )
+    client.service_accounts.delete_service_account_for_org(token="<string>")
 
 
 # OR run async
@@ -2436,9 +2486,7 @@ def test_delete_service_account_for_org():
 async def test_delete_service_account_for_org_async():
     client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    await client.service_accounts.delete_service_account_for_org(
-        token=ServiceAccountUuid("<string>")
-    )
+    await client.service_accounts.delete_service_account_for_org(token="<string>")
 
 
 @pytest.mark.skip
@@ -2492,24 +2540,22 @@ async def test_get_org_shortlinks_async():
 
 
 @pytest.mark.skip
-def test_org_admin_details_get():
+def test_list_org_skills():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: OrgAdminDetails = client.orgs.org_admin_details_get(id=Uuid("<string>"))
+    result: List[OrgSkillResponse] = client.orgs.list_org_skills()
 
-    body: OrgAdminDetails = result
+    body: List[OrgSkillResponse] = result
     print(body)
 
 
 # OR run async
 @pytest.mark.asyncio
 @pytest.mark.skip
-async def test_org_admin_details_get_async():
+async def test_list_org_skills_async():
     client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: OrgAdminDetails = await client.orgs.org_admin_details_get(
-        id=Uuid("<string>")
-    )
+    result: List[OrgSkillResponse] = await client.orgs.list_org_skills()
 
 
 @pytest.mark.skip
@@ -3485,9 +3531,11 @@ async def test_list_api_tokens_for_user_async():
 def test_create_api_token_for_user():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: ApiToken = client.api_tokens.create_api_token_for_user(label=None)
+    result: ApiTokenWithFullToken = client.api_tokens.create_api_token_for_user(
+        label=None
+    )
 
-    body: ApiToken = result
+    body: ApiTokenWithFullToken = result
     print(body)
 
 
@@ -3497,14 +3545,16 @@ def test_create_api_token_for_user():
 async def test_create_api_token_for_user_async():
     client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: ApiToken = await client.api_tokens.create_api_token_for_user(label=None)
+    result: ApiTokenWithFullToken = await client.api_tokens.create_api_token_for_user(
+        label=None
+    )
 
 
 @pytest.mark.skip
 def test_delete_api_token_for_user():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    client.api_tokens.delete_api_token_for_user(token=ApiTokenUuid("<string>"))
+    client.api_tokens.delete_api_token_for_user(token="<string>")
 
 
 # OR run async
@@ -3513,7 +3563,7 @@ def test_delete_api_token_for_user():
 async def test_delete_api_token_for_user_async():
     client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    await client.api_tokens.delete_api_token_for_user(token=ApiTokenUuid("<string>"))
+    await client.api_tokens.delete_api_token_for_user(token="<string>")
 
 
 @pytest.mark.skip
@@ -5046,13 +5096,7 @@ def test_ml_copilot_ws():
         replay=None, conversation_id=None, pr=None
     ) as websocket:
         # Send a message.
-        websocket.send(
-            MlCopilotClientMessage(
-                OptionSystem(
-                    command=MlCopilotSystemCommand.NEW,
-                )
-            )
-        )
+        websocket.send(MlCopilotClientMessage(OptionPing()))
 
         # Get a message.
         message = websocket.recv()
@@ -5085,13 +5129,7 @@ def test_ml_reasoning_ws():
     # Connect to the websocket.
     with client.ml.ml_reasoning_ws(id="<string>") as websocket:
         # Send a message.
-        websocket.send(
-            MlCopilotClientMessage(
-                OptionSystem(
-                    command=MlCopilotSystemCommand.NEW,
-                )
-            )
-        )
+        websocket.send(MlCopilotClientMessage(OptionPing()))
 
         # Get a message.
         message = websocket.recv()
@@ -5137,13 +5175,10 @@ def test_modeling_commands_ws():
         # Send a message.
         websocket.send(
             WebSocketRequest(
-                OptionModelingCmdReq(
-                    cmd=ModelingCmd(
-                        OptionObjectBringToFront(
-                            object_id="<string>",
-                        )
+                OptionTrickleIce(
+                    candidate=RtcIceCandidateInit(
+                        candidate="<string>",
                     ),
-                    cmd_id=ModelingCmdId("<string>"),
                 )
             )
         )

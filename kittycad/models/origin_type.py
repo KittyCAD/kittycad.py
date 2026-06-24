@@ -8,19 +8,19 @@ from .base import KittyCadBaseModel
 
 
 class OptionLocal(KittyCadBaseModel):
-    """Local Origin (center of object bounding box)."""
+    """Local Origin ([0, 0, 0] in object space)."""
 
     type: Literal["local"] = "local"
 
 
 class OptionGlobal(KittyCadBaseModel):
-    """Global Origin (0, 0, 0)."""
+    """Global Origin ([0, 0, 0] in world space)."""
 
     type: Literal["global"] = "global"
 
 
 class OptionCustom(KittyCadBaseModel):
-    """Custom Origin (user specified point)."""
+    """Custom Origin (user specified point in world space)."""
 
     origin: Point3d
 

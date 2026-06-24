@@ -36,11 +36,13 @@ from .exceptions import (
 )
 from .models.account_provider import AccountProvider
 from .models.add_org_member import AddOrgMember
+from .models.announcement_list import AnnouncementList
 from .models.api_call_with_price import ApiCallWithPrice
 from .models.api_call_with_price_results_page import ApiCallWithPriceResultsPage
 from .models.api_token import ApiToken
 from .models.api_token_results_page import ApiTokenResultsPage
 from .models.api_token_uuid import ApiTokenUuid
+from .models.api_token_with_full_token import ApiTokenWithFullToken
 from .models.app_client_info import AppClientInfo
 from .models.async_api_call_output import AsyncApiCallOutput
 from .models.auth_api_key_response import AuthApiKeyResponse
@@ -106,7 +108,6 @@ from .models.o_auth2_scopes import OAuth2Scopes
 from .models.o_auth2_token_request_form import OAuth2TokenRequestForm
 from .models.oauth2_client_info import OAuth2ClientInfo
 from .models.org import Org
-from .models.org_admin_details import OrgAdminDetails
 from .models.org_dataset import OrgDataset
 from .models.org_dataset_conversion_stats_response import (
     OrgDatasetConversionStatsResponse,
@@ -120,6 +121,7 @@ from .models.org_dataset_semantic_search_match import OrgDatasetSemanticSearchMa
 from .models.org_details import OrgDetails
 from .models.org_member import OrgMember
 from .models.org_member_results_page import OrgMemberResultsPage
+from .models.org_skill_response import OrgSkillResponse
 from .models.payment_intent import PaymentIntent
 from .models.payment_method import PaymentMethod
 from .models.pong import Pong
@@ -283,6 +285,33 @@ class MetaAPI:
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return IpAddrInfo.model_validate(json_data, extra="ignore")
+
+    def get_announcements(
+        self,
+    ) -> AnnouncementList:
+        """No authentication is required."""
+
+        url = "{}/announcements".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return AnnouncementList.model_validate(json_data, extra="ignore")
 
     def community_sso(
         self,
@@ -469,6 +498,33 @@ class AsyncMetaAPI:
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return IpAddrInfo.model_validate(json_data, extra="ignore")
+
+    async def get_announcements(
+        self,
+    ) -> AnnouncementList:
+        """No authentication is required."""
+
+        url = "{}/announcements".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return AnnouncementList.model_validate(json_data, extra="ignore")
 
     async def community_sso(
         self,
@@ -7927,13 +7983,12 @@ class OrgsAPI:
         # Validate into a Pydantic model (supports BaseModel/RootModel)
         return ShortlinkResultsPage.model_validate(json_data, extra="ignore")
 
-    def org_admin_details_get(
+    def list_org_skills(
         self,
-        id: Uuid,
-    ) -> OrgAdminDetails:
-        """Zoo admins can retrieve extended information about any organization, while non-admins receive a 404 to avoid leaking existence."""
+    ) -> List[OrgSkillResponse]:
+        """List every skill that belongs to the caller's organization."""
 
-        url = "{}/orgs/{id}/admin/details".format(self.client.base_url, id=id)
+        url = "{}/org/skills".format(self.client.base_url)
 
         _client = self.client.get_http_client()
 
@@ -7952,8 +8007,12 @@ class OrgsAPI:
 
         json_data = response.json()
 
-        # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return OrgAdminDetails.model_validate(json_data, extra="ignore")
+        # Validate into annotated/collection/union types using TypeAdapter
+        from pydantic import TypeAdapter
+
+        return TypeAdapter(List[OrgSkillResponse]).validate_python(
+            json_data, extra="ignore"
+        )
 
     def get_billing_contract_for_any_org(
         self,
@@ -9316,13 +9375,12 @@ class AsyncOrgsAPI:
         # Validate into a Pydantic model (supports BaseModel/RootModel)
         return ShortlinkResultsPage.model_validate(json_data, extra="ignore")
 
-    async def org_admin_details_get(
+    async def list_org_skills(
         self,
-        id: Uuid,
-    ) -> OrgAdminDetails:
-        """Zoo admins can retrieve extended information about any organization, while non-admins receive a 404 to avoid leaking existence."""
+    ) -> List[OrgSkillResponse]:
+        """List every skill that belongs to the caller's organization."""
 
-        url = "{}/orgs/{id}/admin/details".format(self.client.base_url, id=id)
+        url = "{}/org/skills".format(self.client.base_url)
 
         _client = self.client.get_http_client()
 
@@ -9341,8 +9399,12 @@ class AsyncOrgsAPI:
 
         json_data = response.json()
 
-        # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return OrgAdminDetails.model_validate(json_data, extra="ignore")
+        # Validate into annotated/collection/union types using TypeAdapter
+        from pydantic import TypeAdapter
+
+        return TypeAdapter(List[OrgSkillResponse]).validate_python(
+            json_data, extra="ignore"
+        )
 
     async def get_billing_contract_for_any_org(
         self,
@@ -11843,11 +11905,13 @@ class ServiceAccountsAPI:
 
     def delete_service_account_for_org(
         self,
-        token: ServiceAccountUuid,
+        token: str,
     ):
         """This endpoint requires authentication by an org member. It deletes the requested service account for the organization.
 
-        This endpoint does not actually delete the service account from the database. It merely marks the token as invalid. We still want to keep the service account in the database for historical purposes."""
+        This endpoint does not actually delete the service account from the database. It merely marks the token as invalid. We still want to keep the service account in the database for historical purposes.
+
+        The token path parameter can be either the full service account token (prefixed with `svc-`) or the token's unique ID (a UUID)."""
 
         url = "{}/org/service-accounts/{token}".format(
             self.client.base_url, token=token
@@ -12033,11 +12097,13 @@ class AsyncServiceAccountsAPI:
 
     async def delete_service_account_for_org(
         self,
-        token: ServiceAccountUuid,
+        token: str,
     ):
         """This endpoint requires authentication by an org member. It deletes the requested service account for the organization.
 
-        This endpoint does not actually delete the service account from the database. It merely marks the token as invalid. We still want to keep the service account in the database for historical purposes."""
+        This endpoint does not actually delete the service account from the database. It merely marks the token as invalid. We still want to keep the service account in the database for historical purposes.
+
+        The token path parameter can be either the full service account token (prefixed with `svc-`) or the token's unique ID (a UUID)."""
 
         url = "{}/org/service-accounts/{token}".format(
             self.client.base_url, token=token
@@ -15916,7 +15982,7 @@ class ApiTokensAPI:
         self,
         *,
         label: Optional[str] = None,
-    ) -> ApiToken:
+    ) -> ApiTokenWithFullToken:
         """This endpoint requires authentication by any Zoo user. It creates a new API token for the authenticated user."""
 
         url = "{}/user/api-tokens".format(self.client.base_url)
@@ -15945,7 +16011,7 @@ class ApiTokensAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return ApiToken.model_validate(json_data, extra="ignore")
+        return ApiTokenWithFullToken.model_validate(json_data, extra="ignore")
 
     def get_api_token_for_user(
         self,
@@ -15977,11 +16043,13 @@ class ApiTokensAPI:
 
     def delete_api_token_for_user(
         self,
-        token: ApiTokenUuid,
+        token: str,
     ):
         """This endpoint requires authentication by any Zoo user. It deletes the requested API token for the user.
 
-        This endpoint does not actually delete the API token from the database. It merely marks the token as invalid. We still want to keep the token in the database for historical purposes."""
+        This endpoint does not actually delete the API token from the database. It merely marks the token as invalid. We still want to keep the token in the database for historical purposes.
+
+        The token path parameter can be either the full API token (prefixed with `api-`) or the token's unique ID (a UUID)."""
 
         url = "{}/user/api-tokens/{token}".format(self.client.base_url, token=token)
 
@@ -16102,7 +16170,7 @@ class AsyncApiTokensAPI:
         self,
         *,
         label: Optional[str] = None,
-    ) -> ApiToken:
+    ) -> ApiTokenWithFullToken:
         """This endpoint requires authentication by any Zoo user. It creates a new API token for the authenticated user."""
 
         url = "{}/user/api-tokens".format(self.client.base_url)
@@ -16131,7 +16199,7 @@ class AsyncApiTokensAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return ApiToken.model_validate(json_data, extra="ignore")
+        return ApiTokenWithFullToken.model_validate(json_data, extra="ignore")
 
     async def get_api_token_for_user(
         self,
@@ -16163,11 +16231,13 @@ class AsyncApiTokensAPI:
 
     async def delete_api_token_for_user(
         self,
-        token: ApiTokenUuid,
+        token: str,
     ):
         """This endpoint requires authentication by any Zoo user. It deletes the requested API token for the user.
 
-        This endpoint does not actually delete the API token from the database. It merely marks the token as invalid. We still want to keep the token in the database for historical purposes."""
+        This endpoint does not actually delete the API token from the database. It merely marks the token as invalid. We still want to keep the token in the database for historical purposes.
+
+        The token path parameter can be either the full API token (prefixed with `api-`) or the token's unique ID (a UUID)."""
 
         url = "{}/user/api-tokens/{token}".format(self.client.base_url, token=token)
 

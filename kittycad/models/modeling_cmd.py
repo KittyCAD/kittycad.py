@@ -16,7 +16,9 @@ from ..models.component_transform import ComponentTransform
 from ..models.cut_strategy import CutStrategy
 from ..models.cut_type import CutType
 from ..models.cut_type_v2 import CutTypeV2
+from ..models.direction_type import DirectionType
 from ..models.distance_type import DistanceType
+from ..models.edge_cut_version import EdgeCutVersion
 from ..models.edge_specifier import EdgeSpecifier
 from ..models.entity_reference import EntityReference
 from ..models.entity_type import EntityType
@@ -96,7 +98,11 @@ class OptionExtrude(KittyCadBaseModel):
 
     body_type: Optional[BodyType] = "solid"  # type: ignore[assignment]
 
+    direction: Optional[DirectionType] = None
+
     distance: LengthUnit
+
+    draft_angle: Optional[Angle] = None
 
     extrude_method: Optional[ExtrudeMethod] = "merge"  # type: ignore[assignment]
 
@@ -154,7 +160,9 @@ class OptionSweep(KittyCadBaseModel):
 
     body_type: Optional[BodyType] = "solid"  # type: ignore[assignment]
 
-    relative_to: Optional[RelativeTo] = "sketch_plane"  # type: ignore[assignment]
+    orient_profile_perpendicular: Optional[bool] = None
+
+    relative_to: Optional[RelativeTo] = None
 
     sectional: bool
 
@@ -163,6 +171,8 @@ class OptionSweep(KittyCadBaseModel):
     tolerance: LengthUnit
 
     trajectory: ModelingCmdId
+
+    translate_profile_to_path: Optional[bool] = None
 
     type: Literal["sweep"] = "sweep"
 
@@ -513,6 +523,14 @@ class OptionEntityGetDistance(KittyCadBaseModel):
     type: Literal["entity_get_distance"] = "entity_get_distance"
 
 
+class OptionEdgeGetLength(KittyCadBaseModel):
+    """What is the length of this edge?"""
+
+    edge_id: str
+
+    type: Literal["edge_get_length"] = "edge_get_length"
+
+
 class OptionEntityClone(KittyCadBaseModel):
     """Create a pattern using this entity by specifying the transform for each desired repetition. Transformations are performed in the following order (first applied to last applied): scale, rotate, translate."""
 
@@ -797,6 +815,16 @@ class OptionObjectSetMaterialParamsPbr(KittyCadBaseModel):
     type: Literal["object_set_material_params_pbr"] = "object_set_material_params_pbr"
 
 
+class OptionObjectSetName(KittyCadBaseModel):
+    """Set the name of an object"""
+
+    name: Optional[str] = None
+
+    object_id: str
+
+    type: Literal["object_set_name"] = "object_set_name"
+
+
 class OptionGetEntityType(KittyCadBaseModel):
     """What type of entity is this?"""
 
@@ -926,6 +954,8 @@ class OptionSolid3dFilletEdge(KittyCadBaseModel):
 
     use_legacy: Optional[bool] = None
 
+    version: Optional[EdgeCutVersion] = None
+
 
 class OptionSolid3dCutEdgeReferences(KittyCadBaseModel):
     """Cut the list of edge references with the given cut parameters"""
@@ -946,6 +976,8 @@ class OptionSolid3dCutEdgeReferences(KittyCadBaseModel):
 
     use_legacy: Optional[bool] = None
 
+    version: Optional[EdgeCutVersion] = None
+
 
 class OptionSolid3dCutEdges(KittyCadBaseModel):
     """Cut the list of given edges with the given cut parameters."""
@@ -965,6 +997,8 @@ class OptionSolid3dCutEdges(KittyCadBaseModel):
     type: Literal["solid3d_cut_edges"] = "solid3d_cut_edges"
 
     use_legacy: Optional[bool] = None
+
+    version: Optional[EdgeCutVersion] = None
 
 
 class OptionFaceIsPlanar(KittyCadBaseModel):
@@ -1354,7 +1388,7 @@ class OptionImportFiles(KittyCadBaseModel):
 
 
 class OptionSetSceneUnits(KittyCadBaseModel):
-    """Set the units of the scene. For all following commands, the units will be interpreted as the given units. Any previously executed commands will not be affected or have their units changed. They will remain in the units they were originally executed in."""
+    """Set the units of the scene. For all following commands, the units will be interpreted as the given units. Any previously executed commands will not be affected or have their units changed. They will remain in the units they were originally executed in. If not set, engine units default to mm."""
 
     type: Literal["set_scene_units"] = "set_scene_units"
 
@@ -1713,6 +1747,16 @@ class OptionCreateRegion(KittyCadBaseModel):
     version: Optional[RegionVersion] = None
 
 
+class OptionRegionGetResolvableIntersectionInfo(KittyCadBaseModel):
+    """Finds a suitable set of arguments that can be passed to CreateRegion to resolve this very region."""
+
+    region_id: str
+
+    type: Literal["region_get_resolvable_intersection_info"] = (
+        "region_get_resolvable_intersection_info"
+    )
+
+
 class OptionCreateRegionFromQueryPoint(KittyCadBaseModel):
     """Create a region with a query point. The region should have an ID taken from the ID of the 'CreateRegionFromQueryPoint' modeling command."""
 
@@ -1816,6 +1860,7 @@ ModelingCmd = RootModel[
             OptionEntityGetAllChildUuids,
             OptionEntityGetSketchPaths,
             OptionEntityGetDistance,
+            OptionEdgeGetLength,
             OptionEntityClone,
             OptionEntityLinearPatternTransform,
             OptionEntityLinearPattern,
@@ -1841,6 +1886,7 @@ ModelingCmd = RootModel[
             OptionObjectVisible,
             OptionObjectBringToFront,
             OptionObjectSetMaterialParamsPbr,
+            OptionObjectSetName,
             OptionGetEntityType,
             OptionSolid3dGetAllEdgeFaces,
             OptionSolid3dFlip,
@@ -1929,6 +1975,7 @@ ModelingCmd = RootModel[
             OptionSetGridAutoScale,
             OptionSetOrderIndependentTransparency,
             OptionCreateRegion,
+            OptionRegionGetResolvableIntersectionInfo,
             OptionCreateRegionFromQueryPoint,
             OptionRegionGetQueryPoint,
             OptionSelectRegionFromPoint,

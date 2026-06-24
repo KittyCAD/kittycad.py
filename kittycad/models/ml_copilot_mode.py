@@ -12,5 +12,9 @@ class MlCopilotMode(str, Enum):
 
     THOUGHTFUL = "thoughtful"
 
+    """# Let the system automatically choose the model and reasoning effort."""  # noqa: E501
+
+    AUTO = "auto"
+
     def __str__(self) -> str:
         return str(self.value)

@@ -26,6 +26,8 @@ class OrgDataset(KittyCadBaseModel):
 
     org_id: Uuid
 
+    require_raw_kcl_similarity_score_for_success: bool
+
     source_uri: str
 
     status: OrgDatasetStatus

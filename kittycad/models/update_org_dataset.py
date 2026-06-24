@@ -11,4 +11,6 @@ class UpdateOrgDataset(KittyCadBaseModel):
 
     name: Optional[str] = None
 
+    require_raw_kcl_similarity_score_for_success: Optional[bool] = None
+
     source: Optional[UpdateOrgDatasetSource] = None
