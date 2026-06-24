@@ -5,6 +5,43 @@ All notable changes to the KittyCAD Python SDK will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## v1.4.0
+
+Regenerated the SDK against the latest API spec.
+
+### Added
+
+- **Organization skills**: `GET /org/skills` (`list_org_skills`) returning `OrgSkillResponse` — the public skill context available to the caller's organization.
+- **Announcements**: `GET /announcements` (`get_announcements`) returning `AnnouncementList` / `Announcement` for announcements broadcast to all clients.
+- **ML Copilot attachment-loading flow** (WebSocket):
+  - `MlCopilotServerMessage` now includes `RequestAttachments` (backend request for the API to reload client attachments from storage) and `AttachmentsLoaded` (notification that all attachments for a conversation finished loading).
+  - `MlCopilotClientMessage` now includes `AttachmentResponse` (`type="attachment_response"`), carrying the attachments returned in response to a `RequestAttachments` message.
+- **ML Copilot Zookeeper editing**: `ZookeeperAutoRouterMetadata` (on `MlCopilotServerMessage`) and `ZookeeperEditPatch` / `ZookeeperEditPatchFile` (on `MlToolResult`) for project-edit replay data.
+- **Modeling commands & responses**:
+  - New `OkModelingCmdResponse` variants: `EdgeGetLength`, `ObjectSetName`, and `RegionGetResolvableIntersectionInfo`.
+  - `extrude` now accepts a `DirectionType`, and the edge-cut commands (`solid3d_fillet_edge`, `solid3d_cut_edge_references`, `solid3d_cut_edges`) accept an `EdgeCutVersion` (edge-cut algorithm version).
+- **Edge-aware annotations**: `AnnotationBasicDimension`, `AnnotationFeatureControl`, and `AnnotationFeatureTag` can now target edges via `edge_reference` / `from_edge_reference` / `to_edge_reference`, and `AnnotationOptions` gained a `units` field.
+- `MlCopilotModeOption` gained a `disabled` field.
+- `ProjectPublicationInfoResponse` gained a `feedback` field.
+
+### Changed
+
+- **`create_api_token_for_user` (`POST /user/api-tokens`) now returns `ApiTokenWithFullToken`** instead of `ApiToken`. The new model is a superset that additionally exposes the full, unobfuscated token value.
+- `OrgDataset` now includes a required `require_raw_kcl_similarity_score_for_success: bool`; `CreateOrgDataset` and `UpdateOrgDataset` accept it as an optional field.
+- `ProjectResponse` and `ProjectSummaryResponse` now include a required `revision` field.
+- Annotation models no longer require `entity_id` / `from_entity_id` / `to_entity_id`, now that edges can be referenced instead.
+
+### Removed
+
+- **`GET /orgs/{id}/admin/details` (`org_admin_details_get`) and the `OrgAddress` / `OrgAdminDetails` models have been removed.**
+
+### Migration
+
+- **API tokens**: `create_api_token_for_user` now returns `ApiTokenWithFullToken`. Attribute access is compatible because it is a superset of the old `ApiToken`, but update any explicit `ApiToken` type annotations on the return value.
+- **Org admin details**: remove any calls to `org_admin_details_get` and any references to `OrgAddress` / `OrgAdminDetails`; the endpoint and models no longer exist.
+- **Constructing `OrgDataset` directly** (e.g. in tests): set `require_raw_kcl_similarity_score_for_success`. Reading dataset responses from the API requires no change.
+- All other changes are additive — no action required.
+
 ## v1.3.2
 
 ### Added
