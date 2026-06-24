@@ -44,6 +44,7 @@ def test_response_validation_can_ignore_future_fields():
         "id": "550e8400-e29b-41d4-a716-446655440000",
         "name": "training-data",
         "org_id": "550e8400-e29b-41d4-a716-446655440001",
+        "require_raw_kcl_similarity_score_for_success": False,
         "source_uri": "zoo://bucket/test/datasets/550e8400-e29b-41d4-a716-446655440000",
         "status": OrgDatasetStatus.ACTIVE,
         "storage_provider": StorageProvider.ZOO_MANAGED,

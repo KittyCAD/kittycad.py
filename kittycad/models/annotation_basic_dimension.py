@@ -1,6 +1,7 @@
 from typing import Optional
 
 from ..models.annotation_mbd_basic_dimension import AnnotationMbdBasicDimension
+from ..models.edge_specifier import EdgeSpecifier
 from ..models.point2d import Point2d
 from .base import KittyCadBaseModel
 
@@ -16,7 +17,9 @@ class AnnotationBasicDimension(KittyCadBaseModel):
 
     font_scale: float
 
-    from_entity_id: str
+    from_edge_reference: Optional[EdgeSpecifier] = None
+
+    from_entity_id: Optional[str] = None
 
     from_entity_pos: Point2d
 
@@ -26,6 +29,8 @@ class AnnotationBasicDimension(KittyCadBaseModel):
 
     precision: int
 
-    to_entity_id: str
+    to_edge_reference: Optional[EdgeSpecifier] = None
+
+    to_entity_id: Optional[str] = None
 
     to_entity_pos: Point2d

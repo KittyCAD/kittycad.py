@@ -28,5 +28,9 @@ class KclProjectPublicationStatus(str, Enum):
 
     DELETED = "deleted"
 
+    """# The project was reviewed and changes were requested before it can be published."""  # noqa: E501
+
+    CHANGES_REQUESTED = "changes_requested"
+
     def __str__(self) -> str:
         return str(self.value)

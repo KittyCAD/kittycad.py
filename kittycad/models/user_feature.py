@@ -2,11 +2,13 @@ from enum import Enum
 
 
 class UserFeature(str, Enum):
-    AQUARIUM = "aquarium"
-
     BODIES_PANE = "bodies_pane"
 
     ENABLE_Z0006_LINT = "enable_z0006_lint"
+
+    MODELING_DIALOGS = "modeling_dialogs"
+
+    PLUGINS = "plugins"
 
     PROPRIETARY_TO_KCL_CONVERSION_BETA = "proprietary_to_kcl_conversion_beta"
 

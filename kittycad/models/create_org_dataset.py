@@ -11,4 +11,6 @@ class CreateOrgDataset(KittyCadBaseModel):
 
     name: str
 
+    require_raw_kcl_similarity_score_for_success: Optional[bool] = False
+
     source: OrgDatasetSource

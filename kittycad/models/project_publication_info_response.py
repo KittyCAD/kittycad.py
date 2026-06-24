@@ -8,6 +8,8 @@ from .base import KittyCadBaseModel
 class ProjectPublicationInfoResponse(KittyCadBaseModel):
     """Owner-facing publication metadata for a project."""
 
+    feedback: Optional[str] = None
+
     has_unpublished_changes: bool
 
     last_published_at: Optional[datetime.datetime] = None

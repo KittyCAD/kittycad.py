@@ -7,6 +7,7 @@ from ..models.annotation_line_end_options import AnnotationLineEndOptions
 from ..models.annotation_text_options import AnnotationTextOptions
 from ..models.color import Color
 from ..models.point3d import Point3d
+from ..models.unit_length import UnitLength
 from .base import KittyCadBaseModel
 
 
@@ -28,3 +29,5 @@ class AnnotationOptions(KittyCadBaseModel):
     position: Optional[Point3d] = None
 
     text: Optional[AnnotationTextOptions] = None
+
+    units: Optional[UnitLength] = None

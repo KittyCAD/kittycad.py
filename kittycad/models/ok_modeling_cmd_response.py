@@ -38,6 +38,7 @@ from ..models.default_camera_set_view import DefaultCameraSetView
 from ..models.default_camera_zoom import DefaultCameraZoom
 from ..models.density import Density
 from ..models.disable_dry_run import DisableDryRun
+from ..models.edge_get_length import EdgeGetLength
 from ..models.edge_info import EdgeInfo
 from ..models.edge_lines_visible import EdgeLinesVisible
 from ..models.enable_dry_run import EnableDryRun
@@ -97,6 +98,7 @@ from ..models.move_path_pen import MovePathPen
 from ..models.new_annotation import NewAnnotation
 from ..models.object_bring_to_front import ObjectBringToFront
 from ..models.object_set_material_params_pbr import ObjectSetMaterialParamsPbr
+from ..models.object_set_name import ObjectSetName
 from ..models.object_visible import ObjectVisible
 from ..models.offset_surface import OffsetSurface
 from ..models.orient_to_face import OrientToFace
@@ -114,6 +116,9 @@ from ..models.query_entity_type import QueryEntityType
 from ..models.query_entity_type_with_point import QueryEntityTypeWithPoint
 from ..models.reconfigure_stream import ReconfigureStream
 from ..models.region_get_query_point import RegionGetQueryPoint
+from ..models.region_get_resolvable_intersection_info import (
+    RegionGetResolvableIntersectionInfo,
+)
 from ..models.remove_scene_objects import RemoveSceneObjects
 from ..models.revolve import Revolve
 from ..models.revolve_about_edge import RevolveAboutEdge
@@ -428,6 +433,14 @@ class OptionObjectSetMaterialParamsPbr(KittyCadBaseModel):
     data: ObjectSetMaterialParamsPbr
 
     type: Literal["object_set_material_params_pbr"] = "object_set_material_params_pbr"
+
+
+class OptionObjectSetName(KittyCadBaseModel):
+    """"""
+
+    data: ObjectSetName
+
+    type: Literal["object_set_name"] = "object_set_name"
 
 
 class OptionSolid2dAddHole(KittyCadBaseModel):
@@ -1266,6 +1279,14 @@ class OptionEntityGetDistance(KittyCadBaseModel):
     type: Literal["entity_get_distance"] = "entity_get_distance"
 
 
+class OptionEdgeGetLength(KittyCadBaseModel):
+    """"""
+
+    data: EdgeGetLength
+
+    type: Literal["edge_get_length"] = "edge_get_length"
+
+
 class OptionFaceEdgeInfo(KittyCadBaseModel):
     """"""
 
@@ -1468,6 +1489,16 @@ class OptionCreateRegion(KittyCadBaseModel):
     type: Literal["create_region"] = "create_region"
 
 
+class OptionRegionGetResolvableIntersectionInfo(KittyCadBaseModel):
+    """"""
+
+    data: RegionGetResolvableIntersectionInfo
+
+    type: Literal["region_get_resolvable_intersection_info"] = (
+        "region_get_resolvable_intersection_info"
+    )
+
+
 class OptionCreateRegionFromQueryPoint(KittyCadBaseModel):
     """"""
 
@@ -1551,6 +1582,7 @@ OkModelingCmdResponse = RootModel[
             OptionObjectVisible,
             OptionObjectBringToFront,
             OptionObjectSetMaterialParamsPbr,
+            OptionObjectSetName,
             OptionSolid2dAddHole,
             OptionSolid3dFilletEdge,
             OptionSolid3dCutEdgeReferences,
@@ -1655,6 +1687,7 @@ OkModelingCmdResponse = RootModel[
             OptionCenterOfMass,
             OptionGetSketchModePlane,
             OptionEntityGetDistance,
+            OptionEdgeGetLength,
             OptionFaceEdgeInfo,
             OptionEdgeInfo,
             OptionEntityClone,
@@ -1680,6 +1713,7 @@ OkModelingCmdResponse = RootModel[
             OptionSetGridAutoScale,
             OptionSetOrderIndependentTransparency,
             OptionCreateRegion,
+            OptionRegionGetResolvableIntersectionInfo,
             OptionCreateRegionFromQueryPoint,
             OptionRegionGetQueryPoint,
             OptionSelectRegionFromPoint,

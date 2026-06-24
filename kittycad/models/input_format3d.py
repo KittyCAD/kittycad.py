@@ -8,6 +8,45 @@ from ..models.unit_length import UnitLength
 from .base import KittyCadBaseModel
 
 
+class OptionAcis(KittyCadBaseModel):
+    """ACIS part format."""
+
+    coords: Optional[System] = {
+        "forward": {"axis": "y", "direction": "negative"},
+        "up": {"axis": "z", "direction": "positive"},
+    }  # type: ignore[assignment]
+
+    split_closed_faces: Optional[bool] = False
+
+    type: Literal["acis"] = "acis"
+
+
+class OptionCatia(KittyCadBaseModel):
+    """CATIA part format."""
+
+    coords: Optional[System] = {
+        "forward": {"axis": "y", "direction": "negative"},
+        "up": {"axis": "z", "direction": "positive"},
+    }  # type: ignore[assignment]
+
+    split_closed_faces: Optional[bool] = False
+
+    type: Literal["catia"] = "catia"
+
+
+class OptionCreo(KittyCadBaseModel):
+    """PTC Creo part format."""
+
+    coords: Optional[System] = {
+        "forward": {"axis": "z", "direction": "positive"},
+        "up": {"axis": "y", "direction": "positive"},
+    }  # type: ignore[assignment]
+
+    split_closed_faces: Optional[bool] = False
+
+    type: Literal["creo"] = "creo"
+
+
 class OptionFbx(KittyCadBaseModel):
     """Autodesk Filmbox (FBX) format."""
 
@@ -20,6 +59,32 @@ class OptionGltf(KittyCadBaseModel):
     type: Literal["gltf"] = "gltf"
 
 
+class OptionInventor(KittyCadBaseModel):
+    """Autodesk Inventor part format."""
+
+    coords: Optional[System] = {
+        "forward": {"axis": "y", "direction": "negative"},
+        "up": {"axis": "z", "direction": "positive"},
+    }  # type: ignore[assignment]
+
+    split_closed_faces: Optional[bool] = False
+
+    type: Literal["inventor"] = "inventor"
+
+
+class OptionNx(KittyCadBaseModel):
+    """Siemens NX part format."""
+
+    coords: Optional[System] = {
+        "forward": {"axis": "y", "direction": "negative"},
+        "up": {"axis": "z", "direction": "positive"},
+    }  # type: ignore[assignment]
+
+    split_closed_faces: Optional[bool] = False
+
+    type: Literal["nx"] = "nx"
+
+
 class OptionObj(KittyCadBaseModel):
     """Wavefront OBJ format."""
 
@@ -28,6 +93,19 @@ class OptionObj(KittyCadBaseModel):
     type: Literal["obj"] = "obj"
 
     units: UnitLength
+
+
+class OptionParasolid(KittyCadBaseModel):
+    """Parasolid part format."""
+
+    coords: Optional[System] = {
+        "forward": {"axis": "y", "direction": "negative"},
+        "up": {"axis": "z", "direction": "positive"},
+    }  # type: ignore[assignment]
+
+    split_closed_faces: Optional[bool] = False
+
+    type: Literal["parasolid"] = "parasolid"
 
 
 class OptionPly(KittyCadBaseModel):
@@ -42,6 +120,11 @@ class OptionPly(KittyCadBaseModel):
 
 class OptionSldprt(KittyCadBaseModel):
     """SolidWorks part (SLDPRT) format."""
+
+    coords: Optional[System] = {
+        "forward": {"axis": "z", "direction": "positive"},
+        "up": {"axis": "y", "direction": "positive"},
+    }  # type: ignore[assignment]
 
     split_closed_faces: Optional[bool] = False
 
@@ -74,9 +157,15 @@ class OptionStl(KittyCadBaseModel):
 InputFormat3d = RootModel[
     Annotated[
         Union[
+            OptionAcis,
+            OptionCatia,
+            OptionCreo,
             OptionFbx,
             OptionGltf,
+            OptionInventor,
+            OptionNx,
             OptionObj,
+            OptionParasolid,
             OptionPly,
             OptionSldprt,
             OptionStep,

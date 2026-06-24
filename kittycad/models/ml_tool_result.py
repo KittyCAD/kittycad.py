@@ -3,6 +3,7 @@ from typing import Dict, Literal, Optional, Union
 from pydantic import Field, RootModel
 from typing_extensions import Annotated
 
+from ..models.zookeeper_edit_patch import ZookeeperEditPatch
 from .base import KittyCadBaseModel
 
 
@@ -32,6 +33,8 @@ class OptionEditKclCode(KittyCadBaseModel):
     status_code: int
 
     type: Literal["edit_kcl_code"] = "edit_kcl_code"
+
+    zookeeper_edit_patch: Optional[ZookeeperEditPatch] = None
 
 
 class OptionMechanicalKnowledgeBase(KittyCadBaseModel):

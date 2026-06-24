@@ -34,6 +34,8 @@ class ProjectResponse(KittyCadBaseModel):
 
     publication_status: KclProjectPublicationStatus
 
+    revision: str
+
     title: str
 
     updated_at: datetime.datetime
