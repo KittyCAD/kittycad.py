@@ -663,7 +663,9 @@ class MlAPI:
         *,
         kcl: Optional[bool] = None,
     ) -> TextToCad:
-        """Because our source of truth for the resulting model is a STEP file, you will always have STEP file contents when you list your generated parts. Any other formats you request here will also be returned when you list your generated parts.
+        """Prefer the ML copilot websocket (`/ws/ml/copilot`) for new integrations. This REST endpoint is kept for existing Text-to-CAD clients, but it is no longer the recommended way to generate CAD models from a prompt.
+
+        Because our source of truth for the resulting model is a STEP file, you will always have STEP file contents when you list your generated parts. Any other formats you request here will also be returned when you list your generated parts.
 
         This operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint.
 
@@ -989,13 +991,15 @@ class MlAPI:
         self,
         body: TextToCadIterationBody,
     ) -> TextToCadIteration:
-        """Even if you give specific ranges to edit, the model might change more than just those in order to make the changes you requested without breaking the code.
+        """Prefer the ML copilot websocket (`/ws/ml/copilot`) for new prompt-to-edit integrations. This REST endpoint is kept for existing clients, but it is no longer the recommended way to edit KCL or CAD models from a prompt.
+
+        Even if you give specific ranges to edit, the model might change more than just those in order to make the changes you requested without breaking the code.
 
         You always get the whole code back, even if you only changed a small part of it.
 
         This operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint.
 
-        This endpoint will soon be deprecated in favor of the `/ml/text-to-cad/multi-file/iteration` endpoint. In that the endpoint path will remain but it will have the same behavior as `ml/text-to-cad/multi-file/iteration`."""
+        This endpoint is deprecated in favor of `/ws/ml/copilot`."""
 
         url = "{}/ml/text-to-cad/iteration".format(self.client.base_url)
 
@@ -1025,7 +1029,9 @@ class MlAPI:
         body: TextToCadMultiFileIterationBody,
         file_attachments: Dict[str, SyncUpload],
     ) -> TextToCadMultiFileIteration:
-        """This endpoint can iterate on multi-file projects.
+        """Prefer the ML copilot websocket (`/ws/ml/copilot`) for new prompt-to-edit integrations. This REST endpoint is kept for existing multi-file iteration clients, but it is no longer the recommended way to edit KCL or CAD models from a prompt.
+
+        This endpoint can iterate on multi-file projects.
 
         Even if you give specific ranges to edit, the model might change more than just those in order to make the changes you requested without breaking the code.
 
@@ -1337,7 +1343,9 @@ class AsyncMlAPI:
         *,
         kcl: Optional[bool] = None,
     ) -> TextToCad:
-        """Because our source of truth for the resulting model is a STEP file, you will always have STEP file contents when you list your generated parts. Any other formats you request here will also be returned when you list your generated parts.
+        """Prefer the ML copilot websocket (`/ws/ml/copilot`) for new integrations. This REST endpoint is kept for existing Text-to-CAD clients, but it is no longer the recommended way to generate CAD models from a prompt.
+
+        Because our source of truth for the resulting model is a STEP file, you will always have STEP file contents when you list your generated parts. Any other formats you request here will also be returned when you list your generated parts.
 
         This operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint.
 
@@ -1663,13 +1671,15 @@ class AsyncMlAPI:
         self,
         body: TextToCadIterationBody,
     ) -> TextToCadIteration:
-        """Even if you give specific ranges to edit, the model might change more than just those in order to make the changes you requested without breaking the code.
+        """Prefer the ML copilot websocket (`/ws/ml/copilot`) for new prompt-to-edit integrations. This REST endpoint is kept for existing clients, but it is no longer the recommended way to edit KCL or CAD models from a prompt.
+
+        Even if you give specific ranges to edit, the model might change more than just those in order to make the changes you requested without breaking the code.
 
         You always get the whole code back, even if you only changed a small part of it.
 
         This operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint.
 
-        This endpoint will soon be deprecated in favor of the `/ml/text-to-cad/multi-file/iteration` endpoint. In that the endpoint path will remain but it will have the same behavior as `ml/text-to-cad/multi-file/iteration`."""
+        This endpoint is deprecated in favor of `/ws/ml/copilot`."""
 
         url = "{}/ml/text-to-cad/iteration".format(self.client.base_url)
 
@@ -1699,7 +1709,9 @@ class AsyncMlAPI:
         body: TextToCadMultiFileIterationBody,
         file_attachments: Dict[str, SyncUpload],
     ) -> TextToCadMultiFileIteration:
-        """This endpoint can iterate on multi-file projects.
+        """Prefer the ML copilot websocket (`/ws/ml/copilot`) for new prompt-to-edit integrations. This REST endpoint is kept for existing multi-file iteration clients, but it is no longer the recommended way to edit KCL or CAD models from a prompt.
+
+        This endpoint can iterate on multi-file projects.
 
         Even if you give specific ranges to edit, the model might change more than just those in order to make the changes you requested without breaking the code.
 

@@ -12,6 +12,8 @@ class UserFeature(str, Enum):
 
     PROPRIETARY_TO_KCL_CONVERSION_BETA = "proprietary_to_kcl_conversion_beta"
 
+    SEGMENTS_BASED_REGIONS = "segments_based_regions"
+
     SKETCH_EXPERIMENTAL_FEATURES = "sketch_experimental_features"
 
     WEB_APP_FILE_BROWSER = "web_app_file_browser"
