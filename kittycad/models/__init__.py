@@ -207,6 +207,7 @@ from .face_get_position import FaceGetPosition
 from .face_is_planar import FaceIsPlanar
 from .failure_web_socket_response import FailureWebSocketResponse
 from .fbx_storage import FbxStorage
+from .feature import Feature
 from .file_center_of_mass import FileCenterOfMass
 from .file_conversion import FileConversion
 from .file_density import FileDensity
@@ -526,7 +527,6 @@ from .update_user import UpdateUser
 from .upload_org_dataset_files_response import UploadOrgDatasetFilesResponse
 from .user_admin_details import UserAdminDetails
 from .user_cad_info_admin_details import UserCadInfoAdminDetails
-from .user_feature import UserFeature
 from .user_feature_entry import UserFeatureEntry
 from .user_feature_list import UserFeatureList
 from .user_identifier import UserIdentifier
@@ -544,6 +544,9 @@ from .website_sales_form import WebsiteSalesForm
 from .website_support_form import WebsiteSupportForm
 from .world_coordinate_system import WorldCoordinateSystem
 from .zoo_product_subscription import ZooProductSubscription
+from .zoo_product_subscription_downgrade_reason import (
+    ZooProductSubscriptionDowngradeReason,
+)
 from .zoo_product_subscriptions import ZooProductSubscriptions
 from .zoo_product_subscriptions_org_request import ZooProductSubscriptionsOrgRequest
 from .zoo_product_subscriptions_user_request import ZooProductSubscriptionsUserRequest

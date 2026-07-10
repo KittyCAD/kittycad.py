@@ -16,5 +16,9 @@ class MlCopilotMode(str, Enum):
 
     AUTO = "auto"
 
+    """# Use the private Zoo Pro model for internal Zookeeper workflows."""  # noqa: E501
+
+    ZOOKEEPER_PRO = "zookeeper_pro"
+
     def __str__(self) -> str:
         return str(self.value)
