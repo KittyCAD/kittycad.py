@@ -99,6 +99,34 @@ class OptionDeletedKclFile(KittyCadBaseModel):
     type: Literal["deleted_kcl_file"] = "deleted_kcl_file"
 
 
+class OptionCreatedProjectFile(KittyCadBaseModel):
+    """A project file that is being created by the AI. This does not contain KCL code."""
+
+    content: str
+
+    file_name: str
+
+    type: Literal["created_project_file"] = "created_project_file"
+
+
+class OptionUpdatedProjectFile(KittyCadBaseModel):
+    """A project file that is being updated by the AI. This does not contain KCL code."""
+
+    content: str
+
+    file_name: str
+
+    type: Literal["updated_project_file"] = "updated_project_file"
+
+
+class OptionDeletedProjectFile(KittyCadBaseModel):
+    """A project file that is being deleted by the AI."""
+
+    file_name: str
+
+    type: Literal["deleted_project_file"] = "deleted_project_file"
+
+
 ReasoningMessage = RootModel[
     Annotated[
         Union[
@@ -113,6 +141,9 @@ ReasoningMessage = RootModel[
             OptionCreatedKclFile,
             OptionUpdatedKclFile,
             OptionDeletedKclFile,
+            OptionCreatedProjectFile,
+            OptionUpdatedProjectFile,
+            OptionDeletedProjectFile,
         ],
         Field(discriminator="type"),
     ]
