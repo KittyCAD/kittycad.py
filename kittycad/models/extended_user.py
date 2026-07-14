@@ -11,6 +11,8 @@ class ExtendedUser(KittyCadBaseModel):
 
     This is mostly used for internal purposes. It returns a mapping of the user's information, including that of our third party services we use for users: Stripe"""
 
+    allow_pay_as_you_go: Optional[bool] = False
+
     block: Optional[BlockReason] = None
 
     can_train_on_data: Optional[bool] = False

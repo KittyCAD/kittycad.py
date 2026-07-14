@@ -6,6 +6,8 @@ from .base import KittyCadBaseModel
 class UpdateUser(KittyCadBaseModel):
     """The user-modifiable parts of a User."""
 
+    allow_pay_as_you_go: Optional[bool] = None
+
     company: Optional[str] = None
 
     discord: Optional[str] = None

@@ -38045,6 +38045,11 @@
         "description": "Extended user information.\n\nThis is mostly used for internal purposes. It returns a mapping of the user's information, including that of our third party services we use for users: Stripe",
         "type": "object",
         "properties": {
+          "allow_pay_as_you_go": {
+            "description": "Whether the user has opted into pay-as-you-go charges after using their included credits.",
+            "default": false,
+            "type": "boolean"
+          },
           "block": {
             "nullable": true,
             "description": "If the user should be blocked and the reason why.",
@@ -60178,6 +60183,11 @@
         "description": "The user-modifiable parts of a User.",
         "type": "object",
         "properties": {
+          "allow_pay_as_you_go": {
+            "nullable": true,
+            "description": "Whether the user has opted into pay-as-you-go charges after using their included credits.",
+            "type": "boolean"
+          },
           "company": {
             "description": "The user's company.",
             "type": "string"
@@ -60589,6 +60599,11 @@
         "description": "Public user payload returned by the API.",
         "type": "object",
         "properties": {
+          "allow_pay_as_you_go": {
+            "description": "Whether the user has opted into pay-as-you-go charges after using their included credits.",
+            "default": false,
+            "type": "boolean"
+          },
           "block": {
             "nullable": true,
             "description": "If the user should be blocked and the reason why.",
