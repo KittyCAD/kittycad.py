@@ -34736,6 +34736,13 @@
             "enum": [
               "upgrade_downgrade_abuse"
             ]
+          },
+          {
+            "description": "An explicit admin block that can only be removed by admin intervention.",
+            "type": "string",
+            "enum": [
+              "admin"
+            ]
           }
         ]
       },
