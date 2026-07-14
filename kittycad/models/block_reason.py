@@ -16,5 +16,9 @@ class BlockReason(str, Enum):
 
     UPGRADE_DOWNGRADE_ABUSE = "upgrade_downgrade_abuse"
 
+    """# An explicit admin block that can only be removed by admin intervention."""  # noqa: E501
+
+    ADMIN = "admin"
+
     def __str__(self) -> str:
         return str(self.value)
