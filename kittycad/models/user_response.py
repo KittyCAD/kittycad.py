@@ -9,6 +9,8 @@ from .base import KittyCadBaseModel
 class UserResponse(KittyCadBaseModel):
     """Public user payload returned by the API."""
 
+    allow_pay_as_you_go: Optional[bool] = False
+
     block: Optional[BlockReason] = None
 
     block_message: Optional[str] = None
