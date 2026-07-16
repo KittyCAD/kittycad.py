@@ -26,6 +26,7 @@ from kittycad.models import (
     DiscountCode,
     EmailMarketingConsentState,
     ExtendedUser,
+    FactoryJobResponse,
     FileCenterOfMass,
     FileConversion,
     FileDensity,
@@ -3699,6 +3700,25 @@ async def test_get_user_self_extended_async():
     client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     result: ExtendedUser = await client.users.get_user_self_extended()
+
+
+@pytest.mark.skip
+def test_create_user_factory_job():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: FactoryJobResponse = client.factory.create_user_factory_job()
+
+    body: FactoryJobResponse = result
+    print(body)
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_create_user_factory_job_async():
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: FactoryJobResponse = await client.factory.create_user_factory_job()
 
 
 @pytest.mark.skip
