@@ -5,6 +5,7 @@ from typing_extensions import Annotated
 
 from ..models.add_hole_from_offset import AddHoleFromOffset
 from ..models.adjacency_info import AdjacencyInfo
+from ..models.begin_execution import BeginExecution
 from ..models.boolean_imprint import BooleanImprint
 from ..models.boolean_intersection import BooleanIntersection
 from ..models.boolean_subtract import BooleanSubtract
@@ -37,12 +38,11 @@ from ..models.default_camera_set_perspective import DefaultCameraSetPerspective
 from ..models.default_camera_set_view import DefaultCameraSetView
 from ..models.default_camera_zoom import DefaultCameraZoom
 from ..models.density import Density
-from ..models.disable_dry_run import DisableDryRun
 from ..models.edge_get_length import EdgeGetLength
 from ..models.edge_info import EdgeInfo
 from ..models.edge_lines_visible import EdgeLinesVisible
-from ..models.enable_dry_run import EnableDryRun
 from ..models.enable_sketch_mode import EnableSketchMode
+from ..models.end_execution import EndExecution
 from ..models.engine_util_evaluate_path import EngineUtilEvaluatePath
 from ..models.entity_circular_pattern import EntityCircularPattern
 from ..models.entity_clone import EntityClone
@@ -537,22 +537,6 @@ class OptionSketchModeDisable(KittyCadBaseModel):
     data: SketchModeDisable
 
     type: Literal["sketch_mode_disable"] = "sketch_mode_disable"
-
-
-class OptionEnableDryRun(KittyCadBaseModel):
-    """"""
-
-    data: EnableDryRun
-
-    type: Literal["enable_dry_run"] = "enable_dry_run"
-
-
-class OptionDisableDryRun(KittyCadBaseModel):
-    """"""
-
-    data: DisableDryRun
-
-    type: Literal["disable_dry_run"] = "disable_dry_run"
 
 
 class OptionCurveSetConstraint(KittyCadBaseModel):
@@ -1539,6 +1523,22 @@ class OptionOffsetSurface(KittyCadBaseModel):
     type: Literal["offset_surface"] = "offset_surface"
 
 
+class OptionBeginExecution(KittyCadBaseModel):
+    """"""
+
+    data: BeginExecution
+
+    type: Literal["begin_execution"] = "begin_execution"
+
+
+class OptionEndExecution(KittyCadBaseModel):
+    """"""
+
+    data: EndExecution
+
+    type: Literal["end_execution"] = "end_execution"
+
+
 class OptionClosestEdge(KittyCadBaseModel):
     """"""
 
@@ -1595,8 +1595,6 @@ OkModelingCmdResponse = RootModel[
             OptionSetTool,
             OptionMouseMove,
             OptionSketchModeDisable,
-            OptionEnableDryRun,
-            OptionDisableDryRun,
             OptionCurveSetConstraint,
             OptionEnableSketchMode,
             OptionSetBackgroundColor,
@@ -1719,6 +1717,8 @@ OkModelingCmdResponse = RootModel[
             OptionSelectRegionFromPoint,
             OptionBoundingBox,
             OptionOffsetSurface,
+            OptionBeginExecution,
+            OptionEndExecution,
             OptionClosestEdge,
         ],
         Field(discriminator="type"),

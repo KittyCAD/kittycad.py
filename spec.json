@@ -22518,6 +22518,197 @@
         }
       }
     },
+    "/user/factory/jobs": {
+      "post": {
+        "tags": [
+          "factory",
+          "hidden"
+        ],
+        "summary": "Submit a part for manufacturing. Requires a signed-in Zoo account.",
+        "description": "The request is `multipart/form-data`: - one JSON part named `body` (`FactoryIntakeForm`) whose `fields` object holds   free-form intake data (material, quantity, finish, notes, …). It is stored   verbatim, so fields can be added or renamed without an API change. - one or more file parts (any part name). At least one file is required.\n\nThe submitter's identity (email, name, user id) comes from the authenticated account, not the form.\n\nExample `body` part: ```json { \"fields\": { \"material\": \"aluminum-6061\", \"quantity\": 10, \"finish\": \"anodized\", \"notes\": \"deburr all edges\" } } ```\n\nExample request (curl): ``` curl -X POST https://api.zoo.dev/user/factory/jobs \\   -H \"Authorization: Bearer $ZOO_API_TOKEN\" \\   -F 'body={\"fields\":{\"material\":\"aluminum-6061\",\"quantity\":10}};type=application/json' \\   -F 'file=@bracket.step' ```\n\nReturns `201` with the created job (`FactoryJobResponse`).",
+        "operationId": "create_user_factory_job",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "string",
+                "format": "binary"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "successful creation",
+            "headers": {
+              "Access-Control-Allow-Credentials": {
+                "description": "Access-Control-Allow-Credentials header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Headers": {
+                "description": "Access-Control-Allow-Headers header. This is a comma-separated list of headers.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Methods": {
+                "description": "Access-Control-Allow-Methods header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Origin": {
+                "description": "Access-Control-Allow-Origin header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Content-Location": {
+                "description": "The Content-Location header for responses that are not the final destination. This is used to indicate where the resource can be found, when it is finished.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Location": {
+                "description": "The location header for redirects and letting users know if there is a websocket they can listen to for status updates on their operation.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Set-Cookie": {
+                "description": "Set-Cookie header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "X-Api-Call-Id": {
+                "description": "ID for this request. We return it so that users can report this to us and help us debug their problems.",
+                "style": "simple",
+                "required": true,
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FactoryJobResponse"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/Error"
+          },
+          "5XX": {
+            "$ref": "#/components/responses/Error"
+          }
+        }
+      },
+      "options": {
+        "tags": [
+          "hidden"
+        ],
+        "summary": "OPTIONS endpoint.",
+        "description": "This is necessary for some preflight requests, specifically POST, PUT, and DELETE.",
+        "operationId": "options_create_user_factory_job",
+        "responses": {
+          "204": {
+            "description": "resource updated",
+            "headers": {
+              "Access-Control-Allow-Credentials": {
+                "description": "Access-Control-Allow-Credentials header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Headers": {
+                "description": "Access-Control-Allow-Headers header. This is a comma-separated list of headers.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Methods": {
+                "description": "Access-Control-Allow-Methods header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Origin": {
+                "description": "Access-Control-Allow-Origin header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Content-Location": {
+                "description": "The Content-Location header for responses that are not the final destination. This is used to indicate where the resource can be found, when it is finished.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Location": {
+                "description": "The location header for redirects and letting users know if there is a websocket they can listen to for status updates on their operation.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Set-Cookie": {
+                "description": "Set-Cookie header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "X-Api-Call-Id": {
+                "description": "ID for this request. We return it so that users can report this to us and help us debug their problems.",
+                "style": "simple",
+                "required": true,
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/Error"
+          },
+          "5XX": {
+            "$ref": "#/components/responses/Error"
+          }
+        }
+      }
+    },
     "/user/features": {
       "get": {
         "tags": [
@@ -33774,6 +33965,10 @@
           }
         ]
       },
+      "BeginExecution": {
+        "description": "The response from the 'BeginExecution'.",
+        "type": "object"
+      },
       "BillingCadence": {
         "description": "How often a contract is expected to bill or renew operationally.",
         "oneOf": [
@@ -36926,10 +37121,6 @@
           }
         ]
       },
-      "DisableDryRun": {
-        "description": "The response from the `DisableDryRun` endpoint.",
-        "type": "object"
-      },
       "Discount": {
         "description": "The resource representing a Discount.",
         "type": "object",
@@ -37266,12 +37457,12 @@
           }
         ]
       },
-      "EnableDryRun": {
-        "description": "The response from the `EnableDryRun` endpoint.",
-        "type": "object"
-      },
       "EnableSketchMode": {
         "description": "The response from the `EnableSketchMode` endpoint.",
+        "type": "object"
+      },
+      "EndExecution": {
+        "description": "The response from the 'EndExecution'.",
         "type": "object"
       },
       "EngineUtilEvaluatePath": {
@@ -38568,6 +38759,37 @@
             ]
           }
         }
+      },
+      "FactoryJobResponse": {
+        "description": "Response returned when a Factory job is created. Only customer-facing ids are exposed: the job id (the customer's reference) and its current version id. The internal Help Desk thread id is deliberately NOT returned (internal-only per the ERD).",
+        "type": "object",
+        "properties": {
+          "current_version_id": {
+            "nullable": true,
+            "description": "The current (first) version id of the job.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Uuid"
+              }
+            ]
+          },
+          "id": {
+            "description": "The stable, customer-facing job id.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Uuid"
+              }
+            ]
+          },
+          "status": {
+            "description": "The initial workflow status (`new`).",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "status"
+        ]
       },
       "FailureWebSocketResponse": {
         "description": "Unsuccessful Websocket response.",
@@ -46077,36 +46299,6 @@
             ]
           },
           {
-            "description": "Sets whether or not changes to the scene or its objects will be done as a \"dry run\" In a dry run, successful commands won't actually change the model. This is useful for catching errors before actually making the change.",
-            "type": "object",
-            "properties": {
-              "type": {
-                "type": "string",
-                "enum": [
-                  "enable_dry_run"
-                ]
-              }
-            },
-            "required": [
-              "type"
-            ]
-          },
-          {
-            "description": "Sets whether or not changes to the scene or its objects will be done as a \"dry run\" In a dry run, successful commands won't actually change the model. This is useful for catching errors before actually making the change.",
-            "type": "object",
-            "properties": {
-              "type": {
-                "type": "string",
-                "enum": [
-                  "disable_dry_run"
-                ]
-              }
-            },
-            "required": [
-              "type"
-            ]
-          },
-          {
             "description": "Set the background color of the scene.",
             "type": "object",
             "properties": {
@@ -47947,6 +48139,41 @@
             ]
           },
           {
+            "description": "Tell the engine you're beginning execution, and will be sending many API calls shortly. The engine will render your geometry in reduced detail, to make execution faster. Call EndExecution to restore high quality once you're done sending commands.",
+            "type": "object",
+            "properties": {
+              "enable_render": {
+                "description": "Should rendering occur, or not? If enabled, rendering will be low resolution until you call EndExecution.",
+                "type": "boolean"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "begin_execution"
+                ]
+              }
+            },
+            "required": [
+              "enable_render",
+              "type"
+            ]
+          },
+          {
+            "description": "Tell the engine you're finished execution, and it should resume rendering at high resolution.",
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "enum": [
+                  "end_execution"
+                ]
+              }
+            },
+            "required": [
+              "type"
+            ]
+          },
+          {
             "description": "Returns the closest edge to this point.",
             "type": "object",
             "properties": {
@@ -49294,42 +49521,6 @@
                 "type": "string",
                 "enum": [
                   "sketch_mode_disable"
-                ]
-              }
-            },
-            "required": [
-              "data",
-              "type"
-            ]
-          },
-          {
-            "type": "object",
-            "properties": {
-              "data": {
-                "$ref": "#/components/schemas/EnableDryRun"
-              },
-              "type": {
-                "type": "string",
-                "enum": [
-                  "enable_dry_run"
-                ]
-              }
-            },
-            "required": [
-              "data",
-              "type"
-            ]
-          },
-          {
-            "type": "object",
-            "properties": {
-              "data": {
-                "$ref": "#/components/schemas/DisableDryRun"
-              },
-              "type": {
-                "type": "string",
-                "enum": [
-                  "disable_dry_run"
                 ]
               }
             },
@@ -51526,6 +51717,42 @@
                 "type": "string",
                 "enum": [
                   "offset_surface"
+                ]
+              }
+            },
+            "required": [
+              "data",
+              "type"
+            ]
+          },
+          {
+            "type": "object",
+            "properties": {
+              "data": {
+                "$ref": "#/components/schemas/BeginExecution"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "begin_execution"
+                ]
+              }
+            },
+            "required": [
+              "data",
+              "type"
+            ]
+          },
+          {
+            "type": "object",
+            "properties": {
+              "data": {
+                "$ref": "#/components/schemas/EndExecution"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "end_execution"
                 ]
               }
             },
@@ -61762,6 +61989,13 @@
       "description": "Endpoints that allow for code execution or creation of code execution environments.",
       "externalDocs": {
         "url": "https://zoo.dev/docs/api/executor"
+      }
+    },
+    {
+      "name": "factory",
+      "description": "Operations for submitting and managing Factory manufacturing jobs.",
+      "externalDocs": {
+        "url": "https://zoo.dev/docs/api/factory"
       }
     },
     {

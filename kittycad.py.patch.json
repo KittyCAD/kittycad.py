@@ -1201,6 +1201,14 @@
   },
   {
     "op": "add",
+    "path": "/paths/~1user~1factory~1jobs/post/x-python",
+    "value": {
+      "example": "from kittycad.models import FactoryJobResponse\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_create_user_factory_job():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    result: FactoryJobResponse = client.factory.create_user_factory_job()\n\n\n    body: FactoryJobResponse = result\n    print(body)\n\n",
+      "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD.factory"
+    }
+  },
+  {
+    "op": "add",
     "path": "/paths/~1user~1features/get/x-python",
     "value": {
       "example": "from kittycad.models import UserFeatureList\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_user_features_get():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    result: UserFeatureList = client.users.user_features_get()\n\n\n    body: UserFeatureList = result\n    print(body)\n\n",

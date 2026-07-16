@@ -1163,18 +1163,6 @@ class OptionEnableSketchMode(KittyCadBaseModel):
     type: Literal["enable_sketch_mode"] = "enable_sketch_mode"
 
 
-class OptionEnableDryRun(KittyCadBaseModel):
-    """Sets whether or not changes to the scene or its objects will be done as a \"dry run\" In a dry run, successful commands won't actually change the model. This is useful for catching errors before actually making the change."""
-
-    type: Literal["enable_dry_run"] = "enable_dry_run"
-
-
-class OptionDisableDryRun(KittyCadBaseModel):
-    """Sets whether or not changes to the scene or its objects will be done as a \"dry run\" In a dry run, successful commands won't actually change the model. This is useful for catching errors before actually making the change."""
-
-    type: Literal["disable_dry_run"] = "disable_dry_run"
-
-
 class OptionSetBackgroundColor(KittyCadBaseModel):
     """Set the background color of the scene."""
 
@@ -1807,6 +1795,20 @@ class OptionOffsetSurface(KittyCadBaseModel):
     type: Literal["offset_surface"] = "offset_surface"
 
 
+class OptionBeginExecution(KittyCadBaseModel):
+    """Tell the engine you're beginning execution, and will be sending many API calls shortly. The engine will render your geometry in reduced detail, to make execution faster. Call EndExecution to restore high quality once you're done sending commands."""
+
+    enable_render: bool
+
+    type: Literal["begin_execution"] = "begin_execution"
+
+
+class OptionEndExecution(KittyCadBaseModel):
+    """Tell the engine you're finished execution, and it should resume rendering at high resolution."""
+
+    type: Literal["end_execution"] = "end_execution"
+
+
 class OptionClosestEdge(KittyCadBaseModel):
     """Returns the closest edge to this point."""
 
@@ -1916,8 +1918,6 @@ ModelingCmd = RootModel[
             OptionGetSketchModePlane,
             OptionCurveSetConstraint,
             OptionEnableSketchMode,
-            OptionEnableDryRun,
-            OptionDisableDryRun,
             OptionSetBackgroundColor,
             OptionSetCurrentToolProperties,
             OptionSetDefaultSystemProperties,
@@ -1981,6 +1981,8 @@ ModelingCmd = RootModel[
             OptionSelectRegionFromPoint,
             OptionBoundingBox,
             OptionOffsetSurface,
+            OptionBeginExecution,
+            OptionEndExecution,
             OptionClosestEdge,
         ],
         Field(discriminator="type"),

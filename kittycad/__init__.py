@@ -77,6 +77,7 @@ from .models.email_authentication_form import EmailAuthenticationForm
 from .models.email_marketing_confirm_token_body import EmailMarketingConfirmTokenBody
 from .models.email_marketing_consent_state import EmailMarketingConsentState
 from .models.extended_user import ExtendedUser
+from .models.factory_job_response import FactoryJobResponse
 from .models.file_center_of_mass import FileCenterOfMass
 from .models.file_conversion import FileConversion
 from .models.file_density import FileDensity
@@ -16268,6 +16269,90 @@ class AsyncApiTokensAPI:
         return response.json() if response.content else None
 
 
+class FactoryAPI:
+    """API for factory endpoints"""
+
+    def __init__(self, client: Client) -> None:
+        self.client = client
+
+    def create_user_factory_job(
+        self,
+    ) -> FactoryJobResponse:
+        """The request is `multipart/form-data`: - one JSON part named `body` (`FactoryIntakeForm`) whose `fields` object holds   free-form intake data (material, quantity, finish, notes, …). It is stored   verbatim, so fields can be added or renamed without an API change. - one or more file parts (any part name). At least one file is required.
+
+        The submitter's identity (email, name, user id) comes from the authenticated account, not the form.
+
+        Example `body` part: ```json { "fields": { "material": "aluminum-6061", "quantity": 10, "finish": "anodized", "notes": "deburr all edges" } } ```
+
+        Example request (curl): ``` curl -X POST https://api.zoo.dev/user/factory/jobs \   -H "Authorization: Bearer $ZOO_API_TOKEN" \   -F 'body={"fields":{"material":"aluminum-6061","quantity":10}};type=application/json' \   -F 'file=@bracket.step' ```
+
+        Returns `201` with the created job (`FactoryJobResponse`)."""
+
+        url = "{}/user/factory/jobs".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return FactoryJobResponse.model_validate(json_data, extra="ignore")
+
+
+class AsyncFactoryAPI:
+    """Async API for factory endpoints"""
+
+    def __init__(self, client: AsyncClient) -> None:
+        self.client = client
+
+    async def create_user_factory_job(
+        self,
+    ) -> FactoryJobResponse:
+        """The request is `multipart/form-data`: - one JSON part named `body` (`FactoryIntakeForm`) whose `fields` object holds   free-form intake data (material, quantity, finish, notes, …). It is stored   verbatim, so fields can be added or renamed without an API change. - one or more file parts (any part name). At least one file is required.
+
+        The submitter's identity (email, name, user id) comes from the authenticated account, not the form.
+
+        Example `body` part: ```json { "fields": { "material": "aluminum-6061", "quantity": 10, "finish": "anodized", "notes": "deburr all edges" } } ```
+
+        Example request (curl): ``` curl -X POST https://api.zoo.dev/user/factory/jobs \   -H "Authorization: Bearer $ZOO_API_TOKEN" \   -F 'body={"fields":{"material":"aluminum-6061","quantity":10}};type=application/json' \   -F 'file=@bracket.step' ```
+
+        Returns `201` with the created job (`FactoryJobResponse`)."""
+
+        url = "{}/user/factory/jobs".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return FactoryJobResponse.model_validate(json_data, extra="ignore")
+
+
 class ModelingAPI:
     """API for modeling endpoints"""
 
@@ -16901,6 +16986,9 @@ class KittyCAD(Client):
         api_tokens: ApiTokensAPI - Access to api_tokens endpoints
 
 
+        factory: FactoryAPI - Access to factory endpoints
+
+
         modeling: ModelingAPI - Access to modeling endpoints
 
     """
@@ -16938,6 +17026,8 @@ class KittyCAD(Client):
     users: "UsersAPI"
 
     api_tokens: "ApiTokensAPI"
+
+    factory: "FactoryAPI"
 
     modeling: "ModelingAPI"
 
@@ -16991,6 +17081,8 @@ class KittyCAD(Client):
         self.users: UsersAPI = UsersAPI(self)
 
         self.api_tokens: ApiTokensAPI = ApiTokensAPI(self)
+
+        self.factory: FactoryAPI = FactoryAPI(self)
 
         self.modeling: ModelingAPI = ModelingAPI(self)
 
@@ -17062,6 +17154,9 @@ class AsyncKittyCAD(AsyncClient):
         api_tokens: AsyncApiTokensAPI - Access to api_tokens endpoints
 
 
+        factory: AsyncFactoryAPI - Access to factory endpoints
+
+
         modeling: AsyncModelingAPI - Access to modeling endpoints
 
     """
@@ -17099,6 +17194,8 @@ class AsyncKittyCAD(AsyncClient):
     users: "AsyncUsersAPI"
 
     api_tokens: "AsyncApiTokensAPI"
+
+    factory: "AsyncFactoryAPI"
 
     modeling: "AsyncModelingAPI"
 
@@ -17152,6 +17249,8 @@ class AsyncKittyCAD(AsyncClient):
         self.users: AsyncUsersAPI = AsyncUsersAPI(self)
 
         self.api_tokens: AsyncApiTokensAPI = AsyncApiTokensAPI(self)
+
+        self.factory: AsyncFactoryAPI = AsyncFactoryAPI(self)
 
         self.modeling: AsyncModelingAPI = AsyncModelingAPI(self)
 
