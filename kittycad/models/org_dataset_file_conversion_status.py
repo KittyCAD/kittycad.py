@@ -28,6 +28,14 @@ class OrgDatasetFileConversionStatus(str, Enum):
 
     ERROR_GEOMETRY_MISMATCH = "error_geometry_mismatch"
 
+    """# Conversion failed because generated KCL failed to execute."""  # noqa: E501
+
+    ERROR_EXECUTION = "error_execution"
+
+    """# Conversion failed because a required conversion service connection or dependency was unavailable."""  # noqa: E501
+
+    ERROR_CONNECTION = "error_connection"
+
     """# Conversion failed because we didn't know how to handle the file. The conversion should be retried with a new converter version."""  # noqa: E501
 
     ERROR_UNSUPPORTED = "error_unsupported"

@@ -22525,7 +22525,7 @@
           "hidden"
         ],
         "summary": "Submit a part for manufacturing. Requires a signed-in Zoo account.",
-        "description": "The request is `multipart/form-data`: - one JSON part named `body` (`FactoryIntakeForm`) whose `fields` object holds   free-form intake data (material, quantity, finish, notes, …). It is stored   verbatim, so fields can be added or renamed without an API change. - one or more file parts (any part name). At least one file is required.\n\nThe submitter's identity (email, name, user id) comes from the authenticated account, not the form.\n\nExample `body` part: ```json { \"fields\": { \"material\": \"aluminum-6061\", \"quantity\": 10, \"finish\": \"anodized\", \"notes\": \"deburr all edges\" } } ```\n\nExample request (curl): ``` curl -X POST https://api.zoo.dev/user/factory/jobs \\   -H \"Authorization: Bearer $ZOO_API_TOKEN\" \\   -F 'body={\"fields\":{\"material\":\"aluminum-6061\",\"quantity\":10}};type=application/json' \\   -F 'file=@bracket.step' ```\n\nReturns `201` with the created job (`FactoryJobResponse`).",
+        "description": "The request is `multipart/form-data`: - one JSON part named `body` (`FactoryIntakeForm`) whose `fields` object holds   free-form intake data (material, finish, quantity, notes, …). It is stored   verbatim, so fields can be added or renamed without an API change. - one or more file parts (any part name). At least one file is required.\n\nThe submitter's identity (email, name, user id) comes from the authenticated account, not the form.\n\n`fields` is free-form and the server does not validate it, but the Factory operator dashboard renders `material` and `finish` as dropdowns with a known set of values. Send these exact strings so a submission maps onto a first-class option instead of showing up as a one-off custom entry: - `finish`: `\"As machined\"`, `\"Bead blast\"`, `\"Anodized\"`, or   `\"Other (see notes)\"` — describe the real finish in `notes` when choosing   `\"Other (see notes)\"`. - `material`: `\"Aluminum 6061\"`, or `\"Other (see notes)\"` (real material in   `notes`). - `quantity`: a positive integer.\n\nAny other value is still accepted and stored verbatim; it just appears in the dashboard as a custom entry rather than a recognized option.\n\nExample `body` part: ```json { \"fields\": { \"material\": \"Aluminum 6061\", \"finish\": \"Anodized\", \"quantity\": 10, \"notes\": \"deburr all edges\" } } ```\n\nExample request (curl): ``` curl -X POST https://api.zoo.dev/user/factory/jobs \\   -H \"Authorization: Bearer $ZOO_API_TOKEN\" \\   -F 'body={\"fields\":{\"material\":\"Aluminum 6061\",\"finish\":\"Anodized\",\"quantity\":10}};type=application/json' \\   -F 'file=@bracket.step' ```\n\nReturns `201` with the created job (`FactoryJobResponse`).",
         "operationId": "create_user_factory_job",
         "requestBody": {
           "content": {
@@ -38841,13 +38841,6 @@
         "description": "Feature-like switches determined by environment, rules, and overrides.",
         "oneOf": [
           {
-            "description": "Enables the bodies pane in Zoo Design Studio.",
-            "type": "string",
-            "enum": [
-              "bodies_pane"
-            ]
-          },
-          {
             "description": "When enabled, auth is restricted to only employees.",
             "type": "string",
             "enum": [
@@ -38887,6 +38880,13 @@
             "type": "string",
             "enum": [
               "enable_z0006_lint"
+            ]
+          },
+          {
+            "description": "Enables the Factory portal.",
+            "type": "string",
+            "enum": [
+              "factory_portal"
             ]
           },
           {
@@ -38988,7 +38988,7 @@
             ]
           },
           {
-            "description": "Enables the public-facing web app file browser feature.",
+            "description": "Enables cloud storage for web and desktop. Yes desktop too, the name is old and will go away soon.",
             "type": "string",
             "enum": [
               "web_app_file_browser"
@@ -42254,7 +42254,44 @@
             "additionalProperties": false
           },
           {
-            "description": "Replay containing raw bytes for previously-saved messages for a conversation. Includes server messages and client `User` messages.\n\nInvariants: - Includes server messages: `Info`, `Error`, `Reasoning(..)`, `ToolOutput { .. }`, `Files { .. }`, `ProjectUpdated { .. }`, and `EndOfStream { .. }`. - Also includes client `User` messages. - The following are NEVER included: `SessionData`, `ConversationId`, `Delta`, `BackendShutdown`, or `ZookeeperAutoRouterMetadata`. - Ordering is stable: messages are ordered by prompt creation time within the conversation, then by the per-prompt `seq` value (monotonically increasing as seen in the original stream).\n\nWire format: - Each element is canonical serialized bytes (typically JSON) for either a `MlCopilotServerMessage` or a `MlCopilotClientMessage::User`. - When delivered as an initial replay over the websocket (upon `?replay=true&conversation_id=<uuid>`), the server sends a single WebSocket Binary frame containing a MsgPack-encoded document of this enum: `Replay { messages }`.",
+            "description": "Backend-only completed tool result used for portable Zookeeper recovery.\n\nAPI persists this message and includes it only in replay sent to the text-to-CAD backend. It is never forwarded to browser clients.",
+            "type": "object",
+            "properties": {
+              "zookeeper_recovery_tool_output": {
+                "type": "object",
+                "properties": {
+                  "call_id": {
+                    "description": "Application-level tool call identifier.",
+                    "type": "string"
+                  },
+                  "output": {
+                    "description": "Bounded readable output derived from the completed tool result.",
+                    "type": "string"
+                  },
+                  "project_updated": {
+                    "description": "Whether the tool changed the current project.",
+                    "default": false,
+                    "type": "boolean"
+                  },
+                  "tool_name": {
+                    "description": "Name of the completed tool.",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "call_id",
+                  "output",
+                  "tool_name"
+                ]
+              }
+            },
+            "required": [
+              "zookeeper_recovery_tool_output"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "description": "Replay containing raw bytes for previously-saved messages for a conversation. Includes server messages and client `User` messages.\n\nInvariants: - Includes server messages: `Info`, `Error`, `Reasoning(..)`, `ToolOutput { .. }`, `Files { .. }`, `ProjectUpdated { .. }`, and `EndOfStream { .. }`. - Also includes client `User` messages. - The following are NEVER included: `SessionData`, `ConversationId`, `Delta`, `BackendShutdown`, or `ZookeeperAutoRouterMetadata`. - `ZookeeperRecoveryToolOutput` is included only in replay sent to the text-to-CAD backend and is filtered from client replay. - Ordering is stable: messages are ordered by prompt creation time within the conversation, then by the per-prompt `seq` value (monotonically increasing as seen in the original stream).\n\nWire format: - Each element is canonical serialized bytes (typically JSON) for either a `MlCopilotServerMessage` or a `MlCopilotClientMessage::User`. - When delivered as an initial replay over the websocket (upon `?replay=true&conversation_id=<uuid>`), the server sends a single WebSocket Binary frame containing a MsgPack-encoded document of this enum: `Replay { messages }`.",
             "type": "object",
             "properties": {
               "replay": {
@@ -42751,7 +42788,7 @@
             "type": "boolean"
           },
           "monthly_pay_as_you_go_api_credits": {
-            "description": "The amount of pay-as-you-go API credits the individual or org gets outside the modeling app per month. This re-ups on the 1st of each month. This is equivalent to the monetary value divided by the price of an API credit.",
+            "description": "The amount of pay-as-you-go API credits the individual or org gets outside the modeling app per month. Credit replenishment remains calendar-month based while anniversary billing is rolled out. This is equivalent to the monetary value divided by the price of an API credit.",
             "default": 0,
             "type": "integer",
             "format": "uint64",
@@ -42759,7 +42796,7 @@
           },
           "monthly_pay_as_you_go_api_credits_monetary_value": {
             "title": "double",
-            "description": "The monetary value of pay-as-you-go API credits the individual or org gets outside the modeling app per month. This re-ups on the 1st of each month.",
+            "description": "The monetary value of pay-as-you-go API credits the individual or org gets outside the modeling app per month. Credit replenishment remains calendar-month based while anniversary billing is rolled out.",
             "default": 0.0,
             "type": "number",
             "format": "money-usd"
@@ -52623,6 +52660,20 @@
             ]
           },
           {
+            "description": "Conversion failed because generated KCL failed to execute.",
+            "type": "string",
+            "enum": [
+              "error_execution"
+            ]
+          },
+          {
+            "description": "Conversion failed because a required conversion service connection or dependency was unavailable.",
+            "type": "string",
+            "enum": [
+              "error_connection"
+            ]
+          },
+          {
             "description": "Conversion failed because we didn't know how to handle the file. The conversion should be retried with a new converter version.",
             "type": "string",
             "enum": [
@@ -61544,7 +61595,7 @@
                 "type": "boolean"
               },
               "monthly_pay_as_you_go_api_credits": {
-                "description": "The amount of pay-as-you-go API credits the individual or org gets outside the modeling app per month. This re-ups on the 1st of each month. This is equivalent to the monetary value divided by the price of an API credit.",
+                "description": "The amount of pay-as-you-go API credits the individual or org gets outside the modeling app per month. Credit replenishment remains calendar-month based while anniversary billing is rolled out. This is equivalent to the monetary value divided by the price of an API credit.",
                 "default": 0,
                 "type": "integer",
                 "format": "uint64",
@@ -61552,7 +61603,7 @@
               },
               "monthly_pay_as_you_go_api_credits_monetary_value": {
                 "title": "double",
-                "description": "The monetary value of pay-as-you-go API credits the individual or org gets outside the modeling app per month. This re-ups on the 1st of each month.",
+                "description": "The monetary value of pay-as-you-go API credits the individual or org gets outside the modeling app per month. Credit replenishment remains calendar-month based while anniversary billing is rolled out.",
                 "default": 0.0,
                 "type": "number",
                 "format": "money-usd"
