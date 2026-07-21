@@ -4,10 +4,6 @@ from enum import Enum
 class Feature(str, Enum):
     """Feature-like switches determined by environment, rules, and overrides."""  # noqa: E501
 
-    """# Enables the bodies pane in Zoo Design Studio."""  # noqa: E501
-
-    BODIES_PANE = "bodies_pane"
-
     """# When enabled, auth is restricted to only employees."""  # noqa: E501
 
     AUTH_RESTRICTED_TO_EMPLOYEES = "auth_restricted_to_employees"
@@ -31,6 +27,10 @@ class Feature(str, Enum):
     """# Enables the Z0006 lint, for converting to new face api syntax in Zoo Design Studio."""  # noqa: E501
 
     ENABLE_Z0006_LINT = "enable_z0006_lint"
+
+    """# Enables the Factory portal."""  # noqa: E501
+
+    FACTORY_PORTAL = "factory_portal"
 
     """# New KCL lexer and parser."""  # noqa: E501
 
@@ -88,7 +88,7 @@ class Feature(str, Enum):
 
     SKETCH_EXPERIMENTAL_FEATURES = "sketch_experimental_features"
 
-    """# Enables the public-facing web app file browser feature."""  # noqa: E501
+    """# Enables cloud storage for web and desktop. Yes desktop too, the name is old and will go away soon."""  # noqa: E501
 
     WEB_APP_FILE_BROWSER = "web_app_file_browser"
 

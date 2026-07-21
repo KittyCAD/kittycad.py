@@ -310,10 +310,42 @@ class ZookeeperAutoRouterMetadata(KittyCadBaseModel):
     zookeeper_auto_router_metadata: ZookeeperAutoRouterMetadataModel
 
 
+class ZookeeperRecoveryToolOutput(KittyCadBaseModel):
+    """Backend-only completed tool result used for portable Zookeeper recovery.
+
+    API persists this message and includes it only in replay sent to the text-to-CAD backend. It is never forwarded to browser clients."""
+
+    call_id: str
+
+    output: str
+
+    project_updated: Optional[bool] = False
+
+    tool_name: str
+
+    @model_validator(mode="before")
+    @classmethod
+    def _unwrap(cls, data):
+        if (
+            isinstance(data, dict)
+            and "zookeeper_recovery_tool_output" in data
+            and isinstance(data["zookeeper_recovery_tool_output"], dict)
+        ):
+            return data["zookeeper_recovery_tool_output"]
+
+        return data
+
+    @model_serializer(mode="wrap")
+    def _wrap(self, handler, info):
+        payload = handler(self, info)
+
+        return {"zookeeper_recovery_tool_output": payload}
+
+
 class Replay(KittyCadBaseModel):
     """Replay containing raw bytes for previously-saved messages for a conversation. Includes server messages and client `User` messages.
 
-    Invariants: - Includes server messages: `Info`, `Error`, `Reasoning(..)`, `ToolOutput { .. }`, `Files { .. }`, `ProjectUpdated { .. }`, and `EndOfStream { .. }`. - Also includes client `User` messages. - The following are NEVER included: `SessionData`, `ConversationId`, `Delta`, `BackendShutdown`, or `ZookeeperAutoRouterMetadata`. - Ordering is stable: messages are ordered by prompt creation time within the conversation, then by the per-prompt `seq` value (monotonically increasing as seen in the original stream).
+    Invariants: - Includes server messages: `Info`, `Error`, `Reasoning(..)`, `ToolOutput { .. }`, `Files { .. }`, `ProjectUpdated { .. }`, and `EndOfStream { .. }`. - Also includes client `User` messages. - The following are NEVER included: `SessionData`, `ConversationId`, `Delta`, `BackendShutdown`, or `ZookeeperAutoRouterMetadata`. - `ZookeeperRecoveryToolOutput` is included only in replay sent to the text-to-CAD backend and is filtered from client replay. - Ordering is stable: messages are ordered by prompt creation time within the conversation, then by the per-prompt `seq` value (monotonically increasing as seen in the original stream).
 
     Wire format: - Each element is canonical serialized bytes (typically JSON) for either a `MlCopilotServerMessage` or a `MlCopilotClientMessage::User`. - When delivered as an initial replay over the websocket (upon `?replay=true&conversation_id=<uuid>`), the server sends a single WebSocket Binary frame containing a MsgPack-encoded document of this enum: `Replay { messages }`."""
 
@@ -410,6 +442,7 @@ MlCopilotServerMessage = RootModel[
         RequestAttachments,
         AttachmentsLoaded,
         ZookeeperAutoRouterMetadata,
+        ZookeeperRecoveryToolOutput,
         Replay,
         EndOfStream,
         Files,

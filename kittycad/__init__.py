@@ -16278,13 +16278,17 @@ class FactoryAPI:
     def create_user_factory_job(
         self,
     ) -> FactoryJobResponse:
-        """The request is `multipart/form-data`: - one JSON part named `body` (`FactoryIntakeForm`) whose `fields` object holds   free-form intake data (material, quantity, finish, notes, …). It is stored   verbatim, so fields can be added or renamed without an API change. - one or more file parts (any part name). At least one file is required.
+        """The request is `multipart/form-data`: - one JSON part named `body` (`FactoryIntakeForm`) whose `fields` object holds   free-form intake data (material, finish, quantity, notes, …). It is stored   verbatim, so fields can be added or renamed without an API change. - one or more file parts (any part name). At least one file is required.
 
         The submitter's identity (email, name, user id) comes from the authenticated account, not the form.
 
-        Example `body` part: ```json { "fields": { "material": "aluminum-6061", "quantity": 10, "finish": "anodized", "notes": "deburr all edges" } } ```
+        `fields` is free-form and the server does not validate it, but the Factory operator dashboard renders `material` and `finish` as dropdowns with a known set of values. Send these exact strings so a submission maps onto a first-class option instead of showing up as a one-off custom entry: - `finish`: `"As machined"`, `"Bead blast"`, `"Anodized"`, or   `"Other (see notes)"` — describe the real finish in `notes` when choosing   `"Other (see notes)"`. - `material`: `"Aluminum 6061"`, or `"Other (see notes)"` (real material in   `notes`). - `quantity`: a positive integer.
 
-        Example request (curl): ``` curl -X POST https://api.zoo.dev/user/factory/jobs \   -H "Authorization: Bearer $ZOO_API_TOKEN" \   -F 'body={"fields":{"material":"aluminum-6061","quantity":10}};type=application/json' \   -F 'file=@bracket.step' ```
+        Any other value is still accepted and stored verbatim; it just appears in the dashboard as a custom entry rather than a recognized option.
+
+        Example `body` part: ```json { "fields": { "material": "Aluminum 6061", "finish": "Anodized", "quantity": 10, "notes": "deburr all edges" } } ```
+
+        Example request (curl): ``` curl -X POST https://api.zoo.dev/user/factory/jobs \   -H "Authorization: Bearer $ZOO_API_TOKEN" \   -F 'body={"fields":{"material":"Aluminum 6061","finish":"Anodized","quantity":10}};type=application/json' \   -F 'file=@bracket.step' ```
 
         Returns `201` with the created job (`FactoryJobResponse`)."""
 
@@ -16320,13 +16324,17 @@ class AsyncFactoryAPI:
     async def create_user_factory_job(
         self,
     ) -> FactoryJobResponse:
-        """The request is `multipart/form-data`: - one JSON part named `body` (`FactoryIntakeForm`) whose `fields` object holds   free-form intake data (material, quantity, finish, notes, …). It is stored   verbatim, so fields can be added or renamed without an API change. - one or more file parts (any part name). At least one file is required.
+        """The request is `multipart/form-data`: - one JSON part named `body` (`FactoryIntakeForm`) whose `fields` object holds   free-form intake data (material, finish, quantity, notes, …). It is stored   verbatim, so fields can be added or renamed without an API change. - one or more file parts (any part name). At least one file is required.
 
         The submitter's identity (email, name, user id) comes from the authenticated account, not the form.
 
-        Example `body` part: ```json { "fields": { "material": "aluminum-6061", "quantity": 10, "finish": "anodized", "notes": "deburr all edges" } } ```
+        `fields` is free-form and the server does not validate it, but the Factory operator dashboard renders `material` and `finish` as dropdowns with a known set of values. Send these exact strings so a submission maps onto a first-class option instead of showing up as a one-off custom entry: - `finish`: `"As machined"`, `"Bead blast"`, `"Anodized"`, or   `"Other (see notes)"` — describe the real finish in `notes` when choosing   `"Other (see notes)"`. - `material`: `"Aluminum 6061"`, or `"Other (see notes)"` (real material in   `notes`). - `quantity`: a positive integer.
 
-        Example request (curl): ``` curl -X POST https://api.zoo.dev/user/factory/jobs \   -H "Authorization: Bearer $ZOO_API_TOKEN" \   -F 'body={"fields":{"material":"aluminum-6061","quantity":10}};type=application/json' \   -F 'file=@bracket.step' ```
+        Any other value is still accepted and stored verbatim; it just appears in the dashboard as a custom entry rather than a recognized option.
+
+        Example `body` part: ```json { "fields": { "material": "Aluminum 6061", "finish": "Anodized", "quantity": 10, "notes": "deburr all edges" } } ```
+
+        Example request (curl): ``` curl -X POST https://api.zoo.dev/user/factory/jobs \   -H "Authorization: Bearer $ZOO_API_TOKEN" \   -F 'body={"fields":{"material":"Aluminum 6061","finish":"Anodized","quantity":10}};type=application/json' \   -F 'file=@bracket.step' ```
 
         Returns `201` with the created job (`FactoryJobResponse`)."""
 
