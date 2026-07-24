@@ -198,7 +198,8 @@
     "/ai/text-to-cad/{output_format}": {
       "post": {
         "tags": [
-          "ml"
+          "ml",
+          "hidden"
         ],
         "summary": "Generate a CAD model from text.",
         "description": "Prefer the ML copilot websocket (`/ws/ml/copilot`) for new integrations. This REST endpoint is kept for existing Text-to-CAD clients, but it is no longer the recommended way to generate CAD models from a prompt.\n\nBecause our source of truth for the resulting model is a STEP file, you will always have STEP file contents when you list your generated parts. Any other formats you request here will also be returned when you list your generated parts.\n\nThis operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint.\n\nOne thing to note, if you hit the cache, this endpoint will return right away. So you only have to wait if the status is not `Completed` or `Failed`.",
@@ -5412,7 +5413,8 @@
     "/ml/text-to-cad/iteration": {
       "post": {
         "tags": [
-          "ml"
+          "ml",
+          "hidden"
         ],
         "summary": "Iterate on a CAD model with a prompt.",
         "description": "Prefer the ML copilot websocket (`/ws/ml/copilot`) for new prompt-to-edit integrations. This REST endpoint is kept for existing clients, but it is no longer the recommended way to edit KCL or CAD models from a prompt.\n\nEven if you give specific ranges to edit, the model might change more than just those in order to make the changes you requested without breaking the code.\n\nYou always get the whole code back, even if you only changed a small part of it.\n\nThis operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint.\n\nThis endpoint is deprecated in favor of `/ws/ml/copilot`.",
@@ -5602,7 +5604,8 @@
     "/ml/text-to-cad/multi-file/iteration": {
       "post": {
         "tags": [
-          "ml"
+          "ml",
+          "hidden"
         ],
         "summary": "Iterate on a multi-file CAD model with a prompt.",
         "description": "Prefer the ML copilot websocket (`/ws/ml/copilot`) for new prompt-to-edit integrations. This REST endpoint is kept for existing multi-file iteration clients, but it is no longer the recommended way to edit KCL or CAD models from a prompt.\n\nThis endpoint can iterate on multi-file projects.\n\nEven if you give specific ranges to edit, the model might change more than just those in order to make the changes you requested without breaking the code.\n\nYou always get the whole code back, even if you only changed a small part of it. This endpoint will always return all the code back, including files that were not changed. If your original source code imported a stl/gltf/step/etc file, the output will not include that file since the model will never change non-kcl files. The endpoint will only return the kcl files that were changed.\n\nThis operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint.\n\nInput filepaths will be normalized and re-canonicalized to be under the current working directory -- so returned paths may differ from provided paths, and care must be taken when handling user provided paths.",
@@ -22525,7 +22528,7 @@
           "hidden"
         ],
         "summary": "Submit a part for manufacturing. Requires a signed-in Zoo account.",
-        "description": "The request is `multipart/form-data`: - one JSON part named `body` (`FactoryIntakeForm`) whose `fields` object holds   free-form intake data (material, finish, quantity, notes, …). It is stored   verbatim, so fields can be added or renamed without an API change. - one or more file parts (any part name). At least one file is required.\n\nThe submitter's identity (email, name, user id) comes from the authenticated account, not the form.\n\n`fields` is free-form and the server does not validate it, but the Factory operator dashboard renders `material` and `finish` as dropdowns with a known set of values. Send these exact strings so a submission maps onto a first-class option instead of showing up as a one-off custom entry: - `finish`: `\"As machined\"`, `\"Bead blast\"`, `\"Anodized\"`, or   `\"Other (see notes)\"` — describe the real finish in `notes` when choosing   `\"Other (see notes)\"`. - `material`: `\"Aluminum 6061\"`, or `\"Other (see notes)\"` (real material in   `notes`). - `quantity`: a positive integer.\n\nAny other value is still accepted and stored verbatim; it just appears in the dashboard as a custom entry rather than a recognized option.\n\nExample `body` part: ```json { \"fields\": { \"material\": \"Aluminum 6061\", \"finish\": \"Anodized\", \"quantity\": 10, \"notes\": \"deburr all edges\" } } ```\n\nExample request (curl): ``` curl -X POST https://api.zoo.dev/user/factory/jobs \\   -H \"Authorization: Bearer $ZOO_API_TOKEN\" \\   -F 'body={\"fields\":{\"material\":\"Aluminum 6061\",\"finish\":\"Anodized\",\"quantity\":10}};type=application/json' \\   -F 'file=@bracket.step' ```\n\nReturns `201` with the created job (`FactoryJobResponse`).",
+        "description": "The request is `multipart/form-data`: - one JSON part named `body` (`FactoryIntakeForm`) whose `fields` object holds   free-form intake data (material, finish, quantity, notes, …). It is stored   verbatim, so fields can be added or renamed without an API change. - one or more file parts (any part name). At least one file is required.\n\nThe submitter's identity (email, name, user id) comes from the authenticated account, not the form.\n\n`fields` is free-form and the server does not validate it, but the Factory operator dashboard renders `material` and `finish` as dropdowns with a known set of values. Send these exact strings so a submission maps onto a first-class option instead of showing up as a one-off custom entry: - `finish`: `\"As machined\"`, `\"Bead blast\"`, `\"Anodized\"`, or   `\"Other (see notes)\"` — describe the real finish in `notes` when choosing   `\"Other (see notes)\"`. - `material`: `\"6061 Aluminum\"`, `\"Stainless Steel\"`, `\"Titanium\"`, or `\"Other (see notes)\"` (real material in   `notes`). - `quantity`: a positive integer.\n\nAny other value is still accepted and stored verbatim; it just appears in the dashboard as a custom entry rather than a recognized option.\n\nExample `body` part: ```json { \"fields\": { \"material\": \"6061 Aluminum\", \"finish\": \"Anodized\", \"quantity\": 10, \"notes\": \"deburr all edges\" } } ```\n\nExample request (curl): ``` curl -X POST https://api.zoo.dev/user/factory/jobs \\   -H \"Authorization: Bearer $ZOO_API_TOKEN\" \\   -F 'body={\"fields\":{\"material\":\"6061 Aluminum\",\"finish\":\"Anodized\",\"quantity\":10}};type=application/json' \\   -F 'file=@bracket.step' ```\n\nReturns `201` with the created job (`FactoryJobResponse`).",
         "operationId": "create_user_factory_job",
         "requestBody": {
           "content": {
@@ -31675,7 +31678,7 @@
         "properties": {
           "adjacent_info": {
             "nullable": true,
-            "description": "Adjacent edge and face info.",
+            "description": "Next adjacent edge and face info.",
             "allOf": [
               {
                 "$ref": "#/components/schemas/EdgeInfo"
@@ -31694,6 +31697,15 @@
           "original_info": {
             "nullable": true,
             "description": "Original edge id and face info.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/EdgeInfo"
+              }
+            ]
+          },
+          "previous_adjacent_info": {
+            "nullable": true,
+            "description": "Previous adjacent edge and face info.",
             "allOf": [
               {
                 "$ref": "#/components/schemas/EdgeInfo"
@@ -36422,6 +36434,68 @@
         "description": "A billing currency code.\n\nThis is intentionally billing-owned instead of Stripe-owned, so contract and manual invoice flows can use the same validated type without reaching back into a provider-specific crate.",
         "type": "string"
       },
+      "CurveDebug": {
+        "description": "A debug-view of the segment of a curve.",
+        "type": "object",
+        "properties": {
+          "center": {
+            "nullable": true,
+            "description": "Center point of segment.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Point2d"
+              }
+            ]
+          },
+          "end": {
+            "nullable": true,
+            "description": "End point of segment.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Point2d"
+              }
+            ]
+          },
+          "id": {
+            "description": "ID for this segment.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ModelingCmdId"
+              }
+            ]
+          },
+          "mid": {
+            "nullable": true,
+            "description": "Midpoint on a three point arc",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Point2d"
+              }
+            ]
+          },
+          "segment_type": {
+            "description": "What kind of segment is it (line, arc, etc)",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/CurveTypeDebug"
+              }
+            ]
+          },
+          "start": {
+            "nullable": true,
+            "description": "Start point of segment or circle.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Point2d"
+              }
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "segment_type"
+        ]
+      },
       "CurveGetControlPoints": {
         "description": "The response from the `CurveGetControlPoints` command.",
         "type": "object",
@@ -36492,6 +36566,32 @@
           "line",
           "arc",
           "nurbs"
+        ]
+      },
+      "CurveTypeDebug": {
+        "description": "What type of curve is being viewed?",
+        "oneOf": [
+          {
+            "description": "Line with a start and end.",
+            "type": "string",
+            "enum": [
+              "line"
+            ]
+          },
+          {
+            "description": "Arc with a start, end and center.",
+            "type": "string",
+            "enum": [
+              "three_point_arc"
+            ]
+          },
+          {
+            "description": "Circle with a center and radius.",
+            "type": "string",
+            "enum": [
+              "circle"
+            ]
+          }
         ]
       },
       "CustomModel": {
@@ -38995,10 +39095,17 @@
             ]
           },
           {
-            "description": "Enables private Zookeeper Pro mode access in ML Copilot.",
+            "description": "Enables Zookeeper Pro mode access in ML Copilot.",
             "type": "string",
             "enum": [
               "zookeeper_pro_mode"
+            ]
+          },
+          {
+            "description": "Enables Zookeeper Ultra mode access in ML Copilot.",
+            "type": "string",
+            "enum": [
+              "zookeeper_ultra_mode"
             ]
           },
           {
@@ -41512,6 +41619,32 @@
             "additionalProperties": false
           },
           {
+            "description": "Reflect across an edge identified by its adjacent faces. If used with a 3D mirror, the edge will define the normal of the mirror plane.",
+            "type": "object",
+            "properties": {
+              "edge_reference": {
+                "type": "object",
+                "properties": {
+                  "reference": {
+                    "description": "Stable edge reference.",
+                    "allOf": [
+                      {
+                        "$ref": "#/components/schemas/EdgeSpecifier"
+                      }
+                    ]
+                  }
+                },
+                "required": [
+                  "reference"
+                ]
+              }
+            },
+            "required": [
+              "edge_reference"
+            ],
+            "additionalProperties": false
+          },
+          {
             "description": "Reflect across an axis (that goes through a point) If used with a 3D mirror, the axis will define the normal of the mirror plane.",
             "type": "object",
             "properties": {
@@ -41887,6 +42020,13 @@
             "type": "string",
             "enum": [
               "zookeeper_pro"
+            ]
+          },
+          {
+            "description": "Use the Zoo Ultra model for internal Zookeeper workflows.",
+            "type": "string",
+            "enum": [
+              "zookeeper_ultra"
             ]
           }
         ]
@@ -42998,10 +43138,19 @@
               },
               "direction": {
                 "nullable": true,
-                "description": "What direction to extrude in. If None, the engine will extrude in the direction normal of the target's plane.",
+                "description": "What direction to extrude in. If None, the engine will extrude in the direction normal of the target's plane. Legacy field; if `direction_reference` is provided, the reference takes precedence.",
                 "allOf": [
                   {
                     "$ref": "#/components/schemas/DirectionType"
+                  }
+                ]
+              },
+              "direction_reference": {
+                "nullable": true,
+                "description": "Edge specifier identifying the edge direction to use. If provided, this takes precedence over `direction`.",
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/EdgeSpecifier"
                   }
                 ]
               },
@@ -43055,10 +43204,20 @@
                 ]
               },
               "target": {
-                "description": "Which sketch to extrude. Must be a closed 2D solid.",
+                "nullable": true,
+                "description": "Which sketch to extrude (legacy API). Must be a closed 2D solid. If `target_reference` is provided, the reference takes precedence.",
                 "allOf": [
                   {
                     "$ref": "#/components/schemas/ModelingCmdId"
+                  }
+                ]
+              },
+              "target_reference": {
+                "nullable": true,
+                "description": "Edge specifier identifying the edge to extrude. If provided, this takes precedence over `target`.",
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/EdgeSpecifier"
                   }
                 ]
               },
@@ -43071,7 +43230,6 @@
             },
             "required": [
               "distance",
-              "target",
               "type"
             ]
           },
@@ -43245,6 +43403,15 @@
                 "nullable": true,
                 "description": "If true, before the sweep starts, the profile will be re-oriented so that it is perpendicular to the path being swept along. If false, the profile is left in its current orientation. Defaults to false.",
                 "type": "boolean"
+              },
+              "projected_axis": {
+                "nullable": true,
+                "description": "If orient_profile_perpendicular is true, the sketch shall be oriented such that the local Y axis of the sketch will be oriented to align with this element as much as possible. Defaults to +Z if not set",
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/DirectionType"
+                  }
+                ]
               },
               "relative_to": {
                 "nullable": true,
@@ -47456,6 +47623,7 @@
             "type": "object",
             "properties": {
               "edge_id": {
+                "nullable": true,
                 "description": "Any edge that lies on the extrusion base path.",
                 "type": "string",
                 "format": "uuid"
@@ -47473,7 +47641,6 @@
               }
             },
             "required": [
-              "edge_id",
               "object_id",
               "type"
             ]
@@ -47483,6 +47650,7 @@
             "type": "object",
             "properties": {
               "edge_id": {
+                "nullable": true,
                 "description": "Any edge that lies on the extrusion base path.",
                 "type": "string",
                 "format": "uuid"
@@ -47500,7 +47668,6 @@
               }
             },
             "required": [
-              "edge_id",
               "object_id",
               "type"
             ]
@@ -48237,6 +48404,30 @@
             },
             "required": [
               "closest_to",
+              "type"
+            ]
+          },
+          {
+            "description": "Gets debug information about a sketch",
+            "type": "object",
+            "properties": {
+              "path_id": {
+                "description": "Which path to query",
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/ModelingCmdId"
+                  }
+                ]
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "sketch_get_info"
+                ]
+              }
+            },
+            "required": [
+              "path_id",
               "type"
             ]
           }
@@ -51808,6 +51999,24 @@
                 "type": "string",
                 "enum": [
                   "closest_edge"
+                ]
+              }
+            },
+            "required": [
+              "data",
+              "type"
+            ]
+          },
+          {
+            "type": "object",
+            "properties": {
+              "data": {
+                "$ref": "#/components/schemas/SketchGetInfo"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "sketch_get_info"
                 ]
               }
             },
@@ -56427,6 +56636,34 @@
         "required": [
           "face_id",
           "path_id"
+        ]
+      },
+      "SketchGetInfo": {
+        "description": "The response from the 'SketchGetInfo'.",
+        "type": "object",
+        "properties": {
+          "curves": {
+            "description": "All curves in this sketch.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CurveDebug"
+            }
+          },
+          "region_count": {
+            "description": "How many regions the Toolpaths library thinks exist",
+            "type": "integer",
+            "format": "uint16",
+            "minimum": 0
+          },
+          "region_obj": {
+            "description": "OBJ representation of the topology from Toolpaths library.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "curves",
+          "region_count",
+          "region_obj"
         ]
       },
       "SketchModeDisable": {
