@@ -16282,13 +16282,13 @@ class FactoryAPI:
 
         The submitter's identity (email, name, user id) comes from the authenticated account, not the form.
 
-        `fields` is free-form and the server does not validate it, but the Factory operator dashboard renders `material` and `finish` as dropdowns with a known set of values. Send these exact strings so a submission maps onto a first-class option instead of showing up as a one-off custom entry: - `finish`: `"As machined"`, `"Bead blast"`, `"Anodized"`, or   `"Other (see notes)"` — describe the real finish in `notes` when choosing   `"Other (see notes)"`. - `material`: `"Aluminum 6061"`, or `"Other (see notes)"` (real material in   `notes`). - `quantity`: a positive integer.
+        `fields` is free-form and the server does not validate it, but the Factory operator dashboard renders `material` and `finish` as dropdowns with a known set of values. Send these exact strings so a submission maps onto a first-class option instead of showing up as a one-off custom entry: - `finish`: `"As machined"`, `"Bead blast"`, `"Anodized"`, or   `"Other (see notes)"` — describe the real finish in `notes` when choosing   `"Other (see notes)"`. - `material`: `"6061 Aluminum"`, `"Stainless Steel"`, `"Titanium"`, or `"Other (see notes)"` (real material in   `notes`). - `quantity`: a positive integer.
 
         Any other value is still accepted and stored verbatim; it just appears in the dashboard as a custom entry rather than a recognized option.
 
-        Example `body` part: ```json { "fields": { "material": "Aluminum 6061", "finish": "Anodized", "quantity": 10, "notes": "deburr all edges" } } ```
+        Example `body` part: ```json { "fields": { "material": "6061 Aluminum", "finish": "Anodized", "quantity": 10, "notes": "deburr all edges" } } ```
 
-        Example request (curl): ``` curl -X POST https://api.zoo.dev/user/factory/jobs \   -H "Authorization: Bearer $ZOO_API_TOKEN" \   -F 'body={"fields":{"material":"Aluminum 6061","finish":"Anodized","quantity":10}};type=application/json' \   -F 'file=@bracket.step' ```
+        Example request (curl): ``` curl -X POST https://api.zoo.dev/user/factory/jobs \   -H "Authorization: Bearer $ZOO_API_TOKEN" \   -F 'body={"fields":{"material":"6061 Aluminum","finish":"Anodized","quantity":10}};type=application/json' \   -F 'file=@bracket.step' ```
 
         Returns `201` with the created job (`FactoryJobResponse`)."""
 
@@ -16328,13 +16328,13 @@ class AsyncFactoryAPI:
 
         The submitter's identity (email, name, user id) comes from the authenticated account, not the form.
 
-        `fields` is free-form and the server does not validate it, but the Factory operator dashboard renders `material` and `finish` as dropdowns with a known set of values. Send these exact strings so a submission maps onto a first-class option instead of showing up as a one-off custom entry: - `finish`: `"As machined"`, `"Bead blast"`, `"Anodized"`, or   `"Other (see notes)"` — describe the real finish in `notes` when choosing   `"Other (see notes)"`. - `material`: `"Aluminum 6061"`, or `"Other (see notes)"` (real material in   `notes`). - `quantity`: a positive integer.
+        `fields` is free-form and the server does not validate it, but the Factory operator dashboard renders `material` and `finish` as dropdowns with a known set of values. Send these exact strings so a submission maps onto a first-class option instead of showing up as a one-off custom entry: - `finish`: `"As machined"`, `"Bead blast"`, `"Anodized"`, or   `"Other (see notes)"` — describe the real finish in `notes` when choosing   `"Other (see notes)"`. - `material`: `"6061 Aluminum"`, `"Stainless Steel"`, `"Titanium"`, or `"Other (see notes)"` (real material in   `notes`). - `quantity`: a positive integer.
 
         Any other value is still accepted and stored verbatim; it just appears in the dashboard as a custom entry rather than a recognized option.
 
-        Example `body` part: ```json { "fields": { "material": "Aluminum 6061", "finish": "Anodized", "quantity": 10, "notes": "deburr all edges" } } ```
+        Example `body` part: ```json { "fields": { "material": "6061 Aluminum", "finish": "Anodized", "quantity": 10, "notes": "deburr all edges" } } ```
 
-        Example request (curl): ``` curl -X POST https://api.zoo.dev/user/factory/jobs \   -H "Authorization: Bearer $ZOO_API_TOKEN" \   -F 'body={"fields":{"material":"Aluminum 6061","finish":"Anodized","quantity":10}};type=application/json' \   -F 'file=@bracket.step' ```
+        Example request (curl): ``` curl -X POST https://api.zoo.dev/user/factory/jobs \   -H "Authorization: Bearer $ZOO_API_TOKEN" \   -F 'body={"fields":{"material":"6061 Aluminum","finish":"Anodized","quantity":10}};type=application/json' \   -F 'file=@bracket.step' ```
 
         Returns `201` with the created job (`FactoryJobResponse`)."""
 

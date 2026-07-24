@@ -115,11 +115,13 @@ from .create_shortlink_request import CreateShortlinkRequest
 from .create_shortlink_response import CreateShortlinkResponse
 from .created_at_sort_mode import CreatedAtSortMode
 from .currency import Currency
+from .curve_debug import CurveDebug
 from .curve_get_control_points import CurveGetControlPoints
 from .curve_get_end_points import CurveGetEndPoints
 from .curve_get_type import CurveGetType
 from .curve_set_constraint import CurveSetConstraint
 from .curve_type import CurveType
+from .curve_type_debug import CurveTypeDebug
 from .custom_model import CustomModel
 from .customer import Customer
 from .customer_balance import CustomerBalance
@@ -428,6 +430,7 @@ from .set_tool import SetTool
 from .shortlink import Shortlink
 from .shortlink_results_page import ShortlinkResultsPage
 from .side_face import SideFace
+from .sketch_get_info import SketchGetInfo
 from .sketch_mode_disable import SketchModeDisable
 from .solid2d_add_hole import Solid2dAddHole
 from .solid3d_cut_edge_references import Solid3dCutEdgeReferences

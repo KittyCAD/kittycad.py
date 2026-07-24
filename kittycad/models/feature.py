@@ -92,9 +92,13 @@ class Feature(str, Enum):
 
     WEB_APP_FILE_BROWSER = "web_app_file_browser"
 
-    """# Enables private Zookeeper Pro mode access in ML Copilot."""  # noqa: E501
+    """# Enables Zookeeper Pro mode access in ML Copilot."""  # noqa: E501
 
     ZOOKEEPER_PRO_MODE = "zookeeper_pro_mode"
+
+    """# Enables Zookeeper Ultra mode access in ML Copilot."""  # noqa: E501
+
+    ZOOKEEPER_ULTRA_MODE = "zookeeper_ultra_mode"
 
     """# Allow creating a session via an existing API key"""  # noqa: E501
 
