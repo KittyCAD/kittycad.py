@@ -10,7 +10,7 @@ jobs:
     name: make-release
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7.0.0
+      - uses: actions/checkout@v7.0.1
       - uses: actions/setup-python@v6.3.0
         with:
           python-version: '3.x'
@@ -31,4 +31,4 @@ jobs:
       # TODO: generate a nice little doc for the release text like we do for the
       # cli repo.
       - name: Create a Release
-        uses: softprops/action-gh-release@v3.0.1
+        uses: softprops/action-gh-release@v3.0.2
