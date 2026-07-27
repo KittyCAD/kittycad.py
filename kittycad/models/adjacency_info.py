@@ -12,3 +12,5 @@ class AdjacencyInfo(KittyCadBaseModel):
     opposite_info: Optional[EdgeInfo] = None
 
     original_info: Optional[EdgeInfo] = None
+
+    previous_adjacent_info: Optional[EdgeInfo] = None

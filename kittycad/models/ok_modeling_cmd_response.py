@@ -145,6 +145,7 @@ from ..models.set_scene_units import SetSceneUnits
 from ..models.set_selection_filter import SetSelectionFilter
 from ..models.set_selection_type import SetSelectionType
 from ..models.set_tool import SetTool
+from ..models.sketch_get_info import SketchGetInfo
 from ..models.sketch_mode_disable import SketchModeDisable
 from ..models.solid2d_add_hole import Solid2dAddHole
 from ..models.solid3d_cut_edge_references import Solid3dCutEdgeReferences
@@ -1547,6 +1548,14 @@ class OptionClosestEdge(KittyCadBaseModel):
     type: Literal["closest_edge"] = "closest_edge"
 
 
+class OptionSketchGetInfo(KittyCadBaseModel):
+    """"""
+
+    data: SketchGetInfo
+
+    type: Literal["sketch_get_info"] = "sketch_get_info"
+
+
 OkModelingCmdResponse = RootModel[
     Annotated[
         Union[
@@ -1720,6 +1729,7 @@ OkModelingCmdResponse = RootModel[
             OptionBeginExecution,
             OptionEndExecution,
             OptionClosestEdge,
+            OptionSketchGetInfo,
         ],
         Field(discriminator="type"),
     ]

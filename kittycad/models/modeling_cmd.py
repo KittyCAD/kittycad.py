@@ -100,6 +100,8 @@ class OptionExtrude(KittyCadBaseModel):
 
     direction: Optional[DirectionType] = None
 
+    direction_reference: Optional[EdgeSpecifier] = None
+
     distance: LengthUnit
 
     draft_angle: Optional[Angle] = None
@@ -112,7 +114,9 @@ class OptionExtrude(KittyCadBaseModel):
 
     opposite: Optional[OppositeForLengthUnit] = "None"  # type: ignore[assignment]
 
-    target: ModelingCmdId
+    target: Optional[ModelingCmdId] = None
+
+    target_reference: Optional[EdgeSpecifier] = None
 
     type: Literal["extrude"] = "extrude"
 
@@ -161,6 +165,8 @@ class OptionSweep(KittyCadBaseModel):
     body_type: Optional[BodyType] = "solid"  # type: ignore[assignment]
 
     orient_profile_perpendicular: Optional[bool] = None
+
+    projected_axis: Optional[DirectionType] = None
 
     relative_to: Optional[RelativeTo] = None
 
@@ -1544,7 +1550,7 @@ class OptionViewIsometric(KittyCadBaseModel):
 class OptionSolid3dGetExtrusionFaceInfo(KittyCadBaseModel):
     """Get a concise description of all of an extrusion's faces."""
 
-    edge_id: str
+    edge_id: Optional[str] = None
 
     object_id: str
 
@@ -1554,7 +1560,7 @@ class OptionSolid3dGetExtrusionFaceInfo(KittyCadBaseModel):
 class OptionSolid3dGetAdjacencyInfo(KittyCadBaseModel):
     """Get a concise description of all of solids edges."""
 
-    edge_id: str
+    edge_id: Optional[str] = None
 
     object_id: str
 
@@ -1819,6 +1825,14 @@ class OptionClosestEdge(KittyCadBaseModel):
     type: Literal["closest_edge"] = "closest_edge"
 
 
+class OptionSketchGetInfo(KittyCadBaseModel):
+    """Gets debug information about a sketch"""
+
+    path_id: ModelingCmdId
+
+    type: Literal["sketch_get_info"] = "sketch_get_info"
+
+
 ModelingCmd = RootModel[
     Annotated[
         Union[
@@ -1984,6 +1998,7 @@ ModelingCmd = RootModel[
             OptionBeginExecution,
             OptionEndExecution,
             OptionClosestEdge,
+            OptionSketchGetInfo,
         ],
         Field(discriminator="type"),
     ]
