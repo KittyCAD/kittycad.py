@@ -36,6 +36,12 @@ from .exceptions import (
 )
 from .models.account_provider import AccountProvider
 from .models.add_org_member import AddOrgMember
+from .models.aggregate_usage_collection_threshold_set import (
+    AggregateUsageCollectionThresholdSet,
+)
+from .models.aggregate_usage_collection_threshold_view import (
+    AggregateUsageCollectionThresholdView,
+)
 from .models.announcement_list import AnnouncementList
 from .models.api_call_with_price import ApiCallWithPrice
 from .models.api_call_with_price_results_page import ApiCallWithPriceResultsPage
@@ -77,6 +83,7 @@ from .models.email_authentication_form import EmailAuthenticationForm
 from .models.email_marketing_confirm_token_body import EmailMarketingConfirmTokenBody
 from .models.email_marketing_consent_state import EmailMarketingConsentState
 from .models.extended_user import ExtendedUser
+from .models.factory_customer_catalog_option import FactoryCustomerCatalogOption
 from .models.factory_job_response import FactoryJobResponse
 from .models.file_center_of_mass import FileCenterOfMass
 from .models.file_conversion import FileConversion
@@ -9513,6 +9520,102 @@ class PaymentsAPI:
     def __init__(self, client: Client) -> None:
         self.client = client
 
+    def get_org_usage_collection_threshold(
+        self,
+    ) -> AggregateUsageCollectionThresholdView:
+        """Get the authenticated organization's aggregate-usage collection threshold."""
+
+        url = "{}/org/billing/usage-collection-threshold".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return AggregateUsageCollectionThresholdView.model_validate(
+            json_data, extra="ignore"
+        )
+
+    def set_org_usage_collection_threshold(
+        self,
+        body: AggregateUsageCollectionThresholdSet,
+    ) -> AggregateUsageCollectionThresholdView:
+        """Set the authenticated organization's aggregate-usage collection threshold."""
+
+        url = "{}/org/billing/usage-collection-threshold".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+            content=serialize_request_body(body),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return AggregateUsageCollectionThresholdView.model_validate(
+            json_data, extra="ignore"
+        )
+
+    def reset_org_usage_collection_threshold(
+        self,
+        expected_version: int,
+    ) -> AggregateUsageCollectionThresholdView:
+        """Restore the default for the authenticated organization's aggregate-usage collection threshold."""
+
+        url = "{}/org/billing/usage-collection-threshold".format(self.client.base_url)
+
+        if expected_version is not None:
+            if "?" in url:
+                url = url + "&expected_version=" + str(expected_version)
+            else:
+                url = url + "?expected_version=" + str(expected_version)
+
+        _client = self.client.get_http_client()
+
+        response = _client.delete(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return AggregateUsageCollectionThresholdView.model_validate(
+            json_data, extra="ignore"
+        )
+
     def get_payment_information_for_org(
         self,
     ) -> Customer:
@@ -10091,6 +10194,102 @@ class PaymentsAPI:
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return SubscriptionPlanPriceRecord.model_validate(json_data, extra="ignore")
 
+    def get_user_usage_collection_threshold(
+        self,
+    ) -> AggregateUsageCollectionThresholdView:
+        """The effective threshold is the amount of accrued, unfunded usage that causes an early invoice before the normal billing-period close."""
+
+        url = "{}/user/billing/usage-collection-threshold".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return AggregateUsageCollectionThresholdView.model_validate(
+            json_data, extra="ignore"
+        )
+
+    def set_user_usage_collection_threshold(
+        self,
+        body: AggregateUsageCollectionThresholdSet,
+    ) -> AggregateUsageCollectionThresholdView:
+        """Set your personal aggregate-usage collection threshold."""
+
+        url = "{}/user/billing/usage-collection-threshold".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+            content=serialize_request_body(body),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return AggregateUsageCollectionThresholdView.model_validate(
+            json_data, extra="ignore"
+        )
+
+    def reset_user_usage_collection_threshold(
+        self,
+        expected_version: int,
+    ) -> AggregateUsageCollectionThresholdView:
+        """Restore the default for your personal aggregate-usage collection threshold."""
+
+        url = "{}/user/billing/usage-collection-threshold".format(self.client.base_url)
+
+        if expected_version is not None:
+            if "?" in url:
+                url = url + "&expected_version=" + str(expected_version)
+            else:
+                url = url + "?expected_version=" + str(expected_version)
+
+        _client = self.client.get_http_client()
+
+        response = _client.delete(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return AggregateUsageCollectionThresholdView.model_validate(
+            json_data, extra="ignore"
+        )
+
     def get_payment_information_for_user(
         self,
     ) -> Customer:
@@ -10635,6 +10834,102 @@ class AsyncPaymentsAPI:
 
     def __init__(self, client: AsyncClient) -> None:
         self.client = client
+
+    async def get_org_usage_collection_threshold(
+        self,
+    ) -> AggregateUsageCollectionThresholdView:
+        """Get the authenticated organization's aggregate-usage collection threshold."""
+
+        url = "{}/org/billing/usage-collection-threshold".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return AggregateUsageCollectionThresholdView.model_validate(
+            json_data, extra="ignore"
+        )
+
+    async def set_org_usage_collection_threshold(
+        self,
+        body: AggregateUsageCollectionThresholdSet,
+    ) -> AggregateUsageCollectionThresholdView:
+        """Set the authenticated organization's aggregate-usage collection threshold."""
+
+        url = "{}/org/billing/usage-collection-threshold".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+            content=serialize_request_body(body),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return AggregateUsageCollectionThresholdView.model_validate(
+            json_data, extra="ignore"
+        )
+
+    async def reset_org_usage_collection_threshold(
+        self,
+        expected_version: int,
+    ) -> AggregateUsageCollectionThresholdView:
+        """Restore the default for the authenticated organization's aggregate-usage collection threshold."""
+
+        url = "{}/org/billing/usage-collection-threshold".format(self.client.base_url)
+
+        if expected_version is not None:
+            if "?" in url:
+                url = url + "&expected_version=" + str(expected_version)
+            else:
+                url = url + "?expected_version=" + str(expected_version)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.delete(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return AggregateUsageCollectionThresholdView.model_validate(
+            json_data, extra="ignore"
+        )
 
     async def get_payment_information_for_org(
         self,
@@ -11213,6 +11508,102 @@ class AsyncPaymentsAPI:
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return SubscriptionPlanPriceRecord.model_validate(json_data, extra="ignore")
+
+    async def get_user_usage_collection_threshold(
+        self,
+    ) -> AggregateUsageCollectionThresholdView:
+        """The effective threshold is the amount of accrued, unfunded usage that causes an early invoice before the normal billing-period close."""
+
+        url = "{}/user/billing/usage-collection-threshold".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return AggregateUsageCollectionThresholdView.model_validate(
+            json_data, extra="ignore"
+        )
+
+    async def set_user_usage_collection_threshold(
+        self,
+        body: AggregateUsageCollectionThresholdSet,
+    ) -> AggregateUsageCollectionThresholdView:
+        """Set your personal aggregate-usage collection threshold."""
+
+        url = "{}/user/billing/usage-collection-threshold".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+            content=serialize_request_body(body),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return AggregateUsageCollectionThresholdView.model_validate(
+            json_data, extra="ignore"
+        )
+
+    async def reset_user_usage_collection_threshold(
+        self,
+        expected_version: int,
+    ) -> AggregateUsageCollectionThresholdView:
+        """Restore the default for your personal aggregate-usage collection threshold."""
+
+        url = "{}/user/billing/usage-collection-threshold".format(self.client.base_url)
+
+        if expected_version is not None:
+            if "?" in url:
+                url = url + "&expected_version=" + str(expected_version)
+            else:
+                url = url + "?expected_version=" + str(expected_version)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.delete(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return AggregateUsageCollectionThresholdView.model_validate(
+            json_data, extra="ignore"
+        )
 
     async def get_payment_information_for_user(
         self,
@@ -16275,16 +16666,45 @@ class FactoryAPI:
     def __init__(self, client: Client) -> None:
         self.client = client
 
+    def get_user_factory_finishes(
+        self,
+    ) -> List[FactoryCustomerCatalogOption]:
+        """Internal-only entries are omitted. Clients should refetch this endpoint after a catalog validation error before asking the customer to choose again."""
+
+        url = "{}/user/factory/finishes".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into annotated/collection/union types using TypeAdapter
+        from pydantic import TypeAdapter
+
+        return TypeAdapter(List[FactoryCustomerCatalogOption]).validate_python(
+            json_data, extra="ignore"
+        )
+
     def create_user_factory_job(
         self,
     ) -> FactoryJobResponse:
-        """The request is `multipart/form-data`: - one JSON part named `body` (`FactoryIntakeForm`) whose `fields` object holds   free-form intake data (material, finish, quantity, notes, …). It is stored   verbatim, so fields can be added or renamed without an API change. - one or more file parts (any part name). At least one file is required.
+        """The request is `multipart/form-data`: - one JSON part named `body` (`FactoryIntakeForm`) whose `fields` object holds   intake data (material, finish, quantity, notes, …). Material and finish   are required customer-visible catalog names; all other fields are stored   verbatim so they can be added or renamed without an API change. - one or more file parts (any part name). At least one file is required.
 
         The submitter's identity (email, name, user id) comes from the authenticated account, not the form.
 
-        `fields` is free-form and the server does not validate it, but the Factory operator dashboard renders `material` and `finish` as dropdowns with a known set of values. Send these exact strings so a submission maps onto a first-class option instead of showing up as a one-off custom entry: - `finish`: `"As machined"`, `"Bead blast"`, `"Anodized"`, or   `"Other (see notes)"` — describe the real finish in `notes` when choosing   `"Other (see notes)"`. - `material`: `"6061 Aluminum"`, `"Stainless Steel"`, `"Titanium"`, or `"Other (see notes)"` (real material in   `notes`). - `quantity`: a positive integer.
-
-        Any other value is still accepted and stored verbatim; it just appears in the dashboard as a custom entry rather than a recognized option.
+        Fetch `GET /user/factory/materials` and `GET /user/factory/finishes`, then send the returned exact `material` and `finish` names. The server rejects missing, non-string, unknown, deleted, and internal-only choices with these stable field-specific `error_code` values: - `factory_material_input_missing` - `factory_material_input_invalid_type` - `factory_material_not_found` - `factory_material_not_customer_visible` - `factory_finish_input_missing` - `factory_finish_input_invalid_type` - `factory_finish_not_found` - `factory_finish_not_customer_visible` - `quantity`: a positive integer.
 
         Example `body` part: ```json { "fields": { "material": "6061 Aluminum", "finish": "Anodized", "quantity": 10, "notes": "deburr all edges" } } ```
 
@@ -16314,6 +16734,37 @@ class FactoryAPI:
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return FactoryJobResponse.model_validate(json_data, extra="ignore")
 
+    def get_user_factory_materials(
+        self,
+    ) -> List[FactoryCustomerCatalogOption]:
+        """Internal-only entries are omitted. Clients should refetch this endpoint after a catalog validation error before asking the customer to choose again."""
+
+        url = "{}/user/factory/materials".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into annotated/collection/union types using TypeAdapter
+        from pydantic import TypeAdapter
+
+        return TypeAdapter(List[FactoryCustomerCatalogOption]).validate_python(
+            json_data, extra="ignore"
+        )
+
 
 class AsyncFactoryAPI:
     """Async API for factory endpoints"""
@@ -16321,16 +16772,45 @@ class AsyncFactoryAPI:
     def __init__(self, client: AsyncClient) -> None:
         self.client = client
 
+    async def get_user_factory_finishes(
+        self,
+    ) -> List[FactoryCustomerCatalogOption]:
+        """Internal-only entries are omitted. Clients should refetch this endpoint after a catalog validation error before asking the customer to choose again."""
+
+        url = "{}/user/factory/finishes".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into annotated/collection/union types using TypeAdapter
+        from pydantic import TypeAdapter
+
+        return TypeAdapter(List[FactoryCustomerCatalogOption]).validate_python(
+            json_data, extra="ignore"
+        )
+
     async def create_user_factory_job(
         self,
     ) -> FactoryJobResponse:
-        """The request is `multipart/form-data`: - one JSON part named `body` (`FactoryIntakeForm`) whose `fields` object holds   free-form intake data (material, finish, quantity, notes, …). It is stored   verbatim, so fields can be added or renamed without an API change. - one or more file parts (any part name). At least one file is required.
+        """The request is `multipart/form-data`: - one JSON part named `body` (`FactoryIntakeForm`) whose `fields` object holds   intake data (material, finish, quantity, notes, …). Material and finish   are required customer-visible catalog names; all other fields are stored   verbatim so they can be added or renamed without an API change. - one or more file parts (any part name). At least one file is required.
 
         The submitter's identity (email, name, user id) comes from the authenticated account, not the form.
 
-        `fields` is free-form and the server does not validate it, but the Factory operator dashboard renders `material` and `finish` as dropdowns with a known set of values. Send these exact strings so a submission maps onto a first-class option instead of showing up as a one-off custom entry: - `finish`: `"As machined"`, `"Bead blast"`, `"Anodized"`, or   `"Other (see notes)"` — describe the real finish in `notes` when choosing   `"Other (see notes)"`. - `material`: `"6061 Aluminum"`, `"Stainless Steel"`, `"Titanium"`, or `"Other (see notes)"` (real material in   `notes`). - `quantity`: a positive integer.
-
-        Any other value is still accepted and stored verbatim; it just appears in the dashboard as a custom entry rather than a recognized option.
+        Fetch `GET /user/factory/materials` and `GET /user/factory/finishes`, then send the returned exact `material` and `finish` names. The server rejects missing, non-string, unknown, deleted, and internal-only choices with these stable field-specific `error_code` values: - `factory_material_input_missing` - `factory_material_input_invalid_type` - `factory_material_not_found` - `factory_material_not_customer_visible` - `factory_finish_input_missing` - `factory_finish_input_invalid_type` - `factory_finish_not_found` - `factory_finish_not_customer_visible` - `quantity`: a positive integer.
 
         Example `body` part: ```json { "fields": { "material": "6061 Aluminum", "finish": "Anodized", "quantity": 10, "notes": "deburr all edges" } } ```
 
@@ -16359,6 +16839,37 @@ class AsyncFactoryAPI:
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return FactoryJobResponse.model_validate(json_data, extra="ignore")
+
+    async def get_user_factory_materials(
+        self,
+    ) -> List[FactoryCustomerCatalogOption]:
+        """Internal-only entries are omitted. Clients should refetch this endpoint after a catalog validation error before asking the customer to choose again."""
+
+        url = "{}/user/factory/materials".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into annotated/collection/union types using TypeAdapter
+        from pydantic import TypeAdapter
+
+        return TypeAdapter(List[FactoryCustomerCatalogOption]).validate_python(
+            json_data, extra="ignore"
+        )
 
 
 class ModelingAPI:
