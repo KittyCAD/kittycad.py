@@ -393,6 +393,30 @@
   },
   {
     "op": "add",
+    "path": "/paths/~1org~1billing~1usage-collection-threshold/delete/x-python",
+    "value": {
+      "example": "from kittycad.models import AggregateUsageCollectionThresholdView\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_reset_org_usage_collection_threshold():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    result: AggregateUsageCollectionThresholdView = client.payments.reset_org_usage_collection_threshold(expected_version=10)\n\n\n    body: AggregateUsageCollectionThresholdView = result\n    print(body)\n\n",
+      "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD.payments"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/paths/~1org~1billing~1usage-collection-threshold/get/x-python",
+    "value": {
+      "example": "from kittycad.models import AggregateUsageCollectionThresholdView\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_get_org_usage_collection_threshold():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    result: AggregateUsageCollectionThresholdView = client.payments.get_org_usage_collection_threshold()\n\n\n    body: AggregateUsageCollectionThresholdView = result\n    print(body)\n\n",
+      "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD.payments"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/paths/~1org~1billing~1usage-collection-threshold/put/x-python",
+    "value": {
+      "example": "from kittycad.models.aggregate_usage_collection_threshold_set import AggregateUsageCollectionThresholdSet\nfrom kittycad.models import AggregateUsageCollectionThresholdView\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_set_org_usage_collection_threshold():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    result: AggregateUsageCollectionThresholdView = client.payments.set_org_usage_collection_threshold(body=AggregateUsageCollectionThresholdSet(\n        amount=3.14,\n        expected_version=10,\n        ))\n\n\n    body: AggregateUsageCollectionThresholdView = result\n    print(body)\n\n",
+      "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD.payments"
+    }
+  },
+  {
+    "op": "add",
     "path": "/paths/~1org~1datasets/get/x-python",
     "value": {
       "example": "from kittycad.models.created_at_sort_mode import CreatedAtSortMode\nfrom kittycad.models import OrgDatasetResultsPage\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\n\n\nfrom kittycad.models import OrgDataset\ndef example_list_org_datasets():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    # Iterate through all pages automatically\n    item: OrgDataset\n    for item in client.orgs.list_org_datasets(sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,\n        limit=None,\n        page_token=None):\n        print(item)\n\n",
@@ -1145,6 +1169,30 @@
   },
   {
     "op": "add",
+    "path": "/paths/~1user~1billing~1usage-collection-threshold/delete/x-python",
+    "value": {
+      "example": "from kittycad.models import AggregateUsageCollectionThresholdView\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_reset_user_usage_collection_threshold():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    result: AggregateUsageCollectionThresholdView = client.payments.reset_user_usage_collection_threshold(expected_version=10)\n\n\n    body: AggregateUsageCollectionThresholdView = result\n    print(body)\n\n",
+      "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD.payments"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/paths/~1user~1billing~1usage-collection-threshold/get/x-python",
+    "value": {
+      "example": "from kittycad.models import AggregateUsageCollectionThresholdView\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_get_user_usage_collection_threshold():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    result: AggregateUsageCollectionThresholdView = client.payments.get_user_usage_collection_threshold()\n\n\n    body: AggregateUsageCollectionThresholdView = result\n    print(body)\n\n",
+      "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD.payments"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/paths/~1user~1billing~1usage-collection-threshold/put/x-python",
+    "value": {
+      "example": "from kittycad.models.aggregate_usage_collection_threshold_set import AggregateUsageCollectionThresholdSet\nfrom kittycad.models import AggregateUsageCollectionThresholdView\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_set_user_usage_collection_threshold():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    result: AggregateUsageCollectionThresholdView = client.payments.set_user_usage_collection_threshold(body=AggregateUsageCollectionThresholdSet(\n        amount=3.14,\n        expected_version=10,\n        ))\n\n\n    body: AggregateUsageCollectionThresholdView = result\n    print(body)\n\n",
+      "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD.payments"
+    }
+  },
+  {
+    "op": "add",
     "path": "/paths/~1user~1cad-user-info/get/x-python",
     "value": {
       "example": "from kittycad.models import WebsiteCadUserInfoForm\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_get_user_cad_user_info_form():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    result: WebsiteCadUserInfoForm = client.users.get_user_cad_user_info_form()\n\n\n    body: WebsiteCadUserInfoForm = result\n    print(body)\n\n",
@@ -1201,9 +1249,25 @@
   },
   {
     "op": "add",
+    "path": "/paths/~1user~1factory~1finishes/get/x-python",
+    "value": {
+      "example": "from kittycad.models import FactoryCustomerCatalogOption\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_get_user_factory_finishes():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    result: List[FactoryCustomerCatalogOption] = client.factory.get_user_factory_finishes()\n\n\n    body: List[FactoryCustomerCatalogOption] = result\n    print(body)\n\n",
+      "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD.factory"
+    }
+  },
+  {
+    "op": "add",
     "path": "/paths/~1user~1factory~1jobs/post/x-python",
     "value": {
       "example": "from kittycad.models import FactoryJobResponse\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_create_user_factory_job():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    result: FactoryJobResponse = client.factory.create_user_factory_job()\n\n\n    body: FactoryJobResponse = result\n    print(body)\n\n",
+      "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD.factory"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/paths/~1user~1factory~1materials/get/x-python",
+    "value": {
+      "example": "from kittycad.models import FactoryCustomerCatalogOption\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_get_user_factory_materials():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    result: List[FactoryCustomerCatalogOption] = client.factory.get_user_factory_materials()\n\n\n    body: List[FactoryCustomerCatalogOption] = result\n    print(body)\n\n",
       "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD.factory"
     }
   },

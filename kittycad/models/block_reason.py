@@ -12,6 +12,10 @@ class BlockReason(str, Enum):
 
     PAYMENT_METHOD_FAILED = "payment_method_failed"
 
+    """# The account reached its configured pay-as-you-go collection threshold."""  # noqa: E501
+
+    BILLING_THRESHOLD_REACHED = "billing_threshold_reached"
+
     """# The user repeatedly upgraded and downgraded to recycle free-plan credits."""  # noqa: E501
 
     UPGRADE_DOWNGRADE_ABUSE = "upgrade_downgrade_abuse"

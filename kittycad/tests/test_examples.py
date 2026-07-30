@@ -7,6 +7,7 @@ import pytest
 from kittycad import AsyncKittyCAD, KittyCAD
 from kittycad.models import (
     AccountProvider,
+    AggregateUsageCollectionThresholdView,
     AnnouncementList,
     ApiCallWithPrice,
     ApiToken,
@@ -26,6 +27,7 @@ from kittycad.models import (
     DiscountCode,
     EmailMarketingConsentState,
     ExtendedUser,
+    FactoryCustomerCatalogOption,
     FactoryJobResponse,
     FileCenterOfMass,
     FileConversion,
@@ -89,6 +91,9 @@ from kittycad.models import (
     ZooProductSubscriptions,
 )
 from kittycad.models.add_org_member import AddOrgMember
+from kittycad.models.aggregate_usage_collection_threshold_set import (
+    AggregateUsageCollectionThresholdSet,
+)
 from kittycad.models.api_token_uuid import ApiTokenUuid
 from kittycad.models.axis import Axis
 from kittycad.models.axis_direction_pair import AxisDirectionPair
@@ -1348,6 +1353,85 @@ async def test_get_api_call_for_org_async():
 
     result: ApiCallWithPrice = await client.api_calls.get_api_call_for_org(
         id="<string>"
+    )
+
+
+@pytest.mark.skip
+def test_reset_org_usage_collection_threshold():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: AggregateUsageCollectionThresholdView = (
+        client.payments.reset_org_usage_collection_threshold(expected_version=10)
+    )
+
+    body: AggregateUsageCollectionThresholdView = result
+    print(body)
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_reset_org_usage_collection_threshold_async():
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: AggregateUsageCollectionThresholdView = (
+        await client.payments.reset_org_usage_collection_threshold(expected_version=10)
+    )
+
+
+@pytest.mark.skip
+def test_get_org_usage_collection_threshold():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: AggregateUsageCollectionThresholdView = (
+        client.payments.get_org_usage_collection_threshold()
+    )
+
+    body: AggregateUsageCollectionThresholdView = result
+    print(body)
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_get_org_usage_collection_threshold_async():
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: AggregateUsageCollectionThresholdView = (
+        await client.payments.get_org_usage_collection_threshold()
+    )
+
+
+@pytest.mark.skip
+def test_set_org_usage_collection_threshold():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: AggregateUsageCollectionThresholdView = (
+        client.payments.set_org_usage_collection_threshold(
+            body=AggregateUsageCollectionThresholdSet(
+                amount=3.14,
+                expected_version=10,
+            )
+        )
+    )
+
+    body: AggregateUsageCollectionThresholdView = result
+    print(body)
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_set_org_usage_collection_threshold_async():
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: AggregateUsageCollectionThresholdView = (
+        await client.payments.set_org_usage_collection_threshold(
+            body=AggregateUsageCollectionThresholdSet(
+                amount=3.14,
+                expected_version=10,
+            )
+        )
     )
 
 
@@ -3604,6 +3688,85 @@ async def test_get_api_token_for_user_async():
 
 
 @pytest.mark.skip
+def test_reset_user_usage_collection_threshold():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: AggregateUsageCollectionThresholdView = (
+        client.payments.reset_user_usage_collection_threshold(expected_version=10)
+    )
+
+    body: AggregateUsageCollectionThresholdView = result
+    print(body)
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_reset_user_usage_collection_threshold_async():
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: AggregateUsageCollectionThresholdView = (
+        await client.payments.reset_user_usage_collection_threshold(expected_version=10)
+    )
+
+
+@pytest.mark.skip
+def test_get_user_usage_collection_threshold():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: AggregateUsageCollectionThresholdView = (
+        client.payments.get_user_usage_collection_threshold()
+    )
+
+    body: AggregateUsageCollectionThresholdView = result
+    print(body)
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_get_user_usage_collection_threshold_async():
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: AggregateUsageCollectionThresholdView = (
+        await client.payments.get_user_usage_collection_threshold()
+    )
+
+
+@pytest.mark.skip
+def test_set_user_usage_collection_threshold():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: AggregateUsageCollectionThresholdView = (
+        client.payments.set_user_usage_collection_threshold(
+            body=AggregateUsageCollectionThresholdSet(
+                amount=3.14,
+                expected_version=10,
+            )
+        )
+    )
+
+    body: AggregateUsageCollectionThresholdView = result
+    print(body)
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_set_user_usage_collection_threshold_async():
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: AggregateUsageCollectionThresholdView = (
+        await client.payments.set_user_usage_collection_threshold(
+            body=AggregateUsageCollectionThresholdSet(
+                amount=3.14,
+                expected_version=10,
+            )
+        )
+    )
+
+
+@pytest.mark.skip
 def test_get_user_cad_user_info_form():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
@@ -3742,6 +3905,29 @@ async def test_get_user_self_extended_async():
 
 
 @pytest.mark.skip
+def test_get_user_factory_finishes():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: List[FactoryCustomerCatalogOption] = (
+        client.factory.get_user_factory_finishes()
+    )
+
+    body: List[FactoryCustomerCatalogOption] = result
+    print(body)
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_get_user_factory_finishes_async():
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: List[
+        FactoryCustomerCatalogOption
+    ] = await client.factory.get_user_factory_finishes()
+
+
+@pytest.mark.skip
 def test_create_user_factory_job():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
@@ -3758,6 +3944,29 @@ async def test_create_user_factory_job_async():
     client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     result: FactoryJobResponse = await client.factory.create_user_factory_job()
+
+
+@pytest.mark.skip
+def test_get_user_factory_materials():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: List[FactoryCustomerCatalogOption] = (
+        client.factory.get_user_factory_materials()
+    )
+
+    body: List[FactoryCustomerCatalogOption] = result
+    print(body)
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_get_user_factory_materials_async():
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: List[
+        FactoryCustomerCatalogOption
+    ] = await client.factory.get_user_factory_materials()
 
 
 @pytest.mark.skip
