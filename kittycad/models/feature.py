@@ -12,7 +12,7 @@ class Feature(str, Enum):
 
     BIG_QUERY_TELEMETRY = "big_query_telemetry"
 
-    """# Stripe related features are enabled."""  # noqa: E501
+    """# Internal ledger and contract billing are enabled."""  # noqa: E501
 
     BILLING = "billing"
 
