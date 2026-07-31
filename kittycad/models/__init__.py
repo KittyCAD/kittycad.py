@@ -120,6 +120,7 @@ from .coupon import Coupon
 from .create_custom_model import CreateCustomModel
 from .create_o_auth2_app_request import CreateOAuth2AppRequest
 from .create_org_dataset import CreateOrgDataset
+from .create_planar_surface import CreatePlanarSurface
 from .create_project_share_link_request import CreateProjectShareLinkRequest
 from .create_region import CreateRegion
 from .create_region_from_query_point import CreateRegionFromQueryPoint

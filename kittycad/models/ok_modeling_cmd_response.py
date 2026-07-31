@@ -18,6 +18,7 @@ from ..models.center_of_mass import CenterOfMass
 from ..models.close_path import ClosePath
 from ..models.closest_edge import ClosestEdge
 from ..models.complementary_edges import ComplementaryEdges
+from ..models.create_planar_surface import CreatePlanarSurface
 from ..models.create_region import CreateRegion
 from ..models.create_region_from_query_point import CreateRegionFromQueryPoint
 from ..models.curve_get_control_points import CurveGetControlPoints
@@ -1474,6 +1475,14 @@ class OptionCreateRegion(KittyCadBaseModel):
     type: Literal["create_region"] = "create_region"
 
 
+class OptionCreatePlanarSurface(KittyCadBaseModel):
+    """"""
+
+    data: CreatePlanarSurface
+
+    type: Literal["create_planar_surface"] = "create_planar_surface"
+
+
 class OptionRegionGetResolvableIntersectionInfo(KittyCadBaseModel):
     """"""
 
@@ -1720,6 +1729,7 @@ OkModelingCmdResponse = RootModel[
             OptionSetGridAutoScale,
             OptionSetOrderIndependentTransparency,
             OptionCreateRegion,
+            OptionCreatePlanarSurface,
             OptionRegionGetResolvableIntersectionInfo,
             OptionCreateRegionFromQueryPoint,
             OptionRegionGetQueryPoint,

@@ -132,7 +132,9 @@ class OptionExtrudeToReference(KittyCadBaseModel):
 
     reference: ExtrudeReference
 
-    target: ModelingCmdId
+    target: Optional[ModelingCmdId] = None
+
+    target_reference: Optional[EdgeSpecifier] = None
 
     type: Literal["extrude_to_reference"] = "extrude_to_reference"
 
@@ -1741,6 +1743,16 @@ class OptionCreateRegion(KittyCadBaseModel):
     version: Optional[RegionVersion] = None
 
 
+class OptionCreatePlanarSurface(KittyCadBaseModel):
+    """Create a planar surface bounded by the connection of various paths and curves. 'CreatePlanarSurface' modeling command."""
+
+    curve_ids: List[str]
+
+    tolerance: LengthUnit
+
+    type: Literal["create_planar_surface"] = "create_planar_surface"
+
+
 class OptionRegionGetResolvableIntersectionInfo(KittyCadBaseModel):
     """Finds a suitable set of arguments that can be passed to CreateRegion to resolve this very region."""
 
@@ -1989,6 +2001,7 @@ ModelingCmd = RootModel[
             OptionSetGridAutoScale,
             OptionSetOrderIndependentTransparency,
             OptionCreateRegion,
+            OptionCreatePlanarSurface,
             OptionRegionGetResolvableIntersectionInfo,
             OptionCreateRegionFromQueryPoint,
             OptionRegionGetQueryPoint,
