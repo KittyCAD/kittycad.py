@@ -1599,6 +1599,8 @@ def test_list_org_dataset_conversions():
         limit=None,
         page_token=None,
         filter=None,
+        q=None,
+        phase=None,
     ):
         print(item)
 
@@ -1616,6 +1618,8 @@ async def test_list_org_dataset_conversions_async():
         limit=None,
         page_token=None,
         filter=None,
+        q=None,
+        phase=None,
     )
     item: OrgDatasetFileConversionSummary
     async for item in iterator:
@@ -1715,6 +1719,8 @@ def test_search_org_dataset_conversions():
         sort_by=ConversionSortMode.CREATED_AT_ASCENDING,
         limit=None,
         page_token=None,
+        filter=None,
+        phase=None,
     ):
         print(item)
 
@@ -1732,6 +1738,8 @@ async def test_search_org_dataset_conversions_async():
         sort_by=ConversionSortMode.CREATED_AT_ASCENDING,
         limit=None,
         page_token=None,
+        filter=None,
+        phase=None,
     )
     item: OrgDatasetFileConversionSummary
     async for item in iterator:
