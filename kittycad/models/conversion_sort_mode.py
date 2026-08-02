@@ -20,6 +20,14 @@ class ConversionSortMode(str, Enum):
 
     STATUS_DESCENDING = "status_descending"
 
+    """# Sort by phase in increasing order."""  # noqa: E501
+
+    PHASE_ASCENDING = "phase_ascending"
+
+    """# Sort by phase in decreasing order."""  # noqa: E501
+
+    PHASE_DESCENDING = "phase_descending"
+
     """# Sort by updated_at in increasing order."""  # noqa: E501
 
     UPDATED_AT_ASCENDING = "updated_at_ascending"

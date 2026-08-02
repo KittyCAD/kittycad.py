@@ -7118,8 +7118,10 @@ class OrgsAPI:
         page_token: Optional[str] = None,
         sort_by: Optional[ConversionSortMode] = None,
         filter: Optional[str] = None,
+        q: Optional[str] = None,
+        phase: Optional[str] = None,
     ) -> "SyncPageIterator":
-        """This endpoint returns lightweight conversion summaries only (including `phase`), and intentionally omits converted KCL output and snapshot image payloads for speed. Use the optional `filter` query parameter to filter results (example: `?filter=status:success`).
+        """This endpoint returns lightweight conversion summaries only (including `phase`), and intentionally omits converted KCL output and snapshot image payloads for speed. Use the optional `filter` query parameter to filter results (example: `?filter=status:success`). Use `q` to search by conversion id or file path and `phase` to narrow the pipeline stage.
 
         Returns an iterator that automatically handles pagination.
         Iterate over all items across all pages:
@@ -7150,6 +7152,12 @@ class OrgsAPI:
 
         if filter is not None:
             kwargs["filter"] = filter
+
+        if q is not None:
+            kwargs["q"] = q
+
+        if phase is not None:
+            kwargs["phase"] = phase
 
         def fetch_page(**kw):
             return self._fetch_page_list_org_dataset_conversions(id=_id, **kw)
@@ -7192,6 +7200,18 @@ class OrgsAPI:
                 url = url + "&filter=" + str(kwargs["filter"])
             else:
                 url = url + "?filter=" + str(kwargs["filter"])
+
+        if "q" in kwargs and kwargs["q"] is not None:
+            if "?" in url:
+                url = url + "&q=" + str(kwargs["q"])
+            else:
+                url = url + "?q=" + str(kwargs["q"])
+
+        if "phase" in kwargs and kwargs["phase"] is not None:
+            if "?" in url:
+                url = url + "&phase=" + str(kwargs["phase"])
+            else:
+                url = url + "?phase=" + str(kwargs["phase"])
 
         # Pagination parameters (limit, page_token) are already handled above as regular query params
 
@@ -7334,6 +7354,8 @@ class OrgsAPI:
         page_token: Optional[str] = None,
         q: Optional[str] = None,
         sort_by: Optional[ConversionSortMode] = None,
+        filter: Optional[str] = None,
+        phase: Optional[str] = None,
     ) -> "SyncPageIterator":
         """Supports exact conversion-ID matching and fuzzy file-path matching.
 
@@ -7366,6 +7388,12 @@ class OrgsAPI:
 
         if sort_by is not None:
             kwargs["sort_by"] = sort_by
+
+        if filter is not None:
+            kwargs["filter"] = filter
+
+        if phase is not None:
+            kwargs["phase"] = phase
 
         def fetch_page(**kw):
             return self._fetch_page_search_org_dataset_conversions(id=_id, **kw)
@@ -7410,6 +7438,18 @@ class OrgsAPI:
                 url = url + "&sort_by=" + str(kwargs["sort_by"])
             else:
                 url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        if "filter" in kwargs and kwargs["filter"] is not None:
+            if "?" in url:
+                url = url + "&filter=" + str(kwargs["filter"])
+            else:
+                url = url + "?filter=" + str(kwargs["filter"])
+
+        if "phase" in kwargs and kwargs["phase"] is not None:
+            if "?" in url:
+                url = url + "&phase=" + str(kwargs["phase"])
+            else:
+                url = url + "?phase=" + str(kwargs["phase"])
 
         # Pagination parameters (limit, page_token) are already handled above as regular query params
 
@@ -8510,8 +8550,10 @@ class AsyncOrgsAPI:
         page_token: Optional[str] = None,
         sort_by: Optional[ConversionSortMode] = None,
         filter: Optional[str] = None,
+        q: Optional[str] = None,
+        phase: Optional[str] = None,
     ) -> "AsyncPageIterator":
-        """This endpoint returns lightweight conversion summaries only (including `phase`), and intentionally omits converted KCL output and snapshot image payloads for speed. Use the optional `filter` query parameter to filter results (example: `?filter=status:success`).
+        """This endpoint returns lightweight conversion summaries only (including `phase`), and intentionally omits converted KCL output and snapshot image payloads for speed. Use the optional `filter` query parameter to filter results (example: `?filter=status:success`). Use `q` to search by conversion id or file path and `phase` to narrow the pipeline stage.
 
         Returns an async iterator that automatically handles pagination.
         Iterate over all items across all pages:
@@ -8542,6 +8584,12 @@ class AsyncOrgsAPI:
 
         if filter is not None:
             kwargs["filter"] = filter
+
+        if q is not None:
+            kwargs["q"] = q
+
+        if phase is not None:
+            kwargs["phase"] = phase
 
         async def fetch_page(**kw):
             return await self._fetch_page_list_org_dataset_conversions(id=_id, **kw)
@@ -8584,6 +8632,18 @@ class AsyncOrgsAPI:
                 url = url + "&filter=" + str(kwargs["filter"])
             else:
                 url = url + "?filter=" + str(kwargs["filter"])
+
+        if "q" in kwargs and kwargs["q"] is not None:
+            if "?" in url:
+                url = url + "&q=" + str(kwargs["q"])
+            else:
+                url = url + "?q=" + str(kwargs["q"])
+
+        if "phase" in kwargs and kwargs["phase"] is not None:
+            if "?" in url:
+                url = url + "&phase=" + str(kwargs["phase"])
+            else:
+                url = url + "?phase=" + str(kwargs["phase"])
 
         # Pagination parameters (limit, page_token) are already handled above as regular query params
 
@@ -8726,6 +8786,8 @@ class AsyncOrgsAPI:
         page_token: Optional[str] = None,
         q: Optional[str] = None,
         sort_by: Optional[ConversionSortMode] = None,
+        filter: Optional[str] = None,
+        phase: Optional[str] = None,
     ) -> "AsyncPageIterator":
         """Supports exact conversion-ID matching and fuzzy file-path matching.
 
@@ -8758,6 +8820,12 @@ class AsyncOrgsAPI:
 
         if sort_by is not None:
             kwargs["sort_by"] = sort_by
+
+        if filter is not None:
+            kwargs["filter"] = filter
+
+        if phase is not None:
+            kwargs["phase"] = phase
 
         async def fetch_page(**kw):
             return await self._fetch_page_search_org_dataset_conversions(id=_id, **kw)
@@ -8802,6 +8870,18 @@ class AsyncOrgsAPI:
                 url = url + "&sort_by=" + str(kwargs["sort_by"])
             else:
                 url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        if "filter" in kwargs and kwargs["filter"] is not None:
+            if "?" in url:
+                url = url + "&filter=" + str(kwargs["filter"])
+            else:
+                url = url + "?filter=" + str(kwargs["filter"])
+
+        if "phase" in kwargs and kwargs["phase"] is not None:
+            if "?" in url:
+                url = url + "&phase=" + str(kwargs["phase"])
+            else:
+                url = url + "?phase=" + str(kwargs["phase"])
 
         # Pagination parameters (limit, page_token) are already handled above as regular query params
 
