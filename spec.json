@@ -10025,7 +10025,7 @@
           "orgs"
         ],
         "summary": "List the file conversions that have been processed for a given dataset owned by the caller's org.",
-        "description": "This endpoint returns lightweight conversion summaries only (including `phase`), and intentionally omits converted KCL output and snapshot image payloads for speed. Use the optional `filter` query parameter to filter results (example: `?filter=status:success`).",
+        "description": "This endpoint returns lightweight conversion summaries only (including `phase`), and intentionally omits converted KCL output and snapshot image payloads for speed. Use the optional `filter` query parameter to filter results (example: `?filter=status:success`). Use `q` to search by conversion id or file path and `phase` to narrow the pipeline stage.",
         "operationId": "list_org_dataset_conversions",
         "parameters": [
           {
@@ -10068,6 +10068,24 @@
             "in": "query",
             "name": "filter",
             "description": "Optional filter string for conversions (example: `status:success`).",
+            "schema": {
+              "nullable": true,
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "q",
+            "description": "Optional search text matched against conversion id or file path.",
+            "schema": {
+              "nullable": true,
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "phase",
+            "description": "Optional conversion phase filter.",
             "schema": {
               "nullable": true,
               "type": "string"
@@ -10886,6 +10904,24 @@
             "description": "Requested sort mode for matched conversions.",
             "schema": {
               "$ref": "#/components/schemas/ConversionSortMode"
+            }
+          },
+          {
+            "in": "query",
+            "name": "filter",
+            "description": "Optional filter string for conversions (example: `status:success`).",
+            "schema": {
+              "nullable": true,
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "phase",
+            "description": "Optional conversion phase filter.",
+            "schema": {
+              "nullable": true,
+              "type": "string"
             }
           }
         ],
@@ -37409,6 +37445,20 @@
             "type": "string",
             "enum": [
               "status_descending"
+            ]
+          },
+          {
+            "description": "Sort by phase in increasing order.",
+            "type": "string",
+            "enum": [
+              "phase_ascending"
+            ]
+          },
+          {
+            "description": "Sort by phase in decreasing order.",
+            "type": "string",
+            "enum": [
+              "phase_descending"
             ]
           },
           {
