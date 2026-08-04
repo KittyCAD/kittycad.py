@@ -38036,6 +38036,13 @@
             "type": "string",
             "format": "date-time"
           },
+          "monthly_api_credits_refresh_at": {
+            "nullable": true,
+            "title": "DateTime",
+            "description": "The date and time the monthly API credits are next scheduled to refresh.\n\nWhen a refresh is due but has not been applied yet, this is the due timestamp in the past. Clients can use that to show the refresh as pending rather than incorrectly advancing by a month.\n\nThis is `null` when the customer does not have an active standard billing schedule, such as before their billing account is established or while a contract owns billing.",
+            "type": "string",
+            "format": "date-time"
+          },
           "monthly_api_credits_remaining": {
             "description": "The number of monthly API credits remaining in the balance. This is the number of credits remaining in the balance.\n\nBoth the monetary value and the number of credits are returned, but they reflect the same value in the database.",
             "type": "integer",
