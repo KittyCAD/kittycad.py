@@ -12,6 +12,8 @@ class CustomerBalance(KittyCadBaseModel):
 
     created_at: datetime.datetime
 
+    monthly_api_credits_refresh_at: Optional[datetime.datetime] = None
+
     monthly_api_credits_remaining: int
 
     monthly_api_credits_remaining_monetary_value: float
