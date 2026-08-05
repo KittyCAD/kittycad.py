@@ -7,10 +7,10 @@ import pytest
 from kittycad import KittyCAD
 from kittycad._io_types import SyncUpload
 from kittycad.models.api_call_status import ApiCallStatus
+from kittycad.models.async_api_call_output import OptionTextToCadMultiFileIteration
 from kittycad.models.text_to_cad_multi_file_iteration_body import (
     TextToCadMultiFileIterationBody,
 )
-from kittycad.models.text_to_cad_response import OptionTextToCadMultiFileIteration
 
 
 def test_assets_kcl_project_roundtrip_outputs_match_inputs():
@@ -18,7 +18,7 @@ def test_assets_kcl_project_roundtrip_outputs_match_inputs():
 
     - Uploads every .kcl file under assets/test_kcl_project (preserving relative paths)
     - Calls create_text_to_cad_multi_file_iteration
-    - Polls get_text_to_cad_part_for_user until Completed/Failed
+    - Polls get_async_operation until Completed/Failed
     - Asserts the number of outputs equals the number of input attachments
     """
 
@@ -54,7 +54,7 @@ def test_assets_kcl_project_roundtrip_outputs_match_inputs():
         deadline = time.time() + 180  # allow up to 3 minutes
         last_status = None
         while time.time() < deadline:
-            result = client.ml.get_text_to_cad_part_for_user(id=str(created.id))
+            result = client.api_calls.get_async_operation(id=str(created.id))
             root = result.root
             last_status = str(root.status)
 
