@@ -16,6 +16,10 @@ class BlockReason(str, Enum):
 
     BILLING_THRESHOLD_REACHED = "billing_threshold_reached"
 
+    """# The user exhausted their included credits without opting into pay-as-you-go charges."""  # noqa: E501
+
+    PAY_AS_YOU_GO_DISABLED = "pay_as_you_go_disabled"
+
     """# The user repeatedly upgraded and downgraded to recycle free-plan credits."""  # noqa: E501
 
     UPGRADE_DOWNGRADE_ABUSE = "upgrade_downgrade_abuse"
