@@ -11,6 +11,7 @@ from ..models.uuid import Uuid
 from ..models.zookeeper_auto_router_metadata import (
     ZookeeperAutoRouterMetadata as ZookeeperAutoRouterMetadataModel,
 )
+from ..models.zookeeper_turn_usage import ZookeeperTurnUsage as ZookeeperTurnUsageModel
 from .base import KittyCadBaseModel
 
 
@@ -310,6 +311,14 @@ class ZookeeperAutoRouterMetadata(KittyCadBaseModel):
     zookeeper_auto_router_metadata: ZookeeperAutoRouterMetadataModel
 
 
+class ZookeeperTurnUsage(KittyCadBaseModel):
+    """Backend-only token usage and cost for one completed Zookeeper turn.
+
+    Sent just before `EndOfStream`. API records it in `meta.usage` on the turn's `EndOfStream` message row, alongside the `meta.billing` revenue figures, and never forwards it to clients or replays it as a chat message. It exists so spend can be compared against what the turn was billed; it is not customer-facing."""
+
+    zookeeper_turn_usage: ZookeeperTurnUsageModel
+
+
 class ZookeeperRecoveryToolOutput(KittyCadBaseModel):
     """Backend-only completed tool result used for portable Zookeeper recovery.
 
@@ -345,7 +354,7 @@ class ZookeeperRecoveryToolOutput(KittyCadBaseModel):
 class Replay(KittyCadBaseModel):
     """Replay containing raw bytes for previously-saved messages for a conversation. Includes server messages and client `User` messages.
 
-    Invariants: - Client replay includes server messages: `Info`, `Error`, `Reasoning(..)`, `ToolOutput { .. }`, `Files { .. }`, `ProjectUpdated { .. }`, and `EndOfStream { .. }`. - Client replay also includes client `User` messages. - Backend replay includes client `User` messages plus selected reasoning, edit metadata, recovery output, and final responses. - The following are NEVER included: `SessionData`, `ConversationId`, `Delta`, `BackendShutdown`, or `ZookeeperAutoRouterMetadata`. - `ZookeeperRecoveryToolOutput` is included only in replay sent to the text-to-CAD backend and is filtered from client replay. - Ordering is stable: messages are ordered by prompt creation time within the conversation, then by the per-prompt `seq` value (monotonically increasing as seen in the original stream).
+    Invariants: - Client replay includes server messages: `Info`, `Error`, `Reasoning(..)`, `ToolOutput { .. }`, `Files { .. }`, `ProjectUpdated { .. }`, and `EndOfStream { .. }`. - Client replay also includes client `User` messages. - Backend replay includes client `User` messages plus selected reasoning, edit metadata, recovery output, and final responses. - The following are NEVER included: `SessionData`, `ConversationId`, `Delta`, `BackendShutdown`, `ZookeeperAutoRouterMetadata`, or `ZookeeperTurnUsage`. - `ZookeeperRecoveryToolOutput` is included only in replay sent to the text-to-CAD backend and is filtered from client replay. - Ordering is stable: messages are ordered by prompt creation time within the conversation, then by the per-prompt `seq` value (monotonically increasing as seen in the original stream).
 
     Wire format: - Each element is canonical serialized bytes (typically JSON) for either a `MlCopilotServerMessage` or a `MlCopilotClientMessage::User`. - When delivered as an initial replay over the websocket (upon `?replay=true&conversation_id=<uuid>`), the server sends a single WebSocket Binary frame containing a MsgPack-encoded document of this enum: `Replay { messages }`."""
 
@@ -442,6 +451,7 @@ MlCopilotServerMessage = RootModel[
         RequestAttachments,
         AttachmentsLoaded,
         ZookeeperAutoRouterMetadata,
+        ZookeeperTurnUsage,
         ZookeeperRecoveryToolOutput,
         Replay,
         EndOfStream,
