@@ -51,7 +51,11 @@ class OptionUser(KittyCadBaseModel):
 
     content: str
 
+    correlation_id: Optional[Uuid] = None
+
     current_files: Optional[Dict[str, bytes]] = None
+
+    engine_api_call_id: Optional[Uuid] = None
 
     forced_tools: Optional[List[MlCopilotTool]] = None
 
