@@ -8,6 +8,10 @@ class OrgDatasetStatus(str, Enum):
 
     ACTIVE = "active"
 
+    """# Dataset conversion processing is paused by an administrator."""  # noqa: E501
+
+    PAUSED = "paused"
+
     """# Dataset is being deleted and should not be mutated or used."""  # noqa: E501
 
     DELETING = "deleting"
