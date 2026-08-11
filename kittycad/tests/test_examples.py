@@ -95,6 +95,8 @@ from kittycad.models.aggregate_usage_collection_threshold_set import (
     AggregateUsageCollectionThresholdSet,
 )
 from kittycad.models.api_token_uuid import ApiTokenUuid
+from kittycad.models.axis import Axis
+from kittycad.models.axis_direction_pair import AxisDirectionPair
 from kittycad.models.base64data import Base64Data
 from kittycad.models.billing_cadence import BillingCadence
 from kittycad.models.billing_commitment_scope import BillingCommitmentScope
@@ -125,36 +127,37 @@ from kittycad.models.create_project_share_link_request import (
 from kittycad.models.create_shortlink_request import CreateShortlinkRequest
 from kittycad.models.created_at_sort_mode import CreatedAtSortMode
 from kittycad.models.currency import Currency
+from kittycad.models.direction import Direction
 from kittycad.models.email_authentication_form import EmailAuthenticationForm
 from kittycad.models.email_marketing_confirm_token_body import (
     EmailMarketingConfirmTokenBody,
 )
 from kittycad.models.file_export_format import FileExportFormat
 from kittycad.models.file_import_format import FileImportFormat
-from kittycad.models.gltf_presentation import GltfPresentation
-from kittycad.models.gltf_storage import GltfStorage
 from kittycad.models.idp_metadata_source import (
     IdpMetadataSource,
     OptionBase64EncodedXml,
     OptionUrl,
 )
-from kittycad.models.input_format3d import InputFormat3d, OptionFbx
+from kittycad.models.input_format3d import InputFormat3d, OptionStl
 from kittycad.models.kcl_code_completion_params import KclCodeCompletionParams
 from kittycad.models.kcl_code_completion_request import KclCodeCompletionRequest
 from kittycad.models.kcl_project_share_link_access_mode import (
     KclProjectShareLinkAccessMode,
 )
 from kittycad.models.lenient_url import LenientUrl
-from kittycad.models.ml_copilot_client_message import (
-    OptionListModes,
-    OptionProjectContext,
-)
+from kittycad.models.ml_copilot_client_message import OptionPing, OptionProjectContext
 from kittycad.models.ml_feedback import MlFeedback
+from kittycad.models.modeling_cmd import ModelingCmd, OptionProjectPointsToPlane
+from kittycad.models.modeling_cmd_id import ModelingCmdId
+from kittycad.models.modeling_cmd_req import ModelingCmdReq
 from kittycad.models.o_auth2_app_grant_type import OAuth2AppGrantType
 from kittycad.models.org_dataset_source import OrgDatasetSource
 from kittycad.models.org_details import OrgDetails
-from kittycad.models.output_format3d import OptionGltf, OutputFormat3d
+from kittycad.models.output_format3d import OptionPly, OutputFormat3d
 from kittycad.models.plan_interval import PlanInterval
+from kittycad.models.ply_storage import PlyStorage
+from kittycad.models.point3d import Point3d
 from kittycad.models.post_effect_type import PostEffectType
 from kittycad.models.price_upsert_request import PriceUpsertRequest
 from kittycad.models.privacy_settings import PrivacySettings
@@ -167,6 +170,7 @@ from kittycad.models.public_mailing_list_membership_request import (
 )
 from kittycad.models.sales_inquiry_type import SalesInquiryType
 from kittycad.models.saml_identity_provider_create import SamlIdentityProviderCreate
+from kittycad.models.selection import OptionSceneByIndex, Selection
 from kittycad.models.service_account_uuid import ServiceAccountUuid
 from kittycad.models.session_uuid import SessionUuid
 from kittycad.models.source_position import SourcePosition
@@ -176,6 +180,7 @@ from kittycad.models.storage_provider import StorageProvider
 from kittycad.models.store_coupon_params import StoreCouponParams
 from kittycad.models.subscription_plan_billing_model import SubscriptionPlanBillingModel
 from kittycad.models.support_inquiry_type import SupportInquiryType
+from kittycad.models.system import System
 from kittycad.models.text_to_cad_create_body import TextToCadCreateBody
 from kittycad.models.text_to_cad_iteration_body import TextToCadIterationBody
 from kittycad.models.text_to_cad_multi_file_iteration_body import (
@@ -205,7 +210,7 @@ from kittycad.models.update_user import UpdateUser
 from kittycad.models.user_identifier import UserIdentifier
 from kittycad.models.user_org_role import UserOrgRole
 from kittycad.models.uuid import Uuid
-from kittycad.models.web_socket_request import OptionDebug
+from kittycad.models.web_socket_request import OptionModelingCmdBatchReq
 from kittycad.models.website_sales_form import WebsiteSalesForm
 from kittycad.models.website_support_form import WebsiteSupportForm
 from kittycad.models.zoo_product_subscriptions_org_request import (
@@ -594,12 +599,41 @@ def test_create_file_conversion_options():
     result: FileConversion = client.file.create_file_conversion_options(
         body=ConversionParams(
             output_format=OutputFormat3d(
-                OptionGltf(
-                    presentation=GltfPresentation.COMPACT,
-                    storage=GltfStorage.BINARY,
+                OptionPly(
+                    coords=System(
+                        forward=AxisDirectionPair(
+                            axis=Axis.Y,
+                            direction=Direction.POSITIVE,
+                        ),
+                        up=AxisDirectionPair(
+                            axis=Axis.Y,
+                            direction=Direction.POSITIVE,
+                        ),
+                    ),
+                    selection=Selection(
+                        OptionSceneByIndex(
+                            index=10,
+                        )
+                    ),
+                    storage=PlyStorage.ASCII,
+                    units=UnitLength.CM,
                 )
             ),
-            src_format=InputFormat3d(OptionFbx()),
+            src_format=InputFormat3d(
+                OptionStl(
+                    coords=System(
+                        forward=AxisDirectionPair(
+                            axis=Axis.Y,
+                            direction=Direction.POSITIVE,
+                        ),
+                        up=AxisDirectionPair(
+                            axis=Axis.Y,
+                            direction=Direction.POSITIVE,
+                        ),
+                    ),
+                    units=UnitLength.CM,
+                )
+            ),
         ),
         file_attachments={
             "main.kcl": Path("path/to/main.kcl"),
@@ -620,12 +654,41 @@ async def test_create_file_conversion_options_async():
     result: FileConversion = await client.file.create_file_conversion_options(
         body=ConversionParams(
             output_format=OutputFormat3d(
-                OptionGltf(
-                    presentation=GltfPresentation.COMPACT,
-                    storage=GltfStorage.BINARY,
+                OptionPly(
+                    coords=System(
+                        forward=AxisDirectionPair(
+                            axis=Axis.Y,
+                            direction=Direction.POSITIVE,
+                        ),
+                        up=AxisDirectionPair(
+                            axis=Axis.Y,
+                            direction=Direction.POSITIVE,
+                        ),
+                    ),
+                    selection=Selection(
+                        OptionSceneByIndex(
+                            index=10,
+                        )
+                    ),
+                    storage=PlyStorage.ASCII,
+                    units=UnitLength.CM,
                 )
             ),
-            src_format=InputFormat3d(OptionFbx()),
+            src_format=InputFormat3d(
+                OptionStl(
+                    coords=System(
+                        forward=AxisDirectionPair(
+                            axis=Axis.Y,
+                            direction=Direction.POSITIVE,
+                        ),
+                        up=AxisDirectionPair(
+                            axis=Axis.Y,
+                            direction=Direction.POSITIVE,
+                        ),
+                    ),
+                    units=UnitLength.CM,
+                )
+            ),
         ),
         file_attachments={
             "main.kcl": Path("path/to/main.kcl"),
@@ -5281,13 +5344,7 @@ def test_ml_copilot_ws():
         replay=None, conversation_id=None, pr=None
     ) as websocket:
         # Send a message.
-        websocket.send(
-            MlCopilotClientMessage(
-                OptionProjectContext(
-                    current_files={"<string>": b"<bytes>"},
-                )
-            )
-        )
+        websocket.send(MlCopilotClientMessage(OptionPing()))
 
         # Get a message.
         message = websocket.recv()
@@ -5320,7 +5377,13 @@ def test_ml_reasoning_ws():
     # Connect to the websocket.
     with client.ml.ml_reasoning_ws(id="<string>") as websocket:
         # Send a message.
-        websocket.send(MlCopilotClientMessage(OptionListModes()))
+        websocket.send(
+            MlCopilotClientMessage(
+                OptionProjectContext(
+                    current_files={"<string>": b"<bytes>"},
+                )
+            )
+        )
 
         # Get a message.
         message = websocket.recv()
@@ -5364,7 +5427,32 @@ def test_modeling_commands_ws():
         pr=None,
     ) as websocket:
         # Send a message.
-        websocket.send(WebSocketRequest(OptionDebug()))
+        websocket.send(
+            WebSocketRequest(
+                OptionModelingCmdBatchReq(
+                    batch_id=ModelingCmdId("<string>"),
+                    requests=[
+                        ModelingCmdReq(
+                            cmd=ModelingCmd(
+                                OptionProjectPointsToPlane(
+                                    plane_id="<string>",
+                                    points=[
+                                        Point3d(
+                                            x=3.14,
+                                            y=3.14,
+                                            z=3.14,
+                                        )
+                                    ],
+                                    use_plane_coords=False,
+                                )
+                            ),
+                            cmd_id=ModelingCmdId("<string>"),
+                        )
+                    ],
+                    responses=False,
+                )
+            )
+        )
 
         # Get a message.
         message = websocket.recv()
