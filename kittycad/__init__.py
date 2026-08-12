@@ -7554,7 +7554,7 @@ class OrgsAPI:
         self,
         id: Uuid,
     ) -> UploadOrgDatasetFilesResponse:
-        """This endpoint accepts `multipart/form-data` where each file part becomes a source object in the dataset. Paths are normalized and must be relative."""
+        """This endpoint accepts `multipart/form-data` where each file part becomes a source object in the dataset. Exact `<proprietary CAD filename>.json` converter dumps are also accepted and associated with their original CAD file. Paths are normalized and must be relative."""
 
         url = "{}/org/datasets/{id}/uploads".format(self.client.base_url, id=id)
 
@@ -8986,7 +8986,7 @@ class AsyncOrgsAPI:
         self,
         id: Uuid,
     ) -> UploadOrgDatasetFilesResponse:
-        """This endpoint accepts `multipart/form-data` where each file part becomes a source object in the dataset. Paths are normalized and must be relative."""
+        """This endpoint accepts `multipart/form-data` where each file part becomes a source object in the dataset. Exact `<proprietary CAD filename>.json` converter dumps are also accepted and associated with their original CAD file. Paths are normalized and must be relative."""
 
         url = "{}/org/datasets/{id}/uploads".format(self.client.base_url, id=id)
 
