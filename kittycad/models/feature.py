@@ -32,6 +32,10 @@ class Feature(str, Enum):
 
     FACTORY_PORTAL = "factory_portal"
 
+    """# KCL CEK machine executor."""  # noqa: E501
+
+    KCL_CEK_EXECUTOR = "kcl_cek_executor"
+
     """# New KCL lexer and parser."""  # noqa: E501
 
     KCL_NEW_LEXER_PARSER = "kcl_new_lexer_parser"
@@ -71,6 +75,10 @@ class Feature(str, Enum):
     """# Enables modeling dialogs in Zoo Design Studio."""  # noqa: E501
 
     MODELING_DIALOGS = "modeling_dialogs"
+
+    """# Enables the named views user interface in Zoo Design Studio."""  # noqa: E501
+
+    NAMED_VIEWS_UI = "named_views_ui"
 
     """# Enables plugins in Zoo Design Studio."""  # noqa: E501
 
