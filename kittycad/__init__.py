@@ -6892,6 +6892,7 @@ class OrgsAPI:
         *,
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
+        lookup_enabled: Optional[bool] = None,
         sort_by: Optional[CreatedAtSortMode] = None,
     ) -> "SyncPageIterator":
         """List every dataset that belongs to the caller's organization.
@@ -6917,6 +6918,9 @@ class OrgsAPI:
 
         if page_token is not None:
             kwargs["page_token"] = page_token
+
+        if lookup_enabled is not None:
+            kwargs["lookup_enabled"] = lookup_enabled
 
         if sort_by is not None:
             kwargs["sort_by"] = sort_by
@@ -6948,6 +6952,12 @@ class OrgsAPI:
                 url = url + "&page_token=" + str(kwargs["page_token"])
             else:
                 url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "lookup_enabled" in kwargs and kwargs["lookup_enabled"] is not None:
+            if "?" in url:
+                url = url + "&lookup_enabled=" + str(kwargs["lookup_enabled"]).lower()
+            else:
+                url = url + "?lookup_enabled=" + str(kwargs["lookup_enabled"]).lower()
 
         if "sort_by" in kwargs and kwargs["sort_by"] is not None:
             if "?" in url:
@@ -8324,6 +8334,7 @@ class AsyncOrgsAPI:
         *,
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
+        lookup_enabled: Optional[bool] = None,
         sort_by: Optional[CreatedAtSortMode] = None,
     ) -> "AsyncPageIterator":
         """List every dataset that belongs to the caller's organization.
@@ -8349,6 +8360,9 @@ class AsyncOrgsAPI:
 
         if page_token is not None:
             kwargs["page_token"] = page_token
+
+        if lookup_enabled is not None:
+            kwargs["lookup_enabled"] = lookup_enabled
 
         if sort_by is not None:
             kwargs["sort_by"] = sort_by
@@ -8380,6 +8394,12 @@ class AsyncOrgsAPI:
                 url = url + "&page_token=" + str(kwargs["page_token"])
             else:
                 url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "lookup_enabled" in kwargs and kwargs["lookup_enabled"] is not None:
+            if "?" in url:
+                url = url + "&lookup_enabled=" + str(kwargs["lookup_enabled"]).lower()
+            else:
+                url = url + "?lookup_enabled=" + str(kwargs["lookup_enabled"]).lower()
 
         if "sort_by" in kwargs and kwargs["sort_by"] is not None:
             if "?" in url:

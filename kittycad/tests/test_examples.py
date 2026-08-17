@@ -1295,7 +1295,10 @@ def test_list_org_datasets():
     # Iterate through all pages automatically
     item: OrgDataset
     for item in client.orgs.list_org_datasets(
-        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING, limit=None, page_token=None
+        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
+        limit=None,
+        page_token=None,
+        lookup_enabled=None,
     ):
         print(item)
 
@@ -1308,7 +1311,10 @@ async def test_list_org_datasets_async():
 
     # Iterate through all pages automatically
     iterator = client.orgs.list_org_datasets(
-        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING, limit=None, page_token=None
+        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
+        limit=None,
+        page_token=None,
+        lookup_enabled=None,
     )
     item: OrgDataset
     async for item in iterator:

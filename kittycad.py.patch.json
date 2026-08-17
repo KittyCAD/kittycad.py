@@ -419,7 +419,7 @@
     "op": "add",
     "path": "/paths/~1org~1datasets/get/x-python",
     "value": {
-      "example": "from kittycad.models.created_at_sort_mode import CreatedAtSortMode\nfrom kittycad.models import OrgDatasetResultsPage\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\n\n\nfrom kittycad.models import OrgDataset\ndef example_list_org_datasets():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    # Iterate through all pages automatically\n    item: OrgDataset\n    for item in client.orgs.list_org_datasets(sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,\n        limit=None,\n        page_token=None):\n        print(item)\n\n",
+      "example": "from kittycad.models.created_at_sort_mode import CreatedAtSortMode\nfrom kittycad.models import OrgDatasetResultsPage\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\n\n\nfrom kittycad.models import OrgDataset\ndef example_list_org_datasets():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    # Iterate through all pages automatically\n    item: OrgDataset\n    for item in client.orgs.list_org_datasets(sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,\n        limit=None,\n        page_token=None,\n        lookup_enabled=None):\n        print(item)\n\n",
       "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD.orgs"
     }
   },

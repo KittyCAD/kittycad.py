@@ -3,6 +3,7 @@ from typing import Literal, Optional, Union
 from pydantic import Field, RootModel
 from typing_extensions import Annotated
 
+from ..models.step_import_target_representation import StepImportTargetRepresentation
 from ..models.system import System
 from ..models.unit_length import UnitLength
 from .base import KittyCadBaseModel
@@ -140,6 +141,8 @@ class OptionStep(KittyCadBaseModel):
     }  # type: ignore[assignment]
 
     split_closed_faces: Optional[bool] = False
+
+    target_representation: Optional[StepImportTargetRepresentation] = "brep"  # type: ignore[assignment]
 
     type: Literal["step"] = "step"
 
