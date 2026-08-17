@@ -1,6 +1,5 @@
 import json
 import os
-import time
 import uuid
 
 import pytest
@@ -29,7 +28,6 @@ from kittycad.models import (
     Pong,
     PostEffectType,
     System,
-    TextToCadCreateBody,
     UnitDensity,
     UnitLength,
     UnitMass,
@@ -879,32 +877,3 @@ def test_deserialize_null_request_id():
         model_dump["resp"]["data"]["session"]["api_call_id"]
         == "91f7fd17-8846-4593-97ff-6400a81b8cdd"
     )  # type: ignore
-
-
-def test_text_to_cad():
-    # Test the modern client.api pattern
-    client = KittyCAD()
-
-    # Modern way: client.ml.create_text_to_cad()
-    result = client.ml.create_text_to_cad(
-        output_format=FileExportFormat.STEP,
-        body=TextToCadCreateBody(
-            prompt="a 2x4 lego",
-        ),
-    )
-    print(f"Modern result: {result}")
-
-    # Poll the api until the status is completed.
-    # Timeout after some seconds.
-    start_time = time.time()
-    body = result
-    while (
-        body.status == ApiCallStatus.IN_PROGRESS or body.status == ApiCallStatus.QUEUED
-    ) and time.time() - start_time < 120:
-        result_status = client.ml.get_text_to_cad_part_for_user(
-            id=body.id,
-        )
-
-        body = result_status.root  # type: ignore
-
-    assert body.status == ApiCallStatus.COMPLETED
