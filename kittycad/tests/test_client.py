@@ -1,5 +1,7 @@
+import asyncio
 import json
 import os
+import time
 import uuid
 
 import pytest
@@ -56,56 +58,30 @@ from kittycad.types import Unset
 def _poll_for_completion(
     client, fc: FileConversion, timeout_seconds: int = 60
 ) -> FileConversion:
-    """Poll for file conversion completion.
-
-    Args:
-        client: KittyCAD client (sync or async)
-        fc: Initial FileConversion object
-        timeout_seconds: Maximum time to wait for completion
-
-    Returns:
-        Completed FileConversion object
-    """
-    # Handle both completed and in-progress cases
-    if fc.status == ApiCallStatus.COMPLETED:
-        # Already completed, no need to poll
-        return fc
-
-    body = client.wait_for_async_operation(
-        operation_id=fc.id,
-        timeout_seconds=timeout_seconds,
-        poll_interval_seconds=2.0,
-    )
-    if hasattr(body, "status"):
-        print(f"FileConversion status: {body.status}")
+    """Poll for file conversion completion."""
+    deadline = time.monotonic() + timeout_seconds
+    body = fc
+    while body.status not in [ApiCallStatus.COMPLETED, ApiCallStatus.FAILED]:
+        if time.monotonic() >= deadline:
+            break
+        time.sleep(2)
+        result = client.api_calls.get_async_operation(id=fc.id)
+        body = result.root if hasattr(result, "root") else result
     return body
 
 
 async def _poll_for_completion_async(
     client, fc: FileConversion, timeout_seconds: int = 60
 ) -> FileConversion:
-    """Async version of poll for file conversion completion.
-
-    Args:
-        client: AsyncKittyCAD client
-        fc: Initial FileConversion object
-        timeout_seconds: Maximum time to wait for completion
-
-    Returns:
-        Completed FileConversion object
-    """
-    # Handle both completed and in-progress cases
-    if fc.status == ApiCallStatus.COMPLETED:
-        # Already completed, no need to poll
-        return fc
-
-    body = await client.wait_for_async_operation(
-        operation_id=fc.id,
-        timeout_seconds=timeout_seconds,
-        poll_interval_seconds=2.0,
-    )
-    if hasattr(body, "status"):
-        print(f"FileConversion status: {body.status}")
+    """Async version of poll for file conversion completion."""
+    deadline = time.monotonic() + timeout_seconds
+    body = fc
+    while body.status not in [ApiCallStatus.COMPLETED, ApiCallStatus.FAILED]:
+        if time.monotonic() >= deadline:
+            break
+        await asyncio.sleep(2)
+        result = await client.api_calls.get_async_operation(id=fc.id)
+        body = result.root if hasattr(result, "root") else result
     return body
 
 
