@@ -42,6 +42,7 @@ def test_response_validation_can_ignore_future_fields():
         "created_at": "2026-05-11T00:00:00Z",
         "description": None,
         "id": "550e8400-e29b-41d4-a716-446655440000",
+        "lookup_enabled": True,
         "name": "training-data",
         "org_id": "550e8400-e29b-41d4-a716-446655440001",
         "require_raw_kcl_similarity_score_for_success": False,

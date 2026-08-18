@@ -22,6 +22,8 @@ class OrgDataset(KittyCadBaseModel):
 
     last_sync_error_at: Optional[datetime.datetime] = None
 
+    lookup_enabled: bool
+
     name: str
 
     org_id: Uuid
