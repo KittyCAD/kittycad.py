@@ -63,6 +63,10 @@ from kittycad.models import (
     Session,
     Shortlink,
     SubscriptionPlanPriceRecord,
+    TextToCad,
+    TextToCadIteration,
+    TextToCadMultiFileIteration,
+    TextToCadResponse,
     UnitAngleConversion,
     UnitAreaConversion,
     UnitCurrentConversion,
@@ -143,6 +147,7 @@ from kittycad.models.kcl_project_share_link_access_mode import (
 )
 from kittycad.models.lenient_url import LenientUrl
 from kittycad.models.ml_copilot_client_message import OptionPing, OptionProjectContext
+from kittycad.models.ml_feedback import MlFeedback
 from kittycad.models.modeling_cmd import ModelingCmd, OptionProjectPointsToPlane
 from kittycad.models.modeling_cmd_id import ModelingCmdId
 from kittycad.models.modeling_cmd_req import ModelingCmdReq
@@ -168,11 +173,19 @@ from kittycad.models.saml_identity_provider_create import SamlIdentityProviderCr
 from kittycad.models.selection import OptionSceneByIndex, Selection
 from kittycad.models.service_account_uuid import ServiceAccountUuid
 from kittycad.models.session_uuid import SessionUuid
+from kittycad.models.source_position import SourcePosition
+from kittycad.models.source_range import SourceRange
+from kittycad.models.source_range_prompt import SourceRangePrompt
 from kittycad.models.storage_provider import StorageProvider
 from kittycad.models.store_coupon_params import StoreCouponParams
 from kittycad.models.subscription_plan_billing_model import SubscriptionPlanBillingModel
 from kittycad.models.support_inquiry_type import SupportInquiryType
 from kittycad.models.system import System
+from kittycad.models.text_to_cad_create_body import TextToCadCreateBody
+from kittycad.models.text_to_cad_iteration_body import TextToCadIterationBody
+from kittycad.models.text_to_cad_multi_file_iteration_body import (
+    TextToCadMultiFileIterationBody,
+)
 from kittycad.models.unit_angle import UnitAngle
 from kittycad.models.unit_area import UnitArea
 from kittycad.models.unit_current import UnitCurrent
@@ -243,6 +256,37 @@ async def test_get_ipinfo_async():
     client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     result: IpAddrInfo = await client.meta.get_ipinfo()
+
+
+@pytest.mark.skip
+def test_create_text_to_cad():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: TextToCad = client.ml.create_text_to_cad(
+        output_format=FileExportFormat.FBX,
+        kcl=None,
+        body=TextToCadCreateBody(
+            prompt="<string>",
+        ),
+    )
+
+    body: TextToCad = result
+    print(body)
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_create_text_to_cad_async():
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: TextToCad = await client.ml.create_text_to_cad(
+        output_format=FileExportFormat.FBX,
+        kcl=None,
+        body=TextToCadCreateBody(
+            prompt="<string>",
+        ),
+    )
 
 
 @pytest.mark.skip
@@ -1037,6 +1081,130 @@ async def test_create_kcl_code_completions_async():
             stop=["<string>"],
             stream=False,
             suffix="<string>",
+        )
+    )
+
+
+@pytest.mark.skip
+def test_create_text_to_cad_iteration():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: TextToCadIteration = client.ml.create_text_to_cad_iteration(
+        body=TextToCadIterationBody(
+            original_source_code="<string>",
+            source_ranges=[
+                SourceRangePrompt(
+                    prompt="<string>",
+                    range=SourceRange(
+                        end=SourcePosition(
+                            column=10,
+                            line=10,
+                        ),
+                        start=SourcePosition(
+                            column=10,
+                            line=10,
+                        ),
+                    ),
+                )
+            ],
+        )
+    )
+
+    body: TextToCadIteration = result
+    print(body)
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_create_text_to_cad_iteration_async():
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: TextToCadIteration = await client.ml.create_text_to_cad_iteration(
+        body=TextToCadIterationBody(
+            original_source_code="<string>",
+            source_ranges=[
+                SourceRangePrompt(
+                    prompt="<string>",
+                    range=SourceRange(
+                        end=SourcePosition(
+                            column=10,
+                            line=10,
+                        ),
+                        start=SourcePosition(
+                            column=10,
+                            line=10,
+                        ),
+                    ),
+                )
+            ],
+        )
+    )
+
+
+@pytest.mark.skip
+def test_create_text_to_cad_multi_file_iteration():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: TextToCadMultiFileIteration = (
+        client.ml.create_text_to_cad_multi_file_iteration(
+            body=TextToCadMultiFileIterationBody(
+                source_ranges=[
+                    SourceRangePrompt(
+                        prompt="<string>",
+                        range=SourceRange(
+                            end=SourcePosition(
+                                column=10,
+                                line=10,
+                            ),
+                            start=SourcePosition(
+                                column=10,
+                                line=10,
+                            ),
+                        ),
+                    )
+                ],
+            ),
+            file_attachments={
+                "main.kcl": Path("path/to/main.kcl"),
+                "helper.kcl": Path("path/to/helper.kcl"),
+            },
+        )
+    )
+
+    body: TextToCadMultiFileIteration = result
+    print(body)
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_create_text_to_cad_multi_file_iteration_async():
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: TextToCadMultiFileIteration = (
+        await client.ml.create_text_to_cad_multi_file_iteration(
+            body=TextToCadMultiFileIterationBody(
+                source_ranges=[
+                    SourceRangePrompt(
+                        prompt="<string>",
+                        range=SourceRange(
+                            end=SourcePosition(
+                                column=10,
+                                line=10,
+                            ),
+                            start=SourcePosition(
+                                column=10,
+                                line=10,
+                            ),
+                        ),
+                    )
+                ],
+            ),
+            file_attachments={
+                "main.kcl": Path("path/to/main.kcl"),
+                "helper.kcl": Path("path/to/helper.kcl"),
+            },
         )
     )
 
@@ -4697,6 +4865,84 @@ async def test_update_user_shortlink_async():
         body=UpdateShortlinkRequest(
             restrict_to_org=False,
         ),
+    )
+
+
+@pytest.mark.skip
+def test_list_text_to_cad_parts_for_user():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    # Iterate through all pages automatically
+    item: TextToCadResponse
+    for item in client.ml.list_text_to_cad_parts_for_user(
+        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
+        conversation_id=Uuid("<string>"),
+        limit=None,
+        page_token=None,
+        no_models=None,
+        no_parts=None,
+    ):
+        print(item)
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_list_text_to_cad_parts_for_user_async():
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    # Iterate through all pages automatically
+    iterator = client.ml.list_text_to_cad_parts_for_user(
+        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
+        conversation_id=Uuid("<string>"),
+        limit=None,
+        page_token=None,
+        no_models=None,
+        no_parts=None,
+    )
+    item: TextToCadResponse
+    async for item in iterator:
+        print(item)
+
+
+@pytest.mark.skip
+def test_get_text_to_cad_part_for_user():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: TextToCadResponse = client.ml.get_text_to_cad_part_for_user(id="<string>")
+
+    body: TextToCadResponse = result
+    print(body)
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_get_text_to_cad_part_for_user_async():
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: TextToCadResponse = await client.ml.get_text_to_cad_part_for_user(
+        id="<string>"
+    )
+
+
+@pytest.mark.skip
+def test_create_text_to_cad_part_feedback():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    client.ml.create_text_to_cad_part_feedback(
+        id="<string>", feedback=MlFeedback.THUMBS_UP
+    )
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_create_text_to_cad_part_feedback_async():
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    await client.ml.create_text_to_cad_part_feedback(
+        id="<string>", feedback=MlFeedback.THUMBS_UP
     )
 
 
