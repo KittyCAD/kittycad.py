@@ -5,6 +5,63 @@ All notable changes to the KittyCAD Python SDK will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## v1.5.0
+
+Regenerated the SDK against the latest API spec.
+
+### Added
+
+- **Factory API** — a new `client.factory` group:
+  - `POST /user/factory/jobs` (`create_user_factory_job`) returning `FactoryJobResponse` — submit a part for manufacturing.
+  - `GET /user/factory/materials` (`get_user_factory_materials`) and `GET /user/factory/finishes` (`get_user_factory_finishes`), both returning `List[FactoryCustomerCatalogOption]`.
+- **Pay-as-you-go collection thresholds** on `client.payments`:
+  - `get_user_usage_collection_threshold` / `set_user_usage_collection_threshold` / `reset_user_usage_collection_threshold` (`GET`/`PUT`/`DELETE /user/billing/usage-collection-threshold`).
+  - `get_org_usage_collection_threshold` / `set_org_usage_collection_threshold` / `reset_org_usage_collection_threshold` (`GET`/`PUT`/`DELETE /org/billing/usage-collection-threshold`).
+  - All six return `AggregateUsageCollectionThresholdView`; `set_*` takes an `AggregateUsageCollectionThresholdSet` body and `reset_*` takes `expected_version`. New supporting models: `AggregateUsageCollectionThresholdBounds` and `AggregateUsageCollectionThresholdSource`.
+- **Modeling commands & responses**:
+  - `begin_execution` / `end_execution` — tell the engine to render in reduced detail while a batch of commands streams in, then restore high quality (`BeginExecution` / `EndExecution`).
+  - `create_planar_surface` — build a planar surface bounded by a set of curves (`CreatePlanarSurface`).
+  - `sketch_get_info` — sketch debug info (`SketchGetInfo`, plus the new `CurveDebug` / `CurveTypeDebug` models).
+- **Edge references in modeling**: `extrude` gained `direction_reference` and `target_reference`, `extrude_to_reference` gained `target_reference`, `sweep` gained `projected_axis`, and `MirrorAcross` gained an `edge_reference` variant — all keyed off `EdgeSpecifier`.
+- **STEP import representation**: the `step` variant of `InputFormat3d` gained `target_representation` (`StepImportTargetRepresentation`: `mesh` or `brep`, defaulting to `brep`).
+- **ML Copilot**:
+  - `MlCopilotMode` gained `zookeeper_pro` and `zookeeper_ultra`.
+  - `MlCopilotServerMessage` gained the backend-only variants `ZookeeperOpenAiResponseCheckpoint`, `ZookeeperTurnUsage`, and `ZookeeperRecoveryToolOutput` — these are persisted and replayed only to the text-to-CAD backend, never forwarded to browser clients. New models: `ZookeeperTurnUsage`, `ZookeeperTurnUsageModel`, `ZookeeperTurnUsageStage`.
+  - The `User` variant of `MlCopilotClientMessage` gained `correlation_id` and `engine_api_call_id`.
+  - `ReasoningMessage` gained `created_project_file`, `updated_project_file`, and `deleted_project_file` for non-KCL project files.
+- **Billing & users**:
+  - `allow_pay_as_you_go` on `UserResponse`, `ExtendedUser`, and `UpdateUser`.
+  - `BlockReason` gained `billing_threshold_reached`, `pay_as_you_go_disabled`, and `admin`.
+  - `CustomerBalance` gained `monthly_api_credits_refresh_at`.
+  - `ZooProductSubscriptionsUserRequest` gained `downgrade_reason` (`ZooProductSubscriptionDowngradeReason`) and `downgrade_reason_text`.
+- **Org datasets**: `list_org_datasets` gained a `lookup_enabled` filter, `list_org_dataset_conversions` gained `q` and `phase`, and `search_org_dataset_conversions` gained `filter` and `phase`. `ConversionSortMode` gained `phase_ascending` / `phase_descending`, `OrgDatasetStatus` gained `paused`, and `OrgDatasetFileConversionStatus` gained `error_execution` / `error_connection`.
+- `Feature` — a single enum of environment/rule/override-driven feature switches, replacing `UserFeature`.
+- `OAuth2Scope` gained `user:read`.
+- `AdjacencyInfo` gained `previous_adjacent_info`.
+
+### Changed
+
+- `UserFeatureEntry.id` is now typed as `Feature` instead of `UserFeature`.
+- `OrgDataset` now includes a required `lookup_enabled: bool`.
+- Several modeling-command fields are now optional: `target` on `extrude` and `extrude_to_reference` (supply `target_reference` instead), and `edge_id` on `solid3d_get_extrusion_face_info` and `solid3d_get_adjacency_info`.
+
+### Removed
+
+- **The text-to-CAD generation endpoints have been removed**: `create_text_to_cad` (`POST /ai/text-to-cad/{output_format}`), `create_text_to_cad_iteration` (`POST /ml/text-to-cad/iteration`), and `create_text_to_cad_multi_file_iteration` (`POST /ml/text-to-cad/multi-file/iteration`), along with the `TextToCad`, `TextToCadIteration`, and `TextToCadMultiFileIteration` models.
+- **`UserFeature` has been removed** in favor of `Feature`.
+- **The `enable_dry_run` / `disable_dry_run` modeling commands and their `EnableDryRun` / `DisableDryRun` models have been removed.**
+- **`KittyCAD.wait_for_async_operation(...)` and `AsyncKittyCAD.wait_for_async_operation(...)` have been removed.** These were announced in the v1.4.0 notes but were still present in the v1.4.0 code; the removal actually lands here.
+
+### Migration
+
+- **Text-to-CAD generation**: `create_text_to_cad`, `create_text_to_cad_iteration`, and `create_text_to_cad_multi_file_iteration` no longer exist. Generation now runs over the ML Copilot websocket (`client.ml.ml_copilot_ws`); the read-side endpoints (`list_text_to_cad_parts_for_user`, `get_text_to_cad_part_for_user`, `create_text_to_cad_part_feedback`) are unchanged. `TextToCadMultiFileIterationBody` is still exported but no longer has an endpoint that accepts it.
+- **Feature flags**: replace `UserFeature` with `Feature`. Member names carry over for the overlapping values (e.g. `PLUGINS`, `MODELING_DIALOGS`, `WEB_APP_FILE_BROWSER`), but `BODIES_PANE` is gone and many new switches were added.
+- **Dry-run commands**: remove any `enable_dry_run` / `disable_dry_run` modeling commands; consider `begin_execution` / `end_execution` if you were using them to reduce render cost during bulk execution.
+- **Async-operation polling**: replace `wait_for_async_operation(...)` with polling through `client.api_calls.get_async_operation(id=operation_id)`.
+- **Constructing `OrgDataset` directly** (e.g. in tests): set `lookup_enabled`. Reading dataset responses from the API requires no change.
+- **Known limitation**: `create_user_factory_job` is generated without a body parameter, so it cannot yet send the required `multipart/form-data` payload. Call `POST /user/factory/jobs` directly until the generator supports it.
+- All other changes are additive — no action required.
+
 ## v1.4.0
 
 Regenerated the SDK against the latest API spec.
