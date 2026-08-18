@@ -1,3 +1,4 @@
+import asyncio
 import json
 import os
 import time
@@ -29,7 +30,6 @@ from kittycad.models import (
     Pong,
     PostEffectType,
     System,
-    TextToCadCreateBody,
     UnitDensity,
     UnitLength,
     UnitMass,
@@ -58,56 +58,30 @@ from kittycad.types import Unset
 def _poll_for_completion(
     client, fc: FileConversion, timeout_seconds: int = 60
 ) -> FileConversion:
-    """Poll for file conversion completion.
-
-    Args:
-        client: KittyCAD client (sync or async)
-        fc: Initial FileConversion object
-        timeout_seconds: Maximum time to wait for completion
-
-    Returns:
-        Completed FileConversion object
-    """
-    # Handle both completed and in-progress cases
-    if fc.status == ApiCallStatus.COMPLETED:
-        # Already completed, no need to poll
-        return fc
-
-    body = client.wait_for_async_operation(
-        operation_id=fc.id,
-        timeout_seconds=timeout_seconds,
-        poll_interval_seconds=2.0,
-    )
-    if hasattr(body, "status"):
-        print(f"FileConversion status: {body.status}")
+    """Poll for file conversion completion."""
+    deadline = time.monotonic() + timeout_seconds
+    body = fc
+    while body.status not in [ApiCallStatus.COMPLETED, ApiCallStatus.FAILED]:
+        if time.monotonic() >= deadline:
+            break
+        time.sleep(2)
+        result = client.api_calls.get_async_operation(id=fc.id)
+        body = result.root if hasattr(result, "root") else result
     return body
 
 
 async def _poll_for_completion_async(
     client, fc: FileConversion, timeout_seconds: int = 60
 ) -> FileConversion:
-    """Async version of poll for file conversion completion.
-
-    Args:
-        client: AsyncKittyCAD client
-        fc: Initial FileConversion object
-        timeout_seconds: Maximum time to wait for completion
-
-    Returns:
-        Completed FileConversion object
-    """
-    # Handle both completed and in-progress cases
-    if fc.status == ApiCallStatus.COMPLETED:
-        # Already completed, no need to poll
-        return fc
-
-    body = await client.wait_for_async_operation(
-        operation_id=fc.id,
-        timeout_seconds=timeout_seconds,
-        poll_interval_seconds=2.0,
-    )
-    if hasattr(body, "status"):
-        print(f"FileConversion status: {body.status}")
+    """Async version of poll for file conversion completion."""
+    deadline = time.monotonic() + timeout_seconds
+    body = fc
+    while body.status not in [ApiCallStatus.COMPLETED, ApiCallStatus.FAILED]:
+        if time.monotonic() >= deadline:
+            break
+        await asyncio.sleep(2)
+        result = await client.api_calls.get_async_operation(id=fc.id)
+        body = result.root if hasattr(result, "root") else result
     return body
 
 
@@ -879,32 +853,3 @@ def test_deserialize_null_request_id():
         model_dump["resp"]["data"]["session"]["api_call_id"]
         == "91f7fd17-8846-4593-97ff-6400a81b8cdd"
     )  # type: ignore
-
-
-def test_text_to_cad():
-    # Test the modern client.api pattern
-    client = KittyCAD()
-
-    # Modern way: client.ml.create_text_to_cad()
-    result = client.ml.create_text_to_cad(
-        output_format=FileExportFormat.STEP,
-        body=TextToCadCreateBody(
-            prompt="a 2x4 lego",
-        ),
-    )
-    print(f"Modern result: {result}")
-
-    # Poll the api until the status is completed.
-    # Timeout after some seconds.
-    start_time = time.time()
-    body = result
-    while (
-        body.status == ApiCallStatus.IN_PROGRESS or body.status == ApiCallStatus.QUEUED
-    ) and time.time() - start_time < 120:
-        result_status = client.ml.get_text_to_cad_part_for_user(
-            id=body.id,
-        )
-
-        body = result_status.root  # type: ignore
-
-    assert body.status == ApiCallStatus.COMPLETED

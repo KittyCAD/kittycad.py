@@ -34,11 +34,13 @@ Regenerated the SDK against the latest API spec.
 ### Removed
 
 - **`GET /orgs/{id}/admin/details` (`org_admin_details_get`) and the `OrgAddress` / `OrgAdminDetails` models have been removed.**
+- `KittyCAD.wait_for_async_operation(...)` and `AsyncKittyCAD.wait_for_async_operation(...)` have been removed.
 
 ### Migration
 
 - **API tokens**: `create_api_token_for_user` now returns `ApiTokenWithFullToken`. Attribute access is compatible because it is a superset of the old `ApiToken`, but update any explicit `ApiToken` type annotations on the return value.
 - **Org admin details**: remove any calls to `org_admin_details_get` and any references to `OrgAddress` / `OrgAdminDetails`; the endpoint and models no longer exist.
+- **Async-operation polling**: replace `wait_for_async_operation(...)` with polling through `client.api_calls.get_async_operation(id=operation_id)`.
 - **Constructing `OrgDataset` directly** (e.g. in tests): set `require_raw_kcl_similarity_score_for_success`. Reading dataset responses from the API requires no change.
 - All other changes are additive — no action required.
 

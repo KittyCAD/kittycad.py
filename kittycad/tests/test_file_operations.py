@@ -1312,16 +1312,18 @@ class TestJsonMultipartUploads:
 
     def test_create_json_multipart_upload_pydantic_model(self, tmp_path):
         """Test multipart upload with Pydantic model as JSON body."""
-        from kittycad.models.text_to_cad_multi_file_iteration_body import (
-            TextToCadMultiFileIterationBody,
-        )
+        from pydantic import BaseModel
+
+        class MultipartBody(BaseModel):
+            prompt: str
+            project_name: str
 
         # Create test file
         test_file = tmp_path / "main.kcl"
         test_file.write_text("// Main KCL file")
 
         # Create Pydantic model
-        json_body = TextToCadMultiFileIterationBody(
+        json_body = MultipartBody(
             prompt="Create a sphere",
             project_name="pydantic_test",
         )
@@ -1462,7 +1464,7 @@ class TestJsonMultipartUploads:
         # Make the upload
         upload_json_multipart(
             client=mock_client,
-            url="https://api.zoo.dev/ml/text-to-cad/multi-file/iteration",
+            url="https://api.zoo.dev/uploads",
             json_body=json_body,
             file_attachments={"main": str(test_file)},
         )
@@ -1471,10 +1473,7 @@ class TestJsonMultipartUploads:
         assert len(request_calls) == 1
         request_kwargs = request_calls[0]
         assert request_kwargs["method"] == "POST"
-        assert (
-            request_kwargs["url"]
-            == "https://api.zoo.dev/ml/text-to-cad/multi-file/iteration"
-        )
+        assert request_kwargs["url"] == "https://api.zoo.dev/uploads"
         assert "files" in request_kwargs
 
         files = request_kwargs["files"]
