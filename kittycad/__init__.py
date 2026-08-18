@@ -159,14 +159,6 @@ from .models.session_uuid import SessionUuid
 from .models.shortlink_results_page import ShortlinkResultsPage
 from .models.store_coupon_params import StoreCouponParams
 from .models.subscription_plan_price_record import SubscriptionPlanPriceRecord
-from .models.text_to_cad import TextToCad
-from .models.text_to_cad_create_body import TextToCadCreateBody
-from .models.text_to_cad_iteration import TextToCadIteration
-from .models.text_to_cad_iteration_body import TextToCadIterationBody
-from .models.text_to_cad_multi_file_iteration import TextToCadMultiFileIteration
-from .models.text_to_cad_multi_file_iteration_body import (
-    TextToCadMultiFileIterationBody,
-)
 from .models.text_to_cad_response import TextToCadResponse
 from .models.text_to_cad_response_results_page import TextToCadResponseResultsPage
 from .models.token_revoke_request_form import TokenRevokeRequestForm
@@ -656,1403 +648,6 @@ class AsyncMetaAPI:
         from pydantic import TypeAdapter
 
         return TypeAdapter(Dict).validate_python(json_data, extra="ignore")
-
-
-class MlAPI:
-    """API for ml endpoints"""
-
-    def __init__(self, client: Client) -> None:
-        self.client = client
-
-    def create_text_to_cad(
-        self,
-        output_format: FileExportFormat,
-        body: TextToCadCreateBody,
-        *,
-        kcl: Optional[bool] = None,
-    ) -> TextToCad:
-        """Prefer the ML copilot websocket (`/ws/ml/copilot`) for new integrations. This REST endpoint is kept for existing Text-to-CAD clients, but it is no longer the recommended way to generate CAD models from a prompt.
-
-        Because our source of truth for the resulting model is a STEP file, you will always have STEP file contents when you list your generated parts. Any other formats you request here will also be returned when you list your generated parts.
-
-        This operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint.
-
-        One thing to note, if you hit the cache, this endpoint will return right away. So you only have to wait if the status is not `Completed` or `Failed`."""
-
-        url = "{}/ai/text-to-cad/{output_format}".format(
-            self.client.base_url, output_format=output_format
-        )
-
-        if kcl is not None:
-            if "?" in url:
-                url = url + "&kcl=" + str(kcl).lower()
-            else:
-                url = url + "?kcl=" + str(kcl).lower()
-
-        _client = self.client.get_http_client()
-
-        response = _client.post(
-            url=url,
-            headers=self.client.get_headers(),
-            content=serialize_request_body(body),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return TextToCad.model_validate(json_data, extra="ignore")
-
-    def list_conversations_for_user(
-        self,
-        *,
-        limit: Optional[int] = None,
-        page_token: Optional[str] = None,
-        sort_by: Optional[CreatedAtSortMode] = None,
-    ) -> "SyncPageIterator":
-        """This endpoint requires authentication by any Zoo user. It returns the conversations for the authenticated user.
-
-        The conversations are returned in order of creation, with the most recently created conversations first.
-
-                Returns an iterator that automatically handles pagination.
-                Iterate over all items across all pages:
-
-                    for item in client.ml.list_conversations_for_user():
-                        print(item)
-        """
-
-        from typing import Any, Dict
-
-        from kittycad.pagination import SyncPageIterator
-
-        # Store path parameters in closure for later use
-
-        # Create arguments dict, filtering out None values
-        kwargs: Dict[str, Any] = {}
-
-        if limit is not None:
-            kwargs["limit"] = limit
-
-        if page_token is not None:
-            kwargs["page_token"] = page_token
-
-        if sort_by is not None:
-            kwargs["sort_by"] = sort_by
-
-        def fetch_page(**kw):
-            return self._fetch_page_list_conversations_for_user(**kw)
-
-        # Create the page iterator
-        return SyncPageIterator(
-            page_fetcher=fetch_page,
-            initial_kwargs=kwargs,
-        )
-
-    def _fetch_page_list_conversations_for_user(
-        self, **kwargs
-    ) -> ConversationResultsPage:
-        """Internal method to fetch a single page."""
-        # Build URL with path parameters
-        url = "{}/ml/conversations".format(self.client.base_url)
-
-        # Add query parameters
-
-        if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
-
-        if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
-
-        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(kwargs["sort_by"])
-            else:
-                url = url + "?sort_by=" + str(kwargs["sort_by"])
-
-        # Pagination parameters (limit, page_token) are already handled above as regular query params
-
-        _client = self.client.get_http_client()
-        response = _client.get(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-        # Validate into a Pydantic model (supports BaseModel/RootModel)
-        return ConversationResultsPage.model_validate(json_data, extra="ignore")
-
-    def create_proprietary_to_kcl(
-        self,
-        *,
-        code_option: Optional[CodeOption] = None,
-    ) -> KclModel:
-        """This endpoint is used to convert a proprietary CAD format to KCL. The file passed MUST have feature tree data.
-
-        A STEP file does not have feature tree data, so it will not work. A sldprt file does have feature tree data, so it will work.
-
-        This endpoint is designed to work with any native proprietary CAD format, for example: - SolidWorks (.sldprt) - Creo (.prt) - Catia (.catpart) - NX (.prt) - Fusion 360 (.f3d)
-
-        This endpoint is deterministic, it preserves the original design intent by using the feature tree data. This endpoint does not use any machine learning or AI.
-
-        This endpoint is currently in beta, and is only available to users with access to the feature. Please contact support if you are interested in getting access.
-
-        This endpoint might have limitations and bugs, please report any issues you encounter. It will be improved over time.
-
-        Input filepaths will be normalized and re-canonicalized to be under the current working directory -- so returned paths may differ from provided paths, and care must be taken when handling user provided paths."""
-
-        url = "{}/ml/convert/proprietary-to-kcl".format(self.client.base_url)
-
-        if code_option is not None:
-            if "?" in url:
-                url = url + "&code_option=" + str(code_option)
-            else:
-                url = url + "?code_option=" + str(code_option)
-
-        _client = self.client.get_http_client()
-
-        response = _client.post(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return KclModel.model_validate(json_data, extra="ignore")
-
-    def create_custom_model(
-        self,
-        body: CreateCustomModel,
-    ) -> CustomModel:
-        """Dataset readiness is enforced via `OrgDatasetFileConversion::status_counts_for_datasets`: - At least one conversion must have status `success`. - No conversions may remain in `queued`. If even a single file is still queued the dataset is treated as “not ready for training.” - A dataset consisting only of `canceled` or `error_*` entries is rejected because there’s nothing usable."""
-
-        url = "{}/ml/custom/models".format(self.client.base_url)
-
-        _client = self.client.get_http_client()
-
-        response = _client.post(
-            url=url,
-            headers=self.client.get_headers(),
-            content=serialize_request_body(body),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return CustomModel.model_validate(json_data, extra="ignore")
-
-    def get_custom_model(
-        self,
-        id: Uuid,
-    ) -> CustomModel:
-        """Retrieve the details of a single custom ML model so long as it belongs to the caller’s organization."""
-
-        url = "{}/ml/custom/models/{id}".format(self.client.base_url, id=id)
-
-        _client = self.client.get_http_client()
-
-        response = _client.get(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return CustomModel.model_validate(json_data, extra="ignore")
-
-    def update_custom_model(
-        self,
-        id: Uuid,
-        body: UpdateCustomModel,
-    ) -> CustomModel:
-        """Update mutable metadata (name, system prompt) for a custom ML model owned by the caller's organization."""
-
-        url = "{}/ml/custom/models/{id}".format(self.client.base_url, id=id)
-
-        _client = self.client.get_http_client()
-
-        response = _client.put(
-            url=url,
-            headers=self.client.get_headers(),
-            content=serialize_request_body(body),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return CustomModel.model_validate(json_data, extra="ignore")
-
-    def list_org_datasets_for_model(
-        self,
-        id: Uuid,
-    ) -> List[OrgDataset]:
-        """List the org datasets that are currently attached to a custom ML model owned by the caller’s organization."""
-
-        url = "{}/ml/custom/models/{id}/datasets".format(self.client.base_url, id=id)
-
-        _client = self.client.get_http_client()
-
-        response = _client.get(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into annotated/collection/union types using TypeAdapter
-        from pydantic import TypeAdapter
-
-        return TypeAdapter(List[OrgDataset]).validate_python(json_data, extra="ignore")
-
-    def create_kcl_code_completions(
-        self,
-        body: KclCodeCompletionRequest,
-    ) -> KclCodeCompletionResponse:
-        """Generate code completions for KCL."""
-
-        url = "{}/ml/kcl/completions".format(self.client.base_url)
-
-        _client = self.client.get_http_client()
-
-        response = _client.post(
-            url=url,
-            headers=self.client.get_headers(),
-            content=serialize_request_body(body),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return KclCodeCompletionResponse.model_validate(json_data, extra="ignore")
-
-    def create_text_to_cad_iteration(
-        self,
-        body: TextToCadIterationBody,
-    ) -> TextToCadIteration:
-        """Prefer the ML copilot websocket (`/ws/ml/copilot`) for new prompt-to-edit integrations. This REST endpoint is kept for existing clients, but it is no longer the recommended way to edit KCL or CAD models from a prompt.
-
-        Even if you give specific ranges to edit, the model might change more than just those in order to make the changes you requested without breaking the code.
-
-        You always get the whole code back, even if you only changed a small part of it.
-
-        This operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint.
-
-        This endpoint is deprecated in favor of `/ws/ml/copilot`."""
-
-        url = "{}/ml/text-to-cad/iteration".format(self.client.base_url)
-
-        _client = self.client.get_http_client()
-
-        response = _client.post(
-            url=url,
-            headers=self.client.get_headers(),
-            content=serialize_request_body(body),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return TextToCadIteration.model_validate(json_data, extra="ignore")
-
-    def create_text_to_cad_multi_file_iteration(
-        self,
-        body: TextToCadMultiFileIterationBody,
-        file_attachments: Dict[str, SyncUpload],
-    ) -> TextToCadMultiFileIteration:
-        """Prefer the ML copilot websocket (`/ws/ml/copilot`) for new prompt-to-edit integrations. This REST endpoint is kept for existing multi-file iteration clients, but it is no longer the recommended way to edit KCL or CAD models from a prompt.
-
-        This endpoint can iterate on multi-file projects.
-
-        Even if you give specific ranges to edit, the model might change more than just those in order to make the changes you requested without breaking the code.
-
-        You always get the whole code back, even if you only changed a small part of it. This endpoint will always return all the code back, including files that were not changed. If your original source code imported a stl/gltf/step/etc file, the output will not include that file since the model will never change non-kcl files. The endpoint will only return the kcl files that were changed.
-
-        This operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint.
-
-        Input filepaths will be normalized and re-canonicalized to be under the current working directory -- so returned paths may differ from provided paths, and care must be taken when handling user provided paths.
-
-        Examples:
-            Basic usage with file attachments:
-
-            ```python
-            from pathlib import Path
-            from kittycad.models.text_to_cad_multi_file_iteration_body import TextToCadMultiFileIterationBody
-
-            # Create the request body
-            body = TextToCadMultiFileIterationBody(
-                # Add your parameters here
-            )
-
-            # Prepare file attachments
-            file_attachments = {
-                "main.kcl": Path("path/to/main.kcl"),
-                "helper.kcl": Path("path/to/helper.kcl"),
-            }
-
-            # Make the request
-            result = client.create_text_to_cad_multi_file_iteration(
-                body=body,
-                file_attachments=file_attachments,
-            )
-            ```
-
-            Using different file types:
-
-            ```python
-            from io import BytesIO
-
-            # Mix of file paths and file-like objects
-            file_attachments = {
-                "main.kcl": Path("main.kcl"),
-                "config.kcl": BytesIO(b"// KCL configuration"),
-                "data.json": "path/to/data.json",
-            }
-
-            result = client.create_text_to_cad_multi_file_iteration(
-                body=body,
-                file_attachments=file_attachments,
-            )
-            ```
-        """
-
-        url = "{}/ml/text-to-cad/multi-file/iteration".format(self.client.base_url)
-
-        _client = self.client.get_http_client()
-
-        # JSON + multipart endpoint
-        response = upload_json_multipart(
-            client=_client,
-            url=url,
-            json_body=body,
-            file_attachments=file_attachments,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return TextToCadMultiFileIteration.model_validate(json_data, extra="ignore")
-
-    def list_text_to_cad_parts_for_user(
-        self,
-        *,
-        limit: Optional[int] = None,
-        page_token: Optional[str] = None,
-        sort_by: Optional[CreatedAtSortMode] = None,
-        no_models: Optional[bool] = None,
-        no_parts: Optional[bool] = None,
-        conversation_id: Optional[Uuid] = None,
-    ) -> "SyncPageIterator":
-        """This will always return the STEP file contents as well as the format the user originally requested.
-
-        This endpoint requires authentication by any Zoo user. It returns the text-to-CAD parts for the authenticated user.
-
-        The text-to-CAD parts are returned in order of creation, with the most recently created text-to-CAD parts first.
-
-                Returns an iterator that automatically handles pagination.
-                Iterate over all items across all pages:
-
-                    for item in client.user.list_text_to_cad_parts_for_user():
-                        print(item)
-        """
-
-        from typing import Any, Dict
-
-        from kittycad.pagination import SyncPageIterator
-
-        # Store path parameters in closure for later use
-
-        # Create arguments dict, filtering out None values
-        kwargs: Dict[str, Any] = {}
-
-        if limit is not None:
-            kwargs["limit"] = limit
-
-        if page_token is not None:
-            kwargs["page_token"] = page_token
-
-        if sort_by is not None:
-            kwargs["sort_by"] = sort_by
-
-        if no_models is not None:
-            kwargs["no_models"] = no_models
-
-        if no_parts is not None:
-            kwargs["no_parts"] = no_parts
-
-        if conversation_id is not None:
-            kwargs["conversation_id"] = conversation_id
-
-        def fetch_page(**kw):
-            return self._fetch_page_list_text_to_cad_parts_for_user(**kw)
-
-        # Create the page iterator
-        return SyncPageIterator(
-            page_fetcher=fetch_page,
-            initial_kwargs=kwargs,
-        )
-
-    def _fetch_page_list_text_to_cad_parts_for_user(
-        self, **kwargs
-    ) -> TextToCadResponseResultsPage:
-        """Internal method to fetch a single page."""
-        # Build URL with path parameters
-        url = "{}/user/text-to-cad".format(self.client.base_url)
-
-        # Add query parameters
-
-        if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
-
-        if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
-
-        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(kwargs["sort_by"])
-            else:
-                url = url + "?sort_by=" + str(kwargs["sort_by"])
-
-        if "no_models" in kwargs and kwargs["no_models"] is not None:
-            if "?" in url:
-                url = url + "&no_models=" + str(kwargs["no_models"]).lower()
-            else:
-                url = url + "?no_models=" + str(kwargs["no_models"]).lower()
-
-        if "no_parts" in kwargs and kwargs["no_parts"] is not None:
-            if "?" in url:
-                url = url + "&no_parts=" + str(kwargs["no_parts"]).lower()
-            else:
-                url = url + "?no_parts=" + str(kwargs["no_parts"]).lower()
-
-        if "conversation_id" in kwargs and kwargs["conversation_id"] is not None:
-            if "?" in url:
-                url = url + "&conversation_id=" + str(kwargs["conversation_id"])
-            else:
-                url = url + "?conversation_id=" + str(kwargs["conversation_id"])
-
-        # Pagination parameters (limit, page_token) are already handled above as regular query params
-
-        _client = self.client.get_http_client()
-        response = _client.get(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-        # Validate into a Pydantic model (supports BaseModel/RootModel)
-        return TextToCadResponseResultsPage.model_validate(json_data, extra="ignore")
-
-    def get_text_to_cad_part_for_user(
-        self,
-        id: str,
-    ) -> TextToCadResponse:
-        """This endpoint requires authentication by any Zoo user. The user must be the owner of the text-to-CAD model."""
-
-        url = "{}/user/text-to-cad/{id}".format(self.client.base_url, id=id)
-
-        _client = self.client.get_http_client()
-
-        response = _client.get(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return TextToCadResponse.model_validate(json_data, extra="ignore")
-
-    def create_text_to_cad_part_feedback(
-        self,
-        id: str,
-        feedback: MlFeedback,
-    ):
-        """This can be a text-to-CAD creation or iteration.
-
-        This endpoint requires authentication by any Zoo user. The user must be the owner of the ML response, in order to give feedback."""
-
-        url = "{}/user/text-to-cad/{id}".format(self.client.base_url, id=id)
-
-        if feedback is not None:
-            if "?" in url:
-                url = url + "&feedback=" + str(feedback)
-            else:
-                url = url + "?feedback=" + str(feedback)
-
-        _client = self.client.get_http_client()
-
-        response = _client.post(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        return response.json() if response.content else None
-
-    def ml_copilot_ws(
-        self,
-        replay: Optional[bool] = None,
-        conversation_id: Optional[str] = None,
-        pr: Optional[int] = None,
-        recv_timeout: Optional[float] = None,
-        ws_factory: Optional[Callable[..., ClientConnectionSync]] = None,
-    ) -> "WebSocketMlCopilotWs":
-        """Open a websocket to prompt the ML copilot.
-
-        Returns a WebSocket wrapper with methods for sending/receiving data.
-        """
-        return WebSocketMlCopilotWs(
-            replay=replay,
-            conversation_id=conversation_id,
-            pr=pr,
-            recv_timeout=recv_timeout,
-            ws_factory=ws_factory,
-            client=self.client,
-        )
-
-    def ml_reasoning_ws(
-        self,
-        id: str,
-        recv_timeout: Optional[float] = None,
-        ws_factory: Optional[Callable[..., ClientConnectionSync]] = None,
-    ) -> "WebSocketMlReasoningWs":
-        """Open a websocket to prompt the ML copilot.
-
-        Returns a WebSocket wrapper with methods for sending/receiving data.
-        """
-        return WebSocketMlReasoningWs(
-            id=id, recv_timeout=recv_timeout, ws_factory=ws_factory, client=self.client
-        )
-
-
-class AsyncMlAPI:
-    """Async API for ml endpoints"""
-
-    def __init__(self, client: AsyncClient) -> None:
-        self.client = client
-
-    async def create_text_to_cad(
-        self,
-        output_format: FileExportFormat,
-        body: TextToCadCreateBody,
-        *,
-        kcl: Optional[bool] = None,
-    ) -> TextToCad:
-        """Prefer the ML copilot websocket (`/ws/ml/copilot`) for new integrations. This REST endpoint is kept for existing Text-to-CAD clients, but it is no longer the recommended way to generate CAD models from a prompt.
-
-        Because our source of truth for the resulting model is a STEP file, you will always have STEP file contents when you list your generated parts. Any other formats you request here will also be returned when you list your generated parts.
-
-        This operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint.
-
-        One thing to note, if you hit the cache, this endpoint will return right away. So you only have to wait if the status is not `Completed` or `Failed`."""
-
-        url = "{}/ai/text-to-cad/{output_format}".format(
-            self.client.base_url, output_format=output_format
-        )
-
-        if kcl is not None:
-            if "?" in url:
-                url = url + "&kcl=" + str(kcl).lower()
-            else:
-                url = url + "?kcl=" + str(kcl).lower()
-
-        _client = self.client.get_http_client()
-
-        response = await _client.post(
-            url=url,
-            headers=self.client.get_headers(),
-            content=serialize_request_body(body),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return TextToCad.model_validate(json_data, extra="ignore")
-
-    def list_conversations_for_user(
-        self,
-        *,
-        limit: Optional[int] = None,
-        page_token: Optional[str] = None,
-        sort_by: Optional[CreatedAtSortMode] = None,
-    ) -> "AsyncPageIterator":
-        """This endpoint requires authentication by any Zoo user. It returns the conversations for the authenticated user.
-
-        The conversations are returned in order of creation, with the most recently created conversations first.
-
-                Returns an async iterator that automatically handles pagination.
-                Iterate over all items across all pages:
-
-                    async for item in client.ml.list_conversations_for_user():
-                        print(item)
-        """
-
-        from typing import Any, Dict
-
-        from kittycad.pagination import AsyncPageIterator
-
-        # Store path parameters in closure for later use
-
-        # Create arguments dict, filtering out None values
-        kwargs: Dict[str, Any] = {}
-
-        if limit is not None:
-            kwargs["limit"] = limit
-
-        if page_token is not None:
-            kwargs["page_token"] = page_token
-
-        if sort_by is not None:
-            kwargs["sort_by"] = sort_by
-
-        async def fetch_page(**kw):
-            return await self._fetch_page_list_conversations_for_user(**kw)
-
-        # Create the async page iterator
-        return AsyncPageIterator(
-            page_fetcher=fetch_page,
-            initial_kwargs=kwargs,
-        )
-
-    async def _fetch_page_list_conversations_for_user(
-        self, **kwargs
-    ) -> ConversationResultsPage:
-        """Internal async method to fetch a single page."""
-        # Build URL with path parameters
-        url = "{}/ml/conversations".format(self.client.base_url)
-
-        # Add query parameters
-
-        if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
-
-        if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
-
-        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(kwargs["sort_by"])
-            else:
-                url = url + "?sort_by=" + str(kwargs["sort_by"])
-
-        # Pagination parameters (limit, page_token) are already handled above as regular query params
-
-        _client = self.client.get_http_client()
-        response = await _client.get(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-        # Validate into a Pydantic model (supports BaseModel/RootModel)
-        return ConversationResultsPage.model_validate(json_data, extra="ignore")
-
-    async def create_proprietary_to_kcl(
-        self,
-        *,
-        code_option: Optional[CodeOption] = None,
-    ) -> KclModel:
-        """This endpoint is used to convert a proprietary CAD format to KCL. The file passed MUST have feature tree data.
-
-        A STEP file does not have feature tree data, so it will not work. A sldprt file does have feature tree data, so it will work.
-
-        This endpoint is designed to work with any native proprietary CAD format, for example: - SolidWorks (.sldprt) - Creo (.prt) - Catia (.catpart) - NX (.prt) - Fusion 360 (.f3d)
-
-        This endpoint is deterministic, it preserves the original design intent by using the feature tree data. This endpoint does not use any machine learning or AI.
-
-        This endpoint is currently in beta, and is only available to users with access to the feature. Please contact support if you are interested in getting access.
-
-        This endpoint might have limitations and bugs, please report any issues you encounter. It will be improved over time.
-
-        Input filepaths will be normalized and re-canonicalized to be under the current working directory -- so returned paths may differ from provided paths, and care must be taken when handling user provided paths."""
-
-        url = "{}/ml/convert/proprietary-to-kcl".format(self.client.base_url)
-
-        if code_option is not None:
-            if "?" in url:
-                url = url + "&code_option=" + str(code_option)
-            else:
-                url = url + "?code_option=" + str(code_option)
-
-        _client = self.client.get_http_client()
-
-        response = await _client.post(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return KclModel.model_validate(json_data, extra="ignore")
-
-    async def create_custom_model(
-        self,
-        body: CreateCustomModel,
-    ) -> CustomModel:
-        """Dataset readiness is enforced via `OrgDatasetFileConversion::status_counts_for_datasets`: - At least one conversion must have status `success`. - No conversions may remain in `queued`. If even a single file is still queued the dataset is treated as “not ready for training.” - A dataset consisting only of `canceled` or `error_*` entries is rejected because there’s nothing usable."""
-
-        url = "{}/ml/custom/models".format(self.client.base_url)
-
-        _client = self.client.get_http_client()
-
-        response = await _client.post(
-            url=url,
-            headers=self.client.get_headers(),
-            content=serialize_request_body(body),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return CustomModel.model_validate(json_data, extra="ignore")
-
-    async def get_custom_model(
-        self,
-        id: Uuid,
-    ) -> CustomModel:
-        """Retrieve the details of a single custom ML model so long as it belongs to the caller’s organization."""
-
-        url = "{}/ml/custom/models/{id}".format(self.client.base_url, id=id)
-
-        _client = self.client.get_http_client()
-
-        response = await _client.get(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return CustomModel.model_validate(json_data, extra="ignore")
-
-    async def update_custom_model(
-        self,
-        id: Uuid,
-        body: UpdateCustomModel,
-    ) -> CustomModel:
-        """Update mutable metadata (name, system prompt) for a custom ML model owned by the caller's organization."""
-
-        url = "{}/ml/custom/models/{id}".format(self.client.base_url, id=id)
-
-        _client = self.client.get_http_client()
-
-        response = await _client.put(
-            url=url,
-            headers=self.client.get_headers(),
-            content=serialize_request_body(body),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return CustomModel.model_validate(json_data, extra="ignore")
-
-    async def list_org_datasets_for_model(
-        self,
-        id: Uuid,
-    ) -> List[OrgDataset]:
-        """List the org datasets that are currently attached to a custom ML model owned by the caller’s organization."""
-
-        url = "{}/ml/custom/models/{id}/datasets".format(self.client.base_url, id=id)
-
-        _client = self.client.get_http_client()
-
-        response = await _client.get(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into annotated/collection/union types using TypeAdapter
-        from pydantic import TypeAdapter
-
-        return TypeAdapter(List[OrgDataset]).validate_python(json_data, extra="ignore")
-
-    async def create_kcl_code_completions(
-        self,
-        body: KclCodeCompletionRequest,
-    ) -> KclCodeCompletionResponse:
-        """Generate code completions for KCL."""
-
-        url = "{}/ml/kcl/completions".format(self.client.base_url)
-
-        _client = self.client.get_http_client()
-
-        response = await _client.post(
-            url=url,
-            headers=self.client.get_headers(),
-            content=serialize_request_body(body),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return KclCodeCompletionResponse.model_validate(json_data, extra="ignore")
-
-    async def create_text_to_cad_iteration(
-        self,
-        body: TextToCadIterationBody,
-    ) -> TextToCadIteration:
-        """Prefer the ML copilot websocket (`/ws/ml/copilot`) for new prompt-to-edit integrations. This REST endpoint is kept for existing clients, but it is no longer the recommended way to edit KCL or CAD models from a prompt.
-
-        Even if you give specific ranges to edit, the model might change more than just those in order to make the changes you requested without breaking the code.
-
-        You always get the whole code back, even if you only changed a small part of it.
-
-        This operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint.
-
-        This endpoint is deprecated in favor of `/ws/ml/copilot`."""
-
-        url = "{}/ml/text-to-cad/iteration".format(self.client.base_url)
-
-        _client = self.client.get_http_client()
-
-        response = await _client.post(
-            url=url,
-            headers=self.client.get_headers(),
-            content=serialize_request_body(body),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return TextToCadIteration.model_validate(json_data, extra="ignore")
-
-    async def create_text_to_cad_multi_file_iteration(
-        self,
-        body: TextToCadMultiFileIterationBody,
-        file_attachments: Dict[str, SyncUpload],
-    ) -> TextToCadMultiFileIteration:
-        """Prefer the ML copilot websocket (`/ws/ml/copilot`) for new prompt-to-edit integrations. This REST endpoint is kept for existing multi-file iteration clients, but it is no longer the recommended way to edit KCL or CAD models from a prompt.
-
-        This endpoint can iterate on multi-file projects.
-
-        Even if you give specific ranges to edit, the model might change more than just those in order to make the changes you requested without breaking the code.
-
-        You always get the whole code back, even if you only changed a small part of it. This endpoint will always return all the code back, including files that were not changed. If your original source code imported a stl/gltf/step/etc file, the output will not include that file since the model will never change non-kcl files. The endpoint will only return the kcl files that were changed.
-
-        This operation is performed asynchronously, the `id` of the operation will be returned. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint.
-
-        Input filepaths will be normalized and re-canonicalized to be under the current working directory -- so returned paths may differ from provided paths, and care must be taken when handling user provided paths.
-
-        Examples:
-            Basic usage with file attachments:
-
-            ```python
-            from pathlib import Path
-            from kittycad.models.text_to_cad_multi_file_iteration_body import TextToCadMultiFileIterationBody
-
-            # Create the request body
-            body = TextToCadMultiFileIterationBody(
-                # Add your parameters here
-            )
-
-            # Prepare file attachments
-            file_attachments = {
-                "main.kcl": Path("path/to/main.kcl"),
-                "helper.kcl": Path("path/to/helper.kcl"),
-            }
-
-            # Make the request
-            result = client.create_text_to_cad_multi_file_iteration(
-                body=body,
-                file_attachments=file_attachments,
-            )
-            ```
-
-            Using different file types:
-
-            ```python
-            from io import BytesIO
-
-            # Mix of file paths and file-like objects
-            file_attachments = {
-                "main.kcl": Path("main.kcl"),
-                "config.kcl": BytesIO(b"// KCL configuration"),
-                "data.json": "path/to/data.json",
-            }
-
-            result = client.create_text_to_cad_multi_file_iteration(
-                body=body,
-                file_attachments=file_attachments,
-            )
-            ```
-        """
-
-        url = "{}/ml/text-to-cad/multi-file/iteration".format(self.client.base_url)
-
-        _client = self.client.get_http_client()
-
-        # JSON + multipart endpoint
-        response = await upload_json_multipart_async(
-            client=_client,
-            url=url,
-            json_body=body,
-            file_attachments=file_attachments,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return TextToCadMultiFileIteration.model_validate(json_data, extra="ignore")
-
-    def list_text_to_cad_parts_for_user(
-        self,
-        *,
-        limit: Optional[int] = None,
-        page_token: Optional[str] = None,
-        sort_by: Optional[CreatedAtSortMode] = None,
-        no_models: Optional[bool] = None,
-        no_parts: Optional[bool] = None,
-        conversation_id: Optional[Uuid] = None,
-    ) -> "AsyncPageIterator":
-        """This will always return the STEP file contents as well as the format the user originally requested.
-
-        This endpoint requires authentication by any Zoo user. It returns the text-to-CAD parts for the authenticated user.
-
-        The text-to-CAD parts are returned in order of creation, with the most recently created text-to-CAD parts first.
-
-                Returns an async iterator that automatically handles pagination.
-                Iterate over all items across all pages:
-
-                    async for item in client.user.list_text_to_cad_parts_for_user():
-                        print(item)
-        """
-
-        from typing import Any, Dict
-
-        from kittycad.pagination import AsyncPageIterator
-
-        # Store path parameters in closure for later use
-
-        # Create arguments dict, filtering out None values
-        kwargs: Dict[str, Any] = {}
-
-        if limit is not None:
-            kwargs["limit"] = limit
-
-        if page_token is not None:
-            kwargs["page_token"] = page_token
-
-        if sort_by is not None:
-            kwargs["sort_by"] = sort_by
-
-        if no_models is not None:
-            kwargs["no_models"] = no_models
-
-        if no_parts is not None:
-            kwargs["no_parts"] = no_parts
-
-        if conversation_id is not None:
-            kwargs["conversation_id"] = conversation_id
-
-        async def fetch_page(**kw):
-            return await self._fetch_page_list_text_to_cad_parts_for_user(**kw)
-
-        # Create the async page iterator
-        return AsyncPageIterator(
-            page_fetcher=fetch_page,
-            initial_kwargs=kwargs,
-        )
-
-    async def _fetch_page_list_text_to_cad_parts_for_user(
-        self, **kwargs
-    ) -> TextToCadResponseResultsPage:
-        """Internal async method to fetch a single page."""
-        # Build URL with path parameters
-        url = "{}/user/text-to-cad".format(self.client.base_url)
-
-        # Add query parameters
-
-        if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
-
-        if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
-
-        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(kwargs["sort_by"])
-            else:
-                url = url + "?sort_by=" + str(kwargs["sort_by"])
-
-        if "no_models" in kwargs and kwargs["no_models"] is not None:
-            if "?" in url:
-                url = url + "&no_models=" + str(kwargs["no_models"]).lower()
-            else:
-                url = url + "?no_models=" + str(kwargs["no_models"]).lower()
-
-        if "no_parts" in kwargs and kwargs["no_parts"] is not None:
-            if "?" in url:
-                url = url + "&no_parts=" + str(kwargs["no_parts"]).lower()
-            else:
-                url = url + "?no_parts=" + str(kwargs["no_parts"]).lower()
-
-        if "conversation_id" in kwargs and kwargs["conversation_id"] is not None:
-            if "?" in url:
-                url = url + "&conversation_id=" + str(kwargs["conversation_id"])
-            else:
-                url = url + "?conversation_id=" + str(kwargs["conversation_id"])
-
-        # Pagination parameters (limit, page_token) are already handled above as regular query params
-
-        _client = self.client.get_http_client()
-        response = await _client.get(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-        # Validate into a Pydantic model (supports BaseModel/RootModel)
-        return TextToCadResponseResultsPage.model_validate(json_data, extra="ignore")
-
-    async def get_text_to_cad_part_for_user(
-        self,
-        id: str,
-    ) -> TextToCadResponse:
-        """This endpoint requires authentication by any Zoo user. The user must be the owner of the text-to-CAD model."""
-
-        url = "{}/user/text-to-cad/{id}".format(self.client.base_url, id=id)
-
-        _client = self.client.get_http_client()
-
-        response = await _client.get(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return TextToCadResponse.model_validate(json_data, extra="ignore")
-
-    async def create_text_to_cad_part_feedback(
-        self,
-        id: str,
-        feedback: MlFeedback,
-    ):
-        """This can be a text-to-CAD creation or iteration.
-
-        This endpoint requires authentication by any Zoo user. The user must be the owner of the ML response, in order to give feedback."""
-
-        url = "{}/user/text-to-cad/{id}".format(self.client.base_url, id=id)
-
-        if feedback is not None:
-            if "?" in url:
-                url = url + "&feedback=" + str(feedback)
-            else:
-                url = url + "?feedback=" + str(feedback)
-
-        _client = self.client.get_http_client()
-
-        response = await _client.post(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        return response.json() if response.content else None
-
-    async def ml_copilot_ws(
-        self,
-        replay: Optional[bool] = None,
-        conversation_id: Optional[str] = None,
-        pr: Optional[int] = None,
-    ):
-        """Open a websocket to prompt the ML copilot.
-
-        Returns an async WebSocket connection for sending/receiving data.
-        """
-
-        # For async clients, return the raw async WebSocket connection
-        # This supports await websocket.send() and async for message in websocket
-        async def ml_copilot_ws(
-            self,
-            *,
-            replay: Optional[bool] = None,
-            conversation_id: Optional[str] = None,
-            pr: Optional[int] = None,
-        ) -> ClientConnectionAsync:
-            """Open a websocket to prompt the ML copilot."""
-
-            url = "/ws/ml/copilot"
-
-            if replay is not None:
-                if "?" in url:
-                    url = url + "&replay=" + str(replay).lower()
-                else:
-                    url = url + "?replay=" + str(replay).lower()
-
-            if conversation_id is not None:
-                if "?" in url:
-                    url = url + "&conversation_id=" + str(conversation_id)
-                else:
-                    url = url + "?conversation_id=" + str(conversation_id)
-
-            if pr is not None:
-                if "?" in url:
-                    url = url + "&pr=" + str(pr)
-                else:
-                    url = url + "?pr=" + str(pr)
-
-            return await ws_connect_async(
-                url.replace("http", "ws"),
-                extra_headers=self.client.get_headers(),
-                close_timeout=120,
-                max_size=None,
-            )
-
-    async def ml_reasoning_ws(self, id: str):
-        """Open a websocket to prompt the ML copilot.
-
-        Returns an async WebSocket connection for sending/receiving data.
-        """
-
-        # For async clients, return the raw async WebSocket connection
-        # This supports await websocket.send() and async for message in websocket
-        async def ml_reasoning_ws(
-            self,
-            id: str,
-        ) -> ClientConnectionAsync:
-            """Open a websocket to prompt the ML copilot."""
-
-            url = "/ws/ml/reasoning/{id}".format(id=id)
-
-            return await ws_connect_async(
-                url.replace("http", "ws"),
-                extra_headers=self.client.get_headers(),
-                close_timeout=120,
-                max_size=None,
-            )
 
 
 class ApiCallsAPI:
@@ -4573,6 +3168,1063 @@ class AsyncExecutorAPI:
             """Create a terminal."""
 
             url = "/ws/executor/term"
+
+            return await ws_connect_async(
+                url.replace("http", "ws"),
+                extra_headers=self.client.get_headers(),
+                close_timeout=120,
+                max_size=None,
+            )
+
+
+class MlAPI:
+    """API for ml endpoints"""
+
+    def __init__(self, client: Client) -> None:
+        self.client = client
+
+    def list_conversations_for_user(
+        self,
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+        sort_by: Optional[CreatedAtSortMode] = None,
+    ) -> "SyncPageIterator":
+        """This endpoint requires authentication by any Zoo user. It returns the conversations for the authenticated user.
+
+        The conversations are returned in order of creation, with the most recently created conversations first.
+
+                Returns an iterator that automatically handles pagination.
+                Iterate over all items across all pages:
+
+                    for item in client.ml.list_conversations_for_user():
+                        print(item)
+        """
+
+        from typing import Any, Dict
+
+        from kittycad.pagination import SyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
+
+        if limit is not None:
+            kwargs["limit"] = limit
+
+        if page_token is not None:
+            kwargs["page_token"] = page_token
+
+        if sort_by is not None:
+            kwargs["sort_by"] = sort_by
+
+        def fetch_page(**kw):
+            return self._fetch_page_list_conversations_for_user(**kw)
+
+        # Create the page iterator
+        return SyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    def _fetch_page_list_conversations_for_user(
+        self, **kwargs
+    ) -> ConversationResultsPage:
+        """Internal method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/ml/conversations".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+        # Validate into a Pydantic model (supports BaseModel/RootModel)
+        return ConversationResultsPage.model_validate(json_data, extra="ignore")
+
+    def create_proprietary_to_kcl(
+        self,
+        *,
+        code_option: Optional[CodeOption] = None,
+    ) -> KclModel:
+        """This endpoint is used to convert a proprietary CAD format to KCL. The file passed MUST have feature tree data.
+
+        A STEP file does not have feature tree data, so it will not work. A sldprt file does have feature tree data, so it will work.
+
+        This endpoint is designed to work with any native proprietary CAD format, for example: - SolidWorks (.sldprt) - Creo (.prt) - Catia (.catpart) - NX (.prt) - Fusion 360 (.f3d)
+
+        This endpoint is deterministic, it preserves the original design intent by using the feature tree data. This endpoint does not use any machine learning or AI.
+
+        This endpoint is currently in beta, and is only available to users with access to the feature. Please contact support if you are interested in getting access.
+
+        This endpoint might have limitations and bugs, please report any issues you encounter. It will be improved over time.
+
+        Input filepaths will be normalized and re-canonicalized to be under the current working directory -- so returned paths may differ from provided paths, and care must be taken when handling user provided paths."""
+
+        url = "{}/ml/convert/proprietary-to-kcl".format(self.client.base_url)
+
+        if code_option is not None:
+            if "?" in url:
+                url = url + "&code_option=" + str(code_option)
+            else:
+                url = url + "?code_option=" + str(code_option)
+
+        _client = self.client.get_http_client()
+
+        response = _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return KclModel.model_validate(json_data, extra="ignore")
+
+    def create_custom_model(
+        self,
+        body: CreateCustomModel,
+    ) -> CustomModel:
+        """Dataset readiness is enforced via `OrgDatasetFileConversion::status_counts_for_datasets`: - At least one conversion must have status `success`. - No conversions may remain in `queued`. If even a single file is still queued the dataset is treated as “not ready for training.” - A dataset consisting only of `canceled` or `error_*` entries is rejected because there’s nothing usable."""
+
+        url = "{}/ml/custom/models".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+            content=serialize_request_body(body),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return CustomModel.model_validate(json_data, extra="ignore")
+
+    def get_custom_model(
+        self,
+        id: Uuid,
+    ) -> CustomModel:
+        """Retrieve the details of a single custom ML model so long as it belongs to the caller’s organization."""
+
+        url = "{}/ml/custom/models/{id}".format(self.client.base_url, id=id)
+
+        _client = self.client.get_http_client()
+
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return CustomModel.model_validate(json_data, extra="ignore")
+
+    def update_custom_model(
+        self,
+        id: Uuid,
+        body: UpdateCustomModel,
+    ) -> CustomModel:
+        """Update mutable metadata (name, system prompt) for a custom ML model owned by the caller's organization."""
+
+        url = "{}/ml/custom/models/{id}".format(self.client.base_url, id=id)
+
+        _client = self.client.get_http_client()
+
+        response = _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+            content=serialize_request_body(body),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return CustomModel.model_validate(json_data, extra="ignore")
+
+    def list_org_datasets_for_model(
+        self,
+        id: Uuid,
+    ) -> List[OrgDataset]:
+        """List the org datasets that are currently attached to a custom ML model owned by the caller’s organization."""
+
+        url = "{}/ml/custom/models/{id}/datasets".format(self.client.base_url, id=id)
+
+        _client = self.client.get_http_client()
+
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into annotated/collection/union types using TypeAdapter
+        from pydantic import TypeAdapter
+
+        return TypeAdapter(List[OrgDataset]).validate_python(json_data, extra="ignore")
+
+    def create_kcl_code_completions(
+        self,
+        body: KclCodeCompletionRequest,
+    ) -> KclCodeCompletionResponse:
+        """Generate code completions for KCL."""
+
+        url = "{}/ml/kcl/completions".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+            content=serialize_request_body(body),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return KclCodeCompletionResponse.model_validate(json_data, extra="ignore")
+
+    def list_text_to_cad_parts_for_user(
+        self,
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+        sort_by: Optional[CreatedAtSortMode] = None,
+        no_models: Optional[bool] = None,
+        no_parts: Optional[bool] = None,
+        conversation_id: Optional[Uuid] = None,
+    ) -> "SyncPageIterator":
+        """This will always return the STEP file contents as well as the format the user originally requested.
+
+        This endpoint requires authentication by any Zoo user. It returns the text-to-CAD parts for the authenticated user.
+
+        The text-to-CAD parts are returned in order of creation, with the most recently created text-to-CAD parts first.
+
+                Returns an iterator that automatically handles pagination.
+                Iterate over all items across all pages:
+
+                    for item in client.user.list_text_to_cad_parts_for_user():
+                        print(item)
+        """
+
+        from typing import Any, Dict
+
+        from kittycad.pagination import SyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
+
+        if limit is not None:
+            kwargs["limit"] = limit
+
+        if page_token is not None:
+            kwargs["page_token"] = page_token
+
+        if sort_by is not None:
+            kwargs["sort_by"] = sort_by
+
+        if no_models is not None:
+            kwargs["no_models"] = no_models
+
+        if no_parts is not None:
+            kwargs["no_parts"] = no_parts
+
+        if conversation_id is not None:
+            kwargs["conversation_id"] = conversation_id
+
+        def fetch_page(**kw):
+            return self._fetch_page_list_text_to_cad_parts_for_user(**kw)
+
+        # Create the page iterator
+        return SyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    def _fetch_page_list_text_to_cad_parts_for_user(
+        self, **kwargs
+    ) -> TextToCadResponseResultsPage:
+        """Internal method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/user/text-to-cad".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        if "no_models" in kwargs and kwargs["no_models"] is not None:
+            if "?" in url:
+                url = url + "&no_models=" + str(kwargs["no_models"]).lower()
+            else:
+                url = url + "?no_models=" + str(kwargs["no_models"]).lower()
+
+        if "no_parts" in kwargs and kwargs["no_parts"] is not None:
+            if "?" in url:
+                url = url + "&no_parts=" + str(kwargs["no_parts"]).lower()
+            else:
+                url = url + "?no_parts=" + str(kwargs["no_parts"]).lower()
+
+        if "conversation_id" in kwargs and kwargs["conversation_id"] is not None:
+            if "?" in url:
+                url = url + "&conversation_id=" + str(kwargs["conversation_id"])
+            else:
+                url = url + "?conversation_id=" + str(kwargs["conversation_id"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+        # Validate into a Pydantic model (supports BaseModel/RootModel)
+        return TextToCadResponseResultsPage.model_validate(json_data, extra="ignore")
+
+    def get_text_to_cad_part_for_user(
+        self,
+        id: str,
+    ) -> TextToCadResponse:
+        """This endpoint requires authentication by any Zoo user. The user must be the owner of the text-to-CAD model."""
+
+        url = "{}/user/text-to-cad/{id}".format(self.client.base_url, id=id)
+
+        _client = self.client.get_http_client()
+
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return TextToCadResponse.model_validate(json_data, extra="ignore")
+
+    def create_text_to_cad_part_feedback(
+        self,
+        id: str,
+        feedback: MlFeedback,
+    ):
+        """This can be a text-to-CAD creation or iteration.
+
+        This endpoint requires authentication by any Zoo user. The user must be the owner of the ML response, in order to give feedback."""
+
+        url = "{}/user/text-to-cad/{id}".format(self.client.base_url, id=id)
+
+        if feedback is not None:
+            if "?" in url:
+                url = url + "&feedback=" + str(feedback)
+            else:
+                url = url + "?feedback=" + str(feedback)
+
+        _client = self.client.get_http_client()
+
+        response = _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    def ml_copilot_ws(
+        self,
+        replay: Optional[bool] = None,
+        conversation_id: Optional[str] = None,
+        pr: Optional[int] = None,
+        recv_timeout: Optional[float] = None,
+        ws_factory: Optional[Callable[..., ClientConnectionSync]] = None,
+    ) -> "WebSocketMlCopilotWs":
+        """Open a websocket to prompt the ML copilot.
+
+        Returns a WebSocket wrapper with methods for sending/receiving data.
+        """
+        return WebSocketMlCopilotWs(
+            replay=replay,
+            conversation_id=conversation_id,
+            pr=pr,
+            recv_timeout=recv_timeout,
+            ws_factory=ws_factory,
+            client=self.client,
+        )
+
+    def ml_reasoning_ws(
+        self,
+        id: str,
+        recv_timeout: Optional[float] = None,
+        ws_factory: Optional[Callable[..., ClientConnectionSync]] = None,
+    ) -> "WebSocketMlReasoningWs":
+        """Open a websocket to prompt the ML copilot.
+
+        Returns a WebSocket wrapper with methods for sending/receiving data.
+        """
+        return WebSocketMlReasoningWs(
+            id=id, recv_timeout=recv_timeout, ws_factory=ws_factory, client=self.client
+        )
+
+
+class AsyncMlAPI:
+    """Async API for ml endpoints"""
+
+    def __init__(self, client: AsyncClient) -> None:
+        self.client = client
+
+    def list_conversations_for_user(
+        self,
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+        sort_by: Optional[CreatedAtSortMode] = None,
+    ) -> "AsyncPageIterator":
+        """This endpoint requires authentication by any Zoo user. It returns the conversations for the authenticated user.
+
+        The conversations are returned in order of creation, with the most recently created conversations first.
+
+                Returns an async iterator that automatically handles pagination.
+                Iterate over all items across all pages:
+
+                    async for item in client.ml.list_conversations_for_user():
+                        print(item)
+        """
+
+        from typing import Any, Dict
+
+        from kittycad.pagination import AsyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
+
+        if limit is not None:
+            kwargs["limit"] = limit
+
+        if page_token is not None:
+            kwargs["page_token"] = page_token
+
+        if sort_by is not None:
+            kwargs["sort_by"] = sort_by
+
+        async def fetch_page(**kw):
+            return await self._fetch_page_list_conversations_for_user(**kw)
+
+        # Create the async page iterator
+        return AsyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    async def _fetch_page_list_conversations_for_user(
+        self, **kwargs
+    ) -> ConversationResultsPage:
+        """Internal async method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/ml/conversations".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+        # Validate into a Pydantic model (supports BaseModel/RootModel)
+        return ConversationResultsPage.model_validate(json_data, extra="ignore")
+
+    async def create_proprietary_to_kcl(
+        self,
+        *,
+        code_option: Optional[CodeOption] = None,
+    ) -> KclModel:
+        """This endpoint is used to convert a proprietary CAD format to KCL. The file passed MUST have feature tree data.
+
+        A STEP file does not have feature tree data, so it will not work. A sldprt file does have feature tree data, so it will work.
+
+        This endpoint is designed to work with any native proprietary CAD format, for example: - SolidWorks (.sldprt) - Creo (.prt) - Catia (.catpart) - NX (.prt) - Fusion 360 (.f3d)
+
+        This endpoint is deterministic, it preserves the original design intent by using the feature tree data. This endpoint does not use any machine learning or AI.
+
+        This endpoint is currently in beta, and is only available to users with access to the feature. Please contact support if you are interested in getting access.
+
+        This endpoint might have limitations and bugs, please report any issues you encounter. It will be improved over time.
+
+        Input filepaths will be normalized and re-canonicalized to be under the current working directory -- so returned paths may differ from provided paths, and care must be taken when handling user provided paths."""
+
+        url = "{}/ml/convert/proprietary-to-kcl".format(self.client.base_url)
+
+        if code_option is not None:
+            if "?" in url:
+                url = url + "&code_option=" + str(code_option)
+            else:
+                url = url + "?code_option=" + str(code_option)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return KclModel.model_validate(json_data, extra="ignore")
+
+    async def create_custom_model(
+        self,
+        body: CreateCustomModel,
+    ) -> CustomModel:
+        """Dataset readiness is enforced via `OrgDatasetFileConversion::status_counts_for_datasets`: - At least one conversion must have status `success`. - No conversions may remain in `queued`. If even a single file is still queued the dataset is treated as “not ready for training.” - A dataset consisting only of `canceled` or `error_*` entries is rejected because there’s nothing usable."""
+
+        url = "{}/ml/custom/models".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+            content=serialize_request_body(body),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return CustomModel.model_validate(json_data, extra="ignore")
+
+    async def get_custom_model(
+        self,
+        id: Uuid,
+    ) -> CustomModel:
+        """Retrieve the details of a single custom ML model so long as it belongs to the caller’s organization."""
+
+        url = "{}/ml/custom/models/{id}".format(self.client.base_url, id=id)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return CustomModel.model_validate(json_data, extra="ignore")
+
+    async def update_custom_model(
+        self,
+        id: Uuid,
+        body: UpdateCustomModel,
+    ) -> CustomModel:
+        """Update mutable metadata (name, system prompt) for a custom ML model owned by the caller's organization."""
+
+        url = "{}/ml/custom/models/{id}".format(self.client.base_url, id=id)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+            content=serialize_request_body(body),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return CustomModel.model_validate(json_data, extra="ignore")
+
+    async def list_org_datasets_for_model(
+        self,
+        id: Uuid,
+    ) -> List[OrgDataset]:
+        """List the org datasets that are currently attached to a custom ML model owned by the caller’s organization."""
+
+        url = "{}/ml/custom/models/{id}/datasets".format(self.client.base_url, id=id)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into annotated/collection/union types using TypeAdapter
+        from pydantic import TypeAdapter
+
+        return TypeAdapter(List[OrgDataset]).validate_python(json_data, extra="ignore")
+
+    async def create_kcl_code_completions(
+        self,
+        body: KclCodeCompletionRequest,
+    ) -> KclCodeCompletionResponse:
+        """Generate code completions for KCL."""
+
+        url = "{}/ml/kcl/completions".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+            content=serialize_request_body(body),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return KclCodeCompletionResponse.model_validate(json_data, extra="ignore")
+
+    def list_text_to_cad_parts_for_user(
+        self,
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+        sort_by: Optional[CreatedAtSortMode] = None,
+        no_models: Optional[bool] = None,
+        no_parts: Optional[bool] = None,
+        conversation_id: Optional[Uuid] = None,
+    ) -> "AsyncPageIterator":
+        """This will always return the STEP file contents as well as the format the user originally requested.
+
+        This endpoint requires authentication by any Zoo user. It returns the text-to-CAD parts for the authenticated user.
+
+        The text-to-CAD parts are returned in order of creation, with the most recently created text-to-CAD parts first.
+
+                Returns an async iterator that automatically handles pagination.
+                Iterate over all items across all pages:
+
+                    async for item in client.user.list_text_to_cad_parts_for_user():
+                        print(item)
+        """
+
+        from typing import Any, Dict
+
+        from kittycad.pagination import AsyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
+
+        if limit is not None:
+            kwargs["limit"] = limit
+
+        if page_token is not None:
+            kwargs["page_token"] = page_token
+
+        if sort_by is not None:
+            kwargs["sort_by"] = sort_by
+
+        if no_models is not None:
+            kwargs["no_models"] = no_models
+
+        if no_parts is not None:
+            kwargs["no_parts"] = no_parts
+
+        if conversation_id is not None:
+            kwargs["conversation_id"] = conversation_id
+
+        async def fetch_page(**kw):
+            return await self._fetch_page_list_text_to_cad_parts_for_user(**kw)
+
+        # Create the async page iterator
+        return AsyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    async def _fetch_page_list_text_to_cad_parts_for_user(
+        self, **kwargs
+    ) -> TextToCadResponseResultsPage:
+        """Internal async method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/user/text-to-cad".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        if "no_models" in kwargs and kwargs["no_models"] is not None:
+            if "?" in url:
+                url = url + "&no_models=" + str(kwargs["no_models"]).lower()
+            else:
+                url = url + "?no_models=" + str(kwargs["no_models"]).lower()
+
+        if "no_parts" in kwargs and kwargs["no_parts"] is not None:
+            if "?" in url:
+                url = url + "&no_parts=" + str(kwargs["no_parts"]).lower()
+            else:
+                url = url + "?no_parts=" + str(kwargs["no_parts"]).lower()
+
+        if "conversation_id" in kwargs and kwargs["conversation_id"] is not None:
+            if "?" in url:
+                url = url + "&conversation_id=" + str(kwargs["conversation_id"])
+            else:
+                url = url + "?conversation_id=" + str(kwargs["conversation_id"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+        # Validate into a Pydantic model (supports BaseModel/RootModel)
+        return TextToCadResponseResultsPage.model_validate(json_data, extra="ignore")
+
+    async def get_text_to_cad_part_for_user(
+        self,
+        id: str,
+    ) -> TextToCadResponse:
+        """This endpoint requires authentication by any Zoo user. The user must be the owner of the text-to-CAD model."""
+
+        url = "{}/user/text-to-cad/{id}".format(self.client.base_url, id=id)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return TextToCadResponse.model_validate(json_data, extra="ignore")
+
+    async def create_text_to_cad_part_feedback(
+        self,
+        id: str,
+        feedback: MlFeedback,
+    ):
+        """This can be a text-to-CAD creation or iteration.
+
+        This endpoint requires authentication by any Zoo user. The user must be the owner of the ML response, in order to give feedback."""
+
+        url = "{}/user/text-to-cad/{id}".format(self.client.base_url, id=id)
+
+        if feedback is not None:
+            if "?" in url:
+                url = url + "&feedback=" + str(feedback)
+            else:
+                url = url + "?feedback=" + str(feedback)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    async def ml_copilot_ws(
+        self,
+        replay: Optional[bool] = None,
+        conversation_id: Optional[str] = None,
+        pr: Optional[int] = None,
+    ):
+        """Open a websocket to prompt the ML copilot.
+
+        Returns an async WebSocket connection for sending/receiving data.
+        """
+
+        # For async clients, return the raw async WebSocket connection
+        # This supports await websocket.send() and async for message in websocket
+        async def ml_copilot_ws(
+            self,
+            *,
+            replay: Optional[bool] = None,
+            conversation_id: Optional[str] = None,
+            pr: Optional[int] = None,
+        ) -> ClientConnectionAsync:
+            """Open a websocket to prompt the ML copilot."""
+
+            url = "/ws/ml/copilot"
+
+            if replay is not None:
+                if "?" in url:
+                    url = url + "&replay=" + str(replay).lower()
+                else:
+                    url = url + "?replay=" + str(replay).lower()
+
+            if conversation_id is not None:
+                if "?" in url:
+                    url = url + "&conversation_id=" + str(conversation_id)
+                else:
+                    url = url + "?conversation_id=" + str(conversation_id)
+
+            if pr is not None:
+                if "?" in url:
+                    url = url + "&pr=" + str(pr)
+                else:
+                    url = url + "?pr=" + str(pr)
+
+            return await ws_connect_async(
+                url.replace("http", "ws"),
+                extra_headers=self.client.get_headers(),
+                close_timeout=120,
+                max_size=None,
+            )
+
+    async def ml_reasoning_ws(self, id: str):
+        """Open a websocket to prompt the ML copilot.
+
+        Returns an async WebSocket connection for sending/receiving data.
+        """
+
+        # For async clients, return the raw async WebSocket connection
+        # This supports await websocket.send() and async for message in websocket
+        async def ml_reasoning_ws(
+            self,
+            id: str,
+        ) -> ClientConnectionAsync:
+            """Open a websocket to prompt the ML copilot."""
+
+            url = "/ws/ml/reasoning/{id}".format(id=id)
 
             return await ws_connect_async(
                 url.replace("http", "ws"),
@@ -17154,6 +16806,75 @@ class AsyncModelingAPI:
             )
 
 
+class WebSocketCreateExecutorTerm:
+    """A websocket connection for create_executor_term."""
+
+    ws: ClientConnectionSync
+
+    def __init__(
+        self,
+        recv_timeout: Optional[float] = None,
+        ws_factory: Optional[Callable[..., ClientConnectionSync]] = None,
+        *,
+        client: Client,
+    ):
+        # Inline WebSocket connection logic
+
+        url = ("{}" + "/ws/executor/term").format(client.base_url)
+
+        headers = client.get_headers()
+        factory = ws_factory or ws_connect
+        self.ws = factory(
+            url.replace("http", "ws"),
+            additional_headers=headers,
+            close_timeout=120,
+            max_size=None,
+        )
+        self._recv_timeout = (
+            client.get_websocket_recv_timeout()
+            if recv_timeout is None
+            else recv_timeout
+        )
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        self.close()
+
+    def __iter__(self):
+        """
+        Iterate on incoming messages.
+
+        The iterator calls recv() and yields messages in an infinite loop.
+
+        It exits when the connection is closed normally. It raises a
+        ConnectionClosedError exception after a protocol error or a network failure.
+        """
+        for message in self.ws:
+            yield json.loads(message)
+
+    def send(self, data: Dict[str, Any]):
+        """Send data to the websocket."""
+
+        self.ws.send(json.dumps(data))
+
+    def send_binary(self, data: Dict[str, Any]):
+        """Send data as bson to the websocket."""
+
+        self.ws.send(bson.encode(data))
+
+    def recv(self) -> Dict[str, Any]:
+        """Receive data from the websocket."""
+        message = self.ws.recv(timeout=self._recv_timeout)
+
+        return json.loads(message)
+
+    def close(self):
+        """Close the websocket."""
+        self.ws.close()
+
+
 class WebSocketMlCopilotWs:
     """A websocket connection for ml_copilot_ws."""
 
@@ -17308,75 +17029,6 @@ class WebSocketMlReasoningWs:
         message = self.ws.recv(timeout=self._recv_timeout)
 
         return MlCopilotServerMessage.model_validate_json(message)
-
-    def close(self):
-        """Close the websocket."""
-        self.ws.close()
-
-
-class WebSocketCreateExecutorTerm:
-    """A websocket connection for create_executor_term."""
-
-    ws: ClientConnectionSync
-
-    def __init__(
-        self,
-        recv_timeout: Optional[float] = None,
-        ws_factory: Optional[Callable[..., ClientConnectionSync]] = None,
-        *,
-        client: Client,
-    ):
-        # Inline WebSocket connection logic
-
-        url = ("{}" + "/ws/executor/term").format(client.base_url)
-
-        headers = client.get_headers()
-        factory = ws_factory or ws_connect
-        self.ws = factory(
-            url.replace("http", "ws"),
-            additional_headers=headers,
-            close_timeout=120,
-            max_size=None,
-        )
-        self._recv_timeout = (
-            client.get_websocket_recv_timeout()
-            if recv_timeout is None
-            else recv_timeout
-        )
-
-    def __enter__(self):
-        return self
-
-    def __exit__(self, exc_type, exc_value, traceback):
-        self.close()
-
-    def __iter__(self):
-        """
-        Iterate on incoming messages.
-
-        The iterator calls recv() and yields messages in an infinite loop.
-
-        It exits when the connection is closed normally. It raises a
-        ConnectionClosedError exception after a protocol error or a network failure.
-        """
-        for message in self.ws:
-            yield json.loads(message)
-
-    def send(self, data: Dict[str, Any]):
-        """Send data to the websocket."""
-
-        self.ws.send(json.dumps(data))
-
-    def send_binary(self, data: Dict[str, Any]):
-        """Send data as bson to the websocket."""
-
-        self.ws.send(bson.encode(data))
-
-    def recv(self) -> Dict[str, Any]:
-        """Receive data from the websocket."""
-        message = self.ws.recv(timeout=self._recv_timeout)
-
-        return json.loads(message)
 
     def close(self):
         """Close the websocket."""
@@ -17560,9 +17212,6 @@ class KittyCAD(Client):
         meta: MetaAPI - Access to meta endpoints
 
 
-        ml: MlAPI - Access to ml endpoints
-
-
         api_calls: ApiCallsAPI - Access to api_calls endpoints
 
 
@@ -17576,6 +17225,9 @@ class KittyCAD(Client):
 
 
         executor: ExecutorAPI - Access to executor endpoints
+
+
+        ml: MlAPI - Access to ml endpoints
 
 
         oauth2: Oauth2API - Access to oauth2 endpoints
@@ -17616,8 +17268,6 @@ class KittyCAD(Client):
 
     meta: "MetaAPI"
 
-    ml: "MlAPI"
-
     api_calls: "ApiCallsAPI"
 
     apps: "AppsAPI"
@@ -17627,6 +17277,8 @@ class KittyCAD(Client):
     file: "FileAPI"
 
     executor: "ExecutorAPI"
+
+    ml: "MlAPI"
 
     oauth2: "Oauth2API"
 
@@ -17671,8 +17323,6 @@ class KittyCAD(Client):
 
         self.meta: MetaAPI = MetaAPI(self)
 
-        self.ml: MlAPI = MlAPI(self)
-
         self.api_calls: ApiCallsAPI = ApiCallsAPI(self)
 
         self.apps: AppsAPI = AppsAPI(self)
@@ -17682,6 +17332,8 @@ class KittyCAD(Client):
         self.file: FileAPI = FileAPI(self)
 
         self.executor: ExecutorAPI = ExecutorAPI(self)
+
+        self.ml: MlAPI = MlAPI(self)
 
         self.oauth2: Oauth2API = Oauth2API(self)
 
@@ -17728,9 +17380,6 @@ class AsyncKittyCAD(AsyncClient):
         meta: AsyncMetaAPI - Access to meta endpoints
 
 
-        ml: AsyncMlAPI - Access to ml endpoints
-
-
         api_calls: AsyncApiCallsAPI - Access to api_calls endpoints
 
 
@@ -17744,6 +17393,9 @@ class AsyncKittyCAD(AsyncClient):
 
 
         executor: AsyncExecutorAPI - Access to executor endpoints
+
+
+        ml: AsyncMlAPI - Access to ml endpoints
 
 
         oauth2: AsyncOauth2API - Access to oauth2 endpoints
@@ -17784,8 +17436,6 @@ class AsyncKittyCAD(AsyncClient):
 
     meta: "AsyncMetaAPI"
 
-    ml: "AsyncMlAPI"
-
     api_calls: "AsyncApiCallsAPI"
 
     apps: "AsyncAppsAPI"
@@ -17795,6 +17445,8 @@ class AsyncKittyCAD(AsyncClient):
     file: "AsyncFileAPI"
 
     executor: "AsyncExecutorAPI"
+
+    ml: "AsyncMlAPI"
 
     oauth2: "AsyncOauth2API"
 
@@ -17839,8 +17491,6 @@ class AsyncKittyCAD(AsyncClient):
 
         self.meta: AsyncMetaAPI = AsyncMetaAPI(self)
 
-        self.ml: AsyncMlAPI = AsyncMlAPI(self)
-
         self.api_calls: AsyncApiCallsAPI = AsyncApiCallsAPI(self)
 
         self.apps: AsyncAppsAPI = AsyncAppsAPI(self)
@@ -17850,6 +17500,8 @@ class AsyncKittyCAD(AsyncClient):
         self.file: AsyncFileAPI = AsyncFileAPI(self)
 
         self.executor: AsyncExecutorAPI = AsyncExecutorAPI(self)
+
+        self.ml: AsyncMlAPI = AsyncMlAPI(self)
 
         self.oauth2: AsyncOauth2API = AsyncOauth2API(self)
 

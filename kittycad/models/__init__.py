@@ -493,12 +493,7 @@ from .surface_edge_reference import SurfaceEdgeReference
 from .sweep import Sweep
 from .system import System
 from .take_snapshot import TakeSnapshot
-from .text_to_cad import TextToCad
-from .text_to_cad_create_body import TextToCadCreateBody
-from .text_to_cad_iteration import TextToCadIteration
-from .text_to_cad_iteration_body import TextToCadIterationBody
 from .text_to_cad_model import TextToCadModel
-from .text_to_cad_multi_file_iteration import TextToCadMultiFileIteration
 from .text_to_cad_multi_file_iteration_body import TextToCadMultiFileIterationBody
 from .text_to_cad_response import TextToCadResponse
 from .text_to_cad_response_results_page import TextToCadResponseResultsPage
