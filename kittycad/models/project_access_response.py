@@ -12,6 +12,8 @@ class ProjectAccessResponse(KittyCadBaseModel):
 
     can_edit: bool
 
+    can_manage_organization: bool
+
     organization_id: Optional[Uuid] = None
 
     scope: ProjectAccessScope

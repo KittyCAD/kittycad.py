@@ -12650,6 +12650,56 @@ class ProjectsAPI:
 
         return response.json() if response.content else None
 
+    def update_project_organization(
+        self,
+        id: Uuid,
+    ) -> ProjectResponse:
+        """This changes only the project's ownership scope. The project ID, current revision, files, and version history remain unchanged so cloud bindings stay valid across the move."""
+
+        url = "{}/user/projects/{id}/organization".format(self.client.base_url, id=id)
+
+        _client = self.client.get_http_client()
+
+        response = _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return ProjectResponse.model_validate(json_data, extra="ignore")
+
+    def delete_project_organization(
+        self,
+        id: Uuid,
+    ):
+        """Organization administrators may perform this move to revoke organization access. The project ID, current revision, files, and version history remain unchanged."""
+
+        url = "{}/user/projects/{id}/organization".format(self.client.base_url, id=id)
+
+        _client = self.client.get_http_client()
+
+        response = _client.delete(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
     def publish_project(
         self,
         id: Uuid,
@@ -13147,6 +13197,56 @@ class AsyncProjectsAPI:
         _client = self.client.get_http_client()
 
         response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    async def update_project_organization(
+        self,
+        id: Uuid,
+    ) -> ProjectResponse:
+        """This changes only the project's ownership scope. The project ID, current revision, files, and version history remain unchanged so cloud bindings stay valid across the move."""
+
+        url = "{}/user/projects/{id}/organization".format(self.client.base_url, id=id)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return ProjectResponse.model_validate(json_data, extra="ignore")
+
+    async def delete_project_organization(
+        self,
+        id: Uuid,
+    ):
+        """Organization administrators may perform this move to revoke organization access. The project ID, current revision, files, and version history remain unchanged."""
+
+        url = "{}/user/projects/{id}/organization".format(self.client.base_url, id=id)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.delete(
             url=url,
             headers=self.client.get_headers(),
         )
