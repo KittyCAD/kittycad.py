@@ -3,6 +3,7 @@ from typing import List, Optional
 
 from ..models.kcl_project_preview_status import KclProjectPreviewStatus
 from ..models.kcl_project_publication_status import KclProjectPublicationStatus
+from ..models.project_access_response import ProjectAccessResponse
 from ..models.project_file_response import ProjectFileResponse
 from ..models.project_publication_info_response import ProjectPublicationInfoResponse
 from ..models.uuid import Uuid
@@ -11,6 +12,8 @@ from .base import KittyCadBaseModel
 
 class ProjectResponse(KittyCadBaseModel):
     """Owner-visible project detail payload."""
+
+    access: ProjectAccessResponse
 
     category_ids: List[Uuid]
 
