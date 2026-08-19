@@ -376,6 +376,8 @@ from .post_effect_type import PostEffectType
 from .price_upsert_request import PriceUpsertRequest
 from .primitive_topology_fallback import PrimitiveTopologyFallback
 from .privacy_settings import PrivacySettings
+from .project_access_response import ProjectAccessResponse
+from .project_access_scope import ProjectAccessScope
 from .project_archive_format import ProjectArchiveFormat
 from .project_category_response import ProjectCategoryResponse
 from .project_entity_to_plane import ProjectEntityToPlane
