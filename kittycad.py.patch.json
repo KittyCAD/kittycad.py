@@ -1497,6 +1497,22 @@
   },
   {
     "op": "add",
+    "path": "/paths/~1user~1projects~1{id}~1organization/delete/x-python",
+    "value": {
+      "example": "from kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\ndef example_delete_project_organization():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    client.projects.delete_project_organization(id=Uuid(\"<string>\"))\n\n",
+      "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD.projects"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/paths/~1user~1projects~1{id}~1organization/put/x-python",
+    "value": {
+      "example": "from kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models import ProjectResponse\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_update_project_organization():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    result: ProjectResponse = client.projects.update_project_organization(id=Uuid(\"<string>\"))\n\n\n    body: ProjectResponse = result\n    print(body)\n\n",
+      "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD.projects"
+    }
+  },
+  {
+    "op": "add",
     "path": "/paths/~1user~1projects~1{id}~1publish/post/x-python",
     "value": {
       "example": "from kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models import ProjectResponse\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_publish_project():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    result: ProjectResponse = client.projects.publish_project(id=Uuid(\"<string>\"))\n\n\n    body: ProjectResponse = result\n    print(body)\n\n",

@@ -4465,6 +4465,45 @@ async def test_download_project_async():
 
 
 @pytest.mark.skip
+def test_delete_project_organization():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    client.projects.delete_project_organization(id=Uuid("<string>"))
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_delete_project_organization_async():
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    await client.projects.delete_project_organization(id=Uuid("<string>"))
+
+
+@pytest.mark.skip
+def test_update_project_organization():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: ProjectResponse = client.projects.update_project_organization(
+        id=Uuid("<string>")
+    )
+
+    body: ProjectResponse = result
+    print(body)
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_update_project_organization_async():
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: ProjectResponse = await client.projects.update_project_organization(
+        id=Uuid("<string>")
+    )
+
+
+@pytest.mark.skip
 def test_publish_project():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
