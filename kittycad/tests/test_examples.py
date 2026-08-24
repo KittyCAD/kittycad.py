@@ -131,12 +131,14 @@ from kittycad.models.email_marketing_confirm_token_body import (
 )
 from kittycad.models.file_export_format import FileExportFormat
 from kittycad.models.file_import_format import FileImportFormat
+from kittycad.models.gltf_presentation import GltfPresentation
+from kittycad.models.gltf_storage import GltfStorage
 from kittycad.models.idp_metadata_source import (
     IdpMetadataSource,
     OptionBase64EncodedXml,
     OptionUrl,
 )
-from kittycad.models.input_format3d import InputFormat3d, OptionStl
+from kittycad.models.input_format3d import InputFormat3d, OptionCatia
 from kittycad.models.kcl_code_completion_params import KclCodeCompletionParams
 from kittycad.models.kcl_code_completion_request import KclCodeCompletionRequest
 from kittycad.models.kcl_project_share_link_access_mode import (
@@ -145,16 +147,14 @@ from kittycad.models.kcl_project_share_link_access_mode import (
 from kittycad.models.lenient_url import LenientUrl
 from kittycad.models.ml_copilot_client_message import OptionPing, OptionProjectContext
 from kittycad.models.ml_feedback import MlFeedback
-from kittycad.models.modeling_cmd import ModelingCmd, OptionProjectPointsToPlane
+from kittycad.models.modeling_cmd import ModelingCmd, OptionEntityMirrorAcrossEdge
 from kittycad.models.modeling_cmd_id import ModelingCmdId
 from kittycad.models.modeling_cmd_req import ModelingCmdReq
 from kittycad.models.o_auth2_app_grant_type import OAuth2AppGrantType
 from kittycad.models.org_dataset_source import OrgDatasetSource
 from kittycad.models.org_details import OrgDetails
-from kittycad.models.output_format3d import OptionPly, OutputFormat3d
+from kittycad.models.output_format3d import OptionGltf, OutputFormat3d
 from kittycad.models.plan_interval import PlanInterval
-from kittycad.models.ply_storage import PlyStorage
-from kittycad.models.point3d import Point3d
 from kittycad.models.post_effect_type import PostEffectType
 from kittycad.models.price_upsert_request import PriceUpsertRequest
 from kittycad.models.privacy_settings import PrivacySettings
@@ -167,7 +167,6 @@ from kittycad.models.public_mailing_list_membership_request import (
 )
 from kittycad.models.sales_inquiry_type import SalesInquiryType
 from kittycad.models.saml_identity_provider_create import SamlIdentityProviderCreate
-from kittycad.models.selection import OptionSceneByIndex, Selection
 from kittycad.models.service_account_uuid import ServiceAccountUuid
 from kittycad.models.session_uuid import SessionUuid
 from kittycad.models.storage_provider import StorageProvider
@@ -557,28 +556,13 @@ def test_create_file_conversion_options():
     result: FileConversion = client.file.create_file_conversion_options(
         body=ConversionParams(
             output_format=OutputFormat3d(
-                OptionPly(
-                    coords=System(
-                        forward=AxisDirectionPair(
-                            axis=Axis.Y,
-                            direction=Direction.POSITIVE,
-                        ),
-                        up=AxisDirectionPair(
-                            axis=Axis.Y,
-                            direction=Direction.POSITIVE,
-                        ),
-                    ),
-                    selection=Selection(
-                        OptionSceneByIndex(
-                            index=10,
-                        )
-                    ),
-                    storage=PlyStorage.ASCII,
-                    units=UnitLength.CM,
+                OptionGltf(
+                    presentation=GltfPresentation.COMPACT,
+                    storage=GltfStorage.BINARY,
                 )
             ),
             src_format=InputFormat3d(
-                OptionStl(
+                OptionCatia(
                     coords=System(
                         forward=AxisDirectionPair(
                             axis=Axis.Y,
@@ -589,7 +573,7 @@ def test_create_file_conversion_options():
                             direction=Direction.POSITIVE,
                         ),
                     ),
-                    units=UnitLength.CM,
+                    split_closed_faces=False,
                 )
             ),
         ),
@@ -612,28 +596,13 @@ async def test_create_file_conversion_options_async():
     result: FileConversion = await client.file.create_file_conversion_options(
         body=ConversionParams(
             output_format=OutputFormat3d(
-                OptionPly(
-                    coords=System(
-                        forward=AxisDirectionPair(
-                            axis=Axis.Y,
-                            direction=Direction.POSITIVE,
-                        ),
-                        up=AxisDirectionPair(
-                            axis=Axis.Y,
-                            direction=Direction.POSITIVE,
-                        ),
-                    ),
-                    selection=Selection(
-                        OptionSceneByIndex(
-                            index=10,
-                        )
-                    ),
-                    storage=PlyStorage.ASCII,
-                    units=UnitLength.CM,
+                OptionGltf(
+                    presentation=GltfPresentation.COMPACT,
+                    storage=GltfStorage.BINARY,
                 )
             ),
             src_format=InputFormat3d(
-                OptionStl(
+                OptionCatia(
                     coords=System(
                         forward=AxisDirectionPair(
                             axis=Axis.Y,
@@ -644,7 +613,7 @@ async def test_create_file_conversion_options_async():
                             direction=Direction.POSITIVE,
                         ),
                     ),
-                    units=UnitLength.CM,
+                    split_closed_faces=False,
                 )
             ),
         ),
@@ -5223,7 +5192,13 @@ def test_ml_copilot_ws():
         replay=None, conversation_id=None, pr=None
     ) as websocket:
         # Send a message.
-        websocket.send(MlCopilotClientMessage(OptionPing()))
+        websocket.send(
+            MlCopilotClientMessage(
+                OptionProjectContext(
+                    current_files={"<string>": b"<bytes>"},
+                )
+            )
+        )
 
         # Get a message.
         message = websocket.recv()
@@ -5256,13 +5231,7 @@ def test_ml_reasoning_ws():
     # Connect to the websocket.
     with client.ml.ml_reasoning_ws(id="<string>") as websocket:
         # Send a message.
-        websocket.send(
-            MlCopilotClientMessage(
-                OptionProjectContext(
-                    current_files={"<string>": b"<bytes>"},
-                )
-            )
-        )
+        websocket.send(MlCopilotClientMessage(OptionPing()))
 
         # Get a message.
         message = websocket.recv()
@@ -5313,16 +5282,8 @@ def test_modeling_commands_ws():
                     requests=[
                         ModelingCmdReq(
                             cmd=ModelingCmd(
-                                OptionProjectPointsToPlane(
-                                    plane_id="<string>",
-                                    points=[
-                                        Point3d(
-                                            x=3.14,
-                                            y=3.14,
-                                            z=3.14,
-                                        )
-                                    ],
-                                    use_plane_coords=False,
+                                OptionEntityMirrorAcrossEdge(
+                                    ids=["<string>"],
                                 )
                             ),
                             cmd_id=ModelingCmdId("<string>"),

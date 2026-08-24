@@ -3,6 +3,7 @@ from typing import Any, Dict, List, Optional, Union
 
 from pydantic import RootModel, model_serializer, model_validator
 
+from ..models.ml_copilot_access_denied_code import MlCopilotAccessDeniedCode
 from ..models.ml_copilot_file import MlCopilotFile
 from ..models.ml_copilot_mode_option import MlCopilotModeOption
 from ..models.ml_tool_result import MlToolResult
@@ -141,6 +142,34 @@ class Error(KittyCadBaseModel):
         payload = handler(self, info)
 
         return {"error": payload}
+
+
+class AccessDenied(KittyCadBaseModel):
+    """A permanent account or billing denial that must be resolved outside this websocket before retrying."""
+
+    code: MlCopilotAccessDeniedCode
+
+    detail: str
+
+    retryable: bool
+
+    @model_validator(mode="before")
+    @classmethod
+    def _unwrap(cls, data):
+        if (
+            isinstance(data, dict)
+            and "access_denied" in data
+            and isinstance(data["access_denied"], dict)
+        ):
+            return data["access_denied"]
+
+        return data
+
+    @model_serializer(mode="wrap")
+    def _wrap(self, handler, info):
+        payload = handler(self, info)
+
+        return {"access_denied": payload}
 
 
 class Info(KittyCadBaseModel):
@@ -469,6 +498,7 @@ MlCopilotServerMessage = RootModel[
         Delta,
         ToolOutput,
         Error,
+        AccessDenied,
         Info,
         ModesResponse,
         BackendShutdown,
