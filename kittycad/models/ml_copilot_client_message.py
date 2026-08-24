@@ -4,7 +4,6 @@ from pydantic import Field, RootModel
 from typing_extensions import Annotated
 
 from ..models.ml_copilot_file import MlCopilotFile
-from ..models.ml_copilot_mode import MlCopilotMode
 from ..models.ml_copilot_supported_models import MlCopilotSupportedModels
 from ..models.ml_copilot_system_command import MlCopilotSystemCommand
 from ..models.ml_copilot_tool import MlCopilotTool
@@ -37,7 +36,13 @@ class OptionHeaders(KittyCadBaseModel):
 class OptionProjectContext(KittyCadBaseModel):
     """Updates the active project context without creating a new prompt."""
 
+    active_file: Optional[str] = None
+
+    correlation_id: Optional[Uuid] = None
+
     current_files: Optional[Dict[str, bytes]] = None
+
+    engine_api_call_id: Optional[Uuid] = None
 
     project_name: Optional[str] = None
 
@@ -46,6 +51,8 @@ class OptionProjectContext(KittyCadBaseModel):
 
 class OptionUser(KittyCadBaseModel):
     """The user message, which contains the content of the user's input."""
+
+    active_file: Optional[str] = None
 
     additional_files: Optional[List[MlCopilotFile]] = None
 
@@ -59,7 +66,7 @@ class OptionUser(KittyCadBaseModel):
 
     forced_tools: Optional[List[MlCopilotTool]] = None
 
-    mode: Optional[MlCopilotMode] = None
+    mode: Optional[str] = None
 
     model: Optional[MlCopilotSupportedModels] = None
 
