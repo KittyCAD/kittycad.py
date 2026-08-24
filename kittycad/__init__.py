@@ -16747,7 +16747,7 @@ class ModelingAPI:
         recv_timeout: Optional[float] = None,
         ws_factory: Optional[Callable[..., ClientConnectionSync]] = None,
     ) -> "WebSocketModelingCommandsWs":
-        """Open a websocket which accepts modeling commands.
+        """Opens a WebSocket to a Zoo KittyCAD engine instance.
 
         Returns a WebSocket wrapper with methods for sending/receiving data.
         """
@@ -16791,7 +16791,7 @@ class AsyncModelingAPI:
         order_independent_transparency: Optional[bool] = None,
         pr: Optional[int] = None,
     ):
-        """Open a websocket which accepts modeling commands.
+        """Opens a WebSocket to a Zoo KittyCAD engine instance.
 
         Returns an async WebSocket connection for sending/receiving data.
         """
@@ -16814,7 +16814,7 @@ class AsyncModelingAPI:
             order_independent_transparency: Optional[bool] = None,
             pr: Optional[int] = None,
         ) -> ClientConnectionAsync:
-            """Open a websocket which accepts modeling commands."""
+            """Opens a WebSocket to a Zoo KittyCAD engine instance."""
 
             url = "/ws/modeling/commands"
 
