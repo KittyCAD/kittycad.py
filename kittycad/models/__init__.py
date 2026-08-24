@@ -278,7 +278,6 @@ from .method import Method
 from .mirror_across import MirrorAcross
 from .ml_copilot_client_message import MlCopilotClientMessage
 from .ml_copilot_file import MlCopilotFile
-from .ml_copilot_mode import MlCopilotMode
 from .ml_copilot_mode_option import MlCopilotModeOption
 from .ml_copilot_server_message import MlCopilotServerMessage
 from .ml_copilot_supported_models import MlCopilotSupportedModels
