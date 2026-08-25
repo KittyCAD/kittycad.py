@@ -3659,7 +3659,7 @@ class MlAPI:
         recv_timeout: Optional[float] = None,
         ws_factory: Optional[Callable[..., ClientConnectionSync]] = None,
     ) -> "WebSocketMlCopilotWs":
-        """Open a websocket to prompt the ML copilot.
+        """Open a websocket to a Zookeeper agent instance.
 
         Returns a WebSocket wrapper with methods for sending/receiving data.
         """
@@ -4167,7 +4167,7 @@ class AsyncMlAPI:
         conversation_id: Optional[str] = None,
         pr: Optional[int] = None,
     ):
-        """Open a websocket to prompt the ML copilot.
+        """Open a websocket to a Zookeeper agent instance.
 
         Returns an async WebSocket connection for sending/receiving data.
         """
@@ -4181,7 +4181,7 @@ class AsyncMlAPI:
             conversation_id: Optional[str] = None,
             pr: Optional[int] = None,
         ) -> ClientConnectionAsync:
-            """Open a websocket to prompt the ML copilot."""
+            """Open a websocket to a Zookeeper agent instance."""
 
             url = "/ws/ml/copilot"
 
