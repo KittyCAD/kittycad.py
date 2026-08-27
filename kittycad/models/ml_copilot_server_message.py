@@ -366,6 +366,38 @@ class ZookeeperOpenAiResponseCheckpoint(KittyCadBaseModel):
         return {"zookeeper_open_ai_response_checkpoint": payload}
 
 
+class ZookeeperOpenAiIntermediateResponseCheckpoint(KittyCadBaseModel):
+    """Backend-only OpenAI checkpoint for an unfinished Zookeeper turn.
+
+    API persists the latest checkpoint on the active prompt and includes it only in replay sent to the text-to-CAD backend. It is never forwarded to browser clients."""
+
+    expected_tool_call_ids: Optional[List[str]] = None
+
+    project_files_digest: Optional[str] = None
+
+    response_id: str
+
+    @model_validator(mode="before")
+    @classmethod
+    def _unwrap(cls, data):
+        if (
+            isinstance(data, dict)
+            and "zookeeper_open_ai_intermediate_response_checkpoint" in data
+            and isinstance(
+                data["zookeeper_open_ai_intermediate_response_checkpoint"], dict
+            )
+        ):
+            return data["zookeeper_open_ai_intermediate_response_checkpoint"]
+
+        return data
+
+    @model_serializer(mode="wrap")
+    def _wrap(self, handler, info):
+        payload = handler(self, info)
+
+        return {"zookeeper_open_ai_intermediate_response_checkpoint": payload}
+
+
 class ZookeeperTurnUsage(KittyCadBaseModel):
     """Backend-only token usage and cost for one completed Zookeeper turn.
 
@@ -383,7 +415,11 @@ class ZookeeperRecoveryToolOutput(KittyCadBaseModel):
 
     output: str
 
+    output_truncated: Optional[bool] = False
+
     project_updated: Optional[bool] = False
+
+    response_id: Optional[str] = None
 
     tool_name: str
 
@@ -409,7 +445,7 @@ class ZookeeperRecoveryToolOutput(KittyCadBaseModel):
 class Replay(KittyCadBaseModel):
     """Replay containing raw bytes for previously-saved messages for a conversation. Includes server messages and client `User` messages.
 
-    Invariants: - Client replay includes server messages: `Info`, `Error`, `Reasoning(..)`, `ToolOutput { .. }`, `Files { .. }`, `ProjectUpdated { .. }`, and `EndOfStream { .. }`. - Client replay also includes client `User` messages. - Backend replay includes client `User` messages plus selected reasoning, edit metadata, recovery output, and final responses. - The following are NEVER included from persisted chat rows: `SessionData`, `ConversationId`, `Delta`, `BackendShutdown`, `ZookeeperAutoRouterMetadata`, `ZookeeperOpenAiResponseCheckpoint`, or `ZookeeperTurnUsage`. - `ZookeeperRecoveryToolOutput` is included only in replay sent to the text-to-CAD backend and is filtered from client replay. - The latest completed `ZookeeperOpenAiResponseCheckpoint` is synthesized from prompt metadata only for replay sent to the text-to-CAD backend. - Ordering is stable: messages are ordered by prompt creation time within the conversation, then by the per-prompt `seq` value (monotonically increasing as seen in the original stream).
+    Invariants: - Client replay includes server messages: `Info`, `Error`, `Reasoning(..)`, `ToolOutput { .. }`, `Files { .. }`, `ProjectUpdated { .. }`, and `EndOfStream { .. }`. - Client replay also includes client `User` messages. - Backend replay includes client `User` messages plus selected reasoning, edit metadata, recovery output, and final responses. - The following are NEVER included from persisted chat rows: `SessionData`, `ConversationId`, `Delta`, `BackendShutdown`, `ZookeeperAutoRouterMetadata`, `ZookeeperOpenAiResponseCheckpoint`, `ZookeeperOpenAiIntermediateResponseCheckpoint`, or `ZookeeperTurnUsage`. - `ZookeeperRecoveryToolOutput` is included only in replay sent to the text-to-CAD backend and is filtered from client replay. - The latest completed `ZookeeperOpenAiResponseCheckpoint` is synthesized from prompt metadata only for replay sent to the text-to-CAD backend. - The active unfinished prompt's latest `ZookeeperOpenAiIntermediateResponseCheckpoint` is synthesized only for replay sent to the text-to-CAD backend. - Ordering is stable: messages are ordered by prompt creation time within the conversation, then by the per-prompt `seq` value (monotonically increasing as seen in the original stream).
 
     Wire format: - Each element is canonical serialized bytes (typically JSON) for either a `MlCopilotServerMessage` or a `MlCopilotClientMessage::User`. - When delivered as an initial replay over the websocket (upon `?replay=true&conversation_id=<uuid>`), the server sends a single WebSocket Binary frame containing a MsgPack-encoded document of this enum: `Replay { messages }`."""
 
@@ -508,6 +544,7 @@ MlCopilotServerMessage = RootModel[
         AttachmentsLoaded,
         ZookeeperAutoRouterMetadata,
         ZookeeperOpenAiResponseCheckpoint,
+        ZookeeperOpenAiIntermediateResponseCheckpoint,
         ZookeeperTurnUsage,
         ZookeeperRecoveryToolOutput,
         Replay,
