@@ -92,6 +92,10 @@ class Feature(str, Enum):
 
     SEGMENTS_BASED_REGIONS = "segments_based_regions"
 
+    """# Allows legacy sketches to be edited using point-and-click in Zoo Design Studio."""  # noqa: E501
+
+    LEGACY_SKETCH_MODE = "legacy_sketch_mode"
+
     """# Enables sketch solve experimental features in Zoo Design Studio."""  # noqa: E501
 
     SKETCH_EXPERIMENTAL_FEATURES = "sketch_experimental_features"
