@@ -24,6 +24,10 @@ class Feature(str, Enum):
 
     EMAIL_WITH_S_E_S = "email_with_s_e_s"
 
+    """# Quarantine engine-manager sessions when an engine is observed misbehaving."""  # noqa: E501
+
+    ENGINE_MANAGER_QUARANTINE = "engine_manager_quarantine"
+
     """# Enables the Z0006 lint, for converting to new face api syntax in Zoo Design Studio."""  # noqa: E501
 
     ENABLE_Z0006_LINT = "enable_z0006_lint"
