@@ -44,6 +44,7 @@ from .api_token_uuid import ApiTokenUuid
 from .api_token_with_full_token import ApiTokenWithFullToken
 from .app_client_info import AppClientInfo
 from .async_api_call_output import AsyncApiCallOutput
+from .attachment_ref import AttachmentRef
 from .auth_api_key_response import AuthApiKeyResponse
 from .auth_callback import AuthCallback
 from .axis import Axis
@@ -280,11 +281,16 @@ from .ml_copilot_access_denied_code import MlCopilotAccessDeniedCode
 from .ml_copilot_client_message import MlCopilotClientMessage
 from .ml_copilot_file import MlCopilotFile
 from .ml_copilot_mode_option import MlCopilotModeOption
+from .ml_copilot_project_revision import MlCopilotProjectRevision
+from .ml_copilot_project_snapshot_metadata import MlCopilotProjectSnapshotMetadata
+from .ml_copilot_project_snapshot_status import MlCopilotProjectSnapshotStatus
+from .ml_copilot_replay_attachment_mode import MlCopilotReplayAttachmentMode
 from .ml_copilot_server_message import MlCopilotServerMessage
 from .ml_copilot_supported_models import MlCopilotSupportedModels
 from .ml_copilot_system_command import MlCopilotSystemCommand
 from .ml_copilot_tool import MlCopilotTool
 from .ml_feedback import MlFeedback
+from .ml_message_role import MlMessageRole
 from .ml_reasoning_effort import MlReasoningEffort
 from .ml_tool_result import MlToolResult
 from .modeling_app_share_links import ModelingAppShareLinks

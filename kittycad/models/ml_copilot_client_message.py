@@ -4,6 +4,9 @@ from pydantic import Field, RootModel
 from typing_extensions import Annotated
 
 from ..models.ml_copilot_file import MlCopilotFile
+from ..models.ml_copilot_project_snapshot_metadata import (
+    MlCopilotProjectSnapshotMetadata,
+)
 from ..models.ml_copilot_supported_models import MlCopilotSupportedModels
 from ..models.ml_copilot_system_command import MlCopilotSystemCommand
 from ..models.ml_copilot_tool import MlCopilotTool
@@ -46,6 +49,8 @@ class OptionProjectContext(KittyCadBaseModel):
 
     project_name: Optional[str] = None
 
+    project_snapshot: Optional[MlCopilotProjectSnapshotMetadata] = None
+
     type: Literal["project_context"] = "project_context"
 
 
@@ -72,11 +77,25 @@ class OptionUser(KittyCadBaseModel):
 
     project_name: Optional[str] = None
 
+    project_snapshot: Optional[MlCopilotProjectSnapshotMetadata] = None
+
     reasoning_effort: Optional[MlReasoningEffort] = None
 
     source_ranges: Optional[List[SourceRangePrompt]] = None
 
     type: Literal["user"] = "user"
+
+
+class OptionFetchAttachments(KittyCadBaseModel):
+    """Request persisted attachments from conversation history over the active websocket."""
+
+    indices: List[int]
+
+    prompt_id: Uuid
+
+    seq: int
+
+    type: Literal["fetch_attachments"] = "fetch_attachments"
 
 
 class OptionSystem(KittyCadBaseModel):
@@ -111,6 +130,7 @@ MlCopilotClientMessage = RootModel[
             OptionHeaders,
             OptionProjectContext,
             OptionUser,
+            OptionFetchAttachments,
             OptionSystem,
             OptionAttachmentResponse,
         ],

@@ -100,6 +100,7 @@ from .models.kcl_code_completion_response import KclCodeCompletionResponse
 from .models.kcl_model import KclModel
 from .models.lenient_url import LenientUrl
 from .models.ml_copilot_client_message import MlCopilotClientMessage
+from .models.ml_copilot_replay_attachment_mode import MlCopilotReplayAttachmentMode
 from .models.ml_copilot_server_message import MlCopilotServerMessage
 from .models.ml_feedback import MlFeedback
 from .models.o_auth2_app_response import OAuth2AppResponse
@@ -3655,6 +3656,7 @@ class MlAPI:
         self,
         replay: Optional[bool] = None,
         conversation_id: Optional[str] = None,
+        replay_attachment_mode: Optional[MlCopilotReplayAttachmentMode] = None,
         pr: Optional[int] = None,
         recv_timeout: Optional[float] = None,
         ws_factory: Optional[Callable[..., ClientConnectionSync]] = None,
@@ -3666,6 +3668,7 @@ class MlAPI:
         return WebSocketMlCopilotWs(
             replay=replay,
             conversation_id=conversation_id,
+            replay_attachment_mode=replay_attachment_mode,
             pr=pr,
             recv_timeout=recv_timeout,
             ws_factory=ws_factory,
@@ -4165,6 +4168,7 @@ class AsyncMlAPI:
         self,
         replay: Optional[bool] = None,
         conversation_id: Optional[str] = None,
+        replay_attachment_mode: Optional[MlCopilotReplayAttachmentMode] = None,
         pr: Optional[int] = None,
     ):
         """Open a websocket to a Zookeeper agent instance.
@@ -4179,6 +4183,7 @@ class AsyncMlAPI:
             *,
             replay: Optional[bool] = None,
             conversation_id: Optional[str] = None,
+            replay_attachment_mode: Optional[MlCopilotReplayAttachmentMode] = None,
             pr: Optional[int] = None,
         ) -> ClientConnectionAsync:
             """Open a websocket to a Zookeeper agent instance."""
@@ -4196,6 +4201,12 @@ class AsyncMlAPI:
                     url = url + "&conversation_id=" + str(conversation_id)
                 else:
                     url = url + "?conversation_id=" + str(conversation_id)
+
+            if replay_attachment_mode is not None:
+                if "?" in url:
+                    url = url + "&replay_attachment_mode=" + str(replay_attachment_mode)
+                else:
+                    url = url + "?replay_attachment_mode=" + str(replay_attachment_mode)
 
             if pr is not None:
                 if "?" in url:
@@ -16984,6 +16995,7 @@ class WebSocketMlCopilotWs:
         self,
         replay: Optional[bool] = None,
         conversation_id: Optional[str] = None,
+        replay_attachment_mode: Optional[MlCopilotReplayAttachmentMode] = None,
         pr: Optional[int] = None,
         recv_timeout: Optional[float] = None,
         ws_factory: Optional[Callable[..., ClientConnectionSync]] = None,
@@ -17005,6 +17017,12 @@ class WebSocketMlCopilotWs:
                 url = url + "&conversation_id=" + str(conversation_id)
             else:
                 url = url + "?conversation_id=" + str(conversation_id)
+
+        if replay_attachment_mode is not None:
+            if "?" in url:
+                url = url + "&replay_attachment_mode=" + str(replay_attachment_mode)
+            else:
+                url = url + "?replay_attachment_mode=" + str(replay_attachment_mode)
 
         if pr is not None:
             if "?" in url:

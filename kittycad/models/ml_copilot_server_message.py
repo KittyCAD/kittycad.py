@@ -6,6 +6,9 @@ from pydantic import RootModel, model_serializer, model_validator
 from ..models.ml_copilot_access_denied_code import MlCopilotAccessDeniedCode
 from ..models.ml_copilot_file import MlCopilotFile
 from ..models.ml_copilot_mode_option import MlCopilotModeOption
+from ..models.ml_copilot_project_revision import MlCopilotProjectRevision
+from ..models.ml_copilot_project_snapshot_status import MlCopilotProjectSnapshotStatus
+from ..models.ml_message_role import MlMessageRole
 from ..models.ml_tool_result import MlToolResult
 from ..models.reasoning_message import ReasoningMessage
 from ..models.uuid import Uuid
@@ -266,6 +269,64 @@ class ProjectUpdated(KittyCadBaseModel):
         return {"project_updated": payload}
 
 
+class ProjectRevisionUpdated(KittyCadBaseModel):
+    """Revision-aware notification that the canonical project was updated. API emits this only after the new canonical revision is durable."""
+
+    files: Dict[str, bytes]
+
+    project_revision: MlCopilotProjectRevision
+
+    @model_validator(mode="before")
+    @classmethod
+    def _unwrap(cls, data):
+        if (
+            isinstance(data, dict)
+            and "project_revision_updated" in data
+            and isinstance(data["project_revision_updated"], dict)
+        ):
+            return data["project_revision_updated"]
+
+        return data
+
+    @model_serializer(mode="wrap")
+    def _wrap(self, handler, info):
+        payload = handler(self, info)
+
+        return {"project_revision_updated": payload}
+
+
+class ProjectSnapshotResult(KittyCadBaseModel):
+    """Result of validating a revision-aware client project snapshot. `Accepted` and `Merged` are emitted only after the new canonical revision is durable."""
+
+    canonical_files: Optional[Dict[str, bytes]] = None
+
+    conflicting_paths: Optional[List[str]] = None
+
+    project_revision: MlCopilotProjectRevision
+
+    snapshot_id: str
+
+    status: MlCopilotProjectSnapshotStatus
+
+    @model_validator(mode="before")
+    @classmethod
+    def _unwrap(cls, data):
+        if (
+            isinstance(data, dict)
+            and "project_snapshot_result" in data
+            and isinstance(data["project_snapshot_result"], dict)
+        ):
+            return data["project_snapshot_result"]
+
+        return data
+
+    @model_serializer(mode="wrap")
+    def _wrap(self, handler, info):
+        payload = handler(self, info)
+
+        return {"project_snapshot_result": payload}
+
+
 class Reasoning(KittyCadBaseModel):
     """Assistant reasoning / chain-of-thought (if you expose it)."""
 
@@ -447,7 +508,7 @@ class Replay(KittyCadBaseModel):
 
     Invariants: - Client replay includes server messages: `Info`, `Error`, `Reasoning(..)`, `ToolOutput { .. }`, `Files { .. }`, `ProjectUpdated { .. }`, and `EndOfStream { .. }`. - Client replay also includes client `User` messages. - Backend replay includes client `User` messages plus selected reasoning, edit metadata, recovery output, and final responses. - The following are NEVER included from persisted chat rows: `SessionData`, `ConversationId`, `Delta`, `BackendShutdown`, `ZookeeperAutoRouterMetadata`, `ZookeeperOpenAiResponseCheckpoint`, `ZookeeperOpenAiIntermediateResponseCheckpoint`, or `ZookeeperTurnUsage`. - `ZookeeperRecoveryToolOutput` is included only in replay sent to the text-to-CAD backend and is filtered from client replay. - The latest completed `ZookeeperOpenAiResponseCheckpoint` is synthesized from prompt metadata only for replay sent to the text-to-CAD backend. - The active unfinished prompt's latest `ZookeeperOpenAiIntermediateResponseCheckpoint` is synthesized only for replay sent to the text-to-CAD backend. - Ordering is stable: messages are ordered by prompt creation time within the conversation, then by the per-prompt `seq` value (monotonically increasing as seen in the original stream).
 
-    Wire format: - Each element is canonical serialized bytes (typically JSON) for either a `MlCopilotServerMessage` or a `MlCopilotClientMessage::User`. - When delivered as an initial replay over the websocket (upon `?replay=true&conversation_id=<uuid>`), the server sends a single WebSocket Binary frame containing a MsgPack-encoded document of this enum: `Replay { messages }`."""
+    Wire format: - Each element is canonical serialized bytes (typically JSON) for either a `MlCopilotServerMessage` or a `MlCopilotClientMessage::User`. - Client-facing replays may omit large attachment bytes and instead place socket fetch metadata in `MlCopilotFile.metadata`. - When delivered as an initial replay over the websocket (upon `?replay=true&conversation_id=<uuid>`), the server sends a single WebSocket Binary frame containing a MsgPack-encoded document of this enum: `Replay { messages }`."""
 
     messages: List[bytes]
 
@@ -526,6 +587,36 @@ class Files(KittyCadBaseModel):
         return {"files": payload}
 
 
+class Attachments(KittyCadBaseModel):
+    """Persisted attachments fetched over the websocket on demand."""
+
+    files: List[MlCopilotFile]
+
+    prompt_id: Uuid
+
+    role: MlMessageRole
+
+    seq: int
+
+    @model_validator(mode="before")
+    @classmethod
+    def _unwrap(cls, data):
+        if (
+            isinstance(data, dict)
+            and "attachments" in data
+            and isinstance(data["attachments"], dict)
+        ):
+            return data["attachments"]
+
+        return data
+
+    @model_serializer(mode="wrap")
+    def _wrap(self, handler, info):
+        payload = handler(self, info)
+
+        return {"attachments": payload}
+
+
 MlCopilotServerMessage = RootModel[
     Union[
         Pong,
@@ -539,6 +630,8 @@ MlCopilotServerMessage = RootModel[
         ModesResponse,
         BackendShutdown,
         ProjectUpdated,
+        ProjectRevisionUpdated,
+        ProjectSnapshotResult,
         Reasoning,
         RequestAttachments,
         AttachmentsLoaded,
@@ -550,5 +643,6 @@ MlCopilotServerMessage = RootModel[
         Replay,
         EndOfStream,
         Files,
+        Attachments,
     ]
 ]
