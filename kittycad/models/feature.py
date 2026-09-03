@@ -16,6 +16,10 @@ class Feature(str, Enum):
 
     BILLING = "billing"
 
+    """# Route non-WebRTC modeling sessions to the CPU-only engine pool."""  # noqa: E501
+
+    CPU_ENGINE_POOL = "cpu_engine_pool"
+
     """# Disable signup through email or OAuth."""  # noqa: E501
 
     DISALLOW_SELF_SIGNUP = "disallow_self_signup"
