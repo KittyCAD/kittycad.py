@@ -80,6 +80,10 @@ class Feature(str, Enum):
 
     VALIDATE_TAX_INFO = "validate_tax_info"
 
+    """# Enables drawing features across Zoo applications."""  # noqa: E501
+
+    DRAWINGS = "drawings"
+
     """# Enables modeling dialogs in Zoo Design Studio."""  # noqa: E501
 
     MODELING_DIALOGS = "modeling_dialogs"
