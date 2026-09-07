@@ -5,6 +5,18 @@ All notable changes to the KittyCAD Python SDK will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## Unreleased
+
+- Modeling WebSockets accept optional `geometry_only=True` with `webrtc=False`.
+  Omit the option (or use `False`) for sessions that need images. This requires
+  server support and does not guarantee CPU routing.
+- Async WebSocket methods now await and return their generated connection,
+  using the `additional_headers` argument required by the asyncio transport.
+- Positional modeling callers must migrate to keyword arguments: the new
+  `geometry_only` parameter precedes `pr`. Existing keyword
+  calls keep their previous defaults. Treat this signature change as a
+  release-compatibility gate, not an automatic patch release.
+
 ## v1.5.0
 
 Regenerated the SDK against the latest API spec.

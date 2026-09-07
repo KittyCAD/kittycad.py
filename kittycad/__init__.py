@@ -3172,10 +3172,12 @@ class AsyncExecutorAPI:
 
             return await ws_connect_async(
                 url.replace("http", "ws"),
-                extra_headers=self.client.get_headers(),
+                additional_headers=self.client.get_headers(),
                 close_timeout=120,
                 max_size=None,
             )
+
+        return await create_executor_term(self)
 
 
 class MlAPI:
@@ -4216,10 +4218,18 @@ class AsyncMlAPI:
 
             return await ws_connect_async(
                 url.replace("http", "ws"),
-                extra_headers=self.client.get_headers(),
+                additional_headers=self.client.get_headers(),
                 close_timeout=120,
                 max_size=None,
             )
+
+        return await ml_copilot_ws(
+            self,
+            replay=replay,
+            conversation_id=conversation_id,
+            replay_attachment_mode=replay_attachment_mode,
+            pr=pr,
+        )
 
     async def ml_reasoning_ws(self, id: str):
         """Open a websocket to prompt the ML copilot.
@@ -4239,10 +4249,12 @@ class AsyncMlAPI:
 
             return await ws_connect_async(
                 url.replace("http", "ws"),
-                extra_headers=self.client.get_headers(),
+                additional_headers=self.client.get_headers(),
                 close_timeout=120,
                 max_size=None,
             )
+
+        return await ml_reasoning_ws(self, id=id)
 
 
 class Oauth2API:
@@ -16754,6 +16766,7 @@ class ModelingAPI:
         replay: Optional[str] = None,
         api_call_id: Optional[str] = None,
         order_independent_transparency: Optional[bool] = None,
+        geometry_only: Optional[bool] = None,
         pr: Optional[int] = None,
         recv_timeout: Optional[float] = None,
         ws_factory: Optional[Callable[..., ClientConnectionSync]] = None,
@@ -16774,6 +16787,7 @@ class ModelingAPI:
             replay=replay,
             api_call_id=api_call_id,
             order_independent_transparency=order_independent_transparency,
+            geometry_only=geometry_only,
             pr=pr,
             recv_timeout=recv_timeout,
             ws_factory=ws_factory,
@@ -16800,6 +16814,7 @@ class AsyncModelingAPI:
         replay: Optional[str] = None,
         api_call_id: Optional[str] = None,
         order_independent_transparency: Optional[bool] = None,
+        geometry_only: Optional[bool] = None,
         pr: Optional[int] = None,
     ):
         """Opens a WebSocket to a Zoo KittyCAD engine instance.
@@ -16823,6 +16838,7 @@ class AsyncModelingAPI:
             replay: Optional[str] = None,
             api_call_id: Optional[str] = None,
             order_independent_transparency: Optional[bool] = None,
+            geometry_only: Optional[bool] = None,
             pr: Optional[int] = None,
         ) -> ClientConnectionAsync:
             """Opens a WebSocket to a Zoo KittyCAD engine instance."""
@@ -16903,6 +16919,12 @@ class AsyncModelingAPI:
                         + str(order_independent_transparency).lower()
                     )
 
+            if geometry_only is not None:
+                if "?" in url:
+                    url = url + "&geometry_only=" + str(geometry_only).lower()
+                else:
+                    url = url + "?geometry_only=" + str(geometry_only).lower()
+
             if pr is not None:
                 if "?" in url:
                     url = url + "&pr=" + str(pr)
@@ -16911,10 +16933,27 @@ class AsyncModelingAPI:
 
             return await ws_connect_async(
                 url.replace("http", "ws"),
-                extra_headers=self.client.get_headers(),
+                additional_headers=self.client.get_headers(),
                 close_timeout=120,
                 max_size=None,
             )
+
+        return await modeling_commands_ws(
+            self,
+            video_res_width=video_res_width,
+            video_res_height=video_res_height,
+            fps=fps,
+            unlocked_framerate=unlocked_framerate,
+            post_effect=post_effect,
+            webrtc=webrtc,
+            pool=pool,
+            show_grid=show_grid,
+            replay=replay,
+            api_call_id=api_call_id,
+            order_independent_transparency=order_independent_transparency,
+            geometry_only=geometry_only,
+            pr=pr,
+        )
 
 
 class WebSocketCreateExecutorTerm:
@@ -17171,6 +17210,7 @@ class WebSocketModelingCommandsWs:
         replay: Optional[str] = None,
         api_call_id: Optional[str] = None,
         order_independent_transparency: Optional[bool] = None,
+        geometry_only: Optional[bool] = None,
         pr: Optional[int] = None,
         recv_timeout: Optional[float] = None,
         ws_factory: Optional[Callable[..., ClientConnectionSync]] = None,
@@ -17254,6 +17294,12 @@ class WebSocketModelingCommandsWs:
                     + "?order_independent_transparency="
                     + str(order_independent_transparency).lower()
                 )
+
+        if geometry_only is not None:
+            if "?" in url:
+                url = url + "&geometry_only=" + str(geometry_only).lower()
+            else:
+                url = url + "?geometry_only=" + str(geometry_only).lower()
 
         if pr is not None:
             if "?" in url:
