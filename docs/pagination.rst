@@ -139,6 +139,44 @@ Api Tokens API
             print(item)
 
 
+Factory API
+-----------
+
+**list_org_factory_jobs**
+    List Factory jobs owned by your organization.
+    
+    Returns: ``SyncPageIterator[FactoryCustomerJobSummary]``
+    
+    Example:
+    
+    .. code-block:: python
+    
+        # Sync
+        for item in client.factory.list_org_factory_jobs():
+            print(item)
+            
+        # Async  
+        async for item in client.factory.list_org_factory_jobs():
+            print(item)
+
+**list_user_factory_jobs**
+    List your personal Factory jobs.
+    
+    Returns: ``SyncPageIterator[FactoryCustomerJobSummary]``
+    
+    Example:
+    
+    .. code-block:: python
+    
+        # Sync
+        for item in client.factory.list_user_factory_jobs():
+            print(item)
+            
+        # Async  
+        async for item in client.factory.list_user_factory_jobs():
+            print(item)
+
+
 Ml API
 ------
 

@@ -521,6 +521,14 @@
   },
   {
     "op": "add",
+    "path": "/paths/~1org~1factory~1jobs/get/x-python",
+    "value": {
+      "example": "from kittycad.models.created_at_sort_mode import CreatedAtSortMode\nfrom kittycad.models import FactoryCustomerJobSummaryResultsPage\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\n\n\nfrom kittycad.models import FactoryCustomerJobSummary\ndef example_list_org_factory_jobs():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    # Iterate through all pages automatically\n    item: FactoryCustomerJobSummary\n    for item in client.factory.list_org_factory_jobs(sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,\n        limit=None,\n        page_token=None):\n        print(item)\n\n",
+      "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD.factory"
+    }
+  },
+  {
+    "op": "add",
     "path": "/paths/~1org~1members/get/x-python",
     "value": {
       "example": "from kittycad.models.created_at_sort_mode import CreatedAtSortMode\nfrom kittycad.models.user_org_role import UserOrgRole\nfrom kittycad.models import OrgMemberResultsPage\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\n\n\nfrom kittycad.models import OrgMember\ndef example_list_org_members():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    # Iterate through all pages automatically\n    item: OrgMember\n    for item in client.orgs.list_org_members(sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,\n        role=UserOrgRole.ADMIN,\n        limit=None,\n        page_token=None):\n        print(item)\n\n",
@@ -1228,6 +1236,14 @@
     "path": "/paths/~1user~1factory~1finishes/get/x-python",
     "value": {
       "example": "from kittycad.models import FactoryCustomerCatalogOption\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_get_user_factory_finishes():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    result: List[FactoryCustomerCatalogOption] = client.factory.get_user_factory_finishes()\n\n\n    body: List[FactoryCustomerCatalogOption] = result\n    print(body)\n\n",
+      "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD.factory"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/paths/~1user~1factory~1jobs/get/x-python",
+    "value": {
+      "example": "from kittycad.models.created_at_sort_mode import CreatedAtSortMode\nfrom kittycad.models import FactoryCustomerJobSummaryResultsPage\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\n\n\nfrom kittycad.models import FactoryCustomerJobSummary\ndef example_list_user_factory_jobs():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    # Iterate through all pages automatically\n    item: FactoryCustomerJobSummary\n    for item in client.factory.list_user_factory_jobs(sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,\n        limit=None,\n        page_token=None):\n        print(item)\n\n",
       "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD.factory"
     }
   },
