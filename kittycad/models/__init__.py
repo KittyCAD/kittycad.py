@@ -222,6 +222,10 @@ from .face_get_gradient import FaceGetGradient
 from .face_get_position import FaceGetPosition
 from .face_is_planar import FaceIsPlanar
 from .factory_customer_catalog_option import FactoryCustomerCatalogOption
+from .factory_customer_job_summary import FactoryCustomerJobSummary
+from .factory_customer_job_summary_results_page import (
+    FactoryCustomerJobSummaryResultsPage,
+)
 from .factory_job_response import FactoryJobResponse
 from .failure_web_socket_response import FailureWebSocketResponse
 from .fbx_storage import FbxStorage
