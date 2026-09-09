@@ -84,6 +84,9 @@ from .models.email_marketing_confirm_token_body import EmailMarketingConfirmToke
 from .models.email_marketing_consent_state import EmailMarketingConsentState
 from .models.extended_user import ExtendedUser
 from .models.factory_customer_catalog_option import FactoryCustomerCatalogOption
+from .models.factory_customer_job_summary_results_page import (
+    FactoryCustomerJobSummaryResultsPage,
+)
 from .models.factory_job_response import FactoryJobResponse
 from .models.file_center_of_mass import FileCenterOfMass
 from .models.file_conversion import FileConversion
@@ -11919,6 +11922,586 @@ class AsyncPaymentsAPI:
         return CustomerBalance.model_validate(json_data, extra="ignore")
 
 
+class FactoryAPI:
+    """API for factory endpoints"""
+
+    def __init__(self, client: Client) -> None:
+        self.client = client
+
+    def list_org_factory_jobs(
+        self,
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+        sort_by: Optional[CreatedAtSortMode] = None,
+    ) -> "SyncPageIterator":
+        """Any current organization member can list its jobs, including archived jobs. Ownership uses the job's stored organization, so a submitter leaving or deleting their account does not move the job. Former members lose access. Results are paginated, newest first by default, with the job id breaking ties. Internal communication, financial details, and file storage locations are omitted.
+
+        Returns an iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            for item in client.org.list_org_factory_jobs():
+                print(item)
+        """
+
+        from typing import Any, Dict
+
+        from kittycad.pagination import SyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
+
+        if limit is not None:
+            kwargs["limit"] = limit
+
+        if page_token is not None:
+            kwargs["page_token"] = page_token
+
+        if sort_by is not None:
+            kwargs["sort_by"] = sort_by
+
+        def fetch_page(**kw):
+            return self._fetch_page_list_org_factory_jobs(**kw)
+
+        # Create the page iterator
+        return SyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    def _fetch_page_list_org_factory_jobs(
+        self, **kwargs
+    ) -> FactoryCustomerJobSummaryResultsPage:
+        """Internal method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/org/factory/jobs".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+        # Validate into a Pydantic model (supports BaseModel/RootModel)
+        return FactoryCustomerJobSummaryResultsPage.model_validate(
+            json_data, extra="ignore"
+        )
+
+    def get_user_factory_finishes(
+        self,
+    ) -> List[FactoryCustomerCatalogOption]:
+        """Internal-only entries are omitted. Clients should refetch this endpoint after a catalog validation error before asking the customer to choose again."""
+
+        url = "{}/user/factory/finishes".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into annotated/collection/union types using TypeAdapter
+        from pydantic import TypeAdapter
+
+        return TypeAdapter(List[FactoryCustomerCatalogOption]).validate_python(
+            json_data, extra="ignore"
+        )
+
+    def list_user_factory_jobs(
+        self,
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+        sort_by: Optional[CreatedAtSortMode] = None,
+    ) -> "SyncPageIterator":
+        """Returns jobs owned by your account, including archived jobs. Jobs with an organization owner belong to that organization, even when your account is also associated with them; use `GET /org/factory/jobs` to list those jobs. Results are paginated, newest first by default, with the job id breaking ties. Internal communication, financial details, and file storage locations are omitted.
+
+        Returns an iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            for item in client.user.list_user_factory_jobs():
+                print(item)
+        """
+
+        from typing import Any, Dict
+
+        from kittycad.pagination import SyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
+
+        if limit is not None:
+            kwargs["limit"] = limit
+
+        if page_token is not None:
+            kwargs["page_token"] = page_token
+
+        if sort_by is not None:
+            kwargs["sort_by"] = sort_by
+
+        def fetch_page(**kw):
+            return self._fetch_page_list_user_factory_jobs(**kw)
+
+        # Create the page iterator
+        return SyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    def _fetch_page_list_user_factory_jobs(
+        self, **kwargs
+    ) -> FactoryCustomerJobSummaryResultsPage:
+        """Internal method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/user/factory/jobs".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+        # Validate into a Pydantic model (supports BaseModel/RootModel)
+        return FactoryCustomerJobSummaryResultsPage.model_validate(
+            json_data, extra="ignore"
+        )
+
+    def create_user_factory_job(
+        self,
+    ) -> FactoryJobResponse:
+        """The request is `multipart/form-data`: - one JSON part named `body` (`FactoryIntakeForm`) whose `fields` object holds   intake data (material, finish, quantity, notes, …). Material and finish   are required customer-visible catalog names; all other fields are stored   verbatim so they can be added or renamed without an API change. - one or more file parts (any part name). At least one file is required.
+
+        The submitter's identity (email, name, user id) comes from the authenticated account, not the form.
+
+        Fetch `GET /user/factory/materials` and `GET /user/factory/finishes`, then send the returned exact `material` and `finish` names. The server rejects missing, non-string, unknown, deleted, and internal-only choices with these stable field-specific `error_code` values: - `factory_material_input_missing` - `factory_material_input_invalid_type` - `factory_material_not_found` - `factory_material_not_customer_visible` - `factory_finish_input_missing` - `factory_finish_input_invalid_type` - `factory_finish_not_found` - `factory_finish_not_customer_visible` - `quantity`: a positive integer.
+
+        Example `body` part: ```json { "fields": { "material": "6061 Aluminum", "finish": "Anodized", "quantity": 10, "notes": "deburr all edges" } } ```
+
+        Example request (curl): ``` curl -X POST https://api.zoo.dev/user/factory/jobs \   -H "Authorization: Bearer $ZOO_API_TOKEN" \   -F 'body={"fields":{"material":"6061 Aluminum","finish":"Anodized","quantity":10}};type=application/json' \   -F 'file=@bracket.step' ```
+
+        Returns `201` with the created job (`FactoryJobResponse`)."""
+
+        url = "{}/user/factory/jobs".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return FactoryJobResponse.model_validate(json_data, extra="ignore")
+
+    def get_user_factory_materials(
+        self,
+    ) -> List[FactoryCustomerCatalogOption]:
+        """Internal-only entries are omitted. Clients should refetch this endpoint after a catalog validation error before asking the customer to choose again."""
+
+        url = "{}/user/factory/materials".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into annotated/collection/union types using TypeAdapter
+        from pydantic import TypeAdapter
+
+        return TypeAdapter(List[FactoryCustomerCatalogOption]).validate_python(
+            json_data, extra="ignore"
+        )
+
+
+class AsyncFactoryAPI:
+    """Async API for factory endpoints"""
+
+    def __init__(self, client: AsyncClient) -> None:
+        self.client = client
+
+    def list_org_factory_jobs(
+        self,
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+        sort_by: Optional[CreatedAtSortMode] = None,
+    ) -> "AsyncPageIterator":
+        """Any current organization member can list its jobs, including archived jobs. Ownership uses the job's stored organization, so a submitter leaving or deleting their account does not move the job. Former members lose access. Results are paginated, newest first by default, with the job id breaking ties. Internal communication, financial details, and file storage locations are omitted.
+
+        Returns an async iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            async for item in client.org.list_org_factory_jobs():
+                print(item)
+        """
+
+        from typing import Any, Dict
+
+        from kittycad.pagination import AsyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
+
+        if limit is not None:
+            kwargs["limit"] = limit
+
+        if page_token is not None:
+            kwargs["page_token"] = page_token
+
+        if sort_by is not None:
+            kwargs["sort_by"] = sort_by
+
+        async def fetch_page(**kw):
+            return await self._fetch_page_list_org_factory_jobs(**kw)
+
+        # Create the async page iterator
+        return AsyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    async def _fetch_page_list_org_factory_jobs(
+        self, **kwargs
+    ) -> FactoryCustomerJobSummaryResultsPage:
+        """Internal async method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/org/factory/jobs".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+        # Validate into a Pydantic model (supports BaseModel/RootModel)
+        return FactoryCustomerJobSummaryResultsPage.model_validate(
+            json_data, extra="ignore"
+        )
+
+    async def get_user_factory_finishes(
+        self,
+    ) -> List[FactoryCustomerCatalogOption]:
+        """Internal-only entries are omitted. Clients should refetch this endpoint after a catalog validation error before asking the customer to choose again."""
+
+        url = "{}/user/factory/finishes".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into annotated/collection/union types using TypeAdapter
+        from pydantic import TypeAdapter
+
+        return TypeAdapter(List[FactoryCustomerCatalogOption]).validate_python(
+            json_data, extra="ignore"
+        )
+
+    def list_user_factory_jobs(
+        self,
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+        sort_by: Optional[CreatedAtSortMode] = None,
+    ) -> "AsyncPageIterator":
+        """Returns jobs owned by your account, including archived jobs. Jobs with an organization owner belong to that organization, even when your account is also associated with them; use `GET /org/factory/jobs` to list those jobs. Results are paginated, newest first by default, with the job id breaking ties. Internal communication, financial details, and file storage locations are omitted.
+
+        Returns an async iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            async for item in client.user.list_user_factory_jobs():
+                print(item)
+        """
+
+        from typing import Any, Dict
+
+        from kittycad.pagination import AsyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
+
+        if limit is not None:
+            kwargs["limit"] = limit
+
+        if page_token is not None:
+            kwargs["page_token"] = page_token
+
+        if sort_by is not None:
+            kwargs["sort_by"] = sort_by
+
+        async def fetch_page(**kw):
+            return await self._fetch_page_list_user_factory_jobs(**kw)
+
+        # Create the async page iterator
+        return AsyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    async def _fetch_page_list_user_factory_jobs(
+        self, **kwargs
+    ) -> FactoryCustomerJobSummaryResultsPage:
+        """Internal async method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/user/factory/jobs".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+        # Validate into a Pydantic model (supports BaseModel/RootModel)
+        return FactoryCustomerJobSummaryResultsPage.model_validate(
+            json_data, extra="ignore"
+        )
+
+    async def create_user_factory_job(
+        self,
+    ) -> FactoryJobResponse:
+        """The request is `multipart/form-data`: - one JSON part named `body` (`FactoryIntakeForm`) whose `fields` object holds   intake data (material, finish, quantity, notes, …). Material and finish   are required customer-visible catalog names; all other fields are stored   verbatim so they can be added or renamed without an API change. - one or more file parts (any part name). At least one file is required.
+
+        The submitter's identity (email, name, user id) comes from the authenticated account, not the form.
+
+        Fetch `GET /user/factory/materials` and `GET /user/factory/finishes`, then send the returned exact `material` and `finish` names. The server rejects missing, non-string, unknown, deleted, and internal-only choices with these stable field-specific `error_code` values: - `factory_material_input_missing` - `factory_material_input_invalid_type` - `factory_material_not_found` - `factory_material_not_customer_visible` - `factory_finish_input_missing` - `factory_finish_input_invalid_type` - `factory_finish_not_found` - `factory_finish_not_customer_visible` - `quantity`: a positive integer.
+
+        Example `body` part: ```json { "fields": { "material": "6061 Aluminum", "finish": "Anodized", "quantity": 10, "notes": "deburr all edges" } } ```
+
+        Example request (curl): ``` curl -X POST https://api.zoo.dev/user/factory/jobs \   -H "Authorization: Bearer $ZOO_API_TOKEN" \   -F 'body={"fields":{"material":"6061 Aluminum","finish":"Anodized","quantity":10}};type=application/json' \   -F 'file=@bracket.step' ```
+
+        Returns `201` with the created job (`FactoryJobResponse`)."""
+
+        url = "{}/user/factory/jobs".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return FactoryJobResponse.model_validate(json_data, extra="ignore")
+
+    async def get_user_factory_materials(
+        self,
+    ) -> List[FactoryCustomerCatalogOption]:
+        """Internal-only entries are omitted. Clients should refetch this endpoint after a catalog validation error before asking the customer to choose again."""
+
+        url = "{}/user/factory/materials".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into annotated/collection/union types using TypeAdapter
+        from pydantic import TypeAdapter
+
+        return TypeAdapter(List[FactoryCustomerCatalogOption]).validate_python(
+            json_data, extra="ignore"
+        )
+
+
 class ServiceAccountsAPI:
     """API for service_accounts endpoints"""
 
@@ -14562,7 +15145,7 @@ class UsersAPI:
     ):
         """This endpoint requires authentication by any Zoo user. It deletes the authenticated user from Zoo's database.
 
-        This call will only succeed if all invoices associated with the user have been paid in full and there is no outstanding balance."""
+        This call will only succeed if all invoices associated with the user have been paid in full and there is no outstanding balance. Personal Factory jobs must be completed or canceled before deleting your account. In-progress jobs owned by an organization do not prevent account deletion."""
 
         url = "{}/user".format(self.client.base_url)
 
@@ -15396,7 +15979,7 @@ class AsyncUsersAPI:
     ):
         """This endpoint requires authentication by any Zoo user. It deletes the authenticated user from Zoo's database.
 
-        This call will only succeed if all invoices associated with the user have been paid in full and there is no outstanding balance."""
+        This call will only succeed if all invoices associated with the user have been paid in full and there is no outstanding balance. Personal Factory jobs must be completed or canceled before deleting your account. In-progress jobs owned by an organization do not prevent account deletion."""
 
         url = "{}/user".format(self.client.base_url)
 
@@ -16535,218 +17118,6 @@ class AsyncApiTokensAPI:
         return response.json() if response.content else None
 
 
-class FactoryAPI:
-    """API for factory endpoints"""
-
-    def __init__(self, client: Client) -> None:
-        self.client = client
-
-    def get_user_factory_finishes(
-        self,
-    ) -> List[FactoryCustomerCatalogOption]:
-        """Internal-only entries are omitted. Clients should refetch this endpoint after a catalog validation error before asking the customer to choose again."""
-
-        url = "{}/user/factory/finishes".format(self.client.base_url)
-
-        _client = self.client.get_http_client()
-
-        response = _client.get(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into annotated/collection/union types using TypeAdapter
-        from pydantic import TypeAdapter
-
-        return TypeAdapter(List[FactoryCustomerCatalogOption]).validate_python(
-            json_data, extra="ignore"
-        )
-
-    def create_user_factory_job(
-        self,
-    ) -> FactoryJobResponse:
-        """The request is `multipart/form-data`: - one JSON part named `body` (`FactoryIntakeForm`) whose `fields` object holds   intake data (material, finish, quantity, notes, …). Material and finish   are required customer-visible catalog names; all other fields are stored   verbatim so they can be added or renamed without an API change. - one or more file parts (any part name). At least one file is required.
-
-        The submitter's identity (email, name, user id) comes from the authenticated account, not the form.
-
-        Fetch `GET /user/factory/materials` and `GET /user/factory/finishes`, then send the returned exact `material` and `finish` names. The server rejects missing, non-string, unknown, deleted, and internal-only choices with these stable field-specific `error_code` values: - `factory_material_input_missing` - `factory_material_input_invalid_type` - `factory_material_not_found` - `factory_material_not_customer_visible` - `factory_finish_input_missing` - `factory_finish_input_invalid_type` - `factory_finish_not_found` - `factory_finish_not_customer_visible` - `quantity`: a positive integer.
-
-        Example `body` part: ```json { "fields": { "material": "6061 Aluminum", "finish": "Anodized", "quantity": 10, "notes": "deburr all edges" } } ```
-
-        Example request (curl): ``` curl -X POST https://api.zoo.dev/user/factory/jobs \   -H "Authorization: Bearer $ZOO_API_TOKEN" \   -F 'body={"fields":{"material":"6061 Aluminum","finish":"Anodized","quantity":10}};type=application/json' \   -F 'file=@bracket.step' ```
-
-        Returns `201` with the created job (`FactoryJobResponse`)."""
-
-        url = "{}/user/factory/jobs".format(self.client.base_url)
-
-        _client = self.client.get_http_client()
-
-        response = _client.post(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return FactoryJobResponse.model_validate(json_data, extra="ignore")
-
-    def get_user_factory_materials(
-        self,
-    ) -> List[FactoryCustomerCatalogOption]:
-        """Internal-only entries are omitted. Clients should refetch this endpoint after a catalog validation error before asking the customer to choose again."""
-
-        url = "{}/user/factory/materials".format(self.client.base_url)
-
-        _client = self.client.get_http_client()
-
-        response = _client.get(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into annotated/collection/union types using TypeAdapter
-        from pydantic import TypeAdapter
-
-        return TypeAdapter(List[FactoryCustomerCatalogOption]).validate_python(
-            json_data, extra="ignore"
-        )
-
-
-class AsyncFactoryAPI:
-    """Async API for factory endpoints"""
-
-    def __init__(self, client: AsyncClient) -> None:
-        self.client = client
-
-    async def get_user_factory_finishes(
-        self,
-    ) -> List[FactoryCustomerCatalogOption]:
-        """Internal-only entries are omitted. Clients should refetch this endpoint after a catalog validation error before asking the customer to choose again."""
-
-        url = "{}/user/factory/finishes".format(self.client.base_url)
-
-        _client = self.client.get_http_client()
-
-        response = await _client.get(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into annotated/collection/union types using TypeAdapter
-        from pydantic import TypeAdapter
-
-        return TypeAdapter(List[FactoryCustomerCatalogOption]).validate_python(
-            json_data, extra="ignore"
-        )
-
-    async def create_user_factory_job(
-        self,
-    ) -> FactoryJobResponse:
-        """The request is `multipart/form-data`: - one JSON part named `body` (`FactoryIntakeForm`) whose `fields` object holds   intake data (material, finish, quantity, notes, …). Material and finish   are required customer-visible catalog names; all other fields are stored   verbatim so they can be added or renamed without an API change. - one or more file parts (any part name). At least one file is required.
-
-        The submitter's identity (email, name, user id) comes from the authenticated account, not the form.
-
-        Fetch `GET /user/factory/materials` and `GET /user/factory/finishes`, then send the returned exact `material` and `finish` names. The server rejects missing, non-string, unknown, deleted, and internal-only choices with these stable field-specific `error_code` values: - `factory_material_input_missing` - `factory_material_input_invalid_type` - `factory_material_not_found` - `factory_material_not_customer_visible` - `factory_finish_input_missing` - `factory_finish_input_invalid_type` - `factory_finish_not_found` - `factory_finish_not_customer_visible` - `quantity`: a positive integer.
-
-        Example `body` part: ```json { "fields": { "material": "6061 Aluminum", "finish": "Anodized", "quantity": 10, "notes": "deburr all edges" } } ```
-
-        Example request (curl): ``` curl -X POST https://api.zoo.dev/user/factory/jobs \   -H "Authorization: Bearer $ZOO_API_TOKEN" \   -F 'body={"fields":{"material":"6061 Aluminum","finish":"Anodized","quantity":10}};type=application/json' \   -F 'file=@bracket.step' ```
-
-        Returns `201` with the created job (`FactoryJobResponse`)."""
-
-        url = "{}/user/factory/jobs".format(self.client.base_url)
-
-        _client = self.client.get_http_client()
-
-        response = await _client.post(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return FactoryJobResponse.model_validate(json_data, extra="ignore")
-
-    async def get_user_factory_materials(
-        self,
-    ) -> List[FactoryCustomerCatalogOption]:
-        """Internal-only entries are omitted. Clients should refetch this endpoint after a catalog validation error before asking the customer to choose again."""
-
-        url = "{}/user/factory/materials".format(self.client.base_url)
-
-        _client = self.client.get_http_client()
-
-        response = await _client.get(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into annotated/collection/union types using TypeAdapter
-        from pydantic import TypeAdapter
-
-        return TypeAdapter(List[FactoryCustomerCatalogOption]).validate_python(
-            json_data, extra="ignore"
-        )
-
-
 class ModelingAPI:
     """API for modeling endpoints"""
 
@@ -17403,6 +17774,9 @@ class KittyCAD(Client):
         payments: PaymentsAPI - Access to payments endpoints
 
 
+        factory: FactoryAPI - Access to factory endpoints
+
+
         service_accounts: ServiceAccountsAPI - Access to service_accounts endpoints
 
 
@@ -17419,9 +17793,6 @@ class KittyCAD(Client):
 
 
         api_tokens: ApiTokensAPI - Access to api_tokens endpoints
-
-
-        factory: FactoryAPI - Access to factory endpoints
 
 
         modeling: ModelingAPI - Access to modeling endpoints
@@ -17450,6 +17821,8 @@ class KittyCAD(Client):
 
     payments: "PaymentsAPI"
 
+    factory: "FactoryAPI"
+
     service_accounts: "ServiceAccountsAPI"
 
     projects: "ProjectsAPI"
@@ -17461,8 +17834,6 @@ class KittyCAD(Client):
     users: "UsersAPI"
 
     api_tokens: "ApiTokensAPI"
-
-    factory: "FactoryAPI"
 
     modeling: "ModelingAPI"
 
@@ -17505,6 +17876,8 @@ class KittyCAD(Client):
 
         self.payments: PaymentsAPI = PaymentsAPI(self)
 
+        self.factory: FactoryAPI = FactoryAPI(self)
+
         self.service_accounts: ServiceAccountsAPI = ServiceAccountsAPI(self)
 
         self.projects: ProjectsAPI = ProjectsAPI(self)
@@ -17516,8 +17889,6 @@ class KittyCAD(Client):
         self.users: UsersAPI = UsersAPI(self)
 
         self.api_tokens: ApiTokensAPI = ApiTokensAPI(self)
-
-        self.factory: FactoryAPI = FactoryAPI(self)
 
         self.modeling: ModelingAPI = ModelingAPI(self)
 
@@ -17571,6 +17942,9 @@ class AsyncKittyCAD(AsyncClient):
         payments: AsyncPaymentsAPI - Access to payments endpoints
 
 
+        factory: AsyncFactoryAPI - Access to factory endpoints
+
+
         service_accounts: AsyncServiceAccountsAPI - Access to service_accounts endpoints
 
 
@@ -17587,9 +17961,6 @@ class AsyncKittyCAD(AsyncClient):
 
 
         api_tokens: AsyncApiTokensAPI - Access to api_tokens endpoints
-
-
-        factory: AsyncFactoryAPI - Access to factory endpoints
 
 
         modeling: AsyncModelingAPI - Access to modeling endpoints
@@ -17618,6 +17989,8 @@ class AsyncKittyCAD(AsyncClient):
 
     payments: "AsyncPaymentsAPI"
 
+    factory: "AsyncFactoryAPI"
+
     service_accounts: "AsyncServiceAccountsAPI"
 
     projects: "AsyncProjectsAPI"
@@ -17629,8 +18002,6 @@ class AsyncKittyCAD(AsyncClient):
     users: "AsyncUsersAPI"
 
     api_tokens: "AsyncApiTokensAPI"
-
-    factory: "AsyncFactoryAPI"
 
     modeling: "AsyncModelingAPI"
 
@@ -17673,6 +18044,8 @@ class AsyncKittyCAD(AsyncClient):
 
         self.payments: AsyncPaymentsAPI = AsyncPaymentsAPI(self)
 
+        self.factory: AsyncFactoryAPI = AsyncFactoryAPI(self)
+
         self.service_accounts: AsyncServiceAccountsAPI = AsyncServiceAccountsAPI(self)
 
         self.projects: AsyncProjectsAPI = AsyncProjectsAPI(self)
@@ -17684,8 +18057,6 @@ class AsyncKittyCAD(AsyncClient):
         self.users: AsyncUsersAPI = AsyncUsersAPI(self)
 
         self.api_tokens: AsyncApiTokensAPI = AsyncApiTokensAPI(self)
-
-        self.factory: AsyncFactoryAPI = AsyncFactoryAPI(self)
 
         self.modeling: AsyncModelingAPI = AsyncModelingAPI(self)
 

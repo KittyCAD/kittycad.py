@@ -28,6 +28,7 @@ from kittycad.models import (
     EmailMarketingConsentState,
     ExtendedUser,
     FactoryCustomerCatalogOption,
+    FactoryCustomerJobSummary,
     FactoryJobResponse,
     FileCenterOfMass,
     FileConversion,
@@ -1653,6 +1654,33 @@ async def test_upload_org_dataset_files_async():
     result: UploadOrgDatasetFilesResponse = await client.orgs.upload_org_dataset_files(
         id=Uuid("<string>")
     )
+
+
+@pytest.mark.skip
+def test_list_org_factory_jobs():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    # Iterate through all pages automatically
+    item: FactoryCustomerJobSummary
+    for item in client.factory.list_org_factory_jobs(
+        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING, limit=None, page_token=None
+    ):
+        print(item)
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_list_org_factory_jobs_async():
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    # Iterate through all pages automatically
+    iterator = client.factory.list_org_factory_jobs(
+        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING, limit=None, page_token=None
+    )
+    item: FactoryCustomerJobSummary
+    async for item in iterator:
+        print(item)
 
 
 @pytest.mark.skip
@@ -3762,6 +3790,33 @@ async def test_get_user_factory_finishes_async():
     result: List[
         FactoryCustomerCatalogOption
     ] = await client.factory.get_user_factory_finishes()
+
+
+@pytest.mark.skip
+def test_list_user_factory_jobs():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    # Iterate through all pages automatically
+    item: FactoryCustomerJobSummary
+    for item in client.factory.list_user_factory_jobs(
+        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING, limit=None, page_token=None
+    ):
+        print(item)
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_list_user_factory_jobs_async():
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    # Iterate through all pages automatically
+    iterator = client.factory.list_user_factory_jobs(
+        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING, limit=None, page_token=None
+    )
+    item: FactoryCustomerJobSummary
+    async for item in iterator:
+        print(item)
 
 
 @pytest.mark.skip
