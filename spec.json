@@ -29925,6 +29925,14 @@
           },
           {
             "in": "query",
+            "name": "geometry_only",
+            "description": "If true, the engine will be ran without any graphical rendering capability. This may reduce the ability of some endpoints such as snapshot.",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "in": "query",
             "name": "pool",
             "description": "An optional identifier for a pool of engine instances. The 'default' pool is used when none is specified.",
             "schema": {
@@ -29964,6 +29972,14 @@
             "description": "Enables nicer visuals for transparent surfaces. This slows down rendering, so it's off by default.",
             "schema": {
               "type": "boolean"
+            }
+          },
+          {
+            "in": "query",
+            "name": "kcl_version",
+            "description": "Which KCL+Engine version should the engine use? Clients use this to opt into updated algorithms and behaviours.",
+            "schema": {
+              "$ref": "#/components/schemas/KclVersion"
             }
           },
           {
@@ -30675,7 +30691,7 @@
         "properties": {
           "dimension": {
             "nullable": true,
-            "description": "The explicitly defined dimension.  Only required if the measurement is not automatically calculated.",
+            "description": "The explicitly defined dimension. Only required if the measurement is not automatically calculated.",
             "type": "number",
             "format": "double"
           },
@@ -30689,14 +30705,12 @@
             ]
           },
           "tolerance": {
+            "nullable": true,
             "description": "The tolerance of the dimension",
             "type": "number",
             "format": "double"
           }
-        },
-        "required": [
-          "tolerance"
-        ]
+        }
       },
       "AnnotationMbdControlFrame": {
         "description": "Parameters for defining an MBD Geometric control frame",
@@ -30750,7 +30764,7 @@
             "maxLength": 1
           },
           "tolerance": {
-            "description": "Tolerance value - the total tolerance of the geometric control.  The unit is based on the drawing standard.",
+            "description": "Tolerance value - the total tolerance of the geometric control. The unit is based on the drawing standard.",
             "type": "number",
             "format": "double"
           }
@@ -30814,6 +30828,11 @@
             "description": "Width of the annotation's line",
             "type": "number",
             "format": "float"
+          },
+          "name": {
+            "nullable": true,
+            "description": "Human-friendly identifier for this annotation. Included in some exports and metadata of the model. This is _not_ displayed visually in, the annotation, it's only metadata.",
+            "type": "string"
           },
           "position": {
             "nullable": true,
@@ -33514,7 +33533,7 @@
           },
           "rtc_stun_rtt_sec": {
             "nullable": true,
-            "description": "Total duration of pauses in seconds.\n\nThis is the \"ping\" between the client and the STUN server. Not to be confused with the E2E RTT documented [here](https://www.w3.org/TR/webrtc-stats/#dom-rtcremoteinboundrtpstreamstats-roundtriptime)\n\nhttps://www.w3.org/TR/webrtc-stats/#dom-rtcicecandidatepairstats-currentroundtriptime",
+            "description": "Estimated round trip time, measured in seconds.\n\nThis is the \"ping\" between the client and the STUN server. Not to be confused with the E2E RTT documented [here](https://www.w3.org/TR/webrtc-stats/#dom-rtcremoteinboundrtpstreamstats-roundtriptime)\n\nhttps://www.w3.org/TR/webrtc-stats/#dom-rtcicecandidatepairstats-currentroundtriptime",
             "type": "number",
             "format": "float"
           },
@@ -35993,7 +36012,7 @@
             ]
           },
           {
-            "description": "Client sent a Websocket message intended for WebRTC but it was configured as a WebRTC connection.",
+            "description": "Client sent a Websocket message intended for WebRTC, but did not configure the server to establish WebRTC.",
             "type": "string",
             "enum": [
               "message_type_not_accepted_for_web_r_t_c"
@@ -38070,7 +38089,7 @@
         ]
       },
       "ImportFile": {
-        "description": "File to import into the current model. If you are sending binary data for a file, be sure to send the WebSocketRequest as binary/bson, not text/json.",
+        "description": "File to import into the current scene.",
         "type": "object",
         "properties": {
           "data": {
@@ -39251,6 +39270,32 @@
             "type": "string",
             "enum": [
               "organization_only"
+            ]
+          }
+        ]
+      },
+      "KclVersion": {
+        "description": "Which KCL versions does Zoo support?",
+        "oneOf": [
+          {
+            "description": "Original KCL released in 2025",
+            "type": "string",
+            "enum": [
+              "1.0"
+            ]
+          },
+          {
+            "description": "KCL v2 is the same as KCL v1, except that it supports the `region` function.",
+            "type": "string",
+            "enum": [
+              "2.0"
+            ]
+          },
+          {
+            "description": "KCL v3 is currently in development.",
+            "type": "string",
+            "enum": [
+              "3.0-preview"
             ]
           }
         ]
@@ -41721,7 +41766,7 @@
                 ]
               },
               "distance": {
-                "description": "How far off the plane to extrude",
+                "description": "How far off the plane to extrude This distance is relative to the target's plane, not an absolute coordinate. Symmetric extrusions will extrude outwards from both sides of the sketch to the length specified.",
                 "allOf": [
                   {
                     "$ref": "#/components/schemas/LengthUnit"
@@ -42782,7 +42827,7 @@
             "type": "object",
             "properties": {
               "magnitude": {
-                "description": "Move the camera forward along the vector it's looking at, by this magnitudedefaultCameraZoom. Basically, how much should the camera move forward by.",
+                "description": "Move the camera forward along the vector it's looking at, by this magnitude. Basically, how much should the camera move forward by.",
                 "type": "number",
                 "format": "float"
               },
@@ -42832,7 +42877,7 @@
             ]
           },
           {
-            "description": "Export the scene to a file.",
+            "description": "Export the scene to a file.\n\nThe response is a MsgPack-encoded message in a WebSocket binary frame.",
             "type": "object",
             "properties": {
               "entity_ids": {
@@ -42865,7 +42910,7 @@
             ]
           },
           {
-            "description": "Export the scene to a file.",
+            "description": "Export the scene to a file.\n\nThe response is a MsgPack-encoded message in a WebSocket binary frame.",
             "type": "object",
             "properties": {
               "entity_ids": {
@@ -44258,7 +44303,7 @@
             "type": "object",
             "properties": {
               "edge_id": {
-                "description": "Which edge you want the opposite of.",
+                "description": "Which edge you want the next edge of.",
                 "type": "string",
                 "format": "uuid"
               },
@@ -44291,7 +44336,7 @@
             "type": "object",
             "properties": {
               "edge_id": {
-                "description": "Which edge you want the opposite of.",
+                "description": "Which edge you want the previous edge of.",
                 "type": "string",
                 "format": "uuid"
               },
@@ -45147,6 +45192,15 @@
                   }
                 ]
               },
+              "edge_3d_color": {
+                "nullable": true,
+                "description": "The default color to use for the edges of 3D bodies.",
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Color"
+                  }
+                ]
+              },
               "highlight_color": {
                 "nullable": true,
                 "description": "The default color to use for highlight",
@@ -45662,7 +45716,7 @@
             ]
           },
           {
-            "description": "Import files to the current model.",
+            "description": "Import CAD files to the current scene.\n\nSend a request containing binary file data as a MsgPack-encoded message in a WebSocket binary frame.\n\nNote: These imports are non-editable. In the future we may expose a proprietary-to-KCL function to resolve this. The main intention today is to use imports as design references.",
             "type": "object",
             "properties": {
               "files": {
@@ -46345,7 +46399,7 @@
             ]
           },
           {
-            "description": "Create a new solid from combining other smaller solids. In other words, every part of the input solids will be included in the output solid.",
+            "description": "Given a set of overlapping solids, create a new single solid.\n\nMost successful unions come from solids who's faces do not overlap aka non-coplanar.\n\nFailure cases: * A common failure is unsupported coincident faces try to be unioned.\n\nWarning cases: * When an element of the set doesn't overlap.\n\nNotable behaviors: * What appear to be coincident points will succeed and not give a \"no overlap\" warning, even if they're not. * Elements' top or bottom faces may not combine into one new face, which can seem like the union failed. You can tell they succeeded from side faces not extending into the original solids. * When exporting to STEP, if the above behavior is observed, will merged the faces.",
             "type": "object",
             "properties": {
               "separate_bodies": {
@@ -46429,7 +46483,7 @@
             ]
           },
           {
-            "description": "Create a new solid from subtracting several other solids. The 'target' is what will be cut from. The 'tool' is what will be cut out from 'target'.",
+            "description": "Given a target solid, subtract a set of \"tool solids\" to create a new solid.\n\nMost successful subtracts come from solids who's faces do not overlap aka non-coplanar.\n\nPrefer one `tool` over multiple when calling this feature.\n\nFailure cases: * A common failure is unsupported coplanar faces try to be unioned.\n\nWarning cases:\n\nNotable behaviors: If two tools occupy the same vertical range and overlap, like two cubes of the same height, the subtract of the first will cause the second tool to fail because the first leaves behind coplanar faces, causing an aforementioned failure case.\n\nUnlike `boolean_union`, if one tool in the set overlaps, any OTHER tool in the set that doesn't WILL NOT signal a non-overlap warning.",
             "type": "object",
             "properties": {
               "separate_bodies": {
@@ -50942,6 +50996,25 @@
               "data",
               "type"
             ]
+          },
+          {
+            "description": "Request that the client end this connection and establish a new session using normal authentication and authorization. This does not guarantee that a new session will be accepted.",
+            "type": "object",
+            "properties": {
+              "data": {
+                "type": "object"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "reconnect"
+                ]
+              }
+            },
+            "required": [
+              "data",
+              "type"
+            ]
           }
         ]
       },
@@ -53971,7 +54044,7 @@
         }
       },
       "RawFile": {
-        "description": "A raw file with unencoded contents to be passed over binary websockets. When raw files come back for exports it is sent as binary/bson, not text/json.",
+        "description": "A raw file with unencoded contents.\n\nSee the command that emits this type for its response encoding.",
         "type": "object",
         "properties": {
           "contents": {
@@ -56968,7 +57041,7 @@
             ]
           },
           {
-            "description": "Square yards <https://en.wikipedia.org/wiki/Square_mile>",
+            "description": "Square yards <https://en.wikipedia.org/wiki/Square_yard>",
             "type": "string",
             "enum": [
               "yd2"
