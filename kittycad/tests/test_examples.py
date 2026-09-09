@@ -1,4 +1,3 @@
-import datetime
 from pathlib import Path
 from typing import Dict, List
 
@@ -12,10 +11,8 @@ from kittycad.models import (
     ApiCallWithPrice,
     ApiToken,
     ApiTokenWithFullToken,
-    AppClientInfo,
     AsyncApiCallOutput,
     AuthApiKeyResponse,
-    BillingContractView,
     ClientErrorReportAccepted,
     CodeOutput,
     Conversation,
@@ -24,7 +21,6 @@ from kittycad.models import (
     CustomerBalance,
     CustomModel,
     DatasetS3Policies,
-    DiscountCode,
     EmailMarketingConsentState,
     ExtendedUser,
     FactoryCustomerCatalogOption,
@@ -63,7 +59,6 @@ from kittycad.models import (
     ServiceAccount,
     Session,
     Shortlink,
-    SubscriptionPlanPriceRecord,
     TextToCadResponse,
     UnitAngleConversion,
     UnitAreaConversion,
@@ -79,7 +74,6 @@ from kittycad.models import (
     UnitTorqueConversion,
     UnitVolumeConversion,
     UploadOrgDatasetFilesResponse,
-    UserAdminDetails,
     UserFeatureList,
     UserOrgInfo,
     UserResponse,
@@ -96,22 +90,9 @@ from kittycad.models.api_token_uuid import ApiTokenUuid
 from kittycad.models.axis import Axis
 from kittycad.models.axis_direction_pair import AxisDirectionPair
 from kittycad.models.base64data import Base64Data
-from kittycad.models.billing_cadence import BillingCadence
-from kittycad.models.billing_commitment_scope import BillingCommitmentScope
-from kittycad.models.billing_contract_item_input import BillingContractItemInput
-from kittycad.models.billing_contract_status import BillingContractStatus
-from kittycad.models.billing_contract_upsert import BillingContractUpsert
 from kittycad.models.billing_info import BillingInfo
-from kittycad.models.billing_item_code import BillingItemCode
-from kittycad.models.billing_item_kind import BillingItemKind
-from kittycad.models.billing_period_index import BillingPeriodIndex
-from kittycad.models.billing_period_input import BillingPeriodInput
-from kittycad.models.billing_provider import BillingProvider
-from kittycad.models.billing_quantity import BillingQuantity
-from kittycad.models.billing_rate_tier_input import BillingRateTierInput
-from kittycad.models.billing_rollover_policy import BillingRolloverPolicy
-from kittycad.models.billing_unit import BillingUnit
 from kittycad.models.client_error_report import ClientErrorReport
+from kittycad.models.client_metrics import ClientMetrics
 from kittycad.models.code_language import CodeLanguage
 from kittycad.models.code_option import CodeOption
 from kittycad.models.conversion_params import ConversionParams
@@ -124,7 +105,6 @@ from kittycad.models.create_project_share_link_request import (
 )
 from kittycad.models.create_shortlink_request import CreateShortlinkRequest
 from kittycad.models.created_at_sort_mode import CreatedAtSortMode
-from kittycad.models.currency import Currency
 from kittycad.models.direction import Direction
 from kittycad.models.email_authentication_form import EmailAuthenticationForm
 from kittycad.models.email_marketing_confirm_token_body import (
@@ -144,21 +124,24 @@ from kittycad.models.kcl_project_share_link_access_mode import (
     KclProjectShareLinkAccessMode,
 )
 from kittycad.models.lenient_url import LenientUrl
-from kittycad.models.ml_copilot_client_message import OptionHeaders, OptionPing
+from kittycad.models.ml_copilot_client_message import (
+    OptionAttachmentResponse,
+    OptionFetchAttachments,
+)
+from kittycad.models.ml_copilot_file import MlCopilotFile
 from kittycad.models.ml_copilot_replay_attachment_mode import (
     MlCopilotReplayAttachmentMode,
 )
 from kittycad.models.ml_feedback import MlFeedback
-from kittycad.models.modeling_cmd import ModelingCmd, OptionEntityGetPrimitiveIndex
-from kittycad.models.modeling_cmd_id import ModelingCmdId
-from kittycad.models.modeling_cmd_req import ModelingCmdReq
 from kittycad.models.o_auth2_app_grant_type import OAuth2AppGrantType
 from kittycad.models.org_dataset_source import OrgDatasetSource
 from kittycad.models.org_details import OrgDetails
-from kittycad.models.output_format3d import OptionStep, OutputFormat3d
-from kittycad.models.plan_interval import PlanInterval
+from kittycad.models.output_format3d import (
+    OptionPly as OutputFormat3dOptionPly,
+    OutputFormat3d,
+)
+from kittycad.models.ply_storage import PlyStorage
 from kittycad.models.post_effect_type import PostEffectType
-from kittycad.models.price_upsert_request import PriceUpsertRequest
 from kittycad.models.privacy_settings import PrivacySettings
 from kittycad.models.project_archive_format import ProjectArchiveFormat
 from kittycad.models.public_email_marketing_consent_request import (
@@ -169,12 +152,10 @@ from kittycad.models.public_mailing_list_membership_request import (
 )
 from kittycad.models.sales_inquiry_type import SalesInquiryType
 from kittycad.models.saml_identity_provider_create import SamlIdentityProviderCreate
+from kittycad.models.selection import OptionMeshByIndex, Selection
 from kittycad.models.service_account_uuid import ServiceAccountUuid
 from kittycad.models.session_uuid import SessionUuid
-from kittycad.models.step_presentation import StepPresentation
 from kittycad.models.storage_provider import StorageProvider
-from kittycad.models.store_coupon_params import StoreCouponParams
-from kittycad.models.subscription_plan_billing_model import SubscriptionPlanBillingModel
 from kittycad.models.support_inquiry_type import SupportInquiryType
 from kittycad.models.system import System
 from kittycad.models.unit_angle import UnitAngle
@@ -195,13 +176,12 @@ from kittycad.models.update_custom_model import UpdateCustomModel
 from kittycad.models.update_member_to_org_body import UpdateMemberToOrgBody
 from kittycad.models.update_o_auth2_app_request import UpdateOAuth2AppRequest
 from kittycad.models.update_org_dataset import UpdateOrgDataset
-from kittycad.models.update_payment_balance import UpdatePaymentBalance
 from kittycad.models.update_shortlink_request import UpdateShortlinkRequest
 from kittycad.models.update_user import UpdateUser
 from kittycad.models.user_identifier import UserIdentifier
 from kittycad.models.user_org_role import UserOrgRole
 from kittycad.models.uuid import Uuid
-from kittycad.models.web_socket_request import OptionModelingCmdBatchReq
+from kittycad.models.web_socket_request import OptionMetricsResponse
 from kittycad.models.website_sales_form import WebsiteSalesForm
 from kittycad.models.website_support_form import WebsiteSupportForm
 from kittycad.models.zoo_product_subscriptions_org_request import (
@@ -285,57 +265,6 @@ async def test_get_api_call_async():
     client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     result: ApiCallWithPrice = await client.api_calls.get_api_call(id="<string>")
-
-
-@pytest.mark.skip
-def test_apps_github_callback():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
-
-    client.apps.apps_github_callback()
-
-
-# OR run async
-@pytest.mark.asyncio
-@pytest.mark.skip
-async def test_apps_github_callback_async():
-    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
-
-    await client.apps.apps_github_callback()
-
-
-@pytest.mark.skip
-def test_apps_github_consent():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
-
-    result: AppClientInfo = client.apps.apps_github_consent()
-
-    body: AppClientInfo = result
-    print(body)
-
-
-# OR run async
-@pytest.mark.asyncio
-@pytest.mark.skip
-async def test_apps_github_consent_async():
-    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
-
-    result: AppClientInfo = await client.apps.apps_github_consent()
-
-
-@pytest.mark.skip
-def test_apps_github_webhook():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
-
-    client.apps.apps_github_webhook(body=bytes("some bytes", "utf-8"))
-
-
-# OR run async
-@pytest.mark.asyncio
-@pytest.mark.skip
-async def test_apps_github_webhook_async():
-    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
-
-    await client.apps.apps_github_webhook(body=bytes("some bytes", "utf-8"))
 
 
 @pytest.mark.skip
@@ -559,7 +488,7 @@ def test_create_file_conversion_options():
     result: FileConversion = client.file.create_file_conversion_options(
         body=ConversionParams(
             output_format=OutputFormat3d(
-                OptionStep(
+                OutputFormat3dOptionPly(
                     coords=System(
                         forward=AxisDirectionPair(
                             axis=Axis.Y,
@@ -570,7 +499,12 @@ def test_create_file_conversion_options():
                             direction=Direction.POSITIVE,
                         ),
                     ),
-                    presentation=StepPresentation.COMPACT,
+                    selection=Selection(
+                        OptionMeshByIndex(
+                            index=10,
+                        )
+                    ),
+                    storage=PlyStorage.ASCII,
                     units=UnitLength.CM,
                 )
             ),
@@ -609,7 +543,7 @@ async def test_create_file_conversion_options_async():
     result: FileConversion = await client.file.create_file_conversion_options(
         body=ConversionParams(
             output_format=OutputFormat3d(
-                OptionStep(
+                OutputFormat3dOptionPly(
                     coords=System(
                         forward=AxisDirectionPair(
                             axis=Axis.Y,
@@ -620,7 +554,12 @@ async def test_create_file_conversion_options_async():
                             direction=Direction.POSITIVE,
                         ),
                     ),
-                    presentation=StepPresentation.COMPACT,
+                    selection=Selection(
+                        OptionMeshByIndex(
+                            index=10,
+                        )
+                    ),
+                    storage=PlyStorage.ASCII,
                     units=UnitLength.CM,
                 )
             ),
@@ -810,29 +749,6 @@ async def test_create_file_volume_async():
         src_format=FileImportFormat.ACIS,
         output_unit=UnitVolume.MM3,
         body=bytes("some bytes", "utf-8"),
-    )
-
-
-@pytest.mark.skip
-def test_internal_get_api_token_for_discord_user():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
-
-    result: ApiToken = client.meta.internal_get_api_token_for_discord_user(
-        discord_id="<string>"
-    )
-
-    body: ApiToken = result
-    print(body)
-
-
-# OR run async
-@pytest.mark.asyncio
-@pytest.mark.skip
-async def test_internal_get_api_token_for_discord_user_async():
-    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
-
-    result: ApiToken = await client.meta.internal_get_api_token_for_discord_user(
-        discord_id="<string>"
     )
 
 
@@ -2522,234 +2438,6 @@ async def test_list_org_skills_async():
 
 
 @pytest.mark.skip
-def test_get_billing_contract_for_any_org():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
-
-    result: BillingContractView = client.orgs.get_billing_contract_for_any_org(
-        id=Uuid("<string>")
-    )
-
-    body: BillingContractView = result
-    print(body)
-
-
-# OR run async
-@pytest.mark.asyncio
-@pytest.mark.skip
-async def test_get_billing_contract_for_any_org_async():
-    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
-
-    result: BillingContractView = await client.orgs.get_billing_contract_for_any_org(
-        id=Uuid("<string>")
-    )
-
-
-@pytest.mark.skip
-def test_upsert_billing_contract_for_any_org():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
-
-    result: BillingContractView = client.orgs.upsert_billing_contract_for_any_org(
-        id=Uuid("<string>"),
-        body=BillingContractUpsert(
-            billing_cadence=BillingCadence.ANNUAL,
-            commitment_scope=BillingCommitmentScope.POOLED,
-            currency=Currency("<string>"),
-            effective_at=datetime.datetime.now(),
-            items=[
-                BillingContractItemInput(
-                    active=False,
-                    code=BillingItemCode.ENTERPRISE_SUPPORT,
-                    display_name="<string>",
-                    is_commitment_eligible=False,
-                    kind=BillingItemKind.FIXED_FEE,
-                    rate_tiers=[
-                        BillingRateTierInput(
-                            tier_start_inclusive=BillingQuantity(10),
-                            unit_price=3.14,
-                        )
-                    ],
-                    unit=BillingUnit.FILE,
-                )
-            ],
-            name="<string>",
-            periods=[
-                BillingPeriodInput(
-                    commitment_amount=3.14,
-                    period_end_at=datetime.datetime.now(),
-                    period_index=BillingPeriodIndex(10),
-                    period_start_at=datetime.datetime.now(),
-                )
-            ],
-            provider=BillingProvider.STRIPE,
-            rollover_policy=BillingRolloverPolicy.NONE,
-            status=BillingContractStatus.DRAFT,
-            term_end_at=datetime.datetime.now(),
-        ),
-    )
-
-    body: BillingContractView = result
-    print(body)
-
-
-# OR run async
-@pytest.mark.asyncio
-@pytest.mark.skip
-async def test_upsert_billing_contract_for_any_org_async():
-    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
-
-    result: BillingContractView = await client.orgs.upsert_billing_contract_for_any_org(
-        id=Uuid("<string>"),
-        body=BillingContractUpsert(
-            billing_cadence=BillingCadence.ANNUAL,
-            commitment_scope=BillingCommitmentScope.POOLED,
-            currency=Currency("<string>"),
-            effective_at=datetime.datetime.now(),
-            items=[
-                BillingContractItemInput(
-                    active=False,
-                    code=BillingItemCode.ENTERPRISE_SUPPORT,
-                    display_name="<string>",
-                    is_commitment_eligible=False,
-                    kind=BillingItemKind.FIXED_FEE,
-                    rate_tiers=[
-                        BillingRateTierInput(
-                            tier_start_inclusive=BillingQuantity(10),
-                            unit_price=3.14,
-                        )
-                    ],
-                    unit=BillingUnit.FILE,
-                )
-            ],
-            name="<string>",
-            periods=[
-                BillingPeriodInput(
-                    commitment_amount=3.14,
-                    period_end_at=datetime.datetime.now(),
-                    period_index=BillingPeriodIndex(10),
-                    period_start_at=datetime.datetime.now(),
-                )
-            ],
-            provider=BillingProvider.STRIPE,
-            rollover_policy=BillingRolloverPolicy.NONE,
-            status=BillingContractStatus.DRAFT,
-            term_end_at=datetime.datetime.now(),
-        ),
-    )
-
-
-@pytest.mark.skip
-def test_list_oauth2_apps_for_any_org():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
-
-    # Iterate through all pages automatically
-    item: OAuth2AppResponse
-    for item in client.oauth2.list_oauth2_apps_for_any_org(
-        id=Uuid("<string>"),
-        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
-        limit=None,
-        page_token=None,
-    ):
-        print(item)
-
-
-# OR run async
-@pytest.mark.asyncio
-@pytest.mark.skip
-async def test_list_oauth2_apps_for_any_org_async():
-    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
-
-    # Iterate through all pages automatically
-    iterator = client.oauth2.list_oauth2_apps_for_any_org(
-        id=Uuid("<string>"),
-        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
-        limit=None,
-        page_token=None,
-    )
-    item: OAuth2AppResponse
-    async for item in iterator:
-        print(item)
-
-
-@pytest.mark.skip
-def test_get_payment_balance_for_any_org():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
-
-    result: CustomerBalance = client.payments.get_payment_balance_for_any_org(
-        include_total_due=False, id=Uuid("<string>")
-    )
-
-    body: CustomerBalance = result
-    print(body)
-
-
-# OR run async
-@pytest.mark.asyncio
-@pytest.mark.skip
-async def test_get_payment_balance_for_any_org_async():
-    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
-
-    result: CustomerBalance = await client.payments.get_payment_balance_for_any_org(
-        include_total_due=False, id=Uuid("<string>")
-    )
-
-
-@pytest.mark.skip
-def test_update_payment_balance_for_any_org():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
-
-    result: CustomerBalance = client.payments.update_payment_balance_for_any_org(
-        id=Uuid("<string>"), include_total_due=False, body=UpdatePaymentBalance()
-    )
-
-    body: CustomerBalance = result
-    print(body)
-
-
-# OR run async
-@pytest.mark.asyncio
-@pytest.mark.skip
-async def test_update_payment_balance_for_any_org_async():
-    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
-
-    result: CustomerBalance = await client.payments.update_payment_balance_for_any_org(
-        id=Uuid("<string>"), include_total_due=False, body=UpdatePaymentBalance()
-    )
-
-
-@pytest.mark.skip
-def test_update_org_subscription_for_any_org():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
-
-    result: ZooProductSubscriptions = (
-        client.payments.update_org_subscription_for_any_org(
-            id=Uuid("<string>"),
-            body=ZooProductSubscriptionsOrgRequest(
-                modeling_app="<string>",
-            ),
-        )
-    )
-
-    body: ZooProductSubscriptions = result
-    print(body)
-
-
-# OR run async
-@pytest.mark.asyncio
-@pytest.mark.skip
-async def test_update_org_subscription_for_any_org_async():
-    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
-
-    result: ZooProductSubscriptions = (
-        await client.payments.update_org_subscription_for_any_org(
-            id=Uuid("<string>"),
-            body=ZooProductSubscriptionsOrgRequest(
-                modeling_app="<string>",
-            ),
-        )
-    )
-
-
-@pytest.mark.skip
 def test_ping():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
@@ -2949,72 +2637,6 @@ async def test_download_shared_project_async():
 
     await client.hidden.download_shared_project(
         key="<string>", format=ProjectArchiveFormat.TAR
-    )
-
-
-@pytest.mark.skip
-def test_create_store_coupon():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
-
-    result: DiscountCode = client.store.create_store_coupon(
-        body=StoreCouponParams(
-            percent_off=10,
-        )
-    )
-
-    body: DiscountCode = result
-    print(body)
-
-
-# OR run async
-@pytest.mark.asyncio
-@pytest.mark.skip
-async def test_create_store_coupon_async():
-    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
-
-    result: DiscountCode = await client.store.create_store_coupon(
-        body=StoreCouponParams(
-            percent_off=10,
-        )
-    )
-
-
-@pytest.mark.skip
-def test_upsert_subscription_plan_price():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
-
-    result: SubscriptionPlanPriceRecord = (
-        client.payments.upsert_subscription_plan_price(
-            slug="<string>",
-            body=PriceUpsertRequest(
-                active=False,
-                billing_model=SubscriptionPlanBillingModel.FLAT,
-                cadence=PlanInterval.DAY,
-                unit_amount=3.14,
-            ),
-        )
-    )
-
-    body: SubscriptionPlanPriceRecord = result
-    print(body)
-
-
-# OR run async
-@pytest.mark.asyncio
-@pytest.mark.skip
-async def test_upsert_subscription_plan_price_async():
-    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
-
-    result: SubscriptionPlanPriceRecord = (
-        await client.payments.upsert_subscription_plan_price(
-            slug="<string>",
-            body=PriceUpsertRequest(
-                active=False,
-                billing_model=SubscriptionPlanBillingModel.FLAT,
-                cadence=PlanInterval.DAY,
-                unit_amount=3.14,
-            ),
-        )
     )
 
 
@@ -4906,29 +4528,6 @@ async def test_get_user_async():
 
 
 @pytest.mark.skip
-def test_user_admin_details_get():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
-
-    result: UserAdminDetails = client.users.user_admin_details_get(
-        id=UserIdentifier("<string>")
-    )
-
-    body: UserAdminDetails = result
-    print(body)
-
-
-# OR run async
-@pytest.mark.asyncio
-@pytest.mark.skip
-async def test_user_admin_details_get_async():
-    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
-
-    result: UserAdminDetails = await client.users.user_admin_details_get(
-        id=UserIdentifier("<string>")
-    )
-
-
-@pytest.mark.skip
 def test_list_api_calls_for_user():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
@@ -4959,118 +4558,6 @@ async def test_list_api_calls_for_user_async():
     item: ApiCallWithPrice
     async for item in iterator:
         print(item)
-
-
-@pytest.mark.skip
-def test_list_oauth2_apps_for_any_user():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
-
-    # Iterate through all pages automatically
-    item: OAuth2AppResponse
-    for item in client.oauth2.list_oauth2_apps_for_any_user(
-        id=UserIdentifier("<string>"),
-        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
-        limit=None,
-        page_token=None,
-    ):
-        print(item)
-
-
-# OR run async
-@pytest.mark.asyncio
-@pytest.mark.skip
-async def test_list_oauth2_apps_for_any_user_async():
-    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
-
-    # Iterate through all pages automatically
-    iterator = client.oauth2.list_oauth2_apps_for_any_user(
-        id=UserIdentifier("<string>"),
-        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
-        limit=None,
-        page_token=None,
-    )
-    item: OAuth2AppResponse
-    async for item in iterator:
-        print(item)
-
-
-@pytest.mark.skip
-def test_get_payment_balance_for_any_user():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
-
-    result: CustomerBalance = client.payments.get_payment_balance_for_any_user(
-        id=UserIdentifier("<string>"), include_total_due=False
-    )
-
-    body: CustomerBalance = result
-    print(body)
-
-
-# OR run async
-@pytest.mark.asyncio
-@pytest.mark.skip
-async def test_get_payment_balance_for_any_user_async():
-    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
-
-    result: CustomerBalance = await client.payments.get_payment_balance_for_any_user(
-        id=UserIdentifier("<string>"), include_total_due=False
-    )
-
-
-@pytest.mark.skip
-def test_update_payment_balance_for_any_user():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
-
-    result: CustomerBalance = client.payments.update_payment_balance_for_any_user(
-        id=UserIdentifier("<string>"),
-        include_total_due=False,
-        body=UpdatePaymentBalance(),
-    )
-
-    body: CustomerBalance = result
-    print(body)
-
-
-# OR run async
-@pytest.mark.asyncio
-@pytest.mark.skip
-async def test_update_payment_balance_for_any_user_async():
-    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
-
-    result: CustomerBalance = await client.payments.update_payment_balance_for_any_user(
-        id=UserIdentifier("<string>"),
-        include_total_due=False,
-        body=UpdatePaymentBalance(),
-    )
-
-
-@pytest.mark.skip
-def test_update_subscription_for_user():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
-
-    result: ZooProductSubscriptions = client.users.update_subscription_for_user(
-        id=UserIdentifier("<string>"),
-        body=ZooProductSubscriptionsUserRequest(
-            modeling_app="<string>",
-        ),
-    )
-
-    body: ZooProductSubscriptions = result
-    print(body)
-
-
-# OR run async
-@pytest.mark.asyncio
-@pytest.mark.skip
-async def test_update_subscription_for_user_async():
-    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
-
-    result: ZooProductSubscriptions = await client.users.update_subscription_for_user(
-        id=UserIdentifier("<string>"),
-        body=ZooProductSubscriptionsUserRequest(
-            modeling_app="<string>",
-        ),
-    )
 
 
 @pytest.mark.skip
@@ -5274,8 +4761,14 @@ def test_ml_copilot_ws():
         # Send a message.
         websocket.send(
             MlCopilotClientMessage(
-                OptionHeaders(
-                    headers={"<string>": "<string>"},
+                OptionAttachmentResponse(
+                    files=[
+                        MlCopilotFile(
+                            data=b"<bytes>",
+                            mimetype="<string>",
+                            name="<string>",
+                        )
+                    ],
                 )
             )
         )
@@ -5314,7 +4807,15 @@ def test_ml_reasoning_ws():
     # Connect to the websocket.
     with client.ml.ml_reasoning_ws(id="<string>") as websocket:
         # Send a message.
-        websocket.send(MlCopilotClientMessage(OptionPing()))
+        websocket.send(
+            MlCopilotClientMessage(
+                OptionFetchAttachments(
+                    indices=[10],
+                    prompt_id=Uuid("<string>"),
+                    seq=10,
+                )
+            )
+        )
 
         # Get a message.
         message = websocket.recv()
@@ -5360,19 +4861,8 @@ def test_modeling_commands_ws():
         # Send a message.
         websocket.send(
             WebSocketRequest(
-                OptionModelingCmdBatchReq(
-                    batch_id=ModelingCmdId("<string>"),
-                    requests=[
-                        ModelingCmdReq(
-                            cmd=ModelingCmd(
-                                OptionEntityGetPrimitiveIndex(
-                                    entity_id="<string>",
-                                )
-                            ),
-                            cmd_id=ModelingCmdId("<string>"),
-                        )
-                    ],
-                    responses=False,
+                OptionMetricsResponse(
+                    metrics=ClientMetrics(),
                 )
             )
         )

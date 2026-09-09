@@ -16,7 +16,7 @@ class Feature(str, Enum):
 
     BILLING = "billing"
 
-    """# Route non-WebRTC modeling sessions to the CPU-only engine pool."""  # noqa: E501
+    """# Allows explicitly selecting the CPU-only engine pool for non-WebRTC modeling sessions."""  # noqa: E501
 
     CPU_ENGINE_POOL = "cpu_engine_pool"
 
@@ -31,6 +31,10 @@ class Feature(str, Enum):
     """# Quarantine engine-manager sessions when an engine is observed misbehaving."""  # noqa: E501
 
     ENGINE_MANAGER_QUARANTINE = "engine_manager_quarantine"
+
+    """# Grants access to the internal execution jobs API."""  # noqa: E501
+
+    EXECUTION_JOBS = "execution_jobs"
 
     """# Enables the Z0006 lint, for converting to new face api syntax in Zoo Design Studio."""  # noqa: E501
 
@@ -123,6 +127,10 @@ class Feature(str, Enum):
     """# Enables Zookeeper Ultra mode access in ML Copilot."""  # noqa: E501
 
     ZOOKEEPER_ULTRA_MODE = "zookeeper_ultra_mode"
+
+    """# Enables experimental execution of client-advertised commands from Zookeeper."""  # noqa: E501
+
+    ZOOKEEPER_CLIENT_COMMANDS = "zookeeper_client_commands"
 
     """# Allow creating a session via an existing API key"""  # noqa: E501
 

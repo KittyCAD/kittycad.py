@@ -327,6 +327,38 @@ class ProjectSnapshotResult(KittyCadBaseModel):
         return {"project_snapshot_result": payload}
 
 
+class ClientCommandRequest(KittyCadBaseModel):
+    """Ask the connected client to execute one of its advertised commands.
+
+    This request is transient and is never persisted or replayed by API."""
+
+    arguments: Any
+
+    catalog_revision: int
+
+    command_id: str
+
+    request_id: str
+
+    @model_validator(mode="before")
+    @classmethod
+    def _unwrap(cls, data):
+        if (
+            isinstance(data, dict)
+            and "client_command_request" in data
+            and isinstance(data["client_command_request"], dict)
+        ):
+            return data["client_command_request"]
+
+        return data
+
+    @model_serializer(mode="wrap")
+    def _wrap(self, handler, info):
+        payload = handler(self, info)
+
+        return {"client_command_request": payload}
+
+
 class Reasoning(KittyCadBaseModel):
     """Assistant reasoning / chain-of-thought (if you expose it)."""
 
@@ -632,6 +664,7 @@ MlCopilotServerMessage = RootModel[
         ProjectUpdated,
         ProjectRevisionUpdated,
         ProjectSnapshotResult,
+        ClientCommandRequest,
         Reasoning,
         RequestAttachments,
         AttachmentsLoaded,
