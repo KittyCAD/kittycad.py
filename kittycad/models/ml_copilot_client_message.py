@@ -1,8 +1,10 @@
-from typing import Dict, List, Literal, Optional, Union
+from typing import Any, Dict, List, Literal, Optional, Union
 
 from pydantic import Field, RootModel
 from typing_extensions import Annotated
 
+from ..models.ml_copilot_client_command import MlCopilotClientCommand
+from ..models.ml_copilot_client_command_status import MlCopilotClientCommandStatus
 from ..models.ml_copilot_file import MlCopilotFile
 from ..models.ml_copilot_project_snapshot_metadata import (
     MlCopilotProjectSnapshotMetadata,
@@ -122,6 +124,36 @@ class OptionAttachmentResponse(KittyCadBaseModel):
     type: Literal["attachment_response"] = "attachment_response"
 
 
+class OptionUpdateClientCommandSchema(KittyCadBaseModel):
+    """Replace the commands advertised by this client connection.
+
+    API and Zookeeper do not persist or replay this catalog. A client must advertise it again after every reconnect."""
+
+    commands: List[MlCopilotClientCommand]
+
+    protocol_version: int
+
+    revision: int
+
+    type: Literal["update_client_command_schema"] = "update_client_command_schema"
+
+
+class OptionClientCommandResponse(KittyCadBaseModel):
+    """Report progress or a terminal result for a requested client command."""
+
+    catalog_revision: int
+
+    error: Optional[str] = None
+
+    request_id: str
+
+    result: Optional[Any] = None
+
+    status: MlCopilotClientCommandStatus
+
+    type: Literal["client_command_response"] = "client_command_response"
+
+
 MlCopilotClientMessage = RootModel[
     Annotated[
         Union[
@@ -133,6 +165,8 @@ MlCopilotClientMessage = RootModel[
             OptionFetchAttachments,
             OptionSystem,
             OptionAttachmentResponse,
+            OptionUpdateClientCommandSchema,
+            OptionClientCommandResponse,
         ],
         Field(discriminator="type"),
     ]

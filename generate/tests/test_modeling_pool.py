@@ -6,17 +6,14 @@ import pytest
 import kittycad
 
 
-@pytest.mark.parametrize("geometry_only", [None, False, True])
-def test_sync_geometry_intent(geometry_only):
+@pytest.mark.parametrize("pool", [None, "default", "cpu"])
+def test_sync_pool_selection(pool):
     client = kittycad.KittyCAD(token="test-token")
     factory = Mock()
-    client.modeling.modeling_commands_ws(
-        geometry_only=geometry_only, webrtc=False, ws_factory=factory
-    )
+    client.modeling.modeling_commands_ws(pool=pool, webrtc=False, ws_factory=factory)
     query = parse_qs(urlsplit(factory.call_args.args[0]).query)
-    assert query.get("geometry_only") == (
-        None if geometry_only is None else [str(geometry_only).lower()]
-    )
+    assert query.get("pool") == (None if pool is None else [pool])
+    assert "geometry_only" not in query
     assert query["webrtc"] == ["false"]
     for unused in ["post_effect", "video_res_width", "video_res_height"]:
         assert unused not in query
@@ -41,27 +38,29 @@ async def test_shared_async_wrapper_returns_connection(
     factory.assert_awaited_once()
     assert result is factory.return_value
     assert urlsplit(factory.call_args.args[0]).path == path
+    assert urlsplit(factory.call_args.args[0]).scheme == "wss"
+    assert urlsplit(factory.call_args.args[0]).netloc == "api.zoo.dev"
     assert "additional_headers" in factory.call_args.kwargs
     if "pr" in kwargs:
         assert parse_qs(urlsplit(factory.call_args.args[0]).query)["pr"] == ["42"]
 
 
 @pytest.mark.asyncio
-@pytest.mark.parametrize("geometry_only", [None, False, True])
-async def test_async_geometry_intent(monkeypatch, geometry_only):
+@pytest.mark.parametrize("pool", [None, "default", "cpu"])
+@pytest.mark.parametrize("base_url", ["https://api.zoo.dev", "https://api.dev.zoo.dev"])
+async def test_async_pool_selection(monkeypatch, pool, base_url):
     factory = AsyncMock()
     monkeypatch.setattr(kittycad, "ws_connect_async", factory)
-    client = kittycad.AsyncKittyCAD(token="test-token")
-    result = await client.modeling.modeling_commands_ws(
-        geometry_only=geometry_only, webrtc=False
-    )
+    client = kittycad.AsyncKittyCAD(token="test-token", base_url=base_url)
+    result = await client.modeling.modeling_commands_ws(pool=pool, webrtc=False)
     factory.assert_awaited_once()
     assert result is factory.return_value
     query = parse_qs(urlsplit(factory.call_args.args[0]).query)
-    assert query.get("geometry_only") == (
-        None if geometry_only is None else [str(geometry_only).lower()]
-    )
+    assert query.get("pool") == (None if pool is None else [pool])
+    assert "geometry_only" not in query
     assert query["webrtc"] == ["false"]
+    assert urlsplit(factory.call_args.args[0]).scheme == "wss"
+    assert urlsplit(factory.call_args.args[0]).netloc == urlsplit(base_url).netloc
     assert "additional_headers" in factory.call_args.kwargs
     assert "extra_headers" not in factory.call_args.kwargs
     for unused in ["post_effect", "video_res_width", "video_res_height"]:

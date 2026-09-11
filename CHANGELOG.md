@@ -7,15 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
-- Modeling WebSockets accept optional `geometry_only=True` with `webrtc=False`.
-  Omit the option (or use `False`) for sessions that need images. This requires
-  server support and does not guarantee CPU routing.
-- Async WebSocket methods now await and return their generated connection,
-  using the `additional_headers` argument required by the asyncio transport.
-- Positional modeling callers must migrate to keyword arguments: the new
-  `geometry_only` parameter precedes `pr`. Existing keyword
-  calls keep their previous defaults. Treat this signature change as a
-  release-compatibility gate, not an automatic patch release.
+- Fix async WebSocket methods to return an awaited connection and pass
+  `additional_headers` to the asyncio transport, using the configured API host.
+- Document CPU sessions using `pool="cpu"`, `webrtc=False`, and effective
+  `cpu_engine_pool` access. No new geometry-only positional argument is added.
 
 ## v1.5.0
 
