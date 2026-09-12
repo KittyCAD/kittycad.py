@@ -16,9 +16,12 @@ import inspect
 import re
 import subprocess
 from pathlib import Path
+from unittest.mock import AsyncMock
+from urllib.parse import urlencode
 
 import pytest
 
+import kittycad
 from kittycad import KittyCAD
 from kittycad.models import ApiCallWithPriceResultsPage
 from kittycad.pagination import AsyncPageIterator, SyncPageIterator
@@ -600,6 +603,38 @@ class TestDoctestExamples:
 
             # Should show the actual method being called
             assert "create_file_conversion_options" in docstring
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "group,method,kwargs,path,query",
+    [
+        ("executor", "create_executor_term", {}, "/ws/executor/term", {}),
+        ("ml", "ml_copilot_ws", {"pr": 42}, "/ws/ml/copilot", {"pr": "42"}),
+        ("ml", "ml_reasoning_ws", {"id": "test-id"}, "/ws/ml/reasoning/test-id", {}),
+        (
+            "modeling",
+            "modeling_commands_ws",
+            {"pool": "cpu", "webrtc": False},
+            "/ws/modeling/commands",
+            {"webrtc": "false", "pool": "cpu"},
+        ),
+    ],
+)
+async def test_async_websocket_returns_connection(
+    monkeypatch, group, method, kwargs, path, query
+):
+    connect = AsyncMock()
+    monkeypatch.setattr(kittycad, "ws_connect_async", connect)
+    client = kittycad.AsyncKittyCAD(
+        token="test-token", base_url="https://api.dev.zoo.dev"
+    )
+    result = await getattr(getattr(client, group), method)(**kwargs)
+    url = "wss://api.dev.zoo.dev" + path + ("?" + urlencode(query) if query else "")
+    connect.assert_awaited_once_with(
+        url, additional_headers=client.get_headers(), close_timeout=120, max_size=None
+    )
+    assert result is connect.return_value
 
 
 if __name__ == "__main__":
