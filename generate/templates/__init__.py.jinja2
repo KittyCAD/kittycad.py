@@ -79,6 +79,7 @@ class Async{{ tag_pascal }}API:
         # For async clients, return the raw async WebSocket connection
         # This supports await websocket.send() and async for message in websocket
         {{ func_info.async_implementation | replace("    ", "        ") | replace("\n", "\n        ") | trim }}
+        return await {{ func_name }}(self{% if func_info.websocket_call_args %}, {{ func_info.websocket_call_args }}{% endif %})
     {% else %}
 {{ func_info.async_implementation }}
     {% endif %}

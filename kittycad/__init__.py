@@ -2934,14 +2934,16 @@ class AsyncExecutorAPI:
         ) -> ClientConnectionAsync:
             """Create a terminal."""
 
-            url = "/ws/executor/term"
+            url = "{}/ws/executor/term".format(self.client.base_url)
 
             return await ws_connect_async(
                 url.replace("http", "ws"),
-                extra_headers=self.client.get_headers(),
+                additional_headers=self.client.get_headers(),
                 close_timeout=120,
                 max_size=None,
             )
+
+        return await create_executor_term(self)
 
 
 class MlAPI:
@@ -3954,7 +3956,7 @@ class AsyncMlAPI:
         ) -> ClientConnectionAsync:
             """Open a websocket to a Zookeeper agent instance."""
 
-            url = "/ws/ml/copilot"
+            url = "{}/ws/ml/copilot".format(self.client.base_url)
 
             if replay is not None:
                 if "?" in url:
@@ -3982,10 +3984,18 @@ class AsyncMlAPI:
 
             return await ws_connect_async(
                 url.replace("http", "ws"),
-                extra_headers=self.client.get_headers(),
+                additional_headers=self.client.get_headers(),
                 close_timeout=120,
                 max_size=None,
             )
+
+        return await ml_copilot_ws(
+            self,
+            replay=replay,
+            conversation_id=conversation_id,
+            replay_attachment_mode=replay_attachment_mode,
+            pr=pr,
+        )
 
     async def ml_reasoning_ws(self, id: str):
         """Open a websocket to prompt the ML copilot.
@@ -4001,14 +4011,16 @@ class AsyncMlAPI:
         ) -> ClientConnectionAsync:
             """Open a websocket to prompt the ML copilot."""
 
-            url = "/ws/ml/reasoning/{id}".format(id=id)
+            url = "{}/ws/ml/reasoning/{id}".format(self.client.base_url, id=id)
 
             return await ws_connect_async(
                 url.replace("http", "ws"),
-                extra_headers=self.client.get_headers(),
+                additional_headers=self.client.get_headers(),
                 close_timeout=120,
                 max_size=None,
             )
+
+        return await ml_reasoning_ws(self, id=id)
 
 
 class Oauth2API:
@@ -15865,7 +15877,7 @@ class AsyncModelingAPI:
         ) -> ClientConnectionAsync:
             """Opens a WebSocket to a Zoo KittyCAD engine instance."""
 
-            url = "/ws/modeling/commands"
+            url = "{}/ws/modeling/commands".format(self.client.base_url)
 
             if video_res_width is not None:
                 if "?" in url:
@@ -15949,10 +15961,26 @@ class AsyncModelingAPI:
 
             return await ws_connect_async(
                 url.replace("http", "ws"),
-                extra_headers=self.client.get_headers(),
+                additional_headers=self.client.get_headers(),
                 close_timeout=120,
                 max_size=None,
             )
+
+        return await modeling_commands_ws(
+            self,
+            video_res_width=video_res_width,
+            video_res_height=video_res_height,
+            fps=fps,
+            unlocked_framerate=unlocked_framerate,
+            post_effect=post_effect,
+            webrtc=webrtc,
+            pool=pool,
+            show_grid=show_grid,
+            replay=replay,
+            api_call_id=api_call_id,
+            order_independent_transparency=order_independent_transparency,
+            pr=pr,
+        )
 
 
 class WebSocketCreateExecutorTerm:

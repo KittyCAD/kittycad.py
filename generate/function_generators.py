@@ -314,6 +314,6 @@ def generate_websocket_async_function(
     return template.render(
         function_name=operation_id,
         args=args,
-        url_template=path,
+        url_template="{}" + path,
         docs=endpoint.get("summary", "").replace('"', '\\"'),
     )

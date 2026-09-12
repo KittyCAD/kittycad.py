@@ -35,7 +35,7 @@
         
         return await ws_connect_async(
             url.replace("http", "ws"), 
-            extra_headers=self.client.get_headers(), 
+            additional_headers=self.client.get_headers(),
             close_timeout=120, 
             max_size=None
         )
