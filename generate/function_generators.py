@@ -14,6 +14,8 @@ def _generate_docstring_with_examples(
 ) -> str:
     """Generate docstring with usage examples for endpoints."""
     base_docs = endpoint.get("description", endpoint.get("summary", ""))
+    # Preserve literal backslashes when the docs are embedded in Python source.
+    base_docs = base_docs.replace("\\", "\\\\")
 
     # Add examples for JSON + multipart endpoints
     if file_info.get("has_json_body_multipart", False):
