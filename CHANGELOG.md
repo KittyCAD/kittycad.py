@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Changed
+
+- Seven list methods now return auto-paginating iterators instead of lists:
+  `orgs.list_org_skills`, `payments.list_payment_methods_for_org`,
+  `payments.list_payment_methods_for_user`, `projects.list_public_projects`,
+  `projects.list_project_share_links`, `factory.get_user_factory_materials`, and
+  `factory.get_user_factory_finishes`. Use `list(client.orgs.list_org_skills())`
+  to collect all results with the sync client. With `AsyncKittyCAD`, use
+  `[skill async for skill in client.orgs.list_org_skills()]` rather than awaiting
+  the method. Existing path arguments still apply, and `limit` and `page_token`
+  can now be passed as keyword arguments.
+
+### Fixed
+
+- Generate valid enum example expressions for values such as KCL version `1.0`,
+  allowing SDK generation to finish against the current API specification.
+
 - Fix async WebSocket methods to return an awaited connection and pass
   `additional_headers` to the asyncio transport, using the configured API host.
 

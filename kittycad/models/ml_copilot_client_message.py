@@ -97,6 +97,8 @@ class OptionFetchAttachments(KittyCadBaseModel):
 
     seq: int
 
+    supports_attachments_error: Optional[bool] = False
+
     type: Literal["fetch_attachments"] = "fetch_attachments"
 
 

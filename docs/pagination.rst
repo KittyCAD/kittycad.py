@@ -20,9 +20,9 @@ Quick Start
 .. code-block:: python
 
     from kittycad import KittyCAD
-    
+
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
-    
+
     # Iterate through all API calls automatically
     for api_call in client.api_calls.list_api_calls():
         print(f"API Call: {api_call}")
@@ -34,16 +34,16 @@ Quick Start
 
     import asyncio
     from kittycad import AsyncKittyCAD
-    
+
     async def main():
         client = AsyncKittyCAD()
-        
+
         # Iterate through all results asynchronously
         async for api_call in client.api_calls.list_api_calls():
             print(f"API Call: {api_call}")
-            
+
         await client.aclose()
-    
+
     asyncio.run(main())
 
 How It Works
@@ -68,52 +68,52 @@ Api Calls API
 
 **org_list_api_calls**
     List API calls for your org.
-    
+
     Returns: ``SyncPageIterator[ApiCallWithPrice]``
-    
+
     Example:
-    
+
     .. code-block:: python
-    
+
         # Sync
         for item in client.api_calls.org_list_api_calls():
             print(item)
-            
-        # Async  
+
+        # Async
         async for item in client.api_calls.org_list_api_calls():
             print(item)
 
 **user_list_api_calls**
     List API calls for your user.
-    
+
     Returns: ``SyncPageIterator[ApiCallWithPrice]``
-    
+
     Example:
-    
+
     .. code-block:: python
-    
+
         # Sync
         for item in client.api_calls.user_list_api_calls():
             print(item)
-            
-        # Async  
+
+        # Async
         async for item in client.api_calls.user_list_api_calls():
             print(item)
 
 **list_api_calls_for_user**
     List API calls for a user.
-    
+
     Returns: ``SyncPageIterator[ApiCallWithPrice]``
-    
+
     Example:
-    
+
     .. code-block:: python
-    
+
         # Sync
         for item in client.api_calls.list_api_calls_for_user():
             print(item)
-            
-        # Async  
+
+        # Async
         async for item in client.api_calls.list_api_calls_for_user():
             print(item)
 
@@ -123,18 +123,18 @@ Api Tokens API
 
 **list_api_tokens_for_user**
     List API tokens for your user.
-    
+
     Returns: ``SyncPageIterator[ApiToken]``
-    
+
     Example:
-    
+
     .. code-block:: python
-    
+
         # Sync
         for item in client.api_tokens.list_api_tokens_for_user():
             print(item)
-            
-        # Async  
+
+        # Async
         async for item in client.api_tokens.list_api_tokens_for_user():
             print(item)
 
@@ -144,36 +144,70 @@ Factory API
 
 **list_org_factory_jobs**
     List Factory jobs owned by your organization.
-    
+
     Returns: ``SyncPageIterator[FactoryCustomerJobSummary]``
-    
+
     Example:
-    
+
     .. code-block:: python
-    
+
         # Sync
         for item in client.factory.list_org_factory_jobs():
             print(item)
-            
-        # Async  
+
+        # Async
         async for item in client.factory.list_org_factory_jobs():
+            print(item)
+
+**get_user_factory_finishes**
+    List finishes currently available for customer Factory submissions.
+
+    Returns: ``SyncPageIterator[FactoryCustomerCatalogOption]``
+
+    Example:
+
+    .. code-block:: python
+
+        # Sync
+        for item in client.factory.get_user_factory_finishes():
+            print(item)
+
+        # Async
+        async for item in client.factory.get_user_factory_finishes():
             print(item)
 
 **list_user_factory_jobs**
     List your personal Factory jobs.
-    
+
     Returns: ``SyncPageIterator[FactoryCustomerJobSummary]``
-    
+
     Example:
-    
+
     .. code-block:: python
-    
+
         # Sync
         for item in client.factory.list_user_factory_jobs():
             print(item)
-            
-        # Async  
+
+        # Async
         async for item in client.factory.list_user_factory_jobs():
+            print(item)
+
+**get_user_factory_materials**
+    List materials currently available for customer Factory submissions.
+
+    Returns: ``SyncPageIterator[FactoryCustomerCatalogOption]``
+
+    Example:
+
+    .. code-block:: python
+
+        # Sync
+        for item in client.factory.get_user_factory_materials():
+            print(item)
+
+        # Async
+        async for item in client.factory.get_user_factory_materials():
             print(item)
 
 
@@ -182,35 +216,35 @@ Ml API
 
 **list_conversations_for_user**
     List conversations
-    
+
     Returns: ``SyncPageIterator[Conversation]``
-    
+
     Example:
-    
+
     .. code-block:: python
-    
+
         # Sync
         for item in client.ml.list_conversations_for_user():
             print(item)
-            
-        # Async  
+
+        # Async
         async for item in client.ml.list_conversations_for_user():
             print(item)
 
 **list_text_to_cad_parts_for_user**
     List text-to-CAD parts you've generated.
-    
+
     Returns: ``SyncPageIterator[TextToCadResponse]``
-    
+
     Example:
-    
+
     .. code-block:: python
-    
+
         # Sync
         for item in client.ml.list_text_to_cad_parts_for_user():
             print(item)
-            
-        # Async  
+
+        # Async
         async for item in client.ml.list_text_to_cad_parts_for_user():
             print(item)
 
@@ -220,35 +254,35 @@ Oauth2 API
 
 **list_org_oauth2_apps**
     List org OAuth apps.
-    
+
     Returns: ``SyncPageIterator[OAuth2AppResponse]``
-    
+
     Example:
-    
+
     .. code-block:: python
-    
+
         # Sync
         for item in client.oauth2.list_org_oauth2_apps():
             print(item)
-            
-        # Async  
+
+        # Async
         async for item in client.oauth2.list_org_oauth2_apps():
             print(item)
 
 **list_user_oauth2_apps**
     List personal OAuth apps.
-    
+
     Returns: ``SyncPageIterator[OAuth2AppResponse]``
-    
+
     Example:
-    
+
     .. code-block:: python
-    
+
         # Sync
         for item in client.oauth2.list_user_oauth2_apps():
             print(item)
-            
-        # Async  
+
+        # Async
         async for item in client.oauth2.list_user_oauth2_apps():
             print(item)
 
@@ -258,87 +292,104 @@ Orgs API
 
 **list_org_datasets**
     List every dataset that belongs to the caller's organization.
-    
+
     Returns: ``SyncPageIterator[OrgDataset]``
-    
+
     Example:
-    
+
     .. code-block:: python
-    
+
         # Sync
         for item in client.orgs.list_org_datasets():
             print(item)
-            
-        # Async  
+
+        # Async
         async for item in client.orgs.list_org_datasets():
             print(item)
 
 **list_org_dataset_conversions**
     List the file conversions that have been processed for a given dataset owned by the caller's org.
-    
+
     Returns: ``SyncPageIterator[OrgDatasetFileConversionSummary]``
-    
+
     Example:
-    
+
     .. code-block:: python
-    
+
         # Sync
         for item in client.orgs.list_org_dataset_conversions():
             print(item)
-            
-        # Async  
+
+        # Async
         async for item in client.orgs.list_org_dataset_conversions():
             print(item)
 
 **search_org_dataset_conversions**
     Search dataset conversions by conversion ID or file path.
-    
+
     Returns: ``SyncPageIterator[OrgDatasetFileConversionSummary]``
-    
+
     Example:
-    
+
     .. code-block:: python
-    
+
         # Sync
         for item in client.orgs.search_org_dataset_conversions():
             print(item)
-            
-        # Async  
+
+        # Async
         async for item in client.orgs.search_org_dataset_conversions():
             print(item)
 
 **list_org_members**
     List members of your org.
-    
+
     Returns: ``SyncPageIterator[OrgMember]``
-    
+
     Example:
-    
+
     .. code-block:: python
-    
+
         # Sync
         for item in client.orgs.list_org_members():
             print(item)
-            
-        # Async  
+
+        # Async
         async for item in client.orgs.list_org_members():
             print(item)
 
 **get_org_shortlinks**
     Get the shortlinks for an org.
-    
+
     Returns: ``SyncPageIterator[Shortlink]``
-    
+
     Example:
-    
+
     .. code-block:: python
-    
+
         # Sync
         for item in client.orgs.get_org_shortlinks():
             print(item)
-            
-        # Async  
+
+        # Async
         async for item in client.orgs.get_org_shortlinks():
+            print(item)
+
+**list_org_skills**
+    List every skill that belongs to the caller's organization, ordered by name.
+
+    Returns: ``SyncPageIterator[OrgSkillResponse]``
+
+    Example:
+
+    .. code-block:: python
+
+        # Sync
+        for item in client.orgs.list_org_skills():
+            print(item)
+
+        # Async
+        async for item in client.orgs.list_org_skills():
             print(item)
 
 
@@ -347,36 +398,125 @@ Payments API
 
 **list_invoices_for_org**
     List invoices for your org.
-    
+
     Returns: ``SyncPageIterator[Invoice]``
-    
+
     Example:
-    
+
     .. code-block:: python
-    
+
         # Sync
         for item in client.payments.list_invoices_for_org():
             print(item)
-            
-        # Async  
+
+        # Async
         async for item in client.payments.list_invoices_for_org():
+            print(item)
+
+**list_payment_methods_for_org**
+    List payment methods for your org.
+
+    Returns: ``SyncPageIterator[PaymentMethod]``
+
+    Example:
+
+    .. code-block:: python
+
+        # Sync
+        for item in client.payments.list_payment_methods_for_org():
+            print(item)
+
+        # Async
+        async for item in client.payments.list_payment_methods_for_org():
             print(item)
 
 **list_invoices_for_user**
     List invoices for your user.
-    
+
     Returns: ``SyncPageIterator[Invoice]``
-    
+
     Example:
-    
+
     .. code-block:: python
-    
+
         # Sync
         for item in client.payments.list_invoices_for_user():
             print(item)
-            
-        # Async  
+
+        # Async
         async for item in client.payments.list_invoices_for_user():
+            print(item)
+
+**list_payment_methods_for_user**
+    List payment methods for your user.
+
+    Returns: ``SyncPageIterator[PaymentMethod]``
+
+    Example:
+
+    .. code-block:: python
+
+        # Sync
+        for item in client.payments.list_payment_methods_for_user():
+            print(item)
+
+        # Async
+        async for item in client.payments.list_payment_methods_for_user():
+            print(item)
+
+
+Projects API
+------------
+
+**list_public_projects**
+    List publicly visible community projects for the website/gallery.
+
+    Returns: ``SyncPageIterator[PublicProjectResponse]``
+
+    Example:
+
+    .. code-block:: python
+
+        # Sync
+        for item in client.projects.list_public_projects():
+            print(item)
+
+        # Async
+        async for item in client.projects.list_public_projects():
+            print(item)
+
+**list_project_share_links**
+    List share links for one of the authenticated user's projects.
+
+    Returns: ``SyncPageIterator[ProjectShareLinkResponse]``
+
+    Example:
+
+    .. code-block:: python
+
+        # Sync
+        for item in client.projects.list_project_share_links():
+            print(item)
+
+        # Async
+        async for item in client.projects.list_project_share_links():
+            print(item)
+
+**list_project_versions**
+    List a project's saved versions, newest first.
+
+    Returns: ``SyncPageIterator[ProjectVersionSummaryResponse]``
+
+    Example:
+
+    .. code-block:: python
+
+        # Sync
+        for item in client.projects.list_project_versions():
+            print(item)
+
+        # Async
+        async for item in client.projects.list_project_versions():
             print(item)
 
 
@@ -385,18 +525,18 @@ Service Accounts API
 
 **list_service_accounts_for_org**
     List service accounts for your org.
-    
+
     Returns: ``SyncPageIterator[ServiceAccount]``
-    
+
     Example:
-    
+
     .. code-block:: python
-    
+
         # Sync
         for item in client.service_accounts.list_service_accounts_for_org():
             print(item)
-            
-        # Async  
+
+        # Async
         async for item in client.service_accounts.list_service_accounts_for_org():
             print(item)
 
@@ -406,18 +546,18 @@ Users API
 
 **get_user_shortlinks**
     Get the shortlinks for a user.
-    
+
     Returns: ``SyncPageIterator[Shortlink]``
-    
+
     Example:
-    
+
     .. code-block:: python
-    
+
         # Sync
         for item in client.users.get_user_shortlinks():
             print(item)
-            
-        # Async  
+
+        # Async
         async for item in client.users.get_user_shortlinks():
             print(item)
 
@@ -495,11 +635,11 @@ You can iterate over the same paginator multiple times:
 .. code-block:: python
 
     paginator = client.api_calls.list_api_calls()
-    
+
     # First iteration
     for item in paginator:
         print(f"First pass: {item}")
-        
+
     # Second iteration (starts fresh)
     for item in paginator:
         print(f"Second pass: {item}")
@@ -512,7 +652,7 @@ All paginated endpoints return properly typed iterators:
 .. code-block:: python
 
     from kittycad.models import ApiCallWithPrice
-    
+
     # Full type safety and IDE support
     item: ApiCallWithPrice
     for item in client.api_calls.list_api_calls():
@@ -526,14 +666,14 @@ Implementation Details
 The pagination system is built on top of:
 
 * **SyncPageIterator**: For synchronous pagination
-* **AsyncPageIterator**: For asynchronous pagination  
+* **AsyncPageIterator**: For asynchronous pagination
 * **Dropshot Pagination**: Uses the industry-standard Dropshot pagination protocol
 * **Type Inference**: Automatically extracts item types from ``*ResultsPage`` response types
 
 The iterators implement Python's standard iteration protocols, so they work seamlessly with:
 
 * ``for`` loops
-* ``list()`` comprehensions  
+* ``list()`` comprehensions
 * ``async for`` loops
 * ``itertools`` functions
 * Any code that expects iterables
@@ -541,7 +681,7 @@ The iterators implement Python's standard iteration protocols, so they work seam
 Contributing
 -----------
 
-This documentation is automatically generated from the OpenAPI specification. 
+This documentation is automatically generated from the OpenAPI specification.
 To update it, run:
 
 .. code-block:: bash

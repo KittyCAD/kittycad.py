@@ -24,6 +24,7 @@ from kittycad.models import (
     EmailMarketingConsentState,
     ExtendedUser,
     FactoryCustomerCatalogOption,
+    FactoryCustomerJobDetail,
     FactoryCustomerJobSummary,
     FactoryJobResponse,
     FileCenterOfMass,
@@ -35,6 +36,7 @@ from kittycad.models import (
     Invoice,
     IpAddrInfo,
     KclCodeCompletionResponse,
+    KclMigrationClientMessage,
     KclModel,
     MlCopilotClientMessage,
     OAuth2AppResponse,
@@ -53,6 +55,8 @@ from kittycad.models import (
     ProjectResponse,
     ProjectShareLinkResponse,
     ProjectSummaryResponse,
+    ProjectVersionDetailResponse,
+    ProjectVersionSummaryResponse,
     PublicProjectResponse,
     PublicProjectVoteResponse,
     SamlIdentityProvider,
@@ -89,10 +93,8 @@ from kittycad.models.aggregate_usage_collection_threshold_set import (
 from kittycad.models.api_token_uuid import ApiTokenUuid
 from kittycad.models.axis import Axis
 from kittycad.models.axis_direction_pair import AxisDirectionPair
-from kittycad.models.base64data import Base64Data
 from kittycad.models.billing_info import BillingInfo
 from kittycad.models.client_error_report import ClientErrorReport
-from kittycad.models.client_metrics import ClientMetrics
 from kittycad.models.code_language import CodeLanguage
 from kittycad.models.code_option import CodeOption
 from kittycad.models.conversion_params import ConversionParams
@@ -112,35 +114,26 @@ from kittycad.models.email_marketing_confirm_token_body import (
 )
 from kittycad.models.file_export_format import FileExportFormat
 from kittycad.models.file_import_format import FileImportFormat
-from kittycad.models.idp_metadata_source import (
-    IdpMetadataSource,
-    OptionBase64EncodedXml,
-    OptionUrl,
-)
-from kittycad.models.input_format3d import InputFormat3d, OptionPly
+from kittycad.models.idp_metadata_source import IdpMetadataSource, OptionUrl
+from kittycad.models.input_format3d import InputFormat3d, OptionInventor
 from kittycad.models.kcl_code_completion_params import KclCodeCompletionParams
 from kittycad.models.kcl_code_completion_request import KclCodeCompletionRequest
+from kittycad.models.kcl_migration_client_message import OptionCancel
 from kittycad.models.kcl_project_share_link_access_mode import (
     KclProjectShareLinkAccessMode,
 )
+from kittycad.models.kcl_version import KclVersion
 from kittycad.models.lenient_url import LenientUrl
-from kittycad.models.ml_copilot_client_message import (
-    OptionAttachmentResponse,
-    OptionFetchAttachments,
-)
-from kittycad.models.ml_copilot_file import MlCopilotFile
+from kittycad.models.ml_copilot_client_message import OptionSystem
 from kittycad.models.ml_copilot_replay_attachment_mode import (
     MlCopilotReplayAttachmentMode,
 )
+from kittycad.models.ml_copilot_system_command import MlCopilotSystemCommand
 from kittycad.models.ml_feedback import MlFeedback
 from kittycad.models.o_auth2_app_grant_type import OAuth2AppGrantType
 from kittycad.models.org_dataset_source import OrgDatasetSource
 from kittycad.models.org_details import OrgDetails
-from kittycad.models.output_format3d import (
-    OptionPly as OutputFormat3dOptionPly,
-    OutputFormat3d,
-)
-from kittycad.models.ply_storage import PlyStorage
+from kittycad.models.output_format3d import OptionStep, OutputFormat3d
 from kittycad.models.post_effect_type import PostEffectType
 from kittycad.models.privacy_settings import PrivacySettings
 from kittycad.models.project_archive_format import ProjectArchiveFormat
@@ -152,9 +145,9 @@ from kittycad.models.public_mailing_list_membership_request import (
 )
 from kittycad.models.sales_inquiry_type import SalesInquiryType
 from kittycad.models.saml_identity_provider_create import SamlIdentityProviderCreate
-from kittycad.models.selection import OptionMeshByIndex, Selection
 from kittycad.models.service_account_uuid import ServiceAccountUuid
 from kittycad.models.session_uuid import SessionUuid
+from kittycad.models.step_presentation import StepPresentation
 from kittycad.models.storage_provider import StorageProvider
 from kittycad.models.support_inquiry_type import SupportInquiryType
 from kittycad.models.system import System
@@ -181,7 +174,7 @@ from kittycad.models.update_user import UpdateUser
 from kittycad.models.user_identifier import UserIdentifier
 from kittycad.models.user_org_role import UserOrgRole
 from kittycad.models.uuid import Uuid
-from kittycad.models.web_socket_request import OptionMetricsResponse
+from kittycad.models.web_socket_request import OptionPing
 from kittycad.models.website_sales_form import WebsiteSalesForm
 from kittycad.models.website_support_form import WebsiteSupportForm
 from kittycad.models.zoo_product_subscriptions_org_request import (
@@ -488,7 +481,7 @@ def test_create_file_conversion_options():
     result: FileConversion = client.file.create_file_conversion_options(
         body=ConversionParams(
             output_format=OutputFormat3d(
-                OutputFormat3dOptionPly(
+                OptionStep(
                     coords=System(
                         forward=AxisDirectionPair(
                             axis=Axis.Y,
@@ -499,17 +492,12 @@ def test_create_file_conversion_options():
                             direction=Direction.POSITIVE,
                         ),
                     ),
-                    selection=Selection(
-                        OptionMeshByIndex(
-                            index=10,
-                        )
-                    ),
-                    storage=PlyStorage.ASCII,
+                    presentation=StepPresentation.COMPACT,
                     units=UnitLength.CM,
                 )
             ),
             src_format=InputFormat3d(
-                OptionPly(
+                OptionInventor(
                     coords=System(
                         forward=AxisDirectionPair(
                             axis=Axis.Y,
@@ -520,7 +508,7 @@ def test_create_file_conversion_options():
                             direction=Direction.POSITIVE,
                         ),
                     ),
-                    units=UnitLength.CM,
+                    split_closed_faces=False,
                 )
             ),
         ),
@@ -543,7 +531,7 @@ async def test_create_file_conversion_options_async():
     result: FileConversion = await client.file.create_file_conversion_options(
         body=ConversionParams(
             output_format=OutputFormat3d(
-                OutputFormat3dOptionPly(
+                OptionStep(
                     coords=System(
                         forward=AxisDirectionPair(
                             axis=Axis.Y,
@@ -554,17 +542,12 @@ async def test_create_file_conversion_options_async():
                             direction=Direction.POSITIVE,
                         ),
                     ),
-                    selection=Selection(
-                        OptionMeshByIndex(
-                            index=10,
-                        )
-                    ),
-                    storage=PlyStorage.ASCII,
+                    presentation=StepPresentation.COMPACT,
                     units=UnitLength.CM,
                 )
             ),
             src_format=InputFormat3d(
-                OptionPly(
+                OptionInventor(
                     coords=System(
                         forward=AxisDirectionPair(
                             axis=Axis.Y,
@@ -575,7 +558,7 @@ async def test_create_file_conversion_options_async():
                             direction=Direction.POSITIVE,
                         ),
                     ),
-                    units=UnitLength.CM,
+                    split_closed_faces=False,
                 )
             ),
         ),
@@ -884,29 +867,6 @@ async def test_update_custom_model_async():
 
     result: CustomModel = await client.ml.update_custom_model(
         id=Uuid("<string>"), body=UpdateCustomModel()
-    )
-
-
-@pytest.mark.skip
-def test_list_org_datasets_for_model():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
-
-    result: List[OrgDataset] = client.ml.list_org_datasets_for_model(
-        id=Uuid("<string>")
-    )
-
-    body: List[OrgDataset] = result
-    print(body)
-
-
-# OR run async
-@pytest.mark.asyncio
-@pytest.mark.skip
-async def test_list_org_datasets_for_model_async():
-    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
-
-    result: List[OrgDataset] = await client.ml.list_org_datasets_for_model(
-        id=Uuid("<string>")
     )
 
 
@@ -1600,6 +1560,29 @@ async def test_list_org_factory_jobs_async():
 
 
 @pytest.mark.skip
+def test_get_org_factory_job():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: FactoryCustomerJobDetail = client.factory.get_org_factory_job(
+        job_id=Uuid("<string>")
+    )
+
+    body: FactoryCustomerJobDetail = result
+    print(body)
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_get_org_factory_job_async():
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: FactoryCustomerJobDetail = await client.factory.get_org_factory_job(
+        job_id=Uuid("<string>")
+    )
+
+
+@pytest.mark.skip
 def test_list_org_members():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
@@ -2023,10 +2006,12 @@ async def test_redirect_payment_method_portal_link_for_org_async():
 def test_list_payment_methods_for_org():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: List[PaymentMethod] = client.payments.list_payment_methods_for_org()
-
-    body: List[PaymentMethod] = result
-    print(body)
+    # Iterate through all pages automatically
+    item: PaymentMethod
+    for item in client.payments.list_payment_methods_for_org(
+        limit=None, page_token=None
+    ):
+        print(item)
 
 
 # OR run async
@@ -2035,7 +2020,11 @@ def test_list_payment_methods_for_org():
 async def test_list_payment_methods_for_org_async():
     client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: List[PaymentMethod] = await client.payments.list_payment_methods_for_org()
+    # Iterate through all pages automatically
+    iterator = client.payments.list_payment_methods_for_org(limit=None, page_token=None)
+    item: PaymentMethod
+    async for item in iterator:
+        print(item)
 
 
 @pytest.mark.skip
@@ -2232,8 +2221,8 @@ def test_create_org_saml_idp():
         body=SamlIdentityProviderCreate(
             idp_entity_id="<string>",
             idp_metadata_source=IdpMetadataSource(
-                OptionBase64EncodedXml(
-                    data=Base64Data(b"<bytes>"),
+                OptionUrl(
+                    url="<string>",
                 )
             ),
             technical_contact_email="<string>",
@@ -2254,8 +2243,8 @@ async def test_create_org_saml_idp_async():
         body=SamlIdentityProviderCreate(
             idp_entity_id="<string>",
             idp_metadata_source=IdpMetadataSource(
-                OptionBase64EncodedXml(
-                    data=Base64Data(b"<bytes>"),
+                OptionUrl(
+                    url="<string>",
                 )
             ),
             technical_contact_email="<string>",
@@ -2422,10 +2411,10 @@ async def test_get_org_shortlinks_async():
 def test_list_org_skills():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: List[OrgSkillResponse] = client.orgs.list_org_skills()
-
-    body: List[OrgSkillResponse] = result
-    print(body)
+    # Iterate through all pages automatically
+    item: OrgSkillResponse
+    for item in client.orgs.list_org_skills(limit=None, page_token=None):
+        print(item)
 
 
 # OR run async
@@ -2434,7 +2423,11 @@ def test_list_org_skills():
 async def test_list_org_skills_async():
     client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: List[OrgSkillResponse] = await client.orgs.list_org_skills()
+    # Iterate through all pages automatically
+    iterator = client.orgs.list_org_skills(limit=None, page_token=None)
+    item: OrgSkillResponse
+    async for item in iterator:
+        print(item)
 
 
 @pytest.mark.skip
@@ -2500,10 +2493,10 @@ async def test_list_project_categories_async():
 def test_list_public_projects():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: List[PublicProjectResponse] = client.projects.list_public_projects()
-
-    body: List[PublicProjectResponse] = result
-    print(body)
+    # Iterate through all pages automatically
+    item: PublicProjectResponse
+    for item in client.projects.list_public_projects(limit=None, page_token=None):
+        print(item)
 
 
 # OR run async
@@ -2512,7 +2505,11 @@ def test_list_public_projects():
 async def test_list_public_projects_async():
     client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: List[PublicProjectResponse] = await client.projects.list_public_projects()
+    # Iterate through all pages automatically
+    iterator = client.projects.list_public_projects(limit=None, page_token=None)
+    item: PublicProjectResponse
+    async for item in iterator:
+        print(item)
 
 
 @pytest.mark.skip
@@ -3395,12 +3392,10 @@ async def test_get_user_self_extended_async():
 def test_get_user_factory_finishes():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: List[FactoryCustomerCatalogOption] = (
-        client.factory.get_user_factory_finishes()
-    )
-
-    body: List[FactoryCustomerCatalogOption] = result
-    print(body)
+    # Iterate through all pages automatically
+    item: FactoryCustomerCatalogOption
+    for item in client.factory.get_user_factory_finishes(limit=None, page_token=None):
+        print(item)
 
 
 # OR run async
@@ -3409,9 +3404,11 @@ def test_get_user_factory_finishes():
 async def test_get_user_factory_finishes_async():
     client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: List[
-        FactoryCustomerCatalogOption
-    ] = await client.factory.get_user_factory_finishes()
+    # Iterate through all pages automatically
+    iterator = client.factory.get_user_factory_finishes(limit=None, page_token=None)
+    item: FactoryCustomerCatalogOption
+    async for item in iterator:
+        print(item)
 
 
 @pytest.mark.skip
@@ -3461,15 +3458,36 @@ async def test_create_user_factory_job_async():
 
 
 @pytest.mark.skip
+def test_get_user_factory_job():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: FactoryCustomerJobDetail = client.factory.get_user_factory_job(
+        job_id=Uuid("<string>")
+    )
+
+    body: FactoryCustomerJobDetail = result
+    print(body)
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_get_user_factory_job_async():
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: FactoryCustomerJobDetail = await client.factory.get_user_factory_job(
+        job_id=Uuid("<string>")
+    )
+
+
+@pytest.mark.skip
 def test_get_user_factory_materials():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: List[FactoryCustomerCatalogOption] = (
-        client.factory.get_user_factory_materials()
-    )
-
-    body: List[FactoryCustomerCatalogOption] = result
-    print(body)
+    # Iterate through all pages automatically
+    item: FactoryCustomerCatalogOption
+    for item in client.factory.get_user_factory_materials(limit=None, page_token=None):
+        print(item)
 
 
 # OR run async
@@ -3478,9 +3496,11 @@ def test_get_user_factory_materials():
 async def test_get_user_factory_materials_async():
     client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: List[
-        FactoryCustomerCatalogOption
-    ] = await client.factory.get_user_factory_materials()
+    # Iterate through all pages automatically
+    iterator = client.factory.get_user_factory_materials(limit=None, page_token=None)
+    item: FactoryCustomerCatalogOption
+    async for item in iterator:
+        print(item)
 
 
 @pytest.mark.skip
@@ -3838,10 +3858,12 @@ async def test_redirect_payment_method_portal_link_for_user_async():
 def test_list_payment_methods_for_user():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: List[PaymentMethod] = client.payments.list_payment_methods_for_user()
-
-    body: List[PaymentMethod] = result
-    print(body)
+    # Iterate through all pages automatically
+    item: PaymentMethod
+    for item in client.payments.list_payment_methods_for_user(
+        limit=None, page_token=None
+    ):
+        print(item)
 
 
 # OR run async
@@ -3850,7 +3872,13 @@ def test_list_payment_methods_for_user():
 async def test_list_payment_methods_for_user_async():
     client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: List[PaymentMethod] = await client.payments.list_payment_methods_for_user()
+    # Iterate through all pages automatically
+    iterator = client.payments.list_payment_methods_for_user(
+        limit=None, page_token=None
+    )
+    item: PaymentMethod
+    async for item in iterator:
+        print(item)
 
 
 @pytest.mark.skip
@@ -4194,12 +4222,12 @@ async def test_publish_project_async():
 def test_list_project_share_links():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: List[ProjectShareLinkResponse] = client.projects.list_project_share_links(
-        id=Uuid("<string>")
-    )
-
-    body: List[ProjectShareLinkResponse] = result
-    print(body)
+    # Iterate through all pages automatically
+    item: ProjectShareLinkResponse
+    for item in client.projects.list_project_share_links(
+        id=Uuid("<string>"), limit=None, page_token=None
+    ):
+        print(item)
 
 
 # OR run async
@@ -4208,9 +4236,13 @@ def test_list_project_share_links():
 async def test_list_project_share_links_async():
     client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: List[
-        ProjectShareLinkResponse
-    ] = await client.projects.list_project_share_links(id=Uuid("<string>"))
+    # Iterate through all pages automatically
+    iterator = client.projects.list_project_share_links(
+        id=Uuid("<string>"), limit=None, page_token=None
+    )
+    item: ProjectShareLinkResponse
+    async for item in iterator:
+        print(item)
 
 
 @pytest.mark.skip
@@ -4272,6 +4304,100 @@ async def test_get_project_thumbnail_async():
     client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     await client.projects.get_project_thumbnail(id=Uuid("<string>"))
+
+
+@pytest.mark.skip
+def test_list_project_versions():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    # Iterate through all pages automatically
+    item: ProjectVersionSummaryResponse
+    for item in client.projects.list_project_versions(
+        id=Uuid("<string>"), limit=None, page_token=None
+    ):
+        print(item)
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_list_project_versions_async():
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    # Iterate through all pages automatically
+    iterator = client.projects.list_project_versions(
+        id=Uuid("<string>"), limit=None, page_token=None
+    )
+    item: ProjectVersionSummaryResponse
+    async for item in iterator:
+        print(item)
+
+
+@pytest.mark.skip
+def test_get_project_version():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: ProjectVersionDetailResponse = client.projects.get_project_version(
+        id=Uuid("<string>"), version_id=Uuid("<string>")
+    )
+
+    body: ProjectVersionDetailResponse = result
+    print(body)
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_get_project_version_async():
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: ProjectVersionDetailResponse = await client.projects.get_project_version(
+        id=Uuid("<string>"), version_id=Uuid("<string>")
+    )
+
+
+@pytest.mark.skip
+def test_download_project_version():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    client.projects.download_project_version(
+        id=Uuid("<string>"),
+        version_id=Uuid("<string>"),
+        format=ProjectArchiveFormat.TAR,
+    )
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_download_project_version_async():
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    await client.projects.download_project_version(
+        id=Uuid("<string>"),
+        version_id=Uuid("<string>"),
+        format=ProjectArchiveFormat.TAR,
+    )
+
+
+@pytest.mark.skip
+def test_get_project_version_thumbnail():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    client.projects.get_project_version_thumbnail(
+        id=Uuid("<string>"), version_id=Uuid("<string>")
+    )
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_get_project_version_thumbnail_async():
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    await client.projects.get_project_version_thumbnail(
+        id=Uuid("<string>"), version_id=Uuid("<string>")
+    )
 
 
 @pytest.mark.skip
@@ -4761,14 +4887,8 @@ def test_ml_copilot_ws():
         # Send a message.
         websocket.send(
             MlCopilotClientMessage(
-                OptionAttachmentResponse(
-                    files=[
-                        MlCopilotFile(
-                            data=b"<bytes>",
-                            mimetype="<string>",
-                            name="<string>",
-                        )
-                    ],
+                OptionSystem(
+                    command=MlCopilotSystemCommand.NEW,
                 )
             )
         )
@@ -4801,6 +4921,43 @@ async def test_ml_copilot_ws_async():
 
 
 @pytest.mark.skip
+def test_kcl_migration_ws():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    # Connect to the websocket.
+    with client.ml.kcl_migration_ws() as websocket:
+        # Send a message.
+        websocket.send(
+            KclMigrationClientMessage(
+                OptionCancel(
+                    operation_id=Uuid("<string>"),
+                )
+            )
+        )
+
+        # Get a message.
+        message = websocket.recv()
+        print(message)
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_kcl_migration_ws_async():
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    # Connect to the websocket.
+    websocket = await client.ml.kcl_migration_ws()
+
+    # Send a message.
+    await websocket.send("{}")
+
+    # Get the messages.
+    async for message in websocket:
+        print(message)
+
+
+@pytest.mark.skip
 def test_ml_reasoning_ws():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
@@ -4809,10 +4966,8 @@ def test_ml_reasoning_ws():
         # Send a message.
         websocket.send(
             MlCopilotClientMessage(
-                OptionFetchAttachments(
-                    indices=[10],
-                    prompt_id=Uuid("<string>"),
-                    seq=10,
+                OptionSystem(
+                    command=MlCopilotSystemCommand.NEW,
                 )
             )
         )
@@ -4851,21 +5006,17 @@ def test_modeling_commands_ws():
         unlocked_framerate=False,
         post_effect=PostEffectType.PHOSPHOR,
         webrtc=False,
+        geometry_only=False,
         show_grid=False,
         order_independent_transparency=False,
+        kcl_version=KclVersion.VAL_1_0,
         pool=None,
         replay=None,
         api_call_id=None,
         pr=None,
     ) as websocket:
         # Send a message.
-        websocket.send(
-            WebSocketRequest(
-                OptionMetricsResponse(
-                    metrics=ClientMetrics(),
-                )
-            )
-        )
+        websocket.send(WebSocketRequest(OptionPing()))
 
         # Get a message.
         message = websocket.recv()
@@ -4886,8 +5037,10 @@ async def test_modeling_commands_ws_async():
         unlocked_framerate=False,
         post_effect=PostEffectType.PHOSPHOR,
         webrtc=False,
+        geometry_only=False,
         show_grid=False,
         order_independent_transparency=False,
+        kcl_version=KclVersion.VAL_1_0,
         pool=None,
         replay=None,
         api_call_id=None,

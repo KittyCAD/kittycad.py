@@ -115,6 +115,18 @@ def camel_to_screaming_snake(name: str) -> str:
     return camel_to_snake(name).upper()
 
 
+def enum_member_name(value: str) -> str:
+    """Use the same valid enum member name in models and examples."""
+    name = camel_to_screaming_snake(value)
+    if name == "":
+        return "EMPTY"
+    if name in {"1", "2", "3"}:
+        return {"1": "ONE", "2": "TWO", "3": "THREE"}[name]
+    if name[0].isdigit():
+        return "VAL_" + name
+    return name
+
+
 def clean_parameter_name(name: str) -> str:
     """Clean parameter names to be valid Python identifiers."""
     # Replace common problematic characters

@@ -32,7 +32,7 @@ class UnitArea(str, Enum):
 
     MM2 = "mm2"
 
-    """# Square yards <https://en.wikipedia.org/wiki/Square_mile>"""  # noqa: E501
+    """# Square yards <https://en.wikipedia.org/wiki/Square_yard>"""  # noqa: E501
 
     YD2 = "yd2"
 

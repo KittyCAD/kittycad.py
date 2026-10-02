@@ -109,6 +109,7 @@ from ..models.path_get_info import PathGetInfo
 from ..models.path_get_sketch_target_uuid import PathGetSketchTargetUuid
 from ..models.path_get_vertex_uuids import PathGetVertexUuids
 from ..models.path_segment_info import PathSegmentInfo
+from ..models.physical_properties import PhysicalProperties
 from ..models.plane_intersect_and_project import PlaneIntersectAndProject
 from ..models.plane_set_color import PlaneSetColor
 from ..models.project_entity_to_plane import ProjectEntityToPlane
@@ -140,6 +141,7 @@ from ..models.set_default_system_properties import SetDefaultSystemProperties
 from ..models.set_grid_auto_scale import SetGridAutoScale
 from ..models.set_grid_reference_plane import SetGridReferencePlane
 from ..models.set_grid_scale import SetGridScale
+from ..models.set_kcl_version import SetKclVersion
 from ..models.set_object_transform import SetObjectTransform
 from ..models.set_order_independent_transparency import SetOrderIndependentTransparency
 from ..models.set_scene_units import SetSceneUnits
@@ -1249,6 +1251,14 @@ class OptionCenterOfMass(KittyCadBaseModel):
     type: Literal["center_of_mass"] = "center_of_mass"
 
 
+class OptionPhysicalProperties(KittyCadBaseModel):
+    """"""
+
+    data: PhysicalProperties
+
+    type: Literal["physical_properties"] = "physical_properties"
+
+
 class OptionGetSketchModePlane(KittyCadBaseModel):
     """"""
 
@@ -1565,6 +1575,14 @@ class OptionSketchGetInfo(KittyCadBaseModel):
     type: Literal["sketch_get_info"] = "sketch_get_info"
 
 
+class OptionSetKclVersion(KittyCadBaseModel):
+    """"""
+
+    data: SetKclVersion
+
+    type: Literal["set_kcl_version"] = "set_kcl_version"
+
+
 OkModelingCmdResponse = RootModel[
     Annotated[
         Union[
@@ -1701,6 +1719,7 @@ OkModelingCmdResponse = RootModel[
             OptionDensity,
             OptionSurfaceArea,
             OptionCenterOfMass,
+            OptionPhysicalProperties,
             OptionGetSketchModePlane,
             OptionEntityGetDistance,
             OptionEdgeGetLength,
@@ -1740,6 +1759,7 @@ OkModelingCmdResponse = RootModel[
             OptionEndExecution,
             OptionClosestEdge,
             OptionSketchGetInfo,
+            OptionSetKclVersion,
         ],
         Field(discriminator="type"),
     ]

@@ -342,7 +342,7 @@ To update it, run:
 The pagination implementation can be found in ``kittycad/pagination.py``.
 """
 
-    return rst_content.strip()
+    return "\n".join(line.rstrip() for line in rst_content.strip().splitlines()) + "\n"
 
 
 def main():

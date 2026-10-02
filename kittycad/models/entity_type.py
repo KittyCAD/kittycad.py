@@ -28,5 +28,7 @@ class EntityType(str, Enum):
 
     REGION = "region"
 
+    PATTERNGROUP = "patterngroup"
+
     def __str__(self) -> str:
         return str(self.value)
