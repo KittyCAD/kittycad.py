@@ -44,7 +44,7 @@ class ErrorCode(str, Enum):
 
     MESSAGE_TYPE_NOT_ACCEPTED = "message_type_not_accepted"
 
-    """# Client sent a Websocket message intended for WebRTC but it was configured as a WebRTC connection."""  # noqa: E501
+    """# Client sent a Websocket message intended for WebRTC, but did not configure the server to establish WebRTC."""  # noqa: E501
 
     MESSAGE_TYPE_NOT_ACCEPTED_FOR_WEB_R_T_C = "message_type_not_accepted_for_web_r_t_c"
 

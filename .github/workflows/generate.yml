@@ -3,42 +3,76 @@ permissions:
   contents: write
 on:
   pull_request:
-    paths:
-      - 'justfile'
-      - .github/workflows/generate.yml
-      - 'spec.json'
-      - 'generate/generate.py'
   workflow_dispatch:
 jobs:
   generate:
-    # Check if the PR is not from a fork
-    if: ${{ github.event.pull_request.head.repo.full_name == github.repository }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7.0.1
         with:
-          ref: ${{ github.event.pull_request.head.ref }}
+          fetch-depth: 2
+      - name: Check generation inputs
+        id: inputs
+        shell: bash
+        run: |
+          if [[ "$GITHUB_EVENT_NAME" == workflow_dispatch ]]; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          # Compare the PR merge commit with its base, not the previous PR commit.
+          changed=$(git diff --name-only HEAD^1 HEAD -- justfile .github/workflows/generate.yml spec.json generate/generate.py pyproject.toml uv.lock)
+          if [[ -n "$changed" ]]; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Check out PR branch
+        if: steps.inputs.outputs.changed == 'true' && github.event_name == 'pull_request'
+        uses: actions/checkout@v7.0.1
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
       - name: Set up Python
+        if: steps.inputs.outputs.changed == 'true'
         uses: actions/setup-python@v7.0.0
         with:
           python-version: '3.13'
       - name: Install uv
+        if: steps.inputs.outputs.changed == 'true'
         uses: astral-sh/setup-uv@v10.1.0
         with:
           version: "latest"
           enable-cache: true
           cache-dependency-glob: "uv.lock"
       - name: Install just
+        if: steps.inputs.outputs.changed == 'true'
         uses: extractions/setup-just@v4
       - name: Run generate
+        if: steps.inputs.outputs.changed == 'true'
         shell: bash
         run: |
           just generate
         env:
-          KITTYCAD_API_TOKEN: ${{secrets.KITTYCAD_API_TOKEN}}
+          KITTYCAD_API_TOKEN: ${{ (github.event_name == 'workflow_dispatch' || github.event.pull_request.head.repo.full_name == github.repository) && secrets.KITTYCAD_API_TOKEN || '' }}
       - name: Commit generated API files
+        id: commit
+        if: steps.inputs.outputs.changed == 'true' && github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
         uses: KittyCAD/gha-actions-public/pr-commit@main
         with:
           app-id: ${{ secrets.GH_ORG_APP_ID }}
           private-key: ${{ secrets.GH_ORG_APP_PRIVATE_KEY }}
           commit-message: "I have generated the latest API!"
+      - name: Verify generated changes are committed
+        if: steps.inputs.outputs.changed == 'true'
+        shell: bash
+        env:
+          COMMITTED: ${{ steps.commit.outputs.commited }}
+        run: |
+          if [[ "$COMMITTED" == true ]]; then
+            echo "Generated changes pushed; checks will run on the updated PR head." >&2
+            exit 1
+          fi
+          if [[ -n "$(git status --porcelain --untracked-files=all)" ]]; then
+            git status --short
+            echo "Generated SDK files must be committed before this check can pass." >&2
+            exit 1
+          fi

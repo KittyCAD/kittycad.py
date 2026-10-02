@@ -17,9 +17,9 @@ from .schema_analysis import (
     is_nested_object_one_of,
 )
 from .utils import (
-    camel_to_screaming_snake,
     camel_to_snake,
     consolidate_imports_in_file,
+    enum_member_name,
     get_template,
     randletter,
     render_template_to_file,
@@ -188,17 +188,7 @@ def generate_enum_type_code(
         for num, one_of in enumerate(schema["oneOf"]):
             if "enum" in one_of and len(one_of["enum"]) == 1:
                 value = one_of["enum"][0]
-                enum_name = camel_to_screaming_snake(value)
-                if enum_name == "":
-                    enum_name = "EMPTY"
-                elif enum_name == "1":
-                    enum_name = "ONE"
-                elif enum_name == "2":
-                    enum_name = "TWO"
-                elif enum_name == "3":
-                    enum_name = "THREE"
-                elif enum_name[0].isdigit():
-                    enum_name = "VAL_" + enum_name
+                enum_name = enum_member_name(value)
 
                 description = ""
                 if "description" in one_of:
@@ -217,17 +207,7 @@ def generate_enum_type_code(
         # Standard string enum
         if "enum" in schema:
             for num, value in enumerate(schema["enum"], start=0):
-                enum_name = camel_to_screaming_snake(value)
-                if enum_name == "":
-                    enum_name = "EMPTY"
-                elif enum_name == "1":
-                    enum_name = "ONE"
-                elif enum_name == "2":
-                    enum_name = "TWO"
-                elif enum_name == "3":
-                    enum_name = "THREE"
-                elif enum_name[0].isdigit():
-                    enum_name = "VAL_" + enum_name
+                enum_name = enum_member_name(value)
 
                 description = ""
                 if len(additional_docs) > num and additional_docs[num] != "":

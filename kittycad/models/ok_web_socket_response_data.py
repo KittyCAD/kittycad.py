@@ -149,6 +149,18 @@ class OptionDebug(KittyCadBaseModel):
     type: Literal["debug"] = "debug"
 
 
+class ReconnectData(KittyCadBaseModel):
+    """"""
+
+
+class OptionReconnect(KittyCadBaseModel):
+    """Request that the client end this connection and establish a new session using normal authentication and authorization. This does not guarantee that a new session will be accepted."""
+
+    data: ReconnectData
+
+    type: Literal["reconnect"] = "reconnect"
+
+
 OkWebSocketResponseData = RootModel[
     Annotated[
         Union[
@@ -162,6 +174,7 @@ OkWebSocketResponseData = RootModel[
             OptionModelingSessionData,
             OptionPong,
             OptionDebug,
+            OptionReconnect,
         ],
         Field(discriminator="type"),
     ]

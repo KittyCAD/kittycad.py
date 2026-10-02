@@ -26,6 +26,8 @@ class AnnotationOptions(KittyCadBaseModel):
 
     line_width: Optional[float] = None
 
+    name: Optional[str] = None
+
     position: Optional[Point3d] = None
 
     text: Optional[AnnotationTextOptions] = None

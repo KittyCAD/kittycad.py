@@ -21,10 +21,10 @@ from .type_generators import generate_types
 
 # Import utilities
 from .utils import (
-    camel_to_screaming_snake,
     camel_to_snake,
     clean_parameter_name,
     deduplicate_imports,
+    enum_member_name,
     to_pascal_case,
 )
 
@@ -195,7 +195,7 @@ def generate_type_and_example_python(
                 )
 
             parameter_example = (
-                parameter_type + "." + camel_to_screaming_snake(schema["enum"][0])
+                parameter_type + "." + enum_member_name(schema["enum"][0])
             )
         elif schema["type"] == "string":
             if name != "":

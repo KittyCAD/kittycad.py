@@ -649,6 +649,36 @@ class Attachments(KittyCadBaseModel):
         return {"attachments": payload}
 
 
+class AttachmentsError(KittyCadBaseModel):
+    """Failure to fetch a batch of persisted attachments over the websocket. This response is not persisted and does not indicate a generation failure."""
+
+    detail: str
+
+    indices: List[int]
+
+    prompt_id: Uuid
+
+    seq: int
+
+    @model_validator(mode="before")
+    @classmethod
+    def _unwrap(cls, data):
+        if (
+            isinstance(data, dict)
+            and "attachments_error" in data
+            and isinstance(data["attachments_error"], dict)
+        ):
+            return data["attachments_error"]
+
+        return data
+
+    @model_serializer(mode="wrap")
+    def _wrap(self, handler, info):
+        payload = handler(self, info)
+
+        return {"attachments_error": payload}
+
+
 MlCopilotServerMessage = RootModel[
     Union[
         Pong,
@@ -677,5 +707,6 @@ MlCopilotServerMessage = RootModel[
         EndOfStream,
         Files,
         Attachments,
+        AttachmentsError,
     ]
 ]
