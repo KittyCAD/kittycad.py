@@ -5,6 +5,7 @@ from pydantic import Field, RootModel
 from typing_extensions import Annotated
 
 from ..models.api_call_status import ApiCallStatus
+from ..models.bounding_box import BoundingBox
 from ..models.file_export_format import FileExportFormat
 from ..models.file_import_format import FileImportFormat
 from ..models.input_format3d import InputFormat3d
@@ -203,6 +204,34 @@ class OptionFileSurfaceArea(KittyCadBaseModel):
     user_id: Uuid
 
 
+class OptionFileBoundingBox(KittyCadBaseModel):
+    """A file bounding box."""
+
+    bounding_box: Optional[BoundingBox] = None
+
+    completed_at: Optional[datetime.datetime] = None
+
+    created_at: datetime.datetime
+
+    error: Optional[str] = None
+
+    id: Uuid
+
+    output_unit: UnitLength
+
+    src_format: FileImportFormat
+
+    started_at: Optional[datetime.datetime] = None
+
+    status: ApiCallStatus
+
+    type: Literal["file_bounding_box"] = "file_bounding_box"
+
+    updated_at: datetime.datetime
+
+    user_id: Uuid
+
+
 class OptionTextToCad(KittyCadBaseModel):
     """Text to CAD."""
 
@@ -332,6 +361,7 @@ AsyncApiCallOutput = RootModel[
             OptionFileVolume,
             OptionFileDensity,
             OptionFileSurfaceArea,
+            OptionFileBoundingBox,
             OptionTextToCad,
             OptionTextToCadIteration,
             OptionTextToCadMultiFileIteration,

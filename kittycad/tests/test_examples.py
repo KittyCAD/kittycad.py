@@ -27,6 +27,7 @@ from kittycad.models import (
     FactoryCustomerJobDetail,
     FactoryCustomerJobSummary,
     FactoryJobResponse,
+    FileBoundingBox,
     FileCenterOfMass,
     FileConversion,
     FileDensity,
@@ -93,6 +94,7 @@ from kittycad.models.aggregate_usage_collection_threshold_set import (
 from kittycad.models.api_token_uuid import ApiTokenUuid
 from kittycad.models.axis import Axis
 from kittycad.models.axis_direction_pair import AxisDirectionPair
+from kittycad.models.base64data import Base64Data
 from kittycad.models.billing_info import BillingInfo
 from kittycad.models.client_error_report import ClientErrorReport
 from kittycad.models.code_language import CodeLanguage
@@ -114,26 +116,30 @@ from kittycad.models.email_marketing_confirm_token_body import (
 )
 from kittycad.models.file_export_format import FileExportFormat
 from kittycad.models.file_import_format import FileImportFormat
-from kittycad.models.idp_metadata_source import IdpMetadataSource, OptionUrl
-from kittycad.models.input_format3d import InputFormat3d, OptionInventor
+from kittycad.models.idp_metadata_source import (
+    IdpMetadataSource,
+    OptionBase64EncodedXml,
+    OptionUrl,
+)
+from kittycad.models.input_format3d import InputFormat3d, OptionSldprt
 from kittycad.models.kcl_code_completion_params import KclCodeCompletionParams
 from kittycad.models.kcl_code_completion_request import KclCodeCompletionRequest
-from kittycad.models.kcl_migration_client_message import OptionCancel
+from kittycad.models.kcl_migration_client_message import OptionHeaders
 from kittycad.models.kcl_project_share_link_access_mode import (
     KclProjectShareLinkAccessMode,
 )
 from kittycad.models.kcl_version import KclVersion
 from kittycad.models.lenient_url import LenientUrl
-from kittycad.models.ml_copilot_client_message import OptionSystem
+from kittycad.models.ml_copilot_client_command import MlCopilotClientCommand
+from kittycad.models.ml_copilot_client_message import OptionUpdateClientCommandSchema
 from kittycad.models.ml_copilot_replay_attachment_mode import (
     MlCopilotReplayAttachmentMode,
 )
-from kittycad.models.ml_copilot_system_command import MlCopilotSystemCommand
 from kittycad.models.ml_feedback import MlFeedback
 from kittycad.models.o_auth2_app_grant_type import OAuth2AppGrantType
 from kittycad.models.org_dataset_source import OrgDatasetSource
 from kittycad.models.org_details import OrgDetails
-from kittycad.models.output_format3d import OptionStep, OutputFormat3d
+from kittycad.models.output_format3d import OptionStl, OutputFormat3d
 from kittycad.models.post_effect_type import PostEffectType
 from kittycad.models.privacy_settings import PrivacySettings
 from kittycad.models.project_archive_format import ProjectArchiveFormat
@@ -143,11 +149,13 @@ from kittycad.models.public_email_marketing_consent_request import (
 from kittycad.models.public_mailing_list_membership_request import (
     PublicMailingListMembershipRequest,
 )
+from kittycad.models.rtc_ice_candidate_init import RtcIceCandidateInit
 from kittycad.models.sales_inquiry_type import SalesInquiryType
 from kittycad.models.saml_identity_provider_create import SamlIdentityProviderCreate
+from kittycad.models.selection import OptionMeshByIndex, Selection
 from kittycad.models.service_account_uuid import ServiceAccountUuid
 from kittycad.models.session_uuid import SessionUuid
-from kittycad.models.step_presentation import StepPresentation
+from kittycad.models.stl_storage import StlStorage
 from kittycad.models.storage_provider import StorageProvider
 from kittycad.models.support_inquiry_type import SupportInquiryType
 from kittycad.models.system import System
@@ -174,7 +182,7 @@ from kittycad.models.update_user import UpdateUser
 from kittycad.models.user_identifier import UserIdentifier
 from kittycad.models.user_org_role import UserOrgRole
 from kittycad.models.uuid import Uuid
-from kittycad.models.web_socket_request import OptionPing
+from kittycad.models.web_socket_request import OptionTrickleIce
 from kittycad.models.website_sales_form import WebsiteSalesForm
 from kittycad.models.website_support_form import WebsiteSupportForm
 from kittycad.models.zoo_product_subscriptions_org_request import (
@@ -448,6 +456,33 @@ async def test_community_sso_async():
 
 
 @pytest.mark.skip
+def test_create_file_bounding_box():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: FileBoundingBox = client.file.create_file_bounding_box(
+        src_format=FileImportFormat.ACIS,
+        output_unit=UnitLength.CM,
+        body=bytes("some bytes", "utf-8"),
+    )
+
+    body: FileBoundingBox = result
+    print(body)
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_create_file_bounding_box_async():
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: FileBoundingBox = await client.file.create_file_bounding_box(
+        src_format=FileImportFormat.ACIS,
+        output_unit=UnitLength.CM,
+        body=bytes("some bytes", "utf-8"),
+    )
+
+
+@pytest.mark.skip
 def test_create_file_center_of_mass():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
@@ -481,7 +516,7 @@ def test_create_file_conversion_options():
     result: FileConversion = client.file.create_file_conversion_options(
         body=ConversionParams(
             output_format=OutputFormat3d(
-                OptionStep(
+                OptionStl(
                     coords=System(
                         forward=AxisDirectionPair(
                             axis=Axis.Y,
@@ -492,12 +527,17 @@ def test_create_file_conversion_options():
                             direction=Direction.POSITIVE,
                         ),
                     ),
-                    presentation=StepPresentation.COMPACT,
+                    selection=Selection(
+                        OptionMeshByIndex(
+                            index=10,
+                        )
+                    ),
+                    storage=StlStorage.ASCII,
                     units=UnitLength.CM,
                 )
             ),
             src_format=InputFormat3d(
-                OptionInventor(
+                OptionSldprt(
                     coords=System(
                         forward=AxisDirectionPair(
                             axis=Axis.Y,
@@ -531,7 +571,7 @@ async def test_create_file_conversion_options_async():
     result: FileConversion = await client.file.create_file_conversion_options(
         body=ConversionParams(
             output_format=OutputFormat3d(
-                OptionStep(
+                OptionStl(
                     coords=System(
                         forward=AxisDirectionPair(
                             axis=Axis.Y,
@@ -542,12 +582,17 @@ async def test_create_file_conversion_options_async():
                             direction=Direction.POSITIVE,
                         ),
                     ),
-                    presentation=StepPresentation.COMPACT,
+                    selection=Selection(
+                        OptionMeshByIndex(
+                            index=10,
+                        )
+                    ),
+                    storage=StlStorage.ASCII,
                     units=UnitLength.CM,
                 )
             ),
             src_format=InputFormat3d(
-                OptionInventor(
+                OptionSldprt(
                     coords=System(
                         forward=AxisDirectionPair(
                             axis=Axis.Y,
@@ -2221,8 +2266,8 @@ def test_create_org_saml_idp():
         body=SamlIdentityProviderCreate(
             idp_entity_id="<string>",
             idp_metadata_source=IdpMetadataSource(
-                OptionUrl(
-                    url="<string>",
+                OptionBase64EncodedXml(
+                    data=Base64Data(b"<bytes>"),
                 )
             ),
             technical_contact_email="<string>",
@@ -2243,8 +2288,8 @@ async def test_create_org_saml_idp_async():
         body=SamlIdentityProviderCreate(
             idp_entity_id="<string>",
             idp_metadata_source=IdpMetadataSource(
-                OptionUrl(
-                    url="<string>",
+                OptionBase64EncodedXml(
+                    data=Base64Data(b"<bytes>"),
                 )
             ),
             technical_contact_email="<string>",
@@ -4887,8 +4932,17 @@ def test_ml_copilot_ws():
         # Send a message.
         websocket.send(
             MlCopilotClientMessage(
-                OptionSystem(
-                    command=MlCopilotSystemCommand.NEW,
+                OptionUpdateClientCommandSchema(
+                    commands=[
+                        MlCopilotClientCommand(
+                            description="<string>",
+                            id="<string>",
+                            input_schema={},
+                            title="<string>",
+                        )
+                    ],
+                    protocol_version=10,
+                    revision=10,
                 )
             )
         )
@@ -4929,8 +4983,8 @@ def test_kcl_migration_ws():
         # Send a message.
         websocket.send(
             KclMigrationClientMessage(
-                OptionCancel(
-                    operation_id=Uuid("<string>"),
+                OptionHeaders(
+                    headers={"<string>": "<string>"},
                 )
             )
         )
@@ -4966,8 +5020,17 @@ def test_ml_reasoning_ws():
         # Send a message.
         websocket.send(
             MlCopilotClientMessage(
-                OptionSystem(
-                    command=MlCopilotSystemCommand.NEW,
+                OptionUpdateClientCommandSchema(
+                    commands=[
+                        MlCopilotClientCommand(
+                            description="<string>",
+                            id="<string>",
+                            input_schema={},
+                            title="<string>",
+                        )
+                    ],
+                    protocol_version=10,
+                    revision=10,
                 )
             )
         )
@@ -5016,7 +5079,15 @@ def test_modeling_commands_ws():
         pr=None,
     ) as websocket:
         # Send a message.
-        websocket.send(WebSocketRequest(OptionPing()))
+        websocket.send(
+            WebSocketRequest(
+                OptionTrickleIce(
+                    candidate=RtcIceCandidateInit(
+                        candidate="<string>",
+                    ),
+                )
+            )
+        )
 
         # Get a message.
         message = websocket.recv()

@@ -401,6 +401,13 @@ def generate_type_and_example_python(
         return generate_type_and_example_python(
             parameter_type, ref_schema, data, None, None
         )
+    elif "description" in schema and not any(
+        key in schema for key in ["type", "$ref", "oneOf", "anyOf", "allOf"]
+    ):
+        # Match the model generator's unconstrained JSON type.
+        parameter_type = "Any"
+        parameter_example = "{}"
+        example_imports = "from typing import Any\n"
     else:
         logging.error("schema: %s", json.dumps(schema, indent=4))
         raise Exception("Unknown parameter type")
