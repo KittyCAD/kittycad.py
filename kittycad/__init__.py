@@ -11009,7 +11009,7 @@ class FactoryAPI:
 
         Example `body` part: ```json { "fields": { "material": "6061 Aluminum", "finish": "Anodized", "quantity": 10, "notes": "deburr all edges" } } ```
 
-        Example request (curl): ``` curl -X POST https://api.zoo.dev/user/factory/jobs \   -H "Authorization: Bearer $ZOO_API_TOKEN" \   -F 'body={"fields":{"material":"6061 Aluminum","finish":"Anodized","quantity":10}};type=application/json' \   -F 'file=@bracket.step' ```
+        Example request (curl): ``` curl -X POST https://api.zoo.dev/user/factory/jobs \\   -H "Authorization: Bearer $ZOO_API_TOKEN" \\   -F 'body={"fields":{"material":"6061 Aluminum","finish":"Anodized","quantity":10}};type=application/json' \\   -F 'file=@bracket.step' ```
 
         Returns `201` with the created job (`FactoryJobResponse`)."""
 
@@ -11299,7 +11299,7 @@ class AsyncFactoryAPI:
 
         Example `body` part: ```json { "fields": { "material": "6061 Aluminum", "finish": "Anodized", "quantity": 10, "notes": "deburr all edges" } } ```
 
-        Example request (curl): ``` curl -X POST https://api.zoo.dev/user/factory/jobs \   -H "Authorization: Bearer $ZOO_API_TOKEN" \   -F 'body={"fields":{"material":"6061 Aluminum","finish":"Anodized","quantity":10}};type=application/json' \   -F 'file=@bracket.step' ```
+        Example request (curl): ``` curl -X POST https://api.zoo.dev/user/factory/jobs \\   -H "Authorization: Bearer $ZOO_API_TOKEN" \\   -F 'body={"fields":{"material":"6061 Aluminum","finish":"Anodized","quantity":10}};type=application/json' \\   -F 'file=@bracket.step' ```
 
         Returns `201` with the created job (`FactoryJobResponse`)."""
 
