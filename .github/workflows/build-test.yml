@@ -34,6 +34,16 @@ jobs:
         shell: bash
         run: |
           uv sync --extra dev
+      - name: Verify generated SDK is current
+        shell: bash
+        run: |
+          just generate
+          if [[ -n "$(git status --porcelain --untracked-files=all)" ]]; then
+            git status --short
+            git diff --stat
+            echo "Generated SDK files are stale. Run just generate and commit the result." >&2
+            exit 1
+          fi
       - name: Run tests with coverage
         shell: bash
         run: |
