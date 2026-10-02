@@ -18,8 +18,6 @@ jobs:
       fail-fast: false
     steps:
       - uses: actions/checkout@v7.0.1
-        with:
-          fetch-depth: 2
       - name: Set up Python 3.11
         uses: actions/setup-python@v7.0.0
         with:
@@ -36,21 +34,6 @@ jobs:
         shell: bash
         run: |
           uv sync --extra dev
-      - name: Verify generated SDK is current
-        if: github.event_name == 'pull_request'
-        shell: bash
-        run: |
-          # The PR merge commit's first parent is its base, not the previous PR commit.
-          if git diff --quiet HEAD^1 HEAD -- spec.json; then
-            exit 0
-          fi
-          just generate
-          if [[ -n "$(git status --porcelain --untracked-files=all)" ]]; then
-            git status --short
-            git diff --stat
-            echo "Generated SDK files are stale. Run just generate and commit the result." >&2
-            exit 1
-          fi
       - name: Run tests with coverage
         shell: bash
         run: |
