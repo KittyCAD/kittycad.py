@@ -212,6 +212,7 @@ from .factory_job_response import FactoryJobResponse
 from .failure_web_socket_response import FailureWebSocketResponse
 from .fbx_storage import FbxStorage
 from .feature import Feature
+from .file_bounding_box import FileBoundingBox
 from .file_center_of_mass import FileCenterOfMass
 from .file_conversion import FileConversion
 from .file_density import FileDensity

@@ -87,6 +87,7 @@ from .models.factory_customer_job_summary_results_page import (
     FactoryCustomerJobSummaryResultsPage,
 )
 from .models.factory_job_response import FactoryJobResponse
+from .models.file_bounding_box import FileBoundingBox
 from .models.file_center_of_mass import FileCenterOfMass
 from .models.file_conversion import FileConversion
 from .models.file_density import FileDensity
@@ -2011,6 +2012,54 @@ class FileAPI:
     def __init__(self, client: Client) -> None:
         self.client = client
 
+    def create_file_bounding_box(
+        self,
+        src_format: FileImportFormat,
+        body: bytes,
+        *,
+        output_unit: Optional[UnitLength] = None,
+    ) -> FileBoundingBox:
+        """Import the CAD file into the modeling engine and calculate its bounding box.
+
+        This endpoint returns the axis-aligned bounding box as a center and dimensions in the output units, using KittyCAD coordinates (+Z up, -Y forward).
+
+        This operation is always performed asynchronously, regardless of file size. The request returns the `id` of the operation. Use this `id` to get the status and bounding box from the `/async/operations/{id}` endpoint."""
+
+        url = "{}/file/bounding-box".format(self.client.base_url)
+
+        if src_format is not None:
+            if "?" in url:
+                url = url + "&src_format=" + str(src_format)
+            else:
+                url = url + "?src_format=" + str(src_format)
+
+        if output_unit is not None:
+            if "?" in url:
+                url = url + "&output_unit=" + str(output_unit)
+            else:
+                url = url + "?output_unit=" + str(output_unit)
+
+        _client = self.client.get_http_client()
+
+        response = _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body,
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return FileBoundingBox.model_validate(json_data, extra="ignore")
+
     def create_file_center_of_mass(
         self,
         src_format: FileImportFormat,
@@ -2425,6 +2474,54 @@ class AsyncFileAPI:
 
     def __init__(self, client: AsyncClient) -> None:
         self.client = client
+
+    async def create_file_bounding_box(
+        self,
+        src_format: FileImportFormat,
+        body: bytes,
+        *,
+        output_unit: Optional[UnitLength] = None,
+    ) -> FileBoundingBox:
+        """Import the CAD file into the modeling engine and calculate its bounding box.
+
+        This endpoint returns the axis-aligned bounding box as a center and dimensions in the output units, using KittyCAD coordinates (+Z up, -Y forward).
+
+        This operation is always performed asynchronously, regardless of file size. The request returns the `id` of the operation. Use this `id` to get the status and bounding box from the `/async/operations/{id}` endpoint."""
+
+        url = "{}/file/bounding-box".format(self.client.base_url)
+
+        if src_format is not None:
+            if "?" in url:
+                url = url + "&src_format=" + str(src_format)
+            else:
+                url = url + "?src_format=" + str(src_format)
+
+        if output_unit is not None:
+            if "?" in url:
+                url = url + "&output_unit=" + str(output_unit)
+            else:
+                url = url + "?output_unit=" + str(output_unit)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body,
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return FileBoundingBox.model_validate(json_data, extra="ignore")
 
     async def create_file_center_of_mass(
         self,
