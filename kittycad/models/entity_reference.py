@@ -73,6 +73,14 @@ class OptionSolid3d(KittyCadBaseModel):
     type: Literal["solid3d"] = "solid3d"
 
 
+class OptionHelix(KittyCadBaseModel):
+    """A uuid referencing a helix."""
+
+    helix_id: str
+
+    type: Literal["helix"] = "helix"
+
+
 class OptionSolid2dEdge(KittyCadBaseModel):
     """A uuid referencing an edge on a solid2d (profile) - used for raw sketch/profile edges. This is distinct from the face-based Edge reference which is used for BRep/swept body edges."""
 
@@ -114,6 +122,7 @@ EntityReference = RootModel[
             OptionVertex,
             OptionSolid2d,
             OptionSolid3d,
+            OptionHelix,
             OptionSolid2dEdge,
             OptionSegment,
             OptionRegion,

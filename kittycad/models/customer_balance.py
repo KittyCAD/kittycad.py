@@ -10,6 +10,8 @@ class CustomerBalance(KittyCadBaseModel):
 
     This holds information about the financial balance for the customer."""
 
+    amount_due_after_credits: Optional[float] = None
+
     created_at: datetime.datetime
 
     monthly_api_credits_refresh_at: Optional[datetime.datetime] = None

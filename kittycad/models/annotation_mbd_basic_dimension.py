@@ -11,4 +11,4 @@ class AnnotationMbdBasicDimension(KittyCadBaseModel):
 
     symbol: Optional[MbdSymbol] = None
 
-    tolerance: float
+    tolerance: Optional[float] = None

@@ -26,6 +26,8 @@ class Invoice(KittyCadBaseModel):
 
     billing_reason: Optional[str] = None
 
+    can_retry_payment: Optional[bool] = False
+
     collection_method: Optional[str] = None
 
     created_at: datetime.datetime

@@ -1,6 +1,7 @@
 from typing import Optional
 
 from ..models.annotation_line_end import AnnotationLineEnd
+from ..models.annotation_mbd_leader_position import AnnotationMbdLeaderPosition
 from ..models.edge_specifier import EdgeSpecifier
 from ..models.point2d import Point2d
 from .base import KittyCadBaseModel
@@ -13,7 +14,9 @@ class AnnotationFeatureTag(KittyCadBaseModel):
 
     entity_id: Optional[str] = None
 
-    entity_pos: Point2d
+    entity_leader_pos: Optional[AnnotationMbdLeaderPosition] = None
+
+    entity_pos: Optional[Point2d] = None
 
     font_point_size: int
 

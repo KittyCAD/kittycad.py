@@ -79,7 +79,10 @@ from .models.email_authentication_form import EmailAuthenticationForm
 from .models.email_marketing_confirm_token_body import EmailMarketingConfirmTokenBody
 from .models.email_marketing_consent_state import EmailMarketingConsentState
 from .models.extended_user import ExtendedUser
-from .models.factory_customer_catalog_option import FactoryCustomerCatalogOption
+from .models.factory_customer_catalog_option_results_page import (
+    FactoryCustomerCatalogOptionResultsPage,
+)
+from .models.factory_customer_job_detail import FactoryCustomerJobDetail
 from .models.factory_customer_job_summary_results_page import (
     FactoryCustomerJobSummaryResultsPage,
 )
@@ -96,7 +99,10 @@ from .models.invoice_results_page import InvoiceResultsPage
 from .models.ip_addr_info import IpAddrInfo
 from .models.kcl_code_completion_request import KclCodeCompletionRequest
 from .models.kcl_code_completion_response import KclCodeCompletionResponse
+from .models.kcl_migration_client_message import KclMigrationClientMessage
+from .models.kcl_migration_server_message import KclMigrationServerMessage
 from .models.kcl_model import KclModel
+from .models.kcl_version import KclVersion
 from .models.lenient_url import LenientUrl
 from .models.ml_copilot_client_message import MlCopilotClientMessage
 from .models.ml_copilot_replay_attachment_mode import MlCopilotReplayAttachmentMode
@@ -129,9 +135,9 @@ from .models.org_dataset_semantic_search_match import OrgDatasetSemanticSearchMa
 from .models.org_details import OrgDetails
 from .models.org_member import OrgMember
 from .models.org_member_results_page import OrgMemberResultsPage
-from .models.org_skill_response import OrgSkillResponse
+from .models.org_skill_response_results_page import OrgSkillResponseResultsPage
 from .models.payment_intent import PaymentIntent
-from .models.payment_method import PaymentMethod
+from .models.payment_method_results_page import PaymentMethodResultsPage
 from .models.pong import Pong
 from .models.post_effect_type import PostEffectType
 from .models.privacy_settings import PrivacySettings
@@ -139,7 +145,14 @@ from .models.project_archive_format import ProjectArchiveFormat
 from .models.project_category_response import ProjectCategoryResponse
 from .models.project_response import ProjectResponse
 from .models.project_share_link_response import ProjectShareLinkResponse
+from .models.project_share_link_response_results_page import (
+    ProjectShareLinkResponseResultsPage,
+)
 from .models.project_summary_response import ProjectSummaryResponse
+from .models.project_version_detail_response import ProjectVersionDetailResponse
+from .models.project_version_summary_response_results_page import (
+    ProjectVersionSummaryResponseResultsPage,
+)
 from .models.public_email_marketing_consent_request import (
     PublicEmailMarketingConsentRequest,
 )
@@ -147,6 +160,9 @@ from .models.public_mailing_list_membership_request import (
     PublicMailingListMembershipRequest,
 )
 from .models.public_project_response import PublicProjectResponse
+from .models.public_project_response_results_page import (
+    PublicProjectResponseResultsPage,
+)
 from .models.public_project_vote_response import PublicProjectVoteResponse
 from .models.saml_identity_provider import SamlIdentityProvider
 from .models.saml_identity_provider_create import SamlIdentityProviderCreate
@@ -3178,36 +3194,6 @@ class MlAPI:
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return CustomModel.model_validate(json_data, extra="ignore")
 
-    def list_org_datasets_for_model(
-        self,
-        id: Uuid,
-    ) -> List[OrgDataset]:
-        """List the org datasets that are currently attached to a custom ML model owned by the caller’s organization."""
-
-        url = "{}/ml/custom/models/{id}/datasets".format(self.client.base_url, id=id)
-
-        _client = self.client.get_http_client()
-
-        response = _client.get(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into annotated/collection/union types using TypeAdapter
-        from pydantic import TypeAdapter
-
-        return TypeAdapter(List[OrgDataset]).validate_python(json_data, extra="ignore")
-
     def create_kcl_code_completions(
         self,
         body: KclCodeCompletionRequest,
@@ -3441,6 +3427,19 @@ class MlAPI:
             recv_timeout=recv_timeout,
             ws_factory=ws_factory,
             client=self.client,
+        )
+
+    def kcl_migration_ws(
+        self,
+        recv_timeout: Optional[float] = None,
+        ws_factory: Optional[Callable[..., ClientConnectionSync]] = None,
+    ) -> "WebSocketKclMigrationWs":
+        """Open a sponsored KCL migration connection. It cannot execute ordinary prompts.
+
+        Returns a WebSocket wrapper with methods for sending/receiving data.
+        """
+        return WebSocketKclMigrationWs(
+            recv_timeout=recv_timeout, ws_factory=ws_factory, client=self.client
         )
 
     def ml_reasoning_ws(
@@ -3689,36 +3688,6 @@ class AsyncMlAPI:
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return CustomModel.model_validate(json_data, extra="ignore")
-
-    async def list_org_datasets_for_model(
-        self,
-        id: Uuid,
-    ) -> List[OrgDataset]:
-        """List the org datasets that are currently attached to a custom ML model owned by the caller’s organization."""
-
-        url = "{}/ml/custom/models/{id}/datasets".format(self.client.base_url, id=id)
-
-        _client = self.client.get_http_client()
-
-        response = await _client.get(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into annotated/collection/union types using TypeAdapter
-        from pydantic import TypeAdapter
-
-        return TypeAdapter(List[OrgDataset]).validate_python(json_data, extra="ignore")
 
     async def create_kcl_code_completions(
         self,
@@ -3996,6 +3965,30 @@ class AsyncMlAPI:
             replay_attachment_mode=replay_attachment_mode,
             pr=pr,
         )
+
+    async def kcl_migration_ws(self):
+        """Open a sponsored KCL migration connection. It cannot execute ordinary prompts.
+
+        Returns an async WebSocket connection for sending/receiving data.
+        """
+
+        # For async clients, return the raw async WebSocket connection
+        # This supports await websocket.send() and async for message in websocket
+        async def kcl_migration_ws(
+            self,
+        ) -> ClientConnectionAsync:
+            """Open a sponsored KCL migration connection. It cannot execute ordinary prompts."""
+
+            url = "{}/ws/ml/kcl-migration".format(self.client.base_url)
+
+            return await ws_connect_async(
+                url.replace("http", "ws"),
+                additional_headers=self.client.get_headers(),
+                close_timeout=120,
+                max_size=None,
+            )
+
+        return await kcl_migration_ws(self)
 
     async def ml_reasoning_ws(self, id: str):
         """Open a websocket to prompt the ML copilot.
@@ -7124,13 +7117,65 @@ class OrgsAPI:
 
     def list_org_skills(
         self,
-    ) -> List[OrgSkillResponse]:
-        """List every skill that belongs to the caller's organization."""
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+    ) -> "SyncPageIterator":
+        """List every skill that belongs to the caller's organization, ordered by name.
 
+        Returns an iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            for item in client.org.list_org_skills():
+                print(item)
+        """
+
+        from typing import Any, Dict
+
+        from kittycad.pagination import SyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
+
+        if limit is not None:
+            kwargs["limit"] = limit
+
+        if page_token is not None:
+            kwargs["page_token"] = page_token
+
+        def fetch_page(**kw):
+            return self._fetch_page_list_org_skills(**kw)
+
+        # Create the page iterator
+        return SyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    def _fetch_page_list_org_skills(self, **kwargs) -> OrgSkillResponseResultsPage:
+        """Internal method to fetch a single page."""
+        # Build URL with path parameters
         url = "{}/org/skills".format(self.client.base_url)
 
-        _client = self.client.get_http_client()
+        # Add query parameters
 
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
         response = _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -7145,13 +7190,8 @@ class OrgsAPI:
             return None  # type: ignore
 
         json_data = response.json()
-
-        # Validate into annotated/collection/union types using TypeAdapter
-        from pydantic import TypeAdapter
-
-        return TypeAdapter(List[OrgSkillResponse]).validate_python(
-            json_data, extra="ignore"
-        )
+        # Validate into a Pydantic model (supports BaseModel/RootModel)
+        return OrgSkillResponseResultsPage.model_validate(json_data, extra="ignore")
 
     def get_user_org(
         self,
@@ -8506,15 +8546,69 @@ class AsyncOrgsAPI:
         # Validate into a Pydantic model (supports BaseModel/RootModel)
         return ShortlinkResultsPage.model_validate(json_data, extra="ignore")
 
-    async def list_org_skills(
+    def list_org_skills(
         self,
-    ) -> List[OrgSkillResponse]:
-        """List every skill that belongs to the caller's organization."""
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+    ) -> "AsyncPageIterator":
+        """List every skill that belongs to the caller's organization, ordered by name.
 
+        Returns an async iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            async for item in client.org.list_org_skills():
+                print(item)
+        """
+
+        from typing import Any, Dict
+
+        from kittycad.pagination import AsyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
+
+        if limit is not None:
+            kwargs["limit"] = limit
+
+        if page_token is not None:
+            kwargs["page_token"] = page_token
+
+        async def fetch_page(**kw):
+            return await self._fetch_page_list_org_skills(**kw)
+
+        # Create the async page iterator
+        return AsyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    async def _fetch_page_list_org_skills(
+        self, **kwargs
+    ) -> OrgSkillResponseResultsPage:
+        """Internal async method to fetch a single page."""
+        # Build URL with path parameters
         url = "{}/org/skills".format(self.client.base_url)
 
-        _client = self.client.get_http_client()
+        # Add query parameters
 
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
         response = await _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -8529,13 +8623,8 @@ class AsyncOrgsAPI:
             return None  # type: ignore
 
         json_data = response.json()
-
-        # Validate into annotated/collection/union types using TypeAdapter
-        from pydantic import TypeAdapter
-
-        return TypeAdapter(List[OrgSkillResponse]).validate_python(
-            json_data, extra="ignore"
-        )
+        # Validate into a Pydantic model (supports BaseModel/RootModel)
+        return OrgSkillResponseResultsPage.model_validate(json_data, extra="ignore")
 
     async def get_user_org(
         self,
@@ -8954,13 +9043,67 @@ class PaymentsAPI:
 
     def list_payment_methods_for_org(
         self,
-    ) -> List[PaymentMethod]:
-        """This endpoint requires authentication by an org admin. It lists payment methods for the authenticated user's org."""
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+    ) -> "SyncPageIterator":
+        """This endpoint requires authentication by an org admin. It lists payment methods for the authenticated user's org, with the valid default card first.
 
+        Returns an iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            for item in client.org.list_payment_methods_for_org():
+                print(item)
+        """
+
+        from typing import Any, Dict
+
+        from kittycad.pagination import SyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
+
+        if limit is not None:
+            kwargs["limit"] = limit
+
+        if page_token is not None:
+            kwargs["page_token"] = page_token
+
+        def fetch_page(**kw):
+            return self._fetch_page_list_payment_methods_for_org(**kw)
+
+        # Create the page iterator
+        return SyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    def _fetch_page_list_payment_methods_for_org(
+        self, **kwargs
+    ) -> PaymentMethodResultsPage:
+        """Internal method to fetch a single page."""
+        # Build URL with path parameters
         url = "{}/org/payment/methods".format(self.client.base_url)
 
-        _client = self.client.get_http_client()
+        # Add query parameters
 
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
         response = _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -8975,13 +9118,8 @@ class PaymentsAPI:
             return None  # type: ignore
 
         json_data = response.json()
-
-        # Validate into annotated/collection/union types using TypeAdapter
-        from pydantic import TypeAdapter
-
-        return TypeAdapter(List[PaymentMethod]).validate_python(
-            json_data, extra="ignore"
-        )
+        # Validate into a Pydantic model (supports BaseModel/RootModel)
+        return PaymentMethodResultsPage.model_validate(json_data, extra="ignore")
 
     def delete_payment_method_for_org(
         self,
@@ -9492,13 +9630,67 @@ class PaymentsAPI:
 
     def list_payment_methods_for_user(
         self,
-    ) -> List[PaymentMethod]:
-        """This endpoint requires authentication by any Zoo user. It lists payment methods for the authenticated user."""
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+    ) -> "SyncPageIterator":
+        """This endpoint requires authentication by any Zoo user. It lists payment methods for the authenticated user, with the valid default card first.
 
+        Returns an iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            for item in client.user.list_payment_methods_for_user():
+                print(item)
+        """
+
+        from typing import Any, Dict
+
+        from kittycad.pagination import SyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
+
+        if limit is not None:
+            kwargs["limit"] = limit
+
+        if page_token is not None:
+            kwargs["page_token"] = page_token
+
+        def fetch_page(**kw):
+            return self._fetch_page_list_payment_methods_for_user(**kw)
+
+        # Create the page iterator
+        return SyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    def _fetch_page_list_payment_methods_for_user(
+        self, **kwargs
+    ) -> PaymentMethodResultsPage:
+        """Internal method to fetch a single page."""
+        # Build URL with path parameters
         url = "{}/user/payment/methods".format(self.client.base_url)
 
-        _client = self.client.get_http_client()
+        # Add query parameters
 
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
         response = _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -9513,13 +9705,8 @@ class PaymentsAPI:
             return None  # type: ignore
 
         json_data = response.json()
-
-        # Validate into annotated/collection/union types using TypeAdapter
-        from pydantic import TypeAdapter
-
-        return TypeAdapter(List[PaymentMethod]).validate_python(
-            json_data, extra="ignore"
-        )
+        # Validate into a Pydantic model (supports BaseModel/RootModel)
+        return PaymentMethodResultsPage.model_validate(json_data, extra="ignore")
 
     def delete_payment_method_for_user(
         self,
@@ -10057,15 +10244,69 @@ class AsyncPaymentsAPI:
 
         return response.json() if response.content else None
 
-    async def list_payment_methods_for_org(
+    def list_payment_methods_for_org(
         self,
-    ) -> List[PaymentMethod]:
-        """This endpoint requires authentication by an org admin. It lists payment methods for the authenticated user's org."""
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+    ) -> "AsyncPageIterator":
+        """This endpoint requires authentication by an org admin. It lists payment methods for the authenticated user's org, with the valid default card first.
 
+        Returns an async iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            async for item in client.org.list_payment_methods_for_org():
+                print(item)
+        """
+
+        from typing import Any, Dict
+
+        from kittycad.pagination import AsyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
+
+        if limit is not None:
+            kwargs["limit"] = limit
+
+        if page_token is not None:
+            kwargs["page_token"] = page_token
+
+        async def fetch_page(**kw):
+            return await self._fetch_page_list_payment_methods_for_org(**kw)
+
+        # Create the async page iterator
+        return AsyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    async def _fetch_page_list_payment_methods_for_org(
+        self, **kwargs
+    ) -> PaymentMethodResultsPage:
+        """Internal async method to fetch a single page."""
+        # Build URL with path parameters
         url = "{}/org/payment/methods".format(self.client.base_url)
 
-        _client = self.client.get_http_client()
+        # Add query parameters
 
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
         response = await _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -10080,13 +10321,8 @@ class AsyncPaymentsAPI:
             return None  # type: ignore
 
         json_data = response.json()
-
-        # Validate into annotated/collection/union types using TypeAdapter
-        from pydantic import TypeAdapter
-
-        return TypeAdapter(List[PaymentMethod]).validate_python(
-            json_data, extra="ignore"
-        )
+        # Validate into a Pydantic model (supports BaseModel/RootModel)
+        return PaymentMethodResultsPage.model_validate(json_data, extra="ignore")
 
     async def delete_payment_method_for_org(
         self,
@@ -10595,15 +10831,69 @@ class AsyncPaymentsAPI:
 
         return response.json() if response.content else None
 
-    async def list_payment_methods_for_user(
+    def list_payment_methods_for_user(
         self,
-    ) -> List[PaymentMethod]:
-        """This endpoint requires authentication by any Zoo user. It lists payment methods for the authenticated user."""
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+    ) -> "AsyncPageIterator":
+        """This endpoint requires authentication by any Zoo user. It lists payment methods for the authenticated user, with the valid default card first.
 
+        Returns an async iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            async for item in client.user.list_payment_methods_for_user():
+                print(item)
+        """
+
+        from typing import Any, Dict
+
+        from kittycad.pagination import AsyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
+
+        if limit is not None:
+            kwargs["limit"] = limit
+
+        if page_token is not None:
+            kwargs["page_token"] = page_token
+
+        async def fetch_page(**kw):
+            return await self._fetch_page_list_payment_methods_for_user(**kw)
+
+        # Create the async page iterator
+        return AsyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    async def _fetch_page_list_payment_methods_for_user(
+        self, **kwargs
+    ) -> PaymentMethodResultsPage:
+        """Internal async method to fetch a single page."""
+        # Build URL with path parameters
         url = "{}/user/payment/methods".format(self.client.base_url)
 
-        _client = self.client.get_http_client()
+        # Add query parameters
 
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
         response = await _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -10618,13 +10908,8 @@ class AsyncPaymentsAPI:
             return None  # type: ignore
 
         json_data = response.json()
-
-        # Validate into annotated/collection/union types using TypeAdapter
-        from pydantic import TypeAdapter
-
-        return TypeAdapter(List[PaymentMethod]).validate_python(
-            json_data, extra="ignore"
-        )
+        # Validate into a Pydantic model (supports BaseModel/RootModel)
+        return PaymentMethodResultsPage.model_validate(json_data, extra="ignore")
 
     async def delete_payment_method_for_user(
         self,
@@ -10875,12 +11160,13 @@ class FactoryAPI:
             json_data, extra="ignore"
         )
 
-    def get_user_factory_finishes(
+    def get_org_factory_job(
         self,
-    ) -> List[FactoryCustomerCatalogOption]:
-        """Internal-only entries are omitted. Clients should refetch this endpoint after a catalog validation error before asking the customer to choose again."""
+        job_id: Uuid,
+    ) -> FactoryCustomerJobDetail:
+        """Get an organization-owned Factory job for any current member."""
 
-        url = "{}/user/factory/finishes".format(self.client.base_url)
+        url = "{}/org/factory/jobs/{job_id}".format(self.client.base_url, job_id=job_id)
 
         _client = self.client.get_http_client()
 
@@ -10899,10 +11185,88 @@ class FactoryAPI:
 
         json_data = response.json()
 
-        # Validate into annotated/collection/union types using TypeAdapter
-        from pydantic import TypeAdapter
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return FactoryCustomerJobDetail.model_validate(json_data, extra="ignore")
 
-        return TypeAdapter(List[FactoryCustomerCatalogOption]).validate_python(
+    def get_user_factory_finishes(
+        self,
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+    ) -> "SyncPageIterator":
+        """Internal-only entries are omitted. Results are ordered alphabetically, ignoring case, with "Other" last. Clients should refetch this endpoint after a catalog validation error before asking the customer to choose again.
+
+        Returns an iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            for item in client.user.get_user_factory_finishes():
+                print(item)
+        """
+
+        from typing import Any, Dict
+
+        from kittycad.pagination import SyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
+
+        if limit is not None:
+            kwargs["limit"] = limit
+
+        if page_token is not None:
+            kwargs["page_token"] = page_token
+
+        def fetch_page(**kw):
+            return self._fetch_page_get_user_factory_finishes(**kw)
+
+        # Create the page iterator
+        return SyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    def _fetch_page_get_user_factory_finishes(
+        self, **kwargs
+    ) -> FactoryCustomerCatalogOptionResultsPage:
+        """Internal method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/user/factory/finishes".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+        # Validate into a Pydantic model (supports BaseModel/RootModel)
+        return FactoryCustomerCatalogOptionResultsPage.model_validate(
             json_data, extra="ignore"
         )
 
@@ -11035,12 +11399,15 @@ class FactoryAPI:
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return FactoryJobResponse.model_validate(json_data, extra="ignore")
 
-    def get_user_factory_materials(
+    def get_user_factory_job(
         self,
-    ) -> List[FactoryCustomerCatalogOption]:
-        """Internal-only entries are omitted. Clients should refetch this endpoint after a catalog validation error before asking the customer to choose again."""
+        job_id: Uuid,
+    ) -> FactoryCustomerJobDetail:
+        """Get a personal Factory job and its current customer-visible specifications."""
 
-        url = "{}/user/factory/materials".format(self.client.base_url)
+        url = "{}/user/factory/jobs/{job_id}".format(
+            self.client.base_url, job_id=job_id
+        )
 
         _client = self.client.get_http_client()
 
@@ -11059,10 +11426,88 @@ class FactoryAPI:
 
         json_data = response.json()
 
-        # Validate into annotated/collection/union types using TypeAdapter
-        from pydantic import TypeAdapter
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return FactoryCustomerJobDetail.model_validate(json_data, extra="ignore")
 
-        return TypeAdapter(List[FactoryCustomerCatalogOption]).validate_python(
+    def get_user_factory_materials(
+        self,
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+    ) -> "SyncPageIterator":
+        """Internal-only entries are omitted. Results are ordered alphabetically, ignoring case, with "Other" last. Clients should refetch this endpoint after a catalog validation error before asking the customer to choose again.
+
+        Returns an iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            for item in client.user.get_user_factory_materials():
+                print(item)
+        """
+
+        from typing import Any, Dict
+
+        from kittycad.pagination import SyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
+
+        if limit is not None:
+            kwargs["limit"] = limit
+
+        if page_token is not None:
+            kwargs["page_token"] = page_token
+
+        def fetch_page(**kw):
+            return self._fetch_page_get_user_factory_materials(**kw)
+
+        # Create the page iterator
+        return SyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    def _fetch_page_get_user_factory_materials(
+        self, **kwargs
+    ) -> FactoryCustomerCatalogOptionResultsPage:
+        """Internal method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/user/factory/materials".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+        # Validate into a Pydantic model (supports BaseModel/RootModel)
+        return FactoryCustomerCatalogOptionResultsPage.model_validate(
             json_data, extra="ignore"
         )
 
@@ -11165,12 +11610,13 @@ class AsyncFactoryAPI:
             json_data, extra="ignore"
         )
 
-    async def get_user_factory_finishes(
+    async def get_org_factory_job(
         self,
-    ) -> List[FactoryCustomerCatalogOption]:
-        """Internal-only entries are omitted. Clients should refetch this endpoint after a catalog validation error before asking the customer to choose again."""
+        job_id: Uuid,
+    ) -> FactoryCustomerJobDetail:
+        """Get an organization-owned Factory job for any current member."""
 
-        url = "{}/user/factory/finishes".format(self.client.base_url)
+        url = "{}/org/factory/jobs/{job_id}".format(self.client.base_url, job_id=job_id)
 
         _client = self.client.get_http_client()
 
@@ -11189,10 +11635,88 @@ class AsyncFactoryAPI:
 
         json_data = response.json()
 
-        # Validate into annotated/collection/union types using TypeAdapter
-        from pydantic import TypeAdapter
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return FactoryCustomerJobDetail.model_validate(json_data, extra="ignore")
 
-        return TypeAdapter(List[FactoryCustomerCatalogOption]).validate_python(
+    def get_user_factory_finishes(
+        self,
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+    ) -> "AsyncPageIterator":
+        """Internal-only entries are omitted. Results are ordered alphabetically, ignoring case, with "Other" last. Clients should refetch this endpoint after a catalog validation error before asking the customer to choose again.
+
+        Returns an async iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            async for item in client.user.get_user_factory_finishes():
+                print(item)
+        """
+
+        from typing import Any, Dict
+
+        from kittycad.pagination import AsyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
+
+        if limit is not None:
+            kwargs["limit"] = limit
+
+        if page_token is not None:
+            kwargs["page_token"] = page_token
+
+        async def fetch_page(**kw):
+            return await self._fetch_page_get_user_factory_finishes(**kw)
+
+        # Create the async page iterator
+        return AsyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    async def _fetch_page_get_user_factory_finishes(
+        self, **kwargs
+    ) -> FactoryCustomerCatalogOptionResultsPage:
+        """Internal async method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/user/factory/finishes".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+        # Validate into a Pydantic model (supports BaseModel/RootModel)
+        return FactoryCustomerCatalogOptionResultsPage.model_validate(
             json_data, extra="ignore"
         )
 
@@ -11325,12 +11849,15 @@ class AsyncFactoryAPI:
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return FactoryJobResponse.model_validate(json_data, extra="ignore")
 
-    async def get_user_factory_materials(
+    async def get_user_factory_job(
         self,
-    ) -> List[FactoryCustomerCatalogOption]:
-        """Internal-only entries are omitted. Clients should refetch this endpoint after a catalog validation error before asking the customer to choose again."""
+        job_id: Uuid,
+    ) -> FactoryCustomerJobDetail:
+        """Get a personal Factory job and its current customer-visible specifications."""
 
-        url = "{}/user/factory/materials".format(self.client.base_url)
+        url = "{}/user/factory/jobs/{job_id}".format(
+            self.client.base_url, job_id=job_id
+        )
 
         _client = self.client.get_http_client()
 
@@ -11349,10 +11876,88 @@ class AsyncFactoryAPI:
 
         json_data = response.json()
 
-        # Validate into annotated/collection/union types using TypeAdapter
-        from pydantic import TypeAdapter
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return FactoryCustomerJobDetail.model_validate(json_data, extra="ignore")
 
-        return TypeAdapter(List[FactoryCustomerCatalogOption]).validate_python(
+    def get_user_factory_materials(
+        self,
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+    ) -> "AsyncPageIterator":
+        """Internal-only entries are omitted. Results are ordered alphabetically, ignoring case, with "Other" last. Clients should refetch this endpoint after a catalog validation error before asking the customer to choose again.
+
+        Returns an async iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            async for item in client.user.get_user_factory_materials():
+                print(item)
+        """
+
+        from typing import Any, Dict
+
+        from kittycad.pagination import AsyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
+
+        if limit is not None:
+            kwargs["limit"] = limit
+
+        if page_token is not None:
+            kwargs["page_token"] = page_token
+
+        async def fetch_page(**kw):
+            return await self._fetch_page_get_user_factory_materials(**kw)
+
+        # Create the async page iterator
+        return AsyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    async def _fetch_page_get_user_factory_materials(
+        self, **kwargs
+    ) -> FactoryCustomerCatalogOptionResultsPage:
+        """Internal async method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/user/factory/materials".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+        # Validate into a Pydantic model (supports BaseModel/RootModel)
+        return FactoryCustomerCatalogOptionResultsPage.model_validate(
             json_data, extra="ignore"
         )
 
@@ -11780,13 +12385,67 @@ class ProjectsAPI:
 
     def list_public_projects(
         self,
-    ) -> List[PublicProjectResponse]:
-        """List publicly visible community projects for the website/gallery."""
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+    ) -> "SyncPageIterator":
+        """List publicly visible community projects for the website/gallery.
 
+        Returns an iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            for item in client.projects.list_public_projects():
+                print(item)
+        """
+
+        from typing import Any, Dict
+
+        from kittycad.pagination import SyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
+
+        if limit is not None:
+            kwargs["limit"] = limit
+
+        if page_token is not None:
+            kwargs["page_token"] = page_token
+
+        def fetch_page(**kw):
+            return self._fetch_page_list_public_projects(**kw)
+
+        # Create the page iterator
+        return SyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    def _fetch_page_list_public_projects(
+        self, **kwargs
+    ) -> PublicProjectResponseResultsPage:
+        """Internal method to fetch a single page."""
+        # Build URL with path parameters
         url = "{}/projects/public".format(self.client.base_url)
 
-        _client = self.client.get_http_client()
+        # Add query parameters
 
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
         response = _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -11801,11 +12460,8 @@ class ProjectsAPI:
             return None  # type: ignore
 
         json_data = response.json()
-
-        # Validate into annotated/collection/union types using TypeAdapter
-        from pydantic import TypeAdapter
-
-        return TypeAdapter(List[PublicProjectResponse]).validate_python(
+        # Validate into a Pydantic model (supports BaseModel/RootModel)
+        return PublicProjectResponseResultsPage.model_validate(
             json_data, extra="ignore"
         )
 
@@ -12192,13 +12848,69 @@ class ProjectsAPI:
     def list_project_share_links(
         self,
         id: Uuid,
-    ) -> List[ProjectShareLinkResponse]:
-        """List share links for one of the authenticated user's projects."""
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+    ) -> "SyncPageIterator":
+        """List share links for one of the authenticated user's projects.
 
+        Returns an iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            for item in client.user.list_project_share_links():
+                print(item)
+        """
+
+        from typing import Any, Dict
+
+        from kittycad.pagination import SyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        _id = id
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
+
+        if limit is not None:
+            kwargs["limit"] = limit
+
+        if page_token is not None:
+            kwargs["page_token"] = page_token
+
+        def fetch_page(**kw):
+            return self._fetch_page_list_project_share_links(id=_id, **kw)
+
+        # Create the page iterator
+        return SyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    def _fetch_page_list_project_share_links(
+        self, id: Uuid, **kwargs
+    ) -> ProjectShareLinkResponseResultsPage:
+        """Internal method to fetch a single page."""
+        # Build URL with path parameters
         url = "{}/user/projects/{id}/share-links".format(self.client.base_url, id=id)
 
-        _client = self.client.get_http_client()
+        # Add query parameters
 
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
         response = _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -12213,11 +12925,8 @@ class ProjectsAPI:
             return None  # type: ignore
 
         json_data = response.json()
-
-        # Validate into annotated/collection/union types using TypeAdapter
-        from pydantic import TypeAdapter
-
-        return TypeAdapter(List[ProjectShareLinkResponse]).validate_python(
+        # Validate into a Pydantic model (supports BaseModel/RootModel)
+        return ProjectShareLinkResponseResultsPage.model_validate(
             json_data, extra="ignore"
         )
 
@@ -12298,6 +13007,180 @@ class ProjectsAPI:
 
         return response.json() if response.content else None
 
+    def list_project_versions(
+        self,
+        id: Uuid,
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+    ) -> "SyncPageIterator":
+        """Requires access to the project. Public visibility or link sharing will not grant access to history.
+
+        Returns an iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            for item in client.user.list_project_versions():
+                print(item)
+        """
+
+        from typing import Any, Dict
+
+        from kittycad.pagination import SyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        _id = id
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
+
+        if limit is not None:
+            kwargs["limit"] = limit
+
+        if page_token is not None:
+            kwargs["page_token"] = page_token
+
+        def fetch_page(**kw):
+            return self._fetch_page_list_project_versions(id=_id, **kw)
+
+        # Create the page iterator
+        return SyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    def _fetch_page_list_project_versions(
+        self, id: Uuid, **kwargs
+    ) -> ProjectVersionSummaryResponseResultsPage:
+        """Internal method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/user/projects/{id}/versions".format(self.client.base_url, id=id)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+        # Validate into a Pydantic model (supports BaseModel/RootModel)
+        return ProjectVersionSummaryResponseResultsPage.model_validate(
+            json_data, extra="ignore"
+        )
+
+    def get_project_version(
+        self,
+        id: Uuid,
+        version_id: Uuid,
+    ) -> ProjectVersionDetailResponse:
+        """Get metadata and files for a single saved project version."""
+
+        url = "{}/user/projects/{id}/versions/{version_id}".format(
+            self.client.base_url, id=id, version_id=version_id
+        )
+
+        _client = self.client.get_http_client()
+
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return ProjectVersionDetailResponse.model_validate(json_data, extra="ignore")
+
+    def download_project_version(
+        self,
+        id: Uuid,
+        version_id: Uuid,
+        *,
+        format: Optional[ProjectArchiveFormat] = None,
+    ):
+        """Download the files saved in one project version."""
+
+        url = "{}/user/projects/{id}/versions/{version_id}/download".format(
+            self.client.base_url, id=id, version_id=version_id
+        )
+
+        if format is not None:
+            if "?" in url:
+                url = url + "&format=" + str(format)
+            else:
+                url = url + "?format=" + str(format)
+
+        _client = self.client.get_http_client()
+
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    def get_project_version_thumbnail(
+        self,
+        id: Uuid,
+        version_id: Uuid,
+    ):
+        """Fetch the thumbnail for a single saved project version."""
+
+        url = "{}/user/projects/{id}/versions/{version_id}/thumbnail".format(
+            self.client.base_url, id=id, version_id=version_id
+        )
+
+        _client = self.client.get_http_client()
+
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
 
 class AsyncProjectsAPI:
     """Async API for projects endpoints"""
@@ -12336,15 +13219,69 @@ class AsyncProjectsAPI:
             json_data, extra="ignore"
         )
 
-    async def list_public_projects(
+    def list_public_projects(
         self,
-    ) -> List[PublicProjectResponse]:
-        """List publicly visible community projects for the website/gallery."""
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+    ) -> "AsyncPageIterator":
+        """List publicly visible community projects for the website/gallery.
 
+        Returns an async iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            async for item in client.projects.list_public_projects():
+                print(item)
+        """
+
+        from typing import Any, Dict
+
+        from kittycad.pagination import AsyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
+
+        if limit is not None:
+            kwargs["limit"] = limit
+
+        if page_token is not None:
+            kwargs["page_token"] = page_token
+
+        async def fetch_page(**kw):
+            return await self._fetch_page_list_public_projects(**kw)
+
+        # Create the async page iterator
+        return AsyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    async def _fetch_page_list_public_projects(
+        self, **kwargs
+    ) -> PublicProjectResponseResultsPage:
+        """Internal async method to fetch a single page."""
+        # Build URL with path parameters
         url = "{}/projects/public".format(self.client.base_url)
 
-        _client = self.client.get_http_client()
+        # Add query parameters
 
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
         response = await _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -12359,11 +13296,8 @@ class AsyncProjectsAPI:
             return None  # type: ignore
 
         json_data = response.json()
-
-        # Validate into annotated/collection/union types using TypeAdapter
-        from pydantic import TypeAdapter
-
-        return TypeAdapter(List[PublicProjectResponse]).validate_python(
+        # Validate into a Pydantic model (supports BaseModel/RootModel)
+        return PublicProjectResponseResultsPage.model_validate(
             json_data, extra="ignore"
         )
 
@@ -12747,16 +13681,72 @@ class AsyncProjectsAPI:
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return ProjectResponse.model_validate(json_data, extra="ignore")
 
-    async def list_project_share_links(
+    def list_project_share_links(
         self,
         id: Uuid,
-    ) -> List[ProjectShareLinkResponse]:
-        """List share links for one of the authenticated user's projects."""
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+    ) -> "AsyncPageIterator":
+        """List share links for one of the authenticated user's projects.
 
+        Returns an async iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            async for item in client.user.list_project_share_links():
+                print(item)
+        """
+
+        from typing import Any, Dict
+
+        from kittycad.pagination import AsyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        _id = id
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
+
+        if limit is not None:
+            kwargs["limit"] = limit
+
+        if page_token is not None:
+            kwargs["page_token"] = page_token
+
+        async def fetch_page(**kw):
+            return await self._fetch_page_list_project_share_links(id=_id, **kw)
+
+        # Create the async page iterator
+        return AsyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    async def _fetch_page_list_project_share_links(
+        self, id: Uuid, **kwargs
+    ) -> ProjectShareLinkResponseResultsPage:
+        """Internal async method to fetch a single page."""
+        # Build URL with path parameters
         url = "{}/user/projects/{id}/share-links".format(self.client.base_url, id=id)
 
-        _client = self.client.get_http_client()
+        # Add query parameters
 
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
         response = await _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -12771,11 +13761,8 @@ class AsyncProjectsAPI:
             return None  # type: ignore
 
         json_data = response.json()
-
-        # Validate into annotated/collection/union types using TypeAdapter
-        from pydantic import TypeAdapter
-
-        return TypeAdapter(List[ProjectShareLinkResponse]).validate_python(
+        # Validate into a Pydantic model (supports BaseModel/RootModel)
+        return ProjectShareLinkResponseResultsPage.model_validate(
             json_data, extra="ignore"
         )
 
@@ -12841,6 +13828,180 @@ class AsyncProjectsAPI:
         """Fetch the authenticated owner's current project thumbnail."""
 
         url = "{}/user/projects/{id}/thumbnail".format(self.client.base_url, id=id)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    def list_project_versions(
+        self,
+        id: Uuid,
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+    ) -> "AsyncPageIterator":
+        """Requires access to the project. Public visibility or link sharing will not grant access to history.
+
+        Returns an async iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            async for item in client.user.list_project_versions():
+                print(item)
+        """
+
+        from typing import Any, Dict
+
+        from kittycad.pagination import AsyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        _id = id
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
+
+        if limit is not None:
+            kwargs["limit"] = limit
+
+        if page_token is not None:
+            kwargs["page_token"] = page_token
+
+        async def fetch_page(**kw):
+            return await self._fetch_page_list_project_versions(id=_id, **kw)
+
+        # Create the async page iterator
+        return AsyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    async def _fetch_page_list_project_versions(
+        self, id: Uuid, **kwargs
+    ) -> ProjectVersionSummaryResponseResultsPage:
+        """Internal async method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/user/projects/{id}/versions".format(self.client.base_url, id=id)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+        # Validate into a Pydantic model (supports BaseModel/RootModel)
+        return ProjectVersionSummaryResponseResultsPage.model_validate(
+            json_data, extra="ignore"
+        )
+
+    async def get_project_version(
+        self,
+        id: Uuid,
+        version_id: Uuid,
+    ) -> ProjectVersionDetailResponse:
+        """Get metadata and files for a single saved project version."""
+
+        url = "{}/user/projects/{id}/versions/{version_id}".format(
+            self.client.base_url, id=id, version_id=version_id
+        )
+
+        _client = self.client.get_http_client()
+
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return ProjectVersionDetailResponse.model_validate(json_data, extra="ignore")
+
+    async def download_project_version(
+        self,
+        id: Uuid,
+        version_id: Uuid,
+        *,
+        format: Optional[ProjectArchiveFormat] = None,
+    ):
+        """Download the files saved in one project version."""
+
+        url = "{}/user/projects/{id}/versions/{version_id}/download".format(
+            self.client.base_url, id=id, version_id=version_id
+        )
+
+        if format is not None:
+            if "?" in url:
+                url = url + "&format=" + str(format)
+            else:
+                url = url + "?format=" + str(format)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    async def get_project_version_thumbnail(
+        self,
+        id: Uuid,
+        version_id: Uuid,
+    ):
+        """Fetch the thumbnail for a single saved project version."""
+
+        url = "{}/user/projects/{id}/versions/{version_id}/thumbnail".format(
+            self.client.base_url, id=id, version_id=version_id
+        )
 
         _client = self.client.get_http_client()
 
@@ -15799,11 +16960,13 @@ class ModelingAPI:
         unlocked_framerate: Optional[bool] = None,
         post_effect: Optional[PostEffectType] = None,
         webrtc: Optional[bool] = None,
+        geometry_only: Optional[bool] = None,
         pool: Optional[str] = None,
         show_grid: Optional[bool] = None,
         replay: Optional[str] = None,
         api_call_id: Optional[str] = None,
         order_independent_transparency: Optional[bool] = None,
+        kcl_version: Optional[KclVersion] = None,
         pr: Optional[int] = None,
         recv_timeout: Optional[float] = None,
         ws_factory: Optional[Callable[..., ClientConnectionSync]] = None,
@@ -15819,11 +16982,13 @@ class ModelingAPI:
             unlocked_framerate=unlocked_framerate,
             post_effect=post_effect,
             webrtc=webrtc,
+            geometry_only=geometry_only,
             pool=pool,
             show_grid=show_grid,
             replay=replay,
             api_call_id=api_call_id,
             order_independent_transparency=order_independent_transparency,
+            kcl_version=kcl_version,
             pr=pr,
             recv_timeout=recv_timeout,
             ws_factory=ws_factory,
@@ -15845,11 +17010,13 @@ class AsyncModelingAPI:
         unlocked_framerate: Optional[bool] = None,
         post_effect: Optional[PostEffectType] = None,
         webrtc: Optional[bool] = None,
+        geometry_only: Optional[bool] = None,
         pool: Optional[str] = None,
         show_grid: Optional[bool] = None,
         replay: Optional[str] = None,
         api_call_id: Optional[str] = None,
         order_independent_transparency: Optional[bool] = None,
+        kcl_version: Optional[KclVersion] = None,
         pr: Optional[int] = None,
     ):
         """Opens a WebSocket to a Zoo KittyCAD engine instance.
@@ -15868,11 +17035,13 @@ class AsyncModelingAPI:
             unlocked_framerate: Optional[bool] = None,
             post_effect: Optional[PostEffectType] = None,
             webrtc: Optional[bool] = None,
+            geometry_only: Optional[bool] = None,
             pool: Optional[str] = None,
             show_grid: Optional[bool] = None,
             replay: Optional[str] = None,
             api_call_id: Optional[str] = None,
             order_independent_transparency: Optional[bool] = None,
+            kcl_version: Optional[KclVersion] = None,
             pr: Optional[int] = None,
         ) -> ClientConnectionAsync:
             """Opens a WebSocket to a Zoo KittyCAD engine instance."""
@@ -15915,6 +17084,12 @@ class AsyncModelingAPI:
                 else:
                     url = url + "?webrtc=" + str(webrtc).lower()
 
+            if geometry_only is not None:
+                if "?" in url:
+                    url = url + "&geometry_only=" + str(geometry_only).lower()
+                else:
+                    url = url + "?geometry_only=" + str(geometry_only).lower()
+
             if pool is not None:
                 if "?" in url:
                     url = url + "&pool=" + str(pool)
@@ -15953,6 +17128,12 @@ class AsyncModelingAPI:
                         + str(order_independent_transparency).lower()
                     )
 
+            if kcl_version is not None:
+                if "?" in url:
+                    url = url + "&kcl_version=" + str(kcl_version)
+                else:
+                    url = url + "?kcl_version=" + str(kcl_version)
+
             if pr is not None:
                 if "?" in url:
                     url = url + "&pr=" + str(pr)
@@ -15974,11 +17155,13 @@ class AsyncModelingAPI:
             unlocked_framerate=unlocked_framerate,
             post_effect=post_effect,
             webrtc=webrtc,
+            geometry_only=geometry_only,
             pool=pool,
             show_grid=show_grid,
             replay=replay,
             api_call_id=api_call_id,
             order_independent_transparency=order_independent_transparency,
+            kcl_version=kcl_version,
             pr=pr,
         )
 
@@ -16149,6 +17332,75 @@ class WebSocketMlCopilotWs:
         self.ws.close()
 
 
+class WebSocketKclMigrationWs:
+    """A websocket connection for kcl_migration_ws."""
+
+    ws: ClientConnectionSync
+
+    def __init__(
+        self,
+        recv_timeout: Optional[float] = None,
+        ws_factory: Optional[Callable[..., ClientConnectionSync]] = None,
+        *,
+        client: Client,
+    ):
+        # Inline WebSocket connection logic
+
+        url = ("{}" + "/ws/ml/kcl-migration").format(client.base_url)
+
+        headers = client.get_headers()
+        factory = ws_factory or ws_connect
+        self.ws = factory(
+            url.replace("http", "ws"),
+            additional_headers=headers,
+            close_timeout=120,
+            max_size=None,
+        )
+        self._recv_timeout = (
+            client.get_websocket_recv_timeout()
+            if recv_timeout is None
+            else recv_timeout
+        )
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        self.close()
+
+    def __iter__(self):
+        """
+        Iterate on incoming messages.
+
+        The iterator calls recv() and yields messages in an infinite loop.
+
+        It exits when the connection is closed normally. It raises a
+        ConnectionClosedError exception after a protocol error or a network failure.
+        """
+        for message in self.ws:
+            yield KclMigrationServerMessage.model_validate_json(message)
+
+    def send(self, data: KclMigrationClientMessage):
+        """Send data to the websocket."""
+
+        self.ws.send(json.dumps(data.model_dump(exclude_none=True)))
+
+    def send_binary(self, data: KclMigrationClientMessage):
+        """Send data as bson to the websocket."""
+
+        self.ws.send(bson.encode(data.model_dump(exclude_none=True)))
+
+    def recv(self) -> KclMigrationServerMessage:
+        """Receive data from the websocket."""
+        message = self.ws.recv(timeout=self._recv_timeout)
+
+        return KclMigrationServerMessage.model_validate_json(message)
+
+    def close(self):
+        """Close the websocket."""
+        self.ws.close()
+
+
 class WebSocketMlReasoningWs:
     """A websocket connection for ml_reasoning_ws."""
 
@@ -16232,11 +17484,13 @@ class WebSocketModelingCommandsWs:
         unlocked_framerate: Optional[bool] = None,
         post_effect: Optional[PostEffectType] = None,
         webrtc: Optional[bool] = None,
+        geometry_only: Optional[bool] = None,
         pool: Optional[str] = None,
         show_grid: Optional[bool] = None,
         replay: Optional[str] = None,
         api_call_id: Optional[str] = None,
         order_independent_transparency: Optional[bool] = None,
+        kcl_version: Optional[KclVersion] = None,
         pr: Optional[int] = None,
         recv_timeout: Optional[float] = None,
         ws_factory: Optional[Callable[..., ClientConnectionSync]] = None,
@@ -16283,6 +17537,12 @@ class WebSocketModelingCommandsWs:
             else:
                 url = url + "?webrtc=" + str(webrtc).lower()
 
+        if geometry_only is not None:
+            if "?" in url:
+                url = url + "&geometry_only=" + str(geometry_only).lower()
+            else:
+                url = url + "?geometry_only=" + str(geometry_only).lower()
+
         if pool is not None:
             if "?" in url:
                 url = url + "&pool=" + str(pool)
@@ -16320,6 +17580,12 @@ class WebSocketModelingCommandsWs:
                     + "?order_independent_transparency="
                     + str(order_independent_transparency).lower()
                 )
+
+        if kcl_version is not None:
+            if "?" in url:
+                url = url + "&kcl_version=" + str(kcl_version)
+            else:
+                url = url + "?kcl_version=" + str(kcl_version)
 
         if pr is not None:
             if "?" in url:

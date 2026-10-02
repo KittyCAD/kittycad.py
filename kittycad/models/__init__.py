@@ -25,6 +25,7 @@ from .annotation_line_end import AnnotationLineEnd
 from .annotation_line_end_options import AnnotationLineEndOptions
 from .annotation_mbd_basic_dimension import AnnotationMbdBasicDimension
 from .annotation_mbd_control_frame import AnnotationMbdControlFrame
+from .annotation_mbd_leader_position import AnnotationMbdLeaderPosition
 from .annotation_options import AnnotationOptions
 from .annotation_text_alignment_x import AnnotationTextAlignmentX
 from .annotation_text_alignment_y import AnnotationTextAlignmentY
@@ -198,10 +199,15 @@ from .face_get_gradient import FaceGetGradient
 from .face_get_position import FaceGetPosition
 from .face_is_planar import FaceIsPlanar
 from .factory_customer_catalog_option import FactoryCustomerCatalogOption
+from .factory_customer_catalog_option_results_page import (
+    FactoryCustomerCatalogOptionResultsPage,
+)
+from .factory_customer_job_detail import FactoryCustomerJobDetail
 from .factory_customer_job_summary import FactoryCustomerJobSummary
 from .factory_customer_job_summary_results_page import (
     FactoryCustomerJobSummaryResultsPage,
 )
+from .factory_customer_job_version import FactoryCustomerJobVersion
 from .factory_job_response import FactoryJobResponse
 from .failure_web_socket_response import FailureWebSocketResponse
 from .fbx_storage import FbxStorage
@@ -242,11 +248,21 @@ from .ip_addr_info import IpAddrInfo
 from .kcl_code_completion_params import KclCodeCompletionParams
 from .kcl_code_completion_request import KclCodeCompletionRequest
 from .kcl_code_completion_response import KclCodeCompletionResponse
+from .kcl_migration_client_message import KclMigrationClientMessage
+from .kcl_migration_operation import KclMigrationOperation
+from .kcl_migration_request import KclMigrationRequest
+from .kcl_migration_result import KclMigrationResult
+from .kcl_migration_server_message import KclMigrationServerMessage
+from .kcl_migration_status import KclMigrationStatus
+from .kcl_migration_target import KclMigrationTarget
+from .kcl_migration_validation import KclMigrationValidation
 from .kcl_model import KclModel
 from .kcl_project_file_role import KclProjectFileRole
 from .kcl_project_preview_status import KclProjectPreviewStatus
 from .kcl_project_publication_status import KclProjectPublicationStatus
 from .kcl_project_share_link_access_mode import KclProjectShareLinkAccessMode
+from .kcl_project_version_ancestry_status import KclProjectVersionAncestryStatus
+from .kcl_version import KclVersion
 from .length_unit import LengthUnit
 from .lenient_url import LenientUrl
 from .loft import Loft
@@ -331,6 +347,7 @@ from .org_member import OrgMember
 from .org_member_results_page import OrgMemberResultsPage
 from .org_role import OrgRole
 from .org_skill_response import OrgSkillResponse
+from .org_skill_response_results_page import OrgSkillResponseResultsPage
 from .orient_to_face import OrientToFace
 from .origin_type import OriginType
 from .output_file import OutputFile
@@ -349,8 +366,10 @@ from .path_segment_info import PathSegmentInfo
 from .payment_intent import PaymentIntent
 from .payment_method import PaymentMethod
 from .payment_method_card_checks import PaymentMethodCardChecks
+from .payment_method_results_page import PaymentMethodResultsPage
 from .payment_method_type import PaymentMethodType
 from .perspective_camera_parameters import PerspectiveCameraParameters
+from .physical_properties import PhysicalProperties
 from .plan_interval import PlanInterval
 from .plan_step import PlanStep
 from .plane_intersect_and_project import PlaneIntersectAndProject
@@ -373,11 +392,20 @@ from .project_points_to_plane import ProjectPointsToPlane
 from .project_publication_info_response import ProjectPublicationInfoResponse
 from .project_response import ProjectResponse
 from .project_share_link_response import ProjectShareLinkResponse
+from .project_share_link_response_results_page import (
+    ProjectShareLinkResponseResultsPage,
+)
 from .project_summary_response import ProjectSummaryResponse
+from .project_version_detail_response import ProjectVersionDetailResponse
+from .project_version_summary_response import ProjectVersionSummaryResponse
+from .project_version_summary_response_results_page import (
+    ProjectVersionSummaryResponseResultsPage,
+)
 from .public_email_marketing_consent_request import PublicEmailMarketingConsentRequest
 from .public_mailing_list_membership_request import PublicMailingListMembershipRequest
 from .public_project_owner_response import PublicProjectOwnerResponse
 from .public_project_response import PublicProjectResponse
+from .public_project_response_results_page import PublicProjectResponseResultsPage
 from .public_project_vote_response import PublicProjectVoteResponse
 from .query_entity_type import QueryEntityType
 from .query_entity_type_with_point import QueryEntityTypeWithPoint
@@ -424,6 +452,7 @@ from .set_default_system_properties import SetDefaultSystemProperties
 from .set_grid_auto_scale import SetGridAutoScale
 from .set_grid_reference_plane import SetGridReferencePlane
 from .set_grid_scale import SetGridScale
+from .set_kcl_version import SetKclVersion
 from .set_object_transform import SetObjectTransform
 from .set_order_independent_transparency import SetOrderIndependentTransparency
 from .set_scene_units import SetSceneUnits
@@ -484,6 +513,7 @@ from .text_to_cad_multi_file_iteration_body import TextToCadMultiFileIterationBo
 from .text_to_cad_response import TextToCadResponse
 from .text_to_cad_response_results_page import TextToCadResponseResultsPage
 from .token_revoke_request_form import TokenRevokeRequestForm
+from .tolerance import Tolerance
 from .transform import Transform
 from .transform_by_for_point3d import TransformByForPoint3d
 from .transform_by_for_point4d import TransformByForPoint4d

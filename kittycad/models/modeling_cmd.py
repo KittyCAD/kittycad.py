@@ -28,6 +28,7 @@ from ..models.extruded_face_info import ExtrudedFaceInfo
 from ..models.image_format import ImageFormat
 from ..models.import_file import ImportFile
 from ..models.input_format3d import InputFormat3d
+from ..models.kcl_version import KclVersion
 from ..models.length_unit import LengthUnit
 from ..models.mirror_across import MirrorAcross
 from ..models.modeling_cmd_id import ModelingCmdId
@@ -46,6 +47,7 @@ from ..models.relative_to import RelativeTo
 from ..models.scene_selection_type import SceneSelectionType
 from ..models.scene_tool_type import SceneToolType
 from ..models.surface_edge_reference import SurfaceEdgeReference
+from ..models.tolerance import Tolerance
 from ..models.transform import Transform
 from ..models.unit_area import UnitArea
 from ..models.unit_density import UnitDensity
@@ -432,7 +434,9 @@ class OptionExport2d(KittyCadBaseModel):
 
 
 class OptionExport3d(KittyCadBaseModel):
-    """Export the scene to a file."""
+    """Export the scene to a file.
+
+    The response is a MsgPack-encoded message in a WebSocket binary frame."""
 
     entity_ids: List[str]
 
@@ -442,7 +446,9 @@ class OptionExport3d(KittyCadBaseModel):
 
 
 class OptionExport(KittyCadBaseModel):
-    """Export the scene to a file."""
+    """Export the scene to a file.
+
+    The response is a MsgPack-encoded message in a WebSocket binary frame."""
 
     entity_ids: List[str]
 
@@ -978,6 +984,8 @@ class OptionSolid3dCutEdgeReferences(KittyCadBaseModel):
 
     strategy: Optional[CutStrategy] = "automatic"  # type: ignore[assignment]
 
+    tangent_chain: Optional[bool] = None
+
     tolerance: LengthUnit
 
     type: Literal["solid3d_cut_edge_references"] = "solid3d_cut_edge_references"
@@ -999,6 +1007,8 @@ class OptionSolid3dCutEdges(KittyCadBaseModel):
     object_id: str
 
     strategy: Optional[CutStrategy] = "automatic"  # type: ignore[assignment]
+
+    tangent_chain: Optional[bool] = None
 
     tolerance: LengthUnit
 
@@ -1194,9 +1204,13 @@ class OptionSetDefaultSystemProperties(KittyCadBaseModel):
 
     color: Optional[Color] = None
 
+    edge_3d_color: Optional[Color] = None
+
     highlight_color: Optional[Color] = None
 
     selection_color: Optional[Color] = None
+
+    tolerance: Optional[Tolerance] = None
 
     type: Literal["set_default_system_properties"] = "set_default_system_properties"
 
@@ -1374,7 +1388,11 @@ class OptionReconfigureStream(KittyCadBaseModel):
 
 
 class OptionImportFiles(KittyCadBaseModel):
-    """Import files to the current model."""
+    """Import CAD files to the current scene.
+
+    Send a request containing binary file data as a MsgPack-encoded message in a WebSocket binary frame.
+
+    Note: These imports are non-editable. In the future we may expose a proprietary-to-KCL function to resolve this. The main intention today is to use imports as design references."""
 
     files: List[ImportFile]
 
@@ -1447,6 +1465,34 @@ class OptionSurfaceArea(KittyCadBaseModel):
     output_unit: UnitArea
 
     type: Literal["surface_area"] = "surface_area"
+
+
+class OptionPhysicalProperties(KittyCadBaseModel):
+    """Get mass, density, volume, center of mass, surface area, and bounding box together. Equivalent to querying each property separately for the same entities, while allowing the engine to share the intermediate geometry used by the calculations."""
+
+    bounding_box_output_unit: UnitLength
+
+    center_of_mass_output_unit: UnitLength
+
+    density_output_unit: UnitDensity
+
+    entity_ids: List[str]
+
+    mass_output_unit: UnitMass
+
+    material_density: float
+
+    material_density_unit: UnitDensity
+
+    material_mass: float
+
+    material_mass_unit: UnitMass
+
+    surface_area_output_unit: UnitArea
+
+    type: Literal["physical_properties"] = "physical_properties"
+
+    volume_output_unit: UnitVolume
 
 
 class OptionDefaultCameraFocusOn(KittyCadBaseModel):
@@ -1606,7 +1652,15 @@ class OptionSetObjectTransform(KittyCadBaseModel):
 
 
 class OptionBooleanUnion(KittyCadBaseModel):
-    """Create a new solid from combining other smaller solids. In other words, every part of the input solids will be included in the output solid."""
+    """Given a set of overlapping solids, create a new single solid.
+
+    Most successful unions come from solids who's faces do not overlap aka non-coplanar.
+
+    Failure cases: * A common failure is unsupported coincident faces try to be unioned.
+
+    Warning cases: * When an element of the set doesn't overlap.
+
+    Notable behaviors: * What appear to be coincident points will succeed and not give a \"no overlap\" warning, even if they're not. * Elements' top or bottom faces may not combine into one new face, which can seem like the union failed. You can tell they succeeded from side faces not extending into the original solids. * When exporting to STEP, if the above behavior is observed, will merged the faces."""
 
     separate_bodies: Optional[bool] = False
 
@@ -1634,7 +1688,19 @@ class OptionBooleanIntersection(KittyCadBaseModel):
 
 
 class OptionBooleanSubtract(KittyCadBaseModel):
-    """Create a new solid from subtracting several other solids. The 'target' is what will be cut from. The 'tool' is what will be cut out from 'target'."""
+    """Given a target solid, subtract a set of \"tool solids\" to create a new solid.
+
+    Most successful subtracts come from solids who's faces do not overlap aka non-coplanar.
+
+    Prefer one `tool` over multiple when calling this feature.
+
+    Failure cases: * A common failure is unsupported coplanar faces try to be unioned.
+
+    Warning cases:
+
+    Notable behaviors: If two tools occupy the same vertical range and overlap, like two cubes of the same height, the subtract of the first will cause the second tool to fail because the first leaves behind coplanar faces, causing an aforementioned failure case.
+
+    Unlike `boolean_union`, if one tool in the set overlaps, any OTHER tool in the set that doesn't WILL NOT signal a non-overlap warning."""
 
     separate_bodies: Optional[bool] = False
 
@@ -1845,6 +1911,14 @@ class OptionSketchGetInfo(KittyCadBaseModel):
     type: Literal["sketch_get_info"] = "sketch_get_info"
 
 
+class OptionSetKclVersion(KittyCadBaseModel):
+    """Sets the KCL Version used by the engine."""
+
+    kcl_version: KclVersion
+
+    type: Literal["set_kcl_version"] = "set_kcl_version"
+
+
 ModelingCmd = RootModel[
     Annotated[
         Union[
@@ -1972,6 +2046,7 @@ ModelingCmd = RootModel[
             OptionVolume,
             OptionCenterOfMass,
             OptionSurfaceArea,
+            OptionPhysicalProperties,
             OptionDefaultCameraFocusOn,
             OptionSetSelectionType,
             OptionSetSelectionFilter,
@@ -2012,6 +2087,7 @@ ModelingCmd = RootModel[
             OptionEndExecution,
             OptionClosestEdge,
             OptionSketchGetInfo,
+            OptionSetKclVersion,
         ],
         Field(discriminator="type"),
     ]

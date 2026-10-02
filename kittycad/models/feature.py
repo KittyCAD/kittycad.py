@@ -84,6 +84,10 @@ class Feature(str, Enum):
 
     VALIDATE_TAX_INFO = "validate_tax_info"
 
+    """# Enables DFM Review mode in Zoo Design Studio."""  # noqa: E501
+
+    DFM_REVIEW = "dfm_review"
+
     """# Enables drawing features across Zoo applications."""  # noqa: E501
 
     DRAWINGS = "drawings"
@@ -116,10 +120,6 @@ class Feature(str, Enum):
 
     SKETCH_EXPERIMENTAL_FEATURES = "sketch_experimental_features"
 
-    """# Enables cloud storage for web and desktop. Yes desktop too, the name is old and will go away soon."""  # noqa: E501
-
-    WEB_APP_FILE_BROWSER = "web_app_file_browser"
-
     """# Enables Zookeeper Pro mode access in ML Copilot."""  # noqa: E501
 
     ZOOKEEPER_PRO_MODE = "zookeeper_pro_mode"
@@ -131,6 +131,10 @@ class Feature(str, Enum):
     """# Enables experimental execution of client-advertised commands from Zookeeper."""  # noqa: E501
 
     ZOOKEEPER_CLIENT_COMMANDS = "zookeeper_client_commands"
+
+    """# Enables sponsored, time-limited KCL project migration."""  # noqa: E501
+
+    ZOOKEEPER_KCL_MIGRATION = "zookeeper_kcl_migration"
 
     """# Allow creating a session via an existing API key"""  # noqa: E501
 
