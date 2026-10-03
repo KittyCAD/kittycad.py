@@ -7,6 +7,26 @@ from pydantic import BaseModel
 T = TypeVar("T", bound=BaseModel)
 
 
+def _validate_page(page: Optional[BaseModel], seen_tokens: set[str]) -> Optional[str]:
+    """Validate a complete page before yielding any of its items."""
+    if not isinstance(page, BaseModel) or not {"items", "next_page"}.issubset(
+        page.model_fields_set
+    ):
+        raise ValueError("Paginated response must include items and next_page")
+    if not isinstance(getattr(page, "items", None), list):
+        raise ValueError("Paginated response items must be a list")
+
+    next_page = getattr(page, "next_page", None)
+    if next_page is None:
+        return None
+    if not isinstance(next_page, str) or not next_page.strip():
+        raise ValueError("Paginated response has an invalid next_page token")
+    if next_page in seen_tokens:
+        raise ValueError("Paginated response repeated a page token")
+    seen_tokens.add(next_page)
+    return next_page
+
+
 class SyncPageIterator:
     """Synchronous iterator for paginated API responses.
 
@@ -39,6 +59,9 @@ class SyncPageIterator:
         self._exhausted = False
 
         kwargs = self._initial_kwargs.copy()
+        seen_tokens: set[str] = set()
+        if kwargs.get("page_token") is not None:
+            seen_tokens.add(kwargs["page_token"])
 
         while not self._exhausted:
             # Add page token if we have one
@@ -50,16 +73,13 @@ class SyncPageIterator:
             # Fetch the page
             page = self._page_fetcher(**kwargs)
 
-            # Extract items and yield them
-            items = getattr(page, "items", [])
-            # Handle case where items might be None
-            if items is not None:
-                for item in items:
-                    yield item
+            # Fail before yielding this page if its continuation is malformed.
+            next_page_token = _validate_page(page, seen_tokens)
+            for item in getattr(page, "items"):
+                yield item
 
-            # Check for next page
-            next_page_token = getattr(page, "next_page", None)
-            if next_page_token:
+            # Empty pages can still have a continuation.
+            if next_page_token is not None:
                 self._current_page_token = next_page_token
             else:
                 self._exhausted = True
@@ -101,6 +121,9 @@ class AsyncPageIterator:
     async def _async_iter(self) -> AsyncIterator[T]:
         """Internal async iterator implementation."""
         kwargs = self._initial_kwargs.copy()
+        seen_tokens: set[str] = set()
+        if kwargs.get("page_token") is not None:
+            seen_tokens.add(kwargs["page_token"])
 
         while not self._exhausted:
             # Add page token if we have one
@@ -112,16 +135,13 @@ class AsyncPageIterator:
             # Fetch the page
             page = await self._page_fetcher(**kwargs)
 
-            # Extract items and yield them
-            items = getattr(page, "items", [])
-            # Handle case where items might be None
-            if items is not None:
-                for item in items:
-                    yield item
+            # Fail before yielding this page if its continuation is malformed.
+            next_page_token = _validate_page(page, seen_tokens)
+            for item in getattr(page, "items"):
+                yield item
 
-            # Check for next page
-            next_page_token = getattr(page, "next_page", None)
-            if next_page_token:
+            # Empty pages can still have a continuation.
+            if next_page_token is not None:
                 self._current_page_token = next_page_token
             else:
                 self._exhausted = True

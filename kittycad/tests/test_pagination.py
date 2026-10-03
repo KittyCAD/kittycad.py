@@ -297,51 +297,6 @@ async def test_async_page_iterator_preserves_initial_kwargs():
     assert mock_fetcher.call_count == 2
 
 
-def test_sync_page_iterator_handles_none_items():
-    """Test sync pagination handles None items gracefully."""
-
-    # Page with None items attribute
-    class BadPage:
-        items = None
-        next_page = None
-
-    mock_fetcher = Mock(return_value=BadPage())
-
-    iterator = SyncPageIterator(
-        page_fetcher=mock_fetcher,
-        initial_kwargs={},
-        item_type=MockItem,
-    )
-
-    result_items: list[MockItem] = list(iterator)
-    assert len(result_items) == 0
-
-
-@pytest.mark.asyncio
-async def test_async_page_iterator_handles_none_items():
-    """Test async pagination handles None items gracefully."""
-
-    # Page with None items attribute
-    class BadPage:
-        items = None
-        next_page = None
-
-    mock_fetcher = AsyncMock(return_value=BadPage())
-
-    iterator = AsyncPageIterator(
-        page_fetcher=mock_fetcher,
-        initial_kwargs={},
-        item_type=MockItem,
-    )
-
-    result_items: list[MockItem] = []
-    item: MockItem
-    async for item in iterator:
-        result_items.append(item)
-
-    assert len(result_items) == 0
-
-
 def test_sync_page_iterator_multiple_iteration():
     """Test that sync iterator can be iterated multiple times."""
     items = [MockItem(id="1", name="Item 1")]

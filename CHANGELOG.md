@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## v1.6.1
+
+### Fixed
+
+- Sync and async paginated list methods now raise `ValueError` for missing page
+  bodies or fields and blank or repeated continuation tokens, instead of silently
+  ending with partial results or fetching the same page indefinitely. Valid empty
+  pages with a continuation still advance normally. Collect the iterator with
+  `list(...)` or an async list comprehension before publishing a complete catalog;
+  handle the error instead of accepting items yielded before a later-page failure.
+
 ## v1.6.0
 
 ### Changed
