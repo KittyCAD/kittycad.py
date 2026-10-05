@@ -45,7 +45,6 @@ INVALID_PAGES = [
     pytest.param(lambda: httpx.Response(204), id="empty-204"),
     pytest.param(lambda: httpx.Response(200, text="null"), id="null-page"),
     pytest.param(lambda: httpx.Response(200, json=[]), id="legacy-array"),
-    pytest.param(lambda: httpx.Response(200, json={"items": []}), id="missing-cursor"),
     pytest.param(
         lambda: httpx.Response(200, json={"next_page": None}), id="missing-items"
     ),
@@ -224,3 +223,59 @@ async def test_async_rejects_cycle_to_explicit_initial_cursor() -> None:
         with pytest.raises(ValueError):
             await anext(aiter(client.orgs.list_org_skills(page_token="start")))
     assert len(requests) == 1
+
+
+@pytest.mark.parametrize("empty", [False, True])
+@pytest.mark.parametrize("has_previous_page", [False, True])
+def test_sync_final_page_without_cursor(empty: bool, has_previous_page: bool) -> None:
+    requests: list[httpx.Request] = []
+    final_items = [] if empty else [SKILL]
+    responses = [page("last")] if has_previous_page else []
+    responses.append(
+        httpx.Response(
+            200, json={"items": [item.model_dump(mode="json") for item in final_items]}
+        )
+    )
+    with KittyCAD(
+        token="test-token",
+        base_url="https://example.test",
+        http_client=httpx.Client(transport=response_transport(responses, requests)),
+    ) as client:
+        assert list(client.orgs.list_org_skills(limit=1)) == (
+            ([SKILL] if has_previous_page else []) + final_items
+        )
+    assert [request.url.params.get("page_token") for request in requests] == (
+        [None, "last"] if has_previous_page else [None]
+    )
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize("empty", [False, True])
+@pytest.mark.parametrize("has_previous_page", [False, True])
+async def test_async_final_page_without_cursor(
+    empty: bool, has_previous_page: bool
+) -> None:
+    requests: list[httpx.Request] = []
+    final_items = [] if empty else [SKILL]
+    responses = [page("last")] if has_previous_page else []
+    responses.append(
+        httpx.Response(
+            200, json={"items": [item.model_dump(mode="json") for item in final_items]}
+        )
+    )
+    async with AsyncKittyCAD(
+        token="test-token",
+        base_url="https://example.test",
+        http_client=httpx.AsyncClient(
+            transport=response_transport(responses, requests)
+        ),
+    ) as client:
+        iterator: AsyncIterator[OrgSkillResponse] = aiter(
+            client.orgs.list_org_skills(limit=1)
+        )
+        assert [skill async for skill in iterator] == (
+            ([SKILL] if has_previous_page else []) + final_items
+        )
+    assert [request.url.params.get("page_token") for request in requests] == (
+        [None, "last"] if has_previous_page else [None]
+    )

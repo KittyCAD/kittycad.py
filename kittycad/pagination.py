@@ -9,13 +9,12 @@ T = TypeVar("T", bound=BaseModel)
 
 def _validate_page(page: Optional[BaseModel], seen_tokens: set[str]) -> Optional[str]:
     """Validate a complete page before yielding any of its items."""
-    if not isinstance(page, BaseModel) or not {"items", "next_page"}.issubset(
-        page.model_fields_set
-    ):
-        raise ValueError("Paginated response must include items and next_page")
+    if not isinstance(page, BaseModel) or "items" not in page.model_fields_set:
+        raise ValueError("Paginated response must include items")
     if not isinstance(getattr(page, "items", None), list):
         raise ValueError("Paginated response items must be a list")
 
+    # The API schema permits an omitted or null cursor on the final page.
     next_page = getattr(page, "next_page", None)
     if next_page is None:
         return None
