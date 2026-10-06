@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## v1.7.0
+
+### Changed
+
+- `meta.get_announcements`, `projects.list_projects`, and
+  `projects.list_project_categories` now return auto-paginating iterators instead
+  of an `AnnouncementList` wrapper or lists. With `KittyCAD`, collect results
+  with `list(client.projects.list_projects())`; announcements no longer
+  require reading `.announcements`. With `AsyncKittyCAD`, use
+  `[project async for project in client.projects.list_projects()]` instead
+  of awaiting the method. `limit` and `page_token` are optional keyword arguments.
+  Collect all results before publishing a complete catalog and handle iteration
+  errors rather than accepting a partial result.
+
 ## v1.6.1
 
 ### Fixed
