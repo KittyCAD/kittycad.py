@@ -211,6 +211,27 @@ Factory API
             print(item)
 
 
+Meta API
+--------
+
+**get_announcements**
+    List all active announcements.
+
+    Returns: ``SyncPageIterator[Announcement]``
+
+    Example:
+
+    .. code-block:: python
+
+        # Sync
+        for item in client.meta.get_announcements():
+            print(item)
+
+        # Async
+        async for item in client.meta.get_announcements():
+            print(item)
+
+
 Ml API
 ------
 
@@ -468,6 +489,23 @@ Payments API
 Projects API
 ------------
 
+**list_project_categories**
+    List the active categories available for project submissions.
+
+    Returns: ``SyncPageIterator[ProjectCategoryResponse]``
+
+    Example:
+
+    .. code-block:: python
+
+        # Sync
+        for item in client.projects.list_project_categories():
+            print(item)
+
+        # Async
+        async for item in client.projects.list_project_categories():
+            print(item)
+
 **list_public_projects**
     List publicly visible community projects for the website/gallery.
 
@@ -483,6 +521,23 @@ Projects API
 
         # Async
         async for item in client.projects.list_public_projects():
+            print(item)
+
+**list_projects**
+    List the authenticated user's projects.
+
+    Returns: ``SyncPageIterator[ProjectSummaryResponse]``
+
+    Example:
+
+    .. code-block:: python
+
+        # Sync
+        for item in client.projects.list_projects():
+            print(item)
+
+        # Async
+        async for item in client.projects.list_projects():
             print(item)
 
 **list_project_share_links**

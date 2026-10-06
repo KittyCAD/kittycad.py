@@ -16,10 +16,6 @@ class Feature(str, Enum):
 
     BILLING = "billing"
 
-    """# Allows explicitly selecting the CPU-only engine pool for non-WebRTC modeling sessions."""  # noqa: E501
-
-    CPU_ENGINE_POOL = "cpu_engine_pool"
-
     """# Disable signup through email or OAuth."""  # noqa: E501
 
     DISALLOW_SELF_SIGNUP = "disallow_self_signup"
@@ -27,10 +23,6 @@ class Feature(str, Enum):
     """# Email sending is handled by AWS SES."""  # noqa: E501
 
     EMAIL_WITH_S_E_S = "email_with_s_e_s"
-
-    """# Quarantine engine-manager sessions when an engine is observed misbehaving."""  # noqa: E501
-
-    ENGINE_MANAGER_QUARANTINE = "engine_manager_quarantine"
 
     """# Grants access to the internal execution jobs API."""  # noqa: E501
 
