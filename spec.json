@@ -203,8 +203,30 @@
           "meta"
         ],
         "summary": "List all active announcements.",
-        "description": "No authentication is required.",
+        "description": "No authentication is required. Results are ordered newest first, with the announcement ID breaking ties.",
         "operationId": "get_announcements",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "limit",
+            "description": "Maximum number of items returned by a single call",
+            "schema": {
+              "nullable": true,
+              "type": "integer",
+              "format": "uint32",
+              "minimum": 1
+            }
+          },
+          {
+            "in": "query",
+            "name": "page_token",
+            "description": "Token returned by previous call to retrieve the subsequent page",
+            "schema": {
+              "nullable": true,
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "successful operation",
@@ -277,7 +299,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/AnnouncementList"
+                  "$ref": "#/components/schemas/AnnouncementResultsPage"
                 }
               }
             }
@@ -289,7 +311,10 @@
             "$ref": "#/components/responses/Error"
           }
         },
-        "x-billable": false
+        "x-billable": false,
+        "x-dropshot-pagination": {
+          "required": []
+        }
       }
     },
     "/api-calls/{id}": {
@@ -16249,6 +16274,28 @@
         ],
         "summary": "List the active categories available for project submissions.",
         "operationId": "list_project_categories",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "limit",
+            "description": "Maximum number of items returned by a single call",
+            "schema": {
+              "nullable": true,
+              "type": "integer",
+              "format": "uint32",
+              "minimum": 1
+            }
+          },
+          {
+            "in": "query",
+            "name": "page_token",
+            "description": "Token returned by previous call to retrieve the subsequent page",
+            "schema": {
+              "nullable": true,
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "successful operation",
@@ -16320,11 +16367,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "Array_of_ProjectCategoryResponse",
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ProjectCategoryResponse"
-                  }
+                  "$ref": "#/components/schemas/ProjectCategoryResponseResultsPage"
                 }
               }
             }
@@ -16336,7 +16379,10 @@
             "$ref": "#/components/responses/Error"
           }
         },
-        "x-billable": false
+        "x-billable": false,
+        "x-dropshot-pagination": {
+          "required": []
+        }
       },
       "options": {
         "tags": [
@@ -25946,6 +25992,28 @@
         ],
         "summary": "List the authenticated user's projects.",
         "operationId": "list_projects",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "limit",
+            "description": "Maximum number of items returned by a single call",
+            "schema": {
+              "nullable": true,
+              "type": "integer",
+              "format": "uint32",
+              "minimum": 1
+            }
+          },
+          {
+            "in": "query",
+            "name": "page_token",
+            "description": "Token returned by previous call to retrieve the subsequent page",
+            "schema": {
+              "nullable": true,
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "successful operation",
@@ -26018,11 +26086,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "title": "Array_of_ProjectSummaryResponse",
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ProjectSummaryResponse"
-                  }
+                  "$ref": "#/components/schemas/ProjectSummaryResponseResultsPage"
                 }
               }
             }
@@ -26034,7 +26098,10 @@
             "$ref": "#/components/responses/Error"
           }
         },
-        "x-billable": false
+        "x-billable": false,
+        "x-dropshot-pagination": {
+          "required": []
+        }
       },
       "post": {
         "tags": [
@@ -27985,6 +28052,121 @@
         "x-dropshot-pagination": {
           "required": []
         }
+      },
+      "post": {
+        "tags": [
+          "projects"
+        ],
+        "summary": "Save an alternate project version without changing the current version.",
+        "description": "For a history A -> B -> C with C current, saving D with B as its parent creates a second child of B. C stays current. Publications and share links keep pointing to their existing versions.\n\nSend a multipart request with a JSON `body` part and file parts. Upload the complete replacement snapshot, including unchanged files. Each uploaded filename must be its relative project path.\n\nExample JSON for the `body` part (replace the parent placeholder with B's UUID):\n\n```json {   \"parent_version_id\": \"<B_VERSION_ID>\",   \"title\": \"Alternative design\",   \"description\": \"Trying another shape\",   \"entrypoint_path\": \"main.kcl\",   \"deleted_paths\": [\"obsolete.kcl\"] } ```\n\n`parent_version_id` and `title` are required. Description defaults to an empty string, and the entrypoint defaults to `main.kcl`. When supplying `deleted_paths`, list all files removed from the chosen parent B, regardless of the files in current C. An empty list declares that no files were removed; omitting the field skips this deletion-intent check.\n\nSave the JSON as `save-metadata.json`. With D's files in the working directory, set `API_BASE_URL`, `API_TOKEN`, and `PROJECT_ID`, then generate `SAVE_KEY` once for this save (for example, using `uuidgen`):\n\n```sh curl --fail-with-body \\   --request POST \"${API_BASE_URL}/user/projects/${PROJECT_ID}/versions\" \\   --header \"Authorization: Bearer ${API_TOKEN}\" \\   --header \"Idempotency-Key: ${SAVE_KEY}\" \\   --form 'body=<save-metadata.json;type=application/json' \\   --form 'file-0=@project.toml;filename=project.toml' \\   --form 'file-1=@main.kcl;filename=main.kcl' \\   --form 'file-2=@part.kcl;filename=part.kcl' ```\n\nThe HTTP 200 response contains `version_id` (D) and `current_version_id` (C, or the current version when the response is prepared). Read D through `GET /user/projects/{id}/versions/{version_id}` and download it through `GET /user/projects/{id}/versions/{version_id}/download`. Downloads default to TAR; use `?format=zip` for ZIP.\n\n`Idempotency-Key` is optional for all clients. Use a unique key for each save to avoid duplicate versions when retrying. Retain the key, metadata, and submitted file contents across app restarts until the save's outcome is known. Within 24 hours of a successful save, retrying with the same key and contents returns the same version. Changed contents require a new key; reusing an unexpired key with different contents returns HTTP 409 with `IdempotencyConflict`. Without a key, or after its window expires, resending the request can create another version.\n\nWrite access to the project is required, including for retries. A public listing or share link does not grant access to private version history. There is no endpoint to promote an existing alternate version directly to current.",
+        "operationId": "create_project_version",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "The identifier.",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "string",
+                "format": "binary"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "Access-Control-Allow-Credentials": {
+                "description": "Access-Control-Allow-Credentials header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Headers": {
+                "description": "Access-Control-Allow-Headers header. This is a comma-separated list of headers.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Methods": {
+                "description": "Access-Control-Allow-Methods header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Origin": {
+                "description": "Access-Control-Allow-Origin header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Content-Location": {
+                "description": "The Content-Location header for responses that are not the final destination. This is used to indicate where the resource can be found, when it is finished.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Location": {
+                "description": "The location header for redirects and letting users know if there is a websocket they can listen to for status updates on their operation.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Set-Cookie": {
+                "description": "Set-Cookie header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "X-Api-Call-Id": {
+                "description": "ID for this request. We return it so that users can report this to us and help us debug their problems.",
+                "style": "simple",
+                "required": true,
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateProjectVersionResponse"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/Error"
+          },
+          "5XX": {
+            "$ref": "#/components/responses/Error"
+          }
+        },
+        "x-billable": false
       },
       "options": {
         "tags": [
@@ -32801,20 +32983,25 @@
           "updated_at"
         ]
       },
-      "AnnouncementList": {
-        "description": "Response containing active announcements.",
+      "AnnouncementResultsPage": {
+        "description": "A single page of results",
         "type": "object",
         "properties": {
-          "announcements": {
-            "description": "The list of active announcements.",
+          "items": {
+            "description": "list of items on this page of results",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/Announcement"
             }
+          },
+          "next_page": {
+            "nullable": true,
+            "description": "token used to fetch the next page of results (if any)",
+            "type": "string"
           }
         },
         "required": [
-          "announcements"
+          "items"
         ]
       },
       "ApiCallStatus": {
@@ -36033,6 +36220,32 @@
           }
         }
       },
+      "CreateProjectVersionResponse": {
+        "description": "Result of saving an alternate project version.",
+        "type": "object",
+        "properties": {
+          "current_version_id": {
+            "description": "Project's current version when this response was prepared.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Uuid"
+              }
+            ]
+          },
+          "version_id": {
+            "description": "Version created by this save or returned by a retry.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Uuid"
+              }
+            ]
+          }
+        },
+        "required": [
+          "current_version_id",
+          "version_id"
+        ]
+      },
       "CreateRegion": {
         "description": "The response from the 'CreateRegion'. The region should have an ID taken from the ID of the 'CreateRegion' modeling command.",
         "type": "object",
@@ -38833,13 +39046,6 @@
             ]
           },
           {
-            "description": "Allows explicitly selecting the CPU-only engine pool for non-WebRTC modeling sessions.",
-            "type": "string",
-            "enum": [
-              "cpu_engine_pool"
-            ]
-          },
-          {
             "description": "Disable signup through email or OAuth.",
             "type": "string",
             "enum": [
@@ -38851,13 +39057,6 @@
             "type": "string",
             "enum": [
               "email_with_s_e_s"
-            ]
-          },
-          {
-            "description": "Quarantine engine-manager sessions when an engine is observed misbehaving.",
-            "type": "string",
-            "enum": [
-              "engine_manager_quarantine"
             ]
           },
           {
@@ -41572,6 +41771,39 @@
             },
             "required": [
               "operation",
+              "type"
+            ]
+          },
+          {
+            "description": "Best-effort, display-only progress on the execution connection. Only text, informational and supported reasoning messages are forwarded; candidate edits are returned solely in a validated terminal operation.",
+            "type": "object",
+            "properties": {
+              "message": {
+                "description": "Existing Copilot display message. Never dispatch it as a project edit.",
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/MlCopilotServerMessage"
+                  }
+                ]
+              },
+              "operation_id": {
+                "description": "The initiating request ID, used to keep progress with its migration.",
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Uuid"
+                  }
+                ]
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "progress"
+                ]
+              }
+            },
+            "required": [
+              "message",
+              "operation_id",
               "type"
             ]
           },
@@ -56468,6 +56700,27 @@
           "sort_order"
         ]
       },
+      "ProjectCategoryResponseResultsPage": {
+        "description": "A single page of results",
+        "type": "object",
+        "properties": {
+          "items": {
+            "description": "list of items on this page of results",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProjectCategoryResponse"
+            }
+          },
+          "next_page": {
+            "nullable": true,
+            "description": "token used to fetch the next page of results (if any)",
+            "type": "string"
+          }
+        },
+        "required": [
+          "items"
+        ]
+      },
       "ProjectEntityToPlane": {
         "description": "The response from the `ProjectEntityToPlane` command.",
         "type": "object",
@@ -56887,6 +57140,27 @@
           "revision",
           "title",
           "updated_at"
+        ]
+      },
+      "ProjectSummaryResponseResultsPage": {
+        "description": "A single page of results",
+        "type": "object",
+        "properties": {
+          "items": {
+            "description": "list of items on this page of results",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProjectSummaryResponse"
+            }
+          },
+          "next_page": {
+            "nullable": true,
+            "description": "token used to fetch the next page of results (if any)",
+            "type": "string"
+          }
+        },
+        "required": [
+          "items"
         ]
       },
       "ProjectVersionDetailResponse": {
