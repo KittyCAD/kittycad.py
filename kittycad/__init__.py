@@ -42,7 +42,7 @@ from .models.aggregate_usage_collection_threshold_set import (
 from .models.aggregate_usage_collection_threshold_view import (
     AggregateUsageCollectionThresholdView,
 )
-from .models.announcement_list import AnnouncementList
+from .models.announcement_results_page import AnnouncementResultsPage
 from .models.api_call_with_price import ApiCallWithPrice
 from .models.api_call_with_price_results_page import ApiCallWithPriceResultsPage
 from .models.api_token import ApiToken
@@ -65,6 +65,7 @@ from .models.create_custom_model import CreateCustomModel
 from .models.create_o_auth2_app_request import CreateOAuth2AppRequest
 from .models.create_org_dataset import CreateOrgDataset
 from .models.create_project_share_link_request import CreateProjectShareLinkRequest
+from .models.create_project_version_response import CreateProjectVersionResponse
 from .models.create_shortlink_request import CreateShortlinkRequest
 from .models.create_shortlink_response import CreateShortlinkResponse
 from .models.created_at_sort_mode import CreatedAtSortMode
@@ -143,13 +144,17 @@ from .models.pong import Pong
 from .models.post_effect_type import PostEffectType
 from .models.privacy_settings import PrivacySettings
 from .models.project_archive_format import ProjectArchiveFormat
-from .models.project_category_response import ProjectCategoryResponse
+from .models.project_category_response_results_page import (
+    ProjectCategoryResponseResultsPage,
+)
 from .models.project_response import ProjectResponse
 from .models.project_share_link_response import ProjectShareLinkResponse
 from .models.project_share_link_response_results_page import (
     ProjectShareLinkResponseResultsPage,
 )
-from .models.project_summary_response import ProjectSummaryResponse
+from .models.project_summary_response_results_page import (
+    ProjectSummaryResponseResultsPage,
+)
 from .models.project_version_detail_response import ProjectVersionDetailResponse
 from .models.project_version_summary_response_results_page import (
     ProjectVersionSummaryResponseResultsPage,
@@ -300,13 +305,65 @@ class MetaAPI:
 
     def get_announcements(
         self,
-    ) -> AnnouncementList:
-        """No authentication is required."""
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+    ) -> "SyncPageIterator":
+        """No authentication is required. Results are ordered newest first, with the announcement ID breaking ties.
 
+        Returns an iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            for item in client.announcements.get_announcements():
+                print(item)
+        """
+
+        from typing import Any, Dict
+
+        from kittycad.pagination import SyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
+
+        if limit is not None:
+            kwargs["limit"] = limit
+
+        if page_token is not None:
+            kwargs["page_token"] = page_token
+
+        def fetch_page(**kw):
+            return self._fetch_page_get_announcements(**kw)
+
+        # Create the page iterator
+        return SyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    def _fetch_page_get_announcements(self, **kwargs) -> AnnouncementResultsPage:
+        """Internal method to fetch a single page."""
+        # Build URL with path parameters
         url = "{}/announcements".format(self.client.base_url)
 
-        _client = self.client.get_http_client()
+        # Add query parameters
 
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
         response = _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -321,9 +378,8 @@ class MetaAPI:
             return None  # type: ignore
 
         json_data = response.json()
-
-        # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return AnnouncementList.model_validate(json_data, extra="ignore")
+        # Validate into a Pydantic model (supports BaseModel/RootModel)
+        return AnnouncementResultsPage.model_validate(json_data, extra="ignore")
 
     def community_sso(
         self,
@@ -479,15 +535,67 @@ class AsyncMetaAPI:
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return IpAddrInfo.model_validate(json_data, extra="ignore")
 
-    async def get_announcements(
+    def get_announcements(
         self,
-    ) -> AnnouncementList:
-        """No authentication is required."""
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+    ) -> "AsyncPageIterator":
+        """No authentication is required. Results are ordered newest first, with the announcement ID breaking ties.
 
+        Returns an async iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            async for item in client.announcements.get_announcements():
+                print(item)
+        """
+
+        from typing import Any, Dict
+
+        from kittycad.pagination import AsyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
+
+        if limit is not None:
+            kwargs["limit"] = limit
+
+        if page_token is not None:
+            kwargs["page_token"] = page_token
+
+        async def fetch_page(**kw):
+            return await self._fetch_page_get_announcements(**kw)
+
+        # Create the async page iterator
+        return AsyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    async def _fetch_page_get_announcements(self, **kwargs) -> AnnouncementResultsPage:
+        """Internal async method to fetch a single page."""
+        # Build URL with path parameters
         url = "{}/announcements".format(self.client.base_url)
 
-        _client = self.client.get_http_client()
+        # Add query parameters
 
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
         response = await _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -502,9 +610,8 @@ class AsyncMetaAPI:
             return None  # type: ignore
 
         json_data = response.json()
-
-        # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return AnnouncementList.model_validate(json_data, extra="ignore")
+        # Validate into a Pydantic model (supports BaseModel/RootModel)
+        return AnnouncementResultsPage.model_validate(json_data, extra="ignore")
 
     async def community_sso(
         self,
@@ -12451,13 +12558,67 @@ class ProjectsAPI:
 
     def list_project_categories(
         self,
-    ) -> List[ProjectCategoryResponse]:
-        """List the active categories available for project submissions."""
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+    ) -> "SyncPageIterator":
+        """List the active categories available for project submissions.
 
+        Returns an iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            for item in client.projects.list_project_categories():
+                print(item)
+        """
+
+        from typing import Any, Dict
+
+        from kittycad.pagination import SyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
+
+        if limit is not None:
+            kwargs["limit"] = limit
+
+        if page_token is not None:
+            kwargs["page_token"] = page_token
+
+        def fetch_page(**kw):
+            return self._fetch_page_list_project_categories(**kw)
+
+        # Create the page iterator
+        return SyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    def _fetch_page_list_project_categories(
+        self, **kwargs
+    ) -> ProjectCategoryResponseResultsPage:
+        """Internal method to fetch a single page."""
+        # Build URL with path parameters
         url = "{}/projects/categories".format(self.client.base_url)
 
-        _client = self.client.get_http_client()
+        # Add query parameters
 
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
         response = _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -12472,11 +12633,8 @@ class ProjectsAPI:
             return None  # type: ignore
 
         json_data = response.json()
-
-        # Validate into annotated/collection/union types using TypeAdapter
-        from pydantic import TypeAdapter
-
-        return TypeAdapter(List[ProjectCategoryResponse]).validate_python(
+        # Validate into a Pydantic model (supports BaseModel/RootModel)
+        return ProjectCategoryResponseResultsPage.model_validate(
             json_data, extra="ignore"
         )
 
@@ -12700,13 +12858,65 @@ class ProjectsAPI:
 
     def list_projects(
         self,
-    ) -> List[ProjectSummaryResponse]:
-        """List the authenticated user's projects."""
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+    ) -> "SyncPageIterator":
+        """List the authenticated user's projects.
 
+        Returns an iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            for item in client.user.list_projects():
+                print(item)
+        """
+
+        from typing import Any, Dict
+
+        from kittycad.pagination import SyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
+
+        if limit is not None:
+            kwargs["limit"] = limit
+
+        if page_token is not None:
+            kwargs["page_token"] = page_token
+
+        def fetch_page(**kw):
+            return self._fetch_page_list_projects(**kw)
+
+        # Create the page iterator
+        return SyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    def _fetch_page_list_projects(self, **kwargs) -> ProjectSummaryResponseResultsPage:
+        """Internal method to fetch a single page."""
+        # Build URL with path parameters
         url = "{}/user/projects".format(self.client.base_url)
 
-        _client = self.client.get_http_client()
+        # Add query parameters
 
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
         response = _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -12721,11 +12931,8 @@ class ProjectsAPI:
             return None  # type: ignore
 
         json_data = response.json()
-
-        # Validate into annotated/collection/union types using TypeAdapter
-        from pydantic import TypeAdapter
-
-        return TypeAdapter(List[ProjectSummaryResponse]).validate_python(
+        # Validate into a Pydantic model (supports BaseModel/RootModel)
+        return ProjectSummaryResponseResultsPage.model_validate(
             json_data, extra="ignore"
         )
 
@@ -13189,6 +13396,52 @@ class ProjectsAPI:
             json_data, extra="ignore"
         )
 
+    def create_project_version(
+        self,
+        id: Uuid,
+    ) -> CreateProjectVersionResponse:
+        """For a history A -> B -> C with C current, saving D with B as its parent creates a second child of B. C stays current. Publications and share links keep pointing to their existing versions.
+
+        Send a multipart request with a JSON `body` part and file parts. Upload the complete replacement snapshot, including unchanged files. Each uploaded filename must be its relative project path.
+
+        Example JSON for the `body` part (replace the parent placeholder with B's UUID):
+
+        ```json {   "parent_version_id": "<B_VERSION_ID>",   "title": "Alternative design",   "description": "Trying another shape",   "entrypoint_path": "main.kcl",   "deleted_paths": ["obsolete.kcl"] } ```
+
+        `parent_version_id` and `title` are required. Description defaults to an empty string, and the entrypoint defaults to `main.kcl`. When supplying `deleted_paths`, list all files removed from the chosen parent B, regardless of the files in current C. An empty list declares that no files were removed; omitting the field skips this deletion-intent check.
+
+        Save the JSON as `save-metadata.json`. With D's files in the working directory, set `API_BASE_URL`, `API_TOKEN`, and `PROJECT_ID`, then generate `SAVE_KEY` once for this save (for example, using `uuidgen`):
+
+        ```sh curl --fail-with-body \\   --request POST "${API_BASE_URL}/user/projects/${PROJECT_ID}/versions" \\   --header "Authorization: Bearer ${API_TOKEN}" \\   --header "Idempotency-Key: ${SAVE_KEY}" \\   --form 'body=<save-metadata.json;type=application/json' \\   --form 'file-0=@project.toml;filename=project.toml' \\   --form 'file-1=@main.kcl;filename=main.kcl' \\   --form 'file-2=@part.kcl;filename=part.kcl' ```
+
+        The HTTP 200 response contains `version_id` (D) and `current_version_id` (C, or the current version when the response is prepared). Read D through `GET /user/projects/{id}/versions/{version_id}` and download it through `GET /user/projects/{id}/versions/{version_id}/download`. Downloads default to TAR; use `?format=zip` for ZIP.
+
+        `Idempotency-Key` is optional for all clients. Use a unique key for each save to avoid duplicate versions when retrying. Retain the key, metadata, and submitted file contents across app restarts until the save's outcome is known. Within 24 hours of a successful save, retrying with the same key and contents returns the same version. Changed contents require a new key; reusing an unexpired key with different contents returns HTTP 409 with `IdempotencyConflict`. Without a key, or after its window expires, resending the request can create another version.
+
+        Write access to the project is required, including for retries. A public listing or share link does not grant access to private version history. There is no endpoint to promote an existing alternate version directly to current."""
+
+        url = "{}/user/projects/{id}/versions".format(self.client.base_url, id=id)
+
+        _client = self.client.get_http_client()
+
+        response = _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return CreateProjectVersionResponse.model_validate(json_data, extra="ignore")
+
     def get_project_version(
         self,
         id: Uuid,
@@ -13285,15 +13538,69 @@ class AsyncProjectsAPI:
     def __init__(self, client: AsyncClient) -> None:
         self.client = client
 
-    async def list_project_categories(
+    def list_project_categories(
         self,
-    ) -> List[ProjectCategoryResponse]:
-        """List the active categories available for project submissions."""
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+    ) -> "AsyncPageIterator":
+        """List the active categories available for project submissions.
 
+        Returns an async iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            async for item in client.projects.list_project_categories():
+                print(item)
+        """
+
+        from typing import Any, Dict
+
+        from kittycad.pagination import AsyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
+
+        if limit is not None:
+            kwargs["limit"] = limit
+
+        if page_token is not None:
+            kwargs["page_token"] = page_token
+
+        async def fetch_page(**kw):
+            return await self._fetch_page_list_project_categories(**kw)
+
+        # Create the async page iterator
+        return AsyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    async def _fetch_page_list_project_categories(
+        self, **kwargs
+    ) -> ProjectCategoryResponseResultsPage:
+        """Internal async method to fetch a single page."""
+        # Build URL with path parameters
         url = "{}/projects/categories".format(self.client.base_url)
 
-        _client = self.client.get_http_client()
+        # Add query parameters
 
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
         response = await _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -13308,11 +13615,8 @@ class AsyncProjectsAPI:
             return None  # type: ignore
 
         json_data = response.json()
-
-        # Validate into annotated/collection/union types using TypeAdapter
-        from pydantic import TypeAdapter
-
-        return TypeAdapter(List[ProjectCategoryResponse]).validate_python(
+        # Validate into a Pydantic model (supports BaseModel/RootModel)
+        return ProjectCategoryResponseResultsPage.model_validate(
             json_data, extra="ignore"
         )
 
@@ -13534,15 +13838,69 @@ class AsyncProjectsAPI:
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return PublicProjectVoteResponse.model_validate(json_data, extra="ignore")
 
-    async def list_projects(
+    def list_projects(
         self,
-    ) -> List[ProjectSummaryResponse]:
-        """List the authenticated user's projects."""
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+    ) -> "AsyncPageIterator":
+        """List the authenticated user's projects.
 
+        Returns an async iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            async for item in client.user.list_projects():
+                print(item)
+        """
+
+        from typing import Any, Dict
+
+        from kittycad.pagination import AsyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
+
+        if limit is not None:
+            kwargs["limit"] = limit
+
+        if page_token is not None:
+            kwargs["page_token"] = page_token
+
+        async def fetch_page(**kw):
+            return await self._fetch_page_list_projects(**kw)
+
+        # Create the async page iterator
+        return AsyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    async def _fetch_page_list_projects(
+        self, **kwargs
+    ) -> ProjectSummaryResponseResultsPage:
+        """Internal async method to fetch a single page."""
+        # Build URL with path parameters
         url = "{}/user/projects".format(self.client.base_url)
 
-        _client = self.client.get_http_client()
+        # Add query parameters
 
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
         response = await _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -13557,11 +13915,8 @@ class AsyncProjectsAPI:
             return None  # type: ignore
 
         json_data = response.json()
-
-        # Validate into annotated/collection/union types using TypeAdapter
-        from pydantic import TypeAdapter
-
-        return TypeAdapter(List[ProjectSummaryResponse]).validate_python(
+        # Validate into a Pydantic model (supports BaseModel/RootModel)
+        return ProjectSummaryResponseResultsPage.model_validate(
             json_data, extra="ignore"
         )
 
@@ -14024,6 +14379,52 @@ class AsyncProjectsAPI:
         return ProjectVersionSummaryResponseResultsPage.model_validate(
             json_data, extra="ignore"
         )
+
+    async def create_project_version(
+        self,
+        id: Uuid,
+    ) -> CreateProjectVersionResponse:
+        """For a history A -> B -> C with C current, saving D with B as its parent creates a second child of B. C stays current. Publications and share links keep pointing to their existing versions.
+
+        Send a multipart request with a JSON `body` part and file parts. Upload the complete replacement snapshot, including unchanged files. Each uploaded filename must be its relative project path.
+
+        Example JSON for the `body` part (replace the parent placeholder with B's UUID):
+
+        ```json {   "parent_version_id": "<B_VERSION_ID>",   "title": "Alternative design",   "description": "Trying another shape",   "entrypoint_path": "main.kcl",   "deleted_paths": ["obsolete.kcl"] } ```
+
+        `parent_version_id` and `title` are required. Description defaults to an empty string, and the entrypoint defaults to `main.kcl`. When supplying `deleted_paths`, list all files removed from the chosen parent B, regardless of the files in current C. An empty list declares that no files were removed; omitting the field skips this deletion-intent check.
+
+        Save the JSON as `save-metadata.json`. With D's files in the working directory, set `API_BASE_URL`, `API_TOKEN`, and `PROJECT_ID`, then generate `SAVE_KEY` once for this save (for example, using `uuidgen`):
+
+        ```sh curl --fail-with-body \\   --request POST "${API_BASE_URL}/user/projects/${PROJECT_ID}/versions" \\   --header "Authorization: Bearer ${API_TOKEN}" \\   --header "Idempotency-Key: ${SAVE_KEY}" \\   --form 'body=<save-metadata.json;type=application/json' \\   --form 'file-0=@project.toml;filename=project.toml' \\   --form 'file-1=@main.kcl;filename=main.kcl' \\   --form 'file-2=@part.kcl;filename=part.kcl' ```
+
+        The HTTP 200 response contains `version_id` (D) and `current_version_id` (C, or the current version when the response is prepared). Read D through `GET /user/projects/{id}/versions/{version_id}` and download it through `GET /user/projects/{id}/versions/{version_id}/download`. Downloads default to TAR; use `?format=zip` for ZIP.
+
+        `Idempotency-Key` is optional for all clients. Use a unique key for each save to avoid duplicate versions when retrying. Retain the key, metadata, and submitted file contents across app restarts until the save's outcome is known. Within 24 hours of a successful save, retrying with the same key and contents returns the same version. Changed contents require a new key; reusing an unexpired key with different contents returns HTTP 409 with `IdempotencyConflict`. Without a key, or after its window expires, resending the request can create another version.
+
+        Write access to the project is required, including for retries. A public listing or share link does not grant access to private version history. There is no endpoint to promote an existing alternate version directly to current."""
+
+        url = "{}/user/projects/{id}/versions".format(self.client.base_url, id=id)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return CreateProjectVersionResponse.model_validate(json_data, extra="ignore")
 
     async def get_project_version(
         self,
