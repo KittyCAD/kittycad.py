@@ -40,10 +40,6 @@ class Feature(str, Enum):
 
     KCL_CEK_EXECUTOR = "kcl_cek_executor"
 
-    """# New KCL lexer and parser."""  # noqa: E501
-
-    KCL_NEW_LEXER_PARSER = "kcl_new_lexer_parser"
-
     """# Immediately redirect to our Govcloud environment (zoogov.dev)."""  # noqa: E501
 
     REDIRECT_TO_GOVCLOUD = "redirect_to_govcloud"

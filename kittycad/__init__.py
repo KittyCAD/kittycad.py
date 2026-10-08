@@ -42,7 +42,7 @@ from .models.aggregate_usage_collection_threshold_set import (
 from .models.aggregate_usage_collection_threshold_view import (
     AggregateUsageCollectionThresholdView,
 )
-from .models.announcement_results_page import AnnouncementResultsPage
+from .models.announcement_list import AnnouncementList
 from .models.api_call_with_price import ApiCallWithPrice
 from .models.api_call_with_price_results_page import ApiCallWithPriceResultsPage
 from .models.api_token import ApiToken
@@ -144,17 +144,13 @@ from .models.pong import Pong
 from .models.post_effect_type import PostEffectType
 from .models.privacy_settings import PrivacySettings
 from .models.project_archive_format import ProjectArchiveFormat
-from .models.project_category_response_results_page import (
-    ProjectCategoryResponseResultsPage,
-)
+from .models.project_category_response import ProjectCategoryResponse
 from .models.project_response import ProjectResponse
 from .models.project_share_link_response import ProjectShareLinkResponse
 from .models.project_share_link_response_results_page import (
     ProjectShareLinkResponseResultsPage,
 )
-from .models.project_summary_response_results_page import (
-    ProjectSummaryResponseResultsPage,
-)
+from .models.project_summary_response import ProjectSummaryResponse
 from .models.project_version_detail_response import ProjectVersionDetailResponse
 from .models.project_version_summary_response_results_page import (
     ProjectVersionSummaryResponseResultsPage,
@@ -305,65 +301,13 @@ class MetaAPI:
 
     def get_announcements(
         self,
-        *,
-        limit: Optional[int] = None,
-        page_token: Optional[str] = None,
-    ) -> "SyncPageIterator":
-        """No authentication is required. Results are ordered newest first, with the announcement ID breaking ties.
+    ) -> AnnouncementList:
+        """No authentication is required."""
 
-        Returns an iterator that automatically handles pagination.
-        Iterate over all items across all pages:
-
-            for item in client.announcements.get_announcements():
-                print(item)
-        """
-
-        from typing import Any, Dict
-
-        from kittycad.pagination import SyncPageIterator
-
-        # Store path parameters in closure for later use
-
-        # Create arguments dict, filtering out None values
-        kwargs: Dict[str, Any] = {}
-
-        if limit is not None:
-            kwargs["limit"] = limit
-
-        if page_token is not None:
-            kwargs["page_token"] = page_token
-
-        def fetch_page(**kw):
-            return self._fetch_page_get_announcements(**kw)
-
-        # Create the page iterator
-        return SyncPageIterator(
-            page_fetcher=fetch_page,
-            initial_kwargs=kwargs,
-        )
-
-    def _fetch_page_get_announcements(self, **kwargs) -> AnnouncementResultsPage:
-        """Internal method to fetch a single page."""
-        # Build URL with path parameters
         url = "{}/announcements".format(self.client.base_url)
 
-        # Add query parameters
-
-        if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
-
-        if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
-
-        # Pagination parameters (limit, page_token) are already handled above as regular query params
-
         _client = self.client.get_http_client()
+
         response = _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -378,8 +322,9 @@ class MetaAPI:
             return None  # type: ignore
 
         json_data = response.json()
-        # Validate into a Pydantic model (supports BaseModel/RootModel)
-        return AnnouncementResultsPage.model_validate(json_data, extra="ignore")
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return AnnouncementList.model_validate(json_data, extra="ignore")
 
     def community_sso(
         self,
@@ -535,67 +480,15 @@ class AsyncMetaAPI:
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return IpAddrInfo.model_validate(json_data, extra="ignore")
 
-    def get_announcements(
+    async def get_announcements(
         self,
-        *,
-        limit: Optional[int] = None,
-        page_token: Optional[str] = None,
-    ) -> "AsyncPageIterator":
-        """No authentication is required. Results are ordered newest first, with the announcement ID breaking ties.
+    ) -> AnnouncementList:
+        """No authentication is required."""
 
-        Returns an async iterator that automatically handles pagination.
-        Iterate over all items across all pages:
-
-            async for item in client.announcements.get_announcements():
-                print(item)
-        """
-
-        from typing import Any, Dict
-
-        from kittycad.pagination import AsyncPageIterator
-
-        # Store path parameters in closure for later use
-
-        # Create arguments dict, filtering out None values
-        kwargs: Dict[str, Any] = {}
-
-        if limit is not None:
-            kwargs["limit"] = limit
-
-        if page_token is not None:
-            kwargs["page_token"] = page_token
-
-        async def fetch_page(**kw):
-            return await self._fetch_page_get_announcements(**kw)
-
-        # Create the async page iterator
-        return AsyncPageIterator(
-            page_fetcher=fetch_page,
-            initial_kwargs=kwargs,
-        )
-
-    async def _fetch_page_get_announcements(self, **kwargs) -> AnnouncementResultsPage:
-        """Internal async method to fetch a single page."""
-        # Build URL with path parameters
         url = "{}/announcements".format(self.client.base_url)
 
-        # Add query parameters
-
-        if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
-
-        if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
-
-        # Pagination parameters (limit, page_token) are already handled above as regular query params
-
         _client = self.client.get_http_client()
+
         response = await _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -610,8 +503,9 @@ class AsyncMetaAPI:
             return None  # type: ignore
 
         json_data = response.json()
-        # Validate into a Pydantic model (supports BaseModel/RootModel)
-        return AnnouncementResultsPage.model_validate(json_data, extra="ignore")
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return AnnouncementList.model_validate(json_data, extra="ignore")
 
     async def community_sso(
         self,
@@ -12558,67 +12452,13 @@ class ProjectsAPI:
 
     def list_project_categories(
         self,
-        *,
-        limit: Optional[int] = None,
-        page_token: Optional[str] = None,
-    ) -> "SyncPageIterator":
-        """List the active categories available for project submissions.
+    ) -> List[ProjectCategoryResponse]:
+        """List the active categories available for project submissions."""
 
-        Returns an iterator that automatically handles pagination.
-        Iterate over all items across all pages:
-
-            for item in client.projects.list_project_categories():
-                print(item)
-        """
-
-        from typing import Any, Dict
-
-        from kittycad.pagination import SyncPageIterator
-
-        # Store path parameters in closure for later use
-
-        # Create arguments dict, filtering out None values
-        kwargs: Dict[str, Any] = {}
-
-        if limit is not None:
-            kwargs["limit"] = limit
-
-        if page_token is not None:
-            kwargs["page_token"] = page_token
-
-        def fetch_page(**kw):
-            return self._fetch_page_list_project_categories(**kw)
-
-        # Create the page iterator
-        return SyncPageIterator(
-            page_fetcher=fetch_page,
-            initial_kwargs=kwargs,
-        )
-
-    def _fetch_page_list_project_categories(
-        self, **kwargs
-    ) -> ProjectCategoryResponseResultsPage:
-        """Internal method to fetch a single page."""
-        # Build URL with path parameters
         url = "{}/projects/categories".format(self.client.base_url)
 
-        # Add query parameters
-
-        if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
-
-        if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
-
-        # Pagination parameters (limit, page_token) are already handled above as regular query params
-
         _client = self.client.get_http_client()
+
         response = _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -12633,8 +12473,11 @@ class ProjectsAPI:
             return None  # type: ignore
 
         json_data = response.json()
-        # Validate into a Pydantic model (supports BaseModel/RootModel)
-        return ProjectCategoryResponseResultsPage.model_validate(
+
+        # Validate into annotated/collection/union types using TypeAdapter
+        from pydantic import TypeAdapter
+
+        return TypeAdapter(List[ProjectCategoryResponse]).validate_python(
             json_data, extra="ignore"
         )
 
@@ -12858,65 +12701,13 @@ class ProjectsAPI:
 
     def list_projects(
         self,
-        *,
-        limit: Optional[int] = None,
-        page_token: Optional[str] = None,
-    ) -> "SyncPageIterator":
-        """List the authenticated user's projects.
+    ) -> List[ProjectSummaryResponse]:
+        """List the authenticated user's projects."""
 
-        Returns an iterator that automatically handles pagination.
-        Iterate over all items across all pages:
-
-            for item in client.user.list_projects():
-                print(item)
-        """
-
-        from typing import Any, Dict
-
-        from kittycad.pagination import SyncPageIterator
-
-        # Store path parameters in closure for later use
-
-        # Create arguments dict, filtering out None values
-        kwargs: Dict[str, Any] = {}
-
-        if limit is not None:
-            kwargs["limit"] = limit
-
-        if page_token is not None:
-            kwargs["page_token"] = page_token
-
-        def fetch_page(**kw):
-            return self._fetch_page_list_projects(**kw)
-
-        # Create the page iterator
-        return SyncPageIterator(
-            page_fetcher=fetch_page,
-            initial_kwargs=kwargs,
-        )
-
-    def _fetch_page_list_projects(self, **kwargs) -> ProjectSummaryResponseResultsPage:
-        """Internal method to fetch a single page."""
-        # Build URL with path parameters
         url = "{}/user/projects".format(self.client.base_url)
 
-        # Add query parameters
-
-        if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
-
-        if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
-
-        # Pagination parameters (limit, page_token) are already handled above as regular query params
-
         _client = self.client.get_http_client()
+
         response = _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -12931,8 +12722,11 @@ class ProjectsAPI:
             return None  # type: ignore
 
         json_data = response.json()
-        # Validate into a Pydantic model (supports BaseModel/RootModel)
-        return ProjectSummaryResponseResultsPage.model_validate(
+
+        # Validate into annotated/collection/union types using TypeAdapter
+        from pydantic import TypeAdapter
+
+        return TypeAdapter(List[ProjectSummaryResponse]).validate_python(
             json_data, extra="ignore"
         )
 
@@ -13538,69 +13332,15 @@ class AsyncProjectsAPI:
     def __init__(self, client: AsyncClient) -> None:
         self.client = client
 
-    def list_project_categories(
+    async def list_project_categories(
         self,
-        *,
-        limit: Optional[int] = None,
-        page_token: Optional[str] = None,
-    ) -> "AsyncPageIterator":
-        """List the active categories available for project submissions.
+    ) -> List[ProjectCategoryResponse]:
+        """List the active categories available for project submissions."""
 
-        Returns an async iterator that automatically handles pagination.
-        Iterate over all items across all pages:
-
-            async for item in client.projects.list_project_categories():
-                print(item)
-        """
-
-        from typing import Any, Dict
-
-        from kittycad.pagination import AsyncPageIterator
-
-        # Store path parameters in closure for later use
-
-        # Create arguments dict, filtering out None values
-        kwargs: Dict[str, Any] = {}
-
-        if limit is not None:
-            kwargs["limit"] = limit
-
-        if page_token is not None:
-            kwargs["page_token"] = page_token
-
-        async def fetch_page(**kw):
-            return await self._fetch_page_list_project_categories(**kw)
-
-        # Create the async page iterator
-        return AsyncPageIterator(
-            page_fetcher=fetch_page,
-            initial_kwargs=kwargs,
-        )
-
-    async def _fetch_page_list_project_categories(
-        self, **kwargs
-    ) -> ProjectCategoryResponseResultsPage:
-        """Internal async method to fetch a single page."""
-        # Build URL with path parameters
         url = "{}/projects/categories".format(self.client.base_url)
 
-        # Add query parameters
-
-        if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
-
-        if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
-
-        # Pagination parameters (limit, page_token) are already handled above as regular query params
-
         _client = self.client.get_http_client()
+
         response = await _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -13615,8 +13355,11 @@ class AsyncProjectsAPI:
             return None  # type: ignore
 
         json_data = response.json()
-        # Validate into a Pydantic model (supports BaseModel/RootModel)
-        return ProjectCategoryResponseResultsPage.model_validate(
+
+        # Validate into annotated/collection/union types using TypeAdapter
+        from pydantic import TypeAdapter
+
+        return TypeAdapter(List[ProjectCategoryResponse]).validate_python(
             json_data, extra="ignore"
         )
 
@@ -13838,69 +13581,15 @@ class AsyncProjectsAPI:
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return PublicProjectVoteResponse.model_validate(json_data, extra="ignore")
 
-    def list_projects(
+    async def list_projects(
         self,
-        *,
-        limit: Optional[int] = None,
-        page_token: Optional[str] = None,
-    ) -> "AsyncPageIterator":
-        """List the authenticated user's projects.
+    ) -> List[ProjectSummaryResponse]:
+        """List the authenticated user's projects."""
 
-        Returns an async iterator that automatically handles pagination.
-        Iterate over all items across all pages:
-
-            async for item in client.user.list_projects():
-                print(item)
-        """
-
-        from typing import Any, Dict
-
-        from kittycad.pagination import AsyncPageIterator
-
-        # Store path parameters in closure for later use
-
-        # Create arguments dict, filtering out None values
-        kwargs: Dict[str, Any] = {}
-
-        if limit is not None:
-            kwargs["limit"] = limit
-
-        if page_token is not None:
-            kwargs["page_token"] = page_token
-
-        async def fetch_page(**kw):
-            return await self._fetch_page_list_projects(**kw)
-
-        # Create the async page iterator
-        return AsyncPageIterator(
-            page_fetcher=fetch_page,
-            initial_kwargs=kwargs,
-        )
-
-    async def _fetch_page_list_projects(
-        self, **kwargs
-    ) -> ProjectSummaryResponseResultsPage:
-        """Internal async method to fetch a single page."""
-        # Build URL with path parameters
         url = "{}/user/projects".format(self.client.base_url)
 
-        # Add query parameters
-
-        if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
-
-        if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
-
-        # Pagination parameters (limit, page_token) are already handled above as regular query params
-
         _client = self.client.get_http_client()
+
         response = await _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -13915,8 +13604,11 @@ class AsyncProjectsAPI:
             return None  # type: ignore
 
         json_data = response.json()
-        # Validate into a Pydantic model (supports BaseModel/RootModel)
-        return ProjectSummaryResponseResultsPage.model_validate(
+
+        # Validate into annotated/collection/union types using TypeAdapter
+        from pydantic import TypeAdapter
+
+        return TypeAdapter(List[ProjectSummaryResponse]).validate_python(
             json_data, extra="ignore"
         )
 
