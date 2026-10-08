@@ -1809,6 +1809,14 @@ class OptionCreateRegion(KittyCadBaseModel):
     version: Optional[RegionVersion] = None
 
 
+class OptionToggleGraphics(KittyCadBaseModel):
+    """Enable or disable graphics. Warning: enabling graphics slows down the engine."""
+
+    graphics_enabled: bool
+
+    type: Literal["toggle_graphics"] = "toggle_graphics"
+
+
 class OptionCreatePlanarSurface(KittyCadBaseModel):
     """Create a planar surface bounded by the connection of various paths and curves. 'CreatePlanarSurface' modeling command."""
 
@@ -2076,6 +2084,7 @@ ModelingCmd = RootModel[
             OptionSetGridAutoScale,
             OptionSetOrderIndependentTransparency,
             OptionCreateRegion,
+            OptionToggleGraphics,
             OptionCreatePlanarSurface,
             OptionRegionGetResolvableIntersectionInfo,
             OptionCreateRegionFromQueryPoint,
