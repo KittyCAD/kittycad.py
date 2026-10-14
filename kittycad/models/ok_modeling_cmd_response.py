@@ -175,6 +175,7 @@ from ..models.surface_area import SurfaceArea
 from ..models.surface_blend import SurfaceBlend
 from ..models.sweep import Sweep
 from ..models.take_snapshot import TakeSnapshot
+from ..models.toggle_graphics import ToggleGraphics
 from ..models.twist_extrude import TwistExtrude
 from ..models.update_annotation import UpdateAnnotation
 from ..models.view_isometric import ViewIsometric
@@ -1485,6 +1486,14 @@ class OptionCreateRegion(KittyCadBaseModel):
     type: Literal["create_region"] = "create_region"
 
 
+class OptionToggleGraphics(KittyCadBaseModel):
+    """"""
+
+    data: ToggleGraphics
+
+    type: Literal["toggle_graphics"] = "toggle_graphics"
+
+
 class OptionCreatePlanarSurface(KittyCadBaseModel):
     """"""
 
@@ -1748,6 +1757,7 @@ OkModelingCmdResponse = RootModel[
             OptionSetGridAutoScale,
             OptionSetOrderIndependentTransparency,
             OptionCreateRegion,
+            OptionToggleGraphics,
             OptionCreatePlanarSurface,
             OptionRegionGetResolvableIntersectionInfo,
             OptionCreateRegionFromQueryPoint,

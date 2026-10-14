@@ -32,7 +32,7 @@ from .annotation_text_alignment_y import AnnotationTextAlignmentY
 from .annotation_text_options import AnnotationTextOptions
 from .annotation_type import AnnotationType
 from .announcement import Announcement
-from .announcement_results_page import AnnouncementResultsPage
+from .announcement_list import AnnouncementList
 from .api_call_status import ApiCallStatus
 from .api_call_with_price import ApiCallWithPrice
 from .api_call_with_price_results_page import ApiCallWithPriceResultsPage
@@ -250,7 +250,10 @@ from .ip_addr_info import IpAddrInfo
 from .kcl_code_completion_params import KclCodeCompletionParams
 from .kcl_code_completion_request import KclCodeCompletionRequest
 from .kcl_code_completion_response import KclCodeCompletionResponse
+from .kcl_migration_application import KclMigrationApplication
+from .kcl_migration_application_status import KclMigrationApplicationStatus
 from .kcl_migration_client_message import KclMigrationClientMessage
+from .kcl_migration_history_entry import KclMigrationHistoryEntry
 from .kcl_migration_operation import KclMigrationOperation
 from .kcl_migration_request import KclMigrationRequest
 from .kcl_migration_result import KclMigrationResult
@@ -388,7 +391,6 @@ from .project_access_response import ProjectAccessResponse
 from .project_access_scope import ProjectAccessScope
 from .project_archive_format import ProjectArchiveFormat
 from .project_category_response import ProjectCategoryResponse
-from .project_category_response_results_page import ProjectCategoryResponseResultsPage
 from .project_entity_to_plane import ProjectEntityToPlane
 from .project_file_response import ProjectFileResponse
 from .project_points_to_plane import ProjectPointsToPlane
@@ -399,7 +401,6 @@ from .project_share_link_response_results_page import (
     ProjectShareLinkResponseResultsPage,
 )
 from .project_summary_response import ProjectSummaryResponse
-from .project_summary_response_results_page import ProjectSummaryResponseResultsPage
 from .project_version_detail_response import ProjectVersionDetailResponse
 from .project_version_summary_response import ProjectVersionSummaryResponse
 from .project_version_summary_response_results_page import (
@@ -516,6 +517,7 @@ from .text_to_cad_model import TextToCadModel
 from .text_to_cad_multi_file_iteration_body import TextToCadMultiFileIterationBody
 from .text_to_cad_response import TextToCadResponse
 from .text_to_cad_response_results_page import TextToCadResponseResultsPage
+from .toggle_graphics import ToggleGraphics
 from .token_revoke_request_form import TokenRevokeRequestForm
 from .tolerance import Tolerance
 from .transform import Transform

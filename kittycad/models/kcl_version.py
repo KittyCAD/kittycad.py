@@ -20,5 +20,9 @@ class KclVersion(str, Enum):
 
     VAL_3_0 = "3.0"
 
+    """# KCL v4 preview -- used while developing and testing version 4."""  # noqa: E501
+
+    VAL_4_0_PREVIEW = "4.0-preview"
+
     def __str__(self) -> str:
         return str(self.value)

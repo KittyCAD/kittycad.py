@@ -13,6 +13,8 @@ class KclMigrationRequest(KittyCadBaseModel):
 
     allow_preview: Optional[bool] = False
 
+    conversation_id: Optional[Uuid] = None
+
     current_files: Dict[str, bytes]
 
     entrypoint: str
