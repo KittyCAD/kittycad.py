@@ -40,10 +40,6 @@ class Feature(str, Enum):
 
     KCL_CEK_EXECUTOR = "kcl_cek_executor"
 
-    """# New KCL lexer and parser."""  # noqa: E501
-
-    KCL_NEW_LEXER_PARSER = "kcl_new_lexer_parser"
-
     """# Immediately redirect to our Govcloud environment (zoogov.dev)."""  # noqa: E501
 
     REDIRECT_TO_GOVCLOUD = "redirect_to_govcloud"
@@ -99,14 +95,6 @@ class Feature(str, Enum):
     """# Grants access to the beta proprietary-to-KCL conversion endpoint."""  # noqa: E501
 
     PROPRIETARY_TO_KCL_CONVERSION_BETA = "proprietary_to_kcl_conversion_beta"
-
-    """# Enables the topological segments-based region API for point-and-click in Zoo Design Studio."""  # noqa: E501
-
-    SEGMENTS_BASED_REGIONS = "segments_based_regions"
-
-    """# Allows legacy sketches to be edited using point-and-click in Zoo Design Studio."""  # noqa: E501
-
-    LEGACY_SKETCH_MODE = "legacy_sketch_mode"
 
     """# Enables sketch solve experimental features in Zoo Design Studio."""  # noqa: E501
 
