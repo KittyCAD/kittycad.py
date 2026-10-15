@@ -7,6 +7,54 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## v1.8.0
+
+Regenerated the SDK against the latest API spec.
+
+### Added
+
+- KCL migration WebSocket messages for reading conversation history and
+  acknowledging local apply, undo, and redo operations. New supporting models:
+  `KclMigrationHistoryEntry`, `KclMigrationApplication`, and
+  `KclMigrationApplicationStatus`. `KclMigrationRequest` now accepts an optional
+  `conversation_id` to link a migration to an existing conversation.
+- `KclVersion.VAL_4_0_PREVIEW` for the KCL `4.0-preview` version.
+- The `toggle_graphics` modeling command and its `ToggleGraphics` response.
+- An optional `category_id` filter on `projects.list_public_projects`.
+
+### Changed
+
+- `meta.get_announcements`, `projects.list_projects`, and
+  `projects.list_project_categories` no longer paginate, matching the API.
+  Announcements return an `AnnouncementList` containing `.announcements`;
+  projects and categories return lists. These methods no longer accept `limit`
+  or `page_token`. Their async versions are now awaitable coroutines.
+
+### Removed
+
+- `AnnouncementResultsPage`, `ProjectSummaryResponseResultsPage`, and
+  `ProjectCategoryResponseResultsPage`.
+- The `Feature.KCL_NEW_LEXER_PARSER`, `Feature.SEGMENTS_BASED_REGIONS`, and
+  `Feature.LEGACY_SKETCH_MODE` enum members.
+
+### Migration
+
+- **Announcements**: replace `list(client.meta.get_announcements())` with
+  `client.meta.get_announcements().announcements`. With `AsyncKittyCAD`, use
+  `(await client.meta.get_announcements()).announcements` instead of an async
+  list comprehension. Replace `AnnouncementResultsPage` type annotations with
+  `AnnouncementList` and read `.announcements` instead of `.items`.
+- **Projects and categories**: sync methods return lists directly, so calls to
+  `list(...)` are optional. With `AsyncKittyCAD`, replace async iteration with
+  `await client.projects.list_projects()` or
+  `await client.projects.list_project_categories()`, then iterate over the
+  returned list. Replace `ProjectSummaryResponseResultsPage` and
+  `ProjectCategoryResponseResultsPage` type annotations with
+  `list[ProjectSummaryResponse]` and `list[ProjectCategoryResponse]`.
+- Remove `limit` and `page_token` arguments from these three methods.
+- **Feature flags**: remove references to the three removed `Feature` members;
+  the API no longer exposes these switches.
+
 ## v1.7.0
 
 ### Changed
