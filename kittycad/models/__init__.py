@@ -100,6 +100,7 @@ from .create_custom_model import CreateCustomModel
 from .create_o_auth2_app_request import CreateOAuth2AppRequest
 from .create_org_dataset import CreateOrgDataset
 from .create_planar_surface import CreatePlanarSurface
+from .create_project_library_request import CreateProjectLibraryRequest
 from .create_project_share_link_request import CreateProjectShareLinkRequest
 from .create_project_version_response import CreateProjectVersionResponse
 from .create_region import CreateRegion
@@ -393,6 +394,9 @@ from .project_archive_format import ProjectArchiveFormat
 from .project_category_response import ProjectCategoryResponse
 from .project_entity_to_plane import ProjectEntityToPlane
 from .project_file_response import ProjectFileResponse
+from .project_library_response import ProjectLibraryResponse
+from .project_library_response_results_page import ProjectLibraryResponseResultsPage
+from .project_library_scope import ProjectLibraryScope
 from .project_points_to_plane import ProjectPointsToPlane
 from .project_publication_info_response import ProjectPublicationInfoResponse
 from .project_response import ProjectResponse
@@ -422,6 +426,7 @@ from .region_get_resolvable_intersection_info import RegionGetResolvableIntersec
 from .region_version import RegionVersion
 from .relative_to import RelativeTo
 from .remove_scene_objects import RemoveSceneObjects
+from .rename_project_library_request import RenameProjectLibraryRequest
 from .revolve import Revolve
 from .revolve_about_edge import RevolveAboutEdge
 from .rotation import Rotation
