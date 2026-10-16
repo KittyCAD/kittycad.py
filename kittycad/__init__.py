@@ -64,6 +64,7 @@ from .models.conversion_sort_mode import ConversionSortMode
 from .models.create_custom_model import CreateCustomModel
 from .models.create_o_auth2_app_request import CreateOAuth2AppRequest
 from .models.create_org_dataset import CreateOrgDataset
+from .models.create_project_library_request import CreateProjectLibraryRequest
 from .models.create_project_share_link_request import CreateProjectShareLinkRequest
 from .models.create_project_version_response import CreateProjectVersionResponse
 from .models.create_shortlink_request import CreateShortlinkRequest
@@ -145,6 +146,10 @@ from .models.post_effect_type import PostEffectType
 from .models.privacy_settings import PrivacySettings
 from .models.project_archive_format import ProjectArchiveFormat
 from .models.project_category_response import ProjectCategoryResponse
+from .models.project_library_response import ProjectLibraryResponse
+from .models.project_library_response_results_page import (
+    ProjectLibraryResponseResultsPage,
+)
 from .models.project_response import ProjectResponse
 from .models.project_share_link_response import ProjectShareLinkResponse
 from .models.project_share_link_response_results_page import (
@@ -166,6 +171,7 @@ from .models.public_project_response_results_page import (
     PublicProjectResponseResultsPage,
 )
 from .models.public_project_vote_response import PublicProjectVoteResponse
+from .models.rename_project_library_request import RenameProjectLibraryRequest
 from .models.saml_identity_provider import SamlIdentityProvider
 from .models.saml_identity_provider_create import SamlIdentityProviderCreate
 from .models.service_account import ServiceAccount
@@ -12709,6 +12715,176 @@ class ProjectsAPI:
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return PublicProjectVoteResponse.model_validate(json_data, extra="ignore")
 
+    def list_project_libraries(
+        self,
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+    ) -> "SyncPageIterator":
+        """List personal libraries and libraries belonging to the active organization.
+
+        Returns an iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            for item in client.user.list_project_libraries():
+                print(item)
+        """
+
+        from typing import Any, Dict
+
+        from kittycad.pagination import SyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
+
+        if limit is not None:
+            kwargs["limit"] = limit
+
+        if page_token is not None:
+            kwargs["page_token"] = page_token
+
+        def fetch_page(**kw):
+            return self._fetch_page_list_project_libraries(**kw)
+
+        # Create the page iterator
+        return SyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    def _fetch_page_list_project_libraries(
+        self, **kwargs
+    ) -> ProjectLibraryResponseResultsPage:
+        """Internal method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/user/project-libraries".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+        # Validate into a Pydantic model (supports BaseModel/RootModel)
+        return ProjectLibraryResponseResultsPage.model_validate(
+            json_data, extra="ignore"
+        )
+
+    def create_project_library(
+        self,
+        body: CreateProjectLibraryRequest,
+    ) -> ProjectLibraryResponse:
+        """Create a personal library or a library owned by the active organization."""
+
+        url = "{}/user/project-libraries".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+            content=serialize_request_body(body),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return ProjectLibraryResponse.model_validate(json_data, extra="ignore")
+
+    def delete_project_library(
+        self,
+        id: Uuid,
+        expected_revision: str,
+    ):
+        """Delete an empty cloud project library."""
+
+        url = "{}/user/project-libraries/{id}".format(self.client.base_url, id=id)
+
+        if expected_revision is not None:
+            if "?" in url:
+                url = url + "&expected_revision=" + str(expected_revision)
+            else:
+                url = url + "?expected_revision=" + str(expected_revision)
+
+        _client = self.client.get_http_client()
+
+        response = _client.delete(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    def rename_project_library(
+        self,
+        id: Uuid,
+        body: RenameProjectLibraryRequest,
+    ) -> ProjectLibraryResponse:
+        """Rename a library owned by the user or their active organization."""
+
+        url = "{}/user/project-libraries/{id}".format(self.client.base_url, id=id)
+
+        _client = self.client.get_http_client()
+
+        response = _client.patch(
+            url=url,
+            headers=self.client.get_headers(),
+            content=serialize_request_body(body),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return ProjectLibraryResponse.model_validate(json_data, extra="ignore")
+
     def list_projects(
         self,
     ) -> List[ProjectSummaryResponse]:
@@ -13600,6 +13776,176 @@ class AsyncProjectsAPI:
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return PublicProjectVoteResponse.model_validate(json_data, extra="ignore")
+
+    def list_project_libraries(
+        self,
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+    ) -> "AsyncPageIterator":
+        """List personal libraries and libraries belonging to the active organization.
+
+        Returns an async iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            async for item in client.user.list_project_libraries():
+                print(item)
+        """
+
+        from typing import Any, Dict
+
+        from kittycad.pagination import AsyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
+
+        if limit is not None:
+            kwargs["limit"] = limit
+
+        if page_token is not None:
+            kwargs["page_token"] = page_token
+
+        async def fetch_page(**kw):
+            return await self._fetch_page_list_project_libraries(**kw)
+
+        # Create the async page iterator
+        return AsyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    async def _fetch_page_list_project_libraries(
+        self, **kwargs
+    ) -> ProjectLibraryResponseResultsPage:
+        """Internal async method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/user/project-libraries".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+        # Validate into a Pydantic model (supports BaseModel/RootModel)
+        return ProjectLibraryResponseResultsPage.model_validate(
+            json_data, extra="ignore"
+        )
+
+    async def create_project_library(
+        self,
+        body: CreateProjectLibraryRequest,
+    ) -> ProjectLibraryResponse:
+        """Create a personal library or a library owned by the active organization."""
+
+        url = "{}/user/project-libraries".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+            content=serialize_request_body(body),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return ProjectLibraryResponse.model_validate(json_data, extra="ignore")
+
+    async def delete_project_library(
+        self,
+        id: Uuid,
+        expected_revision: str,
+    ):
+        """Delete an empty cloud project library."""
+
+        url = "{}/user/project-libraries/{id}".format(self.client.base_url, id=id)
+
+        if expected_revision is not None:
+            if "?" in url:
+                url = url + "&expected_revision=" + str(expected_revision)
+            else:
+                url = url + "?expected_revision=" + str(expected_revision)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.delete(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    async def rename_project_library(
+        self,
+        id: Uuid,
+        body: RenameProjectLibraryRequest,
+    ) -> ProjectLibraryResponse:
+        """Rename a library owned by the user or their active organization."""
+
+        url = "{}/user/project-libraries/{id}".format(self.client.base_url, id=id)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.patch(
+            url=url,
+            headers=self.client.get_headers(),
+            content=serialize_request_body(body),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return ProjectLibraryResponse.model_validate(json_data, extra="ignore")
 
     async def list_projects(
         self,

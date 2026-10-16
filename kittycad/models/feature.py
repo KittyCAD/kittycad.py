@@ -88,6 +88,10 @@ class Feature(str, Enum):
 
     NAMED_VIEWS_UI = "named_views_ui"
 
+    """# Enables the Scene browser and model tree UI in Zoo Design Studio."""  # noqa: E501
+
+    SCENE_BROWSER = "scene_browser"
+
     """# Enables plugins in Zoo Design Studio."""  # noqa: E501
 
     PLUGINS = "plugins"

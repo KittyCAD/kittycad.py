@@ -1345,6 +1345,38 @@
   },
   {
     "op": "add",
+    "path": "/paths/~1user~1project-libraries/get/x-python",
+    "value": {
+      "example": "from kittycad.models import ProjectLibraryResponseResultsPage\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\n\n\nfrom kittycad.models import ProjectLibraryResponse\ndef example_list_project_libraries():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    # Iterate through all pages automatically\n    item: ProjectLibraryResponse\n    for item in client.projects.list_project_libraries(limit=None,\n        page_token=None):\n        print(item)\n\n",
+      "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD.projects"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/paths/~1user~1project-libraries/post/x-python",
+    "value": {
+      "example": "from kittycad.models.create_project_library_request import CreateProjectLibraryRequest\nfrom kittycad.models.project_library_scope import ProjectLibraryScope\nfrom kittycad.models import ProjectLibraryResponse\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_create_project_library():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    result: ProjectLibraryResponse = client.projects.create_project_library(body=CreateProjectLibraryRequest(\n        name=\"<string>\",\n        scope=ProjectLibraryScope.PERSONAL,\n        ))\n\n\n    body: ProjectLibraryResponse = result\n    print(body)\n\n",
+      "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD.projects"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/paths/~1user~1project-libraries~1{id}/delete/x-python",
+    "value": {
+      "example": "from kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\ndef example_delete_project_library():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    client.projects.delete_project_library(id=Uuid(\"<string>\"),\n        expected_revision=\"<string>\")\n\n",
+      "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD.projects"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/paths/~1user~1project-libraries~1{id}/patch/x-python",
+    "value": {
+      "example": "from kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models.rename_project_library_request import RenameProjectLibraryRequest\nfrom kittycad.models import ProjectLibraryResponse\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_rename_project_library():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    result: ProjectLibraryResponse = client.projects.rename_project_library(id=Uuid(\"<string>\"),\n        body=RenameProjectLibraryRequest(\n        expected_revision=\"<string>\",\n        name=\"<string>\",\n        ))\n\n\n    body: ProjectLibraryResponse = result\n    print(body)\n\n",
+      "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD.projects"
+    }
+  },
+  {
+    "op": "add",
     "path": "/paths/~1user~1projects/get/x-python",
     "value": {
       "example": "from kittycad.models import ProjectSummaryResponse\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_list_projects():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    result: List[ProjectSummaryResponse] = client.projects.list_projects()\n\n\n    body: List[ProjectSummaryResponse] = result\n    print(body)\n\n",

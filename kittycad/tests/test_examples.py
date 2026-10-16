@@ -54,6 +54,7 @@ from kittycad.models import (
     PaymentMethod,
     Pong,
     ProjectCategoryResponse,
+    ProjectLibraryResponse,
     ProjectResponse,
     ProjectShareLinkResponse,
     ProjectSummaryResponse,
@@ -104,6 +105,7 @@ from kittycad.models.conversion_sort_mode import ConversionSortMode
 from kittycad.models.create_custom_model import CreateCustomModel
 from kittycad.models.create_o_auth2_app_request import CreateOAuth2AppRequest
 from kittycad.models.create_org_dataset import CreateOrgDataset
+from kittycad.models.create_project_library_request import CreateProjectLibraryRequest
 from kittycad.models.create_project_share_link_request import (
     CreateProjectShareLinkRequest,
 )
@@ -142,12 +144,14 @@ from kittycad.models.ply_storage import PlyStorage
 from kittycad.models.post_effect_type import PostEffectType
 from kittycad.models.privacy_settings import PrivacySettings
 from kittycad.models.project_archive_format import ProjectArchiveFormat
+from kittycad.models.project_library_scope import ProjectLibraryScope
 from kittycad.models.public_email_marketing_consent_request import (
     PublicEmailMarketingConsentRequest,
 )
 from kittycad.models.public_mailing_list_membership_request import (
     PublicMailingListMembershipRequest,
 )
+from kittycad.models.rename_project_library_request import RenameProjectLibraryRequest
 from kittycad.models.sales_inquiry_type import SalesInquiryType
 from kittycad.models.saml_identity_provider_create import SamlIdentityProviderCreate
 from kittycad.models.selection import OptionSceneByName, Selection
@@ -4091,6 +4095,109 @@ async def test_update_user_privacy_settings_async():
         body=PrivacySettings(
             can_train_on_data=False,
         )
+    )
+
+
+@pytest.mark.skip
+def test_list_project_libraries():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    # Iterate through all pages automatically
+    item: ProjectLibraryResponse
+    for item in client.projects.list_project_libraries(limit=None, page_token=None):
+        print(item)
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_list_project_libraries_async():
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    # Iterate through all pages automatically
+    iterator = client.projects.list_project_libraries(limit=None, page_token=None)
+    item: ProjectLibraryResponse
+    async for item in iterator:
+        print(item)
+
+
+@pytest.mark.skip
+def test_create_project_library():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: ProjectLibraryResponse = client.projects.create_project_library(
+        body=CreateProjectLibraryRequest(
+            name="<string>",
+            scope=ProjectLibraryScope.PERSONAL,
+        )
+    )
+
+    body: ProjectLibraryResponse = result
+    print(body)
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_create_project_library_async():
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: ProjectLibraryResponse = await client.projects.create_project_library(
+        body=CreateProjectLibraryRequest(
+            name="<string>",
+            scope=ProjectLibraryScope.PERSONAL,
+        )
+    )
+
+
+@pytest.mark.skip
+def test_delete_project_library():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    client.projects.delete_project_library(
+        id=Uuid("<string>"), expected_revision="<string>"
+    )
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_delete_project_library_async():
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    await client.projects.delete_project_library(
+        id=Uuid("<string>"), expected_revision="<string>"
+    )
+
+
+@pytest.mark.skip
+def test_rename_project_library():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: ProjectLibraryResponse = client.projects.rename_project_library(
+        id=Uuid("<string>"),
+        body=RenameProjectLibraryRequest(
+            expected_revision="<string>",
+            name="<string>",
+        ),
+    )
+
+    body: ProjectLibraryResponse = result
+    print(body)
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_rename_project_library_async():
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: ProjectLibraryResponse = await client.projects.rename_project_library(
+        id=Uuid("<string>"),
+        body=RenameProjectLibraryRequest(
+            expected_revision="<string>",
+            name="<string>",
+        ),
     )
 
 
