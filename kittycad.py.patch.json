@@ -1377,9 +1377,17 @@
   },
   {
     "op": "add",
+    "path": "/paths/~1user~1project-libraries~1{id}~1projects/get/x-python",
+    "value": {
+      "example": "from kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models import ProjectSummaryResponseResultsPage\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\n\n\nfrom kittycad.models import ProjectSummaryResponse\ndef example_list_library_projects():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    # Iterate through all pages automatically\n    item: ProjectSummaryResponse\n    for item in client.projects.list_library_projects(id=Uuid(\"<string>\"),\n        limit=None,\n        page_token=None):\n        print(item)\n\n",
+      "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD.projects"
+    }
+  },
+  {
+    "op": "add",
     "path": "/paths/~1user~1projects/get/x-python",
     "value": {
-      "example": "from kittycad.models import ProjectSummaryResponse\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_list_projects():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    result: List[ProjectSummaryResponse] = client.projects.list_projects()\n\n\n    body: List[ProjectSummaryResponse] = result\n    print(body)\n\n",
+      "example": "from kittycad.models.project_access_scope import ProjectAccessScope\nfrom kittycad.models import ProjectSummaryResponse\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_list_projects():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    result: List[ProjectSummaryResponse] = client.projects.list_projects(scope=ProjectAccessScope.PERSONAL,\n        unassigned=False)\n\n\n    body: List[ProjectSummaryResponse] = result\n    print(body)\n\n",
       "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD.projects"
     }
   },

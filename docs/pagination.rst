@@ -502,6 +502,23 @@ Projects API
         async for item in client.projects.list_project_libraries():
             print(item)
 
+**list_library_projects**
+    List projects in a cloud library, newest first.
+
+    Returns: ``SyncPageIterator[ProjectSummaryResponse]``
+
+    Example:
+
+    .. code-block:: python
+
+        # Sync
+        for item in client.projects.list_library_projects():
+            print(item)
+
+        # Async
+        async for item in client.projects.list_library_projects():
+            print(item)
+
 **list_project_share_links**
     List share links for one of the authenticated user's projects.
 

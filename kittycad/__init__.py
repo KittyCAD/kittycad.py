@@ -144,6 +144,7 @@ from .models.payment_method_results_page import PaymentMethodResultsPage
 from .models.pong import Pong
 from .models.post_effect_type import PostEffectType
 from .models.privacy_settings import PrivacySettings
+from .models.project_access_scope import ProjectAccessScope
 from .models.project_archive_format import ProjectArchiveFormat
 from .models.project_category_response import ProjectCategoryResponse
 from .models.project_library_response import ProjectLibraryResponse
@@ -156,6 +157,9 @@ from .models.project_share_link_response_results_page import (
     ProjectShareLinkResponseResultsPage,
 )
 from .models.project_summary_response import ProjectSummaryResponse
+from .models.project_summary_response_results_page import (
+    ProjectSummaryResponseResultsPage,
+)
 from .models.project_version_detail_response import ProjectVersionDetailResponse
 from .models.project_version_summary_response_results_page import (
     ProjectVersionSummaryResponseResultsPage,
@@ -12885,12 +12889,114 @@ class ProjectsAPI:
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return ProjectLibraryResponse.model_validate(json_data, extra="ignore")
 
+    def list_library_projects(
+        self,
+        id: Uuid,
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+    ) -> "SyncPageIterator":
+        """List projects in a cloud library, newest first.
+
+        Returns an iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            for item in client.user.list_library_projects():
+                print(item)
+        """
+
+        from typing import Any, Dict
+
+        from kittycad.pagination import SyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        _id = id
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
+
+        if limit is not None:
+            kwargs["limit"] = limit
+
+        if page_token is not None:
+            kwargs["page_token"] = page_token
+
+        def fetch_page(**kw):
+            return self._fetch_page_list_library_projects(id=_id, **kw)
+
+        # Create the page iterator
+        return SyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    def _fetch_page_list_library_projects(
+        self, id: Uuid, **kwargs
+    ) -> ProjectSummaryResponseResultsPage:
+        """Internal method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/user/project-libraries/{id}/projects".format(
+            self.client.base_url, id=id
+        )
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+        # Validate into a Pydantic model (supports BaseModel/RootModel)
+        return ProjectSummaryResponseResultsPage.model_validate(
+            json_data, extra="ignore"
+        )
+
     def list_projects(
         self,
+        *,
+        scope: Optional[ProjectAccessScope] = None,
+        unassigned: Optional[bool] = None,
     ) -> List[ProjectSummaryResponse]:
         """List the authenticated user's projects."""
 
         url = "{}/user/projects".format(self.client.base_url)
+
+        if scope is not None:
+            if "?" in url:
+                url = url + "&scope=" + str(scope)
+            else:
+                url = url + "?scope=" + str(scope)
+
+        if unassigned is not None:
+            if "?" in url:
+                url = url + "&unassigned=" + str(unassigned).lower()
+            else:
+                url = url + "?unassigned=" + str(unassigned).lower()
 
         _client = self.client.get_http_client()
 
@@ -13947,12 +14053,114 @@ class AsyncProjectsAPI:
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return ProjectLibraryResponse.model_validate(json_data, extra="ignore")
 
+    def list_library_projects(
+        self,
+        id: Uuid,
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+    ) -> "AsyncPageIterator":
+        """List projects in a cloud library, newest first.
+
+        Returns an async iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            async for item in client.user.list_library_projects():
+                print(item)
+        """
+
+        from typing import Any, Dict
+
+        from kittycad.pagination import AsyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        _id = id
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
+
+        if limit is not None:
+            kwargs["limit"] = limit
+
+        if page_token is not None:
+            kwargs["page_token"] = page_token
+
+        async def fetch_page(**kw):
+            return await self._fetch_page_list_library_projects(id=_id, **kw)
+
+        # Create the async page iterator
+        return AsyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    async def _fetch_page_list_library_projects(
+        self, id: Uuid, **kwargs
+    ) -> ProjectSummaryResponseResultsPage:
+        """Internal async method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/user/project-libraries/{id}/projects".format(
+            self.client.base_url, id=id
+        )
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+        # Validate into a Pydantic model (supports BaseModel/RootModel)
+        return ProjectSummaryResponseResultsPage.model_validate(
+            json_data, extra="ignore"
+        )
+
     async def list_projects(
         self,
+        *,
+        scope: Optional[ProjectAccessScope] = None,
+        unassigned: Optional[bool] = None,
     ) -> List[ProjectSummaryResponse]:
         """List the authenticated user's projects."""
 
         url = "{}/user/projects".format(self.client.base_url)
+
+        if scope is not None:
+            if "?" in url:
+                url = url + "&scope=" + str(scope)
+            else:
+                url = url + "?scope=" + str(scope)
+
+        if unassigned is not None:
+            if "?" in url:
+                url = url + "&unassigned=" + str(unassigned).lower()
+            else:
+                url = url + "?unassigned=" + str(unassigned).lower()
 
         _client = self.client.get_http_client()
 
