@@ -485,6 +485,23 @@ Projects API
         async for item in client.projects.list_public_projects():
             print(item)
 
+**list_project_libraries**
+    List personal libraries and libraries belonging to the active organization.
+
+    Returns: ``SyncPageIterator[ProjectLibraryResponse]``
+
+    Example:
+
+    .. code-block:: python
+
+        # Sync
+        for item in client.projects.list_project_libraries():
+            print(item)
+
+        # Async
+        async for item in client.projects.list_project_libraries():
+            print(item)
+
 **list_project_share_links**
     List share links for one of the authenticated user's projects.
 
