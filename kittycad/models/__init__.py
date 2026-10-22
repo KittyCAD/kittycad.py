@@ -405,6 +405,7 @@ from .project_share_link_response_results_page import (
     ProjectShareLinkResponseResultsPage,
 )
 from .project_summary_response import ProjectSummaryResponse
+from .project_summary_response_results_page import ProjectSummaryResponseResultsPage
 from .project_version_detail_response import ProjectVersionDetailResponse
 from .project_version_summary_response import ProjectVersionSummaryResponse
 from .project_version_summary_response_results_page import (

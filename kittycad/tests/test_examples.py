@@ -143,6 +143,7 @@ from kittycad.models.output_format3d import OptionPly, OutputFormat3d
 from kittycad.models.ply_storage import PlyStorage
 from kittycad.models.post_effect_type import PostEffectType
 from kittycad.models.privacy_settings import PrivacySettings
+from kittycad.models.project_access_scope import ProjectAccessScope
 from kittycad.models.project_archive_format import ProjectArchiveFormat
 from kittycad.models.project_library_scope import ProjectLibraryScope
 from kittycad.models.public_email_marketing_consent_request import (
@@ -4202,10 +4203,39 @@ async def test_rename_project_library_async():
 
 
 @pytest.mark.skip
+def test_list_library_projects():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    # Iterate through all pages automatically
+    item: ProjectSummaryResponse
+    for item in client.projects.list_library_projects(
+        id=Uuid("<string>"), limit=None, page_token=None
+    ):
+        print(item)
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_list_library_projects_async():
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    # Iterate through all pages automatically
+    iterator = client.projects.list_library_projects(
+        id=Uuid("<string>"), limit=None, page_token=None
+    )
+    item: ProjectSummaryResponse
+    async for item in iterator:
+        print(item)
+
+
+@pytest.mark.skip
 def test_list_projects():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: List[ProjectSummaryResponse] = client.projects.list_projects()
+    result: List[ProjectSummaryResponse] = client.projects.list_projects(
+        scope=ProjectAccessScope.PERSONAL, unassigned=False
+    )
 
     body: List[ProjectSummaryResponse] = result
     print(body)
@@ -4217,7 +4247,9 @@ def test_list_projects():
 async def test_list_projects_async():
     client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: List[ProjectSummaryResponse] = await client.projects.list_projects()
+    result: List[ProjectSummaryResponse] = await client.projects.list_projects(
+        scope=ProjectAccessScope.PERSONAL, unassigned=False
+    )
 
 
 @pytest.mark.skip
