@@ -8,6 +8,8 @@ class PostEffectType(str, Enum):
 
     SSAO = "ssao"
 
+    RETROCAD = "retrocad"
+
     NOEFFECT = "noeffect"
 
     def __str__(self) -> str:

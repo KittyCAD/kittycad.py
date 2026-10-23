@@ -10,6 +10,7 @@ from ..models.gltf_storage import GltfStorage
 from ..models.ply_storage import PlyStorage
 from ..models.selection import Selection
 from ..models.step_presentation import StepPresentation
+from ..models.step_schema import StepSchema
 from ..models.stl_storage import StlStorage
 from ..models.system import System
 from ..models.unit_length import UnitLength
@@ -73,6 +74,8 @@ class OptionStep(KittyCadBaseModel):
     created: Optional[datetime.datetime] = None
 
     presentation: Optional[StepPresentation] = "pretty"  # type: ignore[assignment]
+
+    schema: Optional[StepSchema] = "ap242"  # type: ignore[assignment]
 
     type: Literal["step"] = "step"
 
