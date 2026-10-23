@@ -501,6 +501,7 @@ from .source_range_prompt import SourceRangePrompt
 from .start_path import StartPath
 from .step_import_target_representation import StepImportTargetRepresentation
 from .step_presentation import StepPresentation
+from .step_schema import StepSchema
 from .stl_storage import StlStorage
 from .storage_provider import StorageProvider
 from .subscription_action_type import SubscriptionActionType
