@@ -4,6 +4,7 @@ import asyncio
 import json
 import warnings
 from collections.abc import Iterator
+from contextlib import ExitStack
 from threading import Thread
 
 import bson
@@ -44,16 +45,17 @@ def test_sync_websocket_round_trip(websocket_server: str, custom_factory: bool) 
     # Keep a strict factory signature to catch new transport options leaking into
     # the public ws_factory interface.
     def factory(uri, *, additional_headers, close_timeout, max_size):
-        return connect(
-            uri,
-            additional_headers=additional_headers,
-            close_timeout=close_timeout,
-            max_size=max_size,
-            legacy=True,
+        return connections.enter_context(
+            connect(
+                uri,
+                additional_headers=additional_headers,
+                close_timeout=close_timeout,
+                max_size=max_size,
+            )
         )
 
     client = KittyCAD(token="test-token", base_url=websocket_server)
-    with warnings.catch_warnings():
+    with ExitStack() as connections, warnings.catch_warnings():
         warnings.simplefilter("error", DeprecationWarning)
         with client.ml.ml_reasoning_ws(
             id="test", recv_timeout=5, ws_factory=factory if custom_factory else None

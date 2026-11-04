@@ -9,8 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Require `websockets>=17.4,<18.0.0`, including the upstream fix for memory
-  exhaustion from excessively fragmented messages.
+- Allow `websockets>=14.1,<18.0.0`, preserving the existing minimum version while
+  locking 17.4, which includes the upstream fix for memory exhaustion from
+  excessively fragmented messages.
 - Preserve explicit connection management for synchronous WebSockets without
   transport deprecation warnings, including support for custom `ws_factory` callbacks.
 - Allow attrs 26, python-dateutil 4, mypy 2, and prance 26, and refresh the runtime,
@@ -19,9 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Migration
 
-- If your project pins `websockets` below 17.4, update that constraint before
-  upgrading the SDK. The SDK's WebSocket methods keep their existing signatures.
-- Code using the raw async WebSocket connections should follow the
+- When upgrading to websockets 17, code using the raw async connections should follow
   [websockets 17 migration notes](https://websockets.readthedocs.io/en/stable/project/changelog.html):
   use `websockets.asyncio.client` imports instead of removed legacy module aliases,
   and pass the `text` argument to `send()` by keyword if you use it.
