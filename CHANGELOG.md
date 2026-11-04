@@ -7,6 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Changed
+
+- Require `websockets>=17.4,<18.0.0`, including the upstream fix for memory
+  exhaustion from excessively fragmented messages.
+- Preserve explicit connection management for synchronous WebSockets without
+  transport deprecation warnings, including support for custom `ws_factory` callbacks.
+- Allow attrs 26, python-dateutil 4, mypy 2, and prance 26, and refresh the runtime,
+  development, and documentation dependency lockfile. Python 3.11 remains supported;
+  documentation tools resolve to compatible versions on older Python releases.
+
+### Migration
+
+- If your project pins `websockets` below 17.4, update that constraint before
+  upgrading the SDK. The SDK's WebSocket methods keep their existing signatures.
+- Code using the raw async WebSocket connections should follow the
+  [websockets 17 migration notes](https://websockets.readthedocs.io/en/stable/project/changelog.html):
+  use `websockets.asyncio.client` imports instead of removed legacy module aliases,
+  and pass the `text` argument to `send()` by keyword if you use it.
+
 ## v1.8.0
 
 Regenerated the SDK against the latest API spec.
@@ -293,10 +312,10 @@ new_user = User.from_dict({"id": "456", "name": "Jane"})
 
 ```python
 model_config = ConfigDict(
-    protected_namespaces=(),     # Avoid namespace warnings
-    populate_by_name=True,       # Enable alias usage for API compatibility
-    extra='forbid',              # Prevent typos and unexpected fields
-    use_enum_values=True,        # Clean enum serialization
+    protected_namespaces=(),  # Avoid namespace warnings
+    populate_by_name=True,  # Enable alias usage for API compatibility
+    extra="forbid",  # Prevent typos and unexpected fields
+    use_enum_values=True,  # Clean enum serialization
 )
 ```
 
@@ -365,23 +384,23 @@ def test_file_conversion_options_stl():
     fc = client.file.create_file_conversion_options(
         body=ConversionParams(
             src_format=InputFormat3d(InputOptionStep(split_closed_faces=False)),
-            output_format=OutputFormat3d(OutputOptionObj(...))
+            output_format=OutputFormat3d(OutputOptionObj(...)),
         ),
-        file_attachments={"input.stl": file_path}
+        file_attachments={"input.stl": file_path},
     )
 
-# Async version with STL input  
+
+# Async version with STL input
 async def test_file_conversion_options_stl_async():
     result = await client.file.create_file_conversion_options(
-        body=ConversionParams(...),
-        file_attachments={"input.stl": file_path}
+        body=ConversionParams(...), file_attachments={"input.stl": file_path}
     )
+
 
 # Async version with OBJ input
 async def test_file_conversion_options_obj_async():
     result = await client.file.create_file_conversion_options(
-        body=ConversionParams(...),
-        file_attachments={"input.obj": file_path}
+        body=ConversionParams(...), file_attachments={"input.obj": file_path}
     )
 ```
 
@@ -409,11 +428,13 @@ client.upload_file(file_obj)
 client.upload_file(b"raw file content")
 client.upload_file(bytearray(b"content"))
 
+
 # Streaming iterators for large files
 def file_chunks():
     with open("/path/to/large_file.bin", "rb") as f:
         while chunk := f.read(8192):
             yield chunk
+
 
 client.upload_file(file_chunks())
 ```
@@ -436,9 +457,7 @@ client.upload_file(b"raw binary data")
 
 # Explicit overrides supported
 client.upload_file(
-    "/path/to/file.bin",
-    content_type="application/custom-binary",
-    force_multipart=True
+    "/path/to/file.bin", content_type="application/custom-binary", force_multipart=True
 )
 ```
 
@@ -450,11 +469,13 @@ def progress_callback(bytes_transferred, total_bytes):
         percentage = (bytes_transferred / total_bytes) * 100
         print(f"Progress: {percentage:.1f}% ({bytes_transferred}/{total_bytes})")
 
+
 # Upload with progress
 client.upload_file("/path/to/file.pdf", progress_callback=progress_callback)
 
 # Built-in console progress display
 from kittycad._progress import create_progress_callback
+
 progress = create_progress_callback("Uploading", show_percentage=True, show_speed=True)
 client.upload_file("/path/to/file.pdf", progress_callback=progress)
 # Output: Uploading: 1,234,567/2,000,000 bytes (61.7%) [1.2 MB/s]
@@ -468,13 +489,14 @@ def generate_large_file():
     for i in range(100000):
         yield f"Line {i}\n".encode()
 
+
 client.upload_binary(data=generate_large_file(), stream=True)
 
 # Streaming download to disk
 client.download_file(
     output="/tmp/large_file.bin",
     chunk_size=65536,  # 64KB chunks
-    progress_callback=progress_callback
+    progress_callback=progress_callback,
 )
 
 # Download to memory or file object
@@ -513,8 +535,10 @@ with open("/tmp/file.pdf", "wb") as f:
 file_data = client.download_file(output=None)
 
 # Overwrite protection
-client.download_file(output="/tmp/existing.pdf", overwrite=False)  # Raises FileExistsError
-client.download_file(output="/tmp/existing.pdf", overwrite=True)   # Overwrites safely
+client.download_file(
+    output="/tmp/existing.pdf", overwrite=False
+)  # Raises FileExistsError
+client.download_file(output="/tmp/existing.pdf", overwrite=True)  # Overwrites safely
 ```
 
 **Full Async Support**: All file operations have async equivalents with identical APIs:
@@ -522,20 +546,19 @@ client.download_file(output="/tmp/existing.pdf", overwrite=True)   # Overwrites 
 ```python
 async def upload_example():
     client = AsyncKittyCAD()
-    
+
     # Async upload with progress
     await client.upload_file_async(
-        "/path/to/file.pdf",
-        progress_callback=progress_callback
+        "/path/to/file.pdf", progress_callback=progress_callback
     )
-    
+
     # Async streaming download
     await client.download_file_async(
         output="/tmp/large_download.bin",
         chunk_size=8192,
-        progress_callback=progress_callback
+        progress_callback=progress_callback,
     )
-    
+
     await client.aclose()
 ```
 
@@ -543,7 +566,7 @@ async def upload_example():
 
 ```python
 from kittycad._multipart import upload_file_multipart, MultipartUploadContext
-from kittycad._binary import upload_file_binary, BinaryUploadContext  
+from kittycad._binary import upload_file_binary, BinaryUploadContext
 from kittycad._downloads import stream_download, DownloadContext
 
 # Direct multipart upload with custom fields
@@ -552,7 +575,7 @@ response = upload_file_multipart(
     url="https://api.zoo.dev/upload",
     file_param="document",
     file_input="/path/to/file.pdf",
-    additional_fields={"metadata": "custom_value"}
+    additional_fields={"metadata": "custom_value"},
 )
 
 # Context managers for resource safety
@@ -666,14 +689,16 @@ for item in client.api_calls.list_api_calls(limit=50):
 import asyncio
 from kittycad import AsyncKittyCAD
 
+
 async def main():
     client = AsyncKittyCAD()
-    
+
     # Async iteration over all results
     async for api_call in client.api_calls.list_api_calls():
         print(f"API Call: {api_call.id}")
-        
+
     await client.aclose()
+
 
 asyncio.run(main())
 ```
@@ -771,12 +796,12 @@ from kittycad import KittyCAD
 
 # All available configuration options
 client = KittyCAD(
-    token="your-token-here",           # Or omit to use env vars
-    base_url="https://api.zoo.dev",    # Custom API base URL
-    timeout=120.0,                     # Request timeout in seconds  
-    cookies={"session": "abc123"},     # Additional cookies
-    headers={"X-Custom": "header"},    # Additional headers
-    verify_ssl=True                    # SSL verification setting
+    token="your-token-here",  # Or omit to use env vars
+    base_url="https://api.zoo.dev",  # Custom API base URL
+    timeout=120.0,  # Request timeout in seconds
+    cookies={"session": "abc123"},  # Additional cookies
+    headers={"X-Custom": "header"},  # Additional headers
+    verify_ssl=True,  # SSL verification setting
 )
 ```
 
@@ -797,7 +822,7 @@ user = sync(id="123", client=client)
 ```python
 from kittycad import KittyCAD
 
-client = KittyCAD(token="token") 
+client = KittyCAD(token="token")
 user = client.users.get_user(id="123")
 ```
 
@@ -969,7 +994,9 @@ Example exception message:
   from kittycad.models.text_to_cad_response import TextToCadResponse
 
   resp: TextToCadResponse = client.ml.get_text_to_cad_model_for_user(id=some_id)
-  model = resp.root  # one of: TextToCad | TextToCadIteration | TextToCadMultiFileIteration
+  model = (
+      resp.root
+  )  # one of: TextToCad | TextToCadIteration | TextToCadMultiFileIteration
   ```
 
 - Why: The OpenAPI spec defines the response as `TextToCadResponse` (a discriminated `oneOf`). Returning the wrapper ensures reliable, validated parsing and a stable API.

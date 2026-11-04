@@ -2,6 +2,7 @@
 
 import json
 import os
+from functools import partial
 from typing import Any, Callable, Dict, List, Optional, Union
 
 import bson
@@ -17947,7 +17948,8 @@ class WebSocketCreateExecutorTerm:
         url = ("{}" + "/ws/executor/term").format(client.base_url)
 
         headers = client.get_headers()
-        factory = ws_factory or ws_connect
+        # The SDK owns the connection lifetime, including explicit close().
+        factory = ws_factory or partial(ws_connect, legacy=True)
         self.ws = factory(
             url.replace("http", "ws"),
             additional_headers=headers,
@@ -18044,7 +18046,8 @@ class WebSocketMlCopilotWs:
                 url = url + "?pr=" + str(pr)
 
         headers = client.get_headers()
-        factory = ws_factory or ws_connect
+        # The SDK owns the connection lifetime, including explicit close().
+        factory = ws_factory or partial(ws_connect, legacy=True)
         self.ws = factory(
             url.replace("http", "ws"),
             additional_headers=headers,
@@ -18113,7 +18116,8 @@ class WebSocketKclMigrationWs:
         url = ("{}" + "/ws/ml/kcl-migration").format(client.base_url)
 
         headers = client.get_headers()
-        factory = ws_factory or ws_connect
+        # The SDK owns the connection lifetime, including explicit close().
+        factory = ws_factory or partial(ws_connect, legacy=True)
         self.ws = factory(
             url.replace("http", "ws"),
             additional_headers=headers,
@@ -18183,7 +18187,8 @@ class WebSocketMlReasoningWs:
         url = ("{}" + "/ws/ml/reasoning/{id}").format(client.base_url, id=id)
 
         headers = client.get_headers()
-        factory = ws_factory or ws_connect
+        # The SDK owns the connection lifetime, including explicit close().
+        factory = ws_factory or partial(ws_connect, legacy=True)
         self.ws = factory(
             url.replace("http", "ws"),
             additional_headers=headers,
@@ -18358,7 +18363,8 @@ class WebSocketModelingCommandsWs:
                 url = url + "?pr=" + str(pr)
 
         headers = client.get_headers()
-        factory = ws_factory or ws_connect
+        # The SDK owns the connection lifetime, including explicit close().
+        factory = ws_factory or partial(ws_connect, legacy=True)
         self.ws = factory(
             url.replace("http", "ws"),
             additional_headers=headers,

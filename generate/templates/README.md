@@ -52,18 +52,18 @@ render_universal_function(
     response_type="User",
     output_path="output.py",
     function_type="regular",
-    is_async=False
+    is_async=False,
 )
 
-# Generate a paginated async function  
+# Generate a paginated async function
 render_universal_function(
     func_name="list_users",
     endpoint=endpoint_spec,
     args=processed_args,
     response_type="UserPage",
-    output_path="output.py", 
+    output_path="output.py",
     function_type="paginated",
-    is_async=True
+    is_async=True,
 )
 ```
 
@@ -82,7 +82,7 @@ context = prepare_function_context(
     is_websocket=False,
     # Additional context
     api_section="users",
-    file_info=file_upload_info
+    file_info=file_upload_info,
 )
 ```
 

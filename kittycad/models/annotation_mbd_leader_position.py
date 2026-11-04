@@ -14,6 +14,7 @@ class NormalizedPos(KittyCadBaseModel):
     @model_validator(mode="before")
     @classmethod
     def _unwrap(cls, data):
+
         if (
             isinstance(data, dict)
             and "normalized_pos" in data
@@ -25,6 +26,7 @@ class NormalizedPos(KittyCadBaseModel):
 
     @model_serializer(mode="wrap")
     def _wrap(self, handler, info):
+
         payload = handler(self, info)
 
         return {"normalized_pos": payload}

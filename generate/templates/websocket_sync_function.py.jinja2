@@ -37,5 +37,6 @@
             url.replace("http", "ws"), 
             additional_headers=self.client.get_headers(), 
             close_timeout=120, 
-            max_size=None
+            max_size=None,
+            legacy=True,
         )  # type: ignore

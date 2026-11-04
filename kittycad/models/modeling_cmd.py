@@ -1038,7 +1038,7 @@ class OptionFaceGetPosition(KittyCadBaseModel):
 
 
 class OptionFaceGetCenter(KittyCadBaseModel):
-    """Obtains the surface \"center of mass\" """
+    """Obtains the surface \"center of mass\""""
 
     object_id: str
 
