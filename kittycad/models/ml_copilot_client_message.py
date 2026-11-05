@@ -3,6 +3,8 @@ from typing import Any, Dict, List, Literal, Optional, Union
 from pydantic import Field, RootModel
 from typing_extensions import Annotated
 
+from ..models.kcl_migration_application_status import KclMigrationApplicationStatus
+from ..models.kcl_migration_request import KclMigrationRequest
 from ..models.ml_copilot_client_command import MlCopilotClientCommand
 from ..models.ml_copilot_client_command_status import MlCopilotClientCommandStatus
 from ..models.ml_copilot_file import MlCopilotFile
@@ -88,6 +90,26 @@ class OptionUser(KittyCadBaseModel):
     type: Literal["user"] = "user"
 
 
+class OptionMigrateKcl(KittyCadBaseModel):
+    """Explicitly request a sponsored migration in this conversation. This action does not grant execution or bypass API eligibility checks. Progress and the final answer use the ordinary Copilot messages."""
+
+    request: KclMigrationRequest
+
+    type: Literal["migrate_kcl"] = "migrate_kcl"
+
+
+class OptionKclMigrationApplication(KittyCadBaseModel):
+    """Report Apply/Undo/Redo without creating or charging for a chat turn."""
+
+    expected_revision: int
+
+    operation_id: Uuid
+
+    status: KclMigrationApplicationStatus
+
+    type: Literal["kcl_migration_application"] = "kcl_migration_application"
+
+
 class OptionFetchAttachments(KittyCadBaseModel):
     """Request persisted attachments from conversation history over the active websocket."""
 
@@ -164,6 +186,8 @@ MlCopilotClientMessage = RootModel[
             OptionHeaders,
             OptionProjectContext,
             OptionUser,
+            OptionMigrateKcl,
+            OptionKclMigrationApplication,
             OptionFetchAttachments,
             OptionSystem,
             OptionAttachmentResponse,
