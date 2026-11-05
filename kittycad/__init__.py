@@ -328,7 +328,7 @@ class MetaAPI:
         Returns an iterator that automatically handles pagination.
         Iterate over all items across all pages:
 
-            for item in client.announcements.get_announcements():
+            for item in client.meta.get_announcements():
                 print(item)
         """
 
@@ -560,7 +560,7 @@ class AsyncMetaAPI:
         Returns an async iterator that automatically handles pagination.
         Iterate over all items across all pages:
 
-            async for item in client.announcements.get_announcements():
+            async for item in client.meta.get_announcements():
                 print(item)
         """
 
@@ -807,7 +807,7 @@ class ApiCallsAPI:
                 Returns an iterator that automatically handles pagination.
                 Iterate over all items across all pages:
 
-                    for item in client.org.org_list_api_calls():
+                    for item in client.api_calls.org_list_api_calls():
                         print(item)
         """
 
@@ -925,7 +925,7 @@ class ApiCallsAPI:
                 Returns an iterator that automatically handles pagination.
                 Iterate over all items across all pages:
 
-                    for item in client.user.user_list_api_calls():
+                    for item in client.api_calls.user_list_api_calls():
                         print(item)
         """
 
@@ -1048,7 +1048,7 @@ class ApiCallsAPI:
                 Returns an iterator that automatically handles pagination.
                 Iterate over all items across all pages:
 
-                    for item in client.users.list_api_calls_for_user():
+                    for item in client.api_calls.list_api_calls_for_user():
                         print(item)
         """
 
@@ -1217,7 +1217,7 @@ class AsyncApiCallsAPI:
                 Returns an async iterator that automatically handles pagination.
                 Iterate over all items across all pages:
 
-                    async for item in client.org.org_list_api_calls():
+                    async for item in client.api_calls.org_list_api_calls():
                         print(item)
         """
 
@@ -1337,7 +1337,7 @@ class AsyncApiCallsAPI:
                 Returns an async iterator that automatically handles pagination.
                 Iterate over all items across all pages:
 
-                    async for item in client.user.user_list_api_calls():
+                    async for item in client.api_calls.user_list_api_calls():
                         print(item)
         """
 
@@ -1462,7 +1462,7 @@ class AsyncApiCallsAPI:
                 Returns an async iterator that automatically handles pagination.
                 Iterate over all items across all pages:
 
-                    async for item in client.users.list_api_calls_for_user():
+                    async for item in client.api_calls.list_api_calls_for_user():
                         print(item)
         """
 
@@ -3486,7 +3486,7 @@ class MlAPI:
                 Returns an iterator that automatically handles pagination.
                 Iterate over all items across all pages:
 
-                    for item in client.user.list_text_to_cad_parts_for_user():
+                    for item in client.ml.list_text_to_cad_parts_for_user():
                         print(item)
         """
 
@@ -3981,7 +3981,7 @@ class AsyncMlAPI:
                 Returns an async iterator that automatically handles pagination.
                 Iterate over all items across all pages:
 
-                    async for item in client.user.list_text_to_cad_parts_for_user():
+                    async for item in client.ml.list_text_to_cad_parts_for_user():
                         print(item)
         """
 
@@ -4749,7 +4749,7 @@ class Oauth2API:
         Returns an iterator that automatically handles pagination.
         Iterate over all items across all pages:
 
-            for item in client.org.list_org_oauth2_apps():
+            for item in client.oauth2.list_org_oauth2_apps():
                 print(item)
         """
 
@@ -4954,7 +4954,7 @@ class Oauth2API:
         Returns an iterator that automatically handles pagination.
         Iterate over all items across all pages:
 
-            for item in client.user.list_user_oauth2_apps():
+            for item in client.oauth2.list_user_oauth2_apps():
                 print(item)
         """
 
@@ -5637,7 +5637,7 @@ class AsyncOauth2API:
         Returns an async iterator that automatically handles pagination.
         Iterate over all items across all pages:
 
-            async for item in client.org.list_org_oauth2_apps():
+            async for item in client.oauth2.list_org_oauth2_apps():
                 print(item)
         """
 
@@ -5842,7 +5842,7 @@ class AsyncOauth2API:
         Returns an async iterator that automatically handles pagination.
         Iterate over all items across all pages:
 
-            async for item in client.user.list_user_oauth2_apps():
+            async for item in client.oauth2.list_user_oauth2_apps():
                 print(item)
         """
 
@@ -6206,7 +6206,7 @@ class OrgsAPI:
         Returns an iterator that automatically handles pagination.
         Iterate over all items across all pages:
 
-            for item in client.org.list_org_datasets():
+            for item in client.orgs.list_org_datasets():
                 print(item)
         """
 
@@ -6442,7 +6442,7 @@ class OrgsAPI:
         Returns an iterator that automatically handles pagination.
         Iterate over all items across all pages:
 
-            for item in client.org.list_org_dataset_conversions():
+            for item in client.orgs.list_org_dataset_conversions():
                 print(item)
         """
 
@@ -6678,7 +6678,7 @@ class OrgsAPI:
         Returns an iterator that automatically handles pagination.
         Iterate over all items across all pages:
 
-            for item in client.org.search_org_dataset_conversions():
+            for item in client.orgs.search_org_dataset_conversions():
                 print(item)
         """
 
@@ -6907,7 +6907,7 @@ class OrgsAPI:
         Returns an iterator that automatically handles pagination.
         Iterate over all items across all pages:
 
-            for item in client.org.list_org_members():
+            for item in client.orgs.list_org_members():
                 print(item)
         """
 
@@ -7283,7 +7283,7 @@ class OrgsAPI:
         Returns an iterator that automatically handles pagination.
         Iterate over all items across all pages:
 
-            for item in client.org.get_org_shortlinks():
+            for item in client.orgs.get_org_shortlinks():
                 print(item)
         """
 
@@ -7370,7 +7370,7 @@ class OrgsAPI:
         Returns an iterator that automatically handles pagination.
         Iterate over all items across all pages:
 
-            for item in client.org.list_org_skills():
+            for item in client.orgs.list_org_skills():
                 print(item)
         """
 
@@ -7637,7 +7637,7 @@ class AsyncOrgsAPI:
         Returns an async iterator that automatically handles pagination.
         Iterate over all items across all pages:
 
-            async for item in client.org.list_org_datasets():
+            async for item in client.orgs.list_org_datasets():
                 print(item)
         """
 
@@ -7873,7 +7873,7 @@ class AsyncOrgsAPI:
         Returns an async iterator that automatically handles pagination.
         Iterate over all items across all pages:
 
-            async for item in client.org.list_org_dataset_conversions():
+            async for item in client.orgs.list_org_dataset_conversions():
                 print(item)
         """
 
@@ -8109,7 +8109,7 @@ class AsyncOrgsAPI:
         Returns an async iterator that automatically handles pagination.
         Iterate over all items across all pages:
 
-            async for item in client.org.search_org_dataset_conversions():
+            async for item in client.orgs.search_org_dataset_conversions():
                 print(item)
         """
 
@@ -8338,7 +8338,7 @@ class AsyncOrgsAPI:
         Returns an async iterator that automatically handles pagination.
         Iterate over all items across all pages:
 
-            async for item in client.org.list_org_members():
+            async for item in client.orgs.list_org_members():
                 print(item)
         """
 
@@ -8714,7 +8714,7 @@ class AsyncOrgsAPI:
         Returns an async iterator that automatically handles pagination.
         Iterate over all items across all pages:
 
-            async for item in client.org.get_org_shortlinks():
+            async for item in client.orgs.get_org_shortlinks():
                 print(item)
         """
 
@@ -8801,7 +8801,7 @@ class AsyncOrgsAPI:
         Returns an async iterator that automatically handles pagination.
         Iterate over all items across all pages:
 
-            async for item in client.org.list_org_skills():
+            async for item in client.orgs.list_org_skills():
                 print(item)
         """
 
@@ -9189,7 +9189,7 @@ class PaymentsAPI:
         Returns an iterator that automatically handles pagination.
         Iterate over all items across all pages:
 
-            for item in client.org.list_invoices_for_org():
+            for item in client.payments.list_invoices_for_org():
                 print(item)
         """
 
@@ -9296,7 +9296,7 @@ class PaymentsAPI:
         Returns an iterator that automatically handles pagination.
         Iterate over all items across all pages:
 
-            for item in client.org.list_payment_methods_for_org():
+            for item in client.payments.list_payment_methods_for_org():
                 print(item)
         """
 
@@ -9776,7 +9776,7 @@ class PaymentsAPI:
         Returns an iterator that automatically handles pagination.
         Iterate over all items across all pages:
 
-            for item in client.user.list_invoices_for_user():
+            for item in client.payments.list_invoices_for_user():
                 print(item)
         """
 
@@ -9883,7 +9883,7 @@ class PaymentsAPI:
         Returns an iterator that automatically handles pagination.
         Iterate over all items across all pages:
 
-            for item in client.user.list_payment_methods_for_user():
+            for item in client.payments.list_payment_methods_for_user():
                 print(item)
         """
 
@@ -10392,7 +10392,7 @@ class AsyncPaymentsAPI:
         Returns an async iterator that automatically handles pagination.
         Iterate over all items across all pages:
 
-            async for item in client.org.list_invoices_for_org():
+            async for item in client.payments.list_invoices_for_org():
                 print(item)
         """
 
@@ -10499,7 +10499,7 @@ class AsyncPaymentsAPI:
         Returns an async iterator that automatically handles pagination.
         Iterate over all items across all pages:
 
-            async for item in client.org.list_payment_methods_for_org():
+            async for item in client.payments.list_payment_methods_for_org():
                 print(item)
         """
 
@@ -10979,7 +10979,7 @@ class AsyncPaymentsAPI:
         Returns an async iterator that automatically handles pagination.
         Iterate over all items across all pages:
 
-            async for item in client.user.list_invoices_for_user():
+            async for item in client.payments.list_invoices_for_user():
                 print(item)
         """
 
@@ -11086,7 +11086,7 @@ class AsyncPaymentsAPI:
         Returns an async iterator that automatically handles pagination.
         Iterate over all items across all pages:
 
-            async for item in client.user.list_payment_methods_for_user():
+            async for item in client.payments.list_payment_methods_for_user():
                 print(item)
         """
 
@@ -11324,7 +11324,7 @@ class FactoryAPI:
         Returns an iterator that automatically handles pagination.
         Iterate over all items across all pages:
 
-            for item in client.org.list_org_factory_jobs():
+            for item in client.factory.list_org_factory_jobs():
                 print(item)
         """
 
@@ -11470,7 +11470,7 @@ class FactoryAPI:
         Returns an iterator that automatically handles pagination.
         Iterate over all items across all pages:
 
-            for item in client.org.list_org_factory_job_versions():
+            for item in client.factory.list_org_factory_job_versions():
                 print(item)
         """
 
@@ -11595,7 +11595,7 @@ class FactoryAPI:
         Returns an iterator that automatically handles pagination.
         Iterate over all items across all pages:
 
-            for item in client.user.get_user_factory_finishes():
+            for item in client.factory.get_user_factory_finishes():
                 print(item)
         """
 
@@ -11678,7 +11678,7 @@ class FactoryAPI:
         Returns an iterator that automatically handles pagination.
         Iterate over all items across all pages:
 
-            for item in client.user.list_user_factory_jobs():
+            for item in client.factory.list_user_factory_jobs():
                 print(item)
         """
 
@@ -11863,7 +11863,7 @@ class FactoryAPI:
         Returns an iterator that automatically handles pagination.
         Iterate over all items across all pages:
 
-            for item in client.user.list_user_factory_job_versions():
+            for item in client.factory.list_user_factory_job_versions():
                 print(item)
         """
 
@@ -11988,7 +11988,7 @@ class FactoryAPI:
         Returns an iterator that automatically handles pagination.
         Iterate over all items across all pages:
 
-            for item in client.user.get_user_factory_materials():
+            for item in client.factory.get_user_factory_materials():
                 print(item)
         """
 
@@ -12078,7 +12078,7 @@ class AsyncFactoryAPI:
         Returns an async iterator that automatically handles pagination.
         Iterate over all items across all pages:
 
-            async for item in client.org.list_org_factory_jobs():
+            async for item in client.factory.list_org_factory_jobs():
                 print(item)
         """
 
@@ -12224,7 +12224,7 @@ class AsyncFactoryAPI:
         Returns an async iterator that automatically handles pagination.
         Iterate over all items across all pages:
 
-            async for item in client.org.list_org_factory_job_versions():
+            async for item in client.factory.list_org_factory_job_versions():
                 print(item)
         """
 
@@ -12351,7 +12351,7 @@ class AsyncFactoryAPI:
         Returns an async iterator that automatically handles pagination.
         Iterate over all items across all pages:
 
-            async for item in client.user.get_user_factory_finishes():
+            async for item in client.factory.get_user_factory_finishes():
                 print(item)
         """
 
@@ -12434,7 +12434,7 @@ class AsyncFactoryAPI:
         Returns an async iterator that automatically handles pagination.
         Iterate over all items across all pages:
 
-            async for item in client.user.list_user_factory_jobs():
+            async for item in client.factory.list_user_factory_jobs():
                 print(item)
         """
 
@@ -12619,7 +12619,7 @@ class AsyncFactoryAPI:
         Returns an async iterator that automatically handles pagination.
         Iterate over all items across all pages:
 
-            async for item in client.user.list_user_factory_job_versions():
+            async for item in client.factory.list_user_factory_job_versions():
                 print(item)
         """
 
@@ -12746,7 +12746,7 @@ class AsyncFactoryAPI:
         Returns an async iterator that automatically handles pagination.
         Iterate over all items across all pages:
 
-            async for item in client.user.get_user_factory_materials():
+            async for item in client.factory.get_user_factory_materials():
                 print(item)
         """
 
@@ -13197,7 +13197,7 @@ class ProjectsAPI:
                 Returns an iterator that automatically handles pagination.
                 Iterate over all items across all pages:
 
-                    for item in client.user.list_project_libraries():
+                    for item in client.projects.list_project_libraries():
                         print(item)
         """
 
@@ -13394,7 +13394,7 @@ class ProjectsAPI:
                 Returns an iterator that automatically handles pagination.
                 Iterate over all items across all pages:
 
-                    for item in client.user.list_library_projects():
+                    for item in client.projects.list_library_projects():
                         print(item)
         """
 
@@ -13484,7 +13484,7 @@ class ProjectsAPI:
                 Returns an iterator that automatically handles pagination.
                 Iterate over all items across all pages:
 
-                    for item in client.user.list_projects():
+                    for item in client.projects.list_projects():
                         print(item)
         """
 
@@ -13863,7 +13863,7 @@ class ProjectsAPI:
         Returns an iterator that automatically handles pagination.
         Iterate over all items across all pages:
 
-            for item in client.user.list_project_share_links():
+            for item in client.projects.list_project_share_links():
                 print(item)
         """
 
@@ -14025,7 +14025,7 @@ class ProjectsAPI:
         Returns an iterator that automatically handles pagination.
         Iterate over all items across all pages:
 
-            for item in client.user.list_project_versions():
+            for item in client.projects.list_project_versions():
                 print(item)
         """
 
@@ -14626,7 +14626,7 @@ class AsyncProjectsAPI:
                 Returns an async iterator that automatically handles pagination.
                 Iterate over all items across all pages:
 
-                    async for item in client.user.list_project_libraries():
+                    async for item in client.projects.list_project_libraries():
                         print(item)
         """
 
@@ -14823,7 +14823,7 @@ class AsyncProjectsAPI:
                 Returns an async iterator that automatically handles pagination.
                 Iterate over all items across all pages:
 
-                    async for item in client.user.list_library_projects():
+                    async for item in client.projects.list_library_projects():
                         print(item)
         """
 
@@ -14913,7 +14913,7 @@ class AsyncProjectsAPI:
                 Returns an async iterator that automatically handles pagination.
                 Iterate over all items across all pages:
 
-                    async for item in client.user.list_projects():
+                    async for item in client.projects.list_projects():
                         print(item)
         """
 
@@ -15294,7 +15294,7 @@ class AsyncProjectsAPI:
         Returns an async iterator that automatically handles pagination.
         Iterate over all items across all pages:
 
-            async for item in client.user.list_project_share_links():
+            async for item in client.projects.list_project_share_links():
                 print(item)
         """
 
@@ -15456,7 +15456,7 @@ class AsyncProjectsAPI:
         Returns an async iterator that automatically handles pagination.
         Iterate over all items across all pages:
 
-            async for item in client.user.list_project_versions():
+            async for item in client.projects.list_project_versions():
                 print(item)
         """
 
@@ -15698,7 +15698,7 @@ class ServiceAccountsAPI:
                 Returns an iterator that automatically handles pagination.
                 Iterate over all items across all pages:
 
-                    for item in client.org.list_service_accounts_for_org():
+                    for item in client.service_accounts.list_service_accounts_for_org():
                         print(item)
         """
 
@@ -15890,7 +15890,7 @@ class AsyncServiceAccountsAPI:
                 Returns an async iterator that automatically handles pagination.
                 Iterate over all items across all pages:
 
-                    async for item in client.org.list_service_accounts_for_org():
+                    async for item in client.service_accounts.list_service_accounts_for_org():
                         print(item)
         """
 
@@ -17482,7 +17482,7 @@ class UsersAPI:
         Returns an iterator that automatically handles pagination.
         Iterate over all items across all pages:
 
-            for item in client.user.get_user_shortlinks():
+            for item in client.users.get_user_shortlinks():
                 print(item)
         """
 
@@ -18258,7 +18258,7 @@ class AsyncUsersAPI:
         Returns an async iterator that automatically handles pagination.
         Iterate over all items across all pages:
 
-            async for item in client.user.get_user_shortlinks():
+            async for item in client.users.get_user_shortlinks():
                 print(item)
         """
 
@@ -18636,7 +18636,7 @@ class ApiTokensAPI:
                 Returns an iterator that automatically handles pagination.
                 Iterate over all items across all pages:
 
-                    for item in client.user.list_api_tokens_for_user():
+                    for item in client.api_tokens.list_api_tokens_for_user():
                         print(item)
         """
 
@@ -18822,7 +18822,7 @@ class AsyncApiTokensAPI:
                 Returns an async iterator that automatically handles pagination.
                 Iterate over all items across all pages:
 
-                    async for item in client.user.list_api_tokens_for_user():
+                    async for item in client.api_tokens.list_api_tokens_for_user():
                         print(item)
         """
 
