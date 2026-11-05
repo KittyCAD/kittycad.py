@@ -29,6 +29,8 @@ class ProjectResponse(KittyCadBaseModel):
 
     library_id: Optional[Uuid] = None
 
+    metadata_revision: str
+
     preview_status: KclProjectPreviewStatus
 
     preview_url: Optional[str] = None

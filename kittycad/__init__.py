@@ -42,7 +42,7 @@ from .models.aggregate_usage_collection_threshold_set import (
 from .models.aggregate_usage_collection_threshold_view import (
     AggregateUsageCollectionThresholdView,
 )
-from .models.announcement_list import AnnouncementList
+from .models.announcement_results_page import AnnouncementResultsPage
 from .models.api_call_with_price import ApiCallWithPrice
 from .models.api_call_with_price_results_page import ApiCallWithPriceResultsPage
 from .models.api_token import ApiToken
@@ -87,6 +87,9 @@ from .models.factory_customer_catalog_option_results_page import (
 from .models.factory_customer_job_detail import FactoryCustomerJobDetail
 from .models.factory_customer_job_summary_results_page import (
     FactoryCustomerJobSummaryResultsPage,
+)
+from .models.factory_customer_job_version_results_page import (
+    FactoryCustomerJobVersionResultsPage,
 )
 from .models.factory_job_response import FactoryJobResponse
 from .models.file_bounding_box import FileBoundingBox
@@ -146,17 +149,21 @@ from .models.post_effect_type import PostEffectType
 from .models.privacy_settings import PrivacySettings
 from .models.project_access_scope import ProjectAccessScope
 from .models.project_archive_format import ProjectArchiveFormat
-from .models.project_category_response import ProjectCategoryResponse
+from .models.project_category_response_results_page import (
+    ProjectCategoryResponseResultsPage,
+)
+from .models.project_download_error_response import ProjectDownloadErrorResponse
 from .models.project_library_response import ProjectLibraryResponse
 from .models.project_library_response_results_page import (
     ProjectLibraryResponseResultsPage,
 )
 from .models.project_response import ProjectResponse
+from .models.project_semantic_search_match import ProjectSemanticSearchMatch
+from .models.project_semantic_search_request import ProjectSemanticSearchRequest
 from .models.project_share_link_response import ProjectShareLinkResponse
 from .models.project_share_link_response_results_page import (
     ProjectShareLinkResponseResultsPage,
 )
-from .models.project_summary_response import ProjectSummaryResponse
 from .models.project_summary_response_results_page import (
     ProjectSummaryResponseResultsPage,
 )
@@ -218,6 +225,7 @@ from .models.update_custom_model import UpdateCustomModel
 from .models.update_member_to_org_body import UpdateMemberToOrgBody
 from .models.update_o_auth2_app_request import UpdateOAuth2AppRequest
 from .models.update_org_dataset import UpdateOrgDataset
+from .models.update_project_library_request import UpdateProjectLibraryRequest
 from .models.update_shortlink_request import UpdateShortlinkRequest
 from .models.update_user import UpdateUser
 from .models.upload_org_dataset_files_response import UploadOrgDatasetFilesResponse
@@ -311,13 +319,65 @@ class MetaAPI:
 
     def get_announcements(
         self,
-    ) -> AnnouncementList:
-        """No authentication is required."""
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+    ) -> "SyncPageIterator":
+        """No authentication is required. Results are ordered newest first, with the announcement ID breaking ties.
 
+        Returns an iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            for item in client.announcements.get_announcements():
+                print(item)
+        """
+
+        from typing import Any, Dict
+
+        from kittycad.pagination import SyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
+
+        if limit is not None:
+            kwargs["limit"] = limit
+
+        if page_token is not None:
+            kwargs["page_token"] = page_token
+
+        def fetch_page(**kw):
+            return self._fetch_page_get_announcements(**kw)
+
+        # Create the page iterator
+        return SyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    def _fetch_page_get_announcements(self, **kwargs) -> AnnouncementResultsPage:
+        """Internal method to fetch a single page."""
+        # Build URL with path parameters
         url = "{}/announcements".format(self.client.base_url)
 
-        _client = self.client.get_http_client()
+        # Add query parameters
 
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
         response = _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -332,9 +392,8 @@ class MetaAPI:
             return None  # type: ignore
 
         json_data = response.json()
-
-        # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return AnnouncementList.model_validate(json_data, extra="ignore")
+        # Validate into a Pydantic model (supports BaseModel/RootModel)
+        return AnnouncementResultsPage.model_validate(json_data, extra="ignore")
 
     def community_sso(
         self,
@@ -490,15 +549,67 @@ class AsyncMetaAPI:
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return IpAddrInfo.model_validate(json_data, extra="ignore")
 
-    async def get_announcements(
+    def get_announcements(
         self,
-    ) -> AnnouncementList:
-        """No authentication is required."""
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+    ) -> "AsyncPageIterator":
+        """No authentication is required. Results are ordered newest first, with the announcement ID breaking ties.
 
+        Returns an async iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            async for item in client.announcements.get_announcements():
+                print(item)
+        """
+
+        from typing import Any, Dict
+
+        from kittycad.pagination import AsyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
+
+        if limit is not None:
+            kwargs["limit"] = limit
+
+        if page_token is not None:
+            kwargs["page_token"] = page_token
+
+        async def fetch_page(**kw):
+            return await self._fetch_page_get_announcements(**kw)
+
+        # Create the async page iterator
+        return AsyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    async def _fetch_page_get_announcements(self, **kwargs) -> AnnouncementResultsPage:
+        """Internal async method to fetch a single page."""
+        # Build URL with path parameters
         url = "{}/announcements".format(self.client.base_url)
 
-        _client = self.client.get_http_client()
+        # Add query parameters
 
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
         response = await _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -513,9 +624,8 @@ class AsyncMetaAPI:
             return None  # type: ignore
 
         json_data = response.json()
-
-        # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return AnnouncementList.model_validate(json_data, extra="ignore")
+        # Validate into a Pydantic model (supports BaseModel/RootModel)
+        return AnnouncementResultsPage.model_validate(json_data, extra="ignore")
 
     async def community_sso(
         self,
@@ -1677,8 +1787,9 @@ class HiddenAPI:
         key: str,
         *,
         format: Optional[ProjectArchiveFormat] = None,
-    ):
-        """Download a project using a share link."""
+        file_ids: Optional[List[str]] = None,
+    ) -> ProjectDownloadErrorResponse:
+        """File IDs must belong to the version pinned by this link. Manifest downloads retain the same public-data sanitization when selected individually."""
 
         url = "{}/projects/shared/{key}/download".format(self.client.base_url, key=key)
 
@@ -1687,6 +1798,12 @@ class HiddenAPI:
                 url = url + "&format=" + str(format)
             else:
                 url = url + "?format=" + str(format)
+
+        if file_ids is not None:
+            if "?" in url:
+                url = url + "&file_ids=" + str(file_ids)
+            else:
+                url = url + "?file_ids=" + str(file_ids)
 
         _client = self.client.get_http_client()
 
@@ -1700,7 +1817,13 @@ class HiddenAPI:
 
             raise_for_status(response)
 
-        return response.json() if response.content else None
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return ProjectDownloadErrorResponse.model_validate(json_data, extra="ignore")
 
     def redirect_user_shortlink(
         self,
@@ -1969,8 +2092,9 @@ class AsyncHiddenAPI:
         key: str,
         *,
         format: Optional[ProjectArchiveFormat] = None,
-    ):
-        """Download a project using a share link."""
+        file_ids: Optional[List[str]] = None,
+    ) -> ProjectDownloadErrorResponse:
+        """File IDs must belong to the version pinned by this link. Manifest downloads retain the same public-data sanitization when selected individually."""
 
         url = "{}/projects/shared/{key}/download".format(self.client.base_url, key=key)
 
@@ -1979,6 +2103,12 @@ class AsyncHiddenAPI:
                 url = url + "&format=" + str(format)
             else:
                 url = url + "?format=" + str(format)
+
+        if file_ids is not None:
+            if "?" in url:
+                url = url + "&file_ids=" + str(file_ids)
+            else:
+                url = url + "?file_ids=" + str(file_ids)
 
         _client = self.client.get_http_client()
 
@@ -1992,7 +2122,13 @@ class AsyncHiddenAPI:
 
             raise_for_status(response)
 
-        return response.json() if response.content else None
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return ProjectDownloadErrorResponse.model_validate(json_data, extra="ignore")
 
     async def redirect_user_shortlink(
         self,
@@ -11296,6 +11432,158 @@ class FactoryAPI:
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return FactoryCustomerJobDetail.model_validate(json_data, extra="ignore")
 
+    def get_org_factory_job_file(
+        self,
+        job_id: Uuid,
+        file_id: Uuid,
+    ):
+        """Download an exact submitted manufacturing input for a current organization member."""
+
+        url = "{}/org/factory/jobs/{job_id}/files/{file_id}".format(
+            self.client.base_url, job_id=job_id, file_id=file_id
+        )
+
+        _client = self.client.get_http_client()
+
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    def list_org_factory_job_versions(
+        self,
+        job_id: Uuid,
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+        sort_by: Optional[CreatedAtSortMode] = None,
+    ) -> "SyncPageIterator":
+        """List an organization's submitted revision history for a current member.
+
+        Returns an iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            for item in client.org.list_org_factory_job_versions():
+                print(item)
+        """
+
+        from typing import Any, Dict
+
+        from kittycad.pagination import SyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        _job_id = job_id
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
+
+        if limit is not None:
+            kwargs["limit"] = limit
+
+        if page_token is not None:
+            kwargs["page_token"] = page_token
+
+        if sort_by is not None:
+            kwargs["sort_by"] = sort_by
+
+        def fetch_page(**kw):
+            return self._fetch_page_list_org_factory_job_versions(job_id=_job_id, **kw)
+
+        # Create the page iterator
+        return SyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    def _fetch_page_list_org_factory_job_versions(
+        self, job_id: Uuid, **kwargs
+    ) -> FactoryCustomerJobVersionResultsPage:
+        """Internal method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/org/factory/jobs/{job_id}/versions".format(
+            self.client.base_url, job_id=job_id
+        )
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+        # Validate into a Pydantic model (supports BaseModel/RootModel)
+        return FactoryCustomerJobVersionResultsPage.model_validate(
+            json_data, extra="ignore"
+        )
+
+    def create_org_factory_job_version(
+        self,
+        job_id: Uuid,
+    ) -> FactoryJobResponse:
+        """Submit a complete new revision as a current human member of the owning organization."""
+
+        url = "{}/org/factory/jobs/{job_id}/versions".format(
+            self.client.base_url, job_id=job_id
+        )
+
+        _client = self.client.get_http_client()
+
+        response = _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return FactoryJobResponse.model_validate(json_data, extra="ignore")
+
     def get_user_factory_finishes(
         self,
         *,
@@ -11537,6 +11825,158 @@ class FactoryAPI:
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return FactoryCustomerJobDetail.model_validate(json_data, extra="ignore")
 
+    def get_user_factory_job_file(
+        self,
+        job_id: Uuid,
+        file_id: Uuid,
+    ):
+        """Download an exact submitted manufacturing input of a personal Factory job."""
+
+        url = "{}/user/factory/jobs/{job_id}/files/{file_id}".format(
+            self.client.base_url, job_id=job_id, file_id=file_id
+        )
+
+        _client = self.client.get_http_client()
+
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    def list_user_factory_job_versions(
+        self,
+        job_id: Uuid,
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+        sort_by: Optional[CreatedAtSortMode] = None,
+    ) -> "SyncPageIterator":
+        """List a personal Factory job's submitted revision history, newest first by default.
+
+        Returns an iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            for item in client.user.list_user_factory_job_versions():
+                print(item)
+        """
+
+        from typing import Any, Dict
+
+        from kittycad.pagination import SyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        _job_id = job_id
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
+
+        if limit is not None:
+            kwargs["limit"] = limit
+
+        if page_token is not None:
+            kwargs["page_token"] = page_token
+
+        if sort_by is not None:
+            kwargs["sort_by"] = sort_by
+
+        def fetch_page(**kw):
+            return self._fetch_page_list_user_factory_job_versions(job_id=_job_id, **kw)
+
+        # Create the page iterator
+        return SyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    def _fetch_page_list_user_factory_job_versions(
+        self, job_id: Uuid, **kwargs
+    ) -> FactoryCustomerJobVersionResultsPage:
+        """Internal method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/user/factory/jobs/{job_id}/versions".format(
+            self.client.base_url, job_id=job_id
+        )
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+        # Validate into a Pydantic model (supports BaseModel/RootModel)
+        return FactoryCustomerJobVersionResultsPage.model_validate(
+            json_data, extra="ignore"
+        )
+
+    def create_user_factory_job_version(
+        self,
+        job_id: Uuid,
+    ) -> FactoryJobResponse:
+        """Submit a complete new revision of a personal Factory job."""
+
+        url = "{}/user/factory/jobs/{job_id}/versions".format(
+            self.client.base_url, job_id=job_id
+        )
+
+        _client = self.client.get_http_client()
+
+        response = _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return FactoryJobResponse.model_validate(json_data, extra="ignore")
+
     def get_user_factory_materials(
         self,
         *,
@@ -11745,6 +12185,160 @@ class AsyncFactoryAPI:
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return FactoryCustomerJobDetail.model_validate(json_data, extra="ignore")
+
+    async def get_org_factory_job_file(
+        self,
+        job_id: Uuid,
+        file_id: Uuid,
+    ):
+        """Download an exact submitted manufacturing input for a current organization member."""
+
+        url = "{}/org/factory/jobs/{job_id}/files/{file_id}".format(
+            self.client.base_url, job_id=job_id, file_id=file_id
+        )
+
+        _client = self.client.get_http_client()
+
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    def list_org_factory_job_versions(
+        self,
+        job_id: Uuid,
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+        sort_by: Optional[CreatedAtSortMode] = None,
+    ) -> "AsyncPageIterator":
+        """List an organization's submitted revision history for a current member.
+
+        Returns an async iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            async for item in client.org.list_org_factory_job_versions():
+                print(item)
+        """
+
+        from typing import Any, Dict
+
+        from kittycad.pagination import AsyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        _job_id = job_id
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
+
+        if limit is not None:
+            kwargs["limit"] = limit
+
+        if page_token is not None:
+            kwargs["page_token"] = page_token
+
+        if sort_by is not None:
+            kwargs["sort_by"] = sort_by
+
+        async def fetch_page(**kw):
+            return await self._fetch_page_list_org_factory_job_versions(
+                job_id=_job_id, **kw
+            )
+
+        # Create the async page iterator
+        return AsyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    async def _fetch_page_list_org_factory_job_versions(
+        self, job_id: Uuid, **kwargs
+    ) -> FactoryCustomerJobVersionResultsPage:
+        """Internal async method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/org/factory/jobs/{job_id}/versions".format(
+            self.client.base_url, job_id=job_id
+        )
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+        # Validate into a Pydantic model (supports BaseModel/RootModel)
+        return FactoryCustomerJobVersionResultsPage.model_validate(
+            json_data, extra="ignore"
+        )
+
+    async def create_org_factory_job_version(
+        self,
+        job_id: Uuid,
+    ) -> FactoryJobResponse:
+        """Submit a complete new revision as a current human member of the owning organization."""
+
+        url = "{}/org/factory/jobs/{job_id}/versions".format(
+            self.client.base_url, job_id=job_id
+        )
+
+        _client = self.client.get_http_client()
+
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return FactoryJobResponse.model_validate(json_data, extra="ignore")
 
     def get_user_factory_finishes(
         self,
@@ -11987,6 +12581,160 @@ class AsyncFactoryAPI:
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return FactoryCustomerJobDetail.model_validate(json_data, extra="ignore")
 
+    async def get_user_factory_job_file(
+        self,
+        job_id: Uuid,
+        file_id: Uuid,
+    ):
+        """Download an exact submitted manufacturing input of a personal Factory job."""
+
+        url = "{}/user/factory/jobs/{job_id}/files/{file_id}".format(
+            self.client.base_url, job_id=job_id, file_id=file_id
+        )
+
+        _client = self.client.get_http_client()
+
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    def list_user_factory_job_versions(
+        self,
+        job_id: Uuid,
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+        sort_by: Optional[CreatedAtSortMode] = None,
+    ) -> "AsyncPageIterator":
+        """List a personal Factory job's submitted revision history, newest first by default.
+
+        Returns an async iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            async for item in client.user.list_user_factory_job_versions():
+                print(item)
+        """
+
+        from typing import Any, Dict
+
+        from kittycad.pagination import AsyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        _job_id = job_id
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
+
+        if limit is not None:
+            kwargs["limit"] = limit
+
+        if page_token is not None:
+            kwargs["page_token"] = page_token
+
+        if sort_by is not None:
+            kwargs["sort_by"] = sort_by
+
+        async def fetch_page(**kw):
+            return await self._fetch_page_list_user_factory_job_versions(
+                job_id=_job_id, **kw
+            )
+
+        # Create the async page iterator
+        return AsyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    async def _fetch_page_list_user_factory_job_versions(
+        self, job_id: Uuid, **kwargs
+    ) -> FactoryCustomerJobVersionResultsPage:
+        """Internal async method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/user/factory/jobs/{job_id}/versions".format(
+            self.client.base_url, job_id=job_id
+        )
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+        # Validate into a Pydantic model (supports BaseModel/RootModel)
+        return FactoryCustomerJobVersionResultsPage.model_validate(
+            json_data, extra="ignore"
+        )
+
+    async def create_user_factory_job_version(
+        self,
+        job_id: Uuid,
+    ) -> FactoryJobResponse:
+        """Submit a complete new revision of a personal Factory job."""
+
+        url = "{}/user/factory/jobs/{job_id}/versions".format(
+            self.client.base_url, job_id=job_id
+        )
+
+        _client = self.client.get_http_client()
+
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return FactoryJobResponse.model_validate(json_data, extra="ignore")
+
     def get_user_factory_materials(
         self,
         *,
@@ -12070,28 +12818,58 @@ class AsyncFactoryAPI:
         )
 
 
-class ServiceAccountsAPI:
-    """API for service_accounts endpoints"""
+class ProjectsAPI:
+    """API for projects endpoints"""
 
     def __init__(self, client: Client) -> None:
         self.client = client
 
-    def list_service_accounts_for_org(
+    def search_org_projects_semantic(
+        self,
+        body: ProjectSemanticSearchRequest,
+    ) -> List[ProjectSemanticSearchMatch]:
+        """Results are ranked by similarity to bounded project metadata: title, description, and a capped list of source filenames. Project source contents are not indexed. Projects become searchable asynchronously after saving or changing organization ownership. Personal projects and obsolete versions are excluded. Pass `library_id` to search one named organization library."""
+
+        url = "{}/org/projects/search/semantic".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+            content=serialize_request_body(body),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into annotated/collection/union types using TypeAdapter
+        from pydantic import TypeAdapter
+
+        return TypeAdapter(List[ProjectSemanticSearchMatch]).validate_python(
+            json_data, extra="ignore"
+        )
+
+    def list_project_categories(
         self,
         *,
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
-        sort_by: Optional[CreatedAtSortMode] = None,
     ) -> "SyncPageIterator":
-        """This endpoint requires authentication by an org member. It returns the service accounts for the organization.
+        """List the active categories available for project submissions.
 
-        The service accounts are returned in order of creation, with the most recently created service accounts first.
+        Returns an iterator that automatically handles pagination.
+        Iterate over all items across all pages:
 
-                Returns an iterator that automatically handles pagination.
-                Iterate over all items across all pages:
-
-                    for item in client.org.list_service_accounts_for_org():
-                        print(item)
+            for item in client.projects.list_project_categories():
+                print(item)
         """
 
         from typing import Any, Dict
@@ -12109,11 +12887,8 @@ class ServiceAccountsAPI:
         if page_token is not None:
             kwargs["page_token"] = page_token
 
-        if sort_by is not None:
-            kwargs["sort_by"] = sort_by
-
         def fetch_page(**kw):
-            return self._fetch_page_list_service_accounts_for_org(**kw)
+            return self._fetch_page_list_project_categories(**kw)
 
         # Create the page iterator
         return SyncPageIterator(
@@ -12121,354 +12896,30 @@ class ServiceAccountsAPI:
             initial_kwargs=kwargs,
         )
 
-    def _fetch_page_list_service_accounts_for_org(
+    def _fetch_page_list_project_categories(
         self, **kwargs
-    ) -> ServiceAccountResultsPage:
+    ) -> ProjectCategoryResponseResultsPage:
         """Internal method to fetch a single page."""
         # Build URL with path parameters
-        url = "{}/org/service-accounts".format(self.client.base_url)
-
-        # Add query parameters
-
-        if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
-
-        if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
-
-        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(kwargs["sort_by"])
-            else:
-                url = url + "?sort_by=" + str(kwargs["sort_by"])
-
-        # Pagination parameters (limit, page_token) are already handled above as regular query params
-
-        _client = self.client.get_http_client()
-        response = _client.get(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-        # Validate into a Pydantic model (supports BaseModel/RootModel)
-        return ServiceAccountResultsPage.model_validate(json_data, extra="ignore")
-
-    def create_service_account_for_org(
-        self,
-        *,
-        label: Optional[str] = None,
-    ) -> ServiceAccount:
-        """This endpoint requires authentication by an org member. It creates a new service account for the organization."""
-
-        url = "{}/org/service-accounts".format(self.client.base_url)
-
-        if label is not None:
-            if "?" in url:
-                url = url + "&label=" + str(label)
-            else:
-                url = url + "?label=" + str(label)
-
-        _client = self.client.get_http_client()
-
-        response = _client.post(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return ServiceAccount.model_validate(json_data, extra="ignore")
-
-    def get_service_account_for_org(
-        self,
-        token: ServiceAccountUuid,
-    ) -> ServiceAccount:
-        """This endpoint requires authentication by an org member. It returns details of the requested service account for the organization."""
-
-        url = "{}/org/service-accounts/{token}".format(
-            self.client.base_url, token=token
-        )
-
-        _client = self.client.get_http_client()
-
-        response = _client.get(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return ServiceAccount.model_validate(json_data, extra="ignore")
-
-    def delete_service_account_for_org(
-        self,
-        token: str,
-    ):
-        """This endpoint requires authentication by an org member. It deletes the requested service account for the organization.
-
-        This endpoint does not actually delete the service account from the database. It merely marks the token as invalid. We still want to keep the service account in the database for historical purposes.
-
-        The token path parameter can be either the full service account token (prefixed with `svc-`) or the token's unique ID (a UUID)."""
-
-        url = "{}/org/service-accounts/{token}".format(
-            self.client.base_url, token=token
-        )
-
-        _client = self.client.get_http_client()
-
-        response = _client.delete(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        return response.json() if response.content else None
-
-
-class AsyncServiceAccountsAPI:
-    """Async API for service_accounts endpoints"""
-
-    def __init__(self, client: AsyncClient) -> None:
-        self.client = client
-
-    def list_service_accounts_for_org(
-        self,
-        *,
-        limit: Optional[int] = None,
-        page_token: Optional[str] = None,
-        sort_by: Optional[CreatedAtSortMode] = None,
-    ) -> "AsyncPageIterator":
-        """This endpoint requires authentication by an org member. It returns the service accounts for the organization.
-
-        The service accounts are returned in order of creation, with the most recently created service accounts first.
-
-                Returns an async iterator that automatically handles pagination.
-                Iterate over all items across all pages:
-
-                    async for item in client.org.list_service_accounts_for_org():
-                        print(item)
-        """
-
-        from typing import Any, Dict
-
-        from kittycad.pagination import AsyncPageIterator
-
-        # Store path parameters in closure for later use
-
-        # Create arguments dict, filtering out None values
-        kwargs: Dict[str, Any] = {}
-
-        if limit is not None:
-            kwargs["limit"] = limit
-
-        if page_token is not None:
-            kwargs["page_token"] = page_token
-
-        if sort_by is not None:
-            kwargs["sort_by"] = sort_by
-
-        async def fetch_page(**kw):
-            return await self._fetch_page_list_service_accounts_for_org(**kw)
-
-        # Create the async page iterator
-        return AsyncPageIterator(
-            page_fetcher=fetch_page,
-            initial_kwargs=kwargs,
-        )
-
-    async def _fetch_page_list_service_accounts_for_org(
-        self, **kwargs
-    ) -> ServiceAccountResultsPage:
-        """Internal async method to fetch a single page."""
-        # Build URL with path parameters
-        url = "{}/org/service-accounts".format(self.client.base_url)
-
-        # Add query parameters
-
-        if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
-
-        if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
-
-        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(kwargs["sort_by"])
-            else:
-                url = url + "?sort_by=" + str(kwargs["sort_by"])
-
-        # Pagination parameters (limit, page_token) are already handled above as regular query params
-
-        _client = self.client.get_http_client()
-        response = await _client.get(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-        # Validate into a Pydantic model (supports BaseModel/RootModel)
-        return ServiceAccountResultsPage.model_validate(json_data, extra="ignore")
-
-    async def create_service_account_for_org(
-        self,
-        *,
-        label: Optional[str] = None,
-    ) -> ServiceAccount:
-        """This endpoint requires authentication by an org member. It creates a new service account for the organization."""
-
-        url = "{}/org/service-accounts".format(self.client.base_url)
-
-        if label is not None:
-            if "?" in url:
-                url = url + "&label=" + str(label)
-            else:
-                url = url + "?label=" + str(label)
-
-        _client = self.client.get_http_client()
-
-        response = await _client.post(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return ServiceAccount.model_validate(json_data, extra="ignore")
-
-    async def get_service_account_for_org(
-        self,
-        token: ServiceAccountUuid,
-    ) -> ServiceAccount:
-        """This endpoint requires authentication by an org member. It returns details of the requested service account for the organization."""
-
-        url = "{}/org/service-accounts/{token}".format(
-            self.client.base_url, token=token
-        )
-
-        _client = self.client.get_http_client()
-
-        response = await _client.get(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return ServiceAccount.model_validate(json_data, extra="ignore")
-
-    async def delete_service_account_for_org(
-        self,
-        token: str,
-    ):
-        """This endpoint requires authentication by an org member. It deletes the requested service account for the organization.
-
-        This endpoint does not actually delete the service account from the database. It merely marks the token as invalid. We still want to keep the service account in the database for historical purposes.
-
-        The token path parameter can be either the full service account token (prefixed with `svc-`) or the token's unique ID (a UUID)."""
-
-        url = "{}/org/service-accounts/{token}".format(
-            self.client.base_url, token=token
-        )
-
-        _client = self.client.get_http_client()
-
-        response = await _client.delete(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        return response.json() if response.content else None
-
-
-class ProjectsAPI:
-    """API for projects endpoints"""
-
-    def __init__(self, client: Client) -> None:
-        self.client = client
-
-    def list_project_categories(
-        self,
-    ) -> List[ProjectCategoryResponse]:
-        """List the active categories available for project submissions."""
-
         url = "{}/projects/categories".format(self.client.base_url)
 
-        _client = self.client.get_http_client()
+        # Add query parameters
 
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
         response = _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -12483,11 +12934,8 @@ class ProjectsAPI:
             return None  # type: ignore
 
         json_data = response.json()
-
-        # Validate into annotated/collection/union types using TypeAdapter
-        from pydantic import TypeAdapter
-
-        return TypeAdapter(List[ProjectCategoryResponse]).validate_python(
+        # Validate into a Pydantic model (supports BaseModel/RootModel)
+        return ProjectCategoryResponseResultsPage.model_validate(
             json_data, extra="ignore"
         )
 
@@ -12616,8 +13064,9 @@ class ProjectsAPI:
         id: Uuid,
         *,
         format: Optional[ProjectArchiveFormat] = None,
-    ):
-        """Download a published public project as a tar archive."""
+        file_ids: Optional[List[str]] = None,
+    ) -> ProjectDownloadErrorResponse:
+        """Download all or selected files from a published public project."""
 
         url = "{}/projects/public/{id}/download".format(self.client.base_url, id=id)
 
@@ -12626,6 +13075,12 @@ class ProjectsAPI:
                 url = url + "&format=" + str(format)
             else:
                 url = url + "?format=" + str(format)
+
+        if file_ids is not None:
+            if "?" in url:
+                url = url + "&file_ids=" + str(file_ids)
+            else:
+                url = url + "?file_ids=" + str(file_ids)
 
         _client = self.client.get_http_client()
 
@@ -12639,7 +13094,13 @@ class ProjectsAPI:
 
             raise_for_status(response)
 
-        return response.json() if response.content else None
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return ProjectDownloadErrorResponse.model_validate(json_data, extra="ignore")
 
     def get_public_project_thumbnail(
         self,
@@ -12725,13 +13186,19 @@ class ProjectsAPI:
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
     ) -> "SyncPageIterator":
-        """List personal libraries and libraries belonging to the active organization.
+        """Returns an object with `items` and `next_page`, ordered by library ID. Request the next page with `?page_token=<next_page>` until `next_page` is null. Keep the same authenticated user and active organization for every page; changing that context requires starting a new list request.
 
-        Returns an iterator that automatically handles pagination.
-        Iterate over all items across all pages:
+        Each library has a stable `id`, a display `name`, either `user_id` or `org_id`, an opaque `revision`, and `can_manage`. Use the ID to track a library across renames. `can_manage` allows renaming/deleting the library, not editing all of its projects. Organization members can discover libraries; only organization admins can manage them. Project permissions remain unchanged.
 
-            for item in client.user.list_project_libraries():
-                print(item)
+        Projects with `library_id: null` have no named library. They do not appear as a library record here. Use `GET /user/projects?scope=personal&unassigned=true` for the default personal group, or `scope=organization&unassigned=true` for the active organization's unassigned projects.
+
+        Each library includes its creation source: `zds`, `factory_portal`, or `org_dataset`. Libraries created before source tracking are returned as `zds`. Clients can filter the results by source; API permissions remain unchanged.
+
+                Returns an iterator that automatically handles pagination.
+                Iterate over all items across all pages:
+
+                    for item in client.user.list_project_libraries():
+                        print(item)
         """
 
         from typing import Any, Dict
@@ -12805,7 +13272,21 @@ class ProjectsAPI:
         self,
         body: CreateProjectLibraryRequest,
     ) -> ProjectLibraryResponse:
-        """Create a personal library or a library owned by the active organization."""
+        """Send JSON with a name and explicit ownership scope:
+
+        ```json { "name": "Designs", "scope": "personal" } ```
+
+        Use `scope: "organization"` to create a library for the request's active organization; this requires organization-admin access. There is no organization ID in this body. Personal scope always uses the authenticated user.
+
+        Names are trimmed, must contain 1–255 characters, and are unique ignoring case within each user or organization. Display capitalization is preserved. Duplicate names return HTTP 409. The HTTP 201 response contains the library ID, ownership, revision, and `can_manage`. Creating a library does not move existing projects; select its ID when creating a project, or move an existing project with `PUT /user/projects/{id}/library`.
+
+        Include `source` to identify the application that created the library:
+
+        ```json { "name": "Factory designs", "scope": "personal", "source": "factory_portal" } ```
+
+        Accepted sources are `zds`, `factory_portal`, and `org_dataset`. Omitting source defaults to `zds`. Null and unsupported values return HTTP 400.
+
+        Source is returned in library responses and cannot be changed after creation. Clients use it to decide how to display libraries; it does not change API permissions. No API source filter is provided at the moment."""
 
         url = "{}/user/project-libraries".format(self.client.base_url)
 
@@ -12835,7 +13316,9 @@ class ProjectsAPI:
         id: Uuid,
         expected_revision: str,
     ):
-        """Delete an empty cloud project library."""
+        """Supply the library's last-read `revision` as the required `expected_revision` query parameter. URL-encode this value. Only the personal owner or an admin of the active organization can delete the library. Libraries managed by an organization dataset cannot be deleted independently; those requests return HTTP 409.
+
+        Move or unassign all projects first. A nonempty library or stale revision returns HTTP 409. Success returns HTTP 204 without deleting projects or history. Library revisions are separate from project `revision` and `metadata_revision`."""
 
         url = "{}/user/project-libraries/{id}".format(self.client.base_url, id=id)
 
@@ -12864,7 +13347,11 @@ class ProjectsAPI:
         id: Uuid,
         body: RenameProjectLibraryRequest,
     ) -> ProjectLibraryResponse:
-        """Rename a library owned by the user or their active organization."""
+        """Send JSON containing `name` and `expected_revision`, using the library's `revision` from the last library list response. The personal owner or an admin of the active organization can rename the library. Names follow the same validation and uniqueness rules as library creation.
+
+        HTTP 200 returns the updated library and revision. A stale revision or duplicate name returns HTTP 409; refresh the library list before deciding whether to retry. Renaming keeps the library ID, ownership, and project assignments unchanged.
+
+        Renaming doesn't change the library's source."""
 
         url = "{}/user/project-libraries/{id}".format(self.client.base_url, id=id)
 
@@ -12896,13 +13383,19 @@ class ProjectsAPI:
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
     ) -> "SyncPageIterator":
-        """List projects in a cloud library, newest first.
+        """Returns project summaries in `items`, with `next_page` for continuation. Pass `?page_token=<next_page>` on the same library endpoint until `next_page` is null. Keep the same authenticated user and active organization for every page. Results are ordered by creation time descending, then project ID ascending.
 
-        Returns an iterator that automatically handles pagination.
-        Iterate over all items across all pages:
+        Each summary includes `library_id`, content `revision`, `metadata_revision`, and the caller's project `access` capabilities. Access to a library does not grant additional project permissions.
 
-            for item in client.user.list_library_projects():
-                print(item)
+        Projects can move or disappear while pages load. Even an empty page can have a continuation token; stop only when `next_page` is null.
+
+        When loading several libraries, a project may appear in library A's results, then move to library B before B is loaded. Combining those results can show the same project twice. Use the project ID to show it once, and fetch its latest details to confirm which library it belongs to. A missing list entry may also mean the project moved; fetch its details before treating it as deleted, and preserve unsynced local edits.
+
+                Returns an iterator that automatically handles pagination.
+                Iterate over all items across all pages:
+
+                    for item in client.user.list_library_projects():
+                        print(item)
         """
 
         from typing import Any, Dict
@@ -12979,27 +13472,86 @@ class ProjectsAPI:
     def list_projects(
         self,
         *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
         scope: Optional[ProjectAccessScope] = None,
         unassigned: Optional[bool] = None,
-    ) -> List[ProjectSummaryResponse]:
-        """List the authenticated user's projects."""
+    ) -> "SyncPageIterator":
+        """Returns a page, including personal projects and projects accessible through the request's active organization. Optional `scope=personal` or `scope=organization` narrows ownership; `unassigned=true` includes only projects whose `library_id` is null. Combine them, for example: `GET /user/projects?scope=personal&unassigned=true`. Omitting both filters keeps returning all accessible projects, including projects in named libraries.
 
-        url = "{}/user/projects".format(self.client.base_url)
+        Unassigned is a grouping within the existing ownership scope, not a stored default library. Use `GET /user/project-libraries/{id}/projects` for a named library's paginated project list. Filters do not grant additional access.
+
+                Returns an iterator that automatically handles pagination.
+                Iterate over all items across all pages:
+
+                    for item in client.user.list_projects():
+                        print(item)
+        """
+
+        from typing import Any, Dict
+
+        from kittycad.pagination import SyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
+
+        if limit is not None:
+            kwargs["limit"] = limit
+
+        if page_token is not None:
+            kwargs["page_token"] = page_token
 
         if scope is not None:
-            if "?" in url:
-                url = url + "&scope=" + str(scope)
-            else:
-                url = url + "?scope=" + str(scope)
+            kwargs["scope"] = scope
 
         if unassigned is not None:
+            kwargs["unassigned"] = unassigned
+
+        def fetch_page(**kw):
+            return self._fetch_page_list_projects(**kw)
+
+        # Create the page iterator
+        return SyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    def _fetch_page_list_projects(self, **kwargs) -> ProjectSummaryResponseResultsPage:
+        """Internal method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/user/projects".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
             if "?" in url:
-                url = url + "&unassigned=" + str(unassigned).lower()
+                url = url + "&limit=" + str(kwargs["limit"])
             else:
-                url = url + "?unassigned=" + str(unassigned).lower()
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "scope" in kwargs and kwargs["scope"] is not None:
+            if "?" in url:
+                url = url + "&scope=" + str(kwargs["scope"])
+            else:
+                url = url + "?scope=" + str(kwargs["scope"])
+
+        if "unassigned" in kwargs and kwargs["unassigned"] is not None:
+            if "?" in url:
+                url = url + "&unassigned=" + str(kwargs["unassigned"]).lower()
+            else:
+                url = url + "?unassigned=" + str(kwargs["unassigned"]).lower()
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
 
         _client = self.client.get_http_client()
-
         response = _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -13014,18 +13566,21 @@ class ProjectsAPI:
             return None  # type: ignore
 
         json_data = response.json()
-
-        # Validate into annotated/collection/union types using TypeAdapter
-        from pydantic import TypeAdapter
-
-        return TypeAdapter(List[ProjectSummaryResponse]).validate_python(
+        # Validate into a Pydantic model (supports BaseModel/RootModel)
+        return ProjectSummaryResponseResultsPage.model_validate(
             json_data, extra="ignore"
         )
 
     def create_project(
         self,
     ) -> ProjectResponse:
-        """Create a draft project for the authenticated user."""
+        """Send multipart data with a JSON `body` part and file parts whose filenames are relative project paths. Include an optional `library_id` in the JSON to create the project in a named library:
+
+        ```json { "title": "Bracket", "entrypoint_path": "main.kcl", "library_id": "<LIBRARY_ID>" } ```
+
+        A personal library creates a personal project. An accessible library belonging to the active organization creates an organization project with the caller as its creator; creating the project does not require library-management rights. Omitting `library_id` or passing null creates an unassigned personal project, even when the request has an active organization.
+
+        The HTTP 201 response includes `id`, `library_id`, content `revision`, and `metadata_revision`. Later saves preserve membership, even if they include a library field. Use `PUT /user/projects/{id}/library` to move or unassign an existing project instead of uploading its files again."""
 
         url = "{}/user/projects".format(self.client.base_url)
 
@@ -13081,7 +13636,7 @@ class ProjectsAPI:
         self,
         id: Uuid,
     ) -> ProjectResponse:
-        """Replace one of the authenticated user's projects."""
+        """Content saves use the project's content `revision` as `expected_revision` and preserve its current library assignment. Omitting `library_id`, setting it to null, or supplying another library ID here does not move the project. Use `PUT /user/projects/{id}/library` with `metadata_revision` for library changes."""
 
         url = "{}/user/projects/{id}".format(self.client.base_url, id=id)
 
@@ -13132,8 +13687,9 @@ class ProjectsAPI:
         id: Uuid,
         *,
         format: Optional[ProjectArchiveFormat] = None,
-    ):
-        """Download one of the authenticated user's projects as a tar archive."""
+        file_ids: Optional[List[str]] = None,
+    ) -> ProjectDownloadErrorResponse:
+        """Use `file_ids=<UUID>,<UUID>` to select files from the current version. This endpoint resolves the project's current version at request time, so file IDs from before a save may no longer belong to it. To download those files, use `/user/projects/{id}/versions/{version_id}/download` with `version_id` set to the `summary.revision` returned alongside that file list. A single selected file still uses the requested tar or zip archive format."""
 
         url = "{}/user/projects/{id}/download".format(self.client.base_url, id=id)
 
@@ -13142,6 +13698,12 @@ class ProjectsAPI:
                 url = url + "&format=" + str(format)
             else:
                 url = url + "?format=" + str(format)
+
+        if file_ids is not None:
+            if "?" in url:
+                url = url + "&file_ids=" + str(file_ids)
+            else:
+                url = url + "?file_ids=" + str(file_ids)
 
         _client = self.client.get_http_client()
 
@@ -13155,13 +13717,65 @@ class ProjectsAPI:
 
             raise_for_status(response)
 
-        return response.json() if response.content else None
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return ProjectDownloadErrorResponse.model_validate(json_data, extra="ignore")
+
+    def update_project_library(
+        self,
+        id: Uuid,
+        body: UpdateProjectLibraryRequest,
+    ) -> ProjectResponse:
+        """Read the project first, then send JSON using its `metadata_revision` as the required `expected_revision`. Do not use its content `revision` or a library's revision for this operation.
+
+        ```json { "library_id": "<DESTINATION_LIBRARY_ID>", "expected_revision": "<METADATA_REVISION>" } ```
+
+        Save the JSON as `move-project.json`, with values from actual responses:
+
+        ```sh curl --fail-with-body \\   --request PUT "${API_BASE_URL}/user/projects/${PROJECT_ID}/library" \\   --header "Authorization: Bearer ${API_TOKEN}" \\   --header 'Content-Type: application/json' \\   --data-binary @move-project.json ```
+
+        Use `library_id: null` to unassign the project. The destination must match the project's current ownership: the same user for a personal project, or the same organization for an organization project. Existing project write permission is required; managing the destination library does not grant it. To change ownership first, use `/user/projects/{id}/organization`.
+
+        HTTP 200 returns the project with its library assignment and a new `metadata_revision`. A move preserves its ID, files, current content `revision`, version history, publication, and share links; it creates no content version. Ordinary saves preserve membership and cannot be used to move a project.
+
+        A stale revision or a destination with different ownership returns HTTP 409. If another save, move, or ownership change conflicts with the move, fetch the latest project before deciding whether to retry. Missing or inaccessible projects/libraries fail their normal existence and permission checks.
+
+        If the connection drops or the request times out, the API may have completed the move even though the client did not receive a response. Fetch the project to check its current library. If library_id matches the requested destination, no further move is needed. Otherwise review its latest state before retrying with its new `metadata_revision`. No idempotency key is used for this operation."""
+
+        url = "{}/user/projects/{id}/library".format(self.client.base_url, id=id)
+
+        _client = self.client.get_http_client()
+
+        response = _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+            content=serialize_request_body(body),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return ProjectResponse.model_validate(json_data, extra="ignore")
 
     def update_project_organization(
         self,
         id: Uuid,
     ) -> ProjectResponse:
-        """This changes only the project's ownership scope. The project ID, current revision, files, and version history remain unchanged so cloud bindings stay valid across the move."""
+        """This changes only the project's ownership scope. The project ID, current revision, files, and version history remain unchanged so cloud bindings stay valid across the move.
+
+        An actual ownership change clears `library_id` and changes `metadata_revision`. The project becomes unassigned in the organization. To place it in a named organization library, use `PUT /user/projects/{id}/library` afterwards with the returned metadata revision. An already organization-owned project in the same organization is unchanged by this request."""
 
         url = "{}/user/projects/{id}/organization".format(self.client.base_url, id=id)
 
@@ -13189,7 +13803,9 @@ class ProjectsAPI:
         self,
         id: Uuid,
     ):
-        """Organization administrators may perform this move to revoke organization access. The project ID, current revision, files, and version history remain unchanged."""
+        """Organization administrators may perform this move to revoke organization access. The project ID, current revision, files, and version history remain unchanged.
+
+        The ownership change clears `library_id` and changes `metadata_revision`, leaving the project unassigned under its creator. Success returns HTTP 204. Fetch the project again before assigning it to a personal named library."""
 
         url = "{}/user/projects/{id}/organization".format(self.client.base_url, id=id)
 
@@ -13565,8 +14181,9 @@ class ProjectsAPI:
         version_id: Uuid,
         *,
         format: Optional[ProjectArchiveFormat] = None,
-    ):
-        """Download the files saved in one project version."""
+        file_ids: Optional[List[str]] = None,
+    ) -> ProjectDownloadErrorResponse:
+        """Select files with `file_ids=<UUID>,<UUID>`. IDs must belong to this version; omitted files are excluded, including the manifest unless explicitly selected. The response is a tar or zip archive even when selecting one file."""
 
         url = "{}/user/projects/{id}/versions/{version_id}/download".format(
             self.client.base_url, id=id, version_id=version_id
@@ -13577,6 +14194,12 @@ class ProjectsAPI:
                 url = url + "&format=" + str(format)
             else:
                 url = url + "?format=" + str(format)
+
+        if file_ids is not None:
+            if "?" in url:
+                url = url + "&file_ids=" + str(file_ids)
+            else:
+                url = url + "?file_ids=" + str(file_ids)
 
         _client = self.client.get_http_client()
 
@@ -13590,7 +14213,13 @@ class ProjectsAPI:
 
             raise_for_status(response)
 
-        return response.json() if response.content else None
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return ProjectDownloadErrorResponse.model_validate(json_data, extra="ignore")
 
     def get_project_version_thumbnail(
         self,
@@ -13624,18 +14253,20 @@ class AsyncProjectsAPI:
     def __init__(self, client: AsyncClient) -> None:
         self.client = client
 
-    async def list_project_categories(
+    async def search_org_projects_semantic(
         self,
-    ) -> List[ProjectCategoryResponse]:
-        """List the active categories available for project submissions."""
+        body: ProjectSemanticSearchRequest,
+    ) -> List[ProjectSemanticSearchMatch]:
+        """Results are ranked by similarity to bounded project metadata: title, description, and a capped list of source filenames. Project source contents are not indexed. Projects become searchable asynchronously after saving or changing organization ownership. Personal projects and obsolete versions are excluded. Pass `library_id` to search one named organization library."""
 
-        url = "{}/projects/categories".format(self.client.base_url)
+        url = "{}/org/projects/search/semantic".format(self.client.base_url)
 
         _client = self.client.get_http_client()
 
-        response = await _client.get(
+        response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
+            content=serialize_request_body(body),
         )
 
         if not response.is_success:
@@ -13651,7 +14282,89 @@ class AsyncProjectsAPI:
         # Validate into annotated/collection/union types using TypeAdapter
         from pydantic import TypeAdapter
 
-        return TypeAdapter(List[ProjectCategoryResponse]).validate_python(
+        return TypeAdapter(List[ProjectSemanticSearchMatch]).validate_python(
+            json_data, extra="ignore"
+        )
+
+    def list_project_categories(
+        self,
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+    ) -> "AsyncPageIterator":
+        """List the active categories available for project submissions.
+
+        Returns an async iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            async for item in client.projects.list_project_categories():
+                print(item)
+        """
+
+        from typing import Any, Dict
+
+        from kittycad.pagination import AsyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
+
+        if limit is not None:
+            kwargs["limit"] = limit
+
+        if page_token is not None:
+            kwargs["page_token"] = page_token
+
+        async def fetch_page(**kw):
+            return await self._fetch_page_list_project_categories(**kw)
+
+        # Create the async page iterator
+        return AsyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    async def _fetch_page_list_project_categories(
+        self, **kwargs
+    ) -> ProjectCategoryResponseResultsPage:
+        """Internal async method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/projects/categories".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+        # Validate into a Pydantic model (supports BaseModel/RootModel)
+        return ProjectCategoryResponseResultsPage.model_validate(
             json_data, extra="ignore"
         )
 
@@ -13780,8 +14493,9 @@ class AsyncProjectsAPI:
         id: Uuid,
         *,
         format: Optional[ProjectArchiveFormat] = None,
-    ):
-        """Download a published public project as a tar archive."""
+        file_ids: Optional[List[str]] = None,
+    ) -> ProjectDownloadErrorResponse:
+        """Download all or selected files from a published public project."""
 
         url = "{}/projects/public/{id}/download".format(self.client.base_url, id=id)
 
@@ -13790,6 +14504,12 @@ class AsyncProjectsAPI:
                 url = url + "&format=" + str(format)
             else:
                 url = url + "?format=" + str(format)
+
+        if file_ids is not None:
+            if "?" in url:
+                url = url + "&file_ids=" + str(file_ids)
+            else:
+                url = url + "?file_ids=" + str(file_ids)
 
         _client = self.client.get_http_client()
 
@@ -13803,7 +14523,13 @@ class AsyncProjectsAPI:
 
             raise_for_status(response)
 
-        return response.json() if response.content else None
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return ProjectDownloadErrorResponse.model_validate(json_data, extra="ignore")
 
     async def get_public_project_thumbnail(
         self,
@@ -13889,13 +14615,19 @@ class AsyncProjectsAPI:
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
     ) -> "AsyncPageIterator":
-        """List personal libraries and libraries belonging to the active organization.
+        """Returns an object with `items` and `next_page`, ordered by library ID. Request the next page with `?page_token=<next_page>` until `next_page` is null. Keep the same authenticated user and active organization for every page; changing that context requires starting a new list request.
 
-        Returns an async iterator that automatically handles pagination.
-        Iterate over all items across all pages:
+        Each library has a stable `id`, a display `name`, either `user_id` or `org_id`, an opaque `revision`, and `can_manage`. Use the ID to track a library across renames. `can_manage` allows renaming/deleting the library, not editing all of its projects. Organization members can discover libraries; only organization admins can manage them. Project permissions remain unchanged.
 
-            async for item in client.user.list_project_libraries():
-                print(item)
+        Projects with `library_id: null` have no named library. They do not appear as a library record here. Use `GET /user/projects?scope=personal&unassigned=true` for the default personal group, or `scope=organization&unassigned=true` for the active organization's unassigned projects.
+
+        Each library includes its creation source: `zds`, `factory_portal`, or `org_dataset`. Libraries created before source tracking are returned as `zds`. Clients can filter the results by source; API permissions remain unchanged.
+
+                Returns an async iterator that automatically handles pagination.
+                Iterate over all items across all pages:
+
+                    async for item in client.user.list_project_libraries():
+                        print(item)
         """
 
         from typing import Any, Dict
@@ -13969,7 +14701,21 @@ class AsyncProjectsAPI:
         self,
         body: CreateProjectLibraryRequest,
     ) -> ProjectLibraryResponse:
-        """Create a personal library or a library owned by the active organization."""
+        """Send JSON with a name and explicit ownership scope:
+
+        ```json { "name": "Designs", "scope": "personal" } ```
+
+        Use `scope: "organization"` to create a library for the request's active organization; this requires organization-admin access. There is no organization ID in this body. Personal scope always uses the authenticated user.
+
+        Names are trimmed, must contain 1–255 characters, and are unique ignoring case within each user or organization. Display capitalization is preserved. Duplicate names return HTTP 409. The HTTP 201 response contains the library ID, ownership, revision, and `can_manage`. Creating a library does not move existing projects; select its ID when creating a project, or move an existing project with `PUT /user/projects/{id}/library`.
+
+        Include `source` to identify the application that created the library:
+
+        ```json { "name": "Factory designs", "scope": "personal", "source": "factory_portal" } ```
+
+        Accepted sources are `zds`, `factory_portal`, and `org_dataset`. Omitting source defaults to `zds`. Null and unsupported values return HTTP 400.
+
+        Source is returned in library responses and cannot be changed after creation. Clients use it to decide how to display libraries; it does not change API permissions. No API source filter is provided at the moment."""
 
         url = "{}/user/project-libraries".format(self.client.base_url)
 
@@ -13999,7 +14745,9 @@ class AsyncProjectsAPI:
         id: Uuid,
         expected_revision: str,
     ):
-        """Delete an empty cloud project library."""
+        """Supply the library's last-read `revision` as the required `expected_revision` query parameter. URL-encode this value. Only the personal owner or an admin of the active organization can delete the library. Libraries managed by an organization dataset cannot be deleted independently; those requests return HTTP 409.
+
+        Move or unassign all projects first. A nonempty library or stale revision returns HTTP 409. Success returns HTTP 204 without deleting projects or history. Library revisions are separate from project `revision` and `metadata_revision`."""
 
         url = "{}/user/project-libraries/{id}".format(self.client.base_url, id=id)
 
@@ -14028,7 +14776,11 @@ class AsyncProjectsAPI:
         id: Uuid,
         body: RenameProjectLibraryRequest,
     ) -> ProjectLibraryResponse:
-        """Rename a library owned by the user or their active organization."""
+        """Send JSON containing `name` and `expected_revision`, using the library's `revision` from the last library list response. The personal owner or an admin of the active organization can rename the library. Names follow the same validation and uniqueness rules as library creation.
+
+        HTTP 200 returns the updated library and revision. A stale revision or duplicate name returns HTTP 409; refresh the library list before deciding whether to retry. Renaming keeps the library ID, ownership, and project assignments unchanged.
+
+        Renaming doesn't change the library's source."""
 
         url = "{}/user/project-libraries/{id}".format(self.client.base_url, id=id)
 
@@ -14060,13 +14812,19 @@ class AsyncProjectsAPI:
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
     ) -> "AsyncPageIterator":
-        """List projects in a cloud library, newest first.
+        """Returns project summaries in `items`, with `next_page` for continuation. Pass `?page_token=<next_page>` on the same library endpoint until `next_page` is null. Keep the same authenticated user and active organization for every page. Results are ordered by creation time descending, then project ID ascending.
 
-        Returns an async iterator that automatically handles pagination.
-        Iterate over all items across all pages:
+        Each summary includes `library_id`, content `revision`, `metadata_revision`, and the caller's project `access` capabilities. Access to a library does not grant additional project permissions.
 
-            async for item in client.user.list_library_projects():
-                print(item)
+        Projects can move or disappear while pages load. Even an empty page can have a continuation token; stop only when `next_page` is null.
+
+        When loading several libraries, a project may appear in library A's results, then move to library B before B is loaded. Combining those results can show the same project twice. Use the project ID to show it once, and fetch its latest details to confirm which library it belongs to. A missing list entry may also mean the project moved; fetch its details before treating it as deleted, and preserve unsynced local edits.
+
+                Returns an async iterator that automatically handles pagination.
+                Iterate over all items across all pages:
+
+                    async for item in client.user.list_library_projects():
+                        print(item)
         """
 
         from typing import Any, Dict
@@ -14140,30 +14898,91 @@ class AsyncProjectsAPI:
             json_data, extra="ignore"
         )
 
-    async def list_projects(
+    def list_projects(
         self,
         *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
         scope: Optional[ProjectAccessScope] = None,
         unassigned: Optional[bool] = None,
-    ) -> List[ProjectSummaryResponse]:
-        """List the authenticated user's projects."""
+    ) -> "AsyncPageIterator":
+        """Returns a page, including personal projects and projects accessible through the request's active organization. Optional `scope=personal` or `scope=organization` narrows ownership; `unassigned=true` includes only projects whose `library_id` is null. Combine them, for example: `GET /user/projects?scope=personal&unassigned=true`. Omitting both filters keeps returning all accessible projects, including projects in named libraries.
 
-        url = "{}/user/projects".format(self.client.base_url)
+        Unassigned is a grouping within the existing ownership scope, not a stored default library. Use `GET /user/project-libraries/{id}/projects` for a named library's paginated project list. Filters do not grant additional access.
+
+                Returns an async iterator that automatically handles pagination.
+                Iterate over all items across all pages:
+
+                    async for item in client.user.list_projects():
+                        print(item)
+        """
+
+        from typing import Any, Dict
+
+        from kittycad.pagination import AsyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
+
+        if limit is not None:
+            kwargs["limit"] = limit
+
+        if page_token is not None:
+            kwargs["page_token"] = page_token
 
         if scope is not None:
-            if "?" in url:
-                url = url + "&scope=" + str(scope)
-            else:
-                url = url + "?scope=" + str(scope)
+            kwargs["scope"] = scope
 
         if unassigned is not None:
+            kwargs["unassigned"] = unassigned
+
+        async def fetch_page(**kw):
+            return await self._fetch_page_list_projects(**kw)
+
+        # Create the async page iterator
+        return AsyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    async def _fetch_page_list_projects(
+        self, **kwargs
+    ) -> ProjectSummaryResponseResultsPage:
+        """Internal async method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/user/projects".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
             if "?" in url:
-                url = url + "&unassigned=" + str(unassigned).lower()
+                url = url + "&limit=" + str(kwargs["limit"])
             else:
-                url = url + "?unassigned=" + str(unassigned).lower()
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "scope" in kwargs and kwargs["scope"] is not None:
+            if "?" in url:
+                url = url + "&scope=" + str(kwargs["scope"])
+            else:
+                url = url + "?scope=" + str(kwargs["scope"])
+
+        if "unassigned" in kwargs and kwargs["unassigned"] is not None:
+            if "?" in url:
+                url = url + "&unassigned=" + str(kwargs["unassigned"]).lower()
+            else:
+                url = url + "?unassigned=" + str(kwargs["unassigned"]).lower()
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
 
         _client = self.client.get_http_client()
-
         response = await _client.get(
             url=url,
             headers=self.client.get_headers(),
@@ -14178,18 +14997,21 @@ class AsyncProjectsAPI:
             return None  # type: ignore
 
         json_data = response.json()
-
-        # Validate into annotated/collection/union types using TypeAdapter
-        from pydantic import TypeAdapter
-
-        return TypeAdapter(List[ProjectSummaryResponse]).validate_python(
+        # Validate into a Pydantic model (supports BaseModel/RootModel)
+        return ProjectSummaryResponseResultsPage.model_validate(
             json_data, extra="ignore"
         )
 
     async def create_project(
         self,
     ) -> ProjectResponse:
-        """Create a draft project for the authenticated user."""
+        """Send multipart data with a JSON `body` part and file parts whose filenames are relative project paths. Include an optional `library_id` in the JSON to create the project in a named library:
+
+        ```json { "title": "Bracket", "entrypoint_path": "main.kcl", "library_id": "<LIBRARY_ID>" } ```
+
+        A personal library creates a personal project. An accessible library belonging to the active organization creates an organization project with the caller as its creator; creating the project does not require library-management rights. Omitting `library_id` or passing null creates an unassigned personal project, even when the request has an active organization.
+
+        The HTTP 201 response includes `id`, `library_id`, content `revision`, and `metadata_revision`. Later saves preserve membership, even if they include a library field. Use `PUT /user/projects/{id}/library` to move or unassign an existing project instead of uploading its files again."""
 
         url = "{}/user/projects".format(self.client.base_url)
 
@@ -14245,7 +15067,7 @@ class AsyncProjectsAPI:
         self,
         id: Uuid,
     ) -> ProjectResponse:
-        """Replace one of the authenticated user's projects."""
+        """Content saves use the project's content `revision` as `expected_revision` and preserve its current library assignment. Omitting `library_id`, setting it to null, or supplying another library ID here does not move the project. Use `PUT /user/projects/{id}/library` with `metadata_revision` for library changes."""
 
         url = "{}/user/projects/{id}".format(self.client.base_url, id=id)
 
@@ -14296,8 +15118,9 @@ class AsyncProjectsAPI:
         id: Uuid,
         *,
         format: Optional[ProjectArchiveFormat] = None,
-    ):
-        """Download one of the authenticated user's projects as a tar archive."""
+        file_ids: Optional[List[str]] = None,
+    ) -> ProjectDownloadErrorResponse:
+        """Use `file_ids=<UUID>,<UUID>` to select files from the current version. This endpoint resolves the project's current version at request time, so file IDs from before a save may no longer belong to it. To download those files, use `/user/projects/{id}/versions/{version_id}/download` with `version_id` set to the `summary.revision` returned alongside that file list. A single selected file still uses the requested tar or zip archive format."""
 
         url = "{}/user/projects/{id}/download".format(self.client.base_url, id=id)
 
@@ -14306,6 +15129,12 @@ class AsyncProjectsAPI:
                 url = url + "&format=" + str(format)
             else:
                 url = url + "?format=" + str(format)
+
+        if file_ids is not None:
+            if "?" in url:
+                url = url + "&file_ids=" + str(file_ids)
+            else:
+                url = url + "?file_ids=" + str(file_ids)
 
         _client = self.client.get_http_client()
 
@@ -14319,13 +15148,65 @@ class AsyncProjectsAPI:
 
             raise_for_status(response)
 
-        return response.json() if response.content else None
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return ProjectDownloadErrorResponse.model_validate(json_data, extra="ignore")
+
+    async def update_project_library(
+        self,
+        id: Uuid,
+        body: UpdateProjectLibraryRequest,
+    ) -> ProjectResponse:
+        """Read the project first, then send JSON using its `metadata_revision` as the required `expected_revision`. Do not use its content `revision` or a library's revision for this operation.
+
+        ```json { "library_id": "<DESTINATION_LIBRARY_ID>", "expected_revision": "<METADATA_REVISION>" } ```
+
+        Save the JSON as `move-project.json`, with values from actual responses:
+
+        ```sh curl --fail-with-body \\   --request PUT "${API_BASE_URL}/user/projects/${PROJECT_ID}/library" \\   --header "Authorization: Bearer ${API_TOKEN}" \\   --header 'Content-Type: application/json' \\   --data-binary @move-project.json ```
+
+        Use `library_id: null` to unassign the project. The destination must match the project's current ownership: the same user for a personal project, or the same organization for an organization project. Existing project write permission is required; managing the destination library does not grant it. To change ownership first, use `/user/projects/{id}/organization`.
+
+        HTTP 200 returns the project with its library assignment and a new `metadata_revision`. A move preserves its ID, files, current content `revision`, version history, publication, and share links; it creates no content version. Ordinary saves preserve membership and cannot be used to move a project.
+
+        A stale revision or a destination with different ownership returns HTTP 409. If another save, move, or ownership change conflicts with the move, fetch the latest project before deciding whether to retry. Missing or inaccessible projects/libraries fail their normal existence and permission checks.
+
+        If the connection drops or the request times out, the API may have completed the move even though the client did not receive a response. Fetch the project to check its current library. If library_id matches the requested destination, no further move is needed. Otherwise review its latest state before retrying with its new `metadata_revision`. No idempotency key is used for this operation."""
+
+        url = "{}/user/projects/{id}/library".format(self.client.base_url, id=id)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+            content=serialize_request_body(body),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return ProjectResponse.model_validate(json_data, extra="ignore")
 
     async def update_project_organization(
         self,
         id: Uuid,
     ) -> ProjectResponse:
-        """This changes only the project's ownership scope. The project ID, current revision, files, and version history remain unchanged so cloud bindings stay valid across the move."""
+        """This changes only the project's ownership scope. The project ID, current revision, files, and version history remain unchanged so cloud bindings stay valid across the move.
+
+        An actual ownership change clears `library_id` and changes `metadata_revision`. The project becomes unassigned in the organization. To place it in a named organization library, use `PUT /user/projects/{id}/library` afterwards with the returned metadata revision. An already organization-owned project in the same organization is unchanged by this request."""
 
         url = "{}/user/projects/{id}/organization".format(self.client.base_url, id=id)
 
@@ -14353,7 +15234,9 @@ class AsyncProjectsAPI:
         self,
         id: Uuid,
     ):
-        """Organization administrators may perform this move to revoke organization access. The project ID, current revision, files, and version history remain unchanged."""
+        """Organization administrators may perform this move to revoke organization access. The project ID, current revision, files, and version history remain unchanged.
+
+        The ownership change clears `library_id` and changes `metadata_revision`, leaving the project unassigned under its creator. Success returns HTTP 204. Fetch the project again before assigning it to a personal named library."""
 
         url = "{}/user/projects/{id}/organization".format(self.client.base_url, id=id)
 
@@ -14729,8 +15612,9 @@ class AsyncProjectsAPI:
         version_id: Uuid,
         *,
         format: Optional[ProjectArchiveFormat] = None,
-    ):
-        """Download the files saved in one project version."""
+        file_ids: Optional[List[str]] = None,
+    ) -> ProjectDownloadErrorResponse:
+        """Select files with `file_ids=<UUID>,<UUID>`. IDs must belong to this version; omitted files are excluded, including the manifest unless explicitly selected. The response is a tar or zip archive even when selecting one file."""
 
         url = "{}/user/projects/{id}/versions/{version_id}/download".format(
             self.client.base_url, id=id, version_id=version_id
@@ -14741,6 +15625,12 @@ class AsyncProjectsAPI:
                 url = url + "&format=" + str(format)
             else:
                 url = url + "?format=" + str(format)
+
+        if file_ids is not None:
+            if "?" in url:
+                url = url + "&file_ids=" + str(file_ids)
+            else:
+                url = url + "?file_ids=" + str(file_ids)
 
         _client = self.client.get_http_client()
 
@@ -14754,7 +15644,13 @@ class AsyncProjectsAPI:
 
             raise_for_status(response)
 
-        return response.json() if response.content else None
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return ProjectDownloadErrorResponse.model_validate(json_data, extra="ignore")
 
     async def get_project_version_thumbnail(
         self,
@@ -14770,6 +15666,390 @@ class AsyncProjectsAPI:
         _client = self.client.get_http_client()
 
         response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+
+class ServiceAccountsAPI:
+    """API for service_accounts endpoints"""
+
+    def __init__(self, client: Client) -> None:
+        self.client = client
+
+    def list_service_accounts_for_org(
+        self,
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+        sort_by: Optional[CreatedAtSortMode] = None,
+    ) -> "SyncPageIterator":
+        """This endpoint requires authentication by an org member. It returns the service accounts for the organization.
+
+        The service accounts are returned in order of creation, with the most recently created service accounts first.
+
+                Returns an iterator that automatically handles pagination.
+                Iterate over all items across all pages:
+
+                    for item in client.org.list_service_accounts_for_org():
+                        print(item)
+        """
+
+        from typing import Any, Dict
+
+        from kittycad.pagination import SyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
+
+        if limit is not None:
+            kwargs["limit"] = limit
+
+        if page_token is not None:
+            kwargs["page_token"] = page_token
+
+        if sort_by is not None:
+            kwargs["sort_by"] = sort_by
+
+        def fetch_page(**kw):
+            return self._fetch_page_list_service_accounts_for_org(**kw)
+
+        # Create the page iterator
+        return SyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    def _fetch_page_list_service_accounts_for_org(
+        self, **kwargs
+    ) -> ServiceAccountResultsPage:
+        """Internal method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/org/service-accounts".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+        # Validate into a Pydantic model (supports BaseModel/RootModel)
+        return ServiceAccountResultsPage.model_validate(json_data, extra="ignore")
+
+    def create_service_account_for_org(
+        self,
+        *,
+        label: Optional[str] = None,
+    ) -> ServiceAccount:
+        """This endpoint requires authentication by an org member. It creates a new service account for the organization."""
+
+        url = "{}/org/service-accounts".format(self.client.base_url)
+
+        if label is not None:
+            if "?" in url:
+                url = url + "&label=" + str(label)
+            else:
+                url = url + "?label=" + str(label)
+
+        _client = self.client.get_http_client()
+
+        response = _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return ServiceAccount.model_validate(json_data, extra="ignore")
+
+    def get_service_account_for_org(
+        self,
+        token: ServiceAccountUuid,
+    ) -> ServiceAccount:
+        """This endpoint requires authentication by an org member. It returns details of the requested service account for the organization."""
+
+        url = "{}/org/service-accounts/{token}".format(
+            self.client.base_url, token=token
+        )
+
+        _client = self.client.get_http_client()
+
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return ServiceAccount.model_validate(json_data, extra="ignore")
+
+    def delete_service_account_for_org(
+        self,
+        token: str,
+    ):
+        """This endpoint requires authentication by an org member. It deletes the requested service account for the organization.
+
+        This endpoint does not actually delete the service account from the database. It merely marks the token as invalid. We still want to keep the service account in the database for historical purposes.
+
+        The token path parameter can be either the full service account token (prefixed with `svc-`) or the token's unique ID (a UUID)."""
+
+        url = "{}/org/service-accounts/{token}".format(
+            self.client.base_url, token=token
+        )
+
+        _client = self.client.get_http_client()
+
+        response = _client.delete(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+
+class AsyncServiceAccountsAPI:
+    """Async API for service_accounts endpoints"""
+
+    def __init__(self, client: AsyncClient) -> None:
+        self.client = client
+
+    def list_service_accounts_for_org(
+        self,
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+        sort_by: Optional[CreatedAtSortMode] = None,
+    ) -> "AsyncPageIterator":
+        """This endpoint requires authentication by an org member. It returns the service accounts for the organization.
+
+        The service accounts are returned in order of creation, with the most recently created service accounts first.
+
+                Returns an async iterator that automatically handles pagination.
+                Iterate over all items across all pages:
+
+                    async for item in client.org.list_service_accounts_for_org():
+                        print(item)
+        """
+
+        from typing import Any, Dict
+
+        from kittycad.pagination import AsyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
+
+        if limit is not None:
+            kwargs["limit"] = limit
+
+        if page_token is not None:
+            kwargs["page_token"] = page_token
+
+        if sort_by is not None:
+            kwargs["sort_by"] = sort_by
+
+        async def fetch_page(**kw):
+            return await self._fetch_page_list_service_accounts_for_org(**kw)
+
+        # Create the async page iterator
+        return AsyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    async def _fetch_page_list_service_accounts_for_org(
+        self, **kwargs
+    ) -> ServiceAccountResultsPage:
+        """Internal async method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/org/service-accounts".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            if "?" in url:
+                url = url + "&sort_by=" + str(kwargs["sort_by"])
+            else:
+                url = url + "?sort_by=" + str(kwargs["sort_by"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+        # Validate into a Pydantic model (supports BaseModel/RootModel)
+        return ServiceAccountResultsPage.model_validate(json_data, extra="ignore")
+
+    async def create_service_account_for_org(
+        self,
+        *,
+        label: Optional[str] = None,
+    ) -> ServiceAccount:
+        """This endpoint requires authentication by an org member. It creates a new service account for the organization."""
+
+        url = "{}/org/service-accounts".format(self.client.base_url)
+
+        if label is not None:
+            if "?" in url:
+                url = url + "&label=" + str(label)
+            else:
+                url = url + "?label=" + str(label)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return ServiceAccount.model_validate(json_data, extra="ignore")
+
+    async def get_service_account_for_org(
+        self,
+        token: ServiceAccountUuid,
+    ) -> ServiceAccount:
+        """This endpoint requires authentication by an org member. It returns details of the requested service account for the organization."""
+
+        url = "{}/org/service-accounts/{token}".format(
+            self.client.base_url, token=token
+        )
+
+        _client = self.client.get_http_client()
+
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return ServiceAccount.model_validate(json_data, extra="ignore")
+
+    async def delete_service_account_for_org(
+        self,
+        token: str,
+    ):
+        """This endpoint requires authentication by an org member. It deletes the requested service account for the organization.
+
+        This endpoint does not actually delete the service account from the database. It merely marks the token as invalid. We still want to keep the service account in the database for historical purposes.
+
+        The token path parameter can be either the full service account token (prefixed with `svc-`) or the token's unique ID (a UUID)."""
+
+        url = "{}/org/service-accounts/{token}".format(
+            self.client.base_url, token=token
+        )
+
+        _client = self.client.get_http_client()
+
+        response = await _client.delete(
             url=url,
             headers=self.client.get_headers(),
         )
@@ -18453,10 +19733,10 @@ class KittyCAD(Client):
         factory: FactoryAPI - Access to factory endpoints
 
 
-        service_accounts: ServiceAccountsAPI - Access to service_accounts endpoints
-
-
         projects: ProjectsAPI - Access to projects endpoints
+
+
+        service_accounts: ServiceAccountsAPI - Access to service_accounts endpoints
 
 
         unit: UnitAPI - Access to unit endpoints
@@ -18494,9 +19774,9 @@ class KittyCAD(Client):
 
     factory: "FactoryAPI"
 
-    service_accounts: "ServiceAccountsAPI"
-
     projects: "ProjectsAPI"
+
+    service_accounts: "ServiceAccountsAPI"
 
     unit: "UnitAPI"
 
@@ -18545,9 +19825,9 @@ class KittyCAD(Client):
 
         self.factory: FactoryAPI = FactoryAPI(self)
 
-        self.service_accounts: ServiceAccountsAPI = ServiceAccountsAPI(self)
-
         self.projects: ProjectsAPI = ProjectsAPI(self)
+
+        self.service_accounts: ServiceAccountsAPI = ServiceAccountsAPI(self)
 
         self.unit: UnitAPI = UnitAPI(self)
 
@@ -18607,10 +19887,10 @@ class AsyncKittyCAD(AsyncClient):
         factory: AsyncFactoryAPI - Access to factory endpoints
 
 
-        service_accounts: AsyncServiceAccountsAPI - Access to service_accounts endpoints
-
-
         projects: AsyncProjectsAPI - Access to projects endpoints
+
+
+        service_accounts: AsyncServiceAccountsAPI - Access to service_accounts endpoints
 
 
         unit: AsyncUnitAPI - Access to unit endpoints
@@ -18648,9 +19928,9 @@ class AsyncKittyCAD(AsyncClient):
 
     factory: "AsyncFactoryAPI"
 
-    service_accounts: "AsyncServiceAccountsAPI"
-
     projects: "AsyncProjectsAPI"
+
+    service_accounts: "AsyncServiceAccountsAPI"
 
     unit: "AsyncUnitAPI"
 
@@ -18699,9 +19979,9 @@ class AsyncKittyCAD(AsyncClient):
 
         self.factory: AsyncFactoryAPI = AsyncFactoryAPI(self)
 
-        self.service_accounts: AsyncServiceAccountsAPI = AsyncServiceAccountsAPI(self)
-
         self.projects: AsyncProjectsAPI = AsyncProjectsAPI(self)
+
+        self.service_accounts: AsyncServiceAccountsAPI = AsyncServiceAccountsAPI(self)
 
         self.unit: AsyncUnitAPI = AsyncUnitAPI(self)
 

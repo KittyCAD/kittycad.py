@@ -159,6 +159,23 @@ Factory API
         async for item in client.factory.list_org_factory_jobs():
             print(item)
 
+**list_org_factory_job_versions**
+    List an organization's submitted revision history for a current member.
+
+    Returns: ``SyncPageIterator[FactoryCustomerJobVersion]``
+
+    Example:
+
+    .. code-block:: python
+
+        # Sync
+        for item in client.factory.list_org_factory_job_versions():
+            print(item)
+
+        # Async
+        async for item in client.factory.list_org_factory_job_versions():
+            print(item)
+
 **get_user_factory_finishes**
     List finishes currently available for customer Factory submissions.
 
@@ -193,6 +210,23 @@ Factory API
         async for item in client.factory.list_user_factory_jobs():
             print(item)
 
+**list_user_factory_job_versions**
+    List a personal Factory job's submitted revision history, newest first by default.
+
+    Returns: ``SyncPageIterator[FactoryCustomerJobVersion]``
+
+    Example:
+
+    .. code-block:: python
+
+        # Sync
+        for item in client.factory.list_user_factory_job_versions():
+            print(item)
+
+        # Async
+        async for item in client.factory.list_user_factory_job_versions():
+            print(item)
+
 **get_user_factory_materials**
     List materials currently available for customer Factory submissions.
 
@@ -208,6 +242,27 @@ Factory API
 
         # Async
         async for item in client.factory.get_user_factory_materials():
+            print(item)
+
+
+Meta API
+--------
+
+**get_announcements**
+    List all active announcements.
+
+    Returns: ``SyncPageIterator[Announcement]``
+
+    Example:
+
+    .. code-block:: python
+
+        # Sync
+        for item in client.meta.get_announcements():
+            print(item)
+
+        # Async
+        async for item in client.meta.get_announcements():
             print(item)
 
 
@@ -468,6 +523,23 @@ Payments API
 Projects API
 ------------
 
+**list_project_categories**
+    List the active categories available for project submissions.
+
+    Returns: ``SyncPageIterator[ProjectCategoryResponse]``
+
+    Example:
+
+    .. code-block:: python
+
+        # Sync
+        for item in client.projects.list_project_categories():
+            print(item)
+
+        # Async
+        async for item in client.projects.list_project_categories():
+            print(item)
+
 **list_public_projects**
     List publicly visible community projects for the website/gallery.
 
@@ -517,6 +589,23 @@ Projects API
 
         # Async
         async for item in client.projects.list_library_projects():
+            print(item)
+
+**list_projects**
+    List the authenticated user's projects.
+
+    Returns: ``SyncPageIterator[ProjectSummaryResponse]``
+
+    Example:
+
+    .. code-block:: python
+
+        # Sync
+        for item in client.projects.list_projects():
+            print(item)
+
+        # Async
+        async for item in client.projects.list_projects():
             print(item)
 
 **list_project_share_links**

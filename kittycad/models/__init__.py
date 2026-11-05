@@ -32,7 +32,7 @@ from .annotation_text_alignment_y import AnnotationTextAlignmentY
 from .annotation_text_options import AnnotationTextOptions
 from .annotation_type import AnnotationType
 from .announcement import Announcement
-from .announcement_list import AnnouncementList
+from .announcement_results_page import AnnouncementResultsPage
 from .api_call_status import ApiCallStatus
 from .api_call_with_price import ApiCallWithPrice
 from .api_call_with_price_results_page import ApiCallWithPriceResultsPage
@@ -205,11 +205,15 @@ from .factory_customer_catalog_option_results_page import (
     FactoryCustomerCatalogOptionResultsPage,
 )
 from .factory_customer_job_detail import FactoryCustomerJobDetail
+from .factory_customer_job_file import FactoryCustomerJobFile
 from .factory_customer_job_summary import FactoryCustomerJobSummary
 from .factory_customer_job_summary_results_page import (
     FactoryCustomerJobSummaryResultsPage,
 )
 from .factory_customer_job_version import FactoryCustomerJobVersion
+from .factory_customer_job_version_results_page import (
+    FactoryCustomerJobVersionResultsPage,
+)
 from .factory_job_response import FactoryJobResponse
 from .failure_web_socket_response import FailureWebSocketResponse
 from .fbx_storage import FbxStorage
@@ -251,6 +255,7 @@ from .ip_addr_info import IpAddrInfo
 from .kcl_code_completion_params import KclCodeCompletionParams
 from .kcl_code_completion_request import KclCodeCompletionRequest
 from .kcl_code_completion_response import KclCodeCompletionResponse
+from .kcl_file import KclFile
 from .kcl_migration_application import KclMigrationApplication
 from .kcl_migration_application_status import KclMigrationApplicationStatus
 from .kcl_migration_client_message import KclMigrationClientMessage
@@ -263,7 +268,9 @@ from .kcl_migration_status import KclMigrationStatus
 from .kcl_migration_target import KclMigrationTarget
 from .kcl_migration_validation import KclMigrationValidation
 from .kcl_model import KclModel
+from .kcl_project import KclProject
 from .kcl_project_file_role import KclProjectFileRole
+from .kcl_project_library_source import KclProjectLibrarySource
 from .kcl_project_preview_status import KclProjectPreviewStatus
 from .kcl_project_publication_status import KclProjectPublicationStatus
 from .kcl_project_share_link_access_mode import KclProjectShareLinkAccessMode
@@ -306,6 +313,7 @@ from .modeling_session_data import ModelingSessionData
 from .mouse_click import MouseClick
 from .mouse_move import MouseMove
 from .move_path_pen import MovePathPen
+from .named_view import NamedView
 from .new_annotation import NewAnnotation
 from .o_auth2_app_client_type import OAuth2AppClientType
 from .o_auth2_app_grant_type import OAuth2AppGrantType
@@ -392,6 +400,8 @@ from .project_access_response import ProjectAccessResponse
 from .project_access_scope import ProjectAccessScope
 from .project_archive_format import ProjectArchiveFormat
 from .project_category_response import ProjectCategoryResponse
+from .project_category_response_results_page import ProjectCategoryResponseResultsPage
+from .project_download_error_response import ProjectDownloadErrorResponse
 from .project_entity_to_plane import ProjectEntityToPlane
 from .project_file_response import ProjectFileResponse
 from .project_library_response import ProjectLibraryResponse
@@ -400,6 +410,8 @@ from .project_library_scope import ProjectLibraryScope
 from .project_points_to_plane import ProjectPointsToPlane
 from .project_publication_info_response import ProjectPublicationInfoResponse
 from .project_response import ProjectResponse
+from .project_semantic_search_match import ProjectSemanticSearchMatch
+from .project_semantic_search_request import ProjectSemanticSearchRequest
 from .project_share_link_response import ProjectShareLinkResponse
 from .project_share_link_response_results_page import (
     ProjectShareLinkResponseResultsPage,
@@ -411,6 +423,7 @@ from .project_version_summary_response import ProjectVersionSummaryResponse
 from .project_version_summary_response_results_page import (
     ProjectVersionSummaryResponseResultsPage,
 )
+from .projection import Projection
 from .public_email_marketing_consent_request import PublicEmailMarketingConsentRequest
 from .public_mailing_list_membership_request import PublicMailingListMembershipRequest
 from .public_project_owner_response import PublicProjectOwnerResponse
@@ -434,6 +447,7 @@ from .rotation import Rotation
 from .rtc_ice_candidate_init import RtcIceCandidateInit
 from .rtc_sdp_type import RtcSdpType
 from .rtc_session_description import RtcSessionDescription
+from .safe_filepath import SafeFilepath
 from .sales_inquiry_type import SalesInquiryType
 from .saml_identity_provider import SamlIdentityProvider
 from .saml_identity_provider_create import SamlIdentityProviderCreate
@@ -564,6 +578,7 @@ from .update_member_to_org_body import UpdateMemberToOrgBody
 from .update_o_auth2_app_request import UpdateOAuth2AppRequest
 from .update_org_dataset import UpdateOrgDataset
 from .update_org_dataset_source import UpdateOrgDatasetSource
+from .update_project_library_request import UpdateProjectLibraryRequest
 from .update_shortlink_request import UpdateShortlinkRequest
 from .update_user import UpdateUser
 from .upload_org_dataset_files_response import UploadOrgDatasetFilesResponse
@@ -576,6 +591,7 @@ from .user_response import UserResponse
 from .uuid import Uuid
 from .verification_token_response import VerificationTokenResponse
 from .view_isometric import ViewIsometric
+from .visibility import Visibility
 from .volume import Volume
 from .web_socket_request import WebSocketRequest
 from .web_socket_response import WebSocketResponse

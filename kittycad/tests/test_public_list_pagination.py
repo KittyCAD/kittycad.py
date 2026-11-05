@@ -9,13 +9,21 @@ import pytest
 
 from kittycad import AsyncKittyCAD, KittyCAD
 from kittycad.models import (
+    Announcement,
     BillingInfo,
     FactoryCustomerCatalogOption,
+    KclProjectPreviewStatus,
+    KclProjectPublicationStatus,
     KclProjectShareLinkAccessMode,
     OrgSkillResponse,
     PaymentMethod,
     PaymentMethodType,
+    ProjectAccessResponse,
+    ProjectAccessScope,
+    ProjectCategoryResponse,
+    ProjectPublicationInfoResponse,
     ProjectShareLinkResponse,
+    ProjectSummaryResponse,
     PublicProjectOwnerResponse,
     PublicProjectResponse,
     Uuid,
@@ -40,6 +48,56 @@ class ListEndpoint:
 
 
 ENDPOINTS = [
+    ListEndpoint(
+        "/announcements",
+        Announcement(
+            active=True,
+            created_at=CREATED_AT,
+            id=PROJECT_ID,
+            title="Example",
+            updated_at=CREATED_AT,
+        ),
+        lambda client: client.meta.get_announcements(limit=1),
+        lambda client: client.meta.get_announcements(limit=1),
+    ),
+    ListEndpoint(
+        "/projects/categories",
+        ProjectCategoryResponse(
+            description="Example category",
+            display_name="Example",
+            id=PROJECT_ID,
+            slug="example",
+            sort_order=0,
+        ),
+        lambda client: client.projects.list_project_categories(limit=1),
+        lambda client: client.projects.list_project_categories(limit=1),
+    ),
+    ListEndpoint(
+        "/user/projects",
+        ProjectSummaryResponse(
+            access=ProjectAccessResponse(
+                can_delete=True,
+                can_edit=True,
+                can_manage_organization=False,
+                scope=ProjectAccessScope.PERSONAL,
+            ),
+            category_ids=[],
+            created_at=CREATED_AT,
+            description="Example project",
+            entrypoint_path="main.kcl",
+            id=PROJECT_ID,
+            metadata_revision="example-metadata",
+            preview_status=KclProjectPreviewStatus.PENDING,
+            project_toml_path="project.toml",
+            publication=ProjectPublicationInfoResponse(has_unpublished_changes=False),
+            publication_status=KclProjectPublicationStatus.PRIVATE,
+            revision="example",
+            title="Example",
+            updated_at=CREATED_AT,
+        ),
+        lambda client: client.projects.list_projects(limit=1),
+        lambda client: client.projects.list_projects(limit=1),
+    ),
     ListEndpoint(
         "/org/skills",
         OrgSkillResponse(

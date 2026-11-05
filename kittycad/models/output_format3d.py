@@ -1,5 +1,5 @@
 import datetime
-from typing import Literal, Optional, Union
+from typing import Dict, Literal, Optional, Union
 
 from pydantic import Field, RootModel
 from typing_extensions import Annotated
@@ -7,6 +7,7 @@ from typing_extensions import Annotated
 from ..models.fbx_storage import FbxStorage
 from ..models.gltf_presentation import GltfPresentation
 from ..models.gltf_storage import GltfStorage
+from ..models.named_view import NamedView
 from ..models.ply_storage import PlyStorage
 from ..models.selection import Selection
 from ..models.step_presentation import StepPresentation
@@ -32,11 +33,13 @@ class OptionGltf(KittyCadBaseModel):
 
     include_uuids: Optional[bool] = False
 
-    presentation: GltfPresentation
+    presentation: Optional[GltfPresentation] = "pretty"  # type: ignore[assignment]
 
-    storage: GltfStorage
+    storage: Optional[GltfStorage] = "embedded"  # type: ignore[assignment]
 
     type: Literal["gltf"] = "gltf"
+
+    views: Optional[Dict[str, NamedView]] = None
 
 
 class OptionObj(KittyCadBaseModel):
@@ -80,6 +83,8 @@ class OptionStep(KittyCadBaseModel):
     type: Literal["step"] = "step"
 
     units: Optional[UnitLength] = "m"  # type: ignore[assignment]
+
+    views: Optional[Dict[str, NamedView]] = None
 
 
 class OptionStl(KittyCadBaseModel):

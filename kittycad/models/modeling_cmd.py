@@ -28,6 +28,7 @@ from ..models.extruded_face_info import ExtrudedFaceInfo
 from ..models.image_format import ImageFormat
 from ..models.import_file import ImportFile
 from ..models.input_format3d import InputFormat3d
+from ..models.kcl_project import KclProject
 from ..models.kcl_version import KclVersion
 from ..models.length_unit import LengthUnit
 from ..models.mirror_across import MirrorAcross
@@ -442,6 +443,8 @@ class OptionExport3d(KittyCadBaseModel):
 
     format: OutputFormat3d
 
+    kcl_source: Optional[KclProject] = None
+
     type: Literal["export3d"] = "export3d"
 
 
@@ -453,6 +456,8 @@ class OptionExport(KittyCadBaseModel):
     entity_ids: List[str]
 
     format: OutputFormat3d
+
+    kcl_source: Optional[KclProject] = None
 
     type: Literal["export"] = "export"
 
