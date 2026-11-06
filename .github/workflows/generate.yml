@@ -20,7 +20,7 @@ jobs:
             exit 0
           fi
           # Compare the PR merge commit with its base, not the previous PR commit.
-          changed=$(git diff --name-only HEAD^1 HEAD -- justfile .github/workflows/generate.yml spec.json generate/generate.py pyproject.toml uv.lock)
+          changed=$(git diff --name-only HEAD^1 HEAD -- justfile .github/workflows/generate.yml spec.json generate pyproject.toml uv.lock)
           if [[ -n "$changed" ]]; then
             echo "changed=true" >> "$GITHUB_OUTPUT"
           else

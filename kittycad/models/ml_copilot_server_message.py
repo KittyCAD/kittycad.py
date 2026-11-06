@@ -3,6 +3,12 @@ from typing import Any, Dict, List, Optional, Union
 
 from pydantic import RootModel, model_serializer, model_validator
 
+from ..models.kcl_migration_application import (
+    KclMigrationApplication as KclMigrationApplicationModel,
+)
+from ..models.kcl_migration_operation import (
+    KclMigrationOperation as KclMigrationOperationModel,
+)
 from ..models.ml_copilot_access_denied_code import MlCopilotAccessDeniedCode
 from ..models.ml_copilot_file import MlCopilotFile
 from ..models.ml_copilot_mode_option import MlCopilotModeOption
@@ -185,6 +191,60 @@ class AccessDenied(KittyCadBaseModel):
         payload = handler(self, info)
 
         return {"access_denied": payload}
+
+
+class KclMigrationOperation(KittyCadBaseModel):
+    """API-owned migration state. Candidate files are released only after API validates and stores the worker result. Replaying conversation history must not apply these files again."""
+
+    operation: KclMigrationOperationModel
+
+    @model_validator(mode="before")
+    @classmethod
+    def _unwrap(cls, data):
+
+        if (
+            isinstance(data, dict)
+            and "kcl_migration_operation" in data
+            and isinstance(data["kcl_migration_operation"], dict)
+        ):
+            return data["kcl_migration_operation"]
+
+        return data
+
+    @model_serializer(mode="wrap")
+    def _wrap(self, handler, info):
+
+        payload = handler(self, info)
+
+        return {"kcl_migration_operation": payload}
+
+
+class KclMigrationApplication(KittyCadBaseModel):
+    """Acknowledge the client's reported Apply/Undo/Redo state."""
+
+    application: KclMigrationApplicationModel
+
+    operation_id: Uuid
+
+    @model_validator(mode="before")
+    @classmethod
+    def _unwrap(cls, data):
+
+        if (
+            isinstance(data, dict)
+            and "kcl_migration_application" in data
+            and isinstance(data["kcl_migration_application"], dict)
+        ):
+            return data["kcl_migration_application"]
+
+        return data
+
+    @model_serializer(mode="wrap")
+    def _wrap(self, handler, info):
+
+        payload = handler(self, info)
+
+        return {"kcl_migration_application": payload}
 
 
 class Info(KittyCadBaseModel):
@@ -734,6 +794,8 @@ MlCopilotServerMessage = RootModel[
         ToolOutput,
         Error,
         AccessDenied,
+        KclMigrationOperation,
+        KclMigrationApplication,
         Info,
         ModesResponse,
         BackendShutdown,

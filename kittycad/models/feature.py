@@ -28,10 +28,6 @@ class Feature(str, Enum):
 
     EXECUTION_JOBS = "execution_jobs"
 
-    """# Reuses unchanged cloud project file contents across versions."""  # noqa: E501
-
-    PROJECT_FILE_STORAGE_REUSE = "project_file_storage_reuse"
-
     """# Enables the Z0006 lint, for converting to new face api syntax in Zoo Design Studio."""  # noqa: E501
 
     ENABLE_Z0006_LINT = "enable_z0006_lint"
@@ -39,6 +35,14 @@ class Feature(str, Enum):
     """# Enables the Factory portal."""  # noqa: E501
 
     FACTORY_PORTAL = "factory_portal"
+
+    """# Enables the authenticated hosted MCP proxy."""  # noqa: E501
+
+    HOSTED_MCP = "hosted_mcp"
+
+    """# Store org dataset conversions in organization-shared cloud project libraries."""  # noqa: E501
+
+    ORG_DATASET_CLOUD_PROJECTS = "org_dataset_cloud_projects"
 
     """# KCL CEK machine executor."""  # noqa: E501
 
@@ -83,14 +87,6 @@ class Feature(str, Enum):
     """# Enables drawing features across Zoo applications."""  # noqa: E501
 
     DRAWINGS = "drawings"
-
-    """# Enables modeling dialogs in Zoo Design Studio."""  # noqa: E501
-
-    MODELING_DIALOGS = "modeling_dialogs"
-
-    """# Enables the named views user interface in Zoo Design Studio."""  # noqa: E501
-
-    NAMED_VIEWS_UI = "named_views_ui"
 
     """# Enables the Scene browser and model tree UI in Zoo Design Studio."""  # noqa: E501
 

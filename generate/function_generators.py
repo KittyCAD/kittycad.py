@@ -168,9 +168,7 @@ def generate_sync_function(path: str, method: str, endpoint: dict, data: dict) -
         # Extract item type from response type (e.g., "ApiCallWithPriceResultsPage" -> "ApiCallWithPrice")
         item_type = response_type.replace("ResultsPage", "")
         context["item_type"] = item_type
-        context["api_section"] = (
-            path.split("/")[1] if len(path.split("/")) > 1 else "api"
-        )
+        context["api_section"] = endpoint.get("tags", ["api"])[0].replace("-", "_")
 
     return template.render(context)
 
@@ -274,9 +272,7 @@ def generate_async_function(path: str, method: str, endpoint: dict, data: dict) 
         # Extract item type from response type (e.g., "ApiCallWithPriceResultsPage" -> "ApiCallWithPrice")
         item_type = response_type.replace("ResultsPage", "")
         context["item_type"] = item_type
-        context["api_section"] = (
-            path.split("/")[1] if len(path.split("/")) > 1 else "api"
-        )
+        context["api_section"] = endpoint.get("tags", ["api"])[0].replace("-", "_")
 
     return template.render(context)
 
