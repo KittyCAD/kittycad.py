@@ -63,6 +63,44 @@ Available Paginated Endpoints
 The following endpoints support automatic pagination:
 
 
+Addresses API
+-------------
+
+**list_org_addresses**
+    List saved addresses belonging to your active organization.
+
+    Returns: ``SyncPageIterator[AddressResponse]``
+
+    Example:
+
+    .. code-block:: python
+
+        # Sync
+        for item in client.addresses.list_org_addresses():
+            print(item)
+
+        # Async
+        async for item in client.addresses.list_org_addresses():
+            print(item)
+
+**list_user_addresses**
+    List your saved addresses, including the current billing address.
+
+    Returns: ``SyncPageIterator[AddressResponse]``
+
+    Example:
+
+    .. code-block:: python
+
+        # Sync
+        for item in client.addresses.list_user_addresses():
+            print(item)
+
+        # Async
+        async for item in client.addresses.list_user_addresses():
+            print(item)
+
+
 Api Calls API
 -------------
 

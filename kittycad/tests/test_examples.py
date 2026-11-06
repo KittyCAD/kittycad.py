@@ -6,6 +6,7 @@ import pytest
 from kittycad import AsyncKittyCAD, KittyCAD
 from kittycad.models import (
     AccountProvider,
+    AddressResponse,
     AggregateUsageCollectionThresholdView,
     Announcement,
     ApiCallWithPrice,
@@ -92,20 +93,22 @@ from kittycad.models import (
     ZooProductSubscriptions,
 )
 from kittycad.models.add_org_member import AddOrgMember
+from kittycad.models.address_contact import AddressContact
+from kittycad.models.address_details import AddressDetails
 from kittycad.models.aggregate_usage_collection_threshold_set import (
     AggregateUsageCollectionThresholdSet,
 )
 from kittycad.models.api_token_uuid import ApiTokenUuid
 from kittycad.models.axis import Axis
 from kittycad.models.axis_direction_pair import AxisDirectionPair
-from kittycad.models.base64data import Base64Data
 from kittycad.models.billing_info import BillingInfo
 from kittycad.models.client_error_report import ClientErrorReport
-from kittycad.models.client_metrics import ClientMetrics
 from kittycad.models.code_language import CodeLanguage
 from kittycad.models.code_option import CodeOption
 from kittycad.models.conversion_params import ConversionParams
 from kittycad.models.conversion_sort_mode import ConversionSortMode
+from kittycad.models.country_code import CountryCode
+from kittycad.models.create_address_request import CreateAddressRequest
 from kittycad.models.create_custom_model import CreateCustomModel
 from kittycad.models.create_o_auth2_app_request import CreateOAuth2AppRequest
 from kittycad.models.create_org_dataset import CreateOrgDataset
@@ -122,50 +125,42 @@ from kittycad.models.email_marketing_confirm_token_body import (
 )
 from kittycad.models.file_export_format import FileExportFormat
 from kittycad.models.file_import_format import FileImportFormat
-from kittycad.models.idp_metadata_source import (
-    IdpMetadataSource,
-    OptionBase64EncodedXml,
-)
-from kittycad.models.input_format3d import InputFormat3d, OptionObj
+from kittycad.models.gltf_presentation import GltfPresentation
+from kittycad.models.gltf_storage import GltfStorage
+from kittycad.models.idp_metadata_source import IdpMetadataSource, OptionUrl
+from kittycad.models.input_format3d import InputFormat3d, OptionStep
 from kittycad.models.kcl_code_completion_params import KclCodeCompletionParams
 from kittycad.models.kcl_code_completion_request import KclCodeCompletionRequest
-from kittycad.models.kcl_migration_client_message import OptionStart
-from kittycad.models.kcl_migration_request import KclMigrationRequest
-from kittycad.models.kcl_migration_target import KclMigrationTarget
+from kittycad.models.kcl_migration_client_message import OptionStatus
 from kittycad.models.kcl_project_library_source import KclProjectLibrarySource
 from kittycad.models.kcl_project_share_link_access_mode import (
     KclProjectShareLinkAccessMode,
 )
 from kittycad.models.kcl_version import KclVersion
 from kittycad.models.lenient_url import LenientUrl
-from kittycad.models.ml_copilot_client_command_status import (
-    MlCopilotClientCommandStatus,
-)
+from kittycad.models.ml_copilot_client_command import MlCopilotClientCommand
 from kittycad.models.ml_copilot_client_message import (
-    OptionAttachmentResponse,
-    OptionClientCommandResponse,
-)
-from kittycad.models.ml_copilot_file import MlCopilotFile
-from kittycad.models.ml_copilot_project_snapshot_metadata import (
-    MlCopilotProjectSnapshotMetadata,
+    OptionHeaders,
+    OptionUpdateClientCommandSchema,
 )
 from kittycad.models.ml_copilot_replay_attachment_mode import (
     MlCopilotReplayAttachmentMode,
 )
 from kittycad.models.ml_feedback import MlFeedback
+from kittycad.models.modeling_cmd_id import ModelingCmdId
+from kittycad.models.named_view import NamedView
 from kittycad.models.o_auth2_app_grant_type import OAuth2AppGrantType
 from kittycad.models.org_dataset_source import OrgDatasetSource
 from kittycad.models.org_details import OrgDetails
-from kittycad.models.output_format3d import (
-    OptionObj as OutputFormat3dOptionObj,
-    OutputFormat3d,
-)
+from kittycad.models.output_format3d import OptionGltf, OutputFormat3d
+from kittycad.models.point3d import Point3d
 from kittycad.models.post_effect_type import PostEffectType
 from kittycad.models.privacy_settings import PrivacySettings
 from kittycad.models.project_access_scope import ProjectAccessScope
 from kittycad.models.project_archive_format import ProjectArchiveFormat
 from kittycad.models.project_library_scope import ProjectLibraryScope
 from kittycad.models.project_semantic_search_request import ProjectSemanticSearchRequest
+from kittycad.models.projection import OptionPerspective, Projection
 from kittycad.models.public_email_marketing_consent_request import (
     PublicEmailMarketingConsentRequest,
 )
@@ -173,10 +168,14 @@ from kittycad.models.public_mailing_list_membership_request import (
     PublicMailingListMembershipRequest,
 )
 from kittycad.models.rename_project_library_request import RenameProjectLibraryRequest
+from kittycad.models.rtc_ice_candidate_init import RtcIceCandidateInit
 from kittycad.models.sales_inquiry_type import SalesInquiryType
 from kittycad.models.saml_identity_provider_create import SamlIdentityProviderCreate
 from kittycad.models.service_account_uuid import ServiceAccountUuid
 from kittycad.models.session_uuid import SessionUuid
+from kittycad.models.step_import_target_representation import (
+    StepImportTargetRepresentation,
+)
 from kittycad.models.storage_provider import StorageProvider
 from kittycad.models.support_inquiry_type import SupportInquiryType
 from kittycad.models.system import System
@@ -194,6 +193,7 @@ from kittycad.models.unit_pressure import UnitPressure
 from kittycad.models.unit_temperature import UnitTemperature
 from kittycad.models.unit_torque import UnitTorque
 from kittycad.models.unit_volume import UnitVolume
+from kittycad.models.update_address_request import UpdateAddressRequest
 from kittycad.models.update_custom_model import UpdateCustomModel
 from kittycad.models.update_member_to_org_body import UpdateMemberToOrgBody
 from kittycad.models.update_o_auth2_app_request import UpdateOAuth2AppRequest
@@ -204,7 +204,8 @@ from kittycad.models.update_user import UpdateUser
 from kittycad.models.user_identifier import UserIdentifier
 from kittycad.models.user_org_role import UserOrgRole
 from kittycad.models.uuid import Uuid
-from kittycad.models.web_socket_request import OptionMetricsResponse
+from kittycad.models.visibility import Visibility
+from kittycad.models.web_socket_request import OptionTrickleIce
 from kittycad.models.website_sales_form import WebsiteSalesForm
 from kittycad.models.website_support_form import WebsiteSupportForm
 from kittycad.models.zoo_product_subscriptions_org_request import (
@@ -557,22 +558,36 @@ def test_create_file_conversion_options():
     result: FileConversion = client.file.create_file_conversion_options(
         body=ConversionParams(
             output_format=OutputFormat3d(
-                OutputFormat3dOptionObj(
-                    coords=System(
-                        forward=AxisDirectionPair(
-                            axis=Axis.Y,
-                            direction=Direction.POSITIVE,
-                        ),
-                        up=AxisDirectionPair(
-                            axis=Axis.Y,
-                            direction=Direction.POSITIVE,
-                        ),
-                    ),
-                    units=UnitLength.CM,
+                OptionGltf(
+                    include_uuids=False,
+                    presentation=GltfPresentation.COMPACT,
+                    storage=GltfStorage.BINARY,
+                    views={
+                        "<string>": NamedView(
+                            baseline=Visibility.SHOW,
+                            except_ids=[ModelingCmdId("<string>")],
+                            projection=Projection(OptionPerspective()),
+                            target=Point3d(
+                                x=3.14,
+                                y=3.14,
+                                z=3.14,
+                            ),
+                            up=Point3d(
+                                x=3.14,
+                                y=3.14,
+                                z=3.14,
+                            ),
+                            vantage=Point3d(
+                                x=3.14,
+                                y=3.14,
+                                z=3.14,
+                            ),
+                        )
+                    },
                 )
             ),
             src_format=InputFormat3d(
-                OptionObj(
+                OptionStep(
                     coords=System(
                         forward=AxisDirectionPair(
                             axis=Axis.Y,
@@ -583,7 +598,8 @@ def test_create_file_conversion_options():
                             direction=Direction.POSITIVE,
                         ),
                     ),
-                    units=UnitLength.CM,
+                    split_closed_faces=False,
+                    target_representation=StepImportTargetRepresentation.MESH,
                 )
             ),
         ),
@@ -607,22 +623,36 @@ async def test_create_file_conversion_options_async():
     result: FileConversion = await client.file.create_file_conversion_options(
         body=ConversionParams(
             output_format=OutputFormat3d(
-                OutputFormat3dOptionObj(
-                    coords=System(
-                        forward=AxisDirectionPair(
-                            axis=Axis.Y,
-                            direction=Direction.POSITIVE,
-                        ),
-                        up=AxisDirectionPair(
-                            axis=Axis.Y,
-                            direction=Direction.POSITIVE,
-                        ),
-                    ),
-                    units=UnitLength.CM,
+                OptionGltf(
+                    include_uuids=False,
+                    presentation=GltfPresentation.COMPACT,
+                    storage=GltfStorage.BINARY,
+                    views={
+                        "<string>": NamedView(
+                            baseline=Visibility.SHOW,
+                            except_ids=[ModelingCmdId("<string>")],
+                            projection=Projection(OptionPerspective()),
+                            target=Point3d(
+                                x=3.14,
+                                y=3.14,
+                                z=3.14,
+                            ),
+                            up=Point3d(
+                                x=3.14,
+                                y=3.14,
+                                z=3.14,
+                            ),
+                            vantage=Point3d(
+                                x=3.14,
+                                y=3.14,
+                                z=3.14,
+                            ),
+                        )
+                    },
                 )
             ),
             src_format=InputFormat3d(
-                OptionObj(
+                OptionStep(
                     coords=System(
                         forward=AxisDirectionPair(
                             axis=Axis.Y,
@@ -633,7 +663,8 @@ async def test_create_file_conversion_options_async():
                             direction=Direction.POSITIVE,
                         ),
                     ),
-                    units=UnitLength.CM,
+                    split_closed_faces=False,
+                    target_representation=StepImportTargetRepresentation.MESH,
                 )
             ),
         ),
@@ -1097,6 +1128,191 @@ async def test_update_org_async():
             name="<string>",
             phone="<string>",
         )
+    )
+
+
+@pytest.mark.skip
+def test_list_org_addresses():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    # Iterate through all pages automatically
+    item: AddressResponse
+    for item in client.addresses.list_org_addresses(limit=None, page_token=None):
+        print(item)
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_list_org_addresses_async():
+
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    # Iterate through all pages automatically
+    iterator = client.addresses.list_org_addresses(limit=None, page_token=None)
+    item: AddressResponse
+    async for item in iterator:
+        print(item)
+
+
+@pytest.mark.skip
+def test_create_org_address():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: AddressResponse = client.addresses.create_org_address(
+        body=CreateAddressRequest(
+            contact=AddressContact(
+                company="<string>",
+                phone="<string>",
+                recipient="<string>",
+            ),
+            is_default_shipping=False,
+            is_saved=False,
+            label="<string>",
+            postal=AddressDetails(
+                city="<string>",
+                country=CountryCode("<string>"),
+                state="<string>",
+                street1="<string>",
+                street2="<string>",
+                zip="<string>",
+            ),
+        )
+    )
+
+    body: AddressResponse = result
+    print(body)
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_create_org_address_async():
+
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: AddressResponse = await client.addresses.create_org_address(
+        body=CreateAddressRequest(
+            contact=AddressContact(
+                company="<string>",
+                phone="<string>",
+                recipient="<string>",
+            ),
+            is_default_shipping=False,
+            is_saved=False,
+            label="<string>",
+            postal=AddressDetails(
+                city="<string>",
+                country=CountryCode("<string>"),
+                state="<string>",
+                street1="<string>",
+                street2="<string>",
+                zip="<string>",
+            ),
+        )
+    )
+
+
+@pytest.mark.skip
+def test_delete_org_address():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    client.addresses.delete_org_address(
+        id=Uuid("<string>"), expected_revision=Uuid("<string>")
+    )
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_delete_org_address_async():
+
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    await client.addresses.delete_org_address(
+        id=Uuid("<string>"), expected_revision=Uuid("<string>")
+    )
+
+
+@pytest.mark.skip
+def test_get_org_address():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: AddressResponse = client.addresses.get_org_address(id=Uuid("<string>"))
+
+    body: AddressResponse = result
+    print(body)
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_get_org_address_async():
+
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: AddressResponse = await client.addresses.get_org_address(
+        id=Uuid("<string>")
+    )
+
+
+@pytest.mark.skip
+def test_update_org_address():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: AddressResponse = client.addresses.update_org_address(
+        id=Uuid("<string>"),
+        body=UpdateAddressRequest(
+            contact=AddressContact(
+                company="<string>",
+                phone="<string>",
+                recipient="<string>",
+            ),
+            expected_revision=Uuid("<string>"),
+            is_default_shipping=False,
+            label="<string>",
+            postal=AddressDetails(
+                city="<string>",
+                country=CountryCode("<string>"),
+                state="<string>",
+                street1="<string>",
+                street2="<string>",
+                zip="<string>",
+            ),
+        ),
+    )
+
+    body: AddressResponse = result
+    print(body)
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_update_org_address_async():
+
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: AddressResponse = await client.addresses.update_org_address(
+        id=Uuid("<string>"),
+        body=UpdateAddressRequest(
+            contact=AddressContact(
+                company="<string>",
+                phone="<string>",
+                recipient="<string>",
+            ),
+            expected_revision=Uuid("<string>"),
+            is_default_shipping=False,
+            label="<string>",
+            postal=AddressDetails(
+                city="<string>",
+                country=CountryCode("<string>"),
+                state="<string>",
+                street1="<string>",
+                street2="<string>",
+                zip="<string>",
+            ),
+        ),
     )
 
 
@@ -2475,8 +2691,8 @@ def test_create_org_saml_idp():
         body=SamlIdentityProviderCreate(
             idp_entity_id="<string>",
             idp_metadata_source=IdpMetadataSource(
-                OptionBase64EncodedXml(
-                    data=Base64Data(b"<bytes>"),
+                OptionUrl(
+                    url="<string>",
                 )
             ),
             technical_contact_email="<string>",
@@ -2498,8 +2714,8 @@ async def test_create_org_saml_idp_async():
         body=SamlIdentityProviderCreate(
             idp_entity_id="<string>",
             idp_metadata_source=IdpMetadataSource(
-                OptionBase64EncodedXml(
-                    data=Base64Data(b"<bytes>"),
+                OptionUrl(
+                    url="<string>",
                 )
             ),
             technical_contact_email="<string>",
@@ -2515,8 +2731,8 @@ def test_update_org_saml_idp():
         body=SamlIdentityProviderCreate(
             idp_entity_id="<string>",
             idp_metadata_source=IdpMetadataSource(
-                OptionBase64EncodedXml(
-                    data=Base64Data(b"<bytes>"),
+                OptionUrl(
+                    url="<string>",
                 )
             ),
             technical_contact_email="<string>",
@@ -2538,8 +2754,8 @@ async def test_update_org_saml_idp_async():
         body=SamlIdentityProviderCreate(
             idp_entity_id="<string>",
             idp_metadata_source=IdpMetadataSource(
-                OptionBase64EncodedXml(
-                    data=Base64Data(b"<bytes>"),
+                OptionUrl(
+                    url="<string>",
                 )
             ),
             technical_contact_email="<string>",
@@ -3329,6 +3545,191 @@ async def test_update_user_self_async():
             phone="<string>",
             username="<string>",
         )
+    )
+
+
+@pytest.mark.skip
+def test_list_user_addresses():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    # Iterate through all pages automatically
+    item: AddressResponse
+    for item in client.addresses.list_user_addresses(limit=None, page_token=None):
+        print(item)
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_list_user_addresses_async():
+
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    # Iterate through all pages automatically
+    iterator = client.addresses.list_user_addresses(limit=None, page_token=None)
+    item: AddressResponse
+    async for item in iterator:
+        print(item)
+
+
+@pytest.mark.skip
+def test_create_user_address():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: AddressResponse = client.addresses.create_user_address(
+        body=CreateAddressRequest(
+            contact=AddressContact(
+                company="<string>",
+                phone="<string>",
+                recipient="<string>",
+            ),
+            is_default_shipping=False,
+            is_saved=False,
+            label="<string>",
+            postal=AddressDetails(
+                city="<string>",
+                country=CountryCode("<string>"),
+                state="<string>",
+                street1="<string>",
+                street2="<string>",
+                zip="<string>",
+            ),
+        )
+    )
+
+    body: AddressResponse = result
+    print(body)
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_create_user_address_async():
+
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: AddressResponse = await client.addresses.create_user_address(
+        body=CreateAddressRequest(
+            contact=AddressContact(
+                company="<string>",
+                phone="<string>",
+                recipient="<string>",
+            ),
+            is_default_shipping=False,
+            is_saved=False,
+            label="<string>",
+            postal=AddressDetails(
+                city="<string>",
+                country=CountryCode("<string>"),
+                state="<string>",
+                street1="<string>",
+                street2="<string>",
+                zip="<string>",
+            ),
+        )
+    )
+
+
+@pytest.mark.skip
+def test_delete_user_address():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    client.addresses.delete_user_address(
+        id=Uuid("<string>"), expected_revision=Uuid("<string>")
+    )
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_delete_user_address_async():
+
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    await client.addresses.delete_user_address(
+        id=Uuid("<string>"), expected_revision=Uuid("<string>")
+    )
+
+
+@pytest.mark.skip
+def test_get_user_address():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: AddressResponse = client.addresses.get_user_address(id=Uuid("<string>"))
+
+    body: AddressResponse = result
+    print(body)
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_get_user_address_async():
+
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: AddressResponse = await client.addresses.get_user_address(
+        id=Uuid("<string>")
+    )
+
+
+@pytest.mark.skip
+def test_update_user_address():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: AddressResponse = client.addresses.update_user_address(
+        id=Uuid("<string>"),
+        body=UpdateAddressRequest(
+            contact=AddressContact(
+                company="<string>",
+                phone="<string>",
+                recipient="<string>",
+            ),
+            expected_revision=Uuid("<string>"),
+            is_default_shipping=False,
+            label="<string>",
+            postal=AddressDetails(
+                city="<string>",
+                country=CountryCode("<string>"),
+                state="<string>",
+                street1="<string>",
+                street2="<string>",
+                zip="<string>",
+            ),
+        ),
+    )
+
+    body: AddressResponse = result
+    print(body)
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_update_user_address_async():
+
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: AddressResponse = await client.addresses.update_user_address(
+        id=Uuid("<string>"),
+        body=UpdateAddressRequest(
+            contact=AddressContact(
+                company="<string>",
+                phone="<string>",
+                recipient="<string>",
+            ),
+            expected_revision=Uuid("<string>"),
+            is_default_shipping=False,
+            label="<string>",
+            postal=AddressDetails(
+                city="<string>",
+                country=CountryCode("<string>"),
+                state="<string>",
+                street1="<string>",
+                street2="<string>",
+                zip="<string>",
+            ),
+        ),
     )
 
 
@@ -5551,14 +5952,8 @@ def test_ml_copilot_ws():
         # Send a message.
         websocket.send(
             MlCopilotClientMessage(
-                OptionAttachmentResponse(
-                    files=[
-                        MlCopilotFile(
-                            data=b"<bytes>",
-                            mimetype="<string>",
-                            name="<string>",
-                        )
-                    ],
+                OptionHeaders(
+                    headers={"<string>": "<string>"},
                 )
             )
         )
@@ -5600,18 +5995,8 @@ def test_kcl_migration_ws():
         # Send a message.
         websocket.send(
             KclMigrationClientMessage(
-                OptionStart(
-                    request=KclMigrationRequest(
-                        allow_preview=False,
-                        current_files={"<string>": b"<bytes>"},
-                        entrypoint="<string>",
-                        project_snapshot=MlCopilotProjectSnapshotMetadata(
-                            project_id="<string>",
-                            snapshot_id="<string>",
-                        ),
-                        request_id=Uuid("<string>"),
-                        target=KclMigrationTarget.VAL_3_0_PREVIEW,
-                    ),
+                OptionStatus(
+                    operation_id=Uuid("<string>"),
                 )
             )
         )
@@ -5648,10 +6033,17 @@ def test_ml_reasoning_ws():
         # Send a message.
         websocket.send(
             MlCopilotClientMessage(
-                OptionClientCommandResponse(
-                    catalog_revision=10,
-                    request_id="<string>",
-                    status=MlCopilotClientCommandStatus.ACCEPTED,
+                OptionUpdateClientCommandSchema(
+                    commands=[
+                        MlCopilotClientCommand(
+                            description="<string>",
+                            id="<string>",
+                            input_schema={},
+                            title="<string>",
+                        )
+                    ],
+                    protocol_version=10,
+                    revision=10,
                 )
             )
         )
@@ -5703,8 +6095,10 @@ def test_modeling_commands_ws():
         # Send a message.
         websocket.send(
             WebSocketRequest(
-                OptionMetricsResponse(
-                    metrics=ClientMetrics(),
+                OptionTrickleIce(
+                    candidate=RtcIceCandidateInit(
+                        candidate="<string>",
+                    ),
                 )
             )
         )
