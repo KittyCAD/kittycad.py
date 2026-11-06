@@ -33,9 +33,9 @@
         {% endif %}
         {% endfor %}
         
-        return ws_connect(
+        return _ws_connect_sync(
             url.replace("http", "ws"), 
             additional_headers=self.client.get_headers(), 
             close_timeout=120, 
-            max_size=None
+            max_size=None,
         )  # type: ignore

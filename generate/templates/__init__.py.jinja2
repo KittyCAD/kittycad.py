@@ -7,6 +7,7 @@ import httpx
 {% if has_websockets %}
 import json
 import bson
+from inspect import signature
 from websockets.asyncio.client import (
     ClientConnection as ClientConnectionAsync,
     connect as ws_connect_async,
@@ -40,6 +41,15 @@ from .models.post_effect_type import PostEffectType
 {% for import in all_imports %}
 {{ import }}
 {% endfor %}
+
+{% if has_websockets %}
+def _ws_connect_sync(*args: Any, **kwargs: Any) -> ClientConnectionSync:
+    # Newer transports require explicit opt-in when the SDK owns close().
+    if "legacy" in signature(ws_connect).parameters:
+        kwargs["legacy"] = True
+    return ws_connect(*args, **kwargs)
+
+{% endif %}
 
 {% for tag, functions in endpoints_by_tag.items() %}
 {% set tag_pascal = tag|to_pascal_case %}
@@ -116,7 +126,7 @@ class WebSocket{{ func_name|to_pascal_case }}:
         {% endif %}
         {% endfor %}
         headers = client.get_headers()
-        factory = ws_factory or ws_connect
+        factory = ws_factory or _ws_connect_sync
         self.ws = factory(url.replace("http", "ws"), additional_headers=headers, close_timeout=120, max_size=None)
         self._recv_timeout = (
             client.get_websocket_recv_timeout() if recv_timeout is None else recv_timeout

@@ -2,6 +2,7 @@
 
 import json
 import os
+from inspect import signature
 from typing import Any, Callable, Dict, List, Optional, Union
 
 import bson
@@ -253,6 +254,13 @@ from .models.zoo_product_subscriptions_user_request import (
 from .pagination import AsyncPageIterator, SyncPageIterator
 from .response_helpers import raise_for_status
 from .types import serialize_request_body
+
+
+def _ws_connect_sync(*args: Any, **kwargs: Any) -> ClientConnectionSync:
+    # Newer transports require explicit opt-in when the SDK owns close().
+    if "legacy" in signature(ws_connect).parameters:
+        kwargs["legacy"] = True
+    return ws_connect(*args, **kwargs)
 
 
 class MetaAPI:
@@ -19227,7 +19235,7 @@ class WebSocketCreateExecutorTerm:
         url = ("{}" + "/ws/executor/term").format(client.base_url)
 
         headers = client.get_headers()
-        factory = ws_factory or ws_connect
+        factory = ws_factory or _ws_connect_sync
         self.ws = factory(
             url.replace("http", "ws"),
             additional_headers=headers,
@@ -19324,7 +19332,7 @@ class WebSocketMlCopilotWs:
                 url = url + "?pr=" + str(pr)
 
         headers = client.get_headers()
-        factory = ws_factory or ws_connect
+        factory = ws_factory or _ws_connect_sync
         self.ws = factory(
             url.replace("http", "ws"),
             additional_headers=headers,
@@ -19393,7 +19401,7 @@ class WebSocketKclMigrationWs:
         url = ("{}" + "/ws/ml/kcl-migration").format(client.base_url)
 
         headers = client.get_headers()
-        factory = ws_factory or ws_connect
+        factory = ws_factory or _ws_connect_sync
         self.ws = factory(
             url.replace("http", "ws"),
             additional_headers=headers,
@@ -19463,7 +19471,7 @@ class WebSocketMlReasoningWs:
         url = ("{}" + "/ws/ml/reasoning/{id}").format(client.base_url, id=id)
 
         headers = client.get_headers()
-        factory = ws_factory or ws_connect
+        factory = ws_factory or _ws_connect_sync
         self.ws = factory(
             url.replace("http", "ws"),
             additional_headers=headers,
@@ -19638,7 +19646,7 @@ class WebSocketModelingCommandsWs:
                 url = url + "?pr=" + str(pr)
 
         headers = client.get_headers()
-        factory = ws_factory or ws_connect
+        factory = ws_factory or _ws_connect_sync
         self.ws = factory(
             url.replace("http", "ws"),
             additional_headers=headers,
