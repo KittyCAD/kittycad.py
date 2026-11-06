@@ -7,6 +7,34 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## v1.10.0
+
+### Added
+
+- A `client.addresses` group for listing, creating, reading, updating, and deleting
+  user and organization addresses. List methods paginate automatically in both
+  sync and async clients.
+- Address models: `AddressContact`, `AddressPostalResponse`, `AddressResponse`,
+  `AddressResponseResultsPage`, `CreateAddressRequest`, and `UpdateAddressRequest`.
+- Annotation entity references and `EntityType.ANNOTATION`, plus `step_from` and
+  `auto` variants for `AnnotationMbdLeaderPosition`.
+- The `Feature.ZDS_PROJECT_SHELL_REFACTOR` feature flag.
+
+### Changed
+
+- Factory submission documentation now describes the required shipping address
+  revision and expedited-shipping selection.
+
+### Migration
+
+- Factory submissions must include `shipping_address_revision_id` and
+  `is_expedited` in the multipart JSON body. Create a delivery address with
+  `client.addresses.create_user_address` or `create_org_address` for the job's
+  owner, and submit the returned `revision_id` as `shipping_address_revision_id`.
+  Use the immutable revision ID rather than the address card's `id`.
+
+## v1.9.0
+
 ### Changed
 
 - Allow `websockets>=14.1,<18.0.0`, preserving the existing minimum version while
@@ -17,18 +45,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Allow attrs 26, python-dateutil 4, mypy 2, and prance 26, and refresh the runtime,
   development, and documentation dependency lockfile. Python 3.11 remains supported;
   documentation tools resolve to compatible versions on older Python releases.
-
-### Migration
-
-- When upgrading to websockets 17, code using the raw async connections should follow
-  [websockets 17 migration notes](https://websockets.readthedocs.io/en/stable/project/changelog.html):
-  use `websockets.asyncio.client` imports instead of removed legacy module aliases,
-  and pass the `text` argument to `send()` by keyword if you use it.
-
-## v1.9.0
-
-### Changed
-
 - `meta.get_announcements`, `projects.list_projects`, and
   `projects.list_project_categories` return auto-paginating iterators again,
   matching the paginated API. Sync and async calls accept optional `limit` and
@@ -37,6 +53,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Migration
 
+- When upgrading to websockets 17, code using the raw async connections should follow
+  [websockets 17 migration notes](https://websockets.readthedocs.io/en/stable/project/changelog.html):
+  use `websockets.asyncio.client` imports instead of removed legacy module aliases,
+  and pass the `text` argument to `send()` by keyword if you use it.
 - With `KittyCAD`, collect results with `list(client.meta.get_announcements())`,
   `list(client.projects.list_projects())`, or
   `list(client.projects.list_project_categories())`. Announcements no longer use
