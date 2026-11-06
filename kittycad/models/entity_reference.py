@@ -7,6 +7,14 @@ from ..models.primitive_topology_fallback import PrimitiveTopologyFallback
 from .base import KittyCadBaseModel
 
 
+class OptionAnnotation(KittyCadBaseModel):
+    """A uuid referencing an annotation."""
+
+    annotation_id: str
+
+    type: Literal["annotation"] = "annotation"
+
+
 class OptionPlane(KittyCadBaseModel):
     """A uuid referencing a plane."""
 
@@ -116,6 +124,7 @@ class OptionRegion(KittyCadBaseModel):
 EntityReference = RootModel[
     Annotated[
         Union[
+            OptionAnnotation,
             OptionPlane,
             OptionFace,
             OptionEdge,

@@ -37,6 +37,8 @@ from .exceptions import (
 )
 from .models.account_provider import AccountProvider
 from .models.add_org_member import AddOrgMember
+from .models.address_response import AddressResponse
+from .models.address_response_results_page import AddressResponseResultsPage
 from .models.aggregate_usage_collection_threshold_set import (
     AggregateUsageCollectionThresholdSet,
 )
@@ -62,6 +64,7 @@ from .models.code_output import CodeOutput
 from .models.conversation_results_page import ConversationResultsPage
 from .models.conversion_params import ConversionParams
 from .models.conversion_sort_mode import ConversionSortMode
+from .models.create_address_request import CreateAddressRequest
 from .models.create_custom_model import CreateCustomModel
 from .models.create_o_auth2_app_request import CreateOAuth2AppRequest
 from .models.create_org_dataset import CreateOrgDataset
@@ -222,6 +225,7 @@ from .models.unit_torque import UnitTorque
 from .models.unit_torque_conversion import UnitTorqueConversion
 from .models.unit_volume import UnitVolume
 from .models.unit_volume_conversion import UnitVolumeConversion
+from .models.update_address_request import UpdateAddressRequest
 from .models.update_custom_model import UpdateCustomModel
 from .models.update_member_to_org_body import UpdateMemberToOrgBody
 from .models.update_o_auth2_app_request import UpdateOAuth2AppRequest
@@ -8908,6 +8912,800 @@ class AsyncOrgsAPI:
         return UserOrgInfo.model_validate(json_data, extra="ignore")
 
 
+class AddressesAPI:
+    """API for addresses endpoints"""
+
+    def __init__(self, client: Client) -> None:
+        self.client = client
+
+    def list_org_addresses(
+        self,
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+    ) -> "SyncPageIterator":
+        """Current members can read delivery destinations; only admins see billing cards or manage the book. One-off and archived destinations are omitted.
+
+        Returns an iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            for item in client.addresses.list_org_addresses():
+                print(item)
+        """
+
+        from typing import Any, Dict
+
+        from kittycad.pagination import SyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
+
+        if limit is not None:
+            kwargs["limit"] = limit
+
+        if page_token is not None:
+            kwargs["page_token"] = page_token
+
+        def fetch_page(**kw):
+            return self._fetch_page_list_org_addresses(**kw)
+
+        # Create the page iterator
+        return SyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    def _fetch_page_list_org_addresses(self, **kwargs) -> AddressResponseResultsPage:
+        """Internal method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/org/addresses".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+        # Validate into a Pydantic model (supports BaseModel/RootModel)
+        return AddressResponseResultsPage.model_validate(json_data, extra="ignore")
+
+    def create_org_address(
+        self,
+        body: CreateAddressRequest,
+    ) -> AddressResponse:
+        """Admins can save cards or select shipping defaults. Other current members can create one-off destinations with is_saved=false without modifying the book."""
+
+        url = "{}/org/addresses".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+            content=serialize_request_body(body),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return AddressResponse.model_validate(json_data, extra="ignore")
+
+    def get_org_address(
+        self,
+        id: Uuid,
+    ) -> AddressResponse:
+        """Requires current membership. Billing cards require organization-admin access."""
+
+        url = "{}/org/addresses/{id}".format(self.client.base_url, id=id)
+
+        _client = self.client.get_http_client()
+
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return AddressResponse.model_validate(json_data, extra="ignore")
+
+    def update_org_address(
+        self,
+        id: Uuid,
+        body: UpdateAddressRequest,
+    ) -> AddressResponse:
+        """Requires organization-admin access and the current revision_id as expected_revision. Previously pinned order contents remain unchanged."""
+
+        url = "{}/org/addresses/{id}".format(self.client.base_url, id=id)
+
+        _client = self.client.get_http_client()
+
+        response = _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+            content=serialize_request_body(body),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return AddressResponse.model_validate(json_data, extra="ignore")
+
+    def delete_org_address(
+        self,
+        id: Uuid,
+        expected_revision: Uuid,
+    ):
+        """Requires organization-admin access and the current expected_revision. Previously pinned revisions remain available until organization erasure."""
+
+        url = "{}/org/addresses/{id}".format(self.client.base_url, id=id)
+
+        if expected_revision is not None:
+            if "?" in url:
+                url = url + "&expected_revision=" + str(expected_revision)
+            else:
+                url = url + "?expected_revision=" + str(expected_revision)
+
+        _client = self.client.get_http_client()
+
+        response = _client.delete(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    def list_user_addresses(
+        self,
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+    ) -> "SyncPageIterator":
+        """One-off and archived cards are omitted. Billing cards may contain incomplete historical details and use the payment endpoints for edits. Follow next_page with page_token to read the next page. Results are ordered by stable card ID.
+
+        Returns an iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            for item in client.addresses.list_user_addresses():
+                print(item)
+        """
+
+        from typing import Any, Dict
+
+        from kittycad.pagination import SyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
+
+        if limit is not None:
+            kwargs["limit"] = limit
+
+        if page_token is not None:
+            kwargs["page_token"] = page_token
+
+        def fetch_page(**kw):
+            return self._fetch_page_list_user_addresses(**kw)
+
+        # Create the page iterator
+        return SyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    def _fetch_page_list_user_addresses(self, **kwargs) -> AddressResponseResultsPage:
+        """Internal method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/user/addresses".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+        # Validate into a Pydantic model (supports BaseModel/RootModel)
+        return AddressResponseResultsPage.model_validate(json_data, extra="ignore")
+
+    def create_user_address(
+        self,
+        body: CreateAddressRequest,
+    ) -> AddressResponse:
+        """Set is_saved=false for a one-off destination. It remains owned and erasable while staying out of the picker. Creating a delivery address never changes billing."""
+
+        url = "{}/user/addresses".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+            content=serialize_request_body(body),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return AddressResponse.model_validate(json_data, extra="ignore")
+
+    def get_user_address(
+        self,
+        id: Uuid,
+    ) -> AddressResponse:
+        """Get a personal address and its current immutable revision."""
+
+        url = "{}/user/addresses/{id}".format(self.client.base_url, id=id)
+
+        _client = self.client.get_http_client()
+
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return AddressResponse.model_validate(json_data, extra="ignore")
+
+    def update_user_address(
+        self,
+        id: Uuid,
+        body: UpdateAddressRequest,
+    ) -> AddressResponse:
+        """expected_revision must match the current revision_id. Edits create immutable revisions, preserving any revision already selected by an order. Billing cards must be updated through the payment endpoints."""
+
+        url = "{}/user/addresses/{id}".format(self.client.base_url, id=id)
+
+        _client = self.client.get_http_client()
+
+        response = _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+            content=serialize_request_body(body),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return AddressResponse.model_validate(json_data, extra="ignore")
+
+    def delete_user_address(
+        self,
+        id: Uuid,
+        expected_revision: Uuid,
+    ):
+        """Requires its current expected_revision. Revisions pinned by orders remain available until account erasure. An active billing address cannot be removed."""
+
+        url = "{}/user/addresses/{id}".format(self.client.base_url, id=id)
+
+        if expected_revision is not None:
+            if "?" in url:
+                url = url + "&expected_revision=" + str(expected_revision)
+            else:
+                url = url + "?expected_revision=" + str(expected_revision)
+
+        _client = self.client.get_http_client()
+
+        response = _client.delete(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+
+class AsyncAddressesAPI:
+    """Async API for addresses endpoints"""
+
+    def __init__(self, client: AsyncClient) -> None:
+        self.client = client
+
+    def list_org_addresses(
+        self,
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+    ) -> "AsyncPageIterator":
+        """Current members can read delivery destinations; only admins see billing cards or manage the book. One-off and archived destinations are omitted.
+
+        Returns an async iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            async for item in client.addresses.list_org_addresses():
+                print(item)
+        """
+
+        from typing import Any, Dict
+
+        from kittycad.pagination import AsyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
+
+        if limit is not None:
+            kwargs["limit"] = limit
+
+        if page_token is not None:
+            kwargs["page_token"] = page_token
+
+        async def fetch_page(**kw):
+            return await self._fetch_page_list_org_addresses(**kw)
+
+        # Create the async page iterator
+        return AsyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    async def _fetch_page_list_org_addresses(
+        self, **kwargs
+    ) -> AddressResponseResultsPage:
+        """Internal async method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/org/addresses".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+        # Validate into a Pydantic model (supports BaseModel/RootModel)
+        return AddressResponseResultsPage.model_validate(json_data, extra="ignore")
+
+    async def create_org_address(
+        self,
+        body: CreateAddressRequest,
+    ) -> AddressResponse:
+        """Admins can save cards or select shipping defaults. Other current members can create one-off destinations with is_saved=false without modifying the book."""
+
+        url = "{}/org/addresses".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+            content=serialize_request_body(body),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return AddressResponse.model_validate(json_data, extra="ignore")
+
+    async def get_org_address(
+        self,
+        id: Uuid,
+    ) -> AddressResponse:
+        """Requires current membership. Billing cards require organization-admin access."""
+
+        url = "{}/org/addresses/{id}".format(self.client.base_url, id=id)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return AddressResponse.model_validate(json_data, extra="ignore")
+
+    async def update_org_address(
+        self,
+        id: Uuid,
+        body: UpdateAddressRequest,
+    ) -> AddressResponse:
+        """Requires organization-admin access and the current revision_id as expected_revision. Previously pinned order contents remain unchanged."""
+
+        url = "{}/org/addresses/{id}".format(self.client.base_url, id=id)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+            content=serialize_request_body(body),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return AddressResponse.model_validate(json_data, extra="ignore")
+
+    async def delete_org_address(
+        self,
+        id: Uuid,
+        expected_revision: Uuid,
+    ):
+        """Requires organization-admin access and the current expected_revision. Previously pinned revisions remain available until organization erasure."""
+
+        url = "{}/org/addresses/{id}".format(self.client.base_url, id=id)
+
+        if expected_revision is not None:
+            if "?" in url:
+                url = url + "&expected_revision=" + str(expected_revision)
+            else:
+                url = url + "?expected_revision=" + str(expected_revision)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.delete(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    def list_user_addresses(
+        self,
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+    ) -> "AsyncPageIterator":
+        """One-off and archived cards are omitted. Billing cards may contain incomplete historical details and use the payment endpoints for edits. Follow next_page with page_token to read the next page. Results are ordered by stable card ID.
+
+        Returns an async iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            async for item in client.addresses.list_user_addresses():
+                print(item)
+        """
+
+        from typing import Any, Dict
+
+        from kittycad.pagination import AsyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
+
+        if limit is not None:
+            kwargs["limit"] = limit
+
+        if page_token is not None:
+            kwargs["page_token"] = page_token
+
+        async def fetch_page(**kw):
+            return await self._fetch_page_list_user_addresses(**kw)
+
+        # Create the async page iterator
+        return AsyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    async def _fetch_page_list_user_addresses(
+        self, **kwargs
+    ) -> AddressResponseResultsPage:
+        """Internal async method to fetch a single page."""
+        # Build URL with path parameters
+        url = "{}/user/addresses".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            if "?" in url:
+                url = url + "&limit=" + str(kwargs["limit"])
+            else:
+                url = url + "?limit=" + str(kwargs["limit"])
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            if "?" in url:
+                url = url + "&page_token=" + str(kwargs["page_token"])
+            else:
+                url = url + "?page_token=" + str(kwargs["page_token"])
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+        # Validate into a Pydantic model (supports BaseModel/RootModel)
+        return AddressResponseResultsPage.model_validate(json_data, extra="ignore")
+
+    async def create_user_address(
+        self,
+        body: CreateAddressRequest,
+    ) -> AddressResponse:
+        """Set is_saved=false for a one-off destination. It remains owned and erasable while staying out of the picker. Creating a delivery address never changes billing."""
+
+        url = "{}/user/addresses".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+            content=serialize_request_body(body),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return AddressResponse.model_validate(json_data, extra="ignore")
+
+    async def get_user_address(
+        self,
+        id: Uuid,
+    ) -> AddressResponse:
+        """Get a personal address and its current immutable revision."""
+
+        url = "{}/user/addresses/{id}".format(self.client.base_url, id=id)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return AddressResponse.model_validate(json_data, extra="ignore")
+
+    async def update_user_address(
+        self,
+        id: Uuid,
+        body: UpdateAddressRequest,
+    ) -> AddressResponse:
+        """expected_revision must match the current revision_id. Edits create immutable revisions, preserving any revision already selected by an order. Billing cards must be updated through the payment endpoints."""
+
+        url = "{}/user/addresses/{id}".format(self.client.base_url, id=id)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.put(
+            url=url,
+            headers=self.client.get_headers(),
+            content=serialize_request_body(body),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return AddressResponse.model_validate(json_data, extra="ignore")
+
+    async def delete_user_address(
+        self,
+        id: Uuid,
+        expected_revision: Uuid,
+    ):
+        """Requires its current expected_revision. Revisions pinned by orders remain available until account erasure. An active billing address cannot be removed."""
+
+        url = "{}/user/addresses/{id}".format(self.client.base_url, id=id)
+
+        if expected_revision is not None:
+            if "?" in url:
+                url = url + "&expected_revision=" + str(expected_revision)
+            else:
+                url = url + "?expected_revision=" + str(expected_revision)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.delete(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+
 class PaymentsAPI:
     """API for payments endpoints"""
 
@@ -11769,15 +12567,15 @@ class FactoryAPI:
     def create_user_factory_job(
         self,
     ) -> FactoryJobResponse:
-        """The request is `multipart/form-data`: - one JSON part named `body` (`FactoryIntakeForm`) whose `fields` object holds   intake data (material, finish, quantity, notes, …). Material and finish   are required customer-visible catalog names; all other fields are stored   verbatim so they can be added or renamed without an API change. - one or more file parts (any part name). At least one file is required.
+        """The request is `multipart/form-data`: - one JSON part named `body` (`FactoryIntakeForm`) whose `fields` object holds   intake data (material, finish, quantity, notes, …). Material and finish   are required customer-visible catalog names; all other fields are stored   verbatim so they can be added or renamed without an API change.   The same JSON part requires `shipping_address_revision_id` and `is_expedited`.   First create a delivery address through `/user/addresses` or `/org/addresses`   for the job's owner, then submit its `revision_id`, not its stable card `id`.   All delivery fields except company and street2 are required for Factory.   `is_expedited` is required and accepts booleans or the exact strings "true"/"false".   The job pins that revision without changing billing or following later address-book edits. - one or more file parts (any part name). At least one file is required.
 
         The submitter's identity (email, name, user id) comes from the authenticated account, not the form.
 
         Fetch `GET /user/factory/materials` and `GET /user/factory/finishes`, then send the returned exact `material` and `finish` names. The server rejects missing, non-string, unknown, deleted, and internal-only choices with these stable field-specific `error_code` values: - `factory_material_input_missing` - `factory_material_input_invalid_type` - `factory_material_not_found` - `factory_material_not_customer_visible` - `factory_finish_input_missing` - `factory_finish_input_invalid_type` - `factory_finish_not_found` - `factory_finish_not_customer_visible` - `quantity`: a positive integer.
 
-        Example `body` part: ```json { "fields": { "material": "6061 Aluminum", "finish": "Anodized", "quantity": 10, "notes": "deburr all edges" } } ```
+        Example `body` part: ```json { "fields": { "material": "6061 Aluminum", "finish": "Anodized", "quantity": 10 }, "shipping_address_revision_id": "00000000-0000-4000-8000-000000000001", "is_expedited": false } ```
 
-        Example request (curl): ``` curl -X POST https://api.zoo.dev/user/factory/jobs \\   -H "Authorization: Bearer $ZOO_API_TOKEN" \\   -F 'body={"fields":{"material":"6061 Aluminum","finish":"Anodized","quantity":10}};type=application/json' \\   -F 'file=@bracket.step' ```
+        Example request (curl): ``` curl -X POST https://api.zoo.dev/user/factory/jobs \\   -H "Authorization: Bearer $ZOO_API_TOKEN" \\   -F 'body={"fields":{"material":"6061 Aluminum","finish":"Anodized","quantity":10},"shipping_address_revision_id":"00000000-0000-4000-8000-000000000001","is_expedited":false};type=application/json' \\   -F 'file=@bracket.step' ```
 
         Returns `201` with the created job (`FactoryJobResponse`)."""
 
@@ -12525,15 +13323,15 @@ class AsyncFactoryAPI:
     async def create_user_factory_job(
         self,
     ) -> FactoryJobResponse:
-        """The request is `multipart/form-data`: - one JSON part named `body` (`FactoryIntakeForm`) whose `fields` object holds   intake data (material, finish, quantity, notes, …). Material and finish   are required customer-visible catalog names; all other fields are stored   verbatim so they can be added or renamed without an API change. - one or more file parts (any part name). At least one file is required.
+        """The request is `multipart/form-data`: - one JSON part named `body` (`FactoryIntakeForm`) whose `fields` object holds   intake data (material, finish, quantity, notes, …). Material and finish   are required customer-visible catalog names; all other fields are stored   verbatim so they can be added or renamed without an API change.   The same JSON part requires `shipping_address_revision_id` and `is_expedited`.   First create a delivery address through `/user/addresses` or `/org/addresses`   for the job's owner, then submit its `revision_id`, not its stable card `id`.   All delivery fields except company and street2 are required for Factory.   `is_expedited` is required and accepts booleans or the exact strings "true"/"false".   The job pins that revision without changing billing or following later address-book edits. - one or more file parts (any part name). At least one file is required.
 
         The submitter's identity (email, name, user id) comes from the authenticated account, not the form.
 
         Fetch `GET /user/factory/materials` and `GET /user/factory/finishes`, then send the returned exact `material` and `finish` names. The server rejects missing, non-string, unknown, deleted, and internal-only choices with these stable field-specific `error_code` values: - `factory_material_input_missing` - `factory_material_input_invalid_type` - `factory_material_not_found` - `factory_material_not_customer_visible` - `factory_finish_input_missing` - `factory_finish_input_invalid_type` - `factory_finish_not_found` - `factory_finish_not_customer_visible` - `quantity`: a positive integer.
 
-        Example `body` part: ```json { "fields": { "material": "6061 Aluminum", "finish": "Anodized", "quantity": 10, "notes": "deburr all edges" } } ```
+        Example `body` part: ```json { "fields": { "material": "6061 Aluminum", "finish": "Anodized", "quantity": 10 }, "shipping_address_revision_id": "00000000-0000-4000-8000-000000000001", "is_expedited": false } ```
 
-        Example request (curl): ``` curl -X POST https://api.zoo.dev/user/factory/jobs \\   -H "Authorization: Bearer $ZOO_API_TOKEN" \\   -F 'body={"fields":{"material":"6061 Aluminum","finish":"Anodized","quantity":10}};type=application/json' \\   -F 'file=@bracket.step' ```
+        Example request (curl): ``` curl -X POST https://api.zoo.dev/user/factory/jobs \\   -H "Authorization: Bearer $ZOO_API_TOKEN" \\   -F 'body={"fields":{"material":"6061 Aluminum","finish":"Anodized","quantity":10},"shipping_address_revision_id":"00000000-0000-4000-8000-000000000001","is_expedited":false};type=application/json' \\   -F 'file=@bracket.step' ```
 
         Returns `201` with the created job (`FactoryJobResponse`)."""
 
@@ -19735,6 +20533,9 @@ class KittyCAD(Client):
         orgs: OrgsAPI - Access to orgs endpoints
 
 
+        addresses: AddressesAPI - Access to addresses endpoints
+
+
         payments: PaymentsAPI - Access to payments endpoints
 
 
@@ -19777,6 +20578,8 @@ class KittyCAD(Client):
     oauth2: "Oauth2API"
 
     orgs: "OrgsAPI"
+
+    addresses: "AddressesAPI"
 
     payments: "PaymentsAPI"
 
@@ -19828,6 +20631,8 @@ class KittyCAD(Client):
         self.oauth2: Oauth2API = Oauth2API(self)
 
         self.orgs: OrgsAPI = OrgsAPI(self)
+
+        self.addresses: AddressesAPI = AddressesAPI(self)
 
         self.payments: PaymentsAPI = PaymentsAPI(self)
 
@@ -19889,6 +20694,9 @@ class AsyncKittyCAD(AsyncClient):
         orgs: AsyncOrgsAPI - Access to orgs endpoints
 
 
+        addresses: AsyncAddressesAPI - Access to addresses endpoints
+
+
         payments: AsyncPaymentsAPI - Access to payments endpoints
 
 
@@ -19931,6 +20739,8 @@ class AsyncKittyCAD(AsyncClient):
     oauth2: "AsyncOauth2API"
 
     orgs: "AsyncOrgsAPI"
+
+    addresses: "AsyncAddressesAPI"
 
     payments: "AsyncPaymentsAPI"
 
@@ -19982,6 +20792,8 @@ class AsyncKittyCAD(AsyncClient):
         self.oauth2: AsyncOauth2API = AsyncOauth2API(self)
 
         self.orgs: AsyncOrgsAPI = AsyncOrgsAPI(self)
+
+        self.addresses: AsyncAddressesAPI = AsyncAddressesAPI(self)
 
         self.payments: AsyncPaymentsAPI = AsyncPaymentsAPI(self)
 

@@ -3,7 +3,11 @@
 from .account_provider import AccountProvider
 from .add_hole_from_offset import AddHoleFromOffset
 from .add_org_member import AddOrgMember
+from .address_contact import AddressContact
 from .address_details import AddressDetails
+from .address_postal_response import AddressPostalResponse
+from .address_response import AddressResponse
+from .address_response_results_page import AddressResponseResultsPage
 from .adjacency_info import AdjacencyInfo
 from .aggregate_usage_collection_threshold_bounds import (
     AggregateUsageCollectionThresholdBounds,
@@ -96,6 +100,7 @@ from .conversion_params import ConversionParams
 from .conversion_sort_mode import ConversionSortMode
 from .country_code import CountryCode
 from .coupon import Coupon
+from .create_address_request import CreateAddressRequest
 from .create_custom_model import CreateCustomModel
 from .create_o_auth2_app_request import CreateOAuth2AppRequest
 from .create_org_dataset import CreateOrgDataset
@@ -572,6 +577,7 @@ from .unit_torque import UnitTorque
 from .unit_torque_conversion import UnitTorqueConversion
 from .unit_volume import UnitVolume
 from .unit_volume_conversion import UnitVolumeConversion
+from .update_address_request import UpdateAddressRequest
 from .update_annotation import UpdateAnnotation
 from .update_custom_model import UpdateCustomModel
 from .update_member_to_org_body import UpdateMemberToOrgBody

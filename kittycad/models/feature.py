@@ -92,6 +92,10 @@ class Feature(str, Enum):
 
     SCENE_BROWSER = "scene_browser"
 
+    """# Enables the refactored project shell in Zoo Design Studio."""  # noqa: E501
+
+    ZDS_PROJECT_SHELL_REFACTOR = "zds_project_shell_refactor"
+
     """# Enables plugins in Zoo Design Studio."""  # noqa: E501
 
     PLUGINS = "plugins"

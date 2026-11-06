@@ -30,5 +30,7 @@ class EntityType(str, Enum):
 
     PATTERNGROUP = "patterngroup"
 
+    ANNOTATION = "annotation"
+
     def __str__(self) -> str:
         return str(self.value)
