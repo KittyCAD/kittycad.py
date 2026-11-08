@@ -11909,6 +11909,226 @@
         "x-billable": false
       }
     },
+    "/org/factory/jobs/{job_id}/quotes/{quote_id}/accept": {
+      "post": {
+        "tags": [
+          "factory"
+        ],
+        "summary": "Accept your organization's current Factory quote and charge its default card. Requires an organization administrator.",
+        "operationId": "accept_org_factory_quote",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "job_id",
+            "description": "The manufacturing job being purchased.",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Uuid"
+            }
+          },
+          {
+            "in": "path",
+            "name": "quote_id",
+            "description": "The exact published quote accepted by the customer.",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "Access-Control-Allow-Credentials": {
+                "description": "Access-Control-Allow-Credentials header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Headers": {
+                "description": "Access-Control-Allow-Headers header. This is a comma-separated list of headers.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Methods": {
+                "description": "Access-Control-Allow-Methods header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Origin": {
+                "description": "Access-Control-Allow-Origin header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Content-Location": {
+                "description": "The Content-Location header for responses that are not the final destination. This is used to indicate where the resource can be found, when it is finished.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Location": {
+                "description": "The location header for redirects and letting users know if there is a websocket they can listen to for status updates on their operation.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Set-Cookie": {
+                "description": "Set-Cookie header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "X-Api-Call-Id": {
+                "description": "ID for this request. We return it so that users can report this to us and help us debug their problems.",
+                "style": "simple",
+                "required": true,
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FactoryQuoteAcceptance"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/Error"
+          },
+          "5XX": {
+            "$ref": "#/components/responses/Error"
+          }
+        },
+        "x-billable": false
+      },
+      "options": {
+        "tags": [
+          "hidden"
+        ],
+        "summary": "OPTIONS endpoint.",
+        "description": "This is necessary for some preflight requests, specifically POST, PUT, and DELETE.",
+        "operationId": "options_accept_org_factory_quote",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "job_id",
+            "description": "The manufacturing job being purchased.",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Uuid"
+            }
+          },
+          {
+            "in": "path",
+            "name": "quote_id",
+            "description": "The exact published quote accepted by the customer.",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "successful operation, no content",
+            "headers": {
+              "Access-Control-Allow-Credentials": {
+                "description": "Access-Control-Allow-Credentials header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Headers": {
+                "description": "Access-Control-Allow-Headers header. This is a comma-separated list of headers.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Methods": {
+                "description": "Access-Control-Allow-Methods header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Origin": {
+                "description": "Access-Control-Allow-Origin header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Content-Location": {
+                "description": "The Content-Location header for responses that are not the final destination. This is used to indicate where the resource can be found, when it is finished.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Location": {
+                "description": "The location header for redirects and letting users know if there is a websocket they can listen to for status updates on their operation.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Set-Cookie": {
+                "description": "Set-Cookie header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "X-Api-Call-Id": {
+                "description": "ID for this request. We return it so that users can report this to us and help us debug their problems.",
+                "style": "simple",
+                "required": true,
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/Error"
+          },
+          "5XX": {
+            "$ref": "#/components/responses/Error"
+          }
+        },
+        "x-billable": false
+      }
+    },
     "/org/factory/jobs/{job_id}/versions": {
       "get": {
         "tags": [
@@ -24682,6 +24902,226 @@
             "in": "path",
             "name": "file_id",
             "description": "Submitted file identifier.",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "successful operation, no content",
+            "headers": {
+              "Access-Control-Allow-Credentials": {
+                "description": "Access-Control-Allow-Credentials header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Headers": {
+                "description": "Access-Control-Allow-Headers header. This is a comma-separated list of headers.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Methods": {
+                "description": "Access-Control-Allow-Methods header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Origin": {
+                "description": "Access-Control-Allow-Origin header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Content-Location": {
+                "description": "The Content-Location header for responses that are not the final destination. This is used to indicate where the resource can be found, when it is finished.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Location": {
+                "description": "The location header for redirects and letting users know if there is a websocket they can listen to for status updates on their operation.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Set-Cookie": {
+                "description": "Set-Cookie header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "X-Api-Call-Id": {
+                "description": "ID for this request. We return it so that users can report this to us and help us debug their problems.",
+                "style": "simple",
+                "required": true,
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/Error"
+          },
+          "5XX": {
+            "$ref": "#/components/responses/Error"
+          }
+        },
+        "x-billable": false
+      }
+    },
+    "/user/factory/jobs/{job_id}/quotes/{quote_id}/accept": {
+      "post": {
+        "tags": [
+          "factory"
+        ],
+        "summary": "Accept your current Factory quote and immediately charge your default card. Production starts only after successful payment.",
+        "operationId": "accept_user_factory_quote",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "job_id",
+            "description": "The manufacturing job being purchased.",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Uuid"
+            }
+          },
+          {
+            "in": "path",
+            "name": "quote_id",
+            "description": "The exact published quote accepted by the customer.",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "Access-Control-Allow-Credentials": {
+                "description": "Access-Control-Allow-Credentials header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Headers": {
+                "description": "Access-Control-Allow-Headers header. This is a comma-separated list of headers.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Methods": {
+                "description": "Access-Control-Allow-Methods header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Origin": {
+                "description": "Access-Control-Allow-Origin header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Content-Location": {
+                "description": "The Content-Location header for responses that are not the final destination. This is used to indicate where the resource can be found, when it is finished.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Location": {
+                "description": "The location header for redirects and letting users know if there is a websocket they can listen to for status updates on their operation.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Set-Cookie": {
+                "description": "Set-Cookie header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "X-Api-Call-Id": {
+                "description": "ID for this request. We return it so that users can report this to us and help us debug their problems.",
+                "style": "simple",
+                "required": true,
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FactoryQuoteAcceptance"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/Error"
+          },
+          "5XX": {
+            "$ref": "#/components/responses/Error"
+          }
+        },
+        "x-billable": false
+      },
+      "options": {
+        "tags": [
+          "hidden"
+        ],
+        "summary": "OPTIONS endpoint.",
+        "description": "This is necessary for some preflight requests, specifically POST, PUT, and DELETE.",
+        "operationId": "options_accept_user_factory_quote",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "job_id",
+            "description": "The manufacturing job being purchased.",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Uuid"
+            }
+          },
+          {
+            "in": "path",
+            "name": "quote_id",
+            "description": "The exact published quote accepted by the customer.",
             "required": true,
             "schema": {
               "$ref": "#/components/schemas/Uuid"
@@ -42955,6 +43395,15 @@
                 "$ref": "#/components/schemas/FactoryCustomerJobSummary"
               }
             ]
+          },
+          "quote": {
+            "nullable": true,
+            "description": "The active published quote, excluding all internal costing and worksheet notes.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/FactoryCustomerQuote"
+              }
+            ]
           }
         },
         "required": [
@@ -43110,6 +43559,81 @@
           "items"
         ]
       },
+      "FactoryCustomerQuote": {
+        "description": "Customer prices only. Internal costs and worksheet notes never enter this type.",
+        "type": "object",
+        "properties": {
+          "delivery_estimate": {
+            "description": "Broad production and shipping guidance, not a promised arrival date.",
+            "type": "string"
+          },
+          "estimated_delivery_business_days": {
+            "nullable": true,
+            "description": "Production plus shipping business days from invoicing; null if either is unknown.",
+            "type": "integer",
+            "format": "int64"
+          },
+          "expires_at": {
+            "title": "DateTime",
+            "description": "Seven calendar days after the latest send. Expired offers remain readable.",
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "$ref": "#/components/schemas/Uuid"
+          },
+          "is_expedited": {
+            "type": "boolean"
+          },
+          "job_version_id": {
+            "$ref": "#/components/schemas/Uuid"
+          },
+          "part_quantity": {
+            "nullable": true,
+            "description": "Positive quantity from the quoted revision; null when historical input is unusable.",
+            "type": "integer",
+            "format": "uint64",
+            "minimum": 0
+          },
+          "price_per_part_cents": {
+            "nullable": true,
+            "description": "Approximate USD cents per part, rounded half-up for display only. Subtotal is authoritative.",
+            "type": "integer",
+            "format": "int64"
+          },
+          "published_at": {
+            "title": "DateTime",
+            "description": "Most recent explicit send, including resends of this same offer.",
+            "type": "string",
+            "format": "date-time"
+          },
+          "shipping_cents": {
+            "description": "Customer shipping charge in USD cents: zero for standard shipping, or the expedited upgrade.",
+            "type": "integer",
+            "format": "int64"
+          },
+          "subtotal_cents": {
+            "description": "Part selling subtotal in USD cents, excluding shipping upgrades and tax.",
+            "type": "integer",
+            "format": "int64"
+          },
+          "total_before_tax_cents": {
+            "type": "integer",
+            "format": "int64"
+          }
+        },
+        "required": [
+          "delivery_estimate",
+          "expires_at",
+          "id",
+          "is_expedited",
+          "job_version_id",
+          "published_at",
+          "shipping_cents",
+          "subtotal_cents",
+          "total_before_tax_cents"
+        ]
+      },
       "FactoryJobResponse": {
         "description": "Response returned when a Factory job is created. Only customer-facing ids are exposed: the job id (the customer's reference) and its current version id. The internal Help Desk thread id is deliberately NOT returned (internal-only per the ERD).",
         "type": "object",
@@ -43139,6 +43663,32 @@
         "required": [
           "id",
           "status"
+        ]
+      },
+      "FactoryQuoteAcceptance": {
+        "description": "A paid invoice and the manufacturing job it releases for production.",
+        "type": "object",
+        "properties": {
+          "invoice": {
+            "description": "The ordinary paid billing invoice, including its hosted page and PDF links.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/Invoice"
+              }
+            ]
+          },
+          "job": {
+            "description": "The job after confirmed payment, preserving later manufacturing states on replay.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/FactoryCustomerJobSummary"
+              }
+            ]
+          }
+        },
+        "required": [
+          "invoice",
+          "job"
         ]
       },
       "FailureWebSocketResponse": {
