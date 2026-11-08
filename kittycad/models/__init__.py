@@ -219,7 +219,9 @@ from .factory_customer_job_version import FactoryCustomerJobVersion
 from .factory_customer_job_version_results_page import (
     FactoryCustomerJobVersionResultsPage,
 )
+from .factory_customer_quote import FactoryCustomerQuote
 from .factory_job_response import FactoryJobResponse
+from .factory_quote_acceptance import FactoryQuoteAcceptance
 from .failure_web_socket_response import FailureWebSocketResponse
 from .fbx_storage import FbxStorage
 from .feature import Feature
