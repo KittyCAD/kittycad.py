@@ -30,6 +30,7 @@ from kittycad.models import (
     FactoryCustomerJobSummary,
     FactoryCustomerJobVersion,
     FactoryJobResponse,
+    FactoryQuoteAcceptance,
     FileBoundingBox,
     FileCenterOfMass,
     FileConversion,
@@ -1931,6 +1932,30 @@ async def test_get_org_factory_job_file_async():
 
     await client.factory.get_org_factory_job_file(
         job_id=Uuid("<string>"), file_id=Uuid("<string>")
+    )
+
+
+@pytest.mark.skip
+def test_accept_org_factory_quote():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: FactoryQuoteAcceptance = client.factory.accept_org_factory_quote(
+        job_id=Uuid("<string>"), quote_id=Uuid("<string>")
+    )
+
+    body: FactoryQuoteAcceptance = result
+    print(body)
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_accept_org_factory_quote_async():
+
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: FactoryQuoteAcceptance = await client.factory.accept_org_factory_quote(
+        job_id=Uuid("<string>"), quote_id=Uuid("<string>")
     )
 
 
@@ -4217,6 +4242,30 @@ async def test_get_user_factory_job_file_async():
 
     await client.factory.get_user_factory_job_file(
         job_id=Uuid("<string>"), file_id=Uuid("<string>")
+    )
+
+
+@pytest.mark.skip
+def test_accept_user_factory_quote():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: FactoryQuoteAcceptance = client.factory.accept_user_factory_quote(
+        job_id=Uuid("<string>"), quote_id=Uuid("<string>")
+    )
+
+    body: FactoryQuoteAcceptance = result
+    print(body)
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_accept_user_factory_quote_async():
+
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: FactoryQuoteAcceptance = await client.factory.accept_user_factory_quote(
+        job_id=Uuid("<string>"), quote_id=Uuid("<string>")
     )
 
 
