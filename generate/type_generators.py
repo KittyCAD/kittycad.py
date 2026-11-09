@@ -807,6 +807,8 @@ def generate_object_type_code(
     if "properties" in schema:
         for property_name in schema["properties"]:
             property_schema = schema["properties"][property_name]
+            # Pydantic's BaseModel already defines a schema method.
+            field_name = "schema_" if property_name == "schema" else property_name
             if property_name == tag:
                 field0: FieldType = {
                     "name": property_name,
@@ -877,6 +879,17 @@ def generate_object_type_code(
                         + alias_expr
                         + ")"
                     )
+                elif field_name != property_name:
+                    field_import = "from pydantic import Field\n"
+                    if field_import not in imports:
+                        imports.append(field_import)
+                    field_default = (
+                        default_literal if default_literal is not None else "..."
+                    )
+                    field_definition = (
+                        f"{type_hint} = Field(default={field_default}, "
+                        f"alias={property_name!r})"
+                    )
                 else:
                     field_definition = type_hint
                     if default_literal is not None:
@@ -886,7 +899,7 @@ def generate_object_type_code(
                     field_definition += "  # type: ignore[assignment]"
 
                 field2: FieldType = {
-                    "name": property_name,
+                    "name": field_name,
                     "type": field_definition,
                     "value": "",
                 }
