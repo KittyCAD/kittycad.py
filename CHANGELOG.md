@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## v1.11.0
+
+### Changed
+
+- Generate the STEP output format's `schema` field as `schema_` with a `"schema"`
+  alias to avoid Pydantic's field-shadowing warning.
+
+### Migration
+
+- Replace `OptionStep.schema` attribute reads and assignments with
+  `OptionStep.schema_`. Constructors still accept `schema=`, and API payloads
+  still use `"schema"`. Use `model_dump(by_alias=True)` or
+  `model_dump_json(by_alias=True)` when serializing with API field names;
+  `to_dict()` and `to_json()` already use aliases.
+
 ## v1.10.0
 
 ### Added

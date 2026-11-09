@@ -78,7 +78,7 @@ class OptionStep(KittyCadBaseModel):
 
     presentation: Optional[StepPresentation] = "pretty"  # type: ignore[assignment]
 
-    schema: Optional[StepSchema] = "ap242"  # type: ignore[assignment]
+    schema_: Optional[StepSchema] = Field(default="ap242", alias="schema")  # type: ignore[assignment]
 
     type: Literal["step"] = "step"
 
