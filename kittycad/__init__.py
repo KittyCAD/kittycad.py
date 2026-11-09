@@ -96,6 +96,7 @@ from .models.factory_customer_job_version_results_page import (
     FactoryCustomerJobVersionResultsPage,
 )
 from .models.factory_job_response import FactoryJobResponse
+from .models.factory_quote_acceptance import FactoryQuoteAcceptance
 from .models.file_bounding_box import FileBoundingBox
 from .models.file_center_of_mass import FileCenterOfMass
 from .models.file_conversion import FileConversion
@@ -12263,6 +12264,37 @@ class FactoryAPI:
 
         return response.json() if response.content else None
 
+    def accept_org_factory_quote(
+        self,
+        job_id: Uuid,
+        quote_id: Uuid,
+    ) -> FactoryQuoteAcceptance:
+        """Accept your organization's current Factory quote and charge its default card. Requires an organization administrator."""
+
+        url = "{}/org/factory/jobs/{job_id}/quotes/{quote_id}/accept".format(
+            self.client.base_url, job_id=job_id, quote_id=quote_id
+        )
+
+        _client = self.client.get_http_client()
+
+        response = _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return FactoryQuoteAcceptance.model_validate(json_data, extra="ignore")
+
     def list_org_factory_job_versions(
         self,
         job_id: Uuid,
@@ -12656,6 +12688,37 @@ class FactoryAPI:
 
         return response.json() if response.content else None
 
+    def accept_user_factory_quote(
+        self,
+        job_id: Uuid,
+        quote_id: Uuid,
+    ) -> FactoryQuoteAcceptance:
+        """Accept your current Factory quote and immediately charge your default card. Production starts only after successful payment."""
+
+        url = "{}/user/factory/jobs/{job_id}/quotes/{quote_id}/accept".format(
+            self.client.base_url, job_id=job_id, quote_id=quote_id
+        )
+
+        _client = self.client.get_http_client()
+
+        response = _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return FactoryQuoteAcceptance.model_validate(json_data, extra="ignore")
+
     def list_user_factory_job_versions(
         self,
         job_id: Uuid,
@@ -13016,6 +13079,37 @@ class AsyncFactoryAPI:
             raise_for_status(response)
 
         return response.json() if response.content else None
+
+    async def accept_org_factory_quote(
+        self,
+        job_id: Uuid,
+        quote_id: Uuid,
+    ) -> FactoryQuoteAcceptance:
+        """Accept your organization's current Factory quote and charge its default card. Requires an organization administrator."""
+
+        url = "{}/org/factory/jobs/{job_id}/quotes/{quote_id}/accept".format(
+            self.client.base_url, job_id=job_id, quote_id=quote_id
+        )
+
+        _client = self.client.get_http_client()
+
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return FactoryQuoteAcceptance.model_validate(json_data, extra="ignore")
 
     def list_org_factory_job_versions(
         self,
@@ -13411,6 +13505,37 @@ class AsyncFactoryAPI:
             raise_for_status(response)
 
         return response.json() if response.content else None
+
+    async def accept_user_factory_quote(
+        self,
+        job_id: Uuid,
+        quote_id: Uuid,
+    ) -> FactoryQuoteAcceptance:
+        """Accept your current Factory quote and immediately charge your default card. Production starts only after successful payment."""
+
+        url = "{}/user/factory/jobs/{job_id}/quotes/{quote_id}/accept".format(
+            self.client.base_url, job_id=job_id, quote_id=quote_id
+        )
+
+        _client = self.client.get_http_client()
+
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return FactoryQuoteAcceptance.model_validate(json_data, extra="ignore")
 
     def list_user_factory_job_versions(
         self,
