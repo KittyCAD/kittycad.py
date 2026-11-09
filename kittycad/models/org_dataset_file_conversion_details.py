@@ -41,6 +41,12 @@ class OrgDatasetFileConversionDetails(KittyCadBaseModel):
 
     phase: OrgDatasetFileConversionPhase
 
+    project_id: Optional[Uuid] = None
+
+    project_raw_version_id: Optional[Uuid] = None
+
+    project_salon_version_id: Optional[Uuid] = None
+
     raw_kcl_output: Optional[str] = None
 
     raw_kcl_similarity_score: Optional[float] = None

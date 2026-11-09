@@ -31,6 +31,7 @@ from kittycad.models import (
     FactoryCustomerJobVersion,
     FactoryJobResponse,
     FactoryQuoteAcceptance,
+    FactoryQuotePreview,
     FileBoundingBox,
     FileCenterOfMass,
     FileConversion,
@@ -126,6 +127,7 @@ from kittycad.models.email_marketing_confirm_token_body import (
 )
 from kittycad.models.file_export_format import FileExportFormat
 from kittycad.models.file_import_format import FileImportFormat
+from kittycad.models.gltf_export_extra import GltfExportExtra
 from kittycad.models.gltf_presentation import GltfPresentation
 from kittycad.models.gltf_storage import GltfStorage
 from kittycad.models.idp_metadata_source import IdpMetadataSource, OptionUrl
@@ -560,6 +562,7 @@ def test_create_file_conversion_options():
         body=ConversionParams(
             output_format=OutputFormat3d(
                 OptionGltf(
+                    extras=[GltfExportExtra.SKETCHES],
                     include_uuids=False,
                     presentation=GltfPresentation.COMPACT,
                     storage=GltfStorage.BINARY,
@@ -625,6 +628,7 @@ async def test_create_file_conversion_options_async():
         body=ConversionParams(
             output_format=OutputFormat3d(
                 OptionGltf(
+                    extras=[GltfExportExtra.SKETCHES],
                     include_uuids=False,
                     presentation=GltfPresentation.COMPACT,
                     storage=GltfStorage.BINARY,
@@ -1940,7 +1944,10 @@ def test_accept_org_factory_quote():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     result: FactoryQuoteAcceptance = client.factory.accept_org_factory_quote(
-        job_id=Uuid("<string>"), quote_id=Uuid("<string>")
+        job_id=Uuid("<string>"),
+        quote_id=Uuid("<string>"),
+        use_credits=False,
+        max_amount_due_cents=None,
     )
 
     body: FactoryQuoteAcceptance = result
@@ -1955,7 +1962,34 @@ async def test_accept_org_factory_quote_async():
     client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     result: FactoryQuoteAcceptance = await client.factory.accept_org_factory_quote(
-        job_id=Uuid("<string>"), quote_id=Uuid("<string>")
+        job_id=Uuid("<string>"),
+        quote_id=Uuid("<string>"),
+        use_credits=False,
+        max_amount_due_cents=None,
+    )
+
+
+@pytest.mark.skip
+def test_preview_org_factory_quote():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: FactoryQuotePreview = client.factory.preview_org_factory_quote(
+        job_id=Uuid("<string>"), quote_id=Uuid("<string>"), use_credits=False
+    )
+
+    body: FactoryQuotePreview = result
+    print(body)
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_preview_org_factory_quote_async():
+
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: FactoryQuotePreview = await client.factory.preview_org_factory_quote(
+        job_id=Uuid("<string>"), quote_id=Uuid("<string>"), use_credits=False
     )
 
 
@@ -2014,6 +2048,27 @@ async def test_create_org_factory_job_version_async():
 
     result: FactoryJobResponse = await client.factory.create_org_factory_job_version(
         job_id=Uuid("<string>")
+    )
+
+
+@pytest.mark.skip
+def test_get_org_factory_job_thumbnail():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    client.factory.get_org_factory_job_thumbnail(
+        job_id=Uuid("<string>"), version_id=Uuid("<string>")
+    )
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_get_org_factory_job_thumbnail_async():
+
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    await client.factory.get_org_factory_job_thumbnail(
+        job_id=Uuid("<string>"), version_id=Uuid("<string>")
     )
 
 
@@ -4250,7 +4305,10 @@ def test_accept_user_factory_quote():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     result: FactoryQuoteAcceptance = client.factory.accept_user_factory_quote(
-        job_id=Uuid("<string>"), quote_id=Uuid("<string>")
+        job_id=Uuid("<string>"),
+        quote_id=Uuid("<string>"),
+        use_credits=False,
+        max_amount_due_cents=None,
     )
 
     body: FactoryQuoteAcceptance = result
@@ -4265,7 +4323,34 @@ async def test_accept_user_factory_quote_async():
     client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     result: FactoryQuoteAcceptance = await client.factory.accept_user_factory_quote(
-        job_id=Uuid("<string>"), quote_id=Uuid("<string>")
+        job_id=Uuid("<string>"),
+        quote_id=Uuid("<string>"),
+        use_credits=False,
+        max_amount_due_cents=None,
+    )
+
+
+@pytest.mark.skip
+def test_preview_user_factory_quote():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: FactoryQuotePreview = client.factory.preview_user_factory_quote(
+        job_id=Uuid("<string>"), quote_id=Uuid("<string>"), use_credits=False
+    )
+
+    body: FactoryQuotePreview = result
+    print(body)
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_preview_user_factory_quote_async():
+
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: FactoryQuotePreview = await client.factory.preview_user_factory_quote(
+        job_id=Uuid("<string>"), quote_id=Uuid("<string>"), use_credits=False
     )
 
 
@@ -4324,6 +4409,27 @@ async def test_create_user_factory_job_version_async():
 
     result: FactoryJobResponse = await client.factory.create_user_factory_job_version(
         job_id=Uuid("<string>")
+    )
+
+
+@pytest.mark.skip
+def test_get_user_factory_job_thumbnail():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    client.factory.get_user_factory_job_thumbnail(
+        job_id=Uuid("<string>"), version_id=Uuid("<string>")
+    )
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_get_user_factory_job_thumbnail_async():
+
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    await client.factory.get_user_factory_job_thumbnail(
+        job_id=Uuid("<string>"), version_id=Uuid("<string>")
     )
 
 

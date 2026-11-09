@@ -1,10 +1,11 @@
 import datetime
-from typing import Dict, Literal, Optional, Union
+from typing import Dict, List, Literal, Optional, Union
 
 from pydantic import Field, RootModel
 from typing_extensions import Annotated
 
 from ..models.fbx_storage import FbxStorage
+from ..models.gltf_export_extra import GltfExportExtra
 from ..models.gltf_presentation import GltfPresentation
 from ..models.gltf_storage import GltfStorage
 from ..models.named_view import NamedView
@@ -30,6 +31,8 @@ class OptionFbx(KittyCadBaseModel):
 
 class OptionGltf(KittyCadBaseModel):
     """glTF 2.0. We refer to this as glTF since that is how our customers refer to it, although by default it will be in binary format and thus technically (glb). If you prefer ASCII output, you can set that option for the export."""
+
+    extras: Optional[List[GltfExportExtra]] = []
 
     include_uuids: Optional[bool] = False
 
