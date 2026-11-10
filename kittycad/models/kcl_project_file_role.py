@@ -8,7 +8,7 @@ class KclProjectFileRole(str, Enum):
 
     PROJECT_TOML = "project_toml"
 
-    """# A project source file such as `.kcl`."""  # noqa: E501
+    """# A project source or reference file, such as KCL, a PDF, or a spreadsheet."""  # noqa: E501
 
     PROJECT_FILE = "project_file"
 

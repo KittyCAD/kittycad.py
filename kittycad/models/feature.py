@@ -44,6 +44,10 @@ class Feature(str, Enum):
 
     ORG_DATASET_CLOUD_PROJECTS = "org_dataset_cloud_projects"
 
+    """# Ingest documents and images in org datasets using cloud projects."""  # noqa: E501
+
+    ORG_DATASET_REFERENCE_FILES = "org_dataset_reference_files"
+
     """# KCL CEK machine executor."""  # noqa: E501
 
     KCL_CEK_EXECUTOR = "kcl_cek_executor"

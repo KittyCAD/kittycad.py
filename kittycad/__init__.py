@@ -97,6 +97,7 @@ from .models.factory_customer_job_version_results_page import (
 )
 from .models.factory_job_response import FactoryJobResponse
 from .models.factory_quote_acceptance import FactoryQuoteAcceptance
+from .models.factory_quote_preview import FactoryQuotePreview
 from .models.file_bounding_box import FileBoundingBox
 from .models.file_center_of_mass import FileCenterOfMass
 from .models.file_conversion import FileConversion
@@ -6883,7 +6884,7 @@ class OrgsAPI:
         self,
         id: Uuid,
     ) -> UploadOrgDatasetFilesResponse:
-        """This endpoint accepts `multipart/form-data` where each file part becomes a source object in the dataset. Exact `<proprietary CAD filename>.json` converter dumps are also accepted and associated with their original CAD file. Paths are normalized and must be relative."""
+        """This endpoint accepts `multipart/form-data` where each file part becomes a source object in the dataset. Exact `<proprietary CAD filename>.json` converter dumps are also accepted and associated with their original CAD file. When both `org_dataset_cloud_projects` and `org_dataset_reference_files` are enabled for the organization, PDFs, Word/Excel documents and images are accepted as reference files. Paths are normalized and must be relative."""
 
         url = "{}/org/datasets/{id}/uploads".format(self.client.base_url, id=id)
 
@@ -8314,7 +8315,7 @@ class AsyncOrgsAPI:
         self,
         id: Uuid,
     ) -> UploadOrgDatasetFilesResponse:
-        """This endpoint accepts `multipart/form-data` where each file part becomes a source object in the dataset. Exact `<proprietary CAD filename>.json` converter dumps are also accepted and associated with their original CAD file. Paths are normalized and must be relative."""
+        """This endpoint accepts `multipart/form-data` where each file part becomes a source object in the dataset. Exact `<proprietary CAD filename>.json` converter dumps are also accepted and associated with their original CAD file. When both `org_dataset_cloud_projects` and `org_dataset_reference_files` are enabled for the organization, PDFs, Word/Excel documents and images are accepted as reference files. Paths are normalized and must be relative."""
 
         url = "{}/org/datasets/{id}/uploads".format(self.client.base_url, id=id)
 
@@ -10098,7 +10099,7 @@ class PaymentsAPI:
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
     ) -> "SyncPageIterator":
-        """This endpoint requires authentication by an org admin. It lists payment methods for the authenticated user's org, with the valid default card first.
+        """This endpoint requires authentication by an org member. It lists payment methods for the authenticated user's org, with the valid default card first.
 
         Returns an iterator that automatically handles pagination.
         Iterate over all items across all pages:
@@ -11301,7 +11302,7 @@ class AsyncPaymentsAPI:
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
     ) -> "AsyncPageIterator":
-        """This endpoint requires authentication by an org admin. It lists payment methods for the authenticated user's org, with the valid default card first.
+        """This endpoint requires authentication by an org member. It lists payment methods for the authenticated user's org, with the valid default card first.
 
         Returns an async iterator that automatically handles pagination.
         Iterate over all items across all pages:
@@ -12268,12 +12269,27 @@ class FactoryAPI:
         self,
         job_id: Uuid,
         quote_id: Uuid,
+        *,
+        use_credits: Optional[bool] = None,
+        max_amount_due_cents: Optional[int] = None,
     ) -> FactoryQuoteAcceptance:
-        """Accept your organization's current Factory quote and charge its default card. Requires an organization administrator."""
+        """Accept your organization's current Factory quote and charge its default card. Requires organization membership."""
 
         url = "{}/org/factory/jobs/{job_id}/quotes/{quote_id}/accept".format(
             self.client.base_url, job_id=job_id, quote_id=quote_id
         )
+
+        if use_credits is not None:
+            if "?" in url:
+                url = url + "&use_credits=" + str(use_credits).lower()
+            else:
+                url = url + "?use_credits=" + str(use_credits).lower()
+
+        if max_amount_due_cents is not None:
+            if "?" in url:
+                url = url + "&max_amount_due_cents=" + str(max_amount_due_cents)
+            else:
+                url = url + "?max_amount_due_cents=" + str(max_amount_due_cents)
 
         _client = self.client.get_http_client()
 
@@ -12294,6 +12310,45 @@ class FactoryAPI:
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return FactoryQuoteAcceptance.model_validate(json_data, extra="ignore")
+
+    def preview_org_factory_quote(
+        self,
+        job_id: Uuid,
+        quote_id: Uuid,
+        *,
+        use_credits: Optional[bool] = None,
+    ) -> FactoryQuotePreview:
+        """Preview your organization's Factory quote without accepting it or charging a card. Requires organization membership."""
+
+        url = "{}/org/factory/jobs/{job_id}/quotes/{quote_id}/preview".format(
+            self.client.base_url, job_id=job_id, quote_id=quote_id
+        )
+
+        if use_credits is not None:
+            if "?" in url:
+                url = url + "&use_credits=" + str(use_credits).lower()
+            else:
+                url = url + "?use_credits=" + str(use_credits).lower()
+
+        _client = self.client.get_http_client()
+
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return FactoryQuotePreview.model_validate(json_data, extra="ignore")
 
     def list_org_factory_job_versions(
         self,
@@ -12421,6 +12476,31 @@ class FactoryAPI:
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return FactoryJobResponse.model_validate(json_data, extra="ignore")
+
+    def get_org_factory_job_thumbnail(
+        self,
+        job_id: Uuid,
+        version_id: Uuid,
+    ):
+        """Fetch the private thumbnail pinned by an organization Factory revision."""
+
+        url = "{}/org/factory/jobs/{job_id}/versions/{version_id}/thumbnail".format(
+            self.client.base_url, job_id=job_id, version_id=version_id
+        )
+
+        _client = self.client.get_http_client()
+
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
 
     def get_user_factory_finishes(
         self,
@@ -12692,12 +12772,27 @@ class FactoryAPI:
         self,
         job_id: Uuid,
         quote_id: Uuid,
+        *,
+        use_credits: Optional[bool] = None,
+        max_amount_due_cents: Optional[int] = None,
     ) -> FactoryQuoteAcceptance:
         """Accept your current Factory quote and immediately charge your default card. Production starts only after successful payment."""
 
         url = "{}/user/factory/jobs/{job_id}/quotes/{quote_id}/accept".format(
             self.client.base_url, job_id=job_id, quote_id=quote_id
         )
+
+        if use_credits is not None:
+            if "?" in url:
+                url = url + "&use_credits=" + str(use_credits).lower()
+            else:
+                url = url + "?use_credits=" + str(use_credits).lower()
+
+        if max_amount_due_cents is not None:
+            if "?" in url:
+                url = url + "&max_amount_due_cents=" + str(max_amount_due_cents)
+            else:
+                url = url + "?max_amount_due_cents=" + str(max_amount_due_cents)
 
         _client = self.client.get_http_client()
 
@@ -12718,6 +12813,45 @@ class FactoryAPI:
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return FactoryQuoteAcceptance.model_validate(json_data, extra="ignore")
+
+    def preview_user_factory_quote(
+        self,
+        job_id: Uuid,
+        quote_id: Uuid,
+        *,
+        use_credits: Optional[bool] = None,
+    ) -> FactoryQuotePreview:
+        """Preview your Factory quote's shipping, tax, credits, and total without accepting it or charging a card."""
+
+        url = "{}/user/factory/jobs/{job_id}/quotes/{quote_id}/preview".format(
+            self.client.base_url, job_id=job_id, quote_id=quote_id
+        )
+
+        if use_credits is not None:
+            if "?" in url:
+                url = url + "&use_credits=" + str(use_credits).lower()
+            else:
+                url = url + "?use_credits=" + str(use_credits).lower()
+
+        _client = self.client.get_http_client()
+
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return FactoryQuotePreview.model_validate(json_data, extra="ignore")
 
     def list_user_factory_job_versions(
         self,
@@ -12845,6 +12979,31 @@ class FactoryAPI:
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return FactoryJobResponse.model_validate(json_data, extra="ignore")
+
+    def get_user_factory_job_thumbnail(
+        self,
+        job_id: Uuid,
+        version_id: Uuid,
+    ):
+        """Fetch the private thumbnail pinned by a personal Factory revision."""
+
+        url = "{}/user/factory/jobs/{job_id}/versions/{version_id}/thumbnail".format(
+            self.client.base_url, job_id=job_id, version_id=version_id
+        )
+
+        _client = self.client.get_http_client()
+
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
 
     def get_user_factory_materials(
         self,
@@ -13084,12 +13243,27 @@ class AsyncFactoryAPI:
         self,
         job_id: Uuid,
         quote_id: Uuid,
+        *,
+        use_credits: Optional[bool] = None,
+        max_amount_due_cents: Optional[int] = None,
     ) -> FactoryQuoteAcceptance:
-        """Accept your organization's current Factory quote and charge its default card. Requires an organization administrator."""
+        """Accept your organization's current Factory quote and charge its default card. Requires organization membership."""
 
         url = "{}/org/factory/jobs/{job_id}/quotes/{quote_id}/accept".format(
             self.client.base_url, job_id=job_id, quote_id=quote_id
         )
+
+        if use_credits is not None:
+            if "?" in url:
+                url = url + "&use_credits=" + str(use_credits).lower()
+            else:
+                url = url + "?use_credits=" + str(use_credits).lower()
+
+        if max_amount_due_cents is not None:
+            if "?" in url:
+                url = url + "&max_amount_due_cents=" + str(max_amount_due_cents)
+            else:
+                url = url + "?max_amount_due_cents=" + str(max_amount_due_cents)
 
         _client = self.client.get_http_client()
 
@@ -13110,6 +13284,45 @@ class AsyncFactoryAPI:
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return FactoryQuoteAcceptance.model_validate(json_data, extra="ignore")
+
+    async def preview_org_factory_quote(
+        self,
+        job_id: Uuid,
+        quote_id: Uuid,
+        *,
+        use_credits: Optional[bool] = None,
+    ) -> FactoryQuotePreview:
+        """Preview your organization's Factory quote without accepting it or charging a card. Requires organization membership."""
+
+        url = "{}/org/factory/jobs/{job_id}/quotes/{quote_id}/preview".format(
+            self.client.base_url, job_id=job_id, quote_id=quote_id
+        )
+
+        if use_credits is not None:
+            if "?" in url:
+                url = url + "&use_credits=" + str(use_credits).lower()
+            else:
+                url = url + "?use_credits=" + str(use_credits).lower()
+
+        _client = self.client.get_http_client()
+
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return FactoryQuotePreview.model_validate(json_data, extra="ignore")
 
     def list_org_factory_job_versions(
         self,
@@ -13239,6 +13452,31 @@ class AsyncFactoryAPI:
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return FactoryJobResponse.model_validate(json_data, extra="ignore")
+
+    async def get_org_factory_job_thumbnail(
+        self,
+        job_id: Uuid,
+        version_id: Uuid,
+    ):
+        """Fetch the private thumbnail pinned by an organization Factory revision."""
+
+        url = "{}/org/factory/jobs/{job_id}/versions/{version_id}/thumbnail".format(
+            self.client.base_url, job_id=job_id, version_id=version_id
+        )
+
+        _client = self.client.get_http_client()
+
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
 
     def get_user_factory_finishes(
         self,
@@ -13510,12 +13748,27 @@ class AsyncFactoryAPI:
         self,
         job_id: Uuid,
         quote_id: Uuid,
+        *,
+        use_credits: Optional[bool] = None,
+        max_amount_due_cents: Optional[int] = None,
     ) -> FactoryQuoteAcceptance:
         """Accept your current Factory quote and immediately charge your default card. Production starts only after successful payment."""
 
         url = "{}/user/factory/jobs/{job_id}/quotes/{quote_id}/accept".format(
             self.client.base_url, job_id=job_id, quote_id=quote_id
         )
+
+        if use_credits is not None:
+            if "?" in url:
+                url = url + "&use_credits=" + str(use_credits).lower()
+            else:
+                url = url + "?use_credits=" + str(use_credits).lower()
+
+        if max_amount_due_cents is not None:
+            if "?" in url:
+                url = url + "&max_amount_due_cents=" + str(max_amount_due_cents)
+            else:
+                url = url + "?max_amount_due_cents=" + str(max_amount_due_cents)
 
         _client = self.client.get_http_client()
 
@@ -13536,6 +13789,45 @@ class AsyncFactoryAPI:
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return FactoryQuoteAcceptance.model_validate(json_data, extra="ignore")
+
+    async def preview_user_factory_quote(
+        self,
+        job_id: Uuid,
+        quote_id: Uuid,
+        *,
+        use_credits: Optional[bool] = None,
+    ) -> FactoryQuotePreview:
+        """Preview your Factory quote's shipping, tax, credits, and total without accepting it or charging a card."""
+
+        url = "{}/user/factory/jobs/{job_id}/quotes/{quote_id}/preview".format(
+            self.client.base_url, job_id=job_id, quote_id=quote_id
+        )
+
+        if use_credits is not None:
+            if "?" in url:
+                url = url + "&use_credits=" + str(use_credits).lower()
+            else:
+                url = url + "?use_credits=" + str(use_credits).lower()
+
+        _client = self.client.get_http_client()
+
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return FactoryQuotePreview.model_validate(json_data, extra="ignore")
 
     def list_user_factory_job_versions(
         self,
@@ -13665,6 +13957,31 @@ class AsyncFactoryAPI:
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return FactoryJobResponse.model_validate(json_data, extra="ignore")
+
+    async def get_user_factory_job_thumbnail(
+        self,
+        job_id: Uuid,
+        version_id: Uuid,
+    ):
+        """Fetch the private thumbnail pinned by a personal Factory revision."""
+
+        url = "{}/user/factory/jobs/{job_id}/versions/{version_id}/thumbnail".format(
+            self.client.base_url, job_id=job_id, version_id=version_id
+        )
+
+        _client = self.client.get_http_client()
+
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
 
     def get_user_factory_materials(
         self,

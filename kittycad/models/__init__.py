@@ -222,6 +222,7 @@ from .factory_customer_job_version_results_page import (
 from .factory_customer_quote import FactoryCustomerQuote
 from .factory_job_response import FactoryJobResponse
 from .factory_quote_acceptance import FactoryQuoteAcceptance
+from .factory_quote_preview import FactoryQuotePreview
 from .failure_web_socket_response import FailureWebSocketResponse
 from .fbx_storage import FbxStorage
 from .feature import Feature
@@ -239,6 +240,7 @@ from .get_entity_type import GetEntityType
 from .get_num_objects import GetNumObjects
 from .get_sketch_mode_plane import GetSketchModePlane
 from .global_axis import GlobalAxis
+from .gltf_export_extra import GltfExportExtra
 from .gltf_presentation import GltfPresentation
 from .gltf_storage import GltfStorage
 from .handle_mouse_drag_end import HandleMouseDragEnd

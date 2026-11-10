@@ -16,5 +16,9 @@ class KclProjectPreviewStatus(str, Enum):
 
     FAILED = "failed"
 
+    """# This project contains a reference file and needs no geometry preview."""  # noqa: E501
+
+    NOT_APPLICABLE = "not_applicable"
+
     def __str__(self) -> str:
         return str(self.value)
