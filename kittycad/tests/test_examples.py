@@ -24,6 +24,11 @@ from kittycad.models import (
     CustomModel,
     DatasetS3Policies,
     EmailMarketingConsentState,
+    ExecutionArtifactsResponse,
+    ExecutionInputUploadResponse,
+    ExecutionJobResponse,
+    ExecutionJobSpecificationResponse,
+    ExecutionLogResponse,
     ExtendedUser,
     FactoryCustomerCatalogOption,
     FactoryCustomerJobDetail,
@@ -107,6 +112,7 @@ from kittycad.models.billing_info import BillingInfo
 from kittycad.models.client_error_report import ClientErrorReport
 from kittycad.models.code_language import CodeLanguage
 from kittycad.models.code_option import CodeOption
+from kittycad.models.component_transform import ComponentTransform
 from kittycad.models.conversion_params import ConversionParams
 from kittycad.models.conversion_sort_mode import ConversionSortMode
 from kittycad.models.country_code import CountryCode
@@ -125,13 +131,16 @@ from kittycad.models.email_authentication_form import EmailAuthenticationForm
 from kittycad.models.email_marketing_confirm_token_body import (
     EmailMarketingConfirmTokenBody,
 )
+from kittycad.models.execution_job_create_request import ExecutionJobCreateRequest
+from kittycad.models.execution_job_input import ExecutionJobInput
+from kittycad.models.execution_job_output import ExecutionJobOutput
+from kittycad.models.execution_job_status import ExecutionJobStatus
+from kittycad.models.execution_log_stream import ExecutionLogStream
 from kittycad.models.file_export_format import FileExportFormat
 from kittycad.models.file_import_format import FileImportFormat
-from kittycad.models.gltf_export_extra import GltfExportExtra
-from kittycad.models.gltf_presentation import GltfPresentation
-from kittycad.models.gltf_storage import GltfStorage
+from kittycad.models.id_sort_mode import IdSortMode
 from kittycad.models.idp_metadata_source import IdpMetadataSource, OptionUrl
-from kittycad.models.input_format3d import InputFormat3d, OptionStep
+from kittycad.models.input_format3d import InputFormat3d, OptionNx
 from kittycad.models.kcl_code_completion_params import KclCodeCompletionParams
 from kittycad.models.kcl_code_completion_request import KclCodeCompletionRequest
 from kittycad.models.kcl_migration_client_message import OptionStatus
@@ -141,29 +150,27 @@ from kittycad.models.kcl_project_share_link_access_mode import (
 )
 from kittycad.models.kcl_version import KclVersion
 from kittycad.models.lenient_url import LenientUrl
-from kittycad.models.ml_copilot_client_command import MlCopilotClientCommand
 from kittycad.models.ml_copilot_client_message import (
-    OptionHeaders,
-    OptionUpdateClientCommandSchema,
+    OptionListModes,
+    OptionProjectContext,
 )
 from kittycad.models.ml_copilot_replay_attachment_mode import (
     MlCopilotReplayAttachmentMode,
 )
 from kittycad.models.ml_feedback import MlFeedback
+from kittycad.models.modeling_cmd import ModelingCmd, OptionSetObjectTransform
 from kittycad.models.modeling_cmd_id import ModelingCmdId
-from kittycad.models.named_view import NamedView
+from kittycad.models.modeling_cmd_req import ModelingCmdReq
 from kittycad.models.o_auth2_app_grant_type import OAuth2AppGrantType
 from kittycad.models.org_dataset_source import OrgDatasetSource
 from kittycad.models.org_details import OrgDetails
-from kittycad.models.output_format3d import OptionGltf, OutputFormat3d
-from kittycad.models.point3d import Point3d
+from kittycad.models.output_format3d import OptionStl, OutputFormat3d
 from kittycad.models.post_effect_type import PostEffectType
 from kittycad.models.privacy_settings import PrivacySettings
 from kittycad.models.project_access_scope import ProjectAccessScope
 from kittycad.models.project_archive_format import ProjectArchiveFormat
 from kittycad.models.project_library_scope import ProjectLibraryScope
 from kittycad.models.project_semantic_search_request import ProjectSemanticSearchRequest
-from kittycad.models.projection import OptionPerspective, Projection
 from kittycad.models.public_email_marketing_consent_request import (
     PublicEmailMarketingConsentRequest,
 )
@@ -171,14 +178,12 @@ from kittycad.models.public_mailing_list_membership_request import (
     PublicMailingListMembershipRequest,
 )
 from kittycad.models.rename_project_library_request import RenameProjectLibraryRequest
-from kittycad.models.rtc_ice_candidate_init import RtcIceCandidateInit
 from kittycad.models.sales_inquiry_type import SalesInquiryType
 from kittycad.models.saml_identity_provider_create import SamlIdentityProviderCreate
+from kittycad.models.selection import OptionDefaultScene, Selection
 from kittycad.models.service_account_uuid import ServiceAccountUuid
 from kittycad.models.session_uuid import SessionUuid
-from kittycad.models.step_import_target_representation import (
-    StepImportTargetRepresentation,
-)
+from kittycad.models.stl_storage import StlStorage
 from kittycad.models.storage_provider import StorageProvider
 from kittycad.models.support_inquiry_type import SupportInquiryType
 from kittycad.models.system import System
@@ -207,8 +212,7 @@ from kittycad.models.update_user import UpdateUser
 from kittycad.models.user_identifier import UserIdentifier
 from kittycad.models.user_org_role import UserOrgRole
 from kittycad.models.uuid import Uuid
-from kittycad.models.visibility import Visibility
-from kittycad.models.web_socket_request import OptionTrickleIce
+from kittycad.models.web_socket_request import OptionModelingCmdBatchReq
 from kittycad.models.website_sales_form import WebsiteSalesForm
 from kittycad.models.website_support_form import WebsiteSupportForm
 from kittycad.models.zoo_product_subscriptions_org_request import (
@@ -499,6 +503,279 @@ async def test_community_sso_async():
 
 
 @pytest.mark.skip
+def test_upload_execution_input():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: ExecutionInputUploadResponse = client.executor.upload_execution_input(
+        body=bytes("some bytes", "utf-8")
+    )
+
+    body: ExecutionInputUploadResponse = result
+    print(body)
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_upload_execution_input_async():
+
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: ExecutionInputUploadResponse = await client.executor.upload_execution_input(
+        body=bytes("some bytes", "utf-8")
+    )
+
+
+@pytest.mark.skip
+def test_list_execution_jobs():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    # Iterate through all pages automatically
+    item: ExecutionJobResponse
+    for item in client.executor.list_execution_jobs(
+        status=ExecutionJobStatus.QUEUED,
+        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
+        limit=None,
+        page_token=None,
+        runtime_id=None,
+        created_after=None,
+    ):
+        print(item)
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_list_execution_jobs_async():
+
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    # Iterate through all pages automatically
+    iterator = client.executor.list_execution_jobs(
+        status=ExecutionJobStatus.QUEUED,
+        sort_by=CreatedAtSortMode.CREATED_AT_ASCENDING,
+        limit=None,
+        page_token=None,
+        runtime_id=None,
+        created_after=None,
+    )
+    item: ExecutionJobResponse
+    async for item in iterator:
+        print(item)
+
+
+@pytest.mark.skip
+def test_create_execution_job():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: ExecutionJobResponse = client.executor.create_execution_job(
+        idempotency_key="<string>",
+        body=ExecutionJobCreateRequest(
+            command=["<string>"],
+            compute_profile_id="<string>",
+            environment={"<string>": "<string>"},
+            inputs=[
+                ExecutionJobInput(
+                    artifact_id=Uuid("<string>"),
+                    path="<string>",
+                )
+            ],
+            outputs=[
+                ExecutionJobOutput(
+                    path="<string>",
+                    required=False,
+                )
+            ],
+            runtime_id="<string>",
+            timeout_seconds=10,
+        ),
+    )
+
+    body: ExecutionJobResponse = result
+    print(body)
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_create_execution_job_async():
+
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: ExecutionJobResponse = await client.executor.create_execution_job(
+        idempotency_key="<string>",
+        body=ExecutionJobCreateRequest(
+            command=["<string>"],
+            compute_profile_id="<string>",
+            environment={"<string>": "<string>"},
+            inputs=[
+                ExecutionJobInput(
+                    artifact_id=Uuid("<string>"),
+                    path="<string>",
+                )
+            ],
+            outputs=[
+                ExecutionJobOutput(
+                    path="<string>",
+                    required=False,
+                )
+            ],
+            runtime_id="<string>",
+            timeout_seconds=10,
+        ),
+    )
+
+
+@pytest.mark.skip
+def test_get_execution_job():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: ExecutionJobResponse = client.executor.get_execution_job(
+        id=Uuid("<string>")
+    )
+
+    body: ExecutionJobResponse = result
+    print(body)
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_get_execution_job_async():
+
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: ExecutionJobResponse = await client.executor.get_execution_job(
+        id=Uuid("<string>")
+    )
+
+
+@pytest.mark.skip
+def test_list_execution_job_artifacts():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: ExecutionArtifactsResponse = client.executor.list_execution_job_artifacts(
+        id=Uuid("<string>"),
+        sort_by=IdSortMode.ID_ASCENDING,
+        limit=None,
+        page_token=None,
+    )
+
+    body: ExecutionArtifactsResponse = result
+    print(body)
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_list_execution_job_artifacts_async():
+
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: ExecutionArtifactsResponse = (
+        await client.executor.list_execution_job_artifacts(
+            id=Uuid("<string>"),
+            sort_by=IdSortMode.ID_ASCENDING,
+            limit=None,
+            page_token=None,
+        )
+    )
+
+
+@pytest.mark.skip
+def test_download_execution_job_artifact():
+    client = KittyCAD()
+    with client.executor.download_execution_job_artifact(
+        id=Uuid("<string>"), artifact_id=Uuid("<string>")
+    ) as response:
+        for chunk in response.iter_bytes():
+            print(len(chunk))
+
+
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_download_execution_job_artifact_async():
+    async with AsyncKittyCAD() as client:
+        async with client.executor.download_execution_job_artifact(
+            id=Uuid("<string>"), artifact_id=Uuid("<string>")
+        ) as response:
+            async for chunk in response.aiter_bytes():
+                print(len(chunk))
+
+
+@pytest.mark.skip
+def test_cancel_execution_job():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: ExecutionJobResponse = client.executor.cancel_execution_job(
+        id=Uuid("<string>")
+    )
+
+    body: ExecutionJobResponse = result
+    print(body)
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_cancel_execution_job_async():
+
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: ExecutionJobResponse = await client.executor.cancel_execution_job(
+        id=Uuid("<string>")
+    )
+
+
+@pytest.mark.skip
+def test_get_execution_job_logs():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: ExecutionLogResponse = client.executor.get_execution_job_logs(
+        id=Uuid("<string>"), stream=ExecutionLogStream.STDOUT, offset=10, limit=None
+    )
+
+    body: ExecutionLogResponse = result
+    print(body)
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_get_execution_job_logs_async():
+
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: ExecutionLogResponse = await client.executor.get_execution_job_logs(
+        id=Uuid("<string>"), stream=ExecutionLogStream.STDOUT, offset=10, limit=None
+    )
+
+
+@pytest.mark.skip
+def test_get_execution_job_specification():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: ExecutionJobSpecificationResponse = (
+        client.executor.get_execution_job_specification(id=Uuid("<string>"))
+    )
+
+    body: ExecutionJobSpecificationResponse = result
+    print(body)
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_get_execution_job_specification_async():
+
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: ExecutionJobSpecificationResponse = (
+        await client.executor.get_execution_job_specification(id=Uuid("<string>"))
+    )
+
+
+@pytest.mark.skip
 def test_create_file_bounding_box():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
@@ -561,37 +838,24 @@ def test_create_file_conversion_options():
     result: FileConversion = client.file.create_file_conversion_options(
         body=ConversionParams(
             output_format=OutputFormat3d(
-                OptionGltf(
-                    extras=[GltfExportExtra.SKETCHES],
-                    include_uuids=False,
-                    presentation=GltfPresentation.COMPACT,
-                    storage=GltfStorage.BINARY,
-                    views={
-                        "<string>": NamedView(
-                            baseline=Visibility.SHOW,
-                            except_ids=[ModelingCmdId("<string>")],
-                            projection=Projection(OptionPerspective()),
-                            target=Point3d(
-                                x=3.14,
-                                y=3.14,
-                                z=3.14,
-                            ),
-                            up=Point3d(
-                                x=3.14,
-                                y=3.14,
-                                z=3.14,
-                            ),
-                            vantage=Point3d(
-                                x=3.14,
-                                y=3.14,
-                                z=3.14,
-                            ),
-                        )
-                    },
+                OptionStl(
+                    coords=System(
+                        forward=AxisDirectionPair(
+                            axis=Axis.Y,
+                            direction=Direction.POSITIVE,
+                        ),
+                        up=AxisDirectionPair(
+                            axis=Axis.Y,
+                            direction=Direction.POSITIVE,
+                        ),
+                    ),
+                    selection=Selection(OptionDefaultScene()),
+                    storage=StlStorage.ASCII,
+                    units=UnitLength.CM,
                 )
             ),
             src_format=InputFormat3d(
-                OptionStep(
+                OptionNx(
                     coords=System(
                         forward=AxisDirectionPair(
                             axis=Axis.Y,
@@ -603,7 +867,6 @@ def test_create_file_conversion_options():
                         ),
                     ),
                     split_closed_faces=False,
-                    target_representation=StepImportTargetRepresentation.MESH,
                 )
             ),
         ),
@@ -627,37 +890,24 @@ async def test_create_file_conversion_options_async():
     result: FileConversion = await client.file.create_file_conversion_options(
         body=ConversionParams(
             output_format=OutputFormat3d(
-                OptionGltf(
-                    extras=[GltfExportExtra.SKETCHES],
-                    include_uuids=False,
-                    presentation=GltfPresentation.COMPACT,
-                    storage=GltfStorage.BINARY,
-                    views={
-                        "<string>": NamedView(
-                            baseline=Visibility.SHOW,
-                            except_ids=[ModelingCmdId("<string>")],
-                            projection=Projection(OptionPerspective()),
-                            target=Point3d(
-                                x=3.14,
-                                y=3.14,
-                                z=3.14,
-                            ),
-                            up=Point3d(
-                                x=3.14,
-                                y=3.14,
-                                z=3.14,
-                            ),
-                            vantage=Point3d(
-                                x=3.14,
-                                y=3.14,
-                                z=3.14,
-                            ),
-                        )
-                    },
+                OptionStl(
+                    coords=System(
+                        forward=AxisDirectionPair(
+                            axis=Axis.Y,
+                            direction=Direction.POSITIVE,
+                        ),
+                        up=AxisDirectionPair(
+                            axis=Axis.Y,
+                            direction=Direction.POSITIVE,
+                        ),
+                    ),
+                    selection=Selection(OptionDefaultScene()),
+                    storage=StlStorage.ASCII,
+                    units=UnitLength.CM,
                 )
             ),
             src_format=InputFormat3d(
-                OptionStep(
+                OptionNx(
                     coords=System(
                         forward=AxisDirectionPair(
                             axis=Axis.Y,
@@ -669,7 +919,6 @@ async def test_create_file_conversion_options_async():
                         ),
                     ),
                     split_closed_faces=False,
-                    target_representation=StepImportTargetRepresentation.MESH,
                 )
             ),
         ),
@@ -6105,13 +6354,7 @@ def test_ml_copilot_ws():
         pr=None,
     ) as websocket:
         # Send a message.
-        websocket.send(
-            MlCopilotClientMessage(
-                OptionHeaders(
-                    headers={"<string>": "<string>"},
-                )
-            )
-        )
+        websocket.send(MlCopilotClientMessage(OptionListModes()))
 
         # Get a message.
         message = websocket.recv()
@@ -6188,17 +6431,8 @@ def test_ml_reasoning_ws():
         # Send a message.
         websocket.send(
             MlCopilotClientMessage(
-                OptionUpdateClientCommandSchema(
-                    commands=[
-                        MlCopilotClientCommand(
-                            description="<string>",
-                            id="<string>",
-                            input_schema={},
-                            title="<string>",
-                        )
-                    ],
-                    protocol_version=10,
-                    revision=10,
+                OptionProjectContext(
+                    current_files={"<string>": b"<bytes>"},
                 )
             )
         )
@@ -6250,10 +6484,20 @@ def test_modeling_commands_ws():
         # Send a message.
         websocket.send(
             WebSocketRequest(
-                OptionTrickleIce(
-                    candidate=RtcIceCandidateInit(
-                        candidate="<string>",
-                    ),
+                OptionModelingCmdBatchReq(
+                    batch_id=ModelingCmdId("<string>"),
+                    requests=[
+                        ModelingCmdReq(
+                            cmd=ModelingCmd(
+                                OptionSetObjectTransform(
+                                    object_id="<string>",
+                                    transforms=[ComponentTransform()],
+                                )
+                            ),
+                            cmd_id=ModelingCmdId("<string>"),
+                        )
+                    ],
+                    responses=False,
                 )
             )
         )

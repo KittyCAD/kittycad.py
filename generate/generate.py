@@ -16,15 +16,16 @@ from .schema_utils import (
     get_endpoint_refs,
     get_function_result_type,
     get_request_body_type_schema,
+    has_iterable_page,
 )
 from .type_generators import generate_types
 
 # Import utilities
 from .utils import (
     camel_to_snake,
-    clean_parameter_name,
     deduplicate_imports,
     enum_member_name,
+    parameter_name,
     to_pascal_case,
 )
 
@@ -448,7 +449,7 @@ def generate_path_data(name: str, method: str, endpoint: dict, data: dict) -> di
         parameters = endpoint["parameters"]
         optional_args = []
         for parameter in parameters:
-            parameter_name = parameter["name"]
+            arg_name = parameter_name(parameter)
             (
                 parameter_type,
                 parameter_example,
@@ -460,14 +461,9 @@ def generate_path_data(name: str, method: str, endpoint: dict, data: dict) -> di
 
             if "nullable" in parameter["schema"] and parameter["schema"]["nullable"]:
                 parameter_type = "Optional[" + parameter_type + "]"
-                optional_args.append(clean_parameter_name(parameter_name) + "=None,\n")
+                optional_args.append(arg_name + "=None,\n")
             else:
-                params_str += (
-                    clean_parameter_name(parameter_name)
-                    + "="
-                    + parameter_example
-                    + ",\n"
-                )
+                params_str += arg_name + "=" + parameter_example + ",\n"
 
         for optional_arg in optional_args:
             params_str += optional_arg
@@ -743,8 +739,13 @@ async def test_"""
         print(message)
     """
         )
+    elif file_info["binary_response"]:
+        call = f"client.{tag_name}.{fn_name}({no_client_params})"
+        short_sync_example = f"def test_{fn_name}():\n    client = KittyCAD()\n    with {call} as response:\n        for chunk in response.iter_bytes():\n            print(len(chunk))\n"
+        long_example = f"\n@pytest.mark.asyncio\n@pytest.mark.skip\nasync def test_{fn_name}_async():\n    from kittycad import AsyncKittyCAD\n    async with AsyncKittyCAD() as client:\n        async with {call} as response:\n            async for chunk in response.aiter_bytes():\n                print(len(chunk))\n"
+
     # Generate pagination examples for endpoints with x-dropshot-pagination
-    elif "x-dropshot-pagination" in endpoint:
+    elif has_iterable_page(endpoint, data):
         # Extract item type from ResultsPage response type
         item_type = "Any"
         if success_type and success_type.endswith("ResultsPage"):

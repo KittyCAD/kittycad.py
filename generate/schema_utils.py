@@ -110,6 +110,8 @@ def get_endpoint_refs(endpoint: dict, data: dict) -> List[str]:
                             raise Exception("Unknown type ", json["type"])
                     else:
                         refs.append("dict")
+                elif content_type == "application/octet-stream":
+                    continue  # Streamed responses have no JSON model.
                 elif content_type == "*/*":
                     s = content[content_type]["schema"]
                     if s == {}:
@@ -185,6 +187,17 @@ def get_request_body_refs(endpoint: dict) -> List[str]:
                     raise Exception("Unsupported content type: ", content_type)
 
     return refs
+
+
+def has_iterable_page(endpoint: dict, data: dict) -> bool:
+    """Only top-level items and next_page can be flattened into a page iterator."""
+    if "x-dropshot-pagination" not in endpoint:
+        return False
+    for ref in get_success_endpoint_refs(endpoint, data):
+        properties = data["components"]["schemas"].get(ref, {}).get("properties", {})
+        if "items" in properties and "next_page" in properties:
+            return True
+    return False
 
 
 def get_request_body_type_schema(

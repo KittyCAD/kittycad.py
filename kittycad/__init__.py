@@ -2,8 +2,11 @@
 
 import json
 import os
+from collections.abc import AsyncIterable, AsyncIterator, Iterable, Iterator, Mapping
+from contextlib import asynccontextmanager, contextmanager
+from datetime import datetime
 from inspect import signature
-from typing import Any, Callable, Dict, List, Optional, Union
+from typing import Any, BinaryIO, Callable, Dict, List, Optional, Union
 
 import bson
 import httpx
@@ -84,6 +87,17 @@ from .models.device_auth_request_form import DeviceAuthRequestForm
 from .models.email_authentication_form import EmailAuthenticationForm
 from .models.email_marketing_confirm_token_body import EmailMarketingConfirmTokenBody
 from .models.email_marketing_consent_state import EmailMarketingConsentState
+from .models.execution_artifacts_response import ExecutionArtifactsResponse
+from .models.execution_input_upload_response import ExecutionInputUploadResponse
+from .models.execution_job_create_request import ExecutionJobCreateRequest
+from .models.execution_job_response import ExecutionJobResponse
+from .models.execution_job_response_results_page import ExecutionJobResponseResultsPage
+from .models.execution_job_specification_response import (
+    ExecutionJobSpecificationResponse,
+)
+from .models.execution_job_status import ExecutionJobStatus
+from .models.execution_log_response import ExecutionLogResponse
+from .models.execution_log_stream import ExecutionLogStream
 from .models.extended_user import ExtendedUser
 from .models.factory_customer_catalog_option_results_page import (
     FactoryCustomerCatalogOptionResultsPage,
@@ -107,6 +121,7 @@ from .models.file_import_format import FileImportFormat
 from .models.file_mass import FileMass
 from .models.file_surface_area import FileSurfaceArea
 from .models.file_volume import FileVolume
+from .models.id_sort_mode import IdSortMode
 from .models.invoice_results_page import InvoiceResultsPage
 from .models.ip_addr_info import IpAddrInfo
 from .models.kcl_code_completion_request import KclCodeCompletionRequest
@@ -371,23 +386,19 @@ class MetaAPI:
         )
 
     def _fetch_page_get_announcements(self, **kwargs) -> AnnouncementResultsPage:
-        """Internal method to fetch a single page."""
+        """Fetch a single result page with its continuation token."""
         # Build URL with path parameters
         url = "{}/announcements".format(self.client.base_url)
 
         # Add query parameters
 
         if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
+            url = str(httpx.URL(url).copy_add_param("limit", str(kwargs["limit"])))
 
         if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+            url = str(
+                httpx.URL(url).copy_add_param("page_token", str(kwargs["page_token"]))
+            )
 
         # Pagination parameters (limit, page_token) are already handled above as regular query params
 
@@ -409,6 +420,8 @@ class MetaAPI:
         # Validate into a Pydantic model (supports BaseModel/RootModel)
         return AnnouncementResultsPage.model_validate(json_data, extra="ignore")
 
+    get_announcements_page = _fetch_page_get_announcements
+
     def community_sso(
         self,
         sso: str,
@@ -419,16 +432,10 @@ class MetaAPI:
         url = "{}/community/sso".format(self.client.base_url)
 
         if sso is not None:
-            if "?" in url:
-                url = url + "&sso=" + str(sso)
-            else:
-                url = url + "?sso=" + str(sso)
+            url = str(httpx.URL(url).copy_add_param("sso", str(sso)))
 
         if sig is not None:
-            if "?" in url:
-                url = url + "&sig=" + str(sig)
-            else:
-                url = url + "?sig=" + str(sig)
+            url = str(httpx.URL(url).copy_add_param("sig", str(sig)))
 
         _client = self.client.get_http_client()
 
@@ -603,23 +610,19 @@ class AsyncMetaAPI:
         )
 
     async def _fetch_page_get_announcements(self, **kwargs) -> AnnouncementResultsPage:
-        """Internal async method to fetch a single page."""
+        """Fetch a single result page with its continuation token."""
         # Build URL with path parameters
         url = "{}/announcements".format(self.client.base_url)
 
         # Add query parameters
 
         if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
+            url = str(httpx.URL(url).copy_add_param("limit", str(kwargs["limit"])))
 
         if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+            url = str(
+                httpx.URL(url).copy_add_param("page_token", str(kwargs["page_token"]))
+            )
 
         # Pagination parameters (limit, page_token) are already handled above as regular query params
 
@@ -641,6 +644,8 @@ class AsyncMetaAPI:
         # Validate into a Pydantic model (supports BaseModel/RootModel)
         return AnnouncementResultsPage.model_validate(json_data, extra="ignore")
 
+    get_announcements_page = _fetch_page_get_announcements
+
     async def community_sso(
         self,
         sso: str,
@@ -651,16 +656,10 @@ class AsyncMetaAPI:
         url = "{}/community/sso".format(self.client.base_url)
 
         if sso is not None:
-            if "?" in url:
-                url = url + "&sso=" + str(sso)
-            else:
-                url = url + "?sso=" + str(sso)
+            url = str(httpx.URL(url).copy_add_param("sso", str(sso)))
 
         if sig is not None:
-            if "?" in url:
-                url = url + "&sig=" + str(sig)
-            else:
-                url = url + "?sig=" + str(sig)
+            url = str(httpx.URL(url).copy_add_param("sig", str(sig)))
 
         _client = self.client.get_http_client()
 
@@ -853,29 +852,22 @@ class ApiCallsAPI:
         )
 
     def _fetch_page_org_list_api_calls(self, **kwargs) -> ApiCallWithPriceResultsPage:
-        """Internal method to fetch a single page."""
+        """Fetch a single result page with its continuation token."""
         # Build URL with path parameters
         url = "{}/org/api-calls".format(self.client.base_url)
 
         # Add query parameters
 
         if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
+            url = str(httpx.URL(url).copy_add_param("limit", str(kwargs["limit"])))
 
         if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+            url = str(
+                httpx.URL(url).copy_add_param("page_token", str(kwargs["page_token"]))
+            )
 
         if "sort_by" in kwargs and kwargs["sort_by"] is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(kwargs["sort_by"])
-            else:
-                url = url + "?sort_by=" + str(kwargs["sort_by"])
+            url = str(httpx.URL(url).copy_add_param("sort_by", str(kwargs["sort_by"])))
 
         # Pagination parameters (limit, page_token) are already handled above as regular query params
 
@@ -896,6 +888,8 @@ class ApiCallsAPI:
         json_data = response.json()
         # Validate into a Pydantic model (supports BaseModel/RootModel)
         return ApiCallWithPriceResultsPage.model_validate(json_data, extra="ignore")
+
+    org_list_api_calls_page = _fetch_page_org_list_api_calls
 
     def get_api_call_for_org(
         self,
@@ -971,29 +965,22 @@ class ApiCallsAPI:
         )
 
     def _fetch_page_user_list_api_calls(self, **kwargs) -> ApiCallWithPriceResultsPage:
-        """Internal method to fetch a single page."""
+        """Fetch a single result page with its continuation token."""
         # Build URL with path parameters
         url = "{}/user/api-calls".format(self.client.base_url)
 
         # Add query parameters
 
         if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
+            url = str(httpx.URL(url).copy_add_param("limit", str(kwargs["limit"])))
 
         if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+            url = str(
+                httpx.URL(url).copy_add_param("page_token", str(kwargs["page_token"]))
+            )
 
         if "sort_by" in kwargs and kwargs["sort_by"] is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(kwargs["sort_by"])
-            else:
-                url = url + "?sort_by=" + str(kwargs["sort_by"])
+            url = str(httpx.URL(url).copy_add_param("sort_by", str(kwargs["sort_by"])))
 
         # Pagination parameters (limit, page_token) are already handled above as regular query params
 
@@ -1014,6 +1001,8 @@ class ApiCallsAPI:
         json_data = response.json()
         # Validate into a Pydantic model (supports BaseModel/RootModel)
         return ApiCallWithPriceResultsPage.model_validate(json_data, extra="ignore")
+
+    user_list_api_calls_page = _fetch_page_user_list_api_calls
 
     def get_api_call_for_user(
         self,
@@ -1098,29 +1087,22 @@ class ApiCallsAPI:
     def _fetch_page_list_api_calls_for_user(
         self, id: UserIdentifier, **kwargs
     ) -> ApiCallWithPriceResultsPage:
-        """Internal method to fetch a single page."""
+        """Fetch a single result page with its continuation token."""
         # Build URL with path parameters
         url = "{}/users/{id}/api-calls".format(self.client.base_url, id=id)
 
         # Add query parameters
 
         if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
+            url = str(httpx.URL(url).copy_add_param("limit", str(kwargs["limit"])))
 
         if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+            url = str(
+                httpx.URL(url).copy_add_param("page_token", str(kwargs["page_token"]))
+            )
 
         if "sort_by" in kwargs and kwargs["sort_by"] is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(kwargs["sort_by"])
-            else:
-                url = url + "?sort_by=" + str(kwargs["sort_by"])
+            url = str(httpx.URL(url).copy_add_param("sort_by", str(kwargs["sort_by"])))
 
         # Pagination parameters (limit, page_token) are already handled above as regular query params
 
@@ -1141,6 +1123,8 @@ class ApiCallsAPI:
         json_data = response.json()
         # Validate into a Pydantic model (supports BaseModel/RootModel)
         return ApiCallWithPriceResultsPage.model_validate(json_data, extra="ignore")
+
+    list_api_calls_for_user_page = _fetch_page_list_api_calls_for_user
 
 
 class AsyncApiCallsAPI:
@@ -1265,29 +1249,22 @@ class AsyncApiCallsAPI:
     async def _fetch_page_org_list_api_calls(
         self, **kwargs
     ) -> ApiCallWithPriceResultsPage:
-        """Internal async method to fetch a single page."""
+        """Fetch a single result page with its continuation token."""
         # Build URL with path parameters
         url = "{}/org/api-calls".format(self.client.base_url)
 
         # Add query parameters
 
         if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
+            url = str(httpx.URL(url).copy_add_param("limit", str(kwargs["limit"])))
 
         if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+            url = str(
+                httpx.URL(url).copy_add_param("page_token", str(kwargs["page_token"]))
+            )
 
         if "sort_by" in kwargs and kwargs["sort_by"] is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(kwargs["sort_by"])
-            else:
-                url = url + "?sort_by=" + str(kwargs["sort_by"])
+            url = str(httpx.URL(url).copy_add_param("sort_by", str(kwargs["sort_by"])))
 
         # Pagination parameters (limit, page_token) are already handled above as regular query params
 
@@ -1308,6 +1285,8 @@ class AsyncApiCallsAPI:
         json_data = response.json()
         # Validate into a Pydantic model (supports BaseModel/RootModel)
         return ApiCallWithPriceResultsPage.model_validate(json_data, extra="ignore")
+
+    org_list_api_calls_page = _fetch_page_org_list_api_calls
 
     async def get_api_call_for_org(
         self,
@@ -1385,29 +1364,22 @@ class AsyncApiCallsAPI:
     async def _fetch_page_user_list_api_calls(
         self, **kwargs
     ) -> ApiCallWithPriceResultsPage:
-        """Internal async method to fetch a single page."""
+        """Fetch a single result page with its continuation token."""
         # Build URL with path parameters
         url = "{}/user/api-calls".format(self.client.base_url)
 
         # Add query parameters
 
         if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
+            url = str(httpx.URL(url).copy_add_param("limit", str(kwargs["limit"])))
 
         if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+            url = str(
+                httpx.URL(url).copy_add_param("page_token", str(kwargs["page_token"]))
+            )
 
         if "sort_by" in kwargs and kwargs["sort_by"] is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(kwargs["sort_by"])
-            else:
-                url = url + "?sort_by=" + str(kwargs["sort_by"])
+            url = str(httpx.URL(url).copy_add_param("sort_by", str(kwargs["sort_by"])))
 
         # Pagination parameters (limit, page_token) are already handled above as regular query params
 
@@ -1428,6 +1400,8 @@ class AsyncApiCallsAPI:
         json_data = response.json()
         # Validate into a Pydantic model (supports BaseModel/RootModel)
         return ApiCallWithPriceResultsPage.model_validate(json_data, extra="ignore")
+
+    user_list_api_calls_page = _fetch_page_user_list_api_calls
 
     async def get_api_call_for_user(
         self,
@@ -1512,29 +1486,22 @@ class AsyncApiCallsAPI:
     async def _fetch_page_list_api_calls_for_user(
         self, id: UserIdentifier, **kwargs
     ) -> ApiCallWithPriceResultsPage:
-        """Internal async method to fetch a single page."""
+        """Fetch a single result page with its continuation token."""
         # Build URL with path parameters
         url = "{}/users/{id}/api-calls".format(self.client.base_url, id=id)
 
         # Add query parameters
 
         if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
+            url = str(httpx.URL(url).copy_add_param("limit", str(kwargs["limit"])))
 
         if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+            url = str(
+                httpx.URL(url).copy_add_param("page_token", str(kwargs["page_token"]))
+            )
 
         if "sort_by" in kwargs and kwargs["sort_by"] is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(kwargs["sort_by"])
-            else:
-                url = url + "?sort_by=" + str(kwargs["sort_by"])
+            url = str(httpx.URL(url).copy_add_param("sort_by", str(kwargs["sort_by"])))
 
         # Pagination parameters (limit, page_token) are already handled above as regular query params
 
@@ -1555,6 +1522,8 @@ class AsyncApiCallsAPI:
         json_data = response.json()
         # Validate into a Pydantic model (supports BaseModel/RootModel)
         return ApiCallWithPriceResultsPage.model_validate(json_data, extra="ignore")
+
+    list_api_calls_for_user_page = _fetch_page_list_api_calls_for_user
 
 
 class HiddenAPI:
@@ -1654,22 +1623,13 @@ class HiddenAPI:
         url = "{}/auth/email/callback".format(self.client.base_url)
 
         if callback_url is not None:
-            if "?" in url:
-                url = url + "&callback_url=" + str(callback_url)
-            else:
-                url = url + "?callback_url=" + str(callback_url)
+            url = str(httpx.URL(url).copy_add_param("callback_url", str(callback_url)))
 
         if token is not None:
-            if "?" in url:
-                url = url + "&token=" + str(token)
-            else:
-                url = url + "?token=" + str(token)
+            url = str(httpx.URL(url).copy_add_param("token", str(token)))
 
         if email is not None:
-            if "?" in url:
-                url = url + "&email=" + str(email)
-            else:
-                url = url + "?email=" + str(email)
+            url = str(httpx.URL(url).copy_add_param("email", str(email)))
 
         _client = self.client.get_http_client()
 
@@ -1698,10 +1658,7 @@ class HiddenAPI:
         )
 
         if callback_url is not None:
-            if "?" in url:
-                url = url + "&callback_url=" + str(callback_url)
-            else:
-                url = url + "?callback_url=" + str(callback_url)
+            url = str(httpx.URL(url).copy_add_param("callback_url", str(callback_url)))
 
         _client = self.client.get_http_client()
 
@@ -1730,10 +1687,7 @@ class HiddenAPI:
         )
 
         if callback_url is not None:
-            if "?" in url:
-                url = url + "&callback_url=" + str(callback_url)
-            else:
-                url = url + "?callback_url=" + str(callback_url)
+            url = str(httpx.URL(url).copy_add_param("callback_url", str(callback_url)))
 
         _client = self.client.get_http_client()
 
@@ -1808,16 +1762,10 @@ class HiddenAPI:
         url = "{}/projects/shared/{key}/download".format(self.client.base_url, key=key)
 
         if format is not None:
-            if "?" in url:
-                url = url + "&format=" + str(format)
-            else:
-                url = url + "?format=" + str(format)
+            url = str(httpx.URL(url).copy_add_param("format", str(format)))
 
         if file_ids is not None:
-            if "?" in url:
-                url = url + "&file_ids=" + str(file_ids)
-            else:
-                url = url + "?file_ids=" + str(file_ids)
+            url = str(httpx.URL(url).copy_add_param("file_ids", str(file_ids)))
 
         _client = self.client.get_http_client()
 
@@ -1959,22 +1907,13 @@ class AsyncHiddenAPI:
         url = "{}/auth/email/callback".format(self.client.base_url)
 
         if callback_url is not None:
-            if "?" in url:
-                url = url + "&callback_url=" + str(callback_url)
-            else:
-                url = url + "?callback_url=" + str(callback_url)
+            url = str(httpx.URL(url).copy_add_param("callback_url", str(callback_url)))
 
         if token is not None:
-            if "?" in url:
-                url = url + "&token=" + str(token)
-            else:
-                url = url + "?token=" + str(token)
+            url = str(httpx.URL(url).copy_add_param("token", str(token)))
 
         if email is not None:
-            if "?" in url:
-                url = url + "&email=" + str(email)
-            else:
-                url = url + "?email=" + str(email)
+            url = str(httpx.URL(url).copy_add_param("email", str(email)))
 
         _client = self.client.get_http_client()
 
@@ -2003,10 +1942,7 @@ class AsyncHiddenAPI:
         )
 
         if callback_url is not None:
-            if "?" in url:
-                url = url + "&callback_url=" + str(callback_url)
-            else:
-                url = url + "?callback_url=" + str(callback_url)
+            url = str(httpx.URL(url).copy_add_param("callback_url", str(callback_url)))
 
         _client = self.client.get_http_client()
 
@@ -2035,10 +1971,7 @@ class AsyncHiddenAPI:
         )
 
         if callback_url is not None:
-            if "?" in url:
-                url = url + "&callback_url=" + str(callback_url)
-            else:
-                url = url + "?callback_url=" + str(callback_url)
+            url = str(httpx.URL(url).copy_add_param("callback_url", str(callback_url)))
 
         _client = self.client.get_http_client()
 
@@ -2113,16 +2046,10 @@ class AsyncHiddenAPI:
         url = "{}/projects/shared/{key}/download".format(self.client.base_url, key=key)
 
         if format is not None:
-            if "?" in url:
-                url = url + "&format=" + str(format)
-            else:
-                url = url + "?format=" + str(format)
+            url = str(httpx.URL(url).copy_add_param("format", str(format)))
 
         if file_ids is not None:
-            if "?" in url:
-                url = url + "&file_ids=" + str(file_ids)
-            else:
-                url = url + "?file_ids=" + str(file_ids)
+            url = str(httpx.URL(url).copy_add_param("file_ids", str(file_ids)))
 
         _client = self.client.get_http_client()
 
@@ -2167,6 +2094,887 @@ class AsyncHiddenAPI:
         return response.json() if response.content else None
 
 
+class ExecutorAPI:
+    """API for executor endpoints"""
+
+    def __init__(self, client: Client) -> None:
+        self.client = client
+
+    def upload_execution_input(
+        self,
+        body: bytes | Iterable[bytes] | Mapping[str, bytes | BinaryIO],
+        *,
+        timeout: float | httpx.Timeout | None = None,
+    ) -> ExecutionInputUploadResponse:
+        """Upload one input as binary data or multiple named files as multipart form data."""
+
+        url = "{}/execution/inputs".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        headers = httpx.Headers(self.client.get_headers())
+
+        request_timeout = _client.timeout if timeout is None else timeout
+        if isinstance(body, Mapping):
+            headers.pop("Content-Type", None)
+            files = [
+                ("files", (path, content, "application/octet-stream"))
+                for path, content in body.items()
+            ]
+            response = _client.post(
+                url, files=files, headers=headers, timeout=request_timeout
+            )
+        else:
+            headers["Content-Type"] = "application/octet-stream"
+            response = _client.post(
+                url, content=body, headers=headers, timeout=request_timeout
+            )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return ExecutionInputUploadResponse.model_validate(json_data, extra="ignore")
+
+    def list_execution_jobs(
+        self,
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+        status: Optional[ExecutionJobStatus] = None,
+        runtime_id: Optional[str] = None,
+        created_after: Optional[datetime] = None,
+        sort_by: Optional[CreatedAtSortMode] = None,
+    ) -> "SyncPageIterator":
+        """List execution jobs owned by the active user or organization.
+
+        Returns an iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            for item in client.executor.list_execution_jobs():
+                print(item)
+        """
+
+        from typing import Any, Dict
+
+        from kittycad.pagination import SyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
+
+        if limit is not None:
+            kwargs["limit"] = limit
+
+        if page_token is not None:
+            kwargs["page_token"] = page_token
+
+        if status is not None:
+            kwargs["status"] = status
+
+        if runtime_id is not None:
+            kwargs["runtime_id"] = runtime_id
+
+        if created_after is not None:
+            kwargs["created_after"] = created_after
+
+        if sort_by is not None:
+            kwargs["sort_by"] = sort_by
+
+        def fetch_page(**kw):
+            return self._fetch_page_list_execution_jobs(**kw)
+
+        # Create the page iterator
+        return SyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    def _fetch_page_list_execution_jobs(
+        self, **kwargs
+    ) -> ExecutionJobResponseResultsPage:
+        """Fetch a single result page with its continuation token."""
+        # Build URL with path parameters
+        url = "{}/execution/jobs".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            url = str(httpx.URL(url).copy_add_param("limit", str(kwargs["limit"])))
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            url = str(
+                httpx.URL(url).copy_add_param("page_token", str(kwargs["page_token"]))
+            )
+
+        if "status" in kwargs and kwargs["status"] is not None:
+            url = str(httpx.URL(url).copy_add_param("status", str(kwargs["status"])))
+
+        if "runtime_id" in kwargs and kwargs["runtime_id"] is not None:
+            url = str(
+                httpx.URL(url).copy_add_param("runtime_id", str(kwargs["runtime_id"]))
+            )
+
+        if "created_after" in kwargs and kwargs["created_after"] is not None:
+            url = str(
+                httpx.URL(url).copy_add_param(
+                    "created_after", kwargs["created_after"].isoformat()
+                )
+            )
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            url = str(httpx.URL(url).copy_add_param("sort_by", str(kwargs["sort_by"])))
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+        # Validate into a Pydantic model (supports BaseModel/RootModel)
+        return ExecutionJobResponseResultsPage.model_validate(json_data, extra="ignore")
+
+    list_execution_jobs_page = _fetch_page_list_execution_jobs
+
+    def create_execution_job(
+        self,
+        idempotency_key: str,
+        body: ExecutionJobCreateRequest,
+    ) -> ExecutionJobResponse:
+        """Requires the execution_jobs feature for the active user or organization. Retry a submission with the same Idempotency-Key and request body to recover the original job."""
+
+        url = "{}/execution/jobs".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        headers = httpx.Headers(self.client.get_headers())
+
+        headers.setdefault("Content-Type", "application/json")
+
+        headers["Idempotency-Key"] = str(idempotency_key)
+
+        response = _client.post(
+            url=url,
+            headers=headers,
+            content=serialize_request_body(body),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return ExecutionJobResponse.model_validate(json_data, extra="ignore")
+
+    def get_execution_job(
+        self,
+        id: Uuid,
+    ) -> ExecutionJobResponse:
+        """Get one execution job owned by the active user or organization."""
+
+        url = "{}/execution/jobs/{id}".format(self.client.base_url, id=id)
+
+        _client = self.client.get_http_client()
+
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return ExecutionJobResponse.model_validate(json_data, extra="ignore")
+
+    def list_execution_job_artifacts(
+        self,
+        id: Uuid,
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+        sort_by: Optional[IdSortMode] = None,
+    ) -> ExecutionArtifactsResponse:
+        """List verified durable outputs owned by the active user or organization."""
+
+        url = "{}/execution/jobs/{id}/artifacts".format(self.client.base_url, id=id)
+
+        if limit is not None:
+            url = str(httpx.URL(url).copy_add_param("limit", str(limit)))
+
+        if page_token is not None:
+            url = str(httpx.URL(url).copy_add_param("page_token", str(page_token)))
+
+        if sort_by is not None:
+            url = str(httpx.URL(url).copy_add_param("sort_by", str(sort_by)))
+
+        _client = self.client.get_http_client()
+
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return ExecutionArtifactsResponse.model_validate(json_data, extra="ignore")
+
+    @contextmanager
+    def download_execution_job_artifact(
+        self,
+        id: Uuid,
+        artifact_id: Uuid,
+    ) -> Iterator[httpx.Response]:
+        """Download a verified private execution artifact with bounded streaming."""
+
+        url = "{}/execution/jobs/{id}/artifacts/{artifact_id}".format(
+            self.client.base_url, id=id, artifact_id=artifact_id
+        )
+
+        _client = self.client.get_http_client()
+
+        with _client.stream("GET", url, headers=self.client.get_headers()) as response:
+            if not response.is_success:
+                response.read()
+                raise_for_status(response)
+            yield response
+
+    def cancel_execution_job(
+        self,
+        id: Uuid,
+    ) -> ExecutionJobResponse:
+        """Idempotently request cancellation of an execution job."""
+
+        url = "{}/execution/jobs/{id}/cancel".format(self.client.base_url, id=id)
+
+        _client = self.client.get_http_client()
+
+        response = _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return ExecutionJobResponse.model_validate(json_data, extra="ignore")
+
+    def get_execution_job_logs(
+        self,
+        id: Uuid,
+        *,
+        stream: Optional[ExecutionLogStream] = None,
+        offset: Optional[int] = None,
+        limit: Optional[int] = None,
+    ) -> ExecutionLogResponse:
+        """Read a bounded binary-safe page from a verified execution log archive."""
+
+        url = "{}/execution/jobs/{id}/logs".format(self.client.base_url, id=id)
+
+        if stream is not None:
+            url = str(httpx.URL(url).copy_add_param("stream", str(stream)))
+
+        if offset is not None:
+            url = str(httpx.URL(url).copy_add_param("offset", str(offset)))
+
+        if limit is not None:
+            url = str(httpx.URL(url).copy_add_param("limit", str(limit)))
+
+        _client = self.client.get_http_client()
+
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return ExecutionLogResponse.model_validate(json_data, extra="ignore")
+
+    def get_execution_job_specification(
+        self,
+        id: Uuid,
+    ) -> ExecutionJobSpecificationResponse:
+        """Get immutable execution inputs. Lifecycle polling does not require this object."""
+
+        url = "{}/execution/jobs/{id}/specification".format(self.client.base_url, id=id)
+
+        _client = self.client.get_http_client()
+
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return ExecutionJobSpecificationResponse.model_validate(
+            json_data, extra="ignore"
+        )
+
+    def create_file_execution(
+        self,
+        lang: CodeLanguage,
+        body: bytes,
+        *,
+        output: Optional[str] = None,
+    ) -> CodeOutput:
+        """Execute a Zoo program in a specific language."""
+
+        url = "{}/file/execute/{lang}".format(self.client.base_url, lang=lang)
+
+        if output is not None:
+            url = str(httpx.URL(url).copy_add_param("output", str(output)))
+
+        _client = self.client.get_http_client()
+
+        response = _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body,
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return CodeOutput.model_validate(json_data, extra="ignore")
+
+    def create_executor_term(
+        self,
+        recv_timeout: Optional[float] = None,
+        ws_factory: Optional[Callable[..., ClientConnectionSync]] = None,
+    ) -> "WebSocketCreateExecutorTerm":
+        """Create a terminal.
+
+        Returns a WebSocket wrapper with methods for sending/receiving data.
+        """
+        return WebSocketCreateExecutorTerm(
+            recv_timeout=recv_timeout, ws_factory=ws_factory, client=self.client
+        )
+
+
+class AsyncExecutorAPI:
+    """Async API for executor endpoints"""
+
+    def __init__(self, client: AsyncClient) -> None:
+        self.client = client
+
+    async def upload_execution_input(
+        self,
+        body: bytes | AsyncIterable[bytes] | Mapping[str, bytes | BinaryIO],
+        *,
+        timeout: float | httpx.Timeout | None = None,
+    ) -> ExecutionInputUploadResponse:
+        """Upload one input as binary data or multiple named files as multipart form data."""
+
+        url = "{}/execution/inputs".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        headers = httpx.Headers(self.client.get_headers())
+
+        request_timeout = _client.timeout if timeout is None else timeout
+        if isinstance(body, Mapping):
+            headers.pop("Content-Type", None)
+            files = [
+                ("files", (path, content, "application/octet-stream"))
+                for path, content in body.items()
+            ]
+            response = await _client.post(
+                url, files=files, headers=headers, timeout=request_timeout
+            )
+        else:
+            headers["Content-Type"] = "application/octet-stream"
+            response = await _client.post(
+                url, content=body, headers=headers, timeout=request_timeout
+            )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return ExecutionInputUploadResponse.model_validate(json_data, extra="ignore")
+
+    def list_execution_jobs(
+        self,
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+        status: Optional[ExecutionJobStatus] = None,
+        runtime_id: Optional[str] = None,
+        created_after: Optional[datetime] = None,
+        sort_by: Optional[CreatedAtSortMode] = None,
+    ) -> "AsyncPageIterator":
+        """List execution jobs owned by the active user or organization.
+
+        Returns an async iterator that automatically handles pagination.
+        Iterate over all items across all pages:
+
+            async for item in client.executor.list_execution_jobs():
+                print(item)
+        """
+
+        from typing import Any, Dict
+
+        from kittycad.pagination import AsyncPageIterator
+
+        # Store path parameters in closure for later use
+
+        # Create arguments dict, filtering out None values
+        kwargs: Dict[str, Any] = {}
+
+        if limit is not None:
+            kwargs["limit"] = limit
+
+        if page_token is not None:
+            kwargs["page_token"] = page_token
+
+        if status is not None:
+            kwargs["status"] = status
+
+        if runtime_id is not None:
+            kwargs["runtime_id"] = runtime_id
+
+        if created_after is not None:
+            kwargs["created_after"] = created_after
+
+        if sort_by is not None:
+            kwargs["sort_by"] = sort_by
+
+        async def fetch_page(**kw):
+            return await self._fetch_page_list_execution_jobs(**kw)
+
+        # Create the async page iterator
+        return AsyncPageIterator(
+            page_fetcher=fetch_page,
+            initial_kwargs=kwargs,
+        )
+
+    async def _fetch_page_list_execution_jobs(
+        self, **kwargs
+    ) -> ExecutionJobResponseResultsPage:
+        """Fetch a single result page with its continuation token."""
+        # Build URL with path parameters
+        url = "{}/execution/jobs".format(self.client.base_url)
+
+        # Add query parameters
+
+        if "limit" in kwargs and kwargs["limit"] is not None:
+            url = str(httpx.URL(url).copy_add_param("limit", str(kwargs["limit"])))
+
+        if "page_token" in kwargs and kwargs["page_token"] is not None:
+            url = str(
+                httpx.URL(url).copy_add_param("page_token", str(kwargs["page_token"]))
+            )
+
+        if "status" in kwargs and kwargs["status"] is not None:
+            url = str(httpx.URL(url).copy_add_param("status", str(kwargs["status"])))
+
+        if "runtime_id" in kwargs and kwargs["runtime_id"] is not None:
+            url = str(
+                httpx.URL(url).copy_add_param("runtime_id", str(kwargs["runtime_id"]))
+            )
+
+        if "created_after" in kwargs and kwargs["created_after"] is not None:
+            url = str(
+                httpx.URL(url).copy_add_param(
+                    "created_after", kwargs["created_after"].isoformat()
+                )
+            )
+
+        if "sort_by" in kwargs and kwargs["sort_by"] is not None:
+            url = str(httpx.URL(url).copy_add_param("sort_by", str(kwargs["sort_by"])))
+
+        # Pagination parameters (limit, page_token) are already handled above as regular query params
+
+        _client = self.client.get_http_client()
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+        # Validate into a Pydantic model (supports BaseModel/RootModel)
+        return ExecutionJobResponseResultsPage.model_validate(json_data, extra="ignore")
+
+    list_execution_jobs_page = _fetch_page_list_execution_jobs
+
+    async def create_execution_job(
+        self,
+        idempotency_key: str,
+        body: ExecutionJobCreateRequest,
+    ) -> ExecutionJobResponse:
+        """Requires the execution_jobs feature for the active user or organization. Retry a submission with the same Idempotency-Key and request body to recover the original job."""
+
+        url = "{}/execution/jobs".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        headers = httpx.Headers(self.client.get_headers())
+
+        headers.setdefault("Content-Type", "application/json")
+
+        headers["Idempotency-Key"] = str(idempotency_key)
+
+        response = await _client.post(
+            url=url,
+            headers=headers,
+            content=serialize_request_body(body),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return ExecutionJobResponse.model_validate(json_data, extra="ignore")
+
+    async def get_execution_job(
+        self,
+        id: Uuid,
+    ) -> ExecutionJobResponse:
+        """Get one execution job owned by the active user or organization."""
+
+        url = "{}/execution/jobs/{id}".format(self.client.base_url, id=id)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return ExecutionJobResponse.model_validate(json_data, extra="ignore")
+
+    async def list_execution_job_artifacts(
+        self,
+        id: Uuid,
+        *,
+        limit: Optional[int] = None,
+        page_token: Optional[str] = None,
+        sort_by: Optional[IdSortMode] = None,
+    ) -> ExecutionArtifactsResponse:
+        """List verified durable outputs owned by the active user or organization."""
+
+        url = "{}/execution/jobs/{id}/artifacts".format(self.client.base_url, id=id)
+
+        if limit is not None:
+            url = str(httpx.URL(url).copy_add_param("limit", str(limit)))
+
+        if page_token is not None:
+            url = str(httpx.URL(url).copy_add_param("page_token", str(page_token)))
+
+        if sort_by is not None:
+            url = str(httpx.URL(url).copy_add_param("sort_by", str(sort_by)))
+
+        _client = self.client.get_http_client()
+
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return ExecutionArtifactsResponse.model_validate(json_data, extra="ignore")
+
+    @asynccontextmanager
+    async def download_execution_job_artifact(
+        self,
+        id: Uuid,
+        artifact_id: Uuid,
+    ) -> AsyncIterator[httpx.Response]:
+        """Download a verified private execution artifact with bounded streaming."""
+
+        url = "{}/execution/jobs/{id}/artifacts/{artifact_id}".format(
+            self.client.base_url, id=id, artifact_id=artifact_id
+        )
+
+        _client = self.client.get_http_client()
+
+        async with _client.stream(
+            "GET", url, headers=self.client.get_headers()
+        ) as response:
+            if not response.is_success:
+                await response.aread()
+                raise_for_status(response)
+            yield response
+
+    async def cancel_execution_job(
+        self,
+        id: Uuid,
+    ) -> ExecutionJobResponse:
+        """Idempotently request cancellation of an execution job."""
+
+        url = "{}/execution/jobs/{id}/cancel".format(self.client.base_url, id=id)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return ExecutionJobResponse.model_validate(json_data, extra="ignore")
+
+    async def get_execution_job_logs(
+        self,
+        id: Uuid,
+        *,
+        stream: Optional[ExecutionLogStream] = None,
+        offset: Optional[int] = None,
+        limit: Optional[int] = None,
+    ) -> ExecutionLogResponse:
+        """Read a bounded binary-safe page from a verified execution log archive."""
+
+        url = "{}/execution/jobs/{id}/logs".format(self.client.base_url, id=id)
+
+        if stream is not None:
+            url = str(httpx.URL(url).copy_add_param("stream", str(stream)))
+
+        if offset is not None:
+            url = str(httpx.URL(url).copy_add_param("offset", str(offset)))
+
+        if limit is not None:
+            url = str(httpx.URL(url).copy_add_param("limit", str(limit)))
+
+        _client = self.client.get_http_client()
+
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return ExecutionLogResponse.model_validate(json_data, extra="ignore")
+
+    async def get_execution_job_specification(
+        self,
+        id: Uuid,
+    ) -> ExecutionJobSpecificationResponse:
+        """Get immutable execution inputs. Lifecycle polling does not require this object."""
+
+        url = "{}/execution/jobs/{id}/specification".format(self.client.base_url, id=id)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return ExecutionJobSpecificationResponse.model_validate(
+            json_data, extra="ignore"
+        )
+
+    async def create_file_execution(
+        self,
+        lang: CodeLanguage,
+        body: bytes,
+        *,
+        output: Optional[str] = None,
+    ) -> CodeOutput:
+        """Execute a Zoo program in a specific language."""
+
+        url = "{}/file/execute/{lang}".format(self.client.base_url, lang=lang)
+
+        if output is not None:
+            url = str(httpx.URL(url).copy_add_param("output", str(output)))
+
+        _client = self.client.get_http_client()
+
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+            content=body,
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return CodeOutput.model_validate(json_data, extra="ignore")
+
+    async def create_executor_term(self):
+        """Create a terminal.
+
+        Returns an async WebSocket connection for sending/receiving data.
+        """
+
+        # For async clients, return the raw async WebSocket connection
+        # This supports await websocket.send() and async for message in websocket
+        async def create_executor_term(
+            self,
+        ) -> ClientConnectionAsync:
+            """Create a terminal."""
+
+            url = "{}/ws/executor/term".format(self.client.base_url)
+
+            return await ws_connect_async(
+                url.replace("http", "ws"),
+                additional_headers=self.client.get_headers(),
+                close_timeout=120,
+                max_size=None,
+            )
+
+        return await create_executor_term(self)
+
+
 class FileAPI:
     """API for file endpoints"""
 
@@ -2189,16 +2997,10 @@ class FileAPI:
         url = "{}/file/bounding-box".format(self.client.base_url)
 
         if src_format is not None:
-            if "?" in url:
-                url = url + "&src_format=" + str(src_format)
-            else:
-                url = url + "?src_format=" + str(src_format)
+            url = str(httpx.URL(url).copy_add_param("src_format", str(src_format)))
 
         if output_unit is not None:
-            if "?" in url:
-                url = url + "&output_unit=" + str(output_unit)
-            else:
-                url = url + "?output_unit=" + str(output_unit)
+            url = str(httpx.URL(url).copy_add_param("output_unit", str(output_unit)))
 
         _client = self.client.get_http_client()
 
@@ -2241,16 +3043,10 @@ class FileAPI:
         url = "{}/file/center-of-mass".format(self.client.base_url)
 
         if src_format is not None:
-            if "?" in url:
-                url = url + "&src_format=" + str(src_format)
-            else:
-                url = url + "?src_format=" + str(src_format)
+            url = str(httpx.URL(url).copy_add_param("src_format", str(src_format)))
 
         if output_unit is not None:
-            if "?" in url:
-                url = url + "&output_unit=" + str(output_unit)
-            else:
-                url = url + "?output_unit=" + str(output_unit)
+            url = str(httpx.URL(url).copy_add_param("output_unit", str(output_unit)))
 
         _client = self.client.get_http_client()
 
@@ -2415,28 +3211,22 @@ class FileAPI:
         url = "{}/file/density".format(self.client.base_url)
 
         if src_format is not None:
-            if "?" in url:
-                url = url + "&src_format=" + str(src_format)
-            else:
-                url = url + "?src_format=" + str(src_format)
+            url = str(httpx.URL(url).copy_add_param("src_format", str(src_format)))
 
         if material_mass is not None:
-            if "?" in url:
-                url = url + "&material_mass=" + str(material_mass)
-            else:
-                url = url + "?material_mass=" + str(material_mass)
+            url = str(
+                httpx.URL(url).copy_add_param("material_mass", str(material_mass))
+            )
 
         if material_mass_unit is not None:
-            if "?" in url:
-                url = url + "&material_mass_unit=" + str(material_mass_unit)
-            else:
-                url = url + "?material_mass_unit=" + str(material_mass_unit)
+            url = str(
+                httpx.URL(url).copy_add_param(
+                    "material_mass_unit", str(material_mass_unit)
+                )
+            )
 
         if output_unit is not None:
-            if "?" in url:
-                url = url + "&output_unit=" + str(output_unit)
-            else:
-                url = url + "?output_unit=" + str(output_unit)
+            url = str(httpx.URL(url).copy_add_param("output_unit", str(output_unit)))
 
         _client = self.client.get_http_client()
 
@@ -2481,28 +3271,22 @@ class FileAPI:
         url = "{}/file/mass".format(self.client.base_url)
 
         if src_format is not None:
-            if "?" in url:
-                url = url + "&src_format=" + str(src_format)
-            else:
-                url = url + "?src_format=" + str(src_format)
+            url = str(httpx.URL(url).copy_add_param("src_format", str(src_format)))
 
         if material_density is not None:
-            if "?" in url:
-                url = url + "&material_density=" + str(material_density)
-            else:
-                url = url + "?material_density=" + str(material_density)
+            url = str(
+                httpx.URL(url).copy_add_param("material_density", str(material_density))
+            )
 
         if material_density_unit is not None:
-            if "?" in url:
-                url = url + "&material_density_unit=" + str(material_density_unit)
-            else:
-                url = url + "?material_density_unit=" + str(material_density_unit)
+            url = str(
+                httpx.URL(url).copy_add_param(
+                    "material_density_unit", str(material_density_unit)
+                )
+            )
 
         if output_unit is not None:
-            if "?" in url:
-                url = url + "&output_unit=" + str(output_unit)
-            else:
-                url = url + "?output_unit=" + str(output_unit)
+            url = str(httpx.URL(url).copy_add_param("output_unit", str(output_unit)))
 
         _client = self.client.get_http_client()
 
@@ -2545,16 +3329,10 @@ class FileAPI:
         url = "{}/file/surface-area".format(self.client.base_url)
 
         if src_format is not None:
-            if "?" in url:
-                url = url + "&src_format=" + str(src_format)
-            else:
-                url = url + "?src_format=" + str(src_format)
+            url = str(httpx.URL(url).copy_add_param("src_format", str(src_format)))
 
         if output_unit is not None:
-            if "?" in url:
-                url = url + "&output_unit=" + str(output_unit)
-            else:
-                url = url + "?output_unit=" + str(output_unit)
+            url = str(httpx.URL(url).copy_add_param("output_unit", str(output_unit)))
 
         _client = self.client.get_http_client()
 
@@ -2597,16 +3375,10 @@ class FileAPI:
         url = "{}/file/volume".format(self.client.base_url)
 
         if src_format is not None:
-            if "?" in url:
-                url = url + "&src_format=" + str(src_format)
-            else:
-                url = url + "?src_format=" + str(src_format)
+            url = str(httpx.URL(url).copy_add_param("src_format", str(src_format)))
 
         if output_unit is not None:
-            if "?" in url:
-                url = url + "&output_unit=" + str(output_unit)
-            else:
-                url = url + "?output_unit=" + str(output_unit)
+            url = str(httpx.URL(url).copy_add_param("output_unit", str(output_unit)))
 
         _client = self.client.get_http_client()
 
@@ -2652,16 +3424,10 @@ class AsyncFileAPI:
         url = "{}/file/bounding-box".format(self.client.base_url)
 
         if src_format is not None:
-            if "?" in url:
-                url = url + "&src_format=" + str(src_format)
-            else:
-                url = url + "?src_format=" + str(src_format)
+            url = str(httpx.URL(url).copy_add_param("src_format", str(src_format)))
 
         if output_unit is not None:
-            if "?" in url:
-                url = url + "&output_unit=" + str(output_unit)
-            else:
-                url = url + "?output_unit=" + str(output_unit)
+            url = str(httpx.URL(url).copy_add_param("output_unit", str(output_unit)))
 
         _client = self.client.get_http_client()
 
@@ -2704,16 +3470,10 @@ class AsyncFileAPI:
         url = "{}/file/center-of-mass".format(self.client.base_url)
 
         if src_format is not None:
-            if "?" in url:
-                url = url + "&src_format=" + str(src_format)
-            else:
-                url = url + "?src_format=" + str(src_format)
+            url = str(httpx.URL(url).copy_add_param("src_format", str(src_format)))
 
         if output_unit is not None:
-            if "?" in url:
-                url = url + "&output_unit=" + str(output_unit)
-            else:
-                url = url + "?output_unit=" + str(output_unit)
+            url = str(httpx.URL(url).copy_add_param("output_unit", str(output_unit)))
 
         _client = self.client.get_http_client()
 
@@ -2878,28 +3638,22 @@ class AsyncFileAPI:
         url = "{}/file/density".format(self.client.base_url)
 
         if src_format is not None:
-            if "?" in url:
-                url = url + "&src_format=" + str(src_format)
-            else:
-                url = url + "?src_format=" + str(src_format)
+            url = str(httpx.URL(url).copy_add_param("src_format", str(src_format)))
 
         if material_mass is not None:
-            if "?" in url:
-                url = url + "&material_mass=" + str(material_mass)
-            else:
-                url = url + "?material_mass=" + str(material_mass)
+            url = str(
+                httpx.URL(url).copy_add_param("material_mass", str(material_mass))
+            )
 
         if material_mass_unit is not None:
-            if "?" in url:
-                url = url + "&material_mass_unit=" + str(material_mass_unit)
-            else:
-                url = url + "?material_mass_unit=" + str(material_mass_unit)
+            url = str(
+                httpx.URL(url).copy_add_param(
+                    "material_mass_unit", str(material_mass_unit)
+                )
+            )
 
         if output_unit is not None:
-            if "?" in url:
-                url = url + "&output_unit=" + str(output_unit)
-            else:
-                url = url + "?output_unit=" + str(output_unit)
+            url = str(httpx.URL(url).copy_add_param("output_unit", str(output_unit)))
 
         _client = self.client.get_http_client()
 
@@ -2944,28 +3698,22 @@ class AsyncFileAPI:
         url = "{}/file/mass".format(self.client.base_url)
 
         if src_format is not None:
-            if "?" in url:
-                url = url + "&src_format=" + str(src_format)
-            else:
-                url = url + "?src_format=" + str(src_format)
+            url = str(httpx.URL(url).copy_add_param("src_format", str(src_format)))
 
         if material_density is not None:
-            if "?" in url:
-                url = url + "&material_density=" + str(material_density)
-            else:
-                url = url + "?material_density=" + str(material_density)
+            url = str(
+                httpx.URL(url).copy_add_param("material_density", str(material_density))
+            )
 
         if material_density_unit is not None:
-            if "?" in url:
-                url = url + "&material_density_unit=" + str(material_density_unit)
-            else:
-                url = url + "?material_density_unit=" + str(material_density_unit)
+            url = str(
+                httpx.URL(url).copy_add_param(
+                    "material_density_unit", str(material_density_unit)
+                )
+            )
 
         if output_unit is not None:
-            if "?" in url:
-                url = url + "&output_unit=" + str(output_unit)
-            else:
-                url = url + "?output_unit=" + str(output_unit)
+            url = str(httpx.URL(url).copy_add_param("output_unit", str(output_unit)))
 
         _client = self.client.get_http_client()
 
@@ -3008,16 +3756,10 @@ class AsyncFileAPI:
         url = "{}/file/surface-area".format(self.client.base_url)
 
         if src_format is not None:
-            if "?" in url:
-                url = url + "&src_format=" + str(src_format)
-            else:
-                url = url + "?src_format=" + str(src_format)
+            url = str(httpx.URL(url).copy_add_param("src_format", str(src_format)))
 
         if output_unit is not None:
-            if "?" in url:
-                url = url + "&output_unit=" + str(output_unit)
-            else:
-                url = url + "?output_unit=" + str(output_unit)
+            url = str(httpx.URL(url).copy_add_param("output_unit", str(output_unit)))
 
         _client = self.client.get_http_client()
 
@@ -3060,16 +3802,10 @@ class AsyncFileAPI:
         url = "{}/file/volume".format(self.client.base_url)
 
         if src_format is not None:
-            if "?" in url:
-                url = url + "&src_format=" + str(src_format)
-            else:
-                url = url + "?src_format=" + str(src_format)
+            url = str(httpx.URL(url).copy_add_param("src_format", str(src_format)))
 
         if output_unit is not None:
-            if "?" in url:
-                url = url + "&output_unit=" + str(output_unit)
-            else:
-                url = url + "?output_unit=" + str(output_unit)
+            url = str(httpx.URL(url).copy_add_param("output_unit", str(output_unit)))
 
         _client = self.client.get_http_client()
 
@@ -3091,133 +3827,6 @@ class AsyncFileAPI:
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return FileVolume.model_validate(json_data, extra="ignore")
-
-
-class ExecutorAPI:
-    """API for executor endpoints"""
-
-    def __init__(self, client: Client) -> None:
-        self.client = client
-
-    def create_file_execution(
-        self,
-        lang: CodeLanguage,
-        body: bytes,
-        *,
-        output: Optional[str] = None,
-    ) -> CodeOutput:
-        """Execute a Zoo program in a specific language."""
-
-        url = "{}/file/execute/{lang}".format(self.client.base_url, lang=lang)
-
-        if output is not None:
-            if "?" in url:
-                url = url + "&output=" + str(output)
-            else:
-                url = url + "?output=" + str(output)
-
-        _client = self.client.get_http_client()
-
-        response = _client.post(
-            url=url,
-            headers=self.client.get_headers(),
-            content=body,
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return CodeOutput.model_validate(json_data, extra="ignore")
-
-    def create_executor_term(
-        self,
-        recv_timeout: Optional[float] = None,
-        ws_factory: Optional[Callable[..., ClientConnectionSync]] = None,
-    ) -> "WebSocketCreateExecutorTerm":
-        """Create a terminal.
-
-        Returns a WebSocket wrapper with methods for sending/receiving data.
-        """
-        return WebSocketCreateExecutorTerm(
-            recv_timeout=recv_timeout, ws_factory=ws_factory, client=self.client
-        )
-
-
-class AsyncExecutorAPI:
-    """Async API for executor endpoints"""
-
-    def __init__(self, client: AsyncClient) -> None:
-        self.client = client
-
-    async def create_file_execution(
-        self,
-        lang: CodeLanguage,
-        body: bytes,
-        *,
-        output: Optional[str] = None,
-    ) -> CodeOutput:
-        """Execute a Zoo program in a specific language."""
-
-        url = "{}/file/execute/{lang}".format(self.client.base_url, lang=lang)
-
-        if output is not None:
-            if "?" in url:
-                url = url + "&output=" + str(output)
-            else:
-                url = url + "?output=" + str(output)
-
-        _client = self.client.get_http_client()
-
-        response = await _client.post(
-            url=url,
-            headers=self.client.get_headers(),
-            content=body,
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return CodeOutput.model_validate(json_data, extra="ignore")
-
-    async def create_executor_term(self):
-        """Create a terminal.
-
-        Returns an async WebSocket connection for sending/receiving data.
-        """
-
-        # For async clients, return the raw async WebSocket connection
-        # This supports await websocket.send() and async for message in websocket
-        async def create_executor_term(
-            self,
-        ) -> ClientConnectionAsync:
-            """Create a terminal."""
-
-            url = "{}/ws/executor/term".format(self.client.base_url)
-
-            return await ws_connect_async(
-                url.replace("http", "ws"),
-                additional_headers=self.client.get_headers(),
-                close_timeout=120,
-                max_size=None,
-            )
-
-        return await create_executor_term(self)
 
 
 class MlAPI:
@@ -3274,29 +3883,22 @@ class MlAPI:
     def _fetch_page_list_conversations_for_user(
         self, **kwargs
     ) -> ConversationResultsPage:
-        """Internal method to fetch a single page."""
+        """Fetch a single result page with its continuation token."""
         # Build URL with path parameters
         url = "{}/ml/conversations".format(self.client.base_url)
 
         # Add query parameters
 
         if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
+            url = str(httpx.URL(url).copy_add_param("limit", str(kwargs["limit"])))
 
         if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+            url = str(
+                httpx.URL(url).copy_add_param("page_token", str(kwargs["page_token"]))
+            )
 
         if "sort_by" in kwargs and kwargs["sort_by"] is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(kwargs["sort_by"])
-            else:
-                url = url + "?sort_by=" + str(kwargs["sort_by"])
+            url = str(httpx.URL(url).copy_add_param("sort_by", str(kwargs["sort_by"])))
 
         # Pagination parameters (limit, page_token) are already handled above as regular query params
 
@@ -3317,6 +3919,8 @@ class MlAPI:
         json_data = response.json()
         # Validate into a Pydantic model (supports BaseModel/RootModel)
         return ConversationResultsPage.model_validate(json_data, extra="ignore")
+
+    list_conversations_for_user_page = _fetch_page_list_conversations_for_user
 
     def create_proprietary_to_kcl(
         self,
@@ -3340,10 +3944,7 @@ class MlAPI:
         url = "{}/ml/convert/proprietary-to-kcl".format(self.client.base_url)
 
         if code_option is not None:
-            if "?" in url:
-                url = url + "&code_option=" + str(code_option)
-            else:
-                url = url + "?code_option=" + str(code_option)
+            url = str(httpx.URL(url).copy_add_param("code_option", str(code_option)))
 
         _client = self.client.get_http_client()
 
@@ -3543,47 +4144,43 @@ class MlAPI:
     def _fetch_page_list_text_to_cad_parts_for_user(
         self, **kwargs
     ) -> TextToCadResponseResultsPage:
-        """Internal method to fetch a single page."""
+        """Fetch a single result page with its continuation token."""
         # Build URL with path parameters
         url = "{}/user/text-to-cad".format(self.client.base_url)
 
         # Add query parameters
 
         if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
+            url = str(httpx.URL(url).copy_add_param("limit", str(kwargs["limit"])))
 
         if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+            url = str(
+                httpx.URL(url).copy_add_param("page_token", str(kwargs["page_token"]))
+            )
 
         if "sort_by" in kwargs and kwargs["sort_by"] is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(kwargs["sort_by"])
-            else:
-                url = url + "?sort_by=" + str(kwargs["sort_by"])
+            url = str(httpx.URL(url).copy_add_param("sort_by", str(kwargs["sort_by"])))
 
         if "no_models" in kwargs and kwargs["no_models"] is not None:
-            if "?" in url:
-                url = url + "&no_models=" + str(kwargs["no_models"]).lower()
-            else:
-                url = url + "?no_models=" + str(kwargs["no_models"]).lower()
+            url = str(
+                httpx.URL(url).copy_add_param(
+                    "no_models", str(kwargs["no_models"]).lower()
+                )
+            )
 
         if "no_parts" in kwargs and kwargs["no_parts"] is not None:
-            if "?" in url:
-                url = url + "&no_parts=" + str(kwargs["no_parts"]).lower()
-            else:
-                url = url + "?no_parts=" + str(kwargs["no_parts"]).lower()
+            url = str(
+                httpx.URL(url).copy_add_param(
+                    "no_parts", str(kwargs["no_parts"]).lower()
+                )
+            )
 
         if "conversation_id" in kwargs and kwargs["conversation_id"] is not None:
-            if "?" in url:
-                url = url + "&conversation_id=" + str(kwargs["conversation_id"])
-            else:
-                url = url + "?conversation_id=" + str(kwargs["conversation_id"])
+            url = str(
+                httpx.URL(url).copy_add_param(
+                    "conversation_id", str(kwargs["conversation_id"])
+                )
+            )
 
         # Pagination parameters (limit, page_token) are already handled above as regular query params
 
@@ -3604,6 +4201,8 @@ class MlAPI:
         json_data = response.json()
         # Validate into a Pydantic model (supports BaseModel/RootModel)
         return TextToCadResponseResultsPage.model_validate(json_data, extra="ignore")
+
+    list_text_to_cad_parts_for_user_page = _fetch_page_list_text_to_cad_parts_for_user
 
     def get_text_to_cad_part_for_user(
         self,
@@ -3645,10 +4244,7 @@ class MlAPI:
         url = "{}/user/text-to-cad/{id}".format(self.client.base_url, id=id)
 
         if feedback is not None:
-            if "?" in url:
-                url = url + "&feedback=" + str(feedback)
-            else:
-                url = url + "?feedback=" + str(feedback)
+            url = str(httpx.URL(url).copy_add_param("feedback", str(feedback)))
 
         _client = self.client.get_http_client()
 
@@ -3769,29 +4365,22 @@ class AsyncMlAPI:
     async def _fetch_page_list_conversations_for_user(
         self, **kwargs
     ) -> ConversationResultsPage:
-        """Internal async method to fetch a single page."""
+        """Fetch a single result page with its continuation token."""
         # Build URL with path parameters
         url = "{}/ml/conversations".format(self.client.base_url)
 
         # Add query parameters
 
         if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
+            url = str(httpx.URL(url).copy_add_param("limit", str(kwargs["limit"])))
 
         if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+            url = str(
+                httpx.URL(url).copy_add_param("page_token", str(kwargs["page_token"]))
+            )
 
         if "sort_by" in kwargs and kwargs["sort_by"] is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(kwargs["sort_by"])
-            else:
-                url = url + "?sort_by=" + str(kwargs["sort_by"])
+            url = str(httpx.URL(url).copy_add_param("sort_by", str(kwargs["sort_by"])))
 
         # Pagination parameters (limit, page_token) are already handled above as regular query params
 
@@ -3812,6 +4401,8 @@ class AsyncMlAPI:
         json_data = response.json()
         # Validate into a Pydantic model (supports BaseModel/RootModel)
         return ConversationResultsPage.model_validate(json_data, extra="ignore")
+
+    list_conversations_for_user_page = _fetch_page_list_conversations_for_user
 
     async def create_proprietary_to_kcl(
         self,
@@ -3835,10 +4426,7 @@ class AsyncMlAPI:
         url = "{}/ml/convert/proprietary-to-kcl".format(self.client.base_url)
 
         if code_option is not None:
-            if "?" in url:
-                url = url + "&code_option=" + str(code_option)
-            else:
-                url = url + "?code_option=" + str(code_option)
+            url = str(httpx.URL(url).copy_add_param("code_option", str(code_option)))
 
         _client = self.client.get_http_client()
 
@@ -4038,47 +4626,43 @@ class AsyncMlAPI:
     async def _fetch_page_list_text_to_cad_parts_for_user(
         self, **kwargs
     ) -> TextToCadResponseResultsPage:
-        """Internal async method to fetch a single page."""
+        """Fetch a single result page with its continuation token."""
         # Build URL with path parameters
         url = "{}/user/text-to-cad".format(self.client.base_url)
 
         # Add query parameters
 
         if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
+            url = str(httpx.URL(url).copy_add_param("limit", str(kwargs["limit"])))
 
         if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+            url = str(
+                httpx.URL(url).copy_add_param("page_token", str(kwargs["page_token"]))
+            )
 
         if "sort_by" in kwargs and kwargs["sort_by"] is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(kwargs["sort_by"])
-            else:
-                url = url + "?sort_by=" + str(kwargs["sort_by"])
+            url = str(httpx.URL(url).copy_add_param("sort_by", str(kwargs["sort_by"])))
 
         if "no_models" in kwargs and kwargs["no_models"] is not None:
-            if "?" in url:
-                url = url + "&no_models=" + str(kwargs["no_models"]).lower()
-            else:
-                url = url + "?no_models=" + str(kwargs["no_models"]).lower()
+            url = str(
+                httpx.URL(url).copy_add_param(
+                    "no_models", str(kwargs["no_models"]).lower()
+                )
+            )
 
         if "no_parts" in kwargs and kwargs["no_parts"] is not None:
-            if "?" in url:
-                url = url + "&no_parts=" + str(kwargs["no_parts"]).lower()
-            else:
-                url = url + "?no_parts=" + str(kwargs["no_parts"]).lower()
+            url = str(
+                httpx.URL(url).copy_add_param(
+                    "no_parts", str(kwargs["no_parts"]).lower()
+                )
+            )
 
         if "conversation_id" in kwargs and kwargs["conversation_id"] is not None:
-            if "?" in url:
-                url = url + "&conversation_id=" + str(kwargs["conversation_id"])
-            else:
-                url = url + "?conversation_id=" + str(kwargs["conversation_id"])
+            url = str(
+                httpx.URL(url).copy_add_param(
+                    "conversation_id", str(kwargs["conversation_id"])
+                )
+            )
 
         # Pagination parameters (limit, page_token) are already handled above as regular query params
 
@@ -4099,6 +4683,8 @@ class AsyncMlAPI:
         json_data = response.json()
         # Validate into a Pydantic model (supports BaseModel/RootModel)
         return TextToCadResponseResultsPage.model_validate(json_data, extra="ignore")
+
+    list_text_to_cad_parts_for_user_page = _fetch_page_list_text_to_cad_parts_for_user
 
     async def get_text_to_cad_part_for_user(
         self,
@@ -4140,10 +4726,7 @@ class AsyncMlAPI:
         url = "{}/user/text-to-cad/{id}".format(self.client.base_url, id=id)
 
         if feedback is not None:
-            if "?" in url:
-                url = url + "&feedback=" + str(feedback)
-            else:
-                url = url + "?feedback=" + str(feedback)
+            url = str(httpx.URL(url).copy_add_param("feedback", str(feedback)))
 
         _client = self.client.get_http_client()
 
@@ -4392,46 +4975,33 @@ class Oauth2API:
         url = "{}/oauth2/authorize".format(self.client.base_url)
 
         if response_type is not None:
-            if "?" in url:
-                url = url + "&response_type=" + str(response_type)
-            else:
-                url = url + "?response_type=" + str(response_type)
+            url = str(
+                httpx.URL(url).copy_add_param("response_type", str(response_type))
+            )
 
         if client_id is not None:
-            if "?" in url:
-                url = url + "&client_id=" + str(client_id)
-            else:
-                url = url + "?client_id=" + str(client_id)
+            url = str(httpx.URL(url).copy_add_param("client_id", str(client_id)))
 
         if redirect_uri is not None:
-            if "?" in url:
-                url = url + "&redirect_uri=" + str(redirect_uri)
-            else:
-                url = url + "?redirect_uri=" + str(redirect_uri)
+            url = str(httpx.URL(url).copy_add_param("redirect_uri", str(redirect_uri)))
 
         if state is not None:
-            if "?" in url:
-                url = url + "&state=" + str(state)
-            else:
-                url = url + "?state=" + str(state)
+            url = str(httpx.URL(url).copy_add_param("state", str(state)))
 
         if scope is not None:
-            if "?" in url:
-                url = url + "&scope=" + str(scope)
-            else:
-                url = url + "?scope=" + str(scope)
+            url = str(httpx.URL(url).copy_add_param("scope", str(scope)))
 
         if code_challenge is not None:
-            if "?" in url:
-                url = url + "&code_challenge=" + str(code_challenge)
-            else:
-                url = url + "?code_challenge=" + str(code_challenge)
+            url = str(
+                httpx.URL(url).copy_add_param("code_challenge", str(code_challenge))
+            )
 
         if code_challenge_method is not None:
-            if "?" in url:
-                url = url + "&code_challenge_method=" + str(code_challenge_method)
-            else:
-                url = url + "?code_challenge_method=" + str(code_challenge_method)
+            url = str(
+                httpx.URL(url).copy_add_param(
+                    "code_challenge_method", str(code_challenge_method)
+                )
+            )
 
         _client = self.client.get_http_client()
 
@@ -4527,16 +5097,10 @@ class Oauth2API:
         url = "{}/oauth2/device/verify".format(self.client.base_url)
 
         if user_code is not None:
-            if "?" in url:
-                url = url + "&user_code=" + str(user_code)
-            else:
-                url = url + "?user_code=" + str(user_code)
+            url = str(httpx.URL(url).copy_add_param("user_code", str(user_code)))
 
         if app_name is not None:
-            if "?" in url:
-                url = url + "&app_name=" + str(app_name)
-            else:
-                url = url + "?app_name=" + str(app_name)
+            url = str(httpx.URL(url).copy_add_param("app_name", str(app_name)))
 
         _client = self.client.get_http_client()
 
@@ -4568,28 +5132,16 @@ class Oauth2API:
         )
 
         if code is not None:
-            if "?" in url:
-                url = url + "&code=" + str(code)
-            else:
-                url = url + "?code=" + str(code)
+            url = str(httpx.URL(url).copy_add_param("code", str(code)))
 
         if state is not None:
-            if "?" in url:
-                url = url + "&state=" + str(state)
-            else:
-                url = url + "?state=" + str(state)
+            url = str(httpx.URL(url).copy_add_param("state", str(state)))
 
         if id_token is not None:
-            if "?" in url:
-                url = url + "&id_token=" + str(id_token)
-            else:
-                url = url + "?id_token=" + str(id_token)
+            url = str(httpx.URL(url).copy_add_param("id_token", str(id_token)))
 
         if user is not None:
-            if "?" in url:
-                url = url + "&user=" + str(user)
-            else:
-                url = url + "?user=" + str(user)
+            url = str(httpx.URL(url).copy_add_param("user", str(user)))
 
         _client = self.client.get_http_client()
 
@@ -4644,10 +5196,7 @@ class Oauth2API:
         )
 
         if callback_url is not None:
-            if "?" in url:
-                url = url + "&callback_url=" + str(callback_url)
-            else:
-                url = url + "?callback_url=" + str(callback_url)
+            url = str(httpx.URL(url).copy_add_param("callback_url", str(callback_url)))
 
         _client = self.client.get_http_client()
 
@@ -4726,16 +5275,10 @@ class Oauth2API:
         url = "{}/oauth2/verify-account-linking".format(self.client.base_url)
 
         if token is not None:
-            if "?" in url:
-                url = url + "&token=" + str(token)
-            else:
-                url = url + "?token=" + str(token)
+            url = str(httpx.URL(url).copy_add_param("token", str(token)))
 
         if callback_url is not None:
-            if "?" in url:
-                url = url + "&callback_url=" + str(callback_url)
-            else:
-                url = url + "?callback_url=" + str(callback_url)
+            url = str(httpx.URL(url).copy_add_param("callback_url", str(callback_url)))
 
         _client = self.client.get_http_client()
 
@@ -4797,29 +5340,22 @@ class Oauth2API:
     def _fetch_page_list_org_oauth2_apps(
         self, **kwargs
     ) -> OAuth2AppResponseResultsPage:
-        """Internal method to fetch a single page."""
+        """Fetch a single result page with its continuation token."""
         # Build URL with path parameters
         url = "{}/org/oauth2/apps".format(self.client.base_url)
 
         # Add query parameters
 
         if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
+            url = str(httpx.URL(url).copy_add_param("limit", str(kwargs["limit"])))
 
         if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+            url = str(
+                httpx.URL(url).copy_add_param("page_token", str(kwargs["page_token"]))
+            )
 
         if "sort_by" in kwargs and kwargs["sort_by"] is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(kwargs["sort_by"])
-            else:
-                url = url + "?sort_by=" + str(kwargs["sort_by"])
+            url = str(httpx.URL(url).copy_add_param("sort_by", str(kwargs["sort_by"])))
 
         # Pagination parameters (limit, page_token) are already handled above as regular query params
 
@@ -4840,6 +5376,8 @@ class Oauth2API:
         json_data = response.json()
         # Validate into a Pydantic model (supports BaseModel/RootModel)
         return OAuth2AppResponseResultsPage.model_validate(json_data, extra="ignore")
+
+    list_org_oauth2_apps_page = _fetch_page_list_org_oauth2_apps
 
     def create_org_oauth2_app(
         self,
@@ -5002,29 +5540,22 @@ class Oauth2API:
     def _fetch_page_list_user_oauth2_apps(
         self, **kwargs
     ) -> OAuth2AppResponseResultsPage:
-        """Internal method to fetch a single page."""
+        """Fetch a single result page with its continuation token."""
         # Build URL with path parameters
         url = "{}/user/oauth2/apps".format(self.client.base_url)
 
         # Add query parameters
 
         if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
+            url = str(httpx.URL(url).copy_add_param("limit", str(kwargs["limit"])))
 
         if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+            url = str(
+                httpx.URL(url).copy_add_param("page_token", str(kwargs["page_token"]))
+            )
 
         if "sort_by" in kwargs and kwargs["sort_by"] is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(kwargs["sort_by"])
-            else:
-                url = url + "?sort_by=" + str(kwargs["sort_by"])
+            url = str(httpx.URL(url).copy_add_param("sort_by", str(kwargs["sort_by"])))
 
         # Pagination parameters (limit, page_token) are already handled above as regular query params
 
@@ -5045,6 +5576,8 @@ class Oauth2API:
         json_data = response.json()
         # Validate into a Pydantic model (supports BaseModel/RootModel)
         return OAuth2AppResponseResultsPage.model_validate(json_data, extra="ignore")
+
+    list_user_oauth2_apps_page = _fetch_page_list_user_oauth2_apps
 
     def create_user_oauth2_app(
         self,
@@ -5280,46 +5813,33 @@ class AsyncOauth2API:
         url = "{}/oauth2/authorize".format(self.client.base_url)
 
         if response_type is not None:
-            if "?" in url:
-                url = url + "&response_type=" + str(response_type)
-            else:
-                url = url + "?response_type=" + str(response_type)
+            url = str(
+                httpx.URL(url).copy_add_param("response_type", str(response_type))
+            )
 
         if client_id is not None:
-            if "?" in url:
-                url = url + "&client_id=" + str(client_id)
-            else:
-                url = url + "?client_id=" + str(client_id)
+            url = str(httpx.URL(url).copy_add_param("client_id", str(client_id)))
 
         if redirect_uri is not None:
-            if "?" in url:
-                url = url + "&redirect_uri=" + str(redirect_uri)
-            else:
-                url = url + "?redirect_uri=" + str(redirect_uri)
+            url = str(httpx.URL(url).copy_add_param("redirect_uri", str(redirect_uri)))
 
         if state is not None:
-            if "?" in url:
-                url = url + "&state=" + str(state)
-            else:
-                url = url + "?state=" + str(state)
+            url = str(httpx.URL(url).copy_add_param("state", str(state)))
 
         if scope is not None:
-            if "?" in url:
-                url = url + "&scope=" + str(scope)
-            else:
-                url = url + "?scope=" + str(scope)
+            url = str(httpx.URL(url).copy_add_param("scope", str(scope)))
 
         if code_challenge is not None:
-            if "?" in url:
-                url = url + "&code_challenge=" + str(code_challenge)
-            else:
-                url = url + "?code_challenge=" + str(code_challenge)
+            url = str(
+                httpx.URL(url).copy_add_param("code_challenge", str(code_challenge))
+            )
 
         if code_challenge_method is not None:
-            if "?" in url:
-                url = url + "&code_challenge_method=" + str(code_challenge_method)
-            else:
-                url = url + "?code_challenge_method=" + str(code_challenge_method)
+            url = str(
+                httpx.URL(url).copy_add_param(
+                    "code_challenge_method", str(code_challenge_method)
+                )
+            )
 
         _client = self.client.get_http_client()
 
@@ -5415,16 +5935,10 @@ class AsyncOauth2API:
         url = "{}/oauth2/device/verify".format(self.client.base_url)
 
         if user_code is not None:
-            if "?" in url:
-                url = url + "&user_code=" + str(user_code)
-            else:
-                url = url + "?user_code=" + str(user_code)
+            url = str(httpx.URL(url).copy_add_param("user_code", str(user_code)))
 
         if app_name is not None:
-            if "?" in url:
-                url = url + "&app_name=" + str(app_name)
-            else:
-                url = url + "?app_name=" + str(app_name)
+            url = str(httpx.URL(url).copy_add_param("app_name", str(app_name)))
 
         _client = self.client.get_http_client()
 
@@ -5456,28 +5970,16 @@ class AsyncOauth2API:
         )
 
         if code is not None:
-            if "?" in url:
-                url = url + "&code=" + str(code)
-            else:
-                url = url + "?code=" + str(code)
+            url = str(httpx.URL(url).copy_add_param("code", str(code)))
 
         if state is not None:
-            if "?" in url:
-                url = url + "&state=" + str(state)
-            else:
-                url = url + "?state=" + str(state)
+            url = str(httpx.URL(url).copy_add_param("state", str(state)))
 
         if id_token is not None:
-            if "?" in url:
-                url = url + "&id_token=" + str(id_token)
-            else:
-                url = url + "?id_token=" + str(id_token)
+            url = str(httpx.URL(url).copy_add_param("id_token", str(id_token)))
 
         if user is not None:
-            if "?" in url:
-                url = url + "&user=" + str(user)
-            else:
-                url = url + "?user=" + str(user)
+            url = str(httpx.URL(url).copy_add_param("user", str(user)))
 
         _client = self.client.get_http_client()
 
@@ -5532,10 +6034,7 @@ class AsyncOauth2API:
         )
 
         if callback_url is not None:
-            if "?" in url:
-                url = url + "&callback_url=" + str(callback_url)
-            else:
-                url = url + "?callback_url=" + str(callback_url)
+            url = str(httpx.URL(url).copy_add_param("callback_url", str(callback_url)))
 
         _client = self.client.get_http_client()
 
@@ -5614,16 +6113,10 @@ class AsyncOauth2API:
         url = "{}/oauth2/verify-account-linking".format(self.client.base_url)
 
         if token is not None:
-            if "?" in url:
-                url = url + "&token=" + str(token)
-            else:
-                url = url + "?token=" + str(token)
+            url = str(httpx.URL(url).copy_add_param("token", str(token)))
 
         if callback_url is not None:
-            if "?" in url:
-                url = url + "&callback_url=" + str(callback_url)
-            else:
-                url = url + "?callback_url=" + str(callback_url)
+            url = str(httpx.URL(url).copy_add_param("callback_url", str(callback_url)))
 
         _client = self.client.get_http_client()
 
@@ -5685,29 +6178,22 @@ class AsyncOauth2API:
     async def _fetch_page_list_org_oauth2_apps(
         self, **kwargs
     ) -> OAuth2AppResponseResultsPage:
-        """Internal async method to fetch a single page."""
+        """Fetch a single result page with its continuation token."""
         # Build URL with path parameters
         url = "{}/org/oauth2/apps".format(self.client.base_url)
 
         # Add query parameters
 
         if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
+            url = str(httpx.URL(url).copy_add_param("limit", str(kwargs["limit"])))
 
         if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+            url = str(
+                httpx.URL(url).copy_add_param("page_token", str(kwargs["page_token"]))
+            )
 
         if "sort_by" in kwargs and kwargs["sort_by"] is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(kwargs["sort_by"])
-            else:
-                url = url + "?sort_by=" + str(kwargs["sort_by"])
+            url = str(httpx.URL(url).copy_add_param("sort_by", str(kwargs["sort_by"])))
 
         # Pagination parameters (limit, page_token) are already handled above as regular query params
 
@@ -5728,6 +6214,8 @@ class AsyncOauth2API:
         json_data = response.json()
         # Validate into a Pydantic model (supports BaseModel/RootModel)
         return OAuth2AppResponseResultsPage.model_validate(json_data, extra="ignore")
+
+    list_org_oauth2_apps_page = _fetch_page_list_org_oauth2_apps
 
     async def create_org_oauth2_app(
         self,
@@ -5890,29 +6378,22 @@ class AsyncOauth2API:
     async def _fetch_page_list_user_oauth2_apps(
         self, **kwargs
     ) -> OAuth2AppResponseResultsPage:
-        """Internal async method to fetch a single page."""
+        """Fetch a single result page with its continuation token."""
         # Build URL with path parameters
         url = "{}/user/oauth2/apps".format(self.client.base_url)
 
         # Add query parameters
 
         if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
+            url = str(httpx.URL(url).copy_add_param("limit", str(kwargs["limit"])))
 
         if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+            url = str(
+                httpx.URL(url).copy_add_param("page_token", str(kwargs["page_token"]))
+            )
 
         if "sort_by" in kwargs and kwargs["sort_by"] is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(kwargs["sort_by"])
-            else:
-                url = url + "?sort_by=" + str(kwargs["sort_by"])
+            url = str(httpx.URL(url).copy_add_param("sort_by", str(kwargs["sort_by"])))
 
         # Pagination parameters (limit, page_token) are already handled above as regular query params
 
@@ -5933,6 +6414,8 @@ class AsyncOauth2API:
         json_data = response.json()
         # Validate into a Pydantic model (supports BaseModel/RootModel)
         return OAuth2AppResponseResultsPage.model_validate(json_data, extra="ignore")
+
+    list_user_oauth2_apps_page = _fetch_page_list_user_oauth2_apps
 
     async def create_user_oauth2_app(
         self,
@@ -6176,16 +6659,10 @@ class OrgsAPI:
         url = "{}/org/dataset/s3/policies".format(self.client.base_url)
 
         if uri is not None:
-            if "?" in url:
-                url = url + "&uri=" + str(uri)
-            else:
-                url = url + "?uri=" + str(uri)
+            url = str(httpx.URL(url).copy_add_param("uri", str(uri)))
 
         if role_arn is not None:
-            if "?" in url:
-                url = url + "&role_arn=" + str(role_arn)
-            else:
-                url = url + "?role_arn=" + str(role_arn)
+            url = str(httpx.URL(url).copy_add_param("role_arn", str(role_arn)))
 
         _client = self.client.get_http_client()
 
@@ -6255,35 +6732,29 @@ class OrgsAPI:
         )
 
     def _fetch_page_list_org_datasets(self, **kwargs) -> OrgDatasetResultsPage:
-        """Internal method to fetch a single page."""
+        """Fetch a single result page with its continuation token."""
         # Build URL with path parameters
         url = "{}/org/datasets".format(self.client.base_url)
 
         # Add query parameters
 
         if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
+            url = str(httpx.URL(url).copy_add_param("limit", str(kwargs["limit"])))
 
         if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+            url = str(
+                httpx.URL(url).copy_add_param("page_token", str(kwargs["page_token"]))
+            )
 
         if "lookup_enabled" in kwargs and kwargs["lookup_enabled"] is not None:
-            if "?" in url:
-                url = url + "&lookup_enabled=" + str(kwargs["lookup_enabled"]).lower()
-            else:
-                url = url + "?lookup_enabled=" + str(kwargs["lookup_enabled"]).lower()
+            url = str(
+                httpx.URL(url).copy_add_param(
+                    "lookup_enabled", str(kwargs["lookup_enabled"]).lower()
+                )
+            )
 
         if "sort_by" in kwargs and kwargs["sort_by"] is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(kwargs["sort_by"])
-            else:
-                url = url + "?sort_by=" + str(kwargs["sort_by"])
+            url = str(httpx.URL(url).copy_add_param("sort_by", str(kwargs["sort_by"])))
 
         # Pagination parameters (limit, page_token) are already handled above as regular query params
 
@@ -6304,6 +6775,8 @@ class OrgsAPI:
         json_data = response.json()
         # Validate into a Pydantic model (supports BaseModel/RootModel)
         return OrgDatasetResultsPage.model_validate(json_data, extra="ignore")
+
+    list_org_datasets_page = _fetch_page_list_org_datasets
 
     def create_org_dataset(
         self,
@@ -6501,47 +6974,31 @@ class OrgsAPI:
     def _fetch_page_list_org_dataset_conversions(
         self, id: Uuid, **kwargs
     ) -> OrgDatasetFileConversionSummaryResultsPage:
-        """Internal method to fetch a single page."""
+        """Fetch a single result page with its continuation token."""
         # Build URL with path parameters
         url = "{}/org/datasets/{id}/conversions".format(self.client.base_url, id=id)
 
         # Add query parameters
 
         if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
+            url = str(httpx.URL(url).copy_add_param("limit", str(kwargs["limit"])))
 
         if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+            url = str(
+                httpx.URL(url).copy_add_param("page_token", str(kwargs["page_token"]))
+            )
 
         if "sort_by" in kwargs and kwargs["sort_by"] is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(kwargs["sort_by"])
-            else:
-                url = url + "?sort_by=" + str(kwargs["sort_by"])
+            url = str(httpx.URL(url).copy_add_param("sort_by", str(kwargs["sort_by"])))
 
         if "filter" in kwargs and kwargs["filter"] is not None:
-            if "?" in url:
-                url = url + "&filter=" + str(kwargs["filter"])
-            else:
-                url = url + "?filter=" + str(kwargs["filter"])
+            url = str(httpx.URL(url).copy_add_param("filter", str(kwargs["filter"])))
 
         if "q" in kwargs and kwargs["q"] is not None:
-            if "?" in url:
-                url = url + "&q=" + str(kwargs["q"])
-            else:
-                url = url + "?q=" + str(kwargs["q"])
+            url = str(httpx.URL(url).copy_add_param("q", str(kwargs["q"])))
 
         if "phase" in kwargs and kwargs["phase"] is not None:
-            if "?" in url:
-                url = url + "&phase=" + str(kwargs["phase"])
-            else:
-                url = url + "?phase=" + str(kwargs["phase"])
+            url = str(httpx.URL(url).copy_add_param("phase", str(kwargs["phase"])))
 
         # Pagination parameters (limit, page_token) are already handled above as regular query params
 
@@ -6564,6 +7021,8 @@ class OrgsAPI:
         return OrgDatasetFileConversionSummaryResultsPage.model_validate(
             json_data, extra="ignore"
         )
+
+    list_org_dataset_conversions_page = _fetch_page_list_org_dataset_conversions
 
     def get_org_dataset_conversion(
         self,
@@ -6657,10 +7116,7 @@ class OrgsAPI:
         url = "{}/org/datasets/{id}/retrigger".format(self.client.base_url, id=id)
 
         if statuses is not None:
-            if "?" in url:
-                url = url + "&statuses=" + str(statuses)
-            else:
-                url = url + "?statuses=" + str(statuses)
+            url = str(httpx.URL(url).copy_add_param("statuses", str(statuses)))
 
         _client = self.client.get_http_client()
 
@@ -6737,7 +7193,7 @@ class OrgsAPI:
     def _fetch_page_search_org_dataset_conversions(
         self, id: Uuid, **kwargs
     ) -> OrgDatasetFileConversionSummaryResultsPage:
-        """Internal method to fetch a single page."""
+        """Fetch a single result page with its continuation token."""
         # Build URL with path parameters
         url = "{}/org/datasets/{id}/search/conversions".format(
             self.client.base_url, id=id
@@ -6746,40 +7202,24 @@ class OrgsAPI:
         # Add query parameters
 
         if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
+            url = str(httpx.URL(url).copy_add_param("limit", str(kwargs["limit"])))
 
         if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+            url = str(
+                httpx.URL(url).copy_add_param("page_token", str(kwargs["page_token"]))
+            )
 
         if "q" in kwargs and kwargs["q"] is not None:
-            if "?" in url:
-                url = url + "&q=" + str(kwargs["q"])
-            else:
-                url = url + "?q=" + str(kwargs["q"])
+            url = str(httpx.URL(url).copy_add_param("q", str(kwargs["q"])))
 
         if "sort_by" in kwargs and kwargs["sort_by"] is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(kwargs["sort_by"])
-            else:
-                url = url + "?sort_by=" + str(kwargs["sort_by"])
+            url = str(httpx.URL(url).copy_add_param("sort_by", str(kwargs["sort_by"])))
 
         if "filter" in kwargs and kwargs["filter"] is not None:
-            if "?" in url:
-                url = url + "&filter=" + str(kwargs["filter"])
-            else:
-                url = url + "?filter=" + str(kwargs["filter"])
+            url = str(httpx.URL(url).copy_add_param("filter", str(kwargs["filter"])))
 
         if "phase" in kwargs and kwargs["phase"] is not None:
-            if "?" in url:
-                url = url + "&phase=" + str(kwargs["phase"])
-            else:
-                url = url + "?phase=" + str(kwargs["phase"])
+            url = str(httpx.URL(url).copy_add_param("phase", str(kwargs["phase"])))
 
         # Pagination parameters (limit, page_token) are already handled above as regular query params
 
@@ -6803,6 +7243,8 @@ class OrgsAPI:
             json_data, extra="ignore"
         )
 
+    search_org_dataset_conversions_page = _fetch_page_search_org_dataset_conversions
+
     def search_org_dataset_semantic(
         self,
         id: Uuid,
@@ -6815,16 +7257,10 @@ class OrgsAPI:
         url = "{}/org/datasets/{id}/search/semantic".format(self.client.base_url, id=id)
 
         if q is not None:
-            if "?" in url:
-                url = url + "&q=" + str(q)
-            else:
-                url = url + "?q=" + str(q)
+            url = str(httpx.URL(url).copy_add_param("q", str(q)))
 
         if limit is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(limit)
-            else:
-                url = url + "?limit=" + str(limit)
+            url = str(httpx.URL(url).copy_add_param("limit", str(limit)))
 
         _client = self.client.get_http_client()
 
@@ -6956,35 +7392,25 @@ class OrgsAPI:
         )
 
     def _fetch_page_list_org_members(self, **kwargs) -> OrgMemberResultsPage:
-        """Internal method to fetch a single page."""
+        """Fetch a single result page with its continuation token."""
         # Build URL with path parameters
         url = "{}/org/members".format(self.client.base_url)
 
         # Add query parameters
 
         if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
+            url = str(httpx.URL(url).copy_add_param("limit", str(kwargs["limit"])))
 
         if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+            url = str(
+                httpx.URL(url).copy_add_param("page_token", str(kwargs["page_token"]))
+            )
 
         if "sort_by" in kwargs and kwargs["sort_by"] is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(kwargs["sort_by"])
-            else:
-                url = url + "?sort_by=" + str(kwargs["sort_by"])
+            url = str(httpx.URL(url).copy_add_param("sort_by", str(kwargs["sort_by"])))
 
         if "role" in kwargs and kwargs["role"] is not None:
-            if "?" in url:
-                url = url + "&role=" + str(kwargs["role"])
-            else:
-                url = url + "?role=" + str(kwargs["role"])
+            url = str(httpx.URL(url).copy_add_param("role", str(kwargs["role"])))
 
         # Pagination parameters (limit, page_token) are already handled above as regular query params
 
@@ -7005,6 +7431,8 @@ class OrgsAPI:
         json_data = response.json()
         # Validate into a Pydantic model (supports BaseModel/RootModel)
         return OrgMemberResultsPage.model_validate(json_data, extra="ignore")
+
+    list_org_members_page = _fetch_page_list_org_members
 
     def create_org_member(
         self,
@@ -7329,29 +7757,22 @@ class OrgsAPI:
         )
 
     def _fetch_page_get_org_shortlinks(self, **kwargs) -> ShortlinkResultsPage:
-        """Internal method to fetch a single page."""
+        """Fetch a single result page with its continuation token."""
         # Build URL with path parameters
         url = "{}/org/shortlinks".format(self.client.base_url)
 
         # Add query parameters
 
         if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
+            url = str(httpx.URL(url).copy_add_param("limit", str(kwargs["limit"])))
 
         if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+            url = str(
+                httpx.URL(url).copy_add_param("page_token", str(kwargs["page_token"]))
+            )
 
         if "sort_by" in kwargs and kwargs["sort_by"] is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(kwargs["sort_by"])
-            else:
-                url = url + "?sort_by=" + str(kwargs["sort_by"])
+            url = str(httpx.URL(url).copy_add_param("sort_by", str(kwargs["sort_by"])))
 
         # Pagination parameters (limit, page_token) are already handled above as regular query params
 
@@ -7372,6 +7793,8 @@ class OrgsAPI:
         json_data = response.json()
         # Validate into a Pydantic model (supports BaseModel/RootModel)
         return ShortlinkResultsPage.model_validate(json_data, extra="ignore")
+
+    get_org_shortlinks_page = _fetch_page_get_org_shortlinks
 
     def list_org_skills(
         self,
@@ -7413,23 +7836,19 @@ class OrgsAPI:
         )
 
     def _fetch_page_list_org_skills(self, **kwargs) -> OrgSkillResponseResultsPage:
-        """Internal method to fetch a single page."""
+        """Fetch a single result page with its continuation token."""
         # Build URL with path parameters
         url = "{}/org/skills".format(self.client.base_url)
 
         # Add query parameters
 
         if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
+            url = str(httpx.URL(url).copy_add_param("limit", str(kwargs["limit"])))
 
         if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+            url = str(
+                httpx.URL(url).copy_add_param("page_token", str(kwargs["page_token"]))
+            )
 
         # Pagination parameters (limit, page_token) are already handled above as regular query params
 
@@ -7450,6 +7869,8 @@ class OrgsAPI:
         json_data = response.json()
         # Validate into a Pydantic model (supports BaseModel/RootModel)
         return OrgSkillResponseResultsPage.model_validate(json_data, extra="ignore")
+
+    list_org_skills_page = _fetch_page_list_org_skills
 
     def get_user_org(
         self,
@@ -7607,16 +8028,10 @@ class AsyncOrgsAPI:
         url = "{}/org/dataset/s3/policies".format(self.client.base_url)
 
         if uri is not None:
-            if "?" in url:
-                url = url + "&uri=" + str(uri)
-            else:
-                url = url + "?uri=" + str(uri)
+            url = str(httpx.URL(url).copy_add_param("uri", str(uri)))
 
         if role_arn is not None:
-            if "?" in url:
-                url = url + "&role_arn=" + str(role_arn)
-            else:
-                url = url + "?role_arn=" + str(role_arn)
+            url = str(httpx.URL(url).copy_add_param("role_arn", str(role_arn)))
 
         _client = self.client.get_http_client()
 
@@ -7686,35 +8101,29 @@ class AsyncOrgsAPI:
         )
 
     async def _fetch_page_list_org_datasets(self, **kwargs) -> OrgDatasetResultsPage:
-        """Internal async method to fetch a single page."""
+        """Fetch a single result page with its continuation token."""
         # Build URL with path parameters
         url = "{}/org/datasets".format(self.client.base_url)
 
         # Add query parameters
 
         if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
+            url = str(httpx.URL(url).copy_add_param("limit", str(kwargs["limit"])))
 
         if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+            url = str(
+                httpx.URL(url).copy_add_param("page_token", str(kwargs["page_token"]))
+            )
 
         if "lookup_enabled" in kwargs and kwargs["lookup_enabled"] is not None:
-            if "?" in url:
-                url = url + "&lookup_enabled=" + str(kwargs["lookup_enabled"]).lower()
-            else:
-                url = url + "?lookup_enabled=" + str(kwargs["lookup_enabled"]).lower()
+            url = str(
+                httpx.URL(url).copy_add_param(
+                    "lookup_enabled", str(kwargs["lookup_enabled"]).lower()
+                )
+            )
 
         if "sort_by" in kwargs and kwargs["sort_by"] is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(kwargs["sort_by"])
-            else:
-                url = url + "?sort_by=" + str(kwargs["sort_by"])
+            url = str(httpx.URL(url).copy_add_param("sort_by", str(kwargs["sort_by"])))
 
         # Pagination parameters (limit, page_token) are already handled above as regular query params
 
@@ -7735,6 +8144,8 @@ class AsyncOrgsAPI:
         json_data = response.json()
         # Validate into a Pydantic model (supports BaseModel/RootModel)
         return OrgDatasetResultsPage.model_validate(json_data, extra="ignore")
+
+    list_org_datasets_page = _fetch_page_list_org_datasets
 
     async def create_org_dataset(
         self,
@@ -7932,47 +8343,31 @@ class AsyncOrgsAPI:
     async def _fetch_page_list_org_dataset_conversions(
         self, id: Uuid, **kwargs
     ) -> OrgDatasetFileConversionSummaryResultsPage:
-        """Internal async method to fetch a single page."""
+        """Fetch a single result page with its continuation token."""
         # Build URL with path parameters
         url = "{}/org/datasets/{id}/conversions".format(self.client.base_url, id=id)
 
         # Add query parameters
 
         if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
+            url = str(httpx.URL(url).copy_add_param("limit", str(kwargs["limit"])))
 
         if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+            url = str(
+                httpx.URL(url).copy_add_param("page_token", str(kwargs["page_token"]))
+            )
 
         if "sort_by" in kwargs and kwargs["sort_by"] is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(kwargs["sort_by"])
-            else:
-                url = url + "?sort_by=" + str(kwargs["sort_by"])
+            url = str(httpx.URL(url).copy_add_param("sort_by", str(kwargs["sort_by"])))
 
         if "filter" in kwargs and kwargs["filter"] is not None:
-            if "?" in url:
-                url = url + "&filter=" + str(kwargs["filter"])
-            else:
-                url = url + "?filter=" + str(kwargs["filter"])
+            url = str(httpx.URL(url).copy_add_param("filter", str(kwargs["filter"])))
 
         if "q" in kwargs and kwargs["q"] is not None:
-            if "?" in url:
-                url = url + "&q=" + str(kwargs["q"])
-            else:
-                url = url + "?q=" + str(kwargs["q"])
+            url = str(httpx.URL(url).copy_add_param("q", str(kwargs["q"])))
 
         if "phase" in kwargs and kwargs["phase"] is not None:
-            if "?" in url:
-                url = url + "&phase=" + str(kwargs["phase"])
-            else:
-                url = url + "?phase=" + str(kwargs["phase"])
+            url = str(httpx.URL(url).copy_add_param("phase", str(kwargs["phase"])))
 
         # Pagination parameters (limit, page_token) are already handled above as regular query params
 
@@ -7995,6 +8390,8 @@ class AsyncOrgsAPI:
         return OrgDatasetFileConversionSummaryResultsPage.model_validate(
             json_data, extra="ignore"
         )
+
+    list_org_dataset_conversions_page = _fetch_page_list_org_dataset_conversions
 
     async def get_org_dataset_conversion(
         self,
@@ -8088,10 +8485,7 @@ class AsyncOrgsAPI:
         url = "{}/org/datasets/{id}/retrigger".format(self.client.base_url, id=id)
 
         if statuses is not None:
-            if "?" in url:
-                url = url + "&statuses=" + str(statuses)
-            else:
-                url = url + "?statuses=" + str(statuses)
+            url = str(httpx.URL(url).copy_add_param("statuses", str(statuses)))
 
         _client = self.client.get_http_client()
 
@@ -8168,7 +8562,7 @@ class AsyncOrgsAPI:
     async def _fetch_page_search_org_dataset_conversions(
         self, id: Uuid, **kwargs
     ) -> OrgDatasetFileConversionSummaryResultsPage:
-        """Internal async method to fetch a single page."""
+        """Fetch a single result page with its continuation token."""
         # Build URL with path parameters
         url = "{}/org/datasets/{id}/search/conversions".format(
             self.client.base_url, id=id
@@ -8177,40 +8571,24 @@ class AsyncOrgsAPI:
         # Add query parameters
 
         if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
+            url = str(httpx.URL(url).copy_add_param("limit", str(kwargs["limit"])))
 
         if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+            url = str(
+                httpx.URL(url).copy_add_param("page_token", str(kwargs["page_token"]))
+            )
 
         if "q" in kwargs and kwargs["q"] is not None:
-            if "?" in url:
-                url = url + "&q=" + str(kwargs["q"])
-            else:
-                url = url + "?q=" + str(kwargs["q"])
+            url = str(httpx.URL(url).copy_add_param("q", str(kwargs["q"])))
 
         if "sort_by" in kwargs and kwargs["sort_by"] is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(kwargs["sort_by"])
-            else:
-                url = url + "?sort_by=" + str(kwargs["sort_by"])
+            url = str(httpx.URL(url).copy_add_param("sort_by", str(kwargs["sort_by"])))
 
         if "filter" in kwargs and kwargs["filter"] is not None:
-            if "?" in url:
-                url = url + "&filter=" + str(kwargs["filter"])
-            else:
-                url = url + "?filter=" + str(kwargs["filter"])
+            url = str(httpx.URL(url).copy_add_param("filter", str(kwargs["filter"])))
 
         if "phase" in kwargs and kwargs["phase"] is not None:
-            if "?" in url:
-                url = url + "&phase=" + str(kwargs["phase"])
-            else:
-                url = url + "?phase=" + str(kwargs["phase"])
+            url = str(httpx.URL(url).copy_add_param("phase", str(kwargs["phase"])))
 
         # Pagination parameters (limit, page_token) are already handled above as regular query params
 
@@ -8234,6 +8612,8 @@ class AsyncOrgsAPI:
             json_data, extra="ignore"
         )
 
+    search_org_dataset_conversions_page = _fetch_page_search_org_dataset_conversions
+
     async def search_org_dataset_semantic(
         self,
         id: Uuid,
@@ -8246,16 +8626,10 @@ class AsyncOrgsAPI:
         url = "{}/org/datasets/{id}/search/semantic".format(self.client.base_url, id=id)
 
         if q is not None:
-            if "?" in url:
-                url = url + "&q=" + str(q)
-            else:
-                url = url + "?q=" + str(q)
+            url = str(httpx.URL(url).copy_add_param("q", str(q)))
 
         if limit is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(limit)
-            else:
-                url = url + "?limit=" + str(limit)
+            url = str(httpx.URL(url).copy_add_param("limit", str(limit)))
 
         _client = self.client.get_http_client()
 
@@ -8387,35 +8761,25 @@ class AsyncOrgsAPI:
         )
 
     async def _fetch_page_list_org_members(self, **kwargs) -> OrgMemberResultsPage:
-        """Internal async method to fetch a single page."""
+        """Fetch a single result page with its continuation token."""
         # Build URL with path parameters
         url = "{}/org/members".format(self.client.base_url)
 
         # Add query parameters
 
         if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
+            url = str(httpx.URL(url).copy_add_param("limit", str(kwargs["limit"])))
 
         if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+            url = str(
+                httpx.URL(url).copy_add_param("page_token", str(kwargs["page_token"]))
+            )
 
         if "sort_by" in kwargs and kwargs["sort_by"] is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(kwargs["sort_by"])
-            else:
-                url = url + "?sort_by=" + str(kwargs["sort_by"])
+            url = str(httpx.URL(url).copy_add_param("sort_by", str(kwargs["sort_by"])))
 
         if "role" in kwargs and kwargs["role"] is not None:
-            if "?" in url:
-                url = url + "&role=" + str(kwargs["role"])
-            else:
-                url = url + "?role=" + str(kwargs["role"])
+            url = str(httpx.URL(url).copy_add_param("role", str(kwargs["role"])))
 
         # Pagination parameters (limit, page_token) are already handled above as regular query params
 
@@ -8436,6 +8800,8 @@ class AsyncOrgsAPI:
         json_data = response.json()
         # Validate into a Pydantic model (supports BaseModel/RootModel)
         return OrgMemberResultsPage.model_validate(json_data, extra="ignore")
+
+    list_org_members_page = _fetch_page_list_org_members
 
     async def create_org_member(
         self,
@@ -8760,29 +9126,22 @@ class AsyncOrgsAPI:
         )
 
     async def _fetch_page_get_org_shortlinks(self, **kwargs) -> ShortlinkResultsPage:
-        """Internal async method to fetch a single page."""
+        """Fetch a single result page with its continuation token."""
         # Build URL with path parameters
         url = "{}/org/shortlinks".format(self.client.base_url)
 
         # Add query parameters
 
         if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
+            url = str(httpx.URL(url).copy_add_param("limit", str(kwargs["limit"])))
 
         if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+            url = str(
+                httpx.URL(url).copy_add_param("page_token", str(kwargs["page_token"]))
+            )
 
         if "sort_by" in kwargs and kwargs["sort_by"] is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(kwargs["sort_by"])
-            else:
-                url = url + "?sort_by=" + str(kwargs["sort_by"])
+            url = str(httpx.URL(url).copy_add_param("sort_by", str(kwargs["sort_by"])))
 
         # Pagination parameters (limit, page_token) are already handled above as regular query params
 
@@ -8803,6 +9162,8 @@ class AsyncOrgsAPI:
         json_data = response.json()
         # Validate into a Pydantic model (supports BaseModel/RootModel)
         return ShortlinkResultsPage.model_validate(json_data, extra="ignore")
+
+    get_org_shortlinks_page = _fetch_page_get_org_shortlinks
 
     def list_org_skills(
         self,
@@ -8846,23 +9207,19 @@ class AsyncOrgsAPI:
     async def _fetch_page_list_org_skills(
         self, **kwargs
     ) -> OrgSkillResponseResultsPage:
-        """Internal async method to fetch a single page."""
+        """Fetch a single result page with its continuation token."""
         # Build URL with path parameters
         url = "{}/org/skills".format(self.client.base_url)
 
         # Add query parameters
 
         if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
+            url = str(httpx.URL(url).copy_add_param("limit", str(kwargs["limit"])))
 
         if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+            url = str(
+                httpx.URL(url).copy_add_param("page_token", str(kwargs["page_token"]))
+            )
 
         # Pagination parameters (limit, page_token) are already handled above as regular query params
 
@@ -8883,6 +9240,8 @@ class AsyncOrgsAPI:
         json_data = response.json()
         # Validate into a Pydantic model (supports BaseModel/RootModel)
         return OrgSkillResponseResultsPage.model_validate(json_data, extra="ignore")
+
+    list_org_skills_page = _fetch_page_list_org_skills
 
     async def get_user_org(
         self,
@@ -8960,23 +9319,19 @@ class AddressesAPI:
         )
 
     def _fetch_page_list_org_addresses(self, **kwargs) -> AddressResponseResultsPage:
-        """Internal method to fetch a single page."""
+        """Fetch a single result page with its continuation token."""
         # Build URL with path parameters
         url = "{}/org/addresses".format(self.client.base_url)
 
         # Add query parameters
 
         if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
+            url = str(httpx.URL(url).copy_add_param("limit", str(kwargs["limit"])))
 
         if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+            url = str(
+                httpx.URL(url).copy_add_param("page_token", str(kwargs["page_token"]))
+            )
 
         # Pagination parameters (limit, page_token) are already handled above as regular query params
 
@@ -8997,6 +9352,8 @@ class AddressesAPI:
         json_data = response.json()
         # Validate into a Pydantic model (supports BaseModel/RootModel)
         return AddressResponseResultsPage.model_validate(json_data, extra="ignore")
+
+    list_org_addresses_page = _fetch_page_list_org_addresses
 
     def create_org_address(
         self,
@@ -9095,10 +9452,11 @@ class AddressesAPI:
         url = "{}/org/addresses/{id}".format(self.client.base_url, id=id)
 
         if expected_revision is not None:
-            if "?" in url:
-                url = url + "&expected_revision=" + str(expected_revision)
-            else:
-                url = url + "?expected_revision=" + str(expected_revision)
+            url = str(
+                httpx.URL(url).copy_add_param(
+                    "expected_revision", str(expected_revision)
+                )
+            )
 
         _client = self.client.get_http_client()
 
@@ -9154,23 +9512,19 @@ class AddressesAPI:
         )
 
     def _fetch_page_list_user_addresses(self, **kwargs) -> AddressResponseResultsPage:
-        """Internal method to fetch a single page."""
+        """Fetch a single result page with its continuation token."""
         # Build URL with path parameters
         url = "{}/user/addresses".format(self.client.base_url)
 
         # Add query parameters
 
         if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
+            url = str(httpx.URL(url).copy_add_param("limit", str(kwargs["limit"])))
 
         if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+            url = str(
+                httpx.URL(url).copy_add_param("page_token", str(kwargs["page_token"]))
+            )
 
         # Pagination parameters (limit, page_token) are already handled above as regular query params
 
@@ -9191,6 +9545,8 @@ class AddressesAPI:
         json_data = response.json()
         # Validate into a Pydantic model (supports BaseModel/RootModel)
         return AddressResponseResultsPage.model_validate(json_data, extra="ignore")
+
+    list_user_addresses_page = _fetch_page_list_user_addresses
 
     def create_user_address(
         self,
@@ -9289,10 +9645,11 @@ class AddressesAPI:
         url = "{}/user/addresses/{id}".format(self.client.base_url, id=id)
 
         if expected_revision is not None:
-            if "?" in url:
-                url = url + "&expected_revision=" + str(expected_revision)
-            else:
-                url = url + "?expected_revision=" + str(expected_revision)
+            url = str(
+                httpx.URL(url).copy_add_param(
+                    "expected_revision", str(expected_revision)
+                )
+            )
 
         _client = self.client.get_http_client()
 
@@ -9357,23 +9714,19 @@ class AsyncAddressesAPI:
     async def _fetch_page_list_org_addresses(
         self, **kwargs
     ) -> AddressResponseResultsPage:
-        """Internal async method to fetch a single page."""
+        """Fetch a single result page with its continuation token."""
         # Build URL with path parameters
         url = "{}/org/addresses".format(self.client.base_url)
 
         # Add query parameters
 
         if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
+            url = str(httpx.URL(url).copy_add_param("limit", str(kwargs["limit"])))
 
         if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+            url = str(
+                httpx.URL(url).copy_add_param("page_token", str(kwargs["page_token"]))
+            )
 
         # Pagination parameters (limit, page_token) are already handled above as regular query params
 
@@ -9394,6 +9747,8 @@ class AsyncAddressesAPI:
         json_data = response.json()
         # Validate into a Pydantic model (supports BaseModel/RootModel)
         return AddressResponseResultsPage.model_validate(json_data, extra="ignore")
+
+    list_org_addresses_page = _fetch_page_list_org_addresses
 
     async def create_org_address(
         self,
@@ -9492,10 +9847,11 @@ class AsyncAddressesAPI:
         url = "{}/org/addresses/{id}".format(self.client.base_url, id=id)
 
         if expected_revision is not None:
-            if "?" in url:
-                url = url + "&expected_revision=" + str(expected_revision)
-            else:
-                url = url + "?expected_revision=" + str(expected_revision)
+            url = str(
+                httpx.URL(url).copy_add_param(
+                    "expected_revision", str(expected_revision)
+                )
+            )
 
         _client = self.client.get_http_client()
 
@@ -9553,23 +9909,19 @@ class AsyncAddressesAPI:
     async def _fetch_page_list_user_addresses(
         self, **kwargs
     ) -> AddressResponseResultsPage:
-        """Internal async method to fetch a single page."""
+        """Fetch a single result page with its continuation token."""
         # Build URL with path parameters
         url = "{}/user/addresses".format(self.client.base_url)
 
         # Add query parameters
 
         if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
+            url = str(httpx.URL(url).copy_add_param("limit", str(kwargs["limit"])))
 
         if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+            url = str(
+                httpx.URL(url).copy_add_param("page_token", str(kwargs["page_token"]))
+            )
 
         # Pagination parameters (limit, page_token) are already handled above as regular query params
 
@@ -9590,6 +9942,8 @@ class AsyncAddressesAPI:
         json_data = response.json()
         # Validate into a Pydantic model (supports BaseModel/RootModel)
         return AddressResponseResultsPage.model_validate(json_data, extra="ignore")
+
+    list_user_addresses_page = _fetch_page_list_user_addresses
 
     async def create_user_address(
         self,
@@ -9688,10 +10042,11 @@ class AsyncAddressesAPI:
         url = "{}/user/addresses/{id}".format(self.client.base_url, id=id)
 
         if expected_revision is not None:
-            if "?" in url:
-                url = url + "&expected_revision=" + str(expected_revision)
-            else:
-                url = url + "?expected_revision=" + str(expected_revision)
+            url = str(
+                httpx.URL(url).copy_add_param(
+                    "expected_revision", str(expected_revision)
+                )
+            )
 
         _client = self.client.get_http_client()
 
@@ -9783,10 +10138,9 @@ class PaymentsAPI:
         url = "{}/org/billing/usage-collection-threshold".format(self.client.base_url)
 
         if expected_version is not None:
-            if "?" in url:
-                url = url + "&expected_version=" + str(expected_version)
-            else:
-                url = url + "?expected_version=" + str(expected_version)
+            url = str(
+                httpx.URL(url).copy_add_param("expected_version", str(expected_version))
+            )
 
         _client = self.client.get_http_client()
 
@@ -9934,10 +10288,11 @@ class PaymentsAPI:
         url = "{}/org/payment/balance".format(self.client.base_url)
 
         if include_total_due is not None:
-            if "?" in url:
-                url = url + "&include_total_due=" + str(include_total_due).lower()
-            else:
-                url = url + "?include_total_due=" + str(include_total_due).lower()
+            url = str(
+                httpx.URL(url).copy_add_param(
+                    "include_total_due", str(include_total_due).lower()
+                )
+            )
 
         _client = self.client.get_http_client()
 
@@ -10026,23 +10381,19 @@ class PaymentsAPI:
         )
 
     def _fetch_page_list_invoices_for_org(self, **kwargs) -> InvoiceResultsPage:
-        """Internal method to fetch a single page."""
+        """Fetch a single result page with its continuation token."""
         # Build URL with path parameters
         url = "{}/org/payment/invoices".format(self.client.base_url)
 
         # Add query parameters
 
         if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
+            url = str(httpx.URL(url).copy_add_param("limit", str(kwargs["limit"])))
 
         if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+            url = str(
+                httpx.URL(url).copy_add_param("page_token", str(kwargs["page_token"]))
+            )
 
         # Pagination parameters (limit, page_token) are already handled above as regular query params
 
@@ -10064,6 +10415,8 @@ class PaymentsAPI:
         # Validate into a Pydantic model (supports BaseModel/RootModel)
         return InvoiceResultsPage.model_validate(json_data, extra="ignore")
 
+    list_invoices_for_org_page = _fetch_page_list_invoices_for_org
+
     def redirect_payment_method_portal_link_for_org(
         self,
         *,
@@ -10074,10 +10427,7 @@ class PaymentsAPI:
         url = "{}/org/payment/method-portal-link".format(self.client.base_url)
 
         if return_url is not None:
-            if "?" in url:
-                url = url + "&return_url=" + str(return_url)
-            else:
-                url = url + "?return_url=" + str(return_url)
+            url = str(httpx.URL(url).copy_add_param("return_url", str(return_url)))
 
         _client = self.client.get_http_client()
 
@@ -10135,23 +10485,19 @@ class PaymentsAPI:
     def _fetch_page_list_payment_methods_for_org(
         self, **kwargs
     ) -> PaymentMethodResultsPage:
-        """Internal method to fetch a single page."""
+        """Fetch a single result page with its continuation token."""
         # Build URL with path parameters
         url = "{}/org/payment/methods".format(self.client.base_url)
 
         # Add query parameters
 
         if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
+            url = str(httpx.URL(url).copy_add_param("limit", str(kwargs["limit"])))
 
         if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+            url = str(
+                httpx.URL(url).copy_add_param("page_token", str(kwargs["page_token"]))
+            )
 
         # Pagination parameters (limit, page_token) are already handled above as regular query params
 
@@ -10172,6 +10518,8 @@ class PaymentsAPI:
         json_data = response.json()
         # Validate into a Pydantic model (supports BaseModel/RootModel)
         return PaymentMethodResultsPage.model_validate(json_data, extra="ignore")
+
+    list_payment_methods_for_org_page = _fetch_page_list_payment_methods_for_org
 
     def delete_payment_method_for_org(
         self,
@@ -10370,10 +10718,9 @@ class PaymentsAPI:
         url = "{}/user/billing/usage-collection-threshold".format(self.client.base_url)
 
         if expected_version is not None:
-            if "?" in url:
-                url = url + "&expected_version=" + str(expected_version)
-            else:
-                url = url + "?expected_version=" + str(expected_version)
+            url = str(
+                httpx.URL(url).copy_add_param("expected_version", str(expected_version))
+            )
 
         _client = self.client.get_http_client()
 
@@ -10521,10 +10868,11 @@ class PaymentsAPI:
         url = "{}/user/payment/balance".format(self.client.base_url)
 
         if include_total_due is not None:
-            if "?" in url:
-                url = url + "&include_total_due=" + str(include_total_due).lower()
-            else:
-                url = url + "?include_total_due=" + str(include_total_due).lower()
+            url = str(
+                httpx.URL(url).copy_add_param(
+                    "include_total_due", str(include_total_due).lower()
+                )
+            )
 
         _client = self.client.get_http_client()
 
@@ -10613,23 +10961,19 @@ class PaymentsAPI:
         )
 
     def _fetch_page_list_invoices_for_user(self, **kwargs) -> InvoiceResultsPage:
-        """Internal method to fetch a single page."""
+        """Fetch a single result page with its continuation token."""
         # Build URL with path parameters
         url = "{}/user/payment/invoices".format(self.client.base_url)
 
         # Add query parameters
 
         if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
+            url = str(httpx.URL(url).copy_add_param("limit", str(kwargs["limit"])))
 
         if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+            url = str(
+                httpx.URL(url).copy_add_param("page_token", str(kwargs["page_token"]))
+            )
 
         # Pagination parameters (limit, page_token) are already handled above as regular query params
 
@@ -10651,6 +10995,8 @@ class PaymentsAPI:
         # Validate into a Pydantic model (supports BaseModel/RootModel)
         return InvoiceResultsPage.model_validate(json_data, extra="ignore")
 
+    list_invoices_for_user_page = _fetch_page_list_invoices_for_user
+
     def redirect_payment_method_portal_link_for_user(
         self,
         *,
@@ -10661,10 +11007,7 @@ class PaymentsAPI:
         url = "{}/user/payment/method-portal-link".format(self.client.base_url)
 
         if return_url is not None:
-            if "?" in url:
-                url = url + "&return_url=" + str(return_url)
-            else:
-                url = url + "?return_url=" + str(return_url)
+            url = str(httpx.URL(url).copy_add_param("return_url", str(return_url)))
 
         _client = self.client.get_http_client()
 
@@ -10722,23 +11065,19 @@ class PaymentsAPI:
     def _fetch_page_list_payment_methods_for_user(
         self, **kwargs
     ) -> PaymentMethodResultsPage:
-        """Internal method to fetch a single page."""
+        """Fetch a single result page with its continuation token."""
         # Build URL with path parameters
         url = "{}/user/payment/methods".format(self.client.base_url)
 
         # Add query parameters
 
         if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
+            url = str(httpx.URL(url).copy_add_param("limit", str(kwargs["limit"])))
 
         if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+            url = str(
+                httpx.URL(url).copy_add_param("page_token", str(kwargs["page_token"]))
+            )
 
         # Pagination parameters (limit, page_token) are already handled above as regular query params
 
@@ -10759,6 +11098,8 @@ class PaymentsAPI:
         json_data = response.json()
         # Validate into a Pydantic model (supports BaseModel/RootModel)
         return PaymentMethodResultsPage.model_validate(json_data, extra="ignore")
+
+    list_payment_methods_for_user_page = _fetch_page_list_payment_methods_for_user
 
     def delete_payment_method_for_user(
         self,
@@ -10986,10 +11327,9 @@ class AsyncPaymentsAPI:
         url = "{}/org/billing/usage-collection-threshold".format(self.client.base_url)
 
         if expected_version is not None:
-            if "?" in url:
-                url = url + "&expected_version=" + str(expected_version)
-            else:
-                url = url + "?expected_version=" + str(expected_version)
+            url = str(
+                httpx.URL(url).copy_add_param("expected_version", str(expected_version))
+            )
 
         _client = self.client.get_http_client()
 
@@ -11137,10 +11477,11 @@ class AsyncPaymentsAPI:
         url = "{}/org/payment/balance".format(self.client.base_url)
 
         if include_total_due is not None:
-            if "?" in url:
-                url = url + "&include_total_due=" + str(include_total_due).lower()
-            else:
-                url = url + "?include_total_due=" + str(include_total_due).lower()
+            url = str(
+                httpx.URL(url).copy_add_param(
+                    "include_total_due", str(include_total_due).lower()
+                )
+            )
 
         _client = self.client.get_http_client()
 
@@ -11229,23 +11570,19 @@ class AsyncPaymentsAPI:
         )
 
     async def _fetch_page_list_invoices_for_org(self, **kwargs) -> InvoiceResultsPage:
-        """Internal async method to fetch a single page."""
+        """Fetch a single result page with its continuation token."""
         # Build URL with path parameters
         url = "{}/org/payment/invoices".format(self.client.base_url)
 
         # Add query parameters
 
         if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
+            url = str(httpx.URL(url).copy_add_param("limit", str(kwargs["limit"])))
 
         if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+            url = str(
+                httpx.URL(url).copy_add_param("page_token", str(kwargs["page_token"]))
+            )
 
         # Pagination parameters (limit, page_token) are already handled above as regular query params
 
@@ -11267,6 +11604,8 @@ class AsyncPaymentsAPI:
         # Validate into a Pydantic model (supports BaseModel/RootModel)
         return InvoiceResultsPage.model_validate(json_data, extra="ignore")
 
+    list_invoices_for_org_page = _fetch_page_list_invoices_for_org
+
     async def redirect_payment_method_portal_link_for_org(
         self,
         *,
@@ -11277,10 +11616,7 @@ class AsyncPaymentsAPI:
         url = "{}/org/payment/method-portal-link".format(self.client.base_url)
 
         if return_url is not None:
-            if "?" in url:
-                url = url + "&return_url=" + str(return_url)
-            else:
-                url = url + "?return_url=" + str(return_url)
+            url = str(httpx.URL(url).copy_add_param("return_url", str(return_url)))
 
         _client = self.client.get_http_client()
 
@@ -11338,23 +11674,19 @@ class AsyncPaymentsAPI:
     async def _fetch_page_list_payment_methods_for_org(
         self, **kwargs
     ) -> PaymentMethodResultsPage:
-        """Internal async method to fetch a single page."""
+        """Fetch a single result page with its continuation token."""
         # Build URL with path parameters
         url = "{}/org/payment/methods".format(self.client.base_url)
 
         # Add query parameters
 
         if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
+            url = str(httpx.URL(url).copy_add_param("limit", str(kwargs["limit"])))
 
         if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+            url = str(
+                httpx.URL(url).copy_add_param("page_token", str(kwargs["page_token"]))
+            )
 
         # Pagination parameters (limit, page_token) are already handled above as regular query params
 
@@ -11375,6 +11707,8 @@ class AsyncPaymentsAPI:
         json_data = response.json()
         # Validate into a Pydantic model (supports BaseModel/RootModel)
         return PaymentMethodResultsPage.model_validate(json_data, extra="ignore")
+
+    list_payment_methods_for_org_page = _fetch_page_list_payment_methods_for_org
 
     async def delete_payment_method_for_org(
         self,
@@ -11573,10 +11907,9 @@ class AsyncPaymentsAPI:
         url = "{}/user/billing/usage-collection-threshold".format(self.client.base_url)
 
         if expected_version is not None:
-            if "?" in url:
-                url = url + "&expected_version=" + str(expected_version)
-            else:
-                url = url + "?expected_version=" + str(expected_version)
+            url = str(
+                httpx.URL(url).copy_add_param("expected_version", str(expected_version))
+            )
 
         _client = self.client.get_http_client()
 
@@ -11724,10 +12057,11 @@ class AsyncPaymentsAPI:
         url = "{}/user/payment/balance".format(self.client.base_url)
 
         if include_total_due is not None:
-            if "?" in url:
-                url = url + "&include_total_due=" + str(include_total_due).lower()
-            else:
-                url = url + "?include_total_due=" + str(include_total_due).lower()
+            url = str(
+                httpx.URL(url).copy_add_param(
+                    "include_total_due", str(include_total_due).lower()
+                )
+            )
 
         _client = self.client.get_http_client()
 
@@ -11816,23 +12150,19 @@ class AsyncPaymentsAPI:
         )
 
     async def _fetch_page_list_invoices_for_user(self, **kwargs) -> InvoiceResultsPage:
-        """Internal async method to fetch a single page."""
+        """Fetch a single result page with its continuation token."""
         # Build URL with path parameters
         url = "{}/user/payment/invoices".format(self.client.base_url)
 
         # Add query parameters
 
         if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
+            url = str(httpx.URL(url).copy_add_param("limit", str(kwargs["limit"])))
 
         if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+            url = str(
+                httpx.URL(url).copy_add_param("page_token", str(kwargs["page_token"]))
+            )
 
         # Pagination parameters (limit, page_token) are already handled above as regular query params
 
@@ -11854,6 +12184,8 @@ class AsyncPaymentsAPI:
         # Validate into a Pydantic model (supports BaseModel/RootModel)
         return InvoiceResultsPage.model_validate(json_data, extra="ignore")
 
+    list_invoices_for_user_page = _fetch_page_list_invoices_for_user
+
     async def redirect_payment_method_portal_link_for_user(
         self,
         *,
@@ -11864,10 +12196,7 @@ class AsyncPaymentsAPI:
         url = "{}/user/payment/method-portal-link".format(self.client.base_url)
 
         if return_url is not None:
-            if "?" in url:
-                url = url + "&return_url=" + str(return_url)
-            else:
-                url = url + "?return_url=" + str(return_url)
+            url = str(httpx.URL(url).copy_add_param("return_url", str(return_url)))
 
         _client = self.client.get_http_client()
 
@@ -11925,23 +12254,19 @@ class AsyncPaymentsAPI:
     async def _fetch_page_list_payment_methods_for_user(
         self, **kwargs
     ) -> PaymentMethodResultsPage:
-        """Internal async method to fetch a single page."""
+        """Fetch a single result page with its continuation token."""
         # Build URL with path parameters
         url = "{}/user/payment/methods".format(self.client.base_url)
 
         # Add query parameters
 
         if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
+            url = str(httpx.URL(url).copy_add_param("limit", str(kwargs["limit"])))
 
         if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+            url = str(
+                httpx.URL(url).copy_add_param("page_token", str(kwargs["page_token"]))
+            )
 
         # Pagination parameters (limit, page_token) are already handled above as regular query params
 
@@ -11962,6 +12287,8 @@ class AsyncPaymentsAPI:
         json_data = response.json()
         # Validate into a Pydantic model (supports BaseModel/RootModel)
         return PaymentMethodResultsPage.model_validate(json_data, extra="ignore")
+
+    list_payment_methods_for_user_page = _fetch_page_list_payment_methods_for_user
 
     async def delete_payment_method_for_user(
         self,
@@ -12166,29 +12493,22 @@ class FactoryAPI:
     def _fetch_page_list_org_factory_jobs(
         self, **kwargs
     ) -> FactoryCustomerJobSummaryResultsPage:
-        """Internal method to fetch a single page."""
+        """Fetch a single result page with its continuation token."""
         # Build URL with path parameters
         url = "{}/org/factory/jobs".format(self.client.base_url)
 
         # Add query parameters
 
         if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
+            url = str(httpx.URL(url).copy_add_param("limit", str(kwargs["limit"])))
 
         if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+            url = str(
+                httpx.URL(url).copy_add_param("page_token", str(kwargs["page_token"]))
+            )
 
         if "sort_by" in kwargs and kwargs["sort_by"] is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(kwargs["sort_by"])
-            else:
-                url = url + "?sort_by=" + str(kwargs["sort_by"])
+            url = str(httpx.URL(url).copy_add_param("sort_by", str(kwargs["sort_by"])))
 
         # Pagination parameters (limit, page_token) are already handled above as regular query params
 
@@ -12211,6 +12531,8 @@ class FactoryAPI:
         return FactoryCustomerJobSummaryResultsPage.model_validate(
             json_data, extra="ignore"
         )
+
+    list_org_factory_jobs_page = _fetch_page_list_org_factory_jobs
 
     def get_org_factory_job(
         self,
@@ -12280,16 +12602,16 @@ class FactoryAPI:
         )
 
         if use_credits is not None:
-            if "?" in url:
-                url = url + "&use_credits=" + str(use_credits).lower()
-            else:
-                url = url + "?use_credits=" + str(use_credits).lower()
+            url = str(
+                httpx.URL(url).copy_add_param("use_credits", str(use_credits).lower())
+            )
 
         if max_amount_due_cents is not None:
-            if "?" in url:
-                url = url + "&max_amount_due_cents=" + str(max_amount_due_cents)
-            else:
-                url = url + "?max_amount_due_cents=" + str(max_amount_due_cents)
+            url = str(
+                httpx.URL(url).copy_add_param(
+                    "max_amount_due_cents", str(max_amount_due_cents)
+                )
+            )
 
         _client = self.client.get_http_client()
 
@@ -12325,10 +12647,9 @@ class FactoryAPI:
         )
 
         if use_credits is not None:
-            if "?" in url:
-                url = url + "&use_credits=" + str(use_credits).lower()
-            else:
-                url = url + "?use_credits=" + str(use_credits).lower()
+            url = str(
+                httpx.URL(url).copy_add_param("use_credits", str(use_credits).lower())
+            )
 
         _client = self.client.get_http_client()
 
@@ -12399,7 +12720,7 @@ class FactoryAPI:
     def _fetch_page_list_org_factory_job_versions(
         self, job_id: Uuid, **kwargs
     ) -> FactoryCustomerJobVersionResultsPage:
-        """Internal method to fetch a single page."""
+        """Fetch a single result page with its continuation token."""
         # Build URL with path parameters
         url = "{}/org/factory/jobs/{job_id}/versions".format(
             self.client.base_url, job_id=job_id
@@ -12408,22 +12729,15 @@ class FactoryAPI:
         # Add query parameters
 
         if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
+            url = str(httpx.URL(url).copy_add_param("limit", str(kwargs["limit"])))
 
         if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+            url = str(
+                httpx.URL(url).copy_add_param("page_token", str(kwargs["page_token"]))
+            )
 
         if "sort_by" in kwargs and kwargs["sort_by"] is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(kwargs["sort_by"])
-            else:
-                url = url + "?sort_by=" + str(kwargs["sort_by"])
+            url = str(httpx.URL(url).copy_add_param("sort_by", str(kwargs["sort_by"])))
 
         # Pagination parameters (limit, page_token) are already handled above as regular query params
 
@@ -12446,6 +12760,8 @@ class FactoryAPI:
         return FactoryCustomerJobVersionResultsPage.model_validate(
             json_data, extra="ignore"
         )
+
+    list_org_factory_job_versions_page = _fetch_page_list_org_factory_job_versions
 
     def create_org_factory_job_version(
         self,
@@ -12544,23 +12860,19 @@ class FactoryAPI:
     def _fetch_page_get_user_factory_finishes(
         self, **kwargs
     ) -> FactoryCustomerCatalogOptionResultsPage:
-        """Internal method to fetch a single page."""
+        """Fetch a single result page with its continuation token."""
         # Build URL with path parameters
         url = "{}/user/factory/finishes".format(self.client.base_url)
 
         # Add query parameters
 
         if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
+            url = str(httpx.URL(url).copy_add_param("limit", str(kwargs["limit"])))
 
         if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+            url = str(
+                httpx.URL(url).copy_add_param("page_token", str(kwargs["page_token"]))
+            )
 
         # Pagination parameters (limit, page_token) are already handled above as regular query params
 
@@ -12583,6 +12895,8 @@ class FactoryAPI:
         return FactoryCustomerCatalogOptionResultsPage.model_validate(
             json_data, extra="ignore"
         )
+
+    get_user_factory_finishes_page = _fetch_page_get_user_factory_finishes
 
     def list_user_factory_jobs(
         self,
@@ -12630,29 +12944,22 @@ class FactoryAPI:
     def _fetch_page_list_user_factory_jobs(
         self, **kwargs
     ) -> FactoryCustomerJobSummaryResultsPage:
-        """Internal method to fetch a single page."""
+        """Fetch a single result page with its continuation token."""
         # Build URL with path parameters
         url = "{}/user/factory/jobs".format(self.client.base_url)
 
         # Add query parameters
 
         if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
+            url = str(httpx.URL(url).copy_add_param("limit", str(kwargs["limit"])))
 
         if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+            url = str(
+                httpx.URL(url).copy_add_param("page_token", str(kwargs["page_token"]))
+            )
 
         if "sort_by" in kwargs and kwargs["sort_by"] is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(kwargs["sort_by"])
-            else:
-                url = url + "?sort_by=" + str(kwargs["sort_by"])
+            url = str(httpx.URL(url).copy_add_param("sort_by", str(kwargs["sort_by"])))
 
         # Pagination parameters (limit, page_token) are already handled above as regular query params
 
@@ -12675,6 +12982,8 @@ class FactoryAPI:
         return FactoryCustomerJobSummaryResultsPage.model_validate(
             json_data, extra="ignore"
         )
+
+    list_user_factory_jobs_page = _fetch_page_list_user_factory_jobs
 
     def create_user_factory_job(
         self,
@@ -12783,16 +13092,16 @@ class FactoryAPI:
         )
 
         if use_credits is not None:
-            if "?" in url:
-                url = url + "&use_credits=" + str(use_credits).lower()
-            else:
-                url = url + "?use_credits=" + str(use_credits).lower()
+            url = str(
+                httpx.URL(url).copy_add_param("use_credits", str(use_credits).lower())
+            )
 
         if max_amount_due_cents is not None:
-            if "?" in url:
-                url = url + "&max_amount_due_cents=" + str(max_amount_due_cents)
-            else:
-                url = url + "?max_amount_due_cents=" + str(max_amount_due_cents)
+            url = str(
+                httpx.URL(url).copy_add_param(
+                    "max_amount_due_cents", str(max_amount_due_cents)
+                )
+            )
 
         _client = self.client.get_http_client()
 
@@ -12828,10 +13137,9 @@ class FactoryAPI:
         )
 
         if use_credits is not None:
-            if "?" in url:
-                url = url + "&use_credits=" + str(use_credits).lower()
-            else:
-                url = url + "?use_credits=" + str(use_credits).lower()
+            url = str(
+                httpx.URL(url).copy_add_param("use_credits", str(use_credits).lower())
+            )
 
         _client = self.client.get_http_client()
 
@@ -12902,7 +13210,7 @@ class FactoryAPI:
     def _fetch_page_list_user_factory_job_versions(
         self, job_id: Uuid, **kwargs
     ) -> FactoryCustomerJobVersionResultsPage:
-        """Internal method to fetch a single page."""
+        """Fetch a single result page with its continuation token."""
         # Build URL with path parameters
         url = "{}/user/factory/jobs/{job_id}/versions".format(
             self.client.base_url, job_id=job_id
@@ -12911,22 +13219,15 @@ class FactoryAPI:
         # Add query parameters
 
         if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
+            url = str(httpx.URL(url).copy_add_param("limit", str(kwargs["limit"])))
 
         if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+            url = str(
+                httpx.URL(url).copy_add_param("page_token", str(kwargs["page_token"]))
+            )
 
         if "sort_by" in kwargs and kwargs["sort_by"] is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(kwargs["sort_by"])
-            else:
-                url = url + "?sort_by=" + str(kwargs["sort_by"])
+            url = str(httpx.URL(url).copy_add_param("sort_by", str(kwargs["sort_by"])))
 
         # Pagination parameters (limit, page_token) are already handled above as regular query params
 
@@ -12949,6 +13250,8 @@ class FactoryAPI:
         return FactoryCustomerJobVersionResultsPage.model_validate(
             json_data, extra="ignore"
         )
+
+    list_user_factory_job_versions_page = _fetch_page_list_user_factory_job_versions
 
     def create_user_factory_job_version(
         self,
@@ -13047,23 +13350,19 @@ class FactoryAPI:
     def _fetch_page_get_user_factory_materials(
         self, **kwargs
     ) -> FactoryCustomerCatalogOptionResultsPage:
-        """Internal method to fetch a single page."""
+        """Fetch a single result page with its continuation token."""
         # Build URL with path parameters
         url = "{}/user/factory/materials".format(self.client.base_url)
 
         # Add query parameters
 
         if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
+            url = str(httpx.URL(url).copy_add_param("limit", str(kwargs["limit"])))
 
         if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+            url = str(
+                httpx.URL(url).copy_add_param("page_token", str(kwargs["page_token"]))
+            )
 
         # Pagination parameters (limit, page_token) are already handled above as regular query params
 
@@ -13086,6 +13385,8 @@ class FactoryAPI:
         return FactoryCustomerCatalogOptionResultsPage.model_validate(
             json_data, extra="ignore"
         )
+
+    get_user_factory_materials_page = _fetch_page_get_user_factory_materials
 
 
 class AsyncFactoryAPI:
@@ -13140,29 +13441,22 @@ class AsyncFactoryAPI:
     async def _fetch_page_list_org_factory_jobs(
         self, **kwargs
     ) -> FactoryCustomerJobSummaryResultsPage:
-        """Internal async method to fetch a single page."""
+        """Fetch a single result page with its continuation token."""
         # Build URL with path parameters
         url = "{}/org/factory/jobs".format(self.client.base_url)
 
         # Add query parameters
 
         if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
+            url = str(httpx.URL(url).copy_add_param("limit", str(kwargs["limit"])))
 
         if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+            url = str(
+                httpx.URL(url).copy_add_param("page_token", str(kwargs["page_token"]))
+            )
 
         if "sort_by" in kwargs and kwargs["sort_by"] is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(kwargs["sort_by"])
-            else:
-                url = url + "?sort_by=" + str(kwargs["sort_by"])
+            url = str(httpx.URL(url).copy_add_param("sort_by", str(kwargs["sort_by"])))
 
         # Pagination parameters (limit, page_token) are already handled above as regular query params
 
@@ -13185,6 +13479,8 @@ class AsyncFactoryAPI:
         return FactoryCustomerJobSummaryResultsPage.model_validate(
             json_data, extra="ignore"
         )
+
+    list_org_factory_jobs_page = _fetch_page_list_org_factory_jobs
 
     async def get_org_factory_job(
         self,
@@ -13254,16 +13550,16 @@ class AsyncFactoryAPI:
         )
 
         if use_credits is not None:
-            if "?" in url:
-                url = url + "&use_credits=" + str(use_credits).lower()
-            else:
-                url = url + "?use_credits=" + str(use_credits).lower()
+            url = str(
+                httpx.URL(url).copy_add_param("use_credits", str(use_credits).lower())
+            )
 
         if max_amount_due_cents is not None:
-            if "?" in url:
-                url = url + "&max_amount_due_cents=" + str(max_amount_due_cents)
-            else:
-                url = url + "?max_amount_due_cents=" + str(max_amount_due_cents)
+            url = str(
+                httpx.URL(url).copy_add_param(
+                    "max_amount_due_cents", str(max_amount_due_cents)
+                )
+            )
 
         _client = self.client.get_http_client()
 
@@ -13299,10 +13595,9 @@ class AsyncFactoryAPI:
         )
 
         if use_credits is not None:
-            if "?" in url:
-                url = url + "&use_credits=" + str(use_credits).lower()
-            else:
-                url = url + "?use_credits=" + str(use_credits).lower()
+            url = str(
+                httpx.URL(url).copy_add_param("use_credits", str(use_credits).lower())
+            )
 
         _client = self.client.get_http_client()
 
@@ -13375,7 +13670,7 @@ class AsyncFactoryAPI:
     async def _fetch_page_list_org_factory_job_versions(
         self, job_id: Uuid, **kwargs
     ) -> FactoryCustomerJobVersionResultsPage:
-        """Internal async method to fetch a single page."""
+        """Fetch a single result page with its continuation token."""
         # Build URL with path parameters
         url = "{}/org/factory/jobs/{job_id}/versions".format(
             self.client.base_url, job_id=job_id
@@ -13384,22 +13679,15 @@ class AsyncFactoryAPI:
         # Add query parameters
 
         if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
+            url = str(httpx.URL(url).copy_add_param("limit", str(kwargs["limit"])))
 
         if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+            url = str(
+                httpx.URL(url).copy_add_param("page_token", str(kwargs["page_token"]))
+            )
 
         if "sort_by" in kwargs and kwargs["sort_by"] is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(kwargs["sort_by"])
-            else:
-                url = url + "?sort_by=" + str(kwargs["sort_by"])
+            url = str(httpx.URL(url).copy_add_param("sort_by", str(kwargs["sort_by"])))
 
         # Pagination parameters (limit, page_token) are already handled above as regular query params
 
@@ -13422,6 +13710,8 @@ class AsyncFactoryAPI:
         return FactoryCustomerJobVersionResultsPage.model_validate(
             json_data, extra="ignore"
         )
+
+    list_org_factory_job_versions_page = _fetch_page_list_org_factory_job_versions
 
     async def create_org_factory_job_version(
         self,
@@ -13520,23 +13810,19 @@ class AsyncFactoryAPI:
     async def _fetch_page_get_user_factory_finishes(
         self, **kwargs
     ) -> FactoryCustomerCatalogOptionResultsPage:
-        """Internal async method to fetch a single page."""
+        """Fetch a single result page with its continuation token."""
         # Build URL with path parameters
         url = "{}/user/factory/finishes".format(self.client.base_url)
 
         # Add query parameters
 
         if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
+            url = str(httpx.URL(url).copy_add_param("limit", str(kwargs["limit"])))
 
         if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+            url = str(
+                httpx.URL(url).copy_add_param("page_token", str(kwargs["page_token"]))
+            )
 
         # Pagination parameters (limit, page_token) are already handled above as regular query params
 
@@ -13559,6 +13845,8 @@ class AsyncFactoryAPI:
         return FactoryCustomerCatalogOptionResultsPage.model_validate(
             json_data, extra="ignore"
         )
+
+    get_user_factory_finishes_page = _fetch_page_get_user_factory_finishes
 
     def list_user_factory_jobs(
         self,
@@ -13606,29 +13894,22 @@ class AsyncFactoryAPI:
     async def _fetch_page_list_user_factory_jobs(
         self, **kwargs
     ) -> FactoryCustomerJobSummaryResultsPage:
-        """Internal async method to fetch a single page."""
+        """Fetch a single result page with its continuation token."""
         # Build URL with path parameters
         url = "{}/user/factory/jobs".format(self.client.base_url)
 
         # Add query parameters
 
         if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
+            url = str(httpx.URL(url).copy_add_param("limit", str(kwargs["limit"])))
 
         if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+            url = str(
+                httpx.URL(url).copy_add_param("page_token", str(kwargs["page_token"]))
+            )
 
         if "sort_by" in kwargs and kwargs["sort_by"] is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(kwargs["sort_by"])
-            else:
-                url = url + "?sort_by=" + str(kwargs["sort_by"])
+            url = str(httpx.URL(url).copy_add_param("sort_by", str(kwargs["sort_by"])))
 
         # Pagination parameters (limit, page_token) are already handled above as regular query params
 
@@ -13651,6 +13932,8 @@ class AsyncFactoryAPI:
         return FactoryCustomerJobSummaryResultsPage.model_validate(
             json_data, extra="ignore"
         )
+
+    list_user_factory_jobs_page = _fetch_page_list_user_factory_jobs
 
     async def create_user_factory_job(
         self,
@@ -13759,16 +14042,16 @@ class AsyncFactoryAPI:
         )
 
         if use_credits is not None:
-            if "?" in url:
-                url = url + "&use_credits=" + str(use_credits).lower()
-            else:
-                url = url + "?use_credits=" + str(use_credits).lower()
+            url = str(
+                httpx.URL(url).copy_add_param("use_credits", str(use_credits).lower())
+            )
 
         if max_amount_due_cents is not None:
-            if "?" in url:
-                url = url + "&max_amount_due_cents=" + str(max_amount_due_cents)
-            else:
-                url = url + "?max_amount_due_cents=" + str(max_amount_due_cents)
+            url = str(
+                httpx.URL(url).copy_add_param(
+                    "max_amount_due_cents", str(max_amount_due_cents)
+                )
+            )
 
         _client = self.client.get_http_client()
 
@@ -13804,10 +14087,9 @@ class AsyncFactoryAPI:
         )
 
         if use_credits is not None:
-            if "?" in url:
-                url = url + "&use_credits=" + str(use_credits).lower()
-            else:
-                url = url + "?use_credits=" + str(use_credits).lower()
+            url = str(
+                httpx.URL(url).copy_add_param("use_credits", str(use_credits).lower())
+            )
 
         _client = self.client.get_http_client()
 
@@ -13880,7 +14162,7 @@ class AsyncFactoryAPI:
     async def _fetch_page_list_user_factory_job_versions(
         self, job_id: Uuid, **kwargs
     ) -> FactoryCustomerJobVersionResultsPage:
-        """Internal async method to fetch a single page."""
+        """Fetch a single result page with its continuation token."""
         # Build URL with path parameters
         url = "{}/user/factory/jobs/{job_id}/versions".format(
             self.client.base_url, job_id=job_id
@@ -13889,22 +14171,15 @@ class AsyncFactoryAPI:
         # Add query parameters
 
         if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
+            url = str(httpx.URL(url).copy_add_param("limit", str(kwargs["limit"])))
 
         if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+            url = str(
+                httpx.URL(url).copy_add_param("page_token", str(kwargs["page_token"]))
+            )
 
         if "sort_by" in kwargs and kwargs["sort_by"] is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(kwargs["sort_by"])
-            else:
-                url = url + "?sort_by=" + str(kwargs["sort_by"])
+            url = str(httpx.URL(url).copy_add_param("sort_by", str(kwargs["sort_by"])))
 
         # Pagination parameters (limit, page_token) are already handled above as regular query params
 
@@ -13927,6 +14202,8 @@ class AsyncFactoryAPI:
         return FactoryCustomerJobVersionResultsPage.model_validate(
             json_data, extra="ignore"
         )
+
+    list_user_factory_job_versions_page = _fetch_page_list_user_factory_job_versions
 
     async def create_user_factory_job_version(
         self,
@@ -14025,23 +14302,19 @@ class AsyncFactoryAPI:
     async def _fetch_page_get_user_factory_materials(
         self, **kwargs
     ) -> FactoryCustomerCatalogOptionResultsPage:
-        """Internal async method to fetch a single page."""
+        """Fetch a single result page with its continuation token."""
         # Build URL with path parameters
         url = "{}/user/factory/materials".format(self.client.base_url)
 
         # Add query parameters
 
         if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
+            url = str(httpx.URL(url).copy_add_param("limit", str(kwargs["limit"])))
 
         if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+            url = str(
+                httpx.URL(url).copy_add_param("page_token", str(kwargs["page_token"]))
+            )
 
         # Pagination parameters (limit, page_token) are already handled above as regular query params
 
@@ -14064,6 +14337,8 @@ class AsyncFactoryAPI:
         return FactoryCustomerCatalogOptionResultsPage.model_validate(
             json_data, extra="ignore"
         )
+
+    get_user_factory_materials_page = _fetch_page_get_user_factory_materials
 
 
 class ProjectsAPI:
@@ -14147,23 +14422,19 @@ class ProjectsAPI:
     def _fetch_page_list_project_categories(
         self, **kwargs
     ) -> ProjectCategoryResponseResultsPage:
-        """Internal method to fetch a single page."""
+        """Fetch a single result page with its continuation token."""
         # Build URL with path parameters
         url = "{}/projects/categories".format(self.client.base_url)
 
         # Add query parameters
 
         if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
+            url = str(httpx.URL(url).copy_add_param("limit", str(kwargs["limit"])))
 
         if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+            url = str(
+                httpx.URL(url).copy_add_param("page_token", str(kwargs["page_token"]))
+            )
 
         # Pagination parameters (limit, page_token) are already handled above as regular query params
 
@@ -14186,6 +14457,8 @@ class ProjectsAPI:
         return ProjectCategoryResponseResultsPage.model_validate(
             json_data, extra="ignore"
         )
+
+    list_project_categories_page = _fetch_page_list_project_categories
 
     def list_public_projects(
         self,
@@ -14233,29 +14506,24 @@ class ProjectsAPI:
     def _fetch_page_list_public_projects(
         self, **kwargs
     ) -> PublicProjectResponseResultsPage:
-        """Internal method to fetch a single page."""
+        """Fetch a single result page with its continuation token."""
         # Build URL with path parameters
         url = "{}/projects/public".format(self.client.base_url)
 
         # Add query parameters
 
         if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
+            url = str(httpx.URL(url).copy_add_param("limit", str(kwargs["limit"])))
 
         if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+            url = str(
+                httpx.URL(url).copy_add_param("page_token", str(kwargs["page_token"]))
+            )
 
         if "category_id" in kwargs and kwargs["category_id"] is not None:
-            if "?" in url:
-                url = url + "&category_id=" + str(kwargs["category_id"])
-            else:
-                url = url + "?category_id=" + str(kwargs["category_id"])
+            url = str(
+                httpx.URL(url).copy_add_param("category_id", str(kwargs["category_id"]))
+            )
 
         # Pagination parameters (limit, page_token) are already handled above as regular query params
 
@@ -14278,6 +14546,8 @@ class ProjectsAPI:
         return PublicProjectResponseResultsPage.model_validate(
             json_data, extra="ignore"
         )
+
+    list_public_projects_page = _fetch_page_list_public_projects
 
     def get_public_project(
         self,
@@ -14319,16 +14589,10 @@ class ProjectsAPI:
         url = "{}/projects/public/{id}/download".format(self.client.base_url, id=id)
 
         if format is not None:
-            if "?" in url:
-                url = url + "&format=" + str(format)
-            else:
-                url = url + "?format=" + str(format)
+            url = str(httpx.URL(url).copy_add_param("format", str(format)))
 
         if file_ids is not None:
-            if "?" in url:
-                url = url + "&file_ids=" + str(file_ids)
-            else:
-                url = url + "?file_ids=" + str(file_ids)
+            url = str(httpx.URL(url).copy_add_param("file_ids", str(file_ids)))
 
         _client = self.client.get_http_client()
 
@@ -14476,23 +14740,19 @@ class ProjectsAPI:
     def _fetch_page_list_project_libraries(
         self, **kwargs
     ) -> ProjectLibraryResponseResultsPage:
-        """Internal method to fetch a single page."""
+        """Fetch a single result page with its continuation token."""
         # Build URL with path parameters
         url = "{}/user/project-libraries".format(self.client.base_url)
 
         # Add query parameters
 
         if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
+            url = str(httpx.URL(url).copy_add_param("limit", str(kwargs["limit"])))
 
         if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+            url = str(
+                httpx.URL(url).copy_add_param("page_token", str(kwargs["page_token"]))
+            )
 
         # Pagination parameters (limit, page_token) are already handled above as regular query params
 
@@ -14515,6 +14775,8 @@ class ProjectsAPI:
         return ProjectLibraryResponseResultsPage.model_validate(
             json_data, extra="ignore"
         )
+
+    list_project_libraries_page = _fetch_page_list_project_libraries
 
     def create_project_library(
         self,
@@ -14571,10 +14833,11 @@ class ProjectsAPI:
         url = "{}/user/project-libraries/{id}".format(self.client.base_url, id=id)
 
         if expected_revision is not None:
-            if "?" in url:
-                url = url + "&expected_revision=" + str(expected_revision)
-            else:
-                url = url + "?expected_revision=" + str(expected_revision)
+            url = str(
+                httpx.URL(url).copy_add_param(
+                    "expected_revision", str(expected_revision)
+                )
+            )
 
         _client = self.client.get_http_client()
 
@@ -14675,7 +14938,7 @@ class ProjectsAPI:
     def _fetch_page_list_library_projects(
         self, id: Uuid, **kwargs
     ) -> ProjectSummaryResponseResultsPage:
-        """Internal method to fetch a single page."""
+        """Fetch a single result page with its continuation token."""
         # Build URL with path parameters
         url = "{}/user/project-libraries/{id}/projects".format(
             self.client.base_url, id=id
@@ -14684,16 +14947,12 @@ class ProjectsAPI:
         # Add query parameters
 
         if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
+            url = str(httpx.URL(url).copy_add_param("limit", str(kwargs["limit"])))
 
         if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+            url = str(
+                httpx.URL(url).copy_add_param("page_token", str(kwargs["page_token"]))
+            )
 
         # Pagination parameters (limit, page_token) are already handled above as regular query params
 
@@ -14716,6 +14975,8 @@ class ProjectsAPI:
         return ProjectSummaryResponseResultsPage.model_validate(
             json_data, extra="ignore"
         )
+
+    list_library_projects_page = _fetch_page_list_library_projects
 
     def list_projects(
         self,
@@ -14767,35 +15028,29 @@ class ProjectsAPI:
         )
 
     def _fetch_page_list_projects(self, **kwargs) -> ProjectSummaryResponseResultsPage:
-        """Internal method to fetch a single page."""
+        """Fetch a single result page with its continuation token."""
         # Build URL with path parameters
         url = "{}/user/projects".format(self.client.base_url)
 
         # Add query parameters
 
         if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
+            url = str(httpx.URL(url).copy_add_param("limit", str(kwargs["limit"])))
 
         if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+            url = str(
+                httpx.URL(url).copy_add_param("page_token", str(kwargs["page_token"]))
+            )
 
         if "scope" in kwargs and kwargs["scope"] is not None:
-            if "?" in url:
-                url = url + "&scope=" + str(kwargs["scope"])
-            else:
-                url = url + "?scope=" + str(kwargs["scope"])
+            url = str(httpx.URL(url).copy_add_param("scope", str(kwargs["scope"])))
 
         if "unassigned" in kwargs and kwargs["unassigned"] is not None:
-            if "?" in url:
-                url = url + "&unassigned=" + str(kwargs["unassigned"]).lower()
-            else:
-                url = url + "?unassigned=" + str(kwargs["unassigned"]).lower()
+            url = str(
+                httpx.URL(url).copy_add_param(
+                    "unassigned", str(kwargs["unassigned"]).lower()
+                )
+            )
 
         # Pagination parameters (limit, page_token) are already handled above as regular query params
 
@@ -14818,6 +15073,8 @@ class ProjectsAPI:
         return ProjectSummaryResponseResultsPage.model_validate(
             json_data, extra="ignore"
         )
+
+    list_projects_page = _fetch_page_list_projects
 
     def create_project(
         self,
@@ -14942,16 +15199,10 @@ class ProjectsAPI:
         url = "{}/user/projects/{id}/download".format(self.client.base_url, id=id)
 
         if format is not None:
-            if "?" in url:
-                url = url + "&format=" + str(format)
-            else:
-                url = url + "?format=" + str(format)
+            url = str(httpx.URL(url).copy_add_param("format", str(format)))
 
         if file_ids is not None:
-            if "?" in url:
-                url = url + "&file_ids=" + str(file_ids)
-            else:
-                url = url + "?file_ids=" + str(file_ids)
+            url = str(httpx.URL(url).copy_add_param("file_ids", str(file_ids)))
 
         _client = self.client.get_http_client()
 
@@ -15144,23 +15395,19 @@ class ProjectsAPI:
     def _fetch_page_list_project_share_links(
         self, id: Uuid, **kwargs
     ) -> ProjectShareLinkResponseResultsPage:
-        """Internal method to fetch a single page."""
+        """Fetch a single result page with its continuation token."""
         # Build URL with path parameters
         url = "{}/user/projects/{id}/share-links".format(self.client.base_url, id=id)
 
         # Add query parameters
 
         if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
+            url = str(httpx.URL(url).copy_add_param("limit", str(kwargs["limit"])))
 
         if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+            url = str(
+                httpx.URL(url).copy_add_param("page_token", str(kwargs["page_token"]))
+            )
 
         # Pagination parameters (limit, page_token) are already handled above as regular query params
 
@@ -15183,6 +15430,8 @@ class ProjectsAPI:
         return ProjectShareLinkResponseResultsPage.model_validate(
             json_data, extra="ignore"
         )
+
+    list_project_share_links_page = _fetch_page_list_project_share_links
 
     def create_project_share_link(
         self,
@@ -15306,23 +15555,19 @@ class ProjectsAPI:
     def _fetch_page_list_project_versions(
         self, id: Uuid, **kwargs
     ) -> ProjectVersionSummaryResponseResultsPage:
-        """Internal method to fetch a single page."""
+        """Fetch a single result page with its continuation token."""
         # Build URL with path parameters
         url = "{}/user/projects/{id}/versions".format(self.client.base_url, id=id)
 
         # Add query parameters
 
         if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
+            url = str(httpx.URL(url).copy_add_param("limit", str(kwargs["limit"])))
 
         if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+            url = str(
+                httpx.URL(url).copy_add_param("page_token", str(kwargs["page_token"]))
+            )
 
         # Pagination parameters (limit, page_token) are already handled above as regular query params
 
@@ -15345,6 +15590,8 @@ class ProjectsAPI:
         return ProjectVersionSummaryResponseResultsPage.model_validate(
             json_data, extra="ignore"
         )
+
+    list_project_versions_page = _fetch_page_list_project_versions
 
     def create_project_version(
         self,
@@ -15438,16 +15685,10 @@ class ProjectsAPI:
         )
 
         if format is not None:
-            if "?" in url:
-                url = url + "&format=" + str(format)
-            else:
-                url = url + "?format=" + str(format)
+            url = str(httpx.URL(url).copy_add_param("format", str(format)))
 
         if file_ids is not None:
-            if "?" in url:
-                url = url + "&file_ids=" + str(file_ids)
-            else:
-                url = url + "?file_ids=" + str(file_ids)
+            url = str(httpx.URL(url).copy_add_param("file_ids", str(file_ids)))
 
         _client = self.client.get_http_client()
 
@@ -15576,23 +15817,19 @@ class AsyncProjectsAPI:
     async def _fetch_page_list_project_categories(
         self, **kwargs
     ) -> ProjectCategoryResponseResultsPage:
-        """Internal async method to fetch a single page."""
+        """Fetch a single result page with its continuation token."""
         # Build URL with path parameters
         url = "{}/projects/categories".format(self.client.base_url)
 
         # Add query parameters
 
         if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
+            url = str(httpx.URL(url).copy_add_param("limit", str(kwargs["limit"])))
 
         if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+            url = str(
+                httpx.URL(url).copy_add_param("page_token", str(kwargs["page_token"]))
+            )
 
         # Pagination parameters (limit, page_token) are already handled above as regular query params
 
@@ -15615,6 +15852,8 @@ class AsyncProjectsAPI:
         return ProjectCategoryResponseResultsPage.model_validate(
             json_data, extra="ignore"
         )
+
+    list_project_categories_page = _fetch_page_list_project_categories
 
     def list_public_projects(
         self,
@@ -15662,29 +15901,24 @@ class AsyncProjectsAPI:
     async def _fetch_page_list_public_projects(
         self, **kwargs
     ) -> PublicProjectResponseResultsPage:
-        """Internal async method to fetch a single page."""
+        """Fetch a single result page with its continuation token."""
         # Build URL with path parameters
         url = "{}/projects/public".format(self.client.base_url)
 
         # Add query parameters
 
         if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
+            url = str(httpx.URL(url).copy_add_param("limit", str(kwargs["limit"])))
 
         if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+            url = str(
+                httpx.URL(url).copy_add_param("page_token", str(kwargs["page_token"]))
+            )
 
         if "category_id" in kwargs and kwargs["category_id"] is not None:
-            if "?" in url:
-                url = url + "&category_id=" + str(kwargs["category_id"])
-            else:
-                url = url + "?category_id=" + str(kwargs["category_id"])
+            url = str(
+                httpx.URL(url).copy_add_param("category_id", str(kwargs["category_id"]))
+            )
 
         # Pagination parameters (limit, page_token) are already handled above as regular query params
 
@@ -15707,6 +15941,8 @@ class AsyncProjectsAPI:
         return PublicProjectResponseResultsPage.model_validate(
             json_data, extra="ignore"
         )
+
+    list_public_projects_page = _fetch_page_list_public_projects
 
     async def get_public_project(
         self,
@@ -15748,16 +15984,10 @@ class AsyncProjectsAPI:
         url = "{}/projects/public/{id}/download".format(self.client.base_url, id=id)
 
         if format is not None:
-            if "?" in url:
-                url = url + "&format=" + str(format)
-            else:
-                url = url + "?format=" + str(format)
+            url = str(httpx.URL(url).copy_add_param("format", str(format)))
 
         if file_ids is not None:
-            if "?" in url:
-                url = url + "&file_ids=" + str(file_ids)
-            else:
-                url = url + "?file_ids=" + str(file_ids)
+            url = str(httpx.URL(url).copy_add_param("file_ids", str(file_ids)))
 
         _client = self.client.get_http_client()
 
@@ -15905,23 +16135,19 @@ class AsyncProjectsAPI:
     async def _fetch_page_list_project_libraries(
         self, **kwargs
     ) -> ProjectLibraryResponseResultsPage:
-        """Internal async method to fetch a single page."""
+        """Fetch a single result page with its continuation token."""
         # Build URL with path parameters
         url = "{}/user/project-libraries".format(self.client.base_url)
 
         # Add query parameters
 
         if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
+            url = str(httpx.URL(url).copy_add_param("limit", str(kwargs["limit"])))
 
         if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+            url = str(
+                httpx.URL(url).copy_add_param("page_token", str(kwargs["page_token"]))
+            )
 
         # Pagination parameters (limit, page_token) are already handled above as regular query params
 
@@ -15944,6 +16170,8 @@ class AsyncProjectsAPI:
         return ProjectLibraryResponseResultsPage.model_validate(
             json_data, extra="ignore"
         )
+
+    list_project_libraries_page = _fetch_page_list_project_libraries
 
     async def create_project_library(
         self,
@@ -16000,10 +16228,11 @@ class AsyncProjectsAPI:
         url = "{}/user/project-libraries/{id}".format(self.client.base_url, id=id)
 
         if expected_revision is not None:
-            if "?" in url:
-                url = url + "&expected_revision=" + str(expected_revision)
-            else:
-                url = url + "?expected_revision=" + str(expected_revision)
+            url = str(
+                httpx.URL(url).copy_add_param(
+                    "expected_revision", str(expected_revision)
+                )
+            )
 
         _client = self.client.get_http_client()
 
@@ -16104,7 +16333,7 @@ class AsyncProjectsAPI:
     async def _fetch_page_list_library_projects(
         self, id: Uuid, **kwargs
     ) -> ProjectSummaryResponseResultsPage:
-        """Internal async method to fetch a single page."""
+        """Fetch a single result page with its continuation token."""
         # Build URL with path parameters
         url = "{}/user/project-libraries/{id}/projects".format(
             self.client.base_url, id=id
@@ -16113,16 +16342,12 @@ class AsyncProjectsAPI:
         # Add query parameters
 
         if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
+            url = str(httpx.URL(url).copy_add_param("limit", str(kwargs["limit"])))
 
         if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+            url = str(
+                httpx.URL(url).copy_add_param("page_token", str(kwargs["page_token"]))
+            )
 
         # Pagination parameters (limit, page_token) are already handled above as regular query params
 
@@ -16145,6 +16370,8 @@ class AsyncProjectsAPI:
         return ProjectSummaryResponseResultsPage.model_validate(
             json_data, extra="ignore"
         )
+
+    list_library_projects_page = _fetch_page_list_library_projects
 
     def list_projects(
         self,
@@ -16198,35 +16425,29 @@ class AsyncProjectsAPI:
     async def _fetch_page_list_projects(
         self, **kwargs
     ) -> ProjectSummaryResponseResultsPage:
-        """Internal async method to fetch a single page."""
+        """Fetch a single result page with its continuation token."""
         # Build URL with path parameters
         url = "{}/user/projects".format(self.client.base_url)
 
         # Add query parameters
 
         if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
+            url = str(httpx.URL(url).copy_add_param("limit", str(kwargs["limit"])))
 
         if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+            url = str(
+                httpx.URL(url).copy_add_param("page_token", str(kwargs["page_token"]))
+            )
 
         if "scope" in kwargs and kwargs["scope"] is not None:
-            if "?" in url:
-                url = url + "&scope=" + str(kwargs["scope"])
-            else:
-                url = url + "?scope=" + str(kwargs["scope"])
+            url = str(httpx.URL(url).copy_add_param("scope", str(kwargs["scope"])))
 
         if "unassigned" in kwargs and kwargs["unassigned"] is not None:
-            if "?" in url:
-                url = url + "&unassigned=" + str(kwargs["unassigned"]).lower()
-            else:
-                url = url + "?unassigned=" + str(kwargs["unassigned"]).lower()
+            url = str(
+                httpx.URL(url).copy_add_param(
+                    "unassigned", str(kwargs["unassigned"]).lower()
+                )
+            )
 
         # Pagination parameters (limit, page_token) are already handled above as regular query params
 
@@ -16249,6 +16470,8 @@ class AsyncProjectsAPI:
         return ProjectSummaryResponseResultsPage.model_validate(
             json_data, extra="ignore"
         )
+
+    list_projects_page = _fetch_page_list_projects
 
     async def create_project(
         self,
@@ -16373,16 +16596,10 @@ class AsyncProjectsAPI:
         url = "{}/user/projects/{id}/download".format(self.client.base_url, id=id)
 
         if format is not None:
-            if "?" in url:
-                url = url + "&format=" + str(format)
-            else:
-                url = url + "?format=" + str(format)
+            url = str(httpx.URL(url).copy_add_param("format", str(format)))
 
         if file_ids is not None:
-            if "?" in url:
-                url = url + "&file_ids=" + str(file_ids)
-            else:
-                url = url + "?file_ids=" + str(file_ids)
+            url = str(httpx.URL(url).copy_add_param("file_ids", str(file_ids)))
 
         _client = self.client.get_http_client()
 
@@ -16575,23 +16792,19 @@ class AsyncProjectsAPI:
     async def _fetch_page_list_project_share_links(
         self, id: Uuid, **kwargs
     ) -> ProjectShareLinkResponseResultsPage:
-        """Internal async method to fetch a single page."""
+        """Fetch a single result page with its continuation token."""
         # Build URL with path parameters
         url = "{}/user/projects/{id}/share-links".format(self.client.base_url, id=id)
 
         # Add query parameters
 
         if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
+            url = str(httpx.URL(url).copy_add_param("limit", str(kwargs["limit"])))
 
         if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+            url = str(
+                httpx.URL(url).copy_add_param("page_token", str(kwargs["page_token"]))
+            )
 
         # Pagination parameters (limit, page_token) are already handled above as regular query params
 
@@ -16614,6 +16827,8 @@ class AsyncProjectsAPI:
         return ProjectShareLinkResponseResultsPage.model_validate(
             json_data, extra="ignore"
         )
+
+    list_project_share_links_page = _fetch_page_list_project_share_links
 
     async def create_project_share_link(
         self,
@@ -16737,23 +16952,19 @@ class AsyncProjectsAPI:
     async def _fetch_page_list_project_versions(
         self, id: Uuid, **kwargs
     ) -> ProjectVersionSummaryResponseResultsPage:
-        """Internal async method to fetch a single page."""
+        """Fetch a single result page with its continuation token."""
         # Build URL with path parameters
         url = "{}/user/projects/{id}/versions".format(self.client.base_url, id=id)
 
         # Add query parameters
 
         if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
+            url = str(httpx.URL(url).copy_add_param("limit", str(kwargs["limit"])))
 
         if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+            url = str(
+                httpx.URL(url).copy_add_param("page_token", str(kwargs["page_token"]))
+            )
 
         # Pagination parameters (limit, page_token) are already handled above as regular query params
 
@@ -16776,6 +16987,8 @@ class AsyncProjectsAPI:
         return ProjectVersionSummaryResponseResultsPage.model_validate(
             json_data, extra="ignore"
         )
+
+    list_project_versions_page = _fetch_page_list_project_versions
 
     async def create_project_version(
         self,
@@ -16869,16 +17082,10 @@ class AsyncProjectsAPI:
         )
 
         if format is not None:
-            if "?" in url:
-                url = url + "&format=" + str(format)
-            else:
-                url = url + "?format=" + str(format)
+            url = str(httpx.URL(url).copy_add_param("format", str(format)))
 
         if file_ids is not None:
-            if "?" in url:
-                url = url + "&file_ids=" + str(file_ids)
-            else:
-                url = url + "?file_ids=" + str(file_ids)
+            url = str(httpx.URL(url).copy_add_param("file_ids", str(file_ids)))
 
         _client = self.client.get_http_client()
 
@@ -16980,29 +17187,22 @@ class ServiceAccountsAPI:
     def _fetch_page_list_service_accounts_for_org(
         self, **kwargs
     ) -> ServiceAccountResultsPage:
-        """Internal method to fetch a single page."""
+        """Fetch a single result page with its continuation token."""
         # Build URL with path parameters
         url = "{}/org/service-accounts".format(self.client.base_url)
 
         # Add query parameters
 
         if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
+            url = str(httpx.URL(url).copy_add_param("limit", str(kwargs["limit"])))
 
         if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+            url = str(
+                httpx.URL(url).copy_add_param("page_token", str(kwargs["page_token"]))
+            )
 
         if "sort_by" in kwargs and kwargs["sort_by"] is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(kwargs["sort_by"])
-            else:
-                url = url + "?sort_by=" + str(kwargs["sort_by"])
+            url = str(httpx.URL(url).copy_add_param("sort_by", str(kwargs["sort_by"])))
 
         # Pagination parameters (limit, page_token) are already handled above as regular query params
 
@@ -17024,6 +17224,8 @@ class ServiceAccountsAPI:
         # Validate into a Pydantic model (supports BaseModel/RootModel)
         return ServiceAccountResultsPage.model_validate(json_data, extra="ignore")
 
+    list_service_accounts_for_org_page = _fetch_page_list_service_accounts_for_org
+
     def create_service_account_for_org(
         self,
         *,
@@ -17034,10 +17236,7 @@ class ServiceAccountsAPI:
         url = "{}/org/service-accounts".format(self.client.base_url)
 
         if label is not None:
-            if "?" in url:
-                url = url + "&label=" + str(label)
-            else:
-                url = url + "?label=" + str(label)
+            url = str(httpx.URL(url).copy_add_param("label", str(label)))
 
         _client = self.client.get_http_client()
 
@@ -17172,29 +17371,22 @@ class AsyncServiceAccountsAPI:
     async def _fetch_page_list_service_accounts_for_org(
         self, **kwargs
     ) -> ServiceAccountResultsPage:
-        """Internal async method to fetch a single page."""
+        """Fetch a single result page with its continuation token."""
         # Build URL with path parameters
         url = "{}/org/service-accounts".format(self.client.base_url)
 
         # Add query parameters
 
         if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
+            url = str(httpx.URL(url).copy_add_param("limit", str(kwargs["limit"])))
 
         if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+            url = str(
+                httpx.URL(url).copy_add_param("page_token", str(kwargs["page_token"]))
+            )
 
         if "sort_by" in kwargs and kwargs["sort_by"] is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(kwargs["sort_by"])
-            else:
-                url = url + "?sort_by=" + str(kwargs["sort_by"])
+            url = str(httpx.URL(url).copy_add_param("sort_by", str(kwargs["sort_by"])))
 
         # Pagination parameters (limit, page_token) are already handled above as regular query params
 
@@ -17216,6 +17408,8 @@ class AsyncServiceAccountsAPI:
         # Validate into a Pydantic model (supports BaseModel/RootModel)
         return ServiceAccountResultsPage.model_validate(json_data, extra="ignore")
 
+    list_service_accounts_for_org_page = _fetch_page_list_service_accounts_for_org
+
     async def create_service_account_for_org(
         self,
         *,
@@ -17226,10 +17420,7 @@ class AsyncServiceAccountsAPI:
         url = "{}/org/service-accounts".format(self.client.base_url)
 
         if label is not None:
-            if "?" in url:
-                url = url + "&label=" + str(label)
-            else:
-                url = url + "?label=" + str(label)
+            url = str(httpx.URL(url).copy_add_param("label", str(label)))
 
         _client = self.client.get_http_client()
 
@@ -17329,10 +17520,7 @@ class UnitAPI:
         )
 
         if value is not None:
-            if "?" in url:
-                url = url + "&value=" + str(value)
-            else:
-                url = url + "?value=" + str(value)
+            url = str(httpx.URL(url).copy_add_param("value", str(value)))
 
         _client = self.client.get_http_client()
 
@@ -17367,10 +17555,7 @@ class UnitAPI:
         )
 
         if value is not None:
-            if "?" in url:
-                url = url + "&value=" + str(value)
-            else:
-                url = url + "?value=" + str(value)
+            url = str(httpx.URL(url).copy_add_param("value", str(value)))
 
         _client = self.client.get_http_client()
 
@@ -17405,10 +17590,7 @@ class UnitAPI:
         )
 
         if value is not None:
-            if "?" in url:
-                url = url + "&value=" + str(value)
-            else:
-                url = url + "?value=" + str(value)
+            url = str(httpx.URL(url).copy_add_param("value", str(value)))
 
         _client = self.client.get_http_client()
 
@@ -17443,10 +17625,7 @@ class UnitAPI:
         )
 
         if value is not None:
-            if "?" in url:
-                url = url + "&value=" + str(value)
-            else:
-                url = url + "?value=" + str(value)
+            url = str(httpx.URL(url).copy_add_param("value", str(value)))
 
         _client = self.client.get_http_client()
 
@@ -17481,10 +17660,7 @@ class UnitAPI:
         )
 
         if value is not None:
-            if "?" in url:
-                url = url + "&value=" + str(value)
-            else:
-                url = url + "?value=" + str(value)
+            url = str(httpx.URL(url).copy_add_param("value", str(value)))
 
         _client = self.client.get_http_client()
 
@@ -17519,10 +17695,7 @@ class UnitAPI:
         )
 
         if value is not None:
-            if "?" in url:
-                url = url + "&value=" + str(value)
-            else:
-                url = url + "?value=" + str(value)
+            url = str(httpx.URL(url).copy_add_param("value", str(value)))
 
         _client = self.client.get_http_client()
 
@@ -17557,10 +17730,7 @@ class UnitAPI:
         )
 
         if value is not None:
-            if "?" in url:
-                url = url + "&value=" + str(value)
-            else:
-                url = url + "?value=" + str(value)
+            url = str(httpx.URL(url).copy_add_param("value", str(value)))
 
         _client = self.client.get_http_client()
 
@@ -17595,10 +17765,7 @@ class UnitAPI:
         )
 
         if value is not None:
-            if "?" in url:
-                url = url + "&value=" + str(value)
-            else:
-                url = url + "?value=" + str(value)
+            url = str(httpx.URL(url).copy_add_param("value", str(value)))
 
         _client = self.client.get_http_client()
 
@@ -17633,10 +17800,7 @@ class UnitAPI:
         )
 
         if value is not None:
-            if "?" in url:
-                url = url + "&value=" + str(value)
-            else:
-                url = url + "?value=" + str(value)
+            url = str(httpx.URL(url).copy_add_param("value", str(value)))
 
         _client = self.client.get_http_client()
 
@@ -17671,10 +17835,7 @@ class UnitAPI:
         )
 
         if value is not None:
-            if "?" in url:
-                url = url + "&value=" + str(value)
-            else:
-                url = url + "?value=" + str(value)
+            url = str(httpx.URL(url).copy_add_param("value", str(value)))
 
         _client = self.client.get_http_client()
 
@@ -17709,10 +17870,7 @@ class UnitAPI:
         )
 
         if value is not None:
-            if "?" in url:
-                url = url + "&value=" + str(value)
-            else:
-                url = url + "?value=" + str(value)
+            url = str(httpx.URL(url).copy_add_param("value", str(value)))
 
         _client = self.client.get_http_client()
 
@@ -17747,10 +17905,7 @@ class UnitAPI:
         )
 
         if value is not None:
-            if "?" in url:
-                url = url + "&value=" + str(value)
-            else:
-                url = url + "?value=" + str(value)
+            url = str(httpx.URL(url).copy_add_param("value", str(value)))
 
         _client = self.client.get_http_client()
 
@@ -17785,10 +17940,7 @@ class UnitAPI:
         )
 
         if value is not None:
-            if "?" in url:
-                url = url + "&value=" + str(value)
-            else:
-                url = url + "?value=" + str(value)
+            url = str(httpx.URL(url).copy_add_param("value", str(value)))
 
         _client = self.client.get_http_client()
 
@@ -17830,10 +17982,7 @@ class AsyncUnitAPI:
         )
 
         if value is not None:
-            if "?" in url:
-                url = url + "&value=" + str(value)
-            else:
-                url = url + "?value=" + str(value)
+            url = str(httpx.URL(url).copy_add_param("value", str(value)))
 
         _client = self.client.get_http_client()
 
@@ -17868,10 +18017,7 @@ class AsyncUnitAPI:
         )
 
         if value is not None:
-            if "?" in url:
-                url = url + "&value=" + str(value)
-            else:
-                url = url + "?value=" + str(value)
+            url = str(httpx.URL(url).copy_add_param("value", str(value)))
 
         _client = self.client.get_http_client()
 
@@ -17906,10 +18052,7 @@ class AsyncUnitAPI:
         )
 
         if value is not None:
-            if "?" in url:
-                url = url + "&value=" + str(value)
-            else:
-                url = url + "?value=" + str(value)
+            url = str(httpx.URL(url).copy_add_param("value", str(value)))
 
         _client = self.client.get_http_client()
 
@@ -17944,10 +18087,7 @@ class AsyncUnitAPI:
         )
 
         if value is not None:
-            if "?" in url:
-                url = url + "&value=" + str(value)
-            else:
-                url = url + "?value=" + str(value)
+            url = str(httpx.URL(url).copy_add_param("value", str(value)))
 
         _client = self.client.get_http_client()
 
@@ -17982,10 +18122,7 @@ class AsyncUnitAPI:
         )
 
         if value is not None:
-            if "?" in url:
-                url = url + "&value=" + str(value)
-            else:
-                url = url + "?value=" + str(value)
+            url = str(httpx.URL(url).copy_add_param("value", str(value)))
 
         _client = self.client.get_http_client()
 
@@ -18020,10 +18157,7 @@ class AsyncUnitAPI:
         )
 
         if value is not None:
-            if "?" in url:
-                url = url + "&value=" + str(value)
-            else:
-                url = url + "?value=" + str(value)
+            url = str(httpx.URL(url).copy_add_param("value", str(value)))
 
         _client = self.client.get_http_client()
 
@@ -18058,10 +18192,7 @@ class AsyncUnitAPI:
         )
 
         if value is not None:
-            if "?" in url:
-                url = url + "&value=" + str(value)
-            else:
-                url = url + "?value=" + str(value)
+            url = str(httpx.URL(url).copy_add_param("value", str(value)))
 
         _client = self.client.get_http_client()
 
@@ -18096,10 +18227,7 @@ class AsyncUnitAPI:
         )
 
         if value is not None:
-            if "?" in url:
-                url = url + "&value=" + str(value)
-            else:
-                url = url + "?value=" + str(value)
+            url = str(httpx.URL(url).copy_add_param("value", str(value)))
 
         _client = self.client.get_http_client()
 
@@ -18134,10 +18262,7 @@ class AsyncUnitAPI:
         )
 
         if value is not None:
-            if "?" in url:
-                url = url + "&value=" + str(value)
-            else:
-                url = url + "?value=" + str(value)
+            url = str(httpx.URL(url).copy_add_param("value", str(value)))
 
         _client = self.client.get_http_client()
 
@@ -18172,10 +18297,7 @@ class AsyncUnitAPI:
         )
 
         if value is not None:
-            if "?" in url:
-                url = url + "&value=" + str(value)
-            else:
-                url = url + "?value=" + str(value)
+            url = str(httpx.URL(url).copy_add_param("value", str(value)))
 
         _client = self.client.get_http_client()
 
@@ -18210,10 +18332,7 @@ class AsyncUnitAPI:
         )
 
         if value is not None:
-            if "?" in url:
-                url = url + "&value=" + str(value)
-            else:
-                url = url + "?value=" + str(value)
+            url = str(httpx.URL(url).copy_add_param("value", str(value)))
 
         _client = self.client.get_http_client()
 
@@ -18248,10 +18367,7 @@ class AsyncUnitAPI:
         )
 
         if value is not None:
-            if "?" in url:
-                url = url + "&value=" + str(value)
-            else:
-                url = url + "?value=" + str(value)
+            url = str(httpx.URL(url).copy_add_param("value", str(value)))
 
         _client = self.client.get_http_client()
 
@@ -18286,10 +18402,7 @@ class AsyncUnitAPI:
         )
 
         if value is not None:
-            if "?" in url:
-                url = url + "&value=" + str(value)
-            else:
-                url = url + "?value=" + str(value)
+            url = str(httpx.URL(url).copy_add_param("value", str(value)))
 
         _client = self.client.get_http_client()
 
@@ -18762,29 +18875,22 @@ class UsersAPI:
         )
 
     def _fetch_page_get_user_shortlinks(self, **kwargs) -> ShortlinkResultsPage:
-        """Internal method to fetch a single page."""
+        """Fetch a single result page with its continuation token."""
         # Build URL with path parameters
         url = "{}/user/shortlinks".format(self.client.base_url)
 
         # Add query parameters
 
         if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
+            url = str(httpx.URL(url).copy_add_param("limit", str(kwargs["limit"])))
 
         if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+            url = str(
+                httpx.URL(url).copy_add_param("page_token", str(kwargs["page_token"]))
+            )
 
         if "sort_by" in kwargs and kwargs["sort_by"] is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(kwargs["sort_by"])
-            else:
-                url = url + "?sort_by=" + str(kwargs["sort_by"])
+            url = str(httpx.URL(url).copy_add_param("sort_by", str(kwargs["sort_by"])))
 
         # Pagination parameters (limit, page_token) are already handled above as regular query params
 
@@ -18805,6 +18911,8 @@ class UsersAPI:
         json_data = response.json()
         # Validate into a Pydantic model (supports BaseModel/RootModel)
         return ShortlinkResultsPage.model_validate(json_data, extra="ignore")
+
+    get_user_shortlinks_page = _fetch_page_get_user_shortlinks
 
     def create_user_shortlink(
         self,
@@ -19538,29 +19646,22 @@ class AsyncUsersAPI:
         )
 
     async def _fetch_page_get_user_shortlinks(self, **kwargs) -> ShortlinkResultsPage:
-        """Internal async method to fetch a single page."""
+        """Fetch a single result page with its continuation token."""
         # Build URL with path parameters
         url = "{}/user/shortlinks".format(self.client.base_url)
 
         # Add query parameters
 
         if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
+            url = str(httpx.URL(url).copy_add_param("limit", str(kwargs["limit"])))
 
         if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+            url = str(
+                httpx.URL(url).copy_add_param("page_token", str(kwargs["page_token"]))
+            )
 
         if "sort_by" in kwargs and kwargs["sort_by"] is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(kwargs["sort_by"])
-            else:
-                url = url + "?sort_by=" + str(kwargs["sort_by"])
+            url = str(httpx.URL(url).copy_add_param("sort_by", str(kwargs["sort_by"])))
 
         # Pagination parameters (limit, page_token) are already handled above as regular query params
 
@@ -19581,6 +19682,8 @@ class AsyncUsersAPI:
         json_data = response.json()
         # Validate into a Pydantic model (supports BaseModel/RootModel)
         return ShortlinkResultsPage.model_validate(json_data, extra="ignore")
+
+    get_user_shortlinks_page = _fetch_page_get_user_shortlinks
 
     async def create_user_shortlink(
         self,
@@ -19916,29 +20019,22 @@ class ApiTokensAPI:
         )
 
     def _fetch_page_list_api_tokens_for_user(self, **kwargs) -> ApiTokenResultsPage:
-        """Internal method to fetch a single page."""
+        """Fetch a single result page with its continuation token."""
         # Build URL with path parameters
         url = "{}/user/api-tokens".format(self.client.base_url)
 
         # Add query parameters
 
         if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
+            url = str(httpx.URL(url).copy_add_param("limit", str(kwargs["limit"])))
 
         if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+            url = str(
+                httpx.URL(url).copy_add_param("page_token", str(kwargs["page_token"]))
+            )
 
         if "sort_by" in kwargs and kwargs["sort_by"] is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(kwargs["sort_by"])
-            else:
-                url = url + "?sort_by=" + str(kwargs["sort_by"])
+            url = str(httpx.URL(url).copy_add_param("sort_by", str(kwargs["sort_by"])))
 
         # Pagination parameters (limit, page_token) are already handled above as regular query params
 
@@ -19960,6 +20056,8 @@ class ApiTokensAPI:
         # Validate into a Pydantic model (supports BaseModel/RootModel)
         return ApiTokenResultsPage.model_validate(json_data, extra="ignore")
 
+    list_api_tokens_for_user_page = _fetch_page_list_api_tokens_for_user
+
     def create_api_token_for_user(
         self,
         *,
@@ -19970,10 +20068,7 @@ class ApiTokensAPI:
         url = "{}/user/api-tokens".format(self.client.base_url)
 
         if label is not None:
-            if "?" in url:
-                url = url + "&label=" + str(label)
-            else:
-                url = url + "?label=" + str(label)
+            url = str(httpx.URL(url).copy_add_param("label", str(label)))
 
         _client = self.client.get_http_client()
 
@@ -20104,29 +20199,22 @@ class AsyncApiTokensAPI:
     async def _fetch_page_list_api_tokens_for_user(
         self, **kwargs
     ) -> ApiTokenResultsPage:
-        """Internal async method to fetch a single page."""
+        """Fetch a single result page with its continuation token."""
         # Build URL with path parameters
         url = "{}/user/api-tokens".format(self.client.base_url)
 
         # Add query parameters
 
         if "limit" in kwargs and kwargs["limit"] is not None:
-            if "?" in url:
-                url = url + "&limit=" + str(kwargs["limit"])
-            else:
-                url = url + "?limit=" + str(kwargs["limit"])
+            url = str(httpx.URL(url).copy_add_param("limit", str(kwargs["limit"])))
 
         if "page_token" in kwargs and kwargs["page_token"] is not None:
-            if "?" in url:
-                url = url + "&page_token=" + str(kwargs["page_token"])
-            else:
-                url = url + "?page_token=" + str(kwargs["page_token"])
+            url = str(
+                httpx.URL(url).copy_add_param("page_token", str(kwargs["page_token"]))
+            )
 
         if "sort_by" in kwargs and kwargs["sort_by"] is not None:
-            if "?" in url:
-                url = url + "&sort_by=" + str(kwargs["sort_by"])
-            else:
-                url = url + "?sort_by=" + str(kwargs["sort_by"])
+            url = str(httpx.URL(url).copy_add_param("sort_by", str(kwargs["sort_by"])))
 
         # Pagination parameters (limit, page_token) are already handled above as regular query params
 
@@ -20148,6 +20236,8 @@ class AsyncApiTokensAPI:
         # Validate into a Pydantic model (supports BaseModel/RootModel)
         return ApiTokenResultsPage.model_validate(json_data, extra="ignore")
 
+    list_api_tokens_for_user_page = _fetch_page_list_api_tokens_for_user
+
     async def create_api_token_for_user(
         self,
         *,
@@ -20158,10 +20248,7 @@ class AsyncApiTokensAPI:
         url = "{}/user/api-tokens".format(self.client.base_url)
 
         if label is not None:
-            if "?" in url:
-                url = url + "&label=" + str(label)
-            else:
-                url = url + "?label=" + str(label)
+            url = str(httpx.URL(url).copy_add_param("label", str(label)))
 
         _client = self.client.get_http_client()
 
@@ -20960,10 +21047,10 @@ class KittyCAD(Client):
         hidden: HiddenAPI - Access to hidden endpoints
 
 
-        file: FileAPI - Access to file endpoints
-
-
         executor: ExecutorAPI - Access to executor endpoints
+
+
+        file: FileAPI - Access to file endpoints
 
 
         ml: MlAPI - Access to ml endpoints
@@ -21011,9 +21098,9 @@ class KittyCAD(Client):
 
     hidden: "HiddenAPI"
 
-    file: "FileAPI"
-
     executor: "ExecutorAPI"
+
+    file: "FileAPI"
 
     ml: "MlAPI"
 
@@ -21064,9 +21151,9 @@ class KittyCAD(Client):
 
         self.hidden: HiddenAPI = HiddenAPI(self)
 
-        self.file: FileAPI = FileAPI(self)
-
         self.executor: ExecutorAPI = ExecutorAPI(self)
+
+        self.file: FileAPI = FileAPI(self)
 
         self.ml: MlAPI = MlAPI(self)
 
@@ -21121,10 +21208,10 @@ class AsyncKittyCAD(AsyncClient):
         hidden: AsyncHiddenAPI - Access to hidden endpoints
 
 
-        file: AsyncFileAPI - Access to file endpoints
-
-
         executor: AsyncExecutorAPI - Access to executor endpoints
+
+
+        file: AsyncFileAPI - Access to file endpoints
 
 
         ml: AsyncMlAPI - Access to ml endpoints
@@ -21172,9 +21259,9 @@ class AsyncKittyCAD(AsyncClient):
 
     hidden: "AsyncHiddenAPI"
 
-    file: "AsyncFileAPI"
-
     executor: "AsyncExecutorAPI"
+
+    file: "AsyncFileAPI"
 
     ml: "AsyncMlAPI"
 
@@ -21225,9 +21312,9 @@ class AsyncKittyCAD(AsyncClient):
 
         self.hidden: AsyncHiddenAPI = AsyncHiddenAPI(self)
 
-        self.file: AsyncFileAPI = AsyncFileAPI(self)
-
         self.executor: AsyncExecutorAPI = AsyncExecutorAPI(self)
+
+        self.file: AsyncFileAPI = AsyncFileAPI(self)
 
         self.ml: AsyncMlAPI = AsyncMlAPI(self)
 

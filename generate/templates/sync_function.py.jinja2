@@ -1,17 +1,19 @@
-    def {{ func_name }}(
+    {% if file_info.binary_response %}@contextmanager
+    {% endif %}def {{ func_name }}(
         self,
         {% for arg in args %}
         {% if arg.is_optional == False %}
-        {{ arg.name }}: {{ arg.type }},
+        {{ arg.name }}: {% if file_info.binary_or_files and arg.name == "body" %}bytes | Iterable[bytes] | Mapping[str, bytes | BinaryIO]{% else %}{{ arg.type }}{% endif %},
         {% endif %}
         {% endfor %}
         {% set optional_args = args|selectattr("is_optional")|list %}
-        {% if optional_args %}*,
+        {% if optional_args or file_info.binary_or_files %}*,
         {% for arg in optional_args %}
         {{ arg.name }}: {{ arg.type }} = None,
         {% endfor %}
+        {% if file_info.binary_or_files %}timeout: float | httpx.Timeout | None = None,{% endif %}
         {% endif %}
-    ) {% if response_type != "" %} -> {{ response_type }} {% endif %}:
+    ) {% if file_info.binary_response %} -> Iterator[httpx.Response] {% elif response_type != "" %} -> {{ response_type }} {% endif %}:
         {% if docs %}"""{{ docs }}"""{% endif %}
         
         url = "{{ url_template }}".format(self.client.base_url{% for arg in args %}{% if arg.in_url %}, {{ arg.name }}={{ arg.name }}{% endif %}{% endfor %})
@@ -19,34 +21,51 @@
         {% for arg in args %}
         {% if arg.in_query %}
         if {{ arg.name }} is not None:
-            {% if "bool" in arg.type %}
-            if "?" in url:
-                url = url + "&{{ arg.name }}=" + str({{ arg.name }}).lower()
-            else:
-                url = url + "?{{ arg.name }}=" + str({{ arg.name }}).lower()
-            {% else %}
-            if "?" in url:
-                url = url + "&{{ arg.name }}=" + str({{ arg.name }})
-            else:
-                url = url + "?{{ arg.name }}=" + str({{ arg.name }})
-            {% endif %}
+            url = str(httpx.URL(url).copy_add_param("{{ arg.name }}", {% if "datetime" in arg.type %}{{ arg.name }}.isoformat(){% elif "bool" in arg.type %}str({{ arg.name }}).lower(){% else %}str({{ arg.name }}){% endif %}))
         {% endif %}
         {% endfor %}
 
         _client = self.client.get_http_client()
-        {% if file_info.has_json_body_multipart %}
+        {% set header_args = args|selectattr("header_name")|list %}
+        {% if header_args or file_info.binary_or_files %}
+        headers = httpx.Headers(self.client.get_headers())
+        {% if header_args and has_request_body and request_body_type != "bytes" and not file_info.has_json_body_multipart %}
+        headers.setdefault("Content-Type", "application/json")
+        {% endif %}
+        {% for arg in header_args %}
+        {% if arg.is_optional %}if {{ arg.name }} is not None:
+            {% endif %}headers["{{ arg.header_name }}"] = str({{ arg.name }})
+        {% endfor %}
+        {% endif %}
+        {% if file_info.binary_response %}
+        with _client.stream("{{ method|upper }}", url, headers={% if header_args %}headers{% else %}self.client.get_headers(){% endif %}) as response:
+            if not response.is_success:
+                response.read()
+                raise_for_status(response)
+            yield response
+        {% else %}
+        {% if file_info.binary_or_files %}
+        request_timeout = _client.timeout if timeout is None else timeout
+        if isinstance(body, Mapping):
+            headers.pop("Content-Type", None)
+            files = [("files", (path, content, "application/octet-stream")) for path, content in body.items()]
+            response = _client.{{ method }}(url, files=files, headers=headers, timeout=request_timeout)
+        else:
+            headers["Content-Type"] = "application/octet-stream"
+            response = _client.{{ method }}(url, content=body, headers=headers, timeout=request_timeout)
+        {% elif file_info.has_json_body_multipart %}
         # JSON + multipart endpoint
         response = upload_json_multipart(
             client=_client,
             url=url,
             json_body=body,
             file_attachments=file_attachments,
-            headers=self.client.get_headers(),
+            headers={% if header_args %}headers{% else %}self.client.get_headers(){% endif %},
         )
         {% else %}
         response = _client.{{ method }}(
             url=url,
-            headers=self.client.get_headers(),
+            headers={% if header_args %}headers{% else %}self.client.get_headers(){% endif %},
             {% if has_request_body %}{% if request_body_type != "bytes" %}content=serialize_request_body(body),{% else %}content=body,{% endif %}{% endif %}
         )
         {% endif %}
@@ -70,4 +89,5 @@
         {% endif %}
         {% else %}
         return response.json() if response.content else None
+        {% endif %}
         {% endif %}

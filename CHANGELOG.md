@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## v1.12.0
+
+### Added
+
+- Submit and manage execution jobs through `client.executor`. Upload raw bytes or named files, read archived logs, and stream artifact downloads with a context manager.
+- Fetch one page and its continuation token from generated paginated methods using the `_page` suffix.
+
 ## v1.11.0
 
 ### Changed
