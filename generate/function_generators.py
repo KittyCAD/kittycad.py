@@ -1,5 +1,6 @@
 """Function generation utilities for API endpoints and WebSocket connections."""
 
+from .schema_utils import has_iterable_page
 from .utils import (
     camel_to_snake,
     get_template,
@@ -75,7 +76,7 @@ def generate_sync_function(path: str, method: str, endpoint: dict, data: dict) -
     env = get_template_environment()
 
     # Check if this endpoint uses pagination
-    is_paginated = "x-dropshot-pagination" in endpoint
+    is_paginated = has_iterable_page(endpoint, data)
     template_name = (
         "sync_paginated_function.py.jinja2"
         if is_paginated
@@ -179,7 +180,7 @@ def generate_async_function(path: str, method: str, endpoint: dict, data: dict) 
     env = get_template_environment()
 
     # Check if this endpoint uses pagination
-    is_paginated = "x-dropshot-pagination" in endpoint
+    is_paginated = has_iterable_page(endpoint, data)
     template_name = (
         "async_paginated_function.py.jinja2"
         if is_paginated

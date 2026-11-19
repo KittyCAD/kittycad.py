@@ -2,6 +2,7 @@
 """Comprehensive tests for file handling in KittyCAD SDK."""
 
 import io
+import mimetypes
 from unittest.mock import Mock, patch
 
 import httpx
@@ -44,6 +45,9 @@ from kittycad._progress import (
     create_progress_callback,
     wrap_with_progress,
 )
+
+# Linux MIME databases can register a KCL media type where other hosts use the fallback.
+KCL_CONTENT_TYPE = mimetypes.guess_type("model.kcl")[0] or "application/octet-stream"
 
 
 class TestFileInputNormalization:
@@ -1264,14 +1268,12 @@ class TestJsonMultipartUploads:
 
         file1_name, file1_obj, file1_type = files_dict["file1"]
         assert file1_name == "file1.kcl"
-        assert (
-            file1_type == "application/octet-stream"
-        )  # .kcl is not a standard MIME type
+        assert file1_type == KCL_CONTENT_TYPE
         assert file1_obj.read() == b"// KCL file 1 content"
 
         file2_name, file2_obj, file2_type = files_dict["file2"]
         assert file2_name == "file2.kcl"
-        assert file2_type == "application/octet-stream"
+        assert file2_type == KCL_CONTENT_TYPE
 
         # Clean up
         cleanup_json_multipart_upload(files_dict)
@@ -1288,7 +1290,7 @@ class TestJsonMultipartUploads:
         assert "subdir/main.kcl" in files
         fname, fobj, ctype = files["subdir/main.kcl"]
         assert fname == "subdir/main.kcl"
-        assert ctype == "application/octet-stream"
+        assert ctype == KCL_CONTENT_TYPE
         cleanup_multipart_upload(files)
 
     def test_create_multipart_upload_preserves_relative_path_in_filename(
@@ -1307,7 +1309,7 @@ class TestJsonMultipartUploads:
         if isinstance(enc, dict):
             fname, fobj, ctype = enc["nested/dir/main.kcl"]
             assert fname == "nested/dir/main.kcl"
-            assert ctype == "application/octet-stream"
+            assert ctype == KCL_CONTENT_TYPE
             cleanup_multipart_upload(enc)
 
     def test_create_json_multipart_upload_pydantic_model(self, tmp_path):
@@ -1537,9 +1539,7 @@ class TestJsonMultipartUploads:
         # Verify all files with correct content types
         model_name, model_obj, model_type = files_dict["model"]
         assert model_name == "model.kcl"
-        assert (
-            model_type == "application/octet-stream"
-        )  # .kcl is not a standard MIME type
+        assert model_type == KCL_CONTENT_TYPE
 
         notes_name, notes_obj, notes_type = files_dict["notes"]
         assert notes_name == "notes.txt"

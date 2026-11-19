@@ -277,11 +277,28 @@ def extract_file_parameter_info(endpoint: dict, data: dict) -> Dict[str, Any]:
         info["upload_strategy"] = determine_upload_strategy(endpoint)
         info["upload_content_types"] = get_upload_content_types(endpoint)
 
+    multipart_schema = (
+        endpoint.get("requestBody", {})
+        .get("content", {})
+        .get("multipart/form-data", {})
+        .get("schema", {})
+    )
+    part_schema = multipart_schema.get("additionalProperties")
+    info["binary_or_files"] = (
+        "application/octet-stream" in info["upload_content_types"]
+        and isinstance(part_schema, dict)
+        and part_schema.get("format") == "binary"
+    )
+
     # Check for downloads
     info["has_file_download"] = is_file_download_endpoint(endpoint)
     if info["has_file_download"]:
         info["download_strategy"] = determine_download_strategy(endpoint)
         info["download_content_types"] = get_download_content_types(endpoint)
+
+    info["binary_response"] = (
+        "application/octet-stream" in info["download_content_types"]
+    )
 
     # Check for JSON body + multipart pattern
     info["has_json_body_multipart"] = has_json_body_with_multipart(endpoint, data)

@@ -177,6 +177,27 @@ Api Tokens API
             print(item)
 
 
+Executor API
+------------
+
+**list_execution_jobs**
+    List execution jobs owned by the active user or organization.
+
+    Returns: ``SyncPageIterator[ExecutionJobResponse]``
+
+    Example:
+
+    .. code-block:: python
+
+        # Sync
+        for item in client.executor.list_execution_jobs():
+            print(item)
+
+        # Async
+        async for item in client.executor.list_execution_jobs():
+            print(item)
+
+
 Factory API
 -----------
 

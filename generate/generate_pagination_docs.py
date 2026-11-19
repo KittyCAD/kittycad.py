@@ -30,7 +30,10 @@ def find_paginated_endpoints(spec: dict) -> List[Dict]:
     for path, path_data in spec.get("paths", {}).items():
         for method, endpoint in path_data.items():
             if method.lower() in ["get", "post", "put", "delete", "patch"]:
-                if "x-dropshot-pagination" in endpoint:
+                if (
+                    "x-dropshot-pagination" in endpoint
+                    and get_response_type_and_item_type(endpoint, spec)[1]
+                ):
                     paginated_endpoints.append(
                         {
                             "path": path,

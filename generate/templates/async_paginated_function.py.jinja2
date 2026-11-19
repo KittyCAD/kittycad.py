@@ -34,7 +34,7 @@
         # Create arguments dict, filtering out None values
         kwargs: Dict[str, Any] = {}
         {% for arg in args %}
-        {% if arg.in_query %}
+        {% if arg.in_query or arg.header_name %}
         if {{ arg.name }} is not None:
             kwargs["{{ arg.name }}"] = {{ arg.name }}
         {% endif %}
@@ -57,7 +57,7 @@
         )
     
     async def _fetch_page_{{ func_name }}(self, {% for arg in args %}{% if arg.in_url %}{{ arg.name }}: {{ arg.type }}, {% endif %}{% endfor %}**kwargs) -> {{ response_type }}:
-        """Internal async method to fetch a single page."""
+        """Fetch a single result page with its continuation token."""
         # Build URL with path parameters  
         url = "{{ url_template }}".format(self.client.base_url{% for arg in args %}{% if arg.in_url %}, {{ arg.name }}={{ arg.name }}{% endif %}{% endfor %})
         
@@ -65,26 +65,24 @@
         {% for arg in args %}
         {% if arg.in_query %}
         if "{{ arg.name }}" in kwargs and kwargs["{{ arg.name }}"] is not None:
-            {% if "bool" in arg.type %}
-            if "?" in url:
-                url = url + "&{{ arg.name }}=" + str(kwargs["{{ arg.name }}"]).lower()
-            else:
-                url = url + "?{{ arg.name }}=" + str(kwargs["{{ arg.name }}"]).lower()
-            {% else %}
-            if "?" in url:
-                url = url + "&{{ arg.name }}=" + str(kwargs["{{ arg.name }}"])
-            else:
-                url = url + "?{{ arg.name }}=" + str(kwargs["{{ arg.name }}"])
-            {% endif %}
+            url = str(httpx.URL(url).copy_add_param("{{ arg.name }}", {% if "datetime" in arg.type %}kwargs["{{ arg.name }}"].isoformat(){% elif "bool" in arg.type %}str(kwargs["{{ arg.name }}"]).lower(){% else %}str(kwargs["{{ arg.name }}"]){% endif %}))
         {% endif %}
         {% endfor %}
         
         # Pagination parameters (limit, page_token) are already handled above as regular query params
         
+        {% set header_args = args|selectattr("header_name")|list %}
+        {% if header_args %}
+        headers = httpx.Headers(self.client.get_headers())
+        {% for arg in header_args %}
+        if kwargs.get("{{ arg.name }}") is not None:
+            headers["{{ arg.header_name }}"] = str(kwargs["{{ arg.name }}"])
+        {% endfor %}
+        {% endif %}
         _client = self.client.get_http_client()
         response = await _client.{{ method }}(
             url=url,
-            headers=self.client.get_headers(),
+            headers={% if header_args %}headers{% else %}self.client.get_headers(){% endif %},
             {% if has_request_body %}{% if request_body_type != "bytes" %}content=serialize_request_body(body),{% else %}content=body,{% endif %}{% endif %}
         )
 
@@ -98,3 +96,5 @@
         json_data = response.json()
         # Validate into a Pydantic model (supports BaseModel/RootModel)
         return {{ response_type }}.model_validate(json_data, extra="ignore")
+
+    {{ func_name }}_page = _fetch_page_{{ func_name }}

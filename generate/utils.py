@@ -517,6 +517,13 @@ def render_universal_function(
     render_template_to_file("universal_function.py.jinja2", context, output_path)
 
 
+def parameter_name(parameter: dict) -> str:
+    name = parameter["name"]
+    if parameter["in"] == "header":
+        name = name.lower()
+    return clean_parameter_name(name)
+
+
 def process_endpoint_parameters(
     endpoint: dict, data: dict, is_websocket: bool = False
 ) -> List[dict]:
@@ -559,7 +566,8 @@ def process_endpoint_parameters(
 
         args.append(
             {
-                "name": clean_parameter_name(param["name"]),
+                "name": parameter_name(param),
+                "header_name": param["name"] if param.get("in") == "header" else None,
                 "type": arg_type,
                 "is_optional": is_optional,
                 "in_url": param.get("in") == "path",
