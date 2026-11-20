@@ -572,6 +572,12 @@ def process_endpoint_parameters(
                 "is_optional": is_optional,
                 "in_url": param.get("in") == "path",
                 "in_query": param.get("in") == "query",
+                "is_csv": (
+                    param.get("in") == "query"
+                    and param_schema.get("type") == "array"
+                    and param.get("style", "form") == "form"
+                    and param.get("explode", True) is False
+                ),
             }
         )
 

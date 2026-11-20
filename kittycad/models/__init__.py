@@ -4,6 +4,7 @@ from .account_provider import AccountProvider
 from .add_hole_from_offset import AddHoleFromOffset
 from .add_org_member import AddOrgMember
 from .address_contact import AddressContact
+from .address_content import AddressContent
 from .address_details import AddressDetails
 from .address_postal_response import AddressPostalResponse
 from .address_response import AddressResponse
@@ -106,7 +107,9 @@ from .create_o_auth2_app_request import CreateOAuth2AppRequest
 from .create_org_dataset import CreateOrgDataset
 from .create_planar_surface import CreatePlanarSurface
 from .create_project_library_request import CreateProjectLibraryRequest
+from .create_project_request import CreateProjectRequest
 from .create_project_share_link_request import CreateProjectShareLinkRequest
+from .create_project_version_request import CreateProjectVersionRequest
 from .create_project_version_response import CreateProjectVersionResponse
 from .create_region import CreateRegion
 from .create_region_from_query_point import CreateRegionFromQueryPoint
@@ -237,6 +240,7 @@ from .factory_customer_job_version_results_page import (
 from .factory_customer_quote import FactoryCustomerQuote
 from .factory_job_response import FactoryJobResponse
 from .factory_quote_acceptance import FactoryQuoteAcceptance
+from .factory_quote_detail import FactoryQuoteDetail
 from .factory_quote_preview import FactoryQuotePreview
 from .failure_web_socket_response import FailureWebSocketResponse
 from .fbx_storage import FbxStorage
@@ -261,6 +265,7 @@ from .gltf_storage import GltfStorage
 from .handle_mouse_drag_end import HandleMouseDragEnd
 from .handle_mouse_drag_move import HandleMouseDragMove
 from .handle_mouse_drag_start import HandleMouseDragStart
+from .hidden_state import HiddenState
 from .highlight_set_entities import HighlightSetEntities
 from .highlight_set_entity import HighlightSetEntity
 from .ice_server import IceServer
@@ -281,14 +286,9 @@ from .kcl_code_completion_params import KclCodeCompletionParams
 from .kcl_code_completion_request import KclCodeCompletionRequest
 from .kcl_code_completion_response import KclCodeCompletionResponse
 from .kcl_file import KclFile
-from .kcl_migration_application import KclMigrationApplication
-from .kcl_migration_application_status import KclMigrationApplicationStatus
-from .kcl_migration_client_message import KclMigrationClientMessage
-from .kcl_migration_history_entry import KclMigrationHistoryEntry
 from .kcl_migration_operation import KclMigrationOperation
 from .kcl_migration_request import KclMigrationRequest
 from .kcl_migration_result import KclMigrationResult
-from .kcl_migration_server_message import KclMigrationServerMessage
 from .kcl_migration_status import KclMigrationStatus
 from .kcl_migration_target import KclMigrationTarget
 from .kcl_migration_validation import KclMigrationValidation
@@ -321,6 +321,7 @@ from .ml_copilot_project_revision import MlCopilotProjectRevision
 from .ml_copilot_project_snapshot_metadata import MlCopilotProjectSnapshotMetadata
 from .ml_copilot_project_snapshot_status import MlCopilotProjectSnapshotStatus
 from .ml_copilot_replay_attachment_mode import MlCopilotReplayAttachmentMode
+from .ml_copilot_replay_page_error_code import MlCopilotReplayPageErrorCode
 from .ml_copilot_server_message import MlCopilotServerMessage
 from .ml_copilot_supported_models import MlCopilotSupportedModels
 from .ml_copilot_system_command import MlCopilotSystemCommand
@@ -358,6 +359,7 @@ from .o_auth2_token_request_form import OAuth2TokenRequestForm
 from .oauth2_client_info import OAuth2ClientInfo
 from .oauth2_grant_type import OAuth2GrantType
 from .object_bring_to_front import ObjectBringToFront
+from .object_is_hidden import ObjectIsHidden
 from .object_set_material_params_pbr import ObjectSetMaterialParamsPbr
 from .object_set_name import ObjectSetName
 from .object_visible import ObjectVisible
@@ -605,6 +607,7 @@ from .update_o_auth2_app_request import UpdateOAuth2AppRequest
 from .update_org_dataset import UpdateOrgDataset
 from .update_org_dataset_source import UpdateOrgDatasetSource
 from .update_project_library_request import UpdateProjectLibraryRequest
+from .update_project_request import UpdateProjectRequest
 from .update_shortlink_request import UpdateShortlinkRequest
 from .update_user import UpdateUser
 from .upload_org_dataset_files_response import UploadOrgDatasetFilesResponse

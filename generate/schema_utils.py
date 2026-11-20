@@ -110,7 +110,10 @@ def get_endpoint_refs(endpoint: dict, data: dict) -> List[str]:
                             raise Exception("Unknown type ", json["type"])
                     else:
                         refs.append("dict")
-                elif content_type == "application/octet-stream":
+                elif (
+                    content_type == "application/octet-stream"
+                    or content[content_type].get("schema", {}).get("format") == "binary"
+                ):
                     continue  # Streamed responses have no JSON model.
                 elif content_type == "*/*":
                     s = content[content_type]["schema"]
@@ -178,6 +181,8 @@ def get_request_body_refs(endpoint: dict) -> List[str]:
                         refs.append(ref)
                 elif content_type == "multipart/form-data":
                     form = content[content_type]["schema"]
+                    # A multipart envelope can contain a named JSON metadata part.
+                    form = form.get("properties", {}).get("body", form)
                     if "$ref" in form:
                         ref = resolve_schema_ref(form["$ref"])
                         refs.append(ref)
@@ -232,6 +237,7 @@ def get_request_body_type_schema(
                         raise Exception("not a ref")
                 elif content_type == "multipart/form-data":
                     form = content[content_type]["schema"]
+                    form = form.get("properties", {}).get("body", form)
                     if "$ref" in form:
                         ref = resolve_schema_ref(form["$ref"])
                         type_schema = data["components"]["schemas"][ref]
@@ -348,6 +354,8 @@ def get_function_result_type(
 
 
 def get_type_name(schema: dict) -> str:
+    if schema == {}:
+        return "Any"
     if "type" in schema:
         if schema["type"] == "string":
             if "format" in schema:

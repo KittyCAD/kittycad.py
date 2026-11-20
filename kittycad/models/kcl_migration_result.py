@@ -6,7 +6,7 @@ from .base import KittyCadBaseModel
 
 
 class KclMigrationResult(KittyCadBaseModel):
-    """A worker's terminal candidate, held separately from ordinary project edits."""
+    """A migration's terminal outcome and validation evidence."""
 
     conversion_not_started: Optional[bool] = False
 

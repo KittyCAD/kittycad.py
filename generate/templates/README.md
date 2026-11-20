@@ -185,3 +185,8 @@ To migrate from legacy templates to the universal template:
 2. **Check context**: Print context dictionary before rendering
 3. **Validate macros**: Test macros independently with minimal context
 4. **Compare outputs**: Diff generated code with expected results
+
+## Multipart runtime helper
+
+`multipart.py.jinja2` is the source for `kittycad/_multipart.py`. Change the
+template and run `just generate` when updating multipart upload behavior.

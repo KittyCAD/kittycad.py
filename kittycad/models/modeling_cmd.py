@@ -808,6 +808,14 @@ class OptionObjectVisible(KittyCadBaseModel):
     type: Literal["object_visible"] = "object_visible"
 
 
+class OptionObjectIsHidden(KittyCadBaseModel):
+    """Query whether each object is hidden, preserving input order. Missing objects are reported as `no_such_object` in the response."""
+
+    object_ids: List[str]
+
+    type: Literal["object_is_hidden"] = "object_is_hidden"
+
+
 class OptionObjectBringToFront(KittyCadBaseModel):
     """Bring an object to the front of the scene"""
 
@@ -1999,6 +2007,7 @@ ModelingCmd = RootModel[
             OptionUpdateAnnotation,
             OptionEdgeLinesVisible,
             OptionObjectVisible,
+            OptionObjectIsHidden,
             OptionObjectBringToFront,
             OptionObjectSetMaterialParamsPbr,
             OptionObjectSetName,

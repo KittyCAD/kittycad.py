@@ -377,6 +377,7 @@ def create_json_multipart_upload(
     file_attachments: Optional[Dict[str, SyncUpload]] = None,
     json_field_name: str = "body",
     progress_callback: Optional[ProgressCallback] = None,
+    filenames_from_keys: bool = False,
 ) -> Dict[str, Any]:
     """Create a multipart upload with JSON body + file attachments.
 
@@ -389,6 +390,7 @@ def create_json_multipart_upload(
         file_attachments: Dict of {field_name: file_input} for attachments
         json_field_name: Name of the JSON body field (default: "body")
         progress_callback: Optional progress tracking callback
+        filenames_from_keys: Use attachment keys as the uploaded filenames
 
     Returns:
         Files dict suitable for httpx.post(files=...)
@@ -401,6 +403,10 @@ def create_json_multipart_upload(
         ... )
         >>> # response = httpx.post(url, files=files)
     """
+    if filenames_from_keys and file_attachments:
+        if any(name in {json_field_name, "event"} for name in file_attachments):
+            raise ValueError("File attachment names cannot be body or event")
+
     files_dict = JsonMultipartDict()
 
     # Add JSON body as a text part with application/json content type
@@ -429,6 +435,7 @@ def create_json_multipart_upload(
             file_obj, should_close, detected_filename, detected_content_type, _ = (
                 prepare_upload_input(
                     upload=file_input,
+                    filename=field_name if filenames_from_keys else None,
                     force_multipart=True,
                 )
             )
@@ -444,7 +451,9 @@ def create_json_multipart_upload(
 
             # Create the file tuple: (filename, file_obj, content_type)
             files_dict[field_name] = (
-                _resolve_multipart_filename(field_name, detected_filename),
+                field_name
+                if filenames_from_keys
+                else _resolve_multipart_filename(field_name, detected_filename),
                 file_obj,
                 detected_content_type,
             )
@@ -498,6 +507,7 @@ class JsonMultipartUploadContext:
         file_attachments: Optional[Dict[str, SyncUpload]] = None,
         json_field_name: str = "body",
         progress_callback: Optional[ProgressCallback] = None,
+        filenames_from_keys: bool = False,
     ):
         """Initialize the JSON multipart upload context.
 
@@ -506,11 +516,13 @@ class JsonMultipartUploadContext:
             file_attachments: Dict of {field_name: file_input} for attachments
             json_field_name: Name of the JSON body field (default: "body")
             progress_callback: Optional progress tracking callback
+            filenames_from_keys: Use attachment keys as the uploaded filenames
         """
         self.json_body = json_body
         self.file_attachments = file_attachments
         self.json_field_name = json_field_name
         self.progress_callback = progress_callback
+        self.filenames_from_keys = filenames_from_keys
         self.files: Optional[Dict[str, Any]] = None
 
     def __enter__(self):
@@ -520,6 +532,7 @@ class JsonMultipartUploadContext:
             file_attachments=self.file_attachments,
             json_field_name=self.json_field_name,
             progress_callback=self.progress_callback,
+            filenames_from_keys=self.filenames_from_keys,
         )
         return self
 
@@ -538,6 +551,7 @@ def upload_json_multipart(
     method: str = "POST",
     json_field_name: str = "body",
     progress_callback: Optional[ProgressCallback] = None,
+    filenames_from_keys: bool = False,
     **request_kwargs,
 ) -> httpx.Response:
     """Upload JSON body + file attachments using multipart/form-data.
@@ -550,6 +564,7 @@ def upload_json_multipart(
         method: HTTP method (default: POST)
         json_field_name: Name of the JSON body field (default: "body")
         progress_callback: Optional progress tracking callback
+        filenames_from_keys: Use attachment keys as the uploaded filenames
         **request_kwargs: Additional arguments for the HTTP request
 
     Returns:
@@ -570,6 +585,7 @@ def upload_json_multipart(
         file_attachments=file_attachments,
         json_field_name=json_field_name,
         progress_callback=progress_callback,
+        filenames_from_keys=filenames_from_keys,
     ) as upload:
         # Make the request with files
         response = client.request(
@@ -586,6 +602,7 @@ async def upload_json_multipart_async(
     method: str = "POST",
     json_field_name: str = "body",
     progress_callback: Optional[ProgressCallback] = None,
+    filenames_from_keys: bool = False,
     **request_kwargs,
 ) -> httpx.Response:
     """Async version of upload_json_multipart.
@@ -598,6 +615,7 @@ async def upload_json_multipart_async(
         method: HTTP method (default: POST)
         json_field_name: Name of the JSON body field (default: "body")
         progress_callback: Optional progress tracking callback
+        filenames_from_keys: Use attachment keys as the uploaded filenames
         **request_kwargs: Additional arguments for the HTTP request
 
     Returns:
@@ -608,6 +626,7 @@ async def upload_json_multipart_async(
         file_attachments=file_attachments,
         json_field_name=json_field_name,
         progress_callback=progress_callback,
+        filenames_from_keys=filenames_from_keys,
     ) as upload:
         # Make the async request with files
         response = await client.request(

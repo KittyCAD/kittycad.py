@@ -36,7 +36,7 @@ from kittycad.models import (
     FactoryCustomerJobVersion,
     FactoryJobResponse,
     FactoryQuoteAcceptance,
-    FactoryQuotePreview,
+    FactoryQuoteDetail,
     FileBoundingBox,
     FileCenterOfMass,
     FileConversion,
@@ -47,7 +47,6 @@ from kittycad.models import (
     Invoice,
     IpAddrInfo,
     KclCodeCompletionResponse,
-    KclMigrationClientMessage,
     KclModel,
     MlCopilotClientMessage,
     OAuth2AppResponse,
@@ -112,7 +111,6 @@ from kittycad.models.billing_info import BillingInfo
 from kittycad.models.client_error_report import ClientErrorReport
 from kittycad.models.code_language import CodeLanguage
 from kittycad.models.code_option import CodeOption
-from kittycad.models.component_transform import ComponentTransform
 from kittycad.models.conversion_params import ConversionParams
 from kittycad.models.conversion_sort_mode import ConversionSortMode
 from kittycad.models.country_code import CountryCode
@@ -121,9 +119,11 @@ from kittycad.models.create_custom_model import CreateCustomModel
 from kittycad.models.create_o_auth2_app_request import CreateOAuth2AppRequest
 from kittycad.models.create_org_dataset import CreateOrgDataset
 from kittycad.models.create_project_library_request import CreateProjectLibraryRequest
+from kittycad.models.create_project_request import CreateProjectRequest
 from kittycad.models.create_project_share_link_request import (
     CreateProjectShareLinkRequest,
 )
+from kittycad.models.create_project_version_request import CreateProjectVersionRequest
 from kittycad.models.create_shortlink_request import CreateShortlinkRequest
 from kittycad.models.created_at_sort_mode import CreatedAtSortMode
 from kittycad.models.direction import Direction
@@ -136,35 +136,35 @@ from kittycad.models.execution_job_input import ExecutionJobInput
 from kittycad.models.execution_job_output import ExecutionJobOutput
 from kittycad.models.execution_job_status import ExecutionJobStatus
 from kittycad.models.execution_log_stream import ExecutionLogStream
+from kittycad.models.fbx_storage import FbxStorage
 from kittycad.models.file_export_format import FileExportFormat
 from kittycad.models.file_import_format import FileImportFormat
 from kittycad.models.id_sort_mode import IdSortMode
 from kittycad.models.idp_metadata_source import IdpMetadataSource, OptionUrl
-from kittycad.models.input_format3d import InputFormat3d, OptionNx
+from kittycad.models.input_format3d import InputFormat3d, OptionCatia
 from kittycad.models.kcl_code_completion_params import KclCodeCompletionParams
 from kittycad.models.kcl_code_completion_request import KclCodeCompletionRequest
-from kittycad.models.kcl_migration_client_message import OptionStatus
 from kittycad.models.kcl_project_library_source import KclProjectLibrarySource
+from kittycad.models.kcl_project_publication_status import KclProjectPublicationStatus
 from kittycad.models.kcl_project_share_link_access_mode import (
     KclProjectShareLinkAccessMode,
 )
 from kittycad.models.kcl_version import KclVersion
 from kittycad.models.lenient_url import LenientUrl
 from kittycad.models.ml_copilot_client_message import (
-    OptionListModes,
+    OptionHeaders,
     OptionProjectContext,
 )
 from kittycad.models.ml_copilot_replay_attachment_mode import (
     MlCopilotReplayAttachmentMode,
 )
 from kittycad.models.ml_feedback import MlFeedback
-from kittycad.models.modeling_cmd import ModelingCmd, OptionSetObjectTransform
+from kittycad.models.modeling_cmd import ModelingCmd, OptionEdgeGetLength
 from kittycad.models.modeling_cmd_id import ModelingCmdId
-from kittycad.models.modeling_cmd_req import ModelingCmdReq
 from kittycad.models.o_auth2_app_grant_type import OAuth2AppGrantType
 from kittycad.models.org_dataset_source import OrgDatasetSource
 from kittycad.models.org_details import OrgDetails
-from kittycad.models.output_format3d import OptionStl, OutputFormat3d
+from kittycad.models.output_format3d import OptionFbx, OutputFormat3d
 from kittycad.models.post_effect_type import PostEffectType
 from kittycad.models.privacy_settings import PrivacySettings
 from kittycad.models.project_access_scope import ProjectAccessScope
@@ -180,10 +180,8 @@ from kittycad.models.public_mailing_list_membership_request import (
 from kittycad.models.rename_project_library_request import RenameProjectLibraryRequest
 from kittycad.models.sales_inquiry_type import SalesInquiryType
 from kittycad.models.saml_identity_provider_create import SamlIdentityProviderCreate
-from kittycad.models.selection import OptionDefaultScene, Selection
 from kittycad.models.service_account_uuid import ServiceAccountUuid
 from kittycad.models.session_uuid import SessionUuid
-from kittycad.models.stl_storage import StlStorage
 from kittycad.models.storage_provider import StorageProvider
 from kittycad.models.support_inquiry_type import SupportInquiryType
 from kittycad.models.system import System
@@ -207,12 +205,13 @@ from kittycad.models.update_member_to_org_body import UpdateMemberToOrgBody
 from kittycad.models.update_o_auth2_app_request import UpdateOAuth2AppRequest
 from kittycad.models.update_org_dataset import UpdateOrgDataset
 from kittycad.models.update_project_library_request import UpdateProjectLibraryRequest
+from kittycad.models.update_project_request import UpdateProjectRequest
 from kittycad.models.update_shortlink_request import UpdateShortlinkRequest
 from kittycad.models.update_user import UpdateUser
 from kittycad.models.user_identifier import UserIdentifier
 from kittycad.models.user_org_role import UserOrgRole
 from kittycad.models.uuid import Uuid
-from kittycad.models.web_socket_request import OptionModelingCmdBatchReq
+from kittycad.models.web_socket_request import OptionModelingCmdReq
 from kittycad.models.website_sales_form import WebsiteSalesForm
 from kittycad.models.website_support_form import WebsiteSupportForm
 from kittycad.models.zoo_product_subscriptions_org_request import (
@@ -838,24 +837,12 @@ def test_create_file_conversion_options():
     result: FileConversion = client.file.create_file_conversion_options(
         body=ConversionParams(
             output_format=OutputFormat3d(
-                OptionStl(
-                    coords=System(
-                        forward=AxisDirectionPair(
-                            axis=Axis.Y,
-                            direction=Direction.POSITIVE,
-                        ),
-                        up=AxisDirectionPair(
-                            axis=Axis.Y,
-                            direction=Direction.POSITIVE,
-                        ),
-                    ),
-                    selection=Selection(OptionDefaultScene()),
-                    storage=StlStorage.ASCII,
-                    units=UnitLength.CM,
+                OptionFbx(
+                    storage=FbxStorage.ASCII,
                 )
             ),
             src_format=InputFormat3d(
-                OptionNx(
+                OptionCatia(
                     coords=System(
                         forward=AxisDirectionPair(
                             axis=Axis.Y,
@@ -890,24 +877,12 @@ async def test_create_file_conversion_options_async():
     result: FileConversion = await client.file.create_file_conversion_options(
         body=ConversionParams(
             output_format=OutputFormat3d(
-                OptionStl(
-                    coords=System(
-                        forward=AxisDirectionPair(
-                            axis=Axis.Y,
-                            direction=Direction.POSITIVE,
-                        ),
-                        up=AxisDirectionPair(
-                            axis=Axis.Y,
-                            direction=Direction.POSITIVE,
-                        ),
-                    ),
-                    selection=Selection(OptionDefaultScene()),
-                    storage=StlStorage.ASCII,
-                    units=UnitLength.CM,
+                OptionFbx(
+                    storage=FbxStorage.ASCII,
                 )
             ),
             src_format=InputFormat3d(
-                OptionNx(
+                OptionCatia(
                     coords=System(
                         forward=AxisDirectionPair(
                             axis=Axis.Y,
@@ -2168,6 +2143,30 @@ async def test_get_org_factory_job_async():
 
 
 @pytest.mark.skip
+def test_cancel_org_factory_job():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: FactoryCustomerJobSummary = client.factory.cancel_org_factory_job(
+        job_id=Uuid("<string>")
+    )
+
+    body: FactoryCustomerJobSummary = result
+    print(body)
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_cancel_org_factory_job_async():
+
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: FactoryCustomerJobSummary = await client.factory.cancel_org_factory_job(
+        job_id=Uuid("<string>")
+    )
+
+
+@pytest.mark.skip
 def test_get_org_factory_job_file():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
@@ -2189,12 +2188,43 @@ async def test_get_org_factory_job_file_async():
 
 
 @pytest.mark.skip
+def test_get_org_factory_quote():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: FactoryQuoteDetail = client.factory.get_org_factory_quote(
+        job_id=Uuid("<string>"),
+        quote_id=Uuid("<string>"),
+        payment_attempt_id=Uuid("<string>"),
+        use_credits=False,
+    )
+
+    body: FactoryQuoteDetail = result
+    print(body)
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_get_org_factory_quote_async():
+
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: FactoryQuoteDetail = await client.factory.get_org_factory_quote(
+        job_id=Uuid("<string>"),
+        quote_id=Uuid("<string>"),
+        payment_attempt_id=Uuid("<string>"),
+        use_credits=False,
+    )
+
+
+@pytest.mark.skip
 def test_accept_org_factory_quote():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     result: FactoryQuoteAcceptance = client.factory.accept_org_factory_quote(
         job_id=Uuid("<string>"),
         quote_id=Uuid("<string>"),
+        payment_attempt_id=Uuid("<string>"),
         use_credits=False,
         max_amount_due_cents=None,
     )
@@ -2213,32 +2243,33 @@ async def test_accept_org_factory_quote_async():
     result: FactoryQuoteAcceptance = await client.factory.accept_org_factory_quote(
         job_id=Uuid("<string>"),
         quote_id=Uuid("<string>"),
+        payment_attempt_id=Uuid("<string>"),
         use_credits=False,
         max_amount_due_cents=None,
     )
 
 
 @pytest.mark.skip
-def test_preview_org_factory_quote():
+def test_decline_org_factory_quote():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: FactoryQuotePreview = client.factory.preview_org_factory_quote(
-        job_id=Uuid("<string>"), quote_id=Uuid("<string>"), use_credits=False
+    result: FactoryCustomerJobSummary = client.factory.decline_org_factory_quote(
+        job_id=Uuid("<string>"), quote_id=Uuid("<string>")
     )
 
-    body: FactoryQuotePreview = result
+    body: FactoryCustomerJobSummary = result
     print(body)
 
 
 # OR run async
 @pytest.mark.asyncio
 @pytest.mark.skip
-async def test_preview_org_factory_quote_async():
+async def test_decline_org_factory_quote_async():
 
     client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: FactoryQuotePreview = await client.factory.preview_org_factory_quote(
-        job_id=Uuid("<string>"), quote_id=Uuid("<string>"), use_credits=False
+    result: FactoryCustomerJobSummary = await client.factory.decline_org_factory_quote(
+        job_id=Uuid("<string>"), quote_id=Uuid("<string>")
     )
 
 
@@ -3355,25 +3386,23 @@ async def test_get_public_project_async():
 
 @pytest.mark.skip
 def test_download_public_project():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
-
-    result = client.projects.download_public_project(
+    client = KittyCAD()
+    with client.projects.download_public_project(
         id=Uuid("<string>"), format=ProjectArchiveFormat.TAR, file_ids=["<string>"]
-    )
+    ) as response:
+        for chunk in response.iter_bytes():
+            print(len(chunk))
 
-    print(result)
 
-
-# OR run async
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_download_public_project_async():
-
-    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
-
-    result = await client.projects.download_public_project(
-        id=Uuid("<string>"), format=ProjectArchiveFormat.TAR, file_ids=["<string>"]
-    )
+    async with AsyncKittyCAD() as client:
+        async with client.projects.download_public_project(
+            id=Uuid("<string>"), format=ProjectArchiveFormat.TAR, file_ids=["<string>"]
+        ) as response:
+            async for chunk in response.aiter_bytes():
+                print(len(chunk))
 
 
 @pytest.mark.skip
@@ -3443,25 +3472,23 @@ async def test_create_public_project_vote_async():
 
 @pytest.mark.skip
 def test_download_shared_project():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
-
-    result = client.hidden.download_shared_project(
+    client = KittyCAD()
+    with client.hidden.download_shared_project(
         key="<string>", format=ProjectArchiveFormat.TAR, file_ids=["<string>"]
-    )
+    ) as response:
+        for chunk in response.iter_bytes():
+            print(len(chunk))
 
-    print(result)
 
-
-# OR run async
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_download_shared_project_async():
-
-    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
-
-    result = await client.hidden.download_shared_project(
-        key="<string>", format=ProjectArchiveFormat.TAR, file_ids=["<string>"]
-    )
+    async with AsyncKittyCAD() as client:
+        async with client.hidden.download_shared_project(
+            key="<string>", format=ProjectArchiveFormat.TAR, file_ids=["<string>"]
+        ) as response:
+            async for chunk in response.aiter_bytes():
+                print(len(chunk))
 
 
 @pytest.mark.skip
@@ -4206,6 +4233,23 @@ async def test_get_api_token_for_user_async():
 
 
 @pytest.mark.skip
+def test_remove_user_avatar():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    client.users.remove_user_avatar()
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_remove_user_avatar_async():
+
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    await client.users.remove_user_avatar()
+
+
+@pytest.mark.skip
 def test_reset_user_usage_collection_threshold():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
@@ -4529,6 +4573,30 @@ async def test_get_user_factory_job_async():
 
 
 @pytest.mark.skip
+def test_cancel_user_factory_job():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: FactoryCustomerJobSummary = client.factory.cancel_user_factory_job(
+        job_id=Uuid("<string>")
+    )
+
+    body: FactoryCustomerJobSummary = result
+    print(body)
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_cancel_user_factory_job_async():
+
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: FactoryCustomerJobSummary = await client.factory.cancel_user_factory_job(
+        job_id=Uuid("<string>")
+    )
+
+
+@pytest.mark.skip
 def test_get_user_factory_job_file():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
@@ -4550,12 +4618,43 @@ async def test_get_user_factory_job_file_async():
 
 
 @pytest.mark.skip
+def test_get_user_factory_quote():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: FactoryQuoteDetail = client.factory.get_user_factory_quote(
+        job_id=Uuid("<string>"),
+        quote_id=Uuid("<string>"),
+        payment_attempt_id=Uuid("<string>"),
+        use_credits=False,
+    )
+
+    body: FactoryQuoteDetail = result
+    print(body)
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_get_user_factory_quote_async():
+
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    result: FactoryQuoteDetail = await client.factory.get_user_factory_quote(
+        job_id=Uuid("<string>"),
+        quote_id=Uuid("<string>"),
+        payment_attempt_id=Uuid("<string>"),
+        use_credits=False,
+    )
+
+
+@pytest.mark.skip
 def test_accept_user_factory_quote():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     result: FactoryQuoteAcceptance = client.factory.accept_user_factory_quote(
         job_id=Uuid("<string>"),
         quote_id=Uuid("<string>"),
+        payment_attempt_id=Uuid("<string>"),
         use_credits=False,
         max_amount_due_cents=None,
     )
@@ -4574,32 +4673,33 @@ async def test_accept_user_factory_quote_async():
     result: FactoryQuoteAcceptance = await client.factory.accept_user_factory_quote(
         job_id=Uuid("<string>"),
         quote_id=Uuid("<string>"),
+        payment_attempt_id=Uuid("<string>"),
         use_credits=False,
         max_amount_due_cents=None,
     )
 
 
 @pytest.mark.skip
-def test_preview_user_factory_quote():
+def test_decline_user_factory_quote():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: FactoryQuotePreview = client.factory.preview_user_factory_quote(
-        job_id=Uuid("<string>"), quote_id=Uuid("<string>"), use_credits=False
+    result: FactoryCustomerJobSummary = client.factory.decline_user_factory_quote(
+        job_id=Uuid("<string>"), quote_id=Uuid("<string>")
     )
 
-    body: FactoryQuotePreview = result
+    body: FactoryCustomerJobSummary = result
     print(body)
 
 
 # OR run async
 @pytest.mark.asyncio
 @pytest.mark.skip
-async def test_preview_user_factory_quote_async():
+async def test_decline_user_factory_quote_async():
 
     client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: FactoryQuotePreview = await client.factory.preview_user_factory_quote(
-        job_id=Uuid("<string>"), quote_id=Uuid("<string>"), use_credits=False
+    result: FactoryCustomerJobSummary = await client.factory.decline_user_factory_quote(
+        job_id=Uuid("<string>"), quote_id=Uuid("<string>")
     )
 
 
@@ -5445,7 +5545,20 @@ async def test_list_projects_async():
 def test_create_project():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: ProjectResponse = client.projects.create_project()
+    result: ProjectResponse = client.projects.create_project(
+        body=CreateProjectRequest(
+            category_ids=[Uuid("<string>")],
+            description="<string>",
+            entrypoint_path="<string>",
+            library_id=Uuid("<string>"),
+            publication_status=KclProjectPublicationStatus.PRIVATE,
+            title="<string>",
+        ),
+        file_attachments={
+            "main.kcl": Path("path/to/main.kcl"),
+            "helper.kcl": Path("path/to/helper.kcl"),
+        },
+    )
 
     body: ProjectResponse = result
     print(body)
@@ -5458,7 +5571,20 @@ async def test_create_project_async():
 
     client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: ProjectResponse = await client.projects.create_project()
+    result: ProjectResponse = await client.projects.create_project(
+        body=CreateProjectRequest(
+            category_ids=[Uuid("<string>")],
+            description="<string>",
+            entrypoint_path="<string>",
+            library_id=Uuid("<string>"),
+            publication_status=KclProjectPublicationStatus.PRIVATE,
+            title="<string>",
+        ),
+        file_attachments={
+            "main.kcl": Path("path/to/main.kcl"),
+            "helper.kcl": Path("path/to/helper.kcl"),
+        },
+    )
 
 
 @pytest.mark.skip
@@ -5502,7 +5628,21 @@ async def test_get_project_async():
 def test_update_project():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: ProjectResponse = client.projects.update_project(id=Uuid("<string>"))
+    result: ProjectResponse = client.projects.update_project(
+        id=Uuid("<string>"),
+        body=UpdateProjectRequest(
+            category_ids=[Uuid("<string>")],
+            description="<string>",
+            entrypoint_path="<string>",
+            library_id=Uuid("<string>"),
+            publication_status=KclProjectPublicationStatus.PRIVATE,
+            title="<string>",
+        ),
+        file_attachments={
+            "main.kcl": Path("path/to/main.kcl"),
+            "helper.kcl": Path("path/to/helper.kcl"),
+        },
+    )
 
     body: ProjectResponse = result
     print(body)
@@ -5515,30 +5655,42 @@ async def test_update_project_async():
 
     client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-    result: ProjectResponse = await client.projects.update_project(id=Uuid("<string>"))
+    result: ProjectResponse = await client.projects.update_project(
+        id=Uuid("<string>"),
+        body=UpdateProjectRequest(
+            category_ids=[Uuid("<string>")],
+            description="<string>",
+            entrypoint_path="<string>",
+            library_id=Uuid("<string>"),
+            publication_status=KclProjectPublicationStatus.PRIVATE,
+            title="<string>",
+        ),
+        file_attachments={
+            "main.kcl": Path("path/to/main.kcl"),
+            "helper.kcl": Path("path/to/helper.kcl"),
+        },
+    )
 
 
 @pytest.mark.skip
 def test_download_project():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
-
-    result = client.projects.download_project(
+    client = KittyCAD()
+    with client.projects.download_project(
         id=Uuid("<string>"), format=ProjectArchiveFormat.TAR, file_ids=["<string>"]
-    )
+    ) as response:
+        for chunk in response.iter_bytes():
+            print(len(chunk))
 
-    print(result)
 
-
-# OR run async
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_download_project_async():
-
-    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
-
-    result = await client.projects.download_project(
-        id=Uuid("<string>"), format=ProjectArchiveFormat.TAR, file_ids=["<string>"]
-    )
+    async with AsyncKittyCAD() as client:
+        async with client.projects.download_project(
+            id=Uuid("<string>"), format=ProjectArchiveFormat.TAR, file_ids=["<string>"]
+        ) as response:
+            async for chunk in response.aiter_bytes():
+                print(len(chunk))
 
 
 @pytest.mark.skip
@@ -5757,7 +5909,18 @@ def test_create_project_version():
     client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     result: CreateProjectVersionResponse = client.projects.create_project_version(
-        id=Uuid("<string>")
+        id=Uuid("<string>"),
+        idempotency_key="<string>",
+        body=CreateProjectVersionRequest(
+            description="<string>",
+            entrypoint_path="<string>",
+            parent_version_id=Uuid("<string>"),
+            title="<string>",
+        ),
+        file_attachments={
+            "main.kcl": Path("path/to/main.kcl"),
+            "helper.kcl": Path("path/to/helper.kcl"),
+        },
     )
 
     body: CreateProjectVersionResponse = result
@@ -5772,7 +5935,18 @@ async def test_create_project_version_async():
     client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     result: CreateProjectVersionResponse = await client.projects.create_project_version(
-        id=Uuid("<string>")
+        id=Uuid("<string>"),
+        idempotency_key="<string>",
+        body=CreateProjectVersionRequest(
+            description="<string>",
+            entrypoint_path="<string>",
+            parent_version_id=Uuid("<string>"),
+            title="<string>",
+        ),
+        file_attachments={
+            "main.kcl": Path("path/to/main.kcl"),
+            "helper.kcl": Path("path/to/helper.kcl"),
+        },
     )
 
 
@@ -5802,31 +5976,29 @@ async def test_get_project_version_async():
 
 @pytest.mark.skip
 def test_download_project_version():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
-
-    result = client.projects.download_project_version(
+    client = KittyCAD()
+    with client.projects.download_project_version(
         id=Uuid("<string>"),
         version_id=Uuid("<string>"),
         format=ProjectArchiveFormat.TAR,
         file_ids=["<string>"],
-    )
+    ) as response:
+        for chunk in response.iter_bytes():
+            print(len(chunk))
 
-    print(result)
 
-
-# OR run async
 @pytest.mark.asyncio
 @pytest.mark.skip
 async def test_download_project_version_async():
-
-    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
-
-    result = await client.projects.download_project_version(
-        id=Uuid("<string>"),
-        version_id=Uuid("<string>"),
-        format=ProjectArchiveFormat.TAR,
-        file_ids=["<string>"],
-    )
+    async with AsyncKittyCAD() as client:
+        async with client.projects.download_project_version(
+            id=Uuid("<string>"),
+            version_id=Uuid("<string>"),
+            format=ProjectArchiveFormat.TAR,
+            file_ids=["<string>"],
+        ) as response:
+            async for chunk in response.aiter_bytes():
+                print(len(chunk))
 
 
 @pytest.mark.skip
@@ -6349,12 +6521,19 @@ def test_ml_copilot_ws():
     # Connect to the websocket.
     with client.ml.ml_copilot_ws(
         replay_attachment_mode=MlCopilotReplayAttachmentMode.FULL,
+        replay_pagination=False,
         replay=None,
         conversation_id=None,
         pr=None,
     ) as websocket:
         # Send a message.
-        websocket.send(MlCopilotClientMessage(OptionListModes()))
+        websocket.send(
+            MlCopilotClientMessage(
+                OptionHeaders(
+                    headers={"<string>": "<string>"},
+                )
+            )
+        )
 
         # Get a message.
         message = websocket.recv()
@@ -6371,48 +6550,11 @@ async def test_ml_copilot_ws_async():
     # Connect to the websocket.
     websocket = await client.ml.ml_copilot_ws(
         replay_attachment_mode=MlCopilotReplayAttachmentMode.FULL,
+        replay_pagination=False,
         replay=None,
         conversation_id=None,
         pr=None,
     )
-
-    # Send a message.
-    await websocket.send("{}")
-
-    # Get the messages.
-    async for message in websocket:
-        print(message)
-
-
-@pytest.mark.skip
-def test_kcl_migration_ws():
-    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
-
-    # Connect to the websocket.
-    with client.ml.kcl_migration_ws() as websocket:
-        # Send a message.
-        websocket.send(
-            KclMigrationClientMessage(
-                OptionStatus(
-                    operation_id=Uuid("<string>"),
-                )
-            )
-        )
-
-        # Get a message.
-        message = websocket.recv()
-        print(message)
-
-
-# OR run async
-@pytest.mark.asyncio
-@pytest.mark.skip
-async def test_kcl_migration_ws_async():
-
-    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
-
-    # Connect to the websocket.
-    websocket = await client.ml.kcl_migration_ws()
 
     # Send a message.
     await websocket.send("{}")
@@ -6484,20 +6626,13 @@ def test_modeling_commands_ws():
         # Send a message.
         websocket.send(
             WebSocketRequest(
-                OptionModelingCmdBatchReq(
-                    batch_id=ModelingCmdId("<string>"),
-                    requests=[
-                        ModelingCmdReq(
-                            cmd=ModelingCmd(
-                                OptionSetObjectTransform(
-                                    object_id="<string>",
-                                    transforms=[ComponentTransform()],
-                                )
-                            ),
-                            cmd_id=ModelingCmdId("<string>"),
+                OptionModelingCmdReq(
+                    cmd=ModelingCmd(
+                        OptionEdgeGetLength(
+                            edge_id="<string>",
                         )
-                    ],
-                    responses=False,
+                    ),
+                    cmd_id=ModelingCmdId("<string>"),
                 )
             )
         )

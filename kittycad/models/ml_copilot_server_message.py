@@ -3,9 +3,6 @@ from typing import Any, Dict, List, Optional, Union
 
 from pydantic import RootModel, model_serializer, model_validator
 
-from ..models.kcl_migration_application import (
-    KclMigrationApplication as KclMigrationApplicationModel,
-)
 from ..models.kcl_migration_operation import (
     KclMigrationOperation as KclMigrationOperationModel,
 )
@@ -14,6 +11,7 @@ from ..models.ml_copilot_file import MlCopilotFile
 from ..models.ml_copilot_mode_option import MlCopilotModeOption
 from ..models.ml_copilot_project_revision import MlCopilotProjectRevision
 from ..models.ml_copilot_project_snapshot_status import MlCopilotProjectSnapshotStatus
+from ..models.ml_copilot_replay_page_error_code import MlCopilotReplayPageErrorCode
 from ..models.ml_message_role import MlMessageRole
 from ..models.ml_tool_result import MlToolResult
 from ..models.reasoning_message import ReasoningMessage
@@ -194,7 +192,7 @@ class AccessDenied(KittyCadBaseModel):
 
 
 class KclMigrationOperation(KittyCadBaseModel):
-    """API-owned migration state. Candidate files are released only after API validates and stores the worker result. Replaying conversation history must not apply these files again."""
+    """API-owned migration state for an existing attempt. Edits use ordinary Copilot delivery; replaying this state must not apply them again."""
 
     operation: KclMigrationOperationModel
 
@@ -217,34 +215,6 @@ class KclMigrationOperation(KittyCadBaseModel):
         payload = handler(self, info)
 
         return {"kcl_migration_operation": payload}
-
-
-class KclMigrationApplication(KittyCadBaseModel):
-    """Acknowledge the client's reported Apply/Undo/Redo state."""
-
-    application: KclMigrationApplicationModel
-
-    operation_id: Uuid
-
-    @model_validator(mode="before")
-    @classmethod
-    def _unwrap(cls, data):
-
-        if (
-            isinstance(data, dict)
-            and "kcl_migration_application" in data
-            and isinstance(data["kcl_migration_application"], dict)
-        ):
-            return data["kcl_migration_application"]
-
-        return data
-
-    @model_serializer(mode="wrap")
-    def _wrap(self, handler, info):
-
-        payload = handler(self, info)
-
-        return {"kcl_migration_application": payload}
 
 
 class Info(KittyCadBaseModel):
@@ -449,6 +419,12 @@ class Reasoning(KittyCadBaseModel):
     """Assistant reasoning / chain-of-thought (if you expose it)."""
 
     reasoning: ReasoningMessage
+
+
+class Activity(KittyCadBaseModel):
+    """User-facing progress, separate from model reasoning."""
+
+    activity: Any
 
 
 class RequestAttachments(KittyCadBaseModel):
@@ -785,6 +761,68 @@ class AttachmentsError(KittyCadBaseModel):
         return {"attachments_error": payload}
 
 
+class ReplayPage(KittyCadBaseModel):
+    """A metadata-only history page. Not persisted or forwarded to the backend. Pages use MessagePack, as does legacy `Replay`. Only opted-in connections receive pages."""
+
+    conversation_id: Uuid
+
+    messages: List[bytes]
+
+    next_cursor: Optional[Uuid] = None
+
+    request_id: Optional[str] = None
+
+    @model_validator(mode="before")
+    @classmethod
+    def _unwrap(cls, data):
+
+        if (
+            isinstance(data, dict)
+            and "replay_page" in data
+            and isinstance(data["replay_page"], dict)
+        ):
+            return data["replay_page"]
+
+        return data
+
+    @model_serializer(mode="wrap")
+    def _wrap(self, handler, info):
+
+        payload = handler(self, info)
+
+        return {"replay_page": payload}
+
+
+class ReplayPageError(KittyCadBaseModel):
+    """Page-specific failure. Does not indicate a generation failure."""
+
+    code: MlCopilotReplayPageErrorCode
+
+    detail: str
+
+    request_id: Optional[str] = None
+
+    @model_validator(mode="before")
+    @classmethod
+    def _unwrap(cls, data):
+
+        if (
+            isinstance(data, dict)
+            and "replay_page_error" in data
+            and isinstance(data["replay_page_error"], dict)
+        ):
+            return data["replay_page_error"]
+
+        return data
+
+    @model_serializer(mode="wrap")
+    def _wrap(self, handler, info):
+
+        payload = handler(self, info)
+
+        return {"replay_page_error": payload}
+
+
 MlCopilotServerMessage = RootModel[
     Union[
         Pong,
@@ -795,7 +833,6 @@ MlCopilotServerMessage = RootModel[
         Error,
         AccessDenied,
         KclMigrationOperation,
-        KclMigrationApplication,
         Info,
         ModesResponse,
         BackendShutdown,
@@ -804,6 +841,7 @@ MlCopilotServerMessage = RootModel[
         ProjectSnapshotResult,
         ClientCommandRequest,
         Reasoning,
+        Activity,
         RequestAttachments,
         AttachmentsLoaded,
         ZookeeperAutoRouterMetadata,
@@ -816,5 +854,7 @@ MlCopilotServerMessage = RootModel[
         Files,
         Attachments,
         AttachmentsError,
+        ReplayPage,
+        ReplayPageError,
     ]
 ]

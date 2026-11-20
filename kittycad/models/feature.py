@@ -124,6 +124,10 @@ class Feature(str, Enum):
 
     ZOOKEEPER_CLIENT_COMMANDS = "zookeeper_client_commands"
 
+    """# Enables the Pydantic AI runtime for supported Zookeeper turns."""  # noqa: E501
+
+    ZOOKEEPER_PYDANTIC_AI = "zookeeper_pydantic_ai"
+
     """# Enables sponsored, time-limited KCL project migration."""  # noqa: E501
 
     ZOOKEEPER_KCL_MIGRATION = "zookeeper_kcl_migration"

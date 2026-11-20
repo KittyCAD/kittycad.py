@@ -2,16 +2,14 @@
 set -e
 set -o pipefail
 
-git add kittycad/models/base64data.py || true
-git add kittycad/models/empty.py || true
-
-
-# Cleanup old stuff.
-rm -rf kittycad/models
+# Remove generated models while preserving the shared model helpers.
+for model in kittycad/models/*.py; do
+    case "$model" in
+        */base.py|*/base64data.py|*/empty.py) ;;
+        *) rm "$model" ;;
+    esac
+done
 rm -rf kittycad/api
-git checkout kittycad/models/base64data.py || true
-git checkout kittycad/models/empty.py || true
-git checkout kittycad/models/base.py || true
 
 # Generate new.
 uv run python -m generate.generate

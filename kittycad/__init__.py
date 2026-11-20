@@ -72,7 +72,9 @@ from .models.create_custom_model import CreateCustomModel
 from .models.create_o_auth2_app_request import CreateOAuth2AppRequest
 from .models.create_org_dataset import CreateOrgDataset
 from .models.create_project_library_request import CreateProjectLibraryRequest
+from .models.create_project_request import CreateProjectRequest
 from .models.create_project_share_link_request import CreateProjectShareLinkRequest
+from .models.create_project_version_request import CreateProjectVersionRequest
 from .models.create_project_version_response import CreateProjectVersionResponse
 from .models.create_shortlink_request import CreateShortlinkRequest
 from .models.create_shortlink_response import CreateShortlinkResponse
@@ -103,6 +105,7 @@ from .models.factory_customer_catalog_option_results_page import (
     FactoryCustomerCatalogOptionResultsPage,
 )
 from .models.factory_customer_job_detail import FactoryCustomerJobDetail
+from .models.factory_customer_job_summary import FactoryCustomerJobSummary
 from .models.factory_customer_job_summary_results_page import (
     FactoryCustomerJobSummaryResultsPage,
 )
@@ -111,7 +114,7 @@ from .models.factory_customer_job_version_results_page import (
 )
 from .models.factory_job_response import FactoryJobResponse
 from .models.factory_quote_acceptance import FactoryQuoteAcceptance
-from .models.factory_quote_preview import FactoryQuotePreview
+from .models.factory_quote_detail import FactoryQuoteDetail
 from .models.file_bounding_box import FileBoundingBox
 from .models.file_center_of_mass import FileCenterOfMass
 from .models.file_conversion import FileConversion
@@ -126,8 +129,6 @@ from .models.invoice_results_page import InvoiceResultsPage
 from .models.ip_addr_info import IpAddrInfo
 from .models.kcl_code_completion_request import KclCodeCompletionRequest
 from .models.kcl_code_completion_response import KclCodeCompletionResponse
-from .models.kcl_migration_client_message import KclMigrationClientMessage
-from .models.kcl_migration_server_message import KclMigrationServerMessage
 from .models.kcl_model import KclModel
 from .models.kcl_version import KclVersion
 from .models.lenient_url import LenientUrl
@@ -248,6 +249,7 @@ from .models.update_member_to_org_body import UpdateMemberToOrgBody
 from .models.update_o_auth2_app_request import UpdateOAuth2AppRequest
 from .models.update_org_dataset import UpdateOrgDataset
 from .models.update_project_library_request import UpdateProjectLibraryRequest
+from .models.update_project_request import UpdateProjectRequest
 from .models.update_shortlink_request import UpdateShortlinkRequest
 from .models.update_user import UpdateUser
 from .models.upload_org_dataset_files_response import UploadOrgDatasetFilesResponse
@@ -1750,13 +1752,14 @@ class HiddenAPI:
 
         return response.json() if response.content else None
 
+    @contextmanager
     def download_shared_project(
         self,
         key: str,
         *,
         format: Optional[ProjectArchiveFormat] = None,
         file_ids: Optional[List[str]] = None,
-    ) -> ProjectDownloadErrorResponse:
+    ) -> Iterator[httpx.Response]:
         """File IDs must belong to the version pinned by this link. Manifest downloads retain the same public-data sanitization when selected individually."""
 
         url = "{}/projects/shared/{key}/download".format(self.client.base_url, key=key)
@@ -1765,27 +1768,19 @@ class HiddenAPI:
             url = str(httpx.URL(url).copy_add_param("format", str(format)))
 
         if file_ids is not None:
-            url = str(httpx.URL(url).copy_add_param("file_ids", str(file_ids)))
+            url = str(
+                httpx.URL(url).copy_add_param(
+                    "file_ids", ",".join(str(value) for value in file_ids)
+                )
+            )
 
         _client = self.client.get_http_client()
 
-        response = _client.get(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return ProjectDownloadErrorResponse.model_validate(json_data, extra="ignore")
+        with _client.stream("GET", url, headers=self.client.get_headers()) as response:
+            if not response.is_success:
+                response.read()
+                raise_for_status(response)
+            yield response
 
     def redirect_user_shortlink(
         self,
@@ -2034,13 +2029,14 @@ class AsyncHiddenAPI:
 
         return response.json() if response.content else None
 
+    @asynccontextmanager
     async def download_shared_project(
         self,
         key: str,
         *,
         format: Optional[ProjectArchiveFormat] = None,
         file_ids: Optional[List[str]] = None,
-    ) -> ProjectDownloadErrorResponse:
+    ) -> AsyncIterator[httpx.Response]:
         """File IDs must belong to the version pinned by this link. Manifest downloads retain the same public-data sanitization when selected individually."""
 
         url = "{}/projects/shared/{key}/download".format(self.client.base_url, key=key)
@@ -2049,27 +2045,21 @@ class AsyncHiddenAPI:
             url = str(httpx.URL(url).copy_add_param("format", str(format)))
 
         if file_ids is not None:
-            url = str(httpx.URL(url).copy_add_param("file_ids", str(file_ids)))
+            url = str(
+                httpx.URL(url).copy_add_param(
+                    "file_ids", ",".join(str(value) for value in file_ids)
+                )
+            )
 
         _client = self.client.get_http_client()
 
-        response = await _client.get(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return ProjectDownloadErrorResponse.model_validate(json_data, extra="ignore")
+        async with _client.stream(
+            "GET", url, headers=self.client.get_headers()
+        ) as response:
+            if not response.is_success:
+                await response.aread()
+                raise_for_status(response)
+            yield response
 
     async def redirect_user_shortlink(
         self,
@@ -3081,60 +3071,74 @@ class FileAPI:
         This starts a conversion job and returns the `id` of the operation. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint.
 
         Examples:
-            Basic usage with file attachments:
+        ```python
+        from kittycad.models.conversion_params import ConversionParams
+        from kittycad.models.output_format3d import OptionFbx
+        from kittycad.models.fbx_storage import FbxStorage
+        from kittycad.models.output_format3d import OutputFormat3d
+        from kittycad.models.input_format3d import OptionCatia
+        from kittycad.models.system import System
+        from kittycad.models.axis_direction_pair import AxisDirectionPair
+        from kittycad.models.axis import Axis
+        from kittycad.models.direction import Direction
+        from kittycad.models.axis_direction_pair import AxisDirectionPair
+        from kittycad.models.axis import Axis
+        from kittycad.models.direction import Direction
+        from kittycad.models.input_format3d import InputFormat3d
+        from pathlib import Path
+        from typing import Dict
+        from kittycad._io_types import SyncUpload
+        from kittycad.models import FileConversion
+        from typing import Union, Any, Optional, List, Tuple
+        from kittycad.types import Response
+        def example_create_file_conversion_options():
+            client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-            ```python
-            from pathlib import Path
-            from kittycad.models.conversion_params import ConversionParams
-
-            # Create the request body
-            body = ConversionParams(
-                # Add your parameters here
-            )
-
-            # Prepare file attachments
-            file_attachments = {
+            result: FileConversion = client.file.create_file_conversion_options(body=ConversionParams(
+                output_format=OutputFormat3d(OptionFbx(
+                storage=FbxStorage.ASCII,
+                )),
+                src_format=InputFormat3d(OptionCatia(
+                coords=System(
+                forward=AxisDirectionPair(
+                axis=Axis.Y,
+                direction=Direction.POSITIVE,
+                ),
+                up=AxisDirectionPair(
+                axis=Axis.Y,
+                direction=Direction.POSITIVE,
+                ),
+                ),
+                split_closed_faces=False,
+                )),
+                ),
+                file_attachments={
                 "main.kcl": Path("path/to/main.kcl"),
                 "helper.kcl": Path("path/to/helper.kcl"),
-            }
+                })
 
-            # Make the request
-            result = client.create_file_conversion_options(
-                body=body,
-                file_attachments=file_attachments,
-            )
-            ```
 
-            Using different file types:
+            body: FileConversion = result
+            print(body)
 
-            ```python
-            from io import BytesIO
 
-            # Mix of file paths and file-like objects
-            file_attachments = {
-                "main.kcl": Path("main.kcl"),
-                "config.kcl": BytesIO(b"// KCL configuration"),
-                "data.json": "path/to/data.json",
-            }
-
-            result = client.create_file_conversion_options(
-                body=body,
-                file_attachments=file_attachments,
-            )
-            ```
-        """
+        ```"""
 
         url = "{}/file/conversion".format(self.client.base_url)
 
         _client = self.client.get_http_client()
 
-        # JSON + multipart endpoint
+        headers = httpx.Headers(self.client.get_headers())
+
+        headers.pop("Content-Type", None)
         response = upload_json_multipart(
             client=_client,
             url=url,
+            method="POST",
             json_body=body,
+            filenames_from_keys=False,
             file_attachments=file_attachments,
-            headers=self.client.get_headers(),
+            headers=headers,
         )
 
         if not response.is_success:
@@ -3508,60 +3512,74 @@ class AsyncFileAPI:
         This starts a conversion job and returns the `id` of the operation. You can use the `id` returned from the request to get status information about the async operation from the `/async/operations/{id}` endpoint.
 
         Examples:
-            Basic usage with file attachments:
+        ```python
+        from kittycad.models.conversion_params import ConversionParams
+        from kittycad.models.output_format3d import OptionFbx
+        from kittycad.models.fbx_storage import FbxStorage
+        from kittycad.models.output_format3d import OutputFormat3d
+        from kittycad.models.input_format3d import OptionCatia
+        from kittycad.models.system import System
+        from kittycad.models.axis_direction_pair import AxisDirectionPair
+        from kittycad.models.axis import Axis
+        from kittycad.models.direction import Direction
+        from kittycad.models.axis_direction_pair import AxisDirectionPair
+        from kittycad.models.axis import Axis
+        from kittycad.models.direction import Direction
+        from kittycad.models.input_format3d import InputFormat3d
+        from pathlib import Path
+        from typing import Dict
+        from kittycad._io_types import SyncUpload
+        from kittycad.models import FileConversion
+        from typing import Union, Any, Optional, List, Tuple
+        from kittycad.types import Response
+        def example_create_file_conversion_options():
+            client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
-            ```python
-            from pathlib import Path
-            from kittycad.models.conversion_params import ConversionParams
-
-            # Create the request body
-            body = ConversionParams(
-                # Add your parameters here
-            )
-
-            # Prepare file attachments
-            file_attachments = {
+            result: FileConversion = client.file.create_file_conversion_options(body=ConversionParams(
+                output_format=OutputFormat3d(OptionFbx(
+                storage=FbxStorage.ASCII,
+                )),
+                src_format=InputFormat3d(OptionCatia(
+                coords=System(
+                forward=AxisDirectionPair(
+                axis=Axis.Y,
+                direction=Direction.POSITIVE,
+                ),
+                up=AxisDirectionPair(
+                axis=Axis.Y,
+                direction=Direction.POSITIVE,
+                ),
+                ),
+                split_closed_faces=False,
+                )),
+                ),
+                file_attachments={
                 "main.kcl": Path("path/to/main.kcl"),
                 "helper.kcl": Path("path/to/helper.kcl"),
-            }
+                })
 
-            # Make the request
-            result = client.create_file_conversion_options(
-                body=body,
-                file_attachments=file_attachments,
-            )
-            ```
 
-            Using different file types:
+            body: FileConversion = result
+            print(body)
 
-            ```python
-            from io import BytesIO
 
-            # Mix of file paths and file-like objects
-            file_attachments = {
-                "main.kcl": Path("main.kcl"),
-                "config.kcl": BytesIO(b"// KCL configuration"),
-                "data.json": "path/to/data.json",
-            }
-
-            result = client.create_file_conversion_options(
-                body=body,
-                file_attachments=file_attachments,
-            )
-            ```
-        """
+        ```"""
 
         url = "{}/file/conversion".format(self.client.base_url)
 
         _client = self.client.get_http_client()
 
-        # JSON + multipart endpoint
+        headers = httpx.Headers(self.client.get_headers())
+
+        headers.pop("Content-Type", None)
         response = await upload_json_multipart_async(
             client=_client,
             url=url,
+            method="POST",
             json_body=body,
+            filenames_from_keys=False,
             file_attachments=file_attachments,
-            headers=self.client.get_headers(),
+            headers=headers,
         )
 
         if not response.is_success:
@@ -4265,6 +4283,7 @@ class MlAPI:
         replay: Optional[bool] = None,
         conversation_id: Optional[str] = None,
         replay_attachment_mode: Optional[MlCopilotReplayAttachmentMode] = None,
+        replay_pagination: Optional[bool] = None,
         pr: Optional[int] = None,
         recv_timeout: Optional[float] = None,
         ws_factory: Optional[Callable[..., ClientConnectionSync]] = None,
@@ -4277,23 +4296,11 @@ class MlAPI:
             replay=replay,
             conversation_id=conversation_id,
             replay_attachment_mode=replay_attachment_mode,
+            replay_pagination=replay_pagination,
             pr=pr,
             recv_timeout=recv_timeout,
             ws_factory=ws_factory,
             client=self.client,
-        )
-
-    def kcl_migration_ws(
-        self,
-        recv_timeout: Optional[float] = None,
-        ws_factory: Optional[Callable[..., ClientConnectionSync]] = None,
-    ) -> "WebSocketKclMigrationWs":
-        """Open a sponsored KCL migration connection. It cannot execute ordinary prompts.
-
-        Returns a WebSocket wrapper with methods for sending/receiving data.
-        """
-        return WebSocketKclMigrationWs(
-            recv_timeout=recv_timeout, ws_factory=ws_factory, client=self.client
         )
 
     def ml_reasoning_ws(
@@ -4747,6 +4754,7 @@ class AsyncMlAPI:
         replay: Optional[bool] = None,
         conversation_id: Optional[str] = None,
         replay_attachment_mode: Optional[MlCopilotReplayAttachmentMode] = None,
+        replay_pagination: Optional[bool] = None,
         pr: Optional[int] = None,
     ):
         """Open a websocket to a Zookeeper agent instance.
@@ -4762,6 +4770,7 @@ class AsyncMlAPI:
             replay: Optional[bool] = None,
             conversation_id: Optional[str] = None,
             replay_attachment_mode: Optional[MlCopilotReplayAttachmentMode] = None,
+            replay_pagination: Optional[bool] = None,
             pr: Optional[int] = None,
         ) -> ClientConnectionAsync:
             """Open a websocket to a Zookeeper agent instance."""
@@ -4786,6 +4795,12 @@ class AsyncMlAPI:
                 else:
                     url = url + "?replay_attachment_mode=" + str(replay_attachment_mode)
 
+            if replay_pagination is not None:
+                if "?" in url:
+                    url = url + "&replay_pagination=" + str(replay_pagination).lower()
+                else:
+                    url = url + "?replay_pagination=" + str(replay_pagination).lower()
+
             if pr is not None:
                 if "?" in url:
                     url = url + "&pr=" + str(pr)
@@ -4804,32 +4819,9 @@ class AsyncMlAPI:
             replay=replay,
             conversation_id=conversation_id,
             replay_attachment_mode=replay_attachment_mode,
+            replay_pagination=replay_pagination,
             pr=pr,
         )
-
-    async def kcl_migration_ws(self):
-        """Open a sponsored KCL migration connection. It cannot execute ordinary prompts.
-
-        Returns an async WebSocket connection for sending/receiving data.
-        """
-
-        # For async clients, return the raw async WebSocket connection
-        # This supports await websocket.send() and async for message in websocket
-        async def kcl_migration_ws(
-            self,
-        ) -> ClientConnectionAsync:
-            """Open a sponsored KCL migration connection. It cannot execute ordinary prompts."""
-
-            url = "{}/ws/ml/kcl-migration".format(self.client.base_url)
-
-            return await ws_connect_async(
-                url.replace("http", "ws"),
-                additional_headers=self.client.get_headers(),
-                close_timeout=120,
-                max_size=None,
-            )
-
-        return await kcl_migration_ws(self)
 
     async def ml_reasoning_ws(self, id: str):
         """Open a websocket to prompt the ML copilot.
@@ -7320,7 +7312,7 @@ class OrgsAPI:
         self,
         id: Uuid,
     ) -> UploadOrgDatasetFilesResponse:
-        """This endpoint accepts `multipart/form-data` where each file part becomes a source object in the dataset. Exact `<proprietary CAD filename>.json` converter dumps are also accepted and associated with their original CAD file. When both `org_dataset_cloud_projects` and `org_dataset_reference_files` are enabled for the organization, PDFs, Word/Excel documents and images are accepted as reference files. Paths are normalized and must be relative."""
+        """This endpoint accepts `multipart/form-data` where each file part becomes a source object in the dataset. Exact `<proprietary CAD filename>.json` converter dumps are also accepted and associated with their original CAD file. When both `org_dataset_cloud_projects` and `org_dataset_reference_files` are enabled for the organization, PDFs, Word/Excel documents, Markdown and images are accepted as reference files. Paths are normalized and must be relative."""
 
         url = "{}/org/datasets/{id}/uploads".format(self.client.base_url, id=id)
 
@@ -8689,7 +8681,7 @@ class AsyncOrgsAPI:
         self,
         id: Uuid,
     ) -> UploadOrgDatasetFilesResponse:
-        """This endpoint accepts `multipart/form-data` where each file part becomes a source object in the dataset. Exact `<proprietary CAD filename>.json` converter dumps are also accepted and associated with their original CAD file. When both `org_dataset_cloud_projects` and `org_dataset_reference_files` are enabled for the organization, PDFs, Word/Excel documents and images are accepted as reference files. Paths are normalized and must be relative."""
+        """This endpoint accepts `multipart/form-data` where each file part becomes a source object in the dataset. Exact `<proprietary CAD filename>.json` converter dumps are also accepted and associated with their original CAD file. When both `org_dataset_cloud_projects` and `org_dataset_reference_files` are enabled for the organization, PDFs, Word/Excel documents, Markdown and images are accepted as reference files. Paths are normalized and must be relative."""
 
         url = "{}/org/datasets/{id}/uploads".format(self.client.base_url, id=id)
 
@@ -12562,6 +12554,36 @@ class FactoryAPI:
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return FactoryCustomerJobDetail.model_validate(json_data, extra="ignore")
 
+    def cancel_org_factory_job(
+        self,
+        job_id: Uuid,
+    ) -> FactoryCustomerJobSummary:
+        """Cancel your organization's Factory job before payment starts. Requires organization membership."""
+
+        url = "{}/org/factory/jobs/{job_id}/cancel".format(
+            self.client.base_url, job_id=job_id
+        )
+
+        _client = self.client.get_http_client()
+
+        response = _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return FactoryCustomerJobSummary.model_validate(json_data, extra="ignore")
+
     def get_org_factory_job_file(
         self,
         job_id: Uuid,
@@ -12587,10 +12609,57 @@ class FactoryAPI:
 
         return response.json() if response.content else None
 
+    def get_org_factory_quote(
+        self,
+        job_id: Uuid,
+        quote_id: Uuid,
+        payment_attempt_id: Uuid,
+        *,
+        use_credits: Optional[bool] = None,
+    ) -> FactoryQuoteDetail:
+        """Get your organization's published Factory quote and current checkout amounts. Requires organization membership."""
+
+        url = "{}/org/factory/jobs/{job_id}/quotes/{quote_id}".format(
+            self.client.base_url, job_id=job_id, quote_id=quote_id
+        )
+
+        if payment_attempt_id is not None:
+            url = str(
+                httpx.URL(url).copy_add_param(
+                    "payment_attempt_id", str(payment_attempt_id)
+                )
+            )
+
+        if use_credits is not None:
+            url = str(
+                httpx.URL(url).copy_add_param("use_credits", str(use_credits).lower())
+            )
+
+        _client = self.client.get_http_client()
+
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return FactoryQuoteDetail.model_validate(json_data, extra="ignore")
+
     def accept_org_factory_quote(
         self,
         job_id: Uuid,
         quote_id: Uuid,
+        payment_attempt_id: Uuid,
         *,
         use_credits: Optional[bool] = None,
         max_amount_due_cents: Optional[int] = None,
@@ -12600,6 +12669,13 @@ class FactoryAPI:
         url = "{}/org/factory/jobs/{job_id}/quotes/{quote_id}/accept".format(
             self.client.base_url, job_id=job_id, quote_id=quote_id
         )
+
+        if payment_attempt_id is not None:
+            url = str(
+                httpx.URL(url).copy_add_param(
+                    "payment_attempt_id", str(payment_attempt_id)
+                )
+            )
 
         if use_credits is not None:
             url = str(
@@ -12633,27 +12709,20 @@ class FactoryAPI:
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return FactoryQuoteAcceptance.model_validate(json_data, extra="ignore")
 
-    def preview_org_factory_quote(
+    def decline_org_factory_quote(
         self,
         job_id: Uuid,
         quote_id: Uuid,
-        *,
-        use_credits: Optional[bool] = None,
-    ) -> FactoryQuotePreview:
-        """Preview your organization's Factory quote without accepting it or charging a card. Requires organization membership."""
+    ) -> FactoryCustomerJobSummary:
+        """Decline your organization's current Factory quote and close the job. Requires organization membership."""
 
-        url = "{}/org/factory/jobs/{job_id}/quotes/{quote_id}/preview".format(
+        url = "{}/org/factory/jobs/{job_id}/quotes/{quote_id}/decline".format(
             self.client.base_url, job_id=job_id, quote_id=quote_id
         )
 
-        if use_credits is not None:
-            url = str(
-                httpx.URL(url).copy_add_param("use_credits", str(use_credits).lower())
-            )
-
         _client = self.client.get_http_client()
 
-        response = _client.get(
+        response = _client.post(
             url=url,
             headers=self.client.get_headers(),
         )
@@ -12669,7 +12738,7 @@ class FactoryAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return FactoryQuotePreview.model_validate(json_data, extra="ignore")
+        return FactoryCustomerJobSummary.model_validate(json_data, extra="ignore")
 
     def list_org_factory_job_versions(
         self,
@@ -13052,6 +13121,36 @@ class FactoryAPI:
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return FactoryCustomerJobDetail.model_validate(json_data, extra="ignore")
 
+    def cancel_user_factory_job(
+        self,
+        job_id: Uuid,
+    ) -> FactoryCustomerJobSummary:
+        """Cancel your Factory job before payment starts, even if no quote exists."""
+
+        url = "{}/user/factory/jobs/{job_id}/cancel".format(
+            self.client.base_url, job_id=job_id
+        )
+
+        _client = self.client.get_http_client()
+
+        response = _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return FactoryCustomerJobSummary.model_validate(json_data, extra="ignore")
+
     def get_user_factory_job_file(
         self,
         job_id: Uuid,
@@ -13077,10 +13176,57 @@ class FactoryAPI:
 
         return response.json() if response.content else None
 
+    def get_user_factory_quote(
+        self,
+        job_id: Uuid,
+        quote_id: Uuid,
+        payment_attempt_id: Uuid,
+        *,
+        use_credits: Optional[bool] = None,
+    ) -> FactoryQuoteDetail:
+        """Get your published Factory quote with its current shipping, tax, credits, and checkout total."""
+
+        url = "{}/user/factory/jobs/{job_id}/quotes/{quote_id}".format(
+            self.client.base_url, job_id=job_id, quote_id=quote_id
+        )
+
+        if payment_attempt_id is not None:
+            url = str(
+                httpx.URL(url).copy_add_param(
+                    "payment_attempt_id", str(payment_attempt_id)
+                )
+            )
+
+        if use_credits is not None:
+            url = str(
+                httpx.URL(url).copy_add_param("use_credits", str(use_credits).lower())
+            )
+
+        _client = self.client.get_http_client()
+
+        response = _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return FactoryQuoteDetail.model_validate(json_data, extra="ignore")
+
     def accept_user_factory_quote(
         self,
         job_id: Uuid,
         quote_id: Uuid,
+        payment_attempt_id: Uuid,
         *,
         use_credits: Optional[bool] = None,
         max_amount_due_cents: Optional[int] = None,
@@ -13090,6 +13236,13 @@ class FactoryAPI:
         url = "{}/user/factory/jobs/{job_id}/quotes/{quote_id}/accept".format(
             self.client.base_url, job_id=job_id, quote_id=quote_id
         )
+
+        if payment_attempt_id is not None:
+            url = str(
+                httpx.URL(url).copy_add_param(
+                    "payment_attempt_id", str(payment_attempt_id)
+                )
+            )
 
         if use_credits is not None:
             url = str(
@@ -13123,27 +13276,20 @@ class FactoryAPI:
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return FactoryQuoteAcceptance.model_validate(json_data, extra="ignore")
 
-    def preview_user_factory_quote(
+    def decline_user_factory_quote(
         self,
         job_id: Uuid,
         quote_id: Uuid,
-        *,
-        use_credits: Optional[bool] = None,
-    ) -> FactoryQuotePreview:
-        """Preview your Factory quote's shipping, tax, credits, and total without accepting it or charging a card."""
+    ) -> FactoryCustomerJobSummary:
+        """Decline your current Factory quote and close the job. No payment is created."""
 
-        url = "{}/user/factory/jobs/{job_id}/quotes/{quote_id}/preview".format(
+        url = "{}/user/factory/jobs/{job_id}/quotes/{quote_id}/decline".format(
             self.client.base_url, job_id=job_id, quote_id=quote_id
         )
 
-        if use_credits is not None:
-            url = str(
-                httpx.URL(url).copy_add_param("use_credits", str(use_credits).lower())
-            )
-
         _client = self.client.get_http_client()
 
-        response = _client.get(
+        response = _client.post(
             url=url,
             headers=self.client.get_headers(),
         )
@@ -13159,7 +13305,7 @@ class FactoryAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return FactoryQuotePreview.model_validate(json_data, extra="ignore")
+        return FactoryCustomerJobSummary.model_validate(json_data, extra="ignore")
 
     def list_user_factory_job_versions(
         self,
@@ -13510,6 +13656,36 @@ class AsyncFactoryAPI:
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return FactoryCustomerJobDetail.model_validate(json_data, extra="ignore")
 
+    async def cancel_org_factory_job(
+        self,
+        job_id: Uuid,
+    ) -> FactoryCustomerJobSummary:
+        """Cancel your organization's Factory job before payment starts. Requires organization membership."""
+
+        url = "{}/org/factory/jobs/{job_id}/cancel".format(
+            self.client.base_url, job_id=job_id
+        )
+
+        _client = self.client.get_http_client()
+
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return FactoryCustomerJobSummary.model_validate(json_data, extra="ignore")
+
     async def get_org_factory_job_file(
         self,
         job_id: Uuid,
@@ -13535,10 +13711,57 @@ class AsyncFactoryAPI:
 
         return response.json() if response.content else None
 
+    async def get_org_factory_quote(
+        self,
+        job_id: Uuid,
+        quote_id: Uuid,
+        payment_attempt_id: Uuid,
+        *,
+        use_credits: Optional[bool] = None,
+    ) -> FactoryQuoteDetail:
+        """Get your organization's published Factory quote and current checkout amounts. Requires organization membership."""
+
+        url = "{}/org/factory/jobs/{job_id}/quotes/{quote_id}".format(
+            self.client.base_url, job_id=job_id, quote_id=quote_id
+        )
+
+        if payment_attempt_id is not None:
+            url = str(
+                httpx.URL(url).copy_add_param(
+                    "payment_attempt_id", str(payment_attempt_id)
+                )
+            )
+
+        if use_credits is not None:
+            url = str(
+                httpx.URL(url).copy_add_param("use_credits", str(use_credits).lower())
+            )
+
+        _client = self.client.get_http_client()
+
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return FactoryQuoteDetail.model_validate(json_data, extra="ignore")
+
     async def accept_org_factory_quote(
         self,
         job_id: Uuid,
         quote_id: Uuid,
+        payment_attempt_id: Uuid,
         *,
         use_credits: Optional[bool] = None,
         max_amount_due_cents: Optional[int] = None,
@@ -13548,6 +13771,13 @@ class AsyncFactoryAPI:
         url = "{}/org/factory/jobs/{job_id}/quotes/{quote_id}/accept".format(
             self.client.base_url, job_id=job_id, quote_id=quote_id
         )
+
+        if payment_attempt_id is not None:
+            url = str(
+                httpx.URL(url).copy_add_param(
+                    "payment_attempt_id", str(payment_attempt_id)
+                )
+            )
 
         if use_credits is not None:
             url = str(
@@ -13581,27 +13811,20 @@ class AsyncFactoryAPI:
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return FactoryQuoteAcceptance.model_validate(json_data, extra="ignore")
 
-    async def preview_org_factory_quote(
+    async def decline_org_factory_quote(
         self,
         job_id: Uuid,
         quote_id: Uuid,
-        *,
-        use_credits: Optional[bool] = None,
-    ) -> FactoryQuotePreview:
-        """Preview your organization's Factory quote without accepting it or charging a card. Requires organization membership."""
+    ) -> FactoryCustomerJobSummary:
+        """Decline your organization's current Factory quote and close the job. Requires organization membership."""
 
-        url = "{}/org/factory/jobs/{job_id}/quotes/{quote_id}/preview".format(
+        url = "{}/org/factory/jobs/{job_id}/quotes/{quote_id}/decline".format(
             self.client.base_url, job_id=job_id, quote_id=quote_id
         )
 
-        if use_credits is not None:
-            url = str(
-                httpx.URL(url).copy_add_param("use_credits", str(use_credits).lower())
-            )
-
         _client = self.client.get_http_client()
 
-        response = await _client.get(
+        response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
         )
@@ -13617,7 +13840,7 @@ class AsyncFactoryAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return FactoryQuotePreview.model_validate(json_data, extra="ignore")
+        return FactoryCustomerJobSummary.model_validate(json_data, extra="ignore")
 
     def list_org_factory_job_versions(
         self,
@@ -14002,6 +14225,36 @@ class AsyncFactoryAPI:
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return FactoryCustomerJobDetail.model_validate(json_data, extra="ignore")
 
+    async def cancel_user_factory_job(
+        self,
+        job_id: Uuid,
+    ) -> FactoryCustomerJobSummary:
+        """Cancel your Factory job before payment starts, even if no quote exists."""
+
+        url = "{}/user/factory/jobs/{job_id}/cancel".format(
+            self.client.base_url, job_id=job_id
+        )
+
+        _client = self.client.get_http_client()
+
+        response = await _client.post(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return FactoryCustomerJobSummary.model_validate(json_data, extra="ignore")
+
     async def get_user_factory_job_file(
         self,
         job_id: Uuid,
@@ -14027,10 +14280,57 @@ class AsyncFactoryAPI:
 
         return response.json() if response.content else None
 
+    async def get_user_factory_quote(
+        self,
+        job_id: Uuid,
+        quote_id: Uuid,
+        payment_attempt_id: Uuid,
+        *,
+        use_credits: Optional[bool] = None,
+    ) -> FactoryQuoteDetail:
+        """Get your published Factory quote with its current shipping, tax, credits, and checkout total."""
+
+        url = "{}/user/factory/jobs/{job_id}/quotes/{quote_id}".format(
+            self.client.base_url, job_id=job_id, quote_id=quote_id
+        )
+
+        if payment_attempt_id is not None:
+            url = str(
+                httpx.URL(url).copy_add_param(
+                    "payment_attempt_id", str(payment_attempt_id)
+                )
+            )
+
+        if use_credits is not None:
+            url = str(
+                httpx.URL(url).copy_add_param("use_credits", str(use_credits).lower())
+            )
+
+        _client = self.client.get_http_client()
+
+        response = await _client.get(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        if not response.content:
+            return None  # type: ignore
+
+        json_data = response.json()
+
+        # Validate into a Pydantic model (works for BaseModel and RootModel)
+        return FactoryQuoteDetail.model_validate(json_data, extra="ignore")
+
     async def accept_user_factory_quote(
         self,
         job_id: Uuid,
         quote_id: Uuid,
+        payment_attempt_id: Uuid,
         *,
         use_credits: Optional[bool] = None,
         max_amount_due_cents: Optional[int] = None,
@@ -14040,6 +14340,13 @@ class AsyncFactoryAPI:
         url = "{}/user/factory/jobs/{job_id}/quotes/{quote_id}/accept".format(
             self.client.base_url, job_id=job_id, quote_id=quote_id
         )
+
+        if payment_attempt_id is not None:
+            url = str(
+                httpx.URL(url).copy_add_param(
+                    "payment_attempt_id", str(payment_attempt_id)
+                )
+            )
 
         if use_credits is not None:
             url = str(
@@ -14073,27 +14380,20 @@ class AsyncFactoryAPI:
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return FactoryQuoteAcceptance.model_validate(json_data, extra="ignore")
 
-    async def preview_user_factory_quote(
+    async def decline_user_factory_quote(
         self,
         job_id: Uuid,
         quote_id: Uuid,
-        *,
-        use_credits: Optional[bool] = None,
-    ) -> FactoryQuotePreview:
-        """Preview your Factory quote's shipping, tax, credits, and total without accepting it or charging a card."""
+    ) -> FactoryCustomerJobSummary:
+        """Decline your current Factory quote and close the job. No payment is created."""
 
-        url = "{}/user/factory/jobs/{job_id}/quotes/{quote_id}/preview".format(
+        url = "{}/user/factory/jobs/{job_id}/quotes/{quote_id}/decline".format(
             self.client.base_url, job_id=job_id, quote_id=quote_id
         )
 
-        if use_credits is not None:
-            url = str(
-                httpx.URL(url).copy_add_param("use_credits", str(use_credits).lower())
-            )
-
         _client = self.client.get_http_client()
 
-        response = await _client.get(
+        response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
         )
@@ -14109,7 +14409,7 @@ class AsyncFactoryAPI:
         json_data = response.json()
 
         # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return FactoryQuotePreview.model_validate(json_data, extra="ignore")
+        return FactoryCustomerJobSummary.model_validate(json_data, extra="ignore")
 
     def list_user_factory_job_versions(
         self,
@@ -14577,13 +14877,14 @@ class ProjectsAPI:
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return PublicProjectResponse.model_validate(json_data, extra="ignore")
 
+    @contextmanager
     def download_public_project(
         self,
         id: Uuid,
         *,
         format: Optional[ProjectArchiveFormat] = None,
         file_ids: Optional[List[str]] = None,
-    ) -> ProjectDownloadErrorResponse:
+    ) -> Iterator[httpx.Response]:
         """Download all or selected files from a published public project."""
 
         url = "{}/projects/public/{id}/download".format(self.client.base_url, id=id)
@@ -14592,27 +14893,19 @@ class ProjectsAPI:
             url = str(httpx.URL(url).copy_add_param("format", str(format)))
 
         if file_ids is not None:
-            url = str(httpx.URL(url).copy_add_param("file_ids", str(file_ids)))
+            url = str(
+                httpx.URL(url).copy_add_param(
+                    "file_ids", ",".join(str(value) for value in file_ids)
+                )
+            )
 
         _client = self.client.get_http_client()
 
-        response = _client.get(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return ProjectDownloadErrorResponse.model_validate(json_data, extra="ignore")
+        with _client.stream("GET", url, headers=self.client.get_headers()) as response:
+            if not response.is_success:
+                response.read()
+                raise_for_status(response)
+            yield response
 
     def get_public_project_thumbnail(
         self,
@@ -15078,6 +15371,8 @@ class ProjectsAPI:
 
     def create_project(
         self,
+        body: CreateProjectRequest,
+        file_attachments: Dict[str, SyncUpload],
     ) -> ProjectResponse:
         """Send multipart data with a JSON `body` part and file parts whose filenames are relative project paths. Include an optional `library_id` in the JSON to create the project in a named library:
 
@@ -15085,15 +15380,64 @@ class ProjectsAPI:
 
         A personal library creates a personal project. An accessible library belonging to the active organization creates an organization project with the caller as its creator; creating the project does not require library-management rights. Omitting `library_id` or passing null creates an unassigned personal project, even when the request has an active organization.
 
-        The HTTP 201 response includes `id`, `library_id`, content `revision`, and `metadata_revision`. Later saves preserve membership, even if they include a library field. Use `PUT /user/projects/{id}/library` to move or unassign an existing project instead of uploading its files again."""
+        The HTTP 201 response includes `id`, `library_id`, content `revision`, and `metadata_revision`. Later saves preserve membership, even if they include a library field. Use `PUT /user/projects/{id}/library` to move or unassign an existing project instead of uploading its files again.
+
+        Examples:
+        ```python
+        from kittycad.models.create_project_request import CreateProjectRequest
+        from kittycad.models.uuid import Uuid
+        from kittycad.models.uuid import Uuid
+        from typing import List
+        from kittycad.models.uuid import Uuid
+        from kittycad.models.uuid import Uuid
+        from kittycad.models.kcl_project_publication_status import KclProjectPublicationStatus
+        from pathlib import Path
+        from typing import Dict
+        from kittycad._io_types import SyncUpload
+        from kittycad.models import ProjectResponse
+        from typing import Union, Any, Optional, List, Tuple
+        from kittycad.types import Response
+        def example_create_project():
+            client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+            result: ProjectResponse = client.projects.create_project(body=CreateProjectRequest(
+                category_ids=[Uuid("<string>")],
+                description="<string>",
+                entrypoint_path="<string>",
+                library_id=Uuid("<string>"),
+                publication_status=KclProjectPublicationStatus.PRIVATE,
+                title="<string>",
+                ),
+                file_attachments={
+                "main.kcl": Path("path/to/main.kcl"),
+                "helper.kcl": Path("path/to/helper.kcl"),
+                })
+
+
+            body: ProjectResponse = result
+            print(body)
+
+
+        ```"""
 
         url = "{}/user/projects".format(self.client.base_url)
 
         _client = self.client.get_http_client()
 
-        response = _client.post(
+        headers = httpx.Headers(self.client.get_headers())
+
+        if not file_attachments:
+            raise ValueError("At least one file attachment is required")
+
+        headers.pop("Content-Type", None)
+        response = upload_json_multipart(
+            client=_client,
             url=url,
-            headers=self.client.get_headers(),
+            method="POST",
+            json_body=body,
+            filenames_from_keys=True,
+            file_attachments=file_attachments,
+            headers=headers,
         )
 
         if not response.is_success:
@@ -15140,16 +15484,70 @@ class ProjectsAPI:
     def update_project(
         self,
         id: Uuid,
+        body: UpdateProjectRequest,
+        file_attachments: Dict[str, SyncUpload],
     ) -> ProjectResponse:
-        """Content saves use the project's content `revision` as `expected_revision` and preserve its current library assignment. Omitting `library_id`, setting it to null, or supplying another library ID here does not move the project. Use `PUT /user/projects/{id}/library` with `metadata_revision` for library changes."""
+        """Content saves use the project's content `revision` as `expected_revision` and preserve its current library assignment. Omitting `library_id`, setting it to null, or supplying another library ID here does not move the project. Use `PUT /user/projects/{id}/library` with `metadata_revision` for library changes.
+
+        Examples:
+        ```python
+        from kittycad.models.uuid import Uuid
+        from kittycad.models.uuid import Uuid
+        from kittycad.models.update_project_request import UpdateProjectRequest
+        from kittycad.models.uuid import Uuid
+        from kittycad.models.uuid import Uuid
+        from typing import List
+        from kittycad.models.uuid import Uuid
+        from kittycad.models.uuid import Uuid
+        from kittycad.models.kcl_project_publication_status import KclProjectPublicationStatus
+        from pathlib import Path
+        from typing import Dict
+        from kittycad._io_types import SyncUpload
+        from kittycad.models import ProjectResponse
+        from typing import Union, Any, Optional, List, Tuple
+        from kittycad.types import Response
+        def example_update_project():
+            client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+            result: ProjectResponse = client.projects.update_project(id=Uuid("<string>"),
+                body=UpdateProjectRequest(
+                category_ids=[Uuid("<string>")],
+                description="<string>",
+                entrypoint_path="<string>",
+                library_id=Uuid("<string>"),
+                publication_status=KclProjectPublicationStatus.PRIVATE,
+                title="<string>",
+                ),
+                file_attachments={
+                "main.kcl": Path("path/to/main.kcl"),
+                "helper.kcl": Path("path/to/helper.kcl"),
+                })
+
+
+            body: ProjectResponse = result
+            print(body)
+
+
+        ```"""
 
         url = "{}/user/projects/{id}".format(self.client.base_url, id=id)
 
         _client = self.client.get_http_client()
 
-        response = _client.put(
+        headers = httpx.Headers(self.client.get_headers())
+
+        if not file_attachments:
+            raise ValueError("At least one file attachment is required")
+
+        headers.pop("Content-Type", None)
+        response = upload_json_multipart(
+            client=_client,
             url=url,
-            headers=self.client.get_headers(),
+            method="PUT",
+            json_body=body,
+            filenames_from_keys=True,
+            file_attachments=file_attachments,
+            headers=headers,
         )
 
         if not response.is_success:
@@ -15187,13 +15585,14 @@ class ProjectsAPI:
 
         return response.json() if response.content else None
 
+    @contextmanager
     def download_project(
         self,
         id: Uuid,
         *,
         format: Optional[ProjectArchiveFormat] = None,
         file_ids: Optional[List[str]] = None,
-    ) -> ProjectDownloadErrorResponse:
+    ) -> Iterator[httpx.Response]:
         """Use `file_ids=<UUID>,<UUID>` to select files from the current version. This endpoint resolves the project's current version at request time, so file IDs from before a save may no longer belong to it. To download those files, use `/user/projects/{id}/versions/{version_id}/download` with `version_id` set to the `summary.revision` returned alongside that file list. A single selected file still uses the requested tar or zip archive format."""
 
         url = "{}/user/projects/{id}/download".format(self.client.base_url, id=id)
@@ -15202,27 +15601,19 @@ class ProjectsAPI:
             url = str(httpx.URL(url).copy_add_param("format", str(format)))
 
         if file_ids is not None:
-            url = str(httpx.URL(url).copy_add_param("file_ids", str(file_ids)))
+            url = str(
+                httpx.URL(url).copy_add_param(
+                    "file_ids", ",".join(str(value) for value in file_ids)
+                )
+            )
 
         _client = self.client.get_http_client()
 
-        response = _client.get(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return ProjectDownloadErrorResponse.model_validate(json_data, extra="ignore")
+        with _client.stream("GET", url, headers=self.client.get_headers()) as response:
+            if not response.is_success:
+                response.read()
+                raise_for_status(response)
+            yield response
 
     def update_project_library(
         self,
@@ -15596,6 +15987,10 @@ class ProjectsAPI:
     def create_project_version(
         self,
         id: Uuid,
+        body: CreateProjectVersionRequest,
+        file_attachments: Dict[str, SyncUpload],
+        *,
+        idempotency_key: Optional[str] = None,
     ) -> CreateProjectVersionResponse:
         """For a history A -> B -> C with C current, saving D with B as its parent creates a second child of B. C stays current. Publications and share links keep pointing to their existing versions.
 
@@ -15615,15 +16010,65 @@ class ProjectsAPI:
 
         `Idempotency-Key` is optional for all clients. Use a unique key for each save to avoid duplicate versions when retrying. Retain the key, metadata, and submitted file contents across app restarts until the save's outcome is known. Within 24 hours of a successful save, retrying with the same key and contents returns the same version. Changed contents require a new key; reusing an unexpired key with different contents returns HTTP 409 with `IdempotencyConflict`. Without a key, or after its window expires, resending the request can create another version.
 
-        Write access to the project is required, including for retries. A public listing or share link does not grant access to private version history. There is no endpoint to promote an existing alternate version directly to current."""
+        Write access to the project is required, including for retries. A public listing or share link does not grant access to private version history. There is no endpoint to promote an existing alternate version directly to current.
+
+        Examples:
+        ```python
+        from kittycad.models.uuid import Uuid
+        from kittycad.models.uuid import Uuid
+        from kittycad.models.create_project_version_request import CreateProjectVersionRequest
+        from kittycad.models.uuid import Uuid
+        from kittycad.models.uuid import Uuid
+        from pathlib import Path
+        from typing import Dict
+        from kittycad._io_types import SyncUpload
+        from kittycad.models import CreateProjectVersionResponse
+        from typing import Union, Any, Optional, List, Tuple
+        from kittycad.types import Response
+        def example_create_project_version():
+            client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+            result: CreateProjectVersionResponse = client.projects.create_project_version(id=Uuid("<string>"),
+                idempotency_key="<string>",
+                body=CreateProjectVersionRequest(
+                description="<string>",
+                entrypoint_path="<string>",
+                parent_version_id=Uuid("<string>"),
+                title="<string>",
+                ),
+                file_attachments={
+                "main.kcl": Path("path/to/main.kcl"),
+                "helper.kcl": Path("path/to/helper.kcl"),
+                })
+
+
+            body: CreateProjectVersionResponse = result
+            print(body)
+
+
+        ```"""
 
         url = "{}/user/projects/{id}/versions".format(self.client.base_url, id=id)
 
         _client = self.client.get_http_client()
 
-        response = _client.post(
+        headers = httpx.Headers(self.client.get_headers())
+
+        if idempotency_key is not None:
+            headers["Idempotency-Key"] = str(idempotency_key)
+
+        if not file_attachments:
+            raise ValueError("At least one file attachment is required")
+
+        headers.pop("Content-Type", None)
+        response = upload_json_multipart(
+            client=_client,
             url=url,
-            headers=self.client.get_headers(),
+            method="POST",
+            json_body=body,
+            filenames_from_keys=True,
+            file_attachments=file_attachments,
+            headers=headers,
         )
 
         if not response.is_success:
@@ -15670,6 +16115,7 @@ class ProjectsAPI:
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return ProjectVersionDetailResponse.model_validate(json_data, extra="ignore")
 
+    @contextmanager
     def download_project_version(
         self,
         id: Uuid,
@@ -15677,7 +16123,7 @@ class ProjectsAPI:
         *,
         format: Optional[ProjectArchiveFormat] = None,
         file_ids: Optional[List[str]] = None,
-    ) -> ProjectDownloadErrorResponse:
+    ) -> Iterator[httpx.Response]:
         """Select files with `file_ids=<UUID>,<UUID>`. IDs must belong to this version; omitted files are excluded, including the manifest unless explicitly selected. The response is a tar or zip archive even when selecting one file."""
 
         url = "{}/user/projects/{id}/versions/{version_id}/download".format(
@@ -15688,27 +16134,19 @@ class ProjectsAPI:
             url = str(httpx.URL(url).copy_add_param("format", str(format)))
 
         if file_ids is not None:
-            url = str(httpx.URL(url).copy_add_param("file_ids", str(file_ids)))
+            url = str(
+                httpx.URL(url).copy_add_param(
+                    "file_ids", ",".join(str(value) for value in file_ids)
+                )
+            )
 
         _client = self.client.get_http_client()
 
-        response = _client.get(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return ProjectDownloadErrorResponse.model_validate(json_data, extra="ignore")
+        with _client.stream("GET", url, headers=self.client.get_headers()) as response:
+            if not response.is_success:
+                response.read()
+                raise_for_status(response)
+            yield response
 
     def get_project_version_thumbnail(
         self,
@@ -15972,13 +16410,14 @@ class AsyncProjectsAPI:
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return PublicProjectResponse.model_validate(json_data, extra="ignore")
 
+    @asynccontextmanager
     async def download_public_project(
         self,
         id: Uuid,
         *,
         format: Optional[ProjectArchiveFormat] = None,
         file_ids: Optional[List[str]] = None,
-    ) -> ProjectDownloadErrorResponse:
+    ) -> AsyncIterator[httpx.Response]:
         """Download all or selected files from a published public project."""
 
         url = "{}/projects/public/{id}/download".format(self.client.base_url, id=id)
@@ -15987,27 +16426,21 @@ class AsyncProjectsAPI:
             url = str(httpx.URL(url).copy_add_param("format", str(format)))
 
         if file_ids is not None:
-            url = str(httpx.URL(url).copy_add_param("file_ids", str(file_ids)))
+            url = str(
+                httpx.URL(url).copy_add_param(
+                    "file_ids", ",".join(str(value) for value in file_ids)
+                )
+            )
 
         _client = self.client.get_http_client()
 
-        response = await _client.get(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return ProjectDownloadErrorResponse.model_validate(json_data, extra="ignore")
+        async with _client.stream(
+            "GET", url, headers=self.client.get_headers()
+        ) as response:
+            if not response.is_success:
+                await response.aread()
+                raise_for_status(response)
+            yield response
 
     async def get_public_project_thumbnail(
         self,
@@ -16475,6 +16908,8 @@ class AsyncProjectsAPI:
 
     async def create_project(
         self,
+        body: CreateProjectRequest,
+        file_attachments: Dict[str, SyncUpload],
     ) -> ProjectResponse:
         """Send multipart data with a JSON `body` part and file parts whose filenames are relative project paths. Include an optional `library_id` in the JSON to create the project in a named library:
 
@@ -16482,15 +16917,64 @@ class AsyncProjectsAPI:
 
         A personal library creates a personal project. An accessible library belonging to the active organization creates an organization project with the caller as its creator; creating the project does not require library-management rights. Omitting `library_id` or passing null creates an unassigned personal project, even when the request has an active organization.
 
-        The HTTP 201 response includes `id`, `library_id`, content `revision`, and `metadata_revision`. Later saves preserve membership, even if they include a library field. Use `PUT /user/projects/{id}/library` to move or unassign an existing project instead of uploading its files again."""
+        The HTTP 201 response includes `id`, `library_id`, content `revision`, and `metadata_revision`. Later saves preserve membership, even if they include a library field. Use `PUT /user/projects/{id}/library` to move or unassign an existing project instead of uploading its files again.
+
+        Examples:
+        ```python
+        from kittycad.models.create_project_request import CreateProjectRequest
+        from kittycad.models.uuid import Uuid
+        from kittycad.models.uuid import Uuid
+        from typing import List
+        from kittycad.models.uuid import Uuid
+        from kittycad.models.uuid import Uuid
+        from kittycad.models.kcl_project_publication_status import KclProjectPublicationStatus
+        from pathlib import Path
+        from typing import Dict
+        from kittycad._io_types import SyncUpload
+        from kittycad.models import ProjectResponse
+        from typing import Union, Any, Optional, List, Tuple
+        from kittycad.types import Response
+        def example_create_project():
+            client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+            result: ProjectResponse = client.projects.create_project(body=CreateProjectRequest(
+                category_ids=[Uuid("<string>")],
+                description="<string>",
+                entrypoint_path="<string>",
+                library_id=Uuid("<string>"),
+                publication_status=KclProjectPublicationStatus.PRIVATE,
+                title="<string>",
+                ),
+                file_attachments={
+                "main.kcl": Path("path/to/main.kcl"),
+                "helper.kcl": Path("path/to/helper.kcl"),
+                })
+
+
+            body: ProjectResponse = result
+            print(body)
+
+
+        ```"""
 
         url = "{}/user/projects".format(self.client.base_url)
 
         _client = self.client.get_http_client()
 
-        response = await _client.post(
+        headers = httpx.Headers(self.client.get_headers())
+
+        if not file_attachments:
+            raise ValueError("At least one file attachment is required")
+
+        headers.pop("Content-Type", None)
+        response = await upload_json_multipart_async(
+            client=_client,
             url=url,
-            headers=self.client.get_headers(),
+            method="POST",
+            json_body=body,
+            filenames_from_keys=True,
+            file_attachments=file_attachments,
+            headers=headers,
         )
 
         if not response.is_success:
@@ -16537,16 +17021,70 @@ class AsyncProjectsAPI:
     async def update_project(
         self,
         id: Uuid,
+        body: UpdateProjectRequest,
+        file_attachments: Dict[str, SyncUpload],
     ) -> ProjectResponse:
-        """Content saves use the project's content `revision` as `expected_revision` and preserve its current library assignment. Omitting `library_id`, setting it to null, or supplying another library ID here does not move the project. Use `PUT /user/projects/{id}/library` with `metadata_revision` for library changes."""
+        """Content saves use the project's content `revision` as `expected_revision` and preserve its current library assignment. Omitting `library_id`, setting it to null, or supplying another library ID here does not move the project. Use `PUT /user/projects/{id}/library` with `metadata_revision` for library changes.
+
+        Examples:
+        ```python
+        from kittycad.models.uuid import Uuid
+        from kittycad.models.uuid import Uuid
+        from kittycad.models.update_project_request import UpdateProjectRequest
+        from kittycad.models.uuid import Uuid
+        from kittycad.models.uuid import Uuid
+        from typing import List
+        from kittycad.models.uuid import Uuid
+        from kittycad.models.uuid import Uuid
+        from kittycad.models.kcl_project_publication_status import KclProjectPublicationStatus
+        from pathlib import Path
+        from typing import Dict
+        from kittycad._io_types import SyncUpload
+        from kittycad.models import ProjectResponse
+        from typing import Union, Any, Optional, List, Tuple
+        from kittycad.types import Response
+        def example_update_project():
+            client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+            result: ProjectResponse = client.projects.update_project(id=Uuid("<string>"),
+                body=UpdateProjectRequest(
+                category_ids=[Uuid("<string>")],
+                description="<string>",
+                entrypoint_path="<string>",
+                library_id=Uuid("<string>"),
+                publication_status=KclProjectPublicationStatus.PRIVATE,
+                title="<string>",
+                ),
+                file_attachments={
+                "main.kcl": Path("path/to/main.kcl"),
+                "helper.kcl": Path("path/to/helper.kcl"),
+                })
+
+
+            body: ProjectResponse = result
+            print(body)
+
+
+        ```"""
 
         url = "{}/user/projects/{id}".format(self.client.base_url, id=id)
 
         _client = self.client.get_http_client()
 
-        response = await _client.put(
+        headers = httpx.Headers(self.client.get_headers())
+
+        if not file_attachments:
+            raise ValueError("At least one file attachment is required")
+
+        headers.pop("Content-Type", None)
+        response = await upload_json_multipart_async(
+            client=_client,
             url=url,
-            headers=self.client.get_headers(),
+            method="PUT",
+            json_body=body,
+            filenames_from_keys=True,
+            file_attachments=file_attachments,
+            headers=headers,
         )
 
         if not response.is_success:
@@ -16584,13 +17122,14 @@ class AsyncProjectsAPI:
 
         return response.json() if response.content else None
 
+    @asynccontextmanager
     async def download_project(
         self,
         id: Uuid,
         *,
         format: Optional[ProjectArchiveFormat] = None,
         file_ids: Optional[List[str]] = None,
-    ) -> ProjectDownloadErrorResponse:
+    ) -> AsyncIterator[httpx.Response]:
         """Use `file_ids=<UUID>,<UUID>` to select files from the current version. This endpoint resolves the project's current version at request time, so file IDs from before a save may no longer belong to it. To download those files, use `/user/projects/{id}/versions/{version_id}/download` with `version_id` set to the `summary.revision` returned alongside that file list. A single selected file still uses the requested tar or zip archive format."""
 
         url = "{}/user/projects/{id}/download".format(self.client.base_url, id=id)
@@ -16599,27 +17138,21 @@ class AsyncProjectsAPI:
             url = str(httpx.URL(url).copy_add_param("format", str(format)))
 
         if file_ids is not None:
-            url = str(httpx.URL(url).copy_add_param("file_ids", str(file_ids)))
+            url = str(
+                httpx.URL(url).copy_add_param(
+                    "file_ids", ",".join(str(value) for value in file_ids)
+                )
+            )
 
         _client = self.client.get_http_client()
 
-        response = await _client.get(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return ProjectDownloadErrorResponse.model_validate(json_data, extra="ignore")
+        async with _client.stream(
+            "GET", url, headers=self.client.get_headers()
+        ) as response:
+            if not response.is_success:
+                await response.aread()
+                raise_for_status(response)
+            yield response
 
     async def update_project_library(
         self,
@@ -16993,6 +17526,10 @@ class AsyncProjectsAPI:
     async def create_project_version(
         self,
         id: Uuid,
+        body: CreateProjectVersionRequest,
+        file_attachments: Dict[str, SyncUpload],
+        *,
+        idempotency_key: Optional[str] = None,
     ) -> CreateProjectVersionResponse:
         """For a history A -> B -> C with C current, saving D with B as its parent creates a second child of B. C stays current. Publications and share links keep pointing to their existing versions.
 
@@ -17012,15 +17549,65 @@ class AsyncProjectsAPI:
 
         `Idempotency-Key` is optional for all clients. Use a unique key for each save to avoid duplicate versions when retrying. Retain the key, metadata, and submitted file contents across app restarts until the save's outcome is known. Within 24 hours of a successful save, retrying with the same key and contents returns the same version. Changed contents require a new key; reusing an unexpired key with different contents returns HTTP 409 with `IdempotencyConflict`. Without a key, or after its window expires, resending the request can create another version.
 
-        Write access to the project is required, including for retries. A public listing or share link does not grant access to private version history. There is no endpoint to promote an existing alternate version directly to current."""
+        Write access to the project is required, including for retries. A public listing or share link does not grant access to private version history. There is no endpoint to promote an existing alternate version directly to current.
+
+        Examples:
+        ```python
+        from kittycad.models.uuid import Uuid
+        from kittycad.models.uuid import Uuid
+        from kittycad.models.create_project_version_request import CreateProjectVersionRequest
+        from kittycad.models.uuid import Uuid
+        from kittycad.models.uuid import Uuid
+        from pathlib import Path
+        from typing import Dict
+        from kittycad._io_types import SyncUpload
+        from kittycad.models import CreateProjectVersionResponse
+        from typing import Union, Any, Optional, List, Tuple
+        from kittycad.types import Response
+        def example_create_project_version():
+            client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+            result: CreateProjectVersionResponse = client.projects.create_project_version(id=Uuid("<string>"),
+                idempotency_key="<string>",
+                body=CreateProjectVersionRequest(
+                description="<string>",
+                entrypoint_path="<string>",
+                parent_version_id=Uuid("<string>"),
+                title="<string>",
+                ),
+                file_attachments={
+                "main.kcl": Path("path/to/main.kcl"),
+                "helper.kcl": Path("path/to/helper.kcl"),
+                })
+
+
+            body: CreateProjectVersionResponse = result
+            print(body)
+
+
+        ```"""
 
         url = "{}/user/projects/{id}/versions".format(self.client.base_url, id=id)
 
         _client = self.client.get_http_client()
 
-        response = await _client.post(
+        headers = httpx.Headers(self.client.get_headers())
+
+        if idempotency_key is not None:
+            headers["Idempotency-Key"] = str(idempotency_key)
+
+        if not file_attachments:
+            raise ValueError("At least one file attachment is required")
+
+        headers.pop("Content-Type", None)
+        response = await upload_json_multipart_async(
+            client=_client,
             url=url,
-            headers=self.client.get_headers(),
+            method="POST",
+            json_body=body,
+            filenames_from_keys=True,
+            file_attachments=file_attachments,
+            headers=headers,
         )
 
         if not response.is_success:
@@ -17067,6 +17654,7 @@ class AsyncProjectsAPI:
         # Validate into a Pydantic model (works for BaseModel and RootModel)
         return ProjectVersionDetailResponse.model_validate(json_data, extra="ignore")
 
+    @asynccontextmanager
     async def download_project_version(
         self,
         id: Uuid,
@@ -17074,7 +17662,7 @@ class AsyncProjectsAPI:
         *,
         format: Optional[ProjectArchiveFormat] = None,
         file_ids: Optional[List[str]] = None,
-    ) -> ProjectDownloadErrorResponse:
+    ) -> AsyncIterator[httpx.Response]:
         """Select files with `file_ids=<UUID>,<UUID>`. IDs must belong to this version; omitted files are excluded, including the manifest unless explicitly selected. The response is a tar or zip archive even when selecting one file."""
 
         url = "{}/user/projects/{id}/versions/{version_id}/download".format(
@@ -17085,27 +17673,21 @@ class AsyncProjectsAPI:
             url = str(httpx.URL(url).copy_add_param("format", str(format)))
 
         if file_ids is not None:
-            url = str(httpx.URL(url).copy_add_param("file_ids", str(file_ids)))
+            url = str(
+                httpx.URL(url).copy_add_param(
+                    "file_ids", ",".join(str(value) for value in file_ids)
+                )
+            )
 
         _client = self.client.get_http_client()
 
-        response = await _client.get(
-            url=url,
-            headers=self.client.get_headers(),
-        )
-
-        if not response.is_success:
-            from kittycad.response_helpers import raise_for_status
-
-            raise_for_status(response)
-
-        if not response.content:
-            return None  # type: ignore
-
-        json_data = response.json()
-
-        # Validate into a Pydantic model (works for BaseModel and RootModel)
-        return ProjectDownloadErrorResponse.model_validate(json_data, extra="ignore")
+        async with _client.stream(
+            "GET", url, headers=self.client.get_headers()
+        ) as response:
+            if not response.is_success:
+                await response.aread()
+                raise_for_status(response)
+            yield response
 
     async def get_project_version_thumbnail(
         self,
@@ -18512,6 +19094,27 @@ class UsersAPI:
 
         return response.json() if response.content else None
 
+    def remove_user_avatar(
+        self,
+    ):
+        """Community profile synchronization is best effort."""
+
+        url = "{}/user/avatar".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = _client.delete(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
     def get_user_cad_user_info_form(
         self,
     ) -> WebsiteCadUserInfoForm:
@@ -19268,6 +19871,27 @@ class AsyncUsersAPI:
         This call will only succeed if all invoices associated with the user have been paid in full and there is no outstanding balance. Personal Factory jobs must be completed or canceled before deleting your account. In-progress jobs owned by an organization do not prevent account deletion."""
 
         url = "{}/user".format(self.client.base_url)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.delete(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    async def remove_user_avatar(
+        self,
+    ):
+        """Community profile synchronization is best effort."""
+
+        url = "{}/user/avatar".format(self.client.base_url)
 
         _client = self.client.get_http_client()
 
@@ -20624,6 +21248,7 @@ class WebSocketMlCopilotWs:
         replay: Optional[bool] = None,
         conversation_id: Optional[str] = None,
         replay_attachment_mode: Optional[MlCopilotReplayAttachmentMode] = None,
+        replay_pagination: Optional[bool] = None,
         pr: Optional[int] = None,
         recv_timeout: Optional[float] = None,
         ws_factory: Optional[Callable[..., ClientConnectionSync]] = None,
@@ -20651,6 +21276,12 @@ class WebSocketMlCopilotWs:
                 url = url + "&replay_attachment_mode=" + str(replay_attachment_mode)
             else:
                 url = url + "?replay_attachment_mode=" + str(replay_attachment_mode)
+
+        if replay_pagination is not None:
+            if "?" in url:
+                url = url + "&replay_pagination=" + str(replay_pagination).lower()
+            else:
+                url = url + "?replay_pagination=" + str(replay_pagination).lower()
 
         if pr is not None:
             if "?" in url:
@@ -20705,75 +21336,6 @@ class WebSocketMlCopilotWs:
         message = self.ws.recv(timeout=self._recv_timeout)
 
         return MlCopilotServerMessage.model_validate_json(message)
-
-    def close(self):
-        """Close the websocket."""
-        self.ws.close()
-
-
-class WebSocketKclMigrationWs:
-    """A websocket connection for kcl_migration_ws."""
-
-    ws: ClientConnectionSync
-
-    def __init__(
-        self,
-        recv_timeout: Optional[float] = None,
-        ws_factory: Optional[Callable[..., ClientConnectionSync]] = None,
-        *,
-        client: Client,
-    ):
-        # Inline WebSocket connection logic
-
-        url = ("{}" + "/ws/ml/kcl-migration").format(client.base_url)
-
-        headers = client.get_headers()
-        factory = ws_factory or _ws_connect_sync
-        self.ws = factory(
-            url.replace("http", "ws"),
-            additional_headers=headers,
-            close_timeout=120,
-            max_size=None,
-        )
-        self._recv_timeout = (
-            client.get_websocket_recv_timeout()
-            if recv_timeout is None
-            else recv_timeout
-        )
-
-    def __enter__(self):
-        return self
-
-    def __exit__(self, exc_type, exc_value, traceback):
-        self.close()
-
-    def __iter__(self):
-        """
-        Iterate on incoming messages.
-
-        The iterator calls recv() and yields messages in an infinite loop.
-
-        It exits when the connection is closed normally. It raises a
-        ConnectionClosedError exception after a protocol error or a network failure.
-        """
-        for message in self.ws:
-            yield KclMigrationServerMessage.model_validate_json(message)
-
-    def send(self, data: KclMigrationClientMessage):
-        """Send data to the websocket."""
-
-        self.ws.send(json.dumps(data.model_dump(exclude_none=True)))
-
-    def send_binary(self, data: KclMigrationClientMessage):
-        """Send data as bson to the websocket."""
-
-        self.ws.send(bson.encode(data.model_dump(exclude_none=True)))
-
-    def recv(self) -> KclMigrationServerMessage:
-        """Receive data from the websocket."""
-        message = self.ws.recv(timeout=self._recv_timeout)
-
-        return KclMigrationServerMessage.model_validate_json(message)
 
     def close(self):
         """Close the websocket."""

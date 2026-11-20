@@ -8,7 +8,7 @@ class KclMigrationStatus(str, Enum):
 
     RUNNING = "running"
 
-    """# A validated candidate is ready for review. No project has been applied."""  # noqa: E501
+    """# Conversion and final validation succeeded. Copilot delivers edits live."""  # noqa: E501
 
     SUCCEEDED = "succeeded"
 
@@ -16,11 +16,11 @@ class KclMigrationStatus(str, Enum):
 
     FAILED = "failed"
 
-    """# The original execution deadline expired."""  # noqa: E501
+    """# Admission setup expired before execution could begin."""  # noqa: E501
 
     TIMED_OUT = "timed_out"
 
-    """# The attempt was cancelled, including loss of its execution connection."""  # noqa: E501
+    """# The attempt was cancelled."""  # noqa: E501
 
     CANCELLED = "cancelled"
 

@@ -14,7 +14,7 @@ from .base import KittyCadBaseModel
 class KclMigrationOperation(KittyCadBaseModel):
     """Persisted operation state, safe to retrieve again without starting new work."""
 
-    deadline: datetime.datetime
+    deadline: Optional[datetime.datetime] = None
 
     id: Uuid
 

@@ -65,7 +65,7 @@
         {% for arg in args %}
         {% if arg.in_query %}
         if "{{ arg.name }}" in kwargs and kwargs["{{ arg.name }}"] is not None:
-            url = str(httpx.URL(url).copy_add_param("{{ arg.name }}", {% if "datetime" in arg.type %}kwargs["{{ arg.name }}"].isoformat(){% elif "bool" in arg.type %}str(kwargs["{{ arg.name }}"]).lower(){% else %}str(kwargs["{{ arg.name }}"]){% endif %}))
+            url = str(httpx.URL(url).copy_add_param("{{ arg.name }}", {% if arg.is_csv %}",".join(str(value) for value in kwargs["{{ arg.name }}"]){% elif "datetime" in arg.type %}kwargs["{{ arg.name }}"].isoformat(){% elif "bool" in arg.type %}str(kwargs["{{ arg.name }}"]).lower(){% else %}str(kwargs["{{ arg.name }}"]){% endif %}))
         {% endif %}
         {% endfor %}
         

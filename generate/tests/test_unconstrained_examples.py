@@ -3,17 +3,23 @@
 import json
 from types import ModuleType
 
+import pytest
+
 from generate.generate import generate_type_and_example_python
 from generate.type_generators import generate_object_type_code
 
 
-def test_description_only_field_example_serializes_in_referenced_model() -> None:
+@pytest.mark.parametrize(
+    "field_schema",
+    [{}, {"description": "JSON Schema describing the command arguments."}],
+)
+def test_unconstrained_field_example_serializes_in_referenced_model(
+    field_schema,
+) -> None:
     command_schema = {
         "type": "object",
         "properties": {
-            "input_schema": {
-                "description": "JSON Schema describing the command arguments."
-            },
+            "input_schema": field_schema,
         },
         "required": ["input_schema"],
     }

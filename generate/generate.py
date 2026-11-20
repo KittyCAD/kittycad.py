@@ -26,6 +26,7 @@ from .utils import (
     deduplicate_imports,
     enum_member_name,
     parameter_name,
+    render_template_to_file,
     to_pascal_case,
 )
 
@@ -41,6 +42,10 @@ def main():
     spec_path = os.path.join(cwd, "spec.json")
     logging.info("opening spec file: %s", spec_path)
     parser = BaseParser(spec_path)
+
+    render_template_to_file(
+        "multipart.py.jinja2", {}, os.path.join(cwd, "kittycad", "_multipart.py")
+    )
 
     # Generate the types.
     generate_types(cwd, parser.specification)
@@ -399,8 +404,12 @@ def generate_type_and_example_python(
         return generate_type_and_example_python(
             parameter_type, ref_schema, data, None, None
         )
-    elif "description" in schema and not any(
-        key in schema for key in ["type", "$ref", "oneOf", "anyOf", "allOf"]
+    elif (
+        schema == {}
+        or "description" in schema
+        and not any(
+            key in schema for key in ["type", "$ref", "oneOf", "anyOf", "allOf"]
+        )
     ):
         # Match the model generator's unconstrained JSON type.
         parameter_type = "Any"
