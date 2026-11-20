@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## v1.13.0
+
+### Added
+
+- Cancel a personal or organization Factory job before payment starts, or decline
+  its current quote, through `client.factory`.
+- Opt into paginated conversation history on `client.ml.ml_copilot_ws` with
+  `replay_pagination=True`, `replay=True`, a conversation ID, and the
+  `metadata_only` replay attachment mode.
+- Import and export Rhino 3DM files with `FileImportFormat.RHINO` and
+  `FileExportFormat.RHINO`.
+- Query object visibility with the `object_is_hidden` modeling command. It
+  returns `hidden`, `visible`, or `no_such_object` for each ID in input order.
+- Remove the authenticated user's avatar with `client.users.remove_user_avatar()`.
+
 ### Changed
 
 - Regenerate from API `main` at `b8a9549c95e9e59d914a783484b67cbef798b353`.
@@ -48,7 +63,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   `get_org_factory_quote`. Generate a `payment_attempt_id` UUID once for an
   explicit acceptance, pass it to quote retrieval and `accept_*_factory_quote`,
   and retain it across transport retries. A new attempt after a confirmed decline
-  needs a new UUID.
+  needs a new UUID. The retrieval methods return `FactoryQuoteDetail`. Read
+  checkout amounts from `detail.pricing` and the published quote from
+  `detail.quote`. When constructing `FactoryCustomerJobDetail` locally, supply
+  the required `is_expedited` boolean.
 - Replace `client.ml.kcl_migration_ws` with `client.ml.ml_copilot_ws` and send
   the `migrate_kcl` variant of `MlCopilotClientMessage`, constructed with
   `OptionMigrateKcl(request=...)` from `kittycad.models.ml_copilot_client_message`.
@@ -56,6 +74,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   dedicated `KclMigrationClientMessage`, `KclMigrationServerMessage`, history,
   and application acknowledgement models, along with Apply/Undo/Redo
   acknowledgement messages.
+- If you passed `pr`, `recv_timeout`, or `ws_factory` positionally to
+  `ml_copilot_ws`, pass them by keyword. The new `replay_pagination` parameter
+  precedes `pr`.
 
 ## v1.12.0
 
