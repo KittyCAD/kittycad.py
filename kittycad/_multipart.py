@@ -6,7 +6,18 @@ with proper file handling, content type detection, and progress tracking.
 
 from __future__ import annotations
 
-from typing import IO, Any, Dict, Optional, Union, cast
+from typing import (
+    IO,
+    Any,
+    AsyncIterator,
+    Dict,
+    Iterable,
+    Iterator,
+    Optional,
+    Union,
+    cast,
+)
+from uuid import uuid4
 
 import httpx
 import httpx._multipart
@@ -372,6 +383,74 @@ class JsonMultipartDict(dict):
     pass
 
 
+def _quote_multipart_parameter(value: str) -> str:
+    if any(ord(char) < 32 or ord(char) == 127 for char in value):
+        raise ValueError(
+            "Multipart names and filenames cannot contain control characters"
+        )
+    return value.replace("\\", "\\\\").replace('"', '\\"')
+
+
+def _project_multipart_chunks(
+    files: Dict[str, Any], json_field_name: str, boundary: str
+) -> Iterator[bytes]:
+    """Stream project paths as filenames using the API parser's quoted-pair encoding."""
+    delimiter = b"--" + boundary.encode("ascii")
+    for field_name, (filename, content, content_type) in files.items():
+        is_metadata = field_name == json_field_name
+        name = _quote_multipart_parameter(json_field_name if is_metadata else "files")
+        disposition = f'Content-Disposition: form-data; name="{name}"'
+        if not is_metadata:
+            disposition += f'; filename="{_quote_multipart_parameter(filename)}"'
+        yield delimiter + b"\r\n"
+        yield f"{disposition}\r\nContent-Type: {content_type}\r\n\r\n".encode("utf-8")
+        if isinstance(content, str):
+            yield content.encode("utf-8")
+        elif isinstance(content, bytes):
+            yield content
+        else:
+            # Match HTTPX's multipart behavior for seekable and nonseekable files.
+            try:
+                content.seek(0)
+            except (AttributeError, OSError):
+                pass
+            while chunk := content.read(64 * 1024):
+                yield chunk
+        yield b"\r\n"
+    yield delimiter + b"--\r\n"
+
+
+async def _async_multipart_chunks(chunks: Iterable[bytes]) -> AsyncIterator[bytes]:
+    for chunk in chunks:
+        yield chunk
+
+
+def _json_multipart_request_kwargs(
+    files: Dict[str, Any],
+    json_field_name: str,
+    filenames_from_keys: bool,
+    request_kwargs: Dict[str, Any],
+    *,
+    asynchronous: bool = False,
+) -> Dict[str, Any]:
+    if not filenames_from_keys:
+        return {**request_kwargs, "files": files}
+
+    # HTTPX percent-encodes quotes in filenames. Multer keeps that encoding
+    # literally, so use quoted pairs to distinguish a quote from a literal %22.
+    boundary = uuid4().hex
+    headers = httpx.Headers(request_kwargs.get("headers"))
+    headers.pop("Content-Length", None)
+    headers.pop("Transfer-Encoding", None)
+    headers["Content-Type"] = f"multipart/form-data; boundary={boundary}"
+    chunks = _project_multipart_chunks(files, json_field_name, boundary)
+    return {
+        **request_kwargs,
+        "headers": headers,
+        "content": _async_multipart_chunks(chunks) if asynchronous else chunks,
+    }
+
+
 def create_json_multipart_upload(
     json_body: Any,
     file_attachments: Optional[Dict[str, SyncUpload]] = None,
@@ -387,7 +466,8 @@ def create_json_multipart_upload(
 
     Args:
         json_body: The JSON body object (will be serialized)
-        file_attachments: Dict of {field_name: file_input} for attachments
+        file_attachments: Dict of {field_name: file_input} for attachments, or
+            {project_path: file_input} when filenames_from_keys is enabled
         json_field_name: Name of the JSON body field (default: "body")
         progress_callback: Optional progress tracking callback
         filenames_from_keys: Use attachment keys as the uploaded filenames
@@ -404,8 +484,9 @@ def create_json_multipart_upload(
         >>> # response = httpx.post(url, files=files)
     """
     if filenames_from_keys and file_attachments:
-        if any(name in {json_field_name, "event"} for name in file_attachments):
-            raise ValueError("File attachment names cannot be body or event")
+        # Validate every path before opening files or constructing headers.
+        for path in file_attachments:
+            _quote_multipart_parameter(path)
 
     files_dict = JsonMultipartDict()
 
@@ -431,11 +512,14 @@ def create_json_multipart_upload(
 
     # Add file attachments
     if file_attachments:
-        for field_name, file_input in file_attachments.items():
+        for index, (path, file_input) in enumerate(file_attachments.items()):
+            field_name = (
+                f"{json_field_name}-file-{index}" if filenames_from_keys else path
+            )
             file_obj, should_close, detected_filename, detected_content_type, _ = (
                 prepare_upload_input(
                     upload=file_input,
-                    filename=field_name if filenames_from_keys else None,
+                    filename=path if filenames_from_keys else None,
                     force_multipart=True,
                 )
             )
@@ -451,7 +535,7 @@ def create_json_multipart_upload(
 
             # Create the file tuple: (filename, file_obj, content_type)
             files_dict[field_name] = (
-                field_name
+                path
                 if filenames_from_keys
                 else _resolve_multipart_filename(field_name, detected_filename),
                 file_obj,
@@ -587,10 +671,11 @@ def upload_json_multipart(
         progress_callback=progress_callback,
         filenames_from_keys=filenames_from_keys,
     ) as upload:
-        # Make the request with files
-        response = client.request(
-            method=method, url=url, files=upload.files, **request_kwargs
+        assert upload.files is not None
+        request_kwargs = _json_multipart_request_kwargs(
+            upload.files, json_field_name, filenames_from_keys, request_kwargs
         )
+        response = client.request(method=method, url=url, **request_kwargs)
         return response
 
 
@@ -628,8 +713,13 @@ async def upload_json_multipart_async(
         progress_callback=progress_callback,
         filenames_from_keys=filenames_from_keys,
     ) as upload:
-        # Make the async request with files
-        response = await client.request(
-            method=method, url=url, files=upload.files, **request_kwargs
+        assert upload.files is not None
+        request_kwargs = _json_multipart_request_kwargs(
+            upload.files,
+            json_field_name,
+            filenames_from_keys,
+            request_kwargs,
+            asynchronous=True,
         )
+        response = await client.request(method=method, url=url, **request_kwargs)
         return response

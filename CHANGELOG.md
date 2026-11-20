@@ -16,6 +16,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   PUT, and version saves accept an optional `idempotency_key`.
 - Project downloads now stream TAR or ZIP archives through context managers.
   File ID lists use the API's comma-separated query encoding.
+- Project uploads accept files named `body` or `event`, preserve quotes and
+  literal `%22` sequences in filenames, and stream file contents in 64 KiB chunks.
+  File parts use a separate `files` field name so project paths cannot replace
+  the JSON metadata part.
 - Factory quote retrieval and acceptance now require a payment attempt ID.
   KCL migrations use the ordinary Copilot connection; the dedicated migration
   WebSocket and application acknowledgement models are no longer in the spec.
@@ -24,7 +28,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Pass a `CreateProjectRequest`, `UpdateProjectRequest`, or
   `CreateProjectVersionRequest` as `body`, plus a nonempty `file_attachments`
-  mapping. Keys are relative project paths; `body` and `event` are reserved.
+  mapping. Keys are relative project paths, including names such as `body` and
+  `event`. Filenames containing control characters are rejected before upload.
   Upload a complete project snapshot, including unchanged files:
 
   ```python

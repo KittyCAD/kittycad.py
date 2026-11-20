@@ -10,7 +10,7 @@ from typing import Any
 import httpx
 import pytest
 
-from kittycad import AsyncKittyCAD, KittyCAD
+from kittycad import AsyncKittyCAD, KittyCAD, _multipart as multipart_helpers
 from kittycad.exceptions import (
     KittyCADAPIError,
     KittyCADClientError,
@@ -92,17 +92,44 @@ def upload_arguments(operation: str, files: dict) -> dict[str, Any]:
     }
 
 
+@pytest.fixture
+def prepared_files(monkeypatch):
+    opened = []
+    original = multipart_helpers.prepare_upload_input
+
+    def prepare(*args, **kwargs):
+        result = original(*args, **kwargs)
+        opened.append((result[0], result[1]))
+        return result
+
+    monkeypatch.setattr(multipart_helpers, "prepare_upload_input", prepare)
+    return opened
+
+
 @pytest.mark.parametrize("operation", UPLOADS)
 @pytest.mark.parametrize("asynchronous", [False, True])
 @pytest.mark.asyncio
-async def test_project_upload(operation: str, asynchronous: bool, tmp_path: Path):
+async def test_project_upload(
+    operation: str, asynchronous: bool, tmp_path: Path, prepared_files
+):
     disk_file = tmp_path / "original.kcl"
     disk_file.write_bytes(b"// disk file")
     stream = BytesIO(b"// stream file")
-    arguments = upload_arguments(
-        operation,
-        {"main.kcl": b"// main", "parts/helper.kcl": stream, "renamed.kcl": disk_file},
-    )
+    contents = {
+        "main.kcl": b"// main",
+        "parts/helper.kcl": b"// stream file",
+        'renamed"file.kcl': b"// disk file",
+        "body": b"// file named body",
+        "event": b"// file named event",
+        'part"v1.kcl': b"// quoted filename",
+        "part%22v1.kcl": b"// literal percent filename",
+        "零件/café.kcl": b"// unicode filename",
+        'parts/quoted";file.kcl': b"// nested quoted filename",
+    }
+    files: dict[str, Any] = dict(contents)
+    files["parts/helper.kcl"] = stream
+    files['renamed"file.kcl'] = disk_file
+    arguments = upload_arguments(operation, files)
     calls = []
 
     def handle(request: httpx.Request) -> httpx.Response:
@@ -125,21 +152,23 @@ async def test_project_upload(operation: str, asynchronous: bool, tmp_path: Path
             + b"\r\n\r\n"
             + request.content
         )
-        parts = {
-            p.get_param("name", header="Content-Disposition"): p
-            for p in message.iter_parts()
-        }
-        assert parts["body"].get_content_type() == "application/json"
-        metadata = parts["body"].get_payload(decode=True)
+        parts = list(message.iter_parts())
+        assert parts[0].get_param("name", header="Content-Disposition") == "body"
+        assert parts[0].get_filename() is None
+        assert parts[0].get_content_type() == "application/json"
+        metadata = parts[0].get_payload(decode=True)
         assert isinstance(metadata, bytes)
         assert json.loads(metadata) == arguments["body"].to_dict()
-        for path, contents in {
-            "main.kcl": b"// main",
-            "parts/helper.kcl": b"// stream file",
-            "renamed.kcl": b"// disk file",
-        }.items():
-            assert parts[path].get_filename() == path
-            assert parts[path].get_payload(decode=True) == contents
+        assert len(parts) == len(contents) + 1
+        assert all(
+            p.get_param("name", header="Content-Disposition") == "files"
+            for p in parts[1:]
+        )
+        assert {
+            p.get_filename(): p.get_payload(decode=True) for p in parts[1:]
+        } == contents
+        assert b'filename="part\\"v1.kcl"\r\n' in request.content
+        assert b'filename="part%22v1.kcl"\r\n' in request.content
         if operation == "create_project_version":
             return httpx.Response(
                 200, json={"version_id": VERSION, "current_version_id": ID}
@@ -167,14 +196,23 @@ async def test_project_upload(operation: str, asynchronous: bool, tmp_path: Path
         result.version_id if operation == "create_project_version" else result.id
     ) == (VERSION if operation == "create_project_version" else ID)
     assert not stream.closed
+    assert all(file.closed for file, owned in prepared_files if owned)
 
 
 @pytest.mark.parametrize("operation", UPLOADS)
-@pytest.mark.parametrize("files", [{}, {"body": b"bad"}, {"event": b"bad"}])
+@pytest.mark.parametrize(
+    "files,message",
+    [
+        ({}, "At least one file attachment"),
+        ({"bad\r\nname.kcl": b"bad"}, "control characters"),
+        ({"bad\x00name.kcl": b"bad"}, "control characters"),
+        ({"bad\x7fname.kcl": b"bad"}, "control characters"),
+    ],
+)
 @pytest.mark.parametrize("asynchronous", [False, True])
 @pytest.mark.asyncio
 async def test_project_upload_rejects_invalid_attachments(
-    operation, files, asynchronous
+    operation, files, message, asynchronous, prepared_files
 ):
     def handle(request):
         pytest.fail("Invalid attachments should fail before an HTTP request")
@@ -186,14 +224,96 @@ async def test_project_upload_rejects_invalid_attachments(
         async with AsyncKittyCAD(
             token="caller", http_client=httpx.AsyncClient(transport=transport)
         ) as sdk:
-            with pytest.raises(ValueError, match="file attachment|File attachment"):
+            with pytest.raises(ValueError, match=message):
                 await getattr(sdk.projects, operation)(**arguments)
     else:
         with KittyCAD(
             token="caller", http_client=httpx.Client(transport=transport)
         ) as sdk:
-            with pytest.raises(ValueError, match="file attachment|File attachment"):
+            with pytest.raises(ValueError, match=message):
                 getattr(sdk.projects, operation)(**arguments)
+    assert not prepared_files
+
+
+@pytest.mark.parametrize("asynchronous", [False, True])
+@pytest.mark.asyncio
+async def test_project_upload_cleans_up_on_transport_error(
+    asynchronous, tmp_path, prepared_files
+):
+    path = tmp_path / "main.kcl"
+    path.write_bytes(b"// main")
+    stream = BytesIO(b"// borrowed stream")
+    arguments = upload_arguments("update_project", {"main.kcl": path, "body": stream})
+
+    def handle(request):
+        raise httpx.WriteError("Upload interrupted", request=request)
+
+    transport = httpx.MockTransport(handle)
+    sdk: Any
+    if asynchronous:
+        async with AsyncKittyCAD(
+            token="caller", http_client=httpx.AsyncClient(transport=transport)
+        ) as sdk:
+            with pytest.raises(httpx.WriteError, match="Upload interrupted"):
+                await sdk.projects.update_project(**arguments)
+    else:
+        with KittyCAD(
+            token="caller", http_client=httpx.Client(transport=transport)
+        ) as sdk:
+            with pytest.raises(httpx.WriteError, match="Upload interrupted"):
+                sdk.projects.update_project(**arguments)
+    assert any(owned for _, owned in prepared_files)
+    assert all(file.closed for file, owned in prepared_files if owned)
+    assert not stream.closed
+
+
+@pytest.mark.parametrize("asynchronous", [False, True])
+@pytest.mark.asyncio
+async def test_project_upload_streams_large_files(asynchronous):
+    content = b"x" * (3 * 64 * 1024 + 17)
+    reads = []
+
+    class TrackedFile(BytesIO):
+        def read(self, size=-1):
+            assert 0 < size <= 64 * 1024
+            reads.append(size)
+            return super().read(size)
+
+    stream = TrackedFile(content)
+    chunks = []
+
+    class Transport(httpx.BaseTransport, httpx.AsyncBaseTransport):
+        def handle_request(self, request):
+            assert reads == [512]  # MIME sniffing is the only read before sending.
+            assert request.headers["Transfer-Encoding"] == "chunked"
+            assert "Content-Length" not in request.headers
+            chunks.extend(request.stream)
+            return httpx.Response(200, json=PROJECT)
+
+        async def handle_async_request(self, request):
+            assert reads == [512]
+            assert request.headers["Transfer-Encoding"] == "chunked"
+            assert "Content-Length" not in request.headers
+            async for chunk in request.stream:
+                chunks.append(chunk)
+            return httpx.Response(200, json=PROJECT)
+
+    arguments = upload_arguments("update_project", {'large"file.kcl': stream})
+    sdk: Any
+    if asynchronous:
+        async with AsyncKittyCAD(
+            token="caller", http_client=httpx.AsyncClient(transport=Transport())
+        ) as sdk:
+            await sdk.projects.update_project(**arguments)
+    else:
+        with KittyCAD(
+            token="caller", http_client=httpx.Client(transport=Transport())
+        ) as sdk:
+            sdk.projects.update_project(**arguments)
+    assert chunks.count(b"x" * (64 * 1024)) == 3
+    assert b"x" * 17 in chunks
+    assert len(b"".join(chunks)) > len(content)
+    assert not stream.closed
 
 
 @pytest.mark.parametrize("group,operation,arguments,path", DOWNLOADS)
