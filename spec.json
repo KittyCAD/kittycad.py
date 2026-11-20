@@ -47832,13 +47832,6 @@
             ]
           },
           {
-            "description": "Enables the Z0006 lint, for converting to new face api syntax in Zoo Design Studio.",
-            "type": "string",
-            "enum": [
-              "enable_z0006_lint"
-            ]
-          },
-          {
             "description": "Enables the Factory portal.",
             "type": "string",
             "enum": [
