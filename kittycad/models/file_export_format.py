@@ -42,5 +42,9 @@ It is human readable, single file, and you can view the diff easily in a git com
 
     STL = "stl"
 
+    """# The 3DM file format. <https://deepwiki.com/mcneel/rhino3dm/6.1-3dm-file-format>"""  # noqa: E501
+
+    RHINO = "rhino"
+
     def __str__(self) -> str:
         return str(self.value)

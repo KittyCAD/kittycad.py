@@ -157,6 +157,16 @@ class OptionStl(KittyCadBaseModel):
     units: UnitLength
 
 
+class OptionRhino(KittyCadBaseModel):
+    """Rhino (3dm) file format"""
+
+    coords: System
+
+    type: Literal["rhino"] = "rhino"
+
+    units: UnitLength
+
+
 InputFormat3d = RootModel[
     Annotated[
         Union[
@@ -173,6 +183,7 @@ InputFormat3d = RootModel[
             OptionSldprt,
             OptionStep,
             OptionStl,
+            OptionRhino,
         ],
         Field(discriminator="type"),
     ]

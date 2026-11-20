@@ -12430,7 +12430,7 @@
           "orgs"
         ],
         "summary": "Upload source files into a Zoo-managed dataset.",
-        "description": "This endpoint accepts `multipart/form-data` where each file part becomes a source object in the dataset. Exact `<proprietary CAD filename>.json` converter dumps are also accepted and associated with their original CAD file. When both `org_dataset_cloud_projects` and `org_dataset_reference_files` are enabled for the organization, PDFs, Word/Excel documents and images are accepted as reference files. Paths are normalized and must be relative.",
+        "description": "This endpoint accepts `multipart/form-data` where each file part becomes a source object in the dataset. Exact `<proprietary CAD filename>.json` converter dumps are also accepted and associated with their original CAD file. When both `org_dataset_cloud_projects` and `org_dataset_reference_files` are enabled for the organization, PDFs, Word/Excel documents, Markdown and images are accepted as reference files. Paths are normalized and must be relative.",
         "operationId": "upload_org_dataset_files",
         "parameters": [
           {
@@ -13053,6 +13053,208 @@
         "x-billable": false
       }
     },
+    "/org/factory/jobs/{job_id}/cancel": {
+      "post": {
+        "tags": [
+          "factory"
+        ],
+        "summary": "Cancel your organization's Factory job before payment starts. Requires organization membership.",
+        "operationId": "cancel_org_factory_job",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "job_id",
+            "description": "The requested job's identifier.",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "Access-Control-Allow-Credentials": {
+                "description": "Access-Control-Allow-Credentials header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Headers": {
+                "description": "Access-Control-Allow-Headers header. This is a comma-separated list of headers.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Methods": {
+                "description": "Access-Control-Allow-Methods header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Origin": {
+                "description": "Access-Control-Allow-Origin header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Content-Location": {
+                "description": "The Content-Location header for responses that are not the final destination. This is used to indicate where the resource can be found, when it is finished.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Location": {
+                "description": "The location header for redirects and letting users know if there is a websocket they can listen to for status updates on their operation.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Set-Cookie": {
+                "description": "Set-Cookie header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "X-Api-Call-Id": {
+                "description": "ID for this request. We return it so that users can report this to us and help us debug their problems.",
+                "style": "simple",
+                "required": true,
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FactoryCustomerJobSummary"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/Error"
+          },
+          "5XX": {
+            "$ref": "#/components/responses/Error"
+          }
+        },
+        "x-billable": false
+      },
+      "options": {
+        "tags": [
+          "hidden"
+        ],
+        "summary": "OPTIONS endpoint.",
+        "description": "This is necessary for some preflight requests, specifically POST, PUT, and DELETE.",
+        "operationId": "options_cancel_org_factory_job",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "job_id",
+            "description": "The requested job's identifier.",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "successful operation, no content",
+            "headers": {
+              "Access-Control-Allow-Credentials": {
+                "description": "Access-Control-Allow-Credentials header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Headers": {
+                "description": "Access-Control-Allow-Headers header. This is a comma-separated list of headers.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Methods": {
+                "description": "Access-Control-Allow-Methods header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Origin": {
+                "description": "Access-Control-Allow-Origin header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Content-Location": {
+                "description": "The Content-Location header for responses that are not the final destination. This is used to indicate where the resource can be found, when it is finished.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Location": {
+                "description": "The location header for redirects and letting users know if there is a websocket they can listen to for status updates on their operation.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Set-Cookie": {
+                "description": "Set-Cookie header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "X-Api-Call-Id": {
+                "description": "ID for this request. We return it so that users can report this to us and help us debug their problems.",
+                "style": "simple",
+                "required": true,
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/Error"
+          },
+          "5XX": {
+            "$ref": "#/components/responses/Error"
+          }
+        },
+        "x-billable": false
+      }
+    },
     "/org/factory/jobs/{job_id}/files/{file_id}": {
       "get": {
         "tags": [
@@ -13199,6 +13401,243 @@
         "x-billable": false
       }
     },
+    "/org/factory/jobs/{job_id}/quotes/{quote_id}": {
+      "get": {
+        "tags": [
+          "factory"
+        ],
+        "summary": "Get your organization's published Factory quote and current checkout amounts. Requires organization membership.",
+        "operationId": "get_org_factory_quote",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "job_id",
+            "description": "The manufacturing job being purchased.",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Uuid"
+            }
+          },
+          {
+            "in": "path",
+            "name": "quote_id",
+            "description": "The exact published quote accepted by the customer.",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Uuid"
+            }
+          },
+          {
+            "in": "query",
+            "name": "payment_attempt_id",
+            "description": "Identity reused by the corresponding acceptance and its transport retries.",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Uuid"
+            }
+          },
+          {
+            "in": "query",
+            "name": "use_credits",
+            "description": "Include available Zoo usage credits in the checkout estimate.",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "Access-Control-Allow-Credentials": {
+                "description": "Access-Control-Allow-Credentials header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Headers": {
+                "description": "Access-Control-Allow-Headers header. This is a comma-separated list of headers.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Methods": {
+                "description": "Access-Control-Allow-Methods header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Origin": {
+                "description": "Access-Control-Allow-Origin header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Content-Location": {
+                "description": "The Content-Location header for responses that are not the final destination. This is used to indicate where the resource can be found, when it is finished.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Location": {
+                "description": "The location header for redirects and letting users know if there is a websocket they can listen to for status updates on their operation.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Set-Cookie": {
+                "description": "Set-Cookie header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "X-Api-Call-Id": {
+                "description": "ID for this request. We return it so that users can report this to us and help us debug their problems.",
+                "style": "simple",
+                "required": true,
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FactoryQuoteDetail"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/Error"
+          },
+          "5XX": {
+            "$ref": "#/components/responses/Error"
+          }
+        },
+        "x-billable": false
+      },
+      "options": {
+        "tags": [
+          "hidden"
+        ],
+        "summary": "OPTIONS endpoint.",
+        "description": "This is necessary for some preflight requests, specifically POST, PUT, and DELETE.",
+        "operationId": "options_get_org_factory_quote",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "job_id",
+            "description": "The manufacturing job being purchased.",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Uuid"
+            }
+          },
+          {
+            "in": "path",
+            "name": "quote_id",
+            "description": "The exact published quote accepted by the customer.",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "successful operation, no content",
+            "headers": {
+              "Access-Control-Allow-Credentials": {
+                "description": "Access-Control-Allow-Credentials header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Headers": {
+                "description": "Access-Control-Allow-Headers header. This is a comma-separated list of headers.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Methods": {
+                "description": "Access-Control-Allow-Methods header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Origin": {
+                "description": "Access-Control-Allow-Origin header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Content-Location": {
+                "description": "The Content-Location header for responses that are not the final destination. This is used to indicate where the resource can be found, when it is finished.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Location": {
+                "description": "The location header for redirects and letting users know if there is a websocket they can listen to for status updates on their operation.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Set-Cookie": {
+                "description": "Set-Cookie header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "X-Api-Call-Id": {
+                "description": "ID for this request. We return it so that users can report this to us and help us debug their problems.",
+                "style": "simple",
+                "required": true,
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/Error"
+          },
+          "5XX": {
+            "$ref": "#/components/responses/Error"
+          }
+        },
+        "x-billable": false
+      }
+    },
     "/org/factory/jobs/{job_id}/quotes/{quote_id}/accept": {
       "post": {
         "tags": [
@@ -13220,6 +13659,15 @@
             "in": "path",
             "name": "quote_id",
             "description": "The exact published quote accepted by the customer.",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Uuid"
+            }
+          },
+          {
+            "in": "query",
+            "name": "payment_attempt_id",
+            "description": "Generate once for an explicit acceptance and reuse for every transport retry. A new attempt after a confirmed decline requires a new UUID.",
             "required": true,
             "schema": {
               "$ref": "#/components/schemas/Uuid"
@@ -13437,13 +13885,13 @@
         "x-billable": false
       }
     },
-    "/org/factory/jobs/{job_id}/quotes/{quote_id}/preview": {
-      "get": {
+    "/org/factory/jobs/{job_id}/quotes/{quote_id}/decline": {
+      "post": {
         "tags": [
           "factory"
         ],
-        "summary": "Preview your organization's Factory quote without accepting it or charging a card. Requires organization membership.",
-        "operationId": "preview_org_factory_quote",
+        "summary": "Decline your organization's current Factory quote and close the job. Requires organization membership.",
+        "operationId": "decline_org_factory_quote",
         "parameters": [
           {
             "in": "path",
@@ -13461,14 +13909,6 @@
             "required": true,
             "schema": {
               "$ref": "#/components/schemas/Uuid"
-            }
-          },
-          {
-            "in": "query",
-            "name": "use_credits",
-            "description": "Include available Zoo usage credits in the checkout estimate.",
-            "schema": {
-              "type": "boolean"
             }
           }
         ],
@@ -13544,7 +13984,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/FactoryQuotePreview"
+                  "$ref": "#/components/schemas/FactoryCustomerJobSummary"
                 }
               }
             }
@@ -13564,7 +14004,7 @@
         ],
         "summary": "OPTIONS endpoint.",
         "description": "This is necessary for some preflight requests, specifically POST, PUT, and DELETE.",
-        "operationId": "options_preview_org_factory_quote",
+        "operationId": "options_decline_org_factory_quote",
         "parameters": [
           {
             "in": "path",
@@ -20246,11 +20686,36 @@
           }
         ],
         "responses": {
-          "default": {
-            "description": "",
+          "200": {
+            "description": "Project files in the requested TAR or ZIP archive format.",
+            "headers": {
+              "Content-Disposition": {
+                "style": "simple",
+                "required": true,
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "X-Api-Call-Id": {
+                "style": "simple",
+                "required": true,
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
             "content": {
-              "*/*": {
-                "schema": {}
+              "application/x-tar": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              },
+              "application/zip": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
               }
             }
           },
@@ -20263,6 +20728,12 @@
                 }
               }
             }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/Error"
+          },
+          "5XX": {
+            "$ref": "#/components/responses/Error"
           }
         },
         "x-billable": false
@@ -20647,11 +21118,36 @@
           }
         ],
         "responses": {
-          "default": {
-            "description": "",
+          "200": {
+            "description": "Project files in the requested TAR or ZIP archive format.",
+            "headers": {
+              "Content-Disposition": {
+                "style": "simple",
+                "required": true,
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "X-Api-Call-Id": {
+                "style": "simple",
+                "required": true,
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
             "content": {
-              "*/*": {
-                "schema": {}
+              "application/x-tar": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              },
+              "application/zip": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
               }
             }
           },
@@ -20664,6 +21160,12 @@
                 }
               }
             }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/Error"
+          },
+          "5XX": {
+            "$ref": "#/components/responses/Error"
           }
         },
         "x-billable": false
@@ -24246,6 +24748,180 @@
         "x-billable": false
       }
     },
+    "/user/avatar": {
+      "delete": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Remove the profile photo and prevent future sign-ins from importing it again.",
+        "description": "Community profile synchronization is best effort.",
+        "operationId": "remove_user_avatar",
+        "responses": {
+          "204": {
+            "description": "successful deletion",
+            "headers": {
+              "Access-Control-Allow-Credentials": {
+                "description": "Access-Control-Allow-Credentials header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Headers": {
+                "description": "Access-Control-Allow-Headers header. This is a comma-separated list of headers.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Methods": {
+                "description": "Access-Control-Allow-Methods header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Origin": {
+                "description": "Access-Control-Allow-Origin header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Content-Location": {
+                "description": "The Content-Location header for responses that are not the final destination. This is used to indicate where the resource can be found, when it is finished.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Location": {
+                "description": "The location header for redirects and letting users know if there is a websocket they can listen to for status updates on their operation.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Set-Cookie": {
+                "description": "Set-Cookie header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "X-Api-Call-Id": {
+                "description": "ID for this request. We return it so that users can report this to us and help us debug their problems.",
+                "style": "simple",
+                "required": true,
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/Error"
+          },
+          "5XX": {
+            "$ref": "#/components/responses/Error"
+          }
+        },
+        "x-billable": false
+      },
+      "options": {
+        "tags": [
+          "hidden"
+        ],
+        "summary": "OPTIONS endpoint.",
+        "description": "This is necessary for some preflight requests, specifically POST, PUT, and DELETE.",
+        "operationId": "options_user_avatar",
+        "responses": {
+          "204": {
+            "description": "resource updated",
+            "headers": {
+              "Access-Control-Allow-Credentials": {
+                "description": "Access-Control-Allow-Credentials header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Headers": {
+                "description": "Access-Control-Allow-Headers header. This is a comma-separated list of headers.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Methods": {
+                "description": "Access-Control-Allow-Methods header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Origin": {
+                "description": "Access-Control-Allow-Origin header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Content-Location": {
+                "description": "The Content-Location header for responses that are not the final destination. This is used to indicate where the resource can be found, when it is finished.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Location": {
+                "description": "The location header for redirects and letting users know if there is a websocket they can listen to for status updates on their operation.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Set-Cookie": {
+                "description": "Set-Cookie header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "X-Api-Call-Id": {
+                "description": "ID for this request. We return it so that users can report this to us and help us debug their problems.",
+                "style": "simple",
+                "required": true,
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/Error"
+          },
+          "5XX": {
+            "$ref": "#/components/responses/Error"
+          }
+        },
+        "x-billable": false
+      }
+    },
     "/user/billing/usage-collection-threshold": {
       "get": {
         "tags": [
@@ -26524,6 +27200,208 @@
         "x-billable": false
       }
     },
+    "/user/factory/jobs/{job_id}/cancel": {
+      "post": {
+        "tags": [
+          "factory"
+        ],
+        "summary": "Cancel your Factory job before payment starts, even if no quote exists.",
+        "operationId": "cancel_user_factory_job",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "job_id",
+            "description": "The requested job's identifier.",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "Access-Control-Allow-Credentials": {
+                "description": "Access-Control-Allow-Credentials header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Headers": {
+                "description": "Access-Control-Allow-Headers header. This is a comma-separated list of headers.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Methods": {
+                "description": "Access-Control-Allow-Methods header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Origin": {
+                "description": "Access-Control-Allow-Origin header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Content-Location": {
+                "description": "The Content-Location header for responses that are not the final destination. This is used to indicate where the resource can be found, when it is finished.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Location": {
+                "description": "The location header for redirects and letting users know if there is a websocket they can listen to for status updates on their operation.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Set-Cookie": {
+                "description": "Set-Cookie header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "X-Api-Call-Id": {
+                "description": "ID for this request. We return it so that users can report this to us and help us debug their problems.",
+                "style": "simple",
+                "required": true,
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FactoryCustomerJobSummary"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/Error"
+          },
+          "5XX": {
+            "$ref": "#/components/responses/Error"
+          }
+        },
+        "x-billable": false
+      },
+      "options": {
+        "tags": [
+          "hidden"
+        ],
+        "summary": "OPTIONS endpoint.",
+        "description": "This is necessary for some preflight requests, specifically POST, PUT, and DELETE.",
+        "operationId": "options_cancel_user_factory_job",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "job_id",
+            "description": "The requested job's identifier.",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "successful operation, no content",
+            "headers": {
+              "Access-Control-Allow-Credentials": {
+                "description": "Access-Control-Allow-Credentials header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Headers": {
+                "description": "Access-Control-Allow-Headers header. This is a comma-separated list of headers.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Methods": {
+                "description": "Access-Control-Allow-Methods header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Origin": {
+                "description": "Access-Control-Allow-Origin header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Content-Location": {
+                "description": "The Content-Location header for responses that are not the final destination. This is used to indicate where the resource can be found, when it is finished.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Location": {
+                "description": "The location header for redirects and letting users know if there is a websocket they can listen to for status updates on their operation.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Set-Cookie": {
+                "description": "Set-Cookie header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "X-Api-Call-Id": {
+                "description": "ID for this request. We return it so that users can report this to us and help us debug their problems.",
+                "style": "simple",
+                "required": true,
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/Error"
+          },
+          "5XX": {
+            "$ref": "#/components/responses/Error"
+          }
+        },
+        "x-billable": false
+      }
+    },
     "/user/factory/jobs/{job_id}/files/{file_id}": {
       "get": {
         "tags": [
@@ -26670,6 +27548,243 @@
         "x-billable": false
       }
     },
+    "/user/factory/jobs/{job_id}/quotes/{quote_id}": {
+      "get": {
+        "tags": [
+          "factory"
+        ],
+        "summary": "Get your published Factory quote with its current shipping, tax, credits, and checkout total.",
+        "operationId": "get_user_factory_quote",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "job_id",
+            "description": "The manufacturing job being purchased.",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Uuid"
+            }
+          },
+          {
+            "in": "path",
+            "name": "quote_id",
+            "description": "The exact published quote accepted by the customer.",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Uuid"
+            }
+          },
+          {
+            "in": "query",
+            "name": "payment_attempt_id",
+            "description": "Identity reused by the corresponding acceptance and its transport retries.",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Uuid"
+            }
+          },
+          {
+            "in": "query",
+            "name": "use_credits",
+            "description": "Include available Zoo usage credits in the checkout estimate.",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "headers": {
+              "Access-Control-Allow-Credentials": {
+                "description": "Access-Control-Allow-Credentials header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Headers": {
+                "description": "Access-Control-Allow-Headers header. This is a comma-separated list of headers.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Methods": {
+                "description": "Access-Control-Allow-Methods header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Origin": {
+                "description": "Access-Control-Allow-Origin header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Content-Location": {
+                "description": "The Content-Location header for responses that are not the final destination. This is used to indicate where the resource can be found, when it is finished.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Location": {
+                "description": "The location header for redirects and letting users know if there is a websocket they can listen to for status updates on their operation.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Set-Cookie": {
+                "description": "Set-Cookie header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "X-Api-Call-Id": {
+                "description": "ID for this request. We return it so that users can report this to us and help us debug their problems.",
+                "style": "simple",
+                "required": true,
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FactoryQuoteDetail"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/Error"
+          },
+          "5XX": {
+            "$ref": "#/components/responses/Error"
+          }
+        },
+        "x-billable": false
+      },
+      "options": {
+        "tags": [
+          "hidden"
+        ],
+        "summary": "OPTIONS endpoint.",
+        "description": "This is necessary for some preflight requests, specifically POST, PUT, and DELETE.",
+        "operationId": "options_get_user_factory_quote",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "job_id",
+            "description": "The manufacturing job being purchased.",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Uuid"
+            }
+          },
+          {
+            "in": "path",
+            "name": "quote_id",
+            "description": "The exact published quote accepted by the customer.",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "successful operation, no content",
+            "headers": {
+              "Access-Control-Allow-Credentials": {
+                "description": "Access-Control-Allow-Credentials header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Headers": {
+                "description": "Access-Control-Allow-Headers header. This is a comma-separated list of headers.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Methods": {
+                "description": "Access-Control-Allow-Methods header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Origin": {
+                "description": "Access-Control-Allow-Origin header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Content-Location": {
+                "description": "The Content-Location header for responses that are not the final destination. This is used to indicate where the resource can be found, when it is finished.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Location": {
+                "description": "The location header for redirects and letting users know if there is a websocket they can listen to for status updates on their operation.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Set-Cookie": {
+                "description": "Set-Cookie header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "X-Api-Call-Id": {
+                "description": "ID for this request. We return it so that users can report this to us and help us debug their problems.",
+                "style": "simple",
+                "required": true,
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/Error"
+          },
+          "5XX": {
+            "$ref": "#/components/responses/Error"
+          }
+        },
+        "x-billable": false
+      }
+    },
     "/user/factory/jobs/{job_id}/quotes/{quote_id}/accept": {
       "post": {
         "tags": [
@@ -26691,6 +27806,15 @@
             "in": "path",
             "name": "quote_id",
             "description": "The exact published quote accepted by the customer.",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Uuid"
+            }
+          },
+          {
+            "in": "query",
+            "name": "payment_attempt_id",
+            "description": "Generate once for an explicit acceptance and reuse for every transport retry. A new attempt after a confirmed decline requires a new UUID.",
             "required": true,
             "schema": {
               "$ref": "#/components/schemas/Uuid"
@@ -26908,13 +28032,13 @@
         "x-billable": false
       }
     },
-    "/user/factory/jobs/{job_id}/quotes/{quote_id}/preview": {
-      "get": {
+    "/user/factory/jobs/{job_id}/quotes/{quote_id}/decline": {
+      "post": {
         "tags": [
           "factory"
         ],
-        "summary": "Preview your Factory quote's shipping, tax, credits, and total without accepting it or charging a card.",
-        "operationId": "preview_user_factory_quote",
+        "summary": "Decline your current Factory quote and close the job. No payment is created.",
+        "operationId": "decline_user_factory_quote",
         "parameters": [
           {
             "in": "path",
@@ -26932,14 +28056,6 @@
             "required": true,
             "schema": {
               "$ref": "#/components/schemas/Uuid"
-            }
-          },
-          {
-            "in": "query",
-            "name": "use_credits",
-            "description": "Include available Zoo usage credits in the checkout estimate.",
-            "schema": {
-              "type": "boolean"
             }
           }
         ],
@@ -27015,7 +28131,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/FactoryQuotePreview"
+                  "$ref": "#/components/schemas/FactoryCustomerJobSummary"
                 }
               }
             }
@@ -27035,7 +28151,7 @@
         ],
         "summary": "OPTIONS endpoint.",
         "description": "This is necessary for some preflight requests, specifically POST, PUT, and DELETE.",
-        "operationId": "options_preview_user_factory_quote",
+        "operationId": "options_decline_user_factory_quote",
         "parameters": [
           {
             "in": "path",
@@ -32195,11 +33311,29 @@
         "description": "Send multipart data with a JSON `body` part and file parts whose filenames are relative project paths. Include an optional `library_id` in the JSON to create the project in a named library:\n\n```json { \"title\": \"Bracket\", \"entrypoint_path\": \"main.kcl\", \"library_id\": \"<LIBRARY_ID>\" } ```\n\nA personal library creates a personal project. An accessible library belonging to the active organization creates an organization project with the caller as its creator; creating the project does not require library-management rights. Omitting `library_id` or passing null creates an unassigned personal project, even when the request has an active organization.\n\nThe HTTP 201 response includes `id`, `library_id`, content `revision`, and `metadata_revision`. Later saves preserve membership, even if they include a library field. Use `PUT /user/projects/{id}/library` to move or unassign an existing project instead of uploading its files again.",
         "operationId": "create_project",
         "requestBody": {
+          "description": "Send project metadata as a JSON body part and at least one file part. File part names are arbitrary, except body and event, which are reserved for JSON metadata. Each file part's filename must be its relative project path. Send the complete project snapshot, including unchanged files.",
           "content": {
             "multipart/form-data": {
               "schema": {
-                "type": "string",
-                "format": "binary"
+                "type": "object",
+                "properties": {
+                  "body": {
+                    "$ref": "#/components/schemas/CreateProjectRequest"
+                  }
+                },
+                "required": [
+                  "body"
+                ],
+                "additionalProperties": {
+                  "type": "string",
+                  "format": "binary"
+                },
+                "minProperties": 2
+              },
+              "encoding": {
+                "body": {
+                  "contentType": "application/json"
+                }
               }
             }
           },
@@ -32501,11 +33635,29 @@
           }
         ],
         "requestBody": {
+          "description": "Send project metadata as a JSON body part and at least one file part. File part names are arbitrary, except body and event, which are reserved for JSON metadata. Each file part's filename must be its relative project path. Send the complete project snapshot, including unchanged files.",
           "content": {
             "multipart/form-data": {
               "schema": {
-                "type": "string",
-                "format": "binary"
+                "type": "object",
+                "properties": {
+                  "body": {
+                    "$ref": "#/components/schemas/UpdateProjectRequest"
+                  }
+                },
+                "required": [
+                  "body"
+                ],
+                "additionalProperties": {
+                  "type": "string",
+                  "format": "binary"
+                },
+                "minProperties": 2
+              },
+              "encoding": {
+                "body": {
+                  "contentType": "application/json"
+                }
               }
             }
           },
@@ -32833,11 +33985,36 @@
           }
         ],
         "responses": {
-          "default": {
-            "description": "",
+          "200": {
+            "description": "Project files in the requested TAR or ZIP archive format.",
+            "headers": {
+              "Content-Disposition": {
+                "style": "simple",
+                "required": true,
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "X-Api-Call-Id": {
+                "style": "simple",
+                "required": true,
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
             "content": {
-              "*/*": {
-                "schema": {}
+              "application/x-tar": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              },
+              "application/zip": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
               }
             }
           },
@@ -32850,6 +34027,12 @@
                 }
               }
             }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/Error"
+          },
+          "5XX": {
+            "$ref": "#/components/responses/Error"
           }
         },
         "x-billable": false
@@ -34393,14 +35576,42 @@
             "schema": {
               "$ref": "#/components/schemas/Uuid"
             }
+          },
+          {
+            "in": "header",
+            "name": "Idempotency-Key",
+            "description": "Reuse this key and the same save contents within 24 hours to recover the original version.",
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 255
+            }
           }
         ],
         "requestBody": {
+          "description": "Send project metadata as a JSON body part and at least one file part. File part names are arbitrary, except body and event, which are reserved for JSON metadata. Each file part's filename must be its relative project path. Send the complete project snapshot, including unchanged files.",
           "content": {
             "multipart/form-data": {
               "schema": {
-                "type": "string",
-                "format": "binary"
+                "type": "object",
+                "properties": {
+                  "body": {
+                    "$ref": "#/components/schemas/CreateProjectVersionRequest"
+                  }
+                },
+                "required": [
+                  "body"
+                ],
+                "additionalProperties": {
+                  "type": "string",
+                  "format": "binary"
+                },
+                "minProperties": 2
+              },
+              "encoding": {
+                "body": {
+                  "contentType": "application/json"
+                }
               }
             }
           },
@@ -34861,11 +36072,36 @@
           }
         ],
         "responses": {
-          "default": {
-            "description": "",
+          "200": {
+            "description": "Project files in the requested TAR or ZIP archive format.",
+            "headers": {
+              "Content-Disposition": {
+                "style": "simple",
+                "required": true,
+                "schema": {
+                  "type": "string"
+                }
+              },
+              "X-Api-Call-Id": {
+                "style": "simple",
+                "required": true,
+                "schema": {
+                  "type": "string"
+                }
+              }
+            },
             "content": {
-              "*/*": {
-                "schema": {}
+              "application/x-tar": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              },
+              "application/zip": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
               }
             }
           },
@@ -34878,6 +36114,12 @@
                 }
               }
             }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/Error"
+          },
+          "5XX": {
+            "$ref": "#/components/responses/Error"
           }
         },
         "x-billable": false
@@ -37991,6 +39233,14 @@
           },
           {
             "in": "query",
+            "name": "replay_pagination",
+            "description": "Opt into paginated replay. Requires `replay=true`, a conversation, and `replay_attachment_mode=metadata_only`. Receives a first `ReplayPage` followed by older pages requested with `FetchReplayPage`.",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "in": "query",
             "name": "pr",
             "description": "Optional Pull Request number to route traffic.",
             "schema": {
@@ -38034,49 +39284,6 @@
           }
         },
         "x-billable": true,
-        "x-dropshot-websocket": {}
-      }
-    },
-    "/ws/ml/kcl-migration": {
-      "get": {
-        "tags": [
-          "ml"
-        ],
-        "summary": "Open a sponsored KCL migration connection. It cannot execute ordinary prompts.",
-        "operationId": "kcl_migration_ws",
-        "requestBody": {
-          "description": "Websocket requests",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/KclMigrationClientMessage"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "default": {
-            "description": "Websocket responses",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/KclMigrationServerMessage"
-                }
-              }
-            }
-          },
-          "101": {
-            "description": "Negotiating protocol upgrade from HTTP/1.1 to WebSocket"
-          },
-          "4XX": {
-            "$ref": "#/components/responses/Error"
-          },
-          "5XX": {
-            "$ref": "#/components/responses/Error"
-          }
-        },
-        "x-billable": false,
         "x-dropshot-websocket": {}
       }
     },
@@ -38429,6 +39636,30 @@
             "type": "string"
           }
         }
+      },
+      "AddressContent": {
+        "description": "Address contents. Ownership, saved-address labels, and shipping speed are separate.",
+        "type": "object",
+        "properties": {
+          "contact": {
+            "default": {
+              "company": "",
+              "phone": "",
+              "recipient": ""
+            },
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AddressContact"
+              }
+            ]
+          },
+          "postal": {
+            "$ref": "#/components/schemas/AddressDetails"
+          }
+        },
+        "required": [
+          "postal"
+        ]
       },
       "AddressDetails": {
         "description": "Address details.",
@@ -42816,6 +44047,43 @@
           "scope"
         ]
       },
+      "CreateProjectRequest": {
+        "description": "Request payload for creating or replacing a user-owned project.",
+        "type": "object",
+        "properties": {
+          "category_ids": {
+            "description": "Selected submission categories for the project. New assignments must be active; updates may retain already assigned inactive categories.",
+            "default": [],
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Uuid"
+            }
+          },
+          "description": {
+            "description": "User-facing description for the new project.",
+            "default": "",
+            "type": "string"
+          },
+          "entrypoint_path": {
+            "description": "Relative path to the project's entrypoint file.",
+            "default": "main.kcl",
+            "type": "string"
+          },
+          "library_id": {
+            "$ref": "#/components/schemas/Uuid"
+          },
+          "publication_status": {
+            "$ref": "#/components/schemas/KclProjectPublicationStatus"
+          },
+          "title": {
+            "description": "User-facing title for the new project.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "title"
+        ]
+      },
       "CreateProjectShareLinkRequest": {
         "description": "Request payload for creating a new project share link.",
         "type": "object",
@@ -42830,6 +44098,41 @@
             ]
           }
         }
+      },
+      "CreateProjectVersionRequest": {
+        "description": "Request payload for saving a version without changing the current version.",
+        "type": "object",
+        "properties": {
+          "deleted_paths": {
+            "nullable": true,
+            "description": "Paths intentionally omitted from the chosen parent version.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "description": {
+            "description": "Description saved with the new version.",
+            "default": "",
+            "type": "string"
+          },
+          "entrypoint_path": {
+            "description": "Relative path to the new version's entrypoint KCL file.",
+            "default": "main.kcl",
+            "type": "string"
+          },
+          "parent_version_id": {
+            "$ref": "#/components/schemas/Uuid"
+          },
+          "title": {
+            "description": "Title saved with the new version.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "parent_version_id",
+          "title"
+        ]
       },
       "CreateProjectVersionResponse": {
         "description": "Result of saving an alternate project version.",
@@ -46006,6 +47309,10 @@
               }
             ]
           },
+          "is_expedited": {
+            "description": "Whether the job requests expedited shipping.",
+            "type": "boolean"
+          },
           "job": {
             "description": "The same summary returned by the customer job list.",
             "allOf": [
@@ -46022,9 +47329,19 @@
                 "$ref": "#/components/schemas/FactoryCustomerQuote"
               }
             ]
+          },
+          "shipping_info": {
+            "nullable": true,
+            "description": "Pinned delivery address, if it remains available to the job's owner.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/AddressContent"
+              }
+            ]
           }
         },
         "required": [
+          "is_expedited",
           "job"
         ]
       },
@@ -46321,6 +47638,32 @@
         "required": [
           "invoice",
           "job"
+        ]
+      },
+      "FactoryQuoteDetail": {
+        "description": "A published customer offer and its current checkout amounts.",
+        "type": "object",
+        "properties": {
+          "pricing": {
+            "description": "Shipping, tax, credits, and cash due for the selected payment attempt.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/FactoryQuotePreview"
+              }
+            ]
+          },
+          "quote": {
+            "description": "The customer-visible offer, excluding internal costs and worksheet notes.",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/FactoryCustomerQuote"
+              }
+            ]
+          }
+        },
+        "required": [
+          "pricing",
+          "quote"
         ]
       },
       "FactoryQuotePreview": {
@@ -46654,6 +47997,13 @@
             "type": "string",
             "enum": [
               "zookeeper_client_commands"
+            ]
+          },
+          {
+            "description": "Enables the Pydantic AI runtime for supported Zookeeper turns.",
+            "type": "string",
+            "enum": [
+              "zookeeper_pydantic_ai"
             ]
           },
           {
@@ -47147,6 +48497,13 @@
             "enum": [
               "stl"
             ]
+          },
+          {
+            "description": "The 3DM file format. <https://deepwiki.com/mcneel/rhino3dm/6.1-3dm-file-format>",
+            "type": "string",
+            "enum": [
+              "rhino"
+            ]
           }
         ]
       },
@@ -47242,6 +48599,13 @@
             "type": "string",
             "enum": [
               "stl"
+            ]
+          },
+          {
+            "description": "The 3DM file format. <https://deepwiki.com/mcneel/rhino3dm/6.1-3dm-file-format>",
+            "type": "string",
+            "enum": [
+              "rhino"
             ]
           }
         ]
@@ -47772,6 +49136,32 @@
       "HandleMouseDragStart": {
         "description": "The response from the `HandleMouseDragStart` endpoint.",
         "type": "object"
+      },
+      "HiddenState": {
+        "description": "Visibility of an object, or whether the requested object does not exist.",
+        "oneOf": [
+          {
+            "description": "The object exists and is hidden.",
+            "type": "string",
+            "enum": [
+              "hidden"
+            ]
+          },
+          {
+            "description": "The object exists and is visible.",
+            "type": "string",
+            "enum": [
+              "visible"
+            ]
+          },
+          {
+            "description": "No object exists for the requested UUID.",
+            "type": "string",
+            "enum": [
+              "no_such_object"
+            ]
+          }
+        ]
       },
       "HighlightSetEntities": {
         "description": "The response from the `HighlightSetEntities` endpoint.",
@@ -48412,6 +49802,39 @@
               "type",
               "units"
             ]
+          },
+          {
+            "description": "Rhino (3dm) file format",
+            "type": "object",
+            "properties": {
+              "coords": {
+                "description": "Co-ordinate system of input data.\n\nDefaults to the [KittyCAD co-ordinate system].\n\n[KittyCAD co-ordinate system]: ../coord/constant.KITTYCAD.html",
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/System"
+                  }
+                ]
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "rhino"
+                ]
+              },
+              "units": {
+                "description": "The units of the input data.\n\nThis is very important for correct scaling and when calculating physics properties like mass, etc.\n\nDefaults to millimeters.",
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/UnitLength"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "coords",
+              "type",
+              "units"
+            ]
           }
         ]
       },
@@ -48989,290 +50412,13 @@
           "path"
         ]
       },
-      "KclMigrationApplication": {
-        "description": "A revision-fenced acknowledgement from the client that owns the project files.",
-        "type": "object",
-        "properties": {
-          "revision": {
-            "description": "Starts at zero. Each accepted state change increments it once.",
-            "type": "integer",
-            "format": "uint32",
-            "minimum": 0
-          },
-          "status": {
-            "description": "Last reported state; not independent verification of local files.",
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/KclMigrationApplicationStatus"
-              }
-            ]
-          }
-        },
-        "required": [
-          "revision",
-          "status"
-        ]
-      },
-      "KclMigrationApplicationStatus": {
-        "description": "Client-reported application state, separate from conversion success.",
-        "oneOf": [
-          {
-            "description": "The client has not confirmed application. API does not infer project state.",
-            "type": "string",
-            "enum": [
-              "not_applied"
-            ]
-          },
-          {
-            "description": "The client reports completing the guarded project write (or redo).",
-            "type": "string",
-            "enum": [
-              "applied"
-            ]
-          },
-          {
-            "description": "The client reports undoing the migration.",
-            "type": "string",
-            "enum": [
-              "undone"
-            ]
-          }
-        ]
-      },
-      "KclMigrationClientMessage": {
-        "description": "The restricted public migration connection never accepts ordinary prompts.",
-        "oneOf": [
-          {
-            "description": "Authenticate the connection.",
-            "type": "object",
-            "properties": {
-              "headers": {
-                "type": "object",
-                "additionalProperties": {
-                  "type": "string"
-                }
-              },
-              "type": {
-                "type": "string",
-                "enum": [
-                  "headers"
-                ]
-              }
-            },
-            "required": [
-              "headers",
-              "type"
-            ],
-            "additionalProperties": false
-          },
-          {
-            "description": "Start or retrieve the same attempt after a delivery retry.",
-            "type": "object",
-            "properties": {
-              "request": {
-                "$ref": "#/components/schemas/KclMigrationRequest"
-              },
-              "type": {
-                "type": "string",
-                "enum": [
-                  "start"
-                ]
-              }
-            },
-            "required": [
-              "request",
-              "type"
-            ],
-            "additionalProperties": false
-          },
-          {
-            "description": "Read an existing attempt without resuming it or changing its deadline.",
-            "type": "object",
-            "properties": {
-              "operation_id": {
-                "$ref": "#/components/schemas/Uuid"
-              },
-              "type": {
-                "type": "string",
-                "enum": [
-                  "status"
-                ]
-              }
-            },
-            "required": [
-              "operation_id",
-              "type"
-            ],
-            "additionalProperties": false
-          },
-          {
-            "description": "Cancel an existing attempt. Cancellation is idempotent.",
-            "type": "object",
-            "properties": {
-              "operation_id": {
-                "$ref": "#/components/schemas/Uuid"
-              },
-              "type": {
-                "type": "string",
-                "enum": [
-                  "cancel"
-                ]
-              }
-            },
-            "required": [
-              "operation_id",
-              "type"
-            ],
-            "additionalProperties": false
-          },
-          {
-            "description": "Read linked migration summaries, newest first, without loading or applying files.",
-            "type": "object",
-            "properties": {
-              "conversation_id": {
-                "$ref": "#/components/schemas/Uuid"
-              },
-              "type": {
-                "type": "string",
-                "enum": [
-                  "history"
-                ]
-              }
-            },
-            "required": [
-              "conversation_id",
-              "type"
-            ],
-            "additionalProperties": false
-          },
-          {
-            "description": "Acknowledge a successful local apply/undo/redo. Does not execute or charge work.",
-            "type": "object",
-            "properties": {
-              "expected_revision": {
-                "description": "The revision read before making the local change. Retrying is idempotent.",
-                "type": "integer",
-                "format": "uint32",
-                "minimum": 0
-              },
-              "operation_id": {
-                "$ref": "#/components/schemas/Uuid"
-              },
-              "status": {
-                "$ref": "#/components/schemas/KclMigrationApplicationStatus"
-              },
-              "type": {
-                "type": "string",
-                "enum": [
-                  "application"
-                ]
-              }
-            },
-            "required": [
-              "expected_revision",
-              "operation_id",
-              "status",
-              "type"
-            ],
-            "additionalProperties": false
-          },
-          {
-            "description": "Application heartbeat.",
-            "type": "object",
-            "properties": {
-              "type": {
-                "type": "string",
-                "enum": [
-                  "ping"
-                ]
-              }
-            },
-            "required": [
-              "type"
-            ],
-            "additionalProperties": false
-          }
-        ]
-      },
-      "KclMigrationHistoryEntry": {
-        "description": "Read-only conversation entry. It contains no files, edits or provider checkpoints.",
-        "type": "object",
-        "properties": {
-          "after_prompt_id": {
-            "nullable": true,
-            "description": "Place this entry after this ordinary prompt when replaying the conversation.",
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/Uuid"
-              }
-            ]
-          },
-          "application": {
-            "description": "Most recent client acknowledgement.",
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/KclMigrationApplication"
-              }
-            ]
-          },
-          "conversation_id": {
-            "description": "Conversation that owns this entry.",
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/Uuid"
-              }
-            ]
-          },
-          "created_at": {
-            "description": "Admission time, used for chronological display.",
-            "type": "string",
-            "format": "date-time"
-          },
-          "detail": {
-            "description": "Outcome summary for display and subsequent model context.",
-            "type": "string"
-          },
-          "operation_id": {
-            "description": "Migration request ID. Use the status command to retrieve a candidate explicitly.",
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/Uuid"
-              }
-            ]
-          },
-          "prompt_id": {
-            "nullable": true,
-            "description": "Persisted Copilot prompt, when this migration has a conversation transcript.",
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/Uuid"
-              }
-            ]
-          },
-          "status": {
-            "description": "Conversion outcome. Success alone does not mean files were applied.",
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/KclMigrationStatus"
-              }
-            ]
-          }
-        },
-        "required": [
-          "application",
-          "conversation_id",
-          "created_at",
-          "detail",
-          "operation_id",
-          "status"
-        ]
-      },
       "KclMigrationOperation": {
         "description": "Persisted operation state, safe to retrieve again without starting new work.",
         "type": "object",
         "properties": {
           "deadline": {
-            "description": "Original deadline, including preparation and validation. Never extended.",
+            "nullable": true,
+            "description": "Admission setup expiry, cleared before Copilot execution begins.",
             "type": "string",
             "format": "date-time"
           },
@@ -49285,7 +50431,7 @@
             ]
           },
           "project_snapshot": {
-            "description": "Source revision, retained for conflict detection when applying the result.",
+            "description": "Original project revision captured for this attempt.",
             "allOf": [
               {
                 "$ref": "#/components/schemas/MlCopilotProjectSnapshotMetadata"
@@ -49294,7 +50440,7 @@
           },
           "result": {
             "nullable": true,
-            "description": "Terminal result, if available. The review itself has no execution deadline.",
+            "description": "Terminal result, if available.",
             "allOf": [
               {
                 "$ref": "#/components/schemas/KclMigrationResult"
@@ -49319,7 +50465,6 @@
           }
         },
         "required": [
-          "deadline",
           "id",
           "project_snapshot",
           "status",
@@ -49361,7 +50506,7 @@
             "type": "string"
           },
           "project_snapshot": {
-            "description": "Revision against which the user will review and apply the candidate.",
+            "description": "Original project revision captured when the migration starts.",
             "allOf": [
               {
                 "$ref": "#/components/schemas/MlCopilotProjectSnapshotMetadata"
@@ -49395,7 +50540,7 @@
         "additionalProperties": false
       },
       "KclMigrationResult": {
-        "description": "A worker's terminal candidate, held separately from ordinary project edits.",
+        "description": "A migration's terminal outcome and validation evidence.",
         "type": "object",
         "properties": {
           "conversion_not_started": {
@@ -49408,7 +50553,7 @@
             "type": "string"
           },
           "files": {
-            "description": "Candidate project, returned only after successful validation.",
+            "description": "Final project supplied by the worker on success. Copilot's persisted outcome omits these bytes because edits were already delivered live.",
             "default": {},
             "type": "object",
             "additionalProperties": {
@@ -49443,146 +50588,6 @@
           "status"
         ]
       },
-      "KclMigrationServerMessage": {
-        "description": "Public responses never contain ordinary auto-applying tool results.",
-        "oneOf": [
-          {
-            "description": "Current durable state, including a reviewable candidate when successful.",
-            "type": "object",
-            "properties": {
-              "operation": {
-                "$ref": "#/components/schemas/KclMigrationOperation"
-              },
-              "type": {
-                "type": "string",
-                "enum": [
-                  "operation"
-                ]
-              }
-            },
-            "required": [
-              "operation",
-              "type"
-            ]
-          },
-          {
-            "description": "Best-effort, display-only progress on the execution connection. Only text, informational and supported reasoning messages are forwarded; candidate edits are returned solely in a validated terminal operation.",
-            "type": "object",
-            "properties": {
-              "message": {
-                "description": "Existing Copilot display message. Never dispatch it as a project edit.",
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/MlCopilotServerMessage"
-                  }
-                ]
-              },
-              "operation_id": {
-                "description": "The initiating request ID, used to keep progress with its migration.",
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/Uuid"
-                  }
-                ]
-              },
-              "type": {
-                "type": "string",
-                "enum": [
-                  "progress"
-                ]
-              }
-            },
-            "required": [
-              "message",
-              "operation_id",
-              "type"
-            ]
-          },
-          {
-            "description": "Read-only history; never route these entries through file-edit handlers.",
-            "type": "object",
-            "properties": {
-              "conversation_id": {
-                "$ref": "#/components/schemas/Uuid"
-              },
-              "entries": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/KclMigrationHistoryEntry"
-                }
-              },
-              "type": {
-                "type": "string",
-                "enum": [
-                  "history"
-                ]
-              }
-            },
-            "required": [
-              "conversation_id",
-              "entries",
-              "type"
-            ]
-          },
-          {
-            "description": "Current durable application acknowledgement.",
-            "type": "object",
-            "properties": {
-              "application": {
-                "$ref": "#/components/schemas/KclMigrationApplication"
-              },
-              "operation_id": {
-                "$ref": "#/components/schemas/Uuid"
-              },
-              "type": {
-                "type": "string",
-                "enum": [
-                  "application"
-                ]
-              }
-            },
-            "required": [
-              "application",
-              "operation_id",
-              "type"
-            ]
-          },
-          {
-            "description": "A rejected request, without starting or charging for work.",
-            "type": "object",
-            "properties": {
-              "detail": {
-                "type": "string"
-              },
-              "type": {
-                "type": "string",
-                "enum": [
-                  "error"
-                ]
-              }
-            },
-            "required": [
-              "detail",
-              "type"
-            ]
-          },
-          {
-            "description": "Heartbeat response.",
-            "type": "object",
-            "properties": {
-              "type": {
-                "type": "string",
-                "enum": [
-                  "pong"
-                ]
-              }
-            },
-            "required": [
-              "type"
-            ]
-          }
-        ]
-      },
       "KclMigrationStatus": {
         "description": "Durable state of a migration attempt.",
         "oneOf": [
@@ -49594,7 +50599,7 @@
             ]
           },
           {
-            "description": "A validated candidate is ready for review. No project has been applied.",
+            "description": "Conversion and final validation succeeded. Copilot delivers edits live.",
             "type": "string",
             "enum": [
               "succeeded"
@@ -49608,14 +50613,14 @@
             ]
           },
           {
-            "description": "The original execution deadline expired.",
+            "description": "Admission setup expired before execution could begin.",
             "type": "string",
             "enum": [
               "timed_out"
             ]
           },
           {
-            "description": "The attempt was cancelled, including loss of its execution connection.",
+            "description": "The attempt was cancelled.",
             "type": "string",
             "enum": [
               "cancelled"
@@ -49657,7 +50662,7 @@
         ]
       },
       "KclMigrationValidation": {
-        "description": "Evidence required before a candidate may be returned as successful.",
+        "description": "Evidence required before a migration may be reported as successful.",
         "type": "object",
         "properties": {
           "behavior_preserved": {
@@ -50654,7 +51659,7 @@
             "type": "object",
             "properties": {
               "request": {
-                "description": "Complete isolated input. API binds it to the active conversation; a supplied conversation ID must match that conversation.",
+                "description": "Complete original project. API binds it to the active conversation; a supplied conversation ID must match that conversation.",
                 "allOf": [
                   {
                     "$ref": "#/components/schemas/KclMigrationRequest"
@@ -50670,46 +51675,6 @@
             },
             "required": [
               "request",
-              "type"
-            ]
-          },
-          {
-            "description": "Report Apply/Undo/Redo without creating or charging for a chat turn.",
-            "type": "object",
-            "properties": {
-              "expected_revision": {
-                "description": "Last acknowledged revision. Retrying the same change is idempotent.",
-                "type": "integer",
-                "format": "uint32",
-                "minimum": 0
-              },
-              "operation_id": {
-                "description": "Migration request ID, independent of the connection and prompt IDs.",
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/Uuid"
-                  }
-                ]
-              },
-              "status": {
-                "description": "Client-reported project state.",
-                "allOf": [
-                  {
-                    "$ref": "#/components/schemas/KclMigrationApplicationStatus"
-                  }
-                ]
-              },
-              "type": {
-                "type": "string",
-                "enum": [
-                  "kcl_migration_application"
-                ]
-              }
-            },
-            "required": [
-              "expected_revision",
-              "operation_id",
-              "status",
               "type"
             ]
           },
@@ -50910,6 +51875,35 @@
               "status",
               "type"
             ]
+          },
+          {
+            "description": "Request an older history page on an opted-in paginated connection. Cursors are single-use after a successful page; retry failed loads with the same cursor.",
+            "type": "object",
+            "properties": {
+              "cursor": {
+                "description": "Opaque, connection-scoped token returned by the previous page. It is not an attachment reference or a persisted message coordinate.",
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/Uuid"
+                  }
+                ]
+              },
+              "request_id": {
+                "description": "Client identifier echoed in the page response or error.",
+                "type": "string"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "fetch_replay_page"
+                ]
+              }
+            },
+            "required": [
+              "cursor",
+              "request_id",
+              "type"
+            ]
           }
         ]
       },
@@ -51098,6 +52092,39 @@
           }
         ]
       },
+      "MlCopilotReplayPageErrorCode": {
+        "description": "Machine-readable failures for paginated client history, independent of generation.",
+        "oneOf": [
+          {
+            "description": "Pagination is not available on this connection.",
+            "type": "string",
+            "enum": [
+              "unavailable"
+            ]
+          },
+          {
+            "description": "The connection query does not satisfy pagination requirements.",
+            "type": "string",
+            "enum": [
+              "invalid_request"
+            ]
+          },
+          {
+            "description": "The continuation expired, belongs to another connection, or its boundary no longer exists. The client must start a new replay instead of retrying it.",
+            "type": "string",
+            "enum": [
+              "invalid_cursor"
+            ]
+          },
+          {
+            "description": "A transient page load failure; the same request may be retried.",
+            "type": "string",
+            "enum": [
+              "load_failed"
+            ]
+          }
+        ]
+      },
       "MlCopilotServerMessage": {
         "description": "The types of messages that can be sent by the server to the client.",
         "oneOf": [
@@ -51265,7 +52292,7 @@
             "additionalProperties": false
           },
           {
-            "description": "API-owned migration state. Candidate files are released only after API validates and stores the worker result. Replaying conversation history must not apply these files again.",
+            "description": "API-owned migration state for an existing attempt. Edits use ordinary Copilot delivery; replaying this state must not apply them again.",
             "type": "object",
             "properties": {
               "kcl_migration_operation": {
@@ -51287,41 +52314,6 @@
             },
             "required": [
               "kcl_migration_operation"
-            ],
-            "additionalProperties": false
-          },
-          {
-            "description": "Acknowledge the client's reported Apply/Undo/Redo state.",
-            "type": "object",
-            "properties": {
-              "kcl_migration_application": {
-                "type": "object",
-                "properties": {
-                  "application": {
-                    "description": "Accepted state and revision for subsequent acknowledgements.",
-                    "allOf": [
-                      {
-                        "$ref": "#/components/schemas/KclMigrationApplication"
-                      }
-                    ]
-                  },
-                  "operation_id": {
-                    "description": "Migration request ID.",
-                    "allOf": [
-                      {
-                        "$ref": "#/components/schemas/Uuid"
-                      }
-                    ]
-                  }
-                },
-                "required": [
-                  "application",
-                  "operation_id"
-                ]
-              }
-            },
-            "required": [
-              "kcl_migration_application"
             ],
             "additionalProperties": false
           },
@@ -51569,6 +52561,17 @@
             },
             "required": [
               "reasoning"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "description": "User-facing progress, separate from model reasoning.",
+            "type": "object",
+            "properties": {
+              "activity": {}
+            },
+            "required": [
+              "activity"
             ],
             "additionalProperties": false
           },
@@ -51972,6 +52975,95 @@
             },
             "required": [
               "attachments_error"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "description": "A metadata-only history page. Not persisted or forwarded to the backend. Pages use MessagePack, as does legacy `Replay`. Only opted-in connections receive pages.",
+            "type": "object",
+            "properties": {
+              "replay_page": {
+                "type": "object",
+                "properties": {
+                  "conversation_id": {
+                    "description": "Conversation whose history this page belongs to.",
+                    "allOf": [
+                      {
+                        "$ref": "#/components/schemas/Uuid"
+                      }
+                    ]
+                  },
+                  "messages": {
+                    "description": "Canonical message bytes in chronological order, as in `Replay`.",
+                    "type": "array",
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "type": "integer",
+                        "format": "uint8",
+                        "minimum": 0
+                      }
+                    }
+                  },
+                  "next_cursor": {
+                    "nullable": true,
+                    "description": "Connection-scoped token for older history; absent when history is exhausted.",
+                    "allOf": [
+                      {
+                        "$ref": "#/components/schemas/Uuid"
+                      }
+                    ]
+                  },
+                  "request_id": {
+                    "nullable": true,
+                    "description": "Absent for the initial page; otherwise echoes `FetchReplayPage.request_id`.",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "conversation_id",
+                  "messages"
+                ]
+              }
+            },
+            "required": [
+              "replay_page"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "description": "Page-specific failure. Does not indicate a generation failure.",
+            "type": "object",
+            "properties": {
+              "replay_page_error": {
+                "type": "object",
+                "properties": {
+                  "code": {
+                    "description": "Machine-readable reason and retry behavior.",
+                    "allOf": [
+                      {
+                        "$ref": "#/components/schemas/MlCopilotReplayPageErrorCode"
+                      }
+                    ]
+                  },
+                  "detail": {
+                    "description": "Client readable error detail, without persisted message contents.",
+                    "type": "string"
+                  },
+                  "request_id": {
+                    "nullable": true,
+                    "description": "Absent for connection-query errors; otherwise echoes the failed request.",
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "code",
+                  "detail"
+                ]
+              }
+            },
+            "required": [
+              "replay_page_error"
             ],
             "additionalProperties": false
           }
@@ -54870,6 +55962,30 @@
             "required": [
               "hidden",
               "object_id",
+              "type"
+            ]
+          },
+          {
+            "description": "Query whether each object is hidden, preserving input order. Missing objects are reported as `no_such_object` in the response.",
+            "type": "object",
+            "properties": {
+              "object_ids": {
+                "description": "The IDs of the objects to query. Order and duplicates are preserved. An empty list returns an empty result.",
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "format": "uuid"
+                }
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "object_is_hidden"
+                ]
+              }
+            },
+            "required": [
+              "object_ids",
               "type"
             ]
           },
@@ -58693,6 +59809,22 @@
         "description": "The response from the `ObjectBringToFront` endpoint.",
         "type": "object"
       },
+      "ObjectIsHidden": {
+        "description": "The response from the `ObjectIsHidden` endpoint.",
+        "type": "object",
+        "properties": {
+          "hidden": {
+            "description": "The hidden or missing-object state of each UUID, in the same order as `object_ids`. Contains one entry per requested ID, including duplicates.",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/HiddenState"
+            }
+          }
+        },
+        "required": [
+          "hidden"
+        ]
+      },
       "ObjectSetMaterialParamsPbr": {
         "description": "The response from the `ObjectSetMaterialParamsPbr` endpoint.",
         "type": "object"
@@ -59241,6 +60373,24 @@
                 "type": "string",
                 "enum": [
                   "object_visible"
+                ]
+              }
+            },
+            "required": [
+              "data",
+              "type"
+            ]
+          },
+          {
+            "type": "object",
+            "properties": {
+              "data": {
+                "$ref": "#/components/schemas/ObjectIsHidden"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "object_is_hidden"
                 ]
               }
             },
@@ -63739,6 +64889,39 @@
               "coords",
               "selection",
               "storage",
+              "type",
+              "units"
+            ]
+          },
+          {
+            "description": "Rhino (3dm) file format",
+            "type": "object",
+            "properties": {
+              "coords": {
+                "description": "Co-ordinate system of output data.\n\nDefaults to the [KittyCAD co-ordinate system].\n\n[KittyCAD co-ordinate system]: ../coord/constant.KITTYCAD.html",
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/System"
+                  }
+                ]
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "rhino"
+                ]
+              },
+              "units": {
+                "description": "Export length unit.\n\nDefaults to millimeters.",
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/UnitLength"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "coords",
               "type",
               "units"
             ]
@@ -70896,6 +72079,56 @@
           "expected_revision"
         ]
       },
+      "UpdateProjectRequest": {
+        "description": "Request payload for replacing a user-owned project.",
+        "type": "object",
+        "properties": {
+          "category_ids": {
+            "description": "Selected submission categories for the project. New assignments must be active; updates may retain already assigned inactive categories.",
+            "default": [],
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Uuid"
+            }
+          },
+          "deleted_paths": {
+            "nullable": true,
+            "description": "Relative paths intentionally omitted from this whole-project replacement.\n\nWhen present, this must exactly match the non-preview files removed from the currently acknowledged project version.",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "description": {
+            "description": "User-facing description for the new project.",
+            "default": "",
+            "type": "string"
+          },
+          "entrypoint_path": {
+            "description": "Relative path to the project's entrypoint file.",
+            "default": "main.kcl",
+            "type": "string"
+          },
+          "expected_revision": {
+            "nullable": true,
+            "description": "Optional optimistic concurrency token from the last project response.",
+            "type": "string"
+          },
+          "library_id": {
+            "$ref": "#/components/schemas/Uuid"
+          },
+          "publication_status": {
+            "$ref": "#/components/schemas/KclProjectPublicationStatus"
+          },
+          "title": {
+            "description": "User-facing title for the new project.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "title"
+        ]
+      },
       "UpdateShortlinkRequest": {
         "description": "Request to update a shortlink.",
         "type": "object",
@@ -70941,7 +72174,7 @@
           },
           "image": {
             "title": "String",
-            "description": "The image URL for the user. NOTE: If the user uses an OAuth2 provider, this will be overwritten by the provider's image URL when the user logs in next.",
+            "description": "The image URL for the user. A non-empty URL replaces the photo. An empty URL leaves it unchanged. Use DELETE /user/avatar to remove the photo and prevent provider imports.",
             "type": "string",
             "format": "uri"
           },
@@ -72103,14 +73336,14 @@
         "description": "The Zoo tools that can make API calls.",
         "oneOf": [
           {
-            "description": "The modeling app.",
+            "description": "Design Studio and verified Zookeeper callbacks.",
             "type": "string",
             "enum": [
               "modeling_app"
             ]
           },
           {
-            "description": "Zookeeper callbacks to the API.",
+            "description": "Legacy Text-to-CAD entitlement, retained for existing plan records.",
             "type": "string",
             "enum": [
               "text_to_cad"

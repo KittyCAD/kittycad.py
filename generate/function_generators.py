@@ -10,64 +10,14 @@ from .utils import (
 )
 
 
-def _generate_docstring_with_examples(
-    endpoint: dict, file_info: dict, request_body_type: str | None
-) -> str:
-    """Generate docstring with usage examples for endpoints."""
-    base_docs = endpoint.get("description", endpoint.get("summary", ""))
+def _generate_docstring_with_examples(endpoint: dict, file_info: dict) -> str:
+    """Reuse the generated endpoint example for multipart method documentation."""
+    docs = endpoint.get("description", endpoint.get("summary", ""))
+    example = endpoint.get("x-python", {}).get("example")
+    if file_info.get("has_json_body_multipart") and example:
+        docs += f"\n\nExamples:\n```python\n{example}\n```"
     # Preserve literal backslashes when the docs are embedded in Python source.
-    base_docs = base_docs.replace("\\", "\\\\")
-
-    # Add examples for JSON + multipart endpoints
-    if file_info.get("has_json_body_multipart", False):
-        examples = f"""
-
-Examples:
-    Basic usage with file attachments:
-    
-    ```python
-    from pathlib import Path
-    from kittycad.models.{camel_to_snake(request_body_type) if request_body_type else "text_to_cad_multi_file_iteration_body"} import {request_body_type or "TextToCadMultiFileIterationBody"}
-    
-    # Create the request body
-    body = {request_body_type or "TextToCadMultiFileIterationBody"}(
-        # Add your parameters here
-    )
-    
-    # Prepare file attachments
-    file_attachments = {{
-        "main.kcl": Path("path/to/main.kcl"),
-        "helper.kcl": Path("path/to/helper.kcl"),
-    }}
-    
-    # Make the request
-    result = client.{camel_to_snake(endpoint.get("operationId", ""))}(
-        body=body,
-        file_attachments=file_attachments,
-    )
-    ```
-    
-    Using different file types:
-    
-    ```python
-    from io import BytesIO
-    
-    # Mix of file paths and file-like objects
-    file_attachments = {{
-        "main.kcl": Path("main.kcl"),
-        "config.kcl": BytesIO(b"// KCL configuration"),
-        "data.json": "path/to/data.json",
-    }}
-    
-    result = client.{camel_to_snake(endpoint.get("operationId", ""))}(
-        body=body,
-        file_attachments=file_attachments,
-    )
-    ```
-    """
-        return base_docs + examples
-
-    return base_docs
+    return docs.replace("\\", "\\\\")
 
 
 def generate_sync_function(path: str, method: str, endpoint: dict, data: dict) -> str:
@@ -158,9 +108,7 @@ def generate_sync_function(path: str, method: str, endpoint: dict, data: dict) -
         "has_request_body": has_body_param,
         "request_body_type": request_body_type,
         "args": args,
-        "docs": _generate_docstring_with_examples(
-            endpoint, file_info, request_body_type
-        ),
+        "docs": _generate_docstring_with_examples(endpoint, file_info),
         "file_info": file_info,  # Add file operation info to context
     }
 
@@ -262,9 +210,7 @@ def generate_async_function(path: str, method: str, endpoint: dict, data: dict) 
         "has_request_body": has_body_param,
         "request_body_type": request_body_type,
         "args": args,
-        "docs": _generate_docstring_with_examples(
-            endpoint, file_info, request_body_type
-        ),
+        "docs": _generate_docstring_with_examples(endpoint, file_info),
         "file_info": file_info,  # Add file operation info to context
     }
 

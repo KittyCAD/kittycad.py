@@ -6,6 +6,7 @@ This module provides utilities to detect when API endpoints involve file operati
 
 from typing import Any, Dict, List, Optional
 
+from .schema_utils import get_request_body_type_schema
 from .utils import (
     FILE_DOWNLOAD_CONTENT_TYPES,
     FILE_UPLOAD_CONTENT_TYPES,
@@ -284,6 +285,12 @@ def extract_file_parameter_info(endpoint: dict, data: dict) -> Dict[str, Any]:
         .get("schema", {})
     )
     part_schema = multipart_schema.get("additionalProperties")
+    info["filenames_from_keys"] = (
+        isinstance(part_schema, dict) and part_schema.get("format") == "binary"
+    )
+    info["requires_file_attachments"] = multipart_schema.get("minProperties", 0) > len(
+        multipart_schema.get("properties", {})
+    )
     info["binary_or_files"] = (
         "application/octet-stream" in info["upload_content_types"]
         and isinstance(part_schema, dict)
@@ -296,8 +303,12 @@ def extract_file_parameter_info(endpoint: dict, data: dict) -> Dict[str, Any]:
         info["download_strategy"] = determine_download_strategy(endpoint)
         info["download_content_types"] = get_download_content_types(endpoint)
 
-    info["binary_response"] = (
-        "application/octet-stream" in info["download_content_types"]
+    info["binary_response"] = any(
+        content_type == "application/octet-stream"
+        or media.get("schema", {}).get("format") == "binary"
+        for status, response in endpoint.get("responses", {}).items()
+        if str(status).startswith("2")
+        for content_type, media in response.get("content", {}).items()
     )
 
     # Check for JSON body + multipart pattern
@@ -343,14 +354,8 @@ def _extract_json_body_schema(endpoint: dict, data: dict) -> Optional[str]:
     if "schema" not in multipart_content:
         return None
 
-    schema = multipart_content["schema"]
-
-    # Handle $ref schemas
-    if "$ref" in schema:
-        ref_name = resolve_schema_ref(schema["$ref"])
-        return ref_name
-
-    return None
+    name, _ = get_request_body_type_schema(endpoint, data)
+    return name
 
 
 def _extract_multipart_file_params(endpoint: dict, data: dict) -> List[Dict[str, Any]]:

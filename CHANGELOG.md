@@ -7,6 +7,56 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Changed
+
+- Regenerate from API `main` at `b8a9549c95e9e59d914a783484b67cbef798b353`.
+- Generate typed metadata and file attachment arguments for project creation,
+  replacement, and version saves. Attachment keys become relative project
+  filenames, including when uploading bytes or streams. Project replacement uses
+  PUT, and version saves accept an optional `idempotency_key`.
+- Project downloads now stream TAR or ZIP archives through context managers.
+  File ID lists use the API's comma-separated query encoding.
+- Factory quote retrieval and acceptance now require a payment attempt ID.
+  KCL migrations use the ordinary Copilot connection; the dedicated migration
+  WebSocket and application acknowledgement models are no longer in the spec.
+
+### Migration
+
+- Pass a `CreateProjectRequest`, `UpdateProjectRequest`, or
+  `CreateProjectVersionRequest` as `body`, plus a nonempty `file_attachments`
+  mapping. Keys are relative project paths; `body` and `event` are reserved.
+  Upload a complete project snapshot, including unchanged files:
+
+  ```python
+  from pathlib import Path
+  from kittycad.models import CreateProjectRequest
+
+  project = client.projects.create_project(
+      body=CreateProjectRequest(title="Bracket"),
+      file_attachments={"main.kcl": Path("main.kcl")},
+  )
+  ```
+
+- Read downloads inside `with client.projects.download_project(id) as response`
+  and consume `response.iter_bytes()`. For the async client, use
+  `async with client.projects.download_project(id) as response` and
+  `response.aiter_bytes()`. The same pattern applies to project versions, public
+  projects, and `client.hidden.download_shared_project(key)`. The methods return
+  an HTTP response containing archive bytes instead of parsing JSON.
+- Replace `client.factory.preview_user_factory_quote` and
+  `preview_org_factory_quote` with `get_user_factory_quote` and
+  `get_org_factory_quote`. Generate a `payment_attempt_id` UUID once for an
+  explicit acceptance, pass it to quote retrieval and `accept_*_factory_quote`,
+  and retain it across transport retries. A new attempt after a confirmed decline
+  needs a new UUID.
+- Replace `client.ml.kcl_migration_ws` with `client.ml.ml_copilot_ws` and send
+  the `migrate_kcl` variant of `MlCopilotClientMessage`, constructed with
+  `OptionMigrateKcl(request=...)` from `kittycad.models.ml_copilot_client_message`.
+  Handle ordinary Copilot progress and final messages. Remove imports of the
+  dedicated `KclMigrationClientMessage`, `KclMigrationServerMessage`, history,
+  and application acknowledgement models, along with Apply/Undo/Redo
+  acknowledgement messages.
+
 ## v1.12.0
 
 ### Added

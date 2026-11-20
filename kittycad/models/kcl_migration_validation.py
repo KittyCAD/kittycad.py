@@ -3,7 +3,7 @@ from .base import KittyCadBaseModel
 
 
 class KclMigrationValidation(KittyCadBaseModel):
-    """Evidence required before a candidate may be returned as successful."""
+    """Evidence required before a migration may be reported as successful."""
 
     behavior_preserved: bool
 

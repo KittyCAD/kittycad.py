@@ -3,7 +3,6 @@ from typing import Any, Dict, List, Literal, Optional, Union
 from pydantic import Field, RootModel
 from typing_extensions import Annotated
 
-from ..models.kcl_migration_application_status import KclMigrationApplicationStatus
 from ..models.kcl_migration_request import KclMigrationRequest
 from ..models.ml_copilot_client_command import MlCopilotClientCommand
 from ..models.ml_copilot_client_command_status import MlCopilotClientCommandStatus
@@ -98,18 +97,6 @@ class OptionMigrateKcl(KittyCadBaseModel):
     type: Literal["migrate_kcl"] = "migrate_kcl"
 
 
-class OptionKclMigrationApplication(KittyCadBaseModel):
-    """Report Apply/Undo/Redo without creating or charging for a chat turn."""
-
-    expected_revision: int
-
-    operation_id: Uuid
-
-    status: KclMigrationApplicationStatus
-
-    type: Literal["kcl_migration_application"] = "kcl_migration_application"
-
-
 class OptionFetchAttachments(KittyCadBaseModel):
     """Request persisted attachments from conversation history over the active websocket."""
 
@@ -178,6 +165,16 @@ class OptionClientCommandResponse(KittyCadBaseModel):
     type: Literal["client_command_response"] = "client_command_response"
 
 
+class OptionFetchReplayPage(KittyCadBaseModel):
+    """Request an older history page on an opted-in paginated connection. Cursors are single-use after a successful page; retry failed loads with the same cursor."""
+
+    cursor: Uuid
+
+    request_id: str
+
+    type: Literal["fetch_replay_page"] = "fetch_replay_page"
+
+
 MlCopilotClientMessage = RootModel[
     Annotated[
         Union[
@@ -187,12 +184,12 @@ MlCopilotClientMessage = RootModel[
             OptionProjectContext,
             OptionUser,
             OptionMigrateKcl,
-            OptionKclMigrationApplication,
             OptionFetchAttachments,
             OptionSystem,
             OptionAttachmentResponse,
             OptionUpdateClientCommandSchema,
             OptionClientCommandResponse,
+            OptionFetchReplayPage,
         ],
         Field(discriminator="type"),
     ]

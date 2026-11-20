@@ -21,13 +21,13 @@
         {% for arg in args %}
         {% if arg.in_query %}
         if {{ arg.name }} is not None:
-            url = str(httpx.URL(url).copy_add_param("{{ arg.name }}", {% if "datetime" in arg.type %}{{ arg.name }}.isoformat(){% elif "bool" in arg.type %}str({{ arg.name }}).lower(){% else %}str({{ arg.name }}){% endif %}))
+            url = str(httpx.URL(url).copy_add_param("{{ arg.name }}", {% if arg.is_csv %}",".join(str(value) for value in {{ arg.name }}){% elif "datetime" in arg.type %}{{ arg.name }}.isoformat(){% elif "bool" in arg.type %}str({{ arg.name }}).lower(){% else %}str({{ arg.name }}){% endif %}))
         {% endif %}
         {% endfor %}
 
         _client = self.client.get_http_client()
         {% set header_args = args|selectattr("header_name")|list %}
-        {% if header_args or file_info.binary_or_files %}
+        {% if header_args or file_info.binary_or_files or file_info.has_json_body_multipart %}
         headers = httpx.Headers(self.client.get_headers())
         {% if header_args and has_request_body and request_body_type != "bytes" and not file_info.has_json_body_multipart %}
         headers.setdefault("Content-Type", "application/json")
@@ -54,13 +54,19 @@
             headers["Content-Type"] = "application/octet-stream"
             response = await _client.{{ method }}(url, content=body, headers=headers, timeout=request_timeout)
         {% elif file_info.has_json_body_multipart %}
-        # JSON + multipart endpoint
+        {% if file_info.requires_file_attachments %}
+        if not file_attachments:
+            raise ValueError("At least one file attachment is required")
+        {% endif %}
+        headers.pop("Content-Type", None)
         response = await upload_json_multipart_async(
             client=_client,
             url=url,
+            method="{{ method|upper }}",
             json_body=body,
+            filenames_from_keys={{ file_info.filenames_from_keys }},
             file_attachments=file_attachments,
-            headers={% if header_args %}headers{% else %}self.client.get_headers(){% endif %},
+            headers=headers,
         )
         {% else %}
         response = await _client.{{ method }}(

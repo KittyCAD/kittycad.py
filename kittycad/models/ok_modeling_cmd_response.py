@@ -98,6 +98,7 @@ from ..models.mouse_move import MouseMove
 from ..models.move_path_pen import MovePathPen
 from ..models.new_annotation import NewAnnotation
 from ..models.object_bring_to_front import ObjectBringToFront
+from ..models.object_is_hidden import ObjectIsHidden
 from ..models.object_set_material_params_pbr import ObjectSetMaterialParamsPbr
 from ..models.object_set_name import ObjectSetName
 from ..models.object_visible import ObjectVisible
@@ -422,6 +423,14 @@ class OptionObjectVisible(KittyCadBaseModel):
     data: ObjectVisible
 
     type: Literal["object_visible"] = "object_visible"
+
+
+class OptionObjectIsHidden(KittyCadBaseModel):
+    """"""
+
+    data: ObjectIsHidden
+
+    type: Literal["object_is_hidden"] = "object_is_hidden"
 
 
 class OptionObjectBringToFront(KittyCadBaseModel):
@@ -1625,6 +1634,7 @@ OkModelingCmdResponse = RootModel[
             OptionUpdateAnnotation,
             OptionEdgeLinesVisible,
             OptionObjectVisible,
+            OptionObjectIsHidden,
             OptionObjectBringToFront,
             OptionObjectSetMaterialParamsPbr,
             OptionObjectSetName,

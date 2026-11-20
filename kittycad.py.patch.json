@@ -203,7 +203,7 @@
     "op": "add",
     "path": "/paths/~1file~1conversion/post/x-python",
     "value": {
-      "example": "from kittycad.models.conversion_params import ConversionParams\nfrom kittycad.models.output_format3d import OptionStl\nfrom kittycad.models.system import System\nfrom kittycad.models.axis_direction_pair import AxisDirectionPair\nfrom kittycad.models.axis import Axis\nfrom kittycad.models.direction import Direction\nfrom kittycad.models.axis_direction_pair import AxisDirectionPair\nfrom kittycad.models.axis import Axis\nfrom kittycad.models.direction import Direction\nfrom kittycad.models.selection import OptionDefaultScene\nfrom kittycad.models.selection import Selection\nfrom kittycad.models.stl_storage import StlStorage\nfrom kittycad.models.unit_length import UnitLength\nfrom kittycad.models.output_format3d import OutputFormat3d\nfrom kittycad.models.input_format3d import OptionNx\nfrom kittycad.models.system import System\nfrom kittycad.models.axis_direction_pair import AxisDirectionPair\nfrom kittycad.models.axis import Axis\nfrom kittycad.models.direction import Direction\nfrom kittycad.models.axis_direction_pair import AxisDirectionPair\nfrom kittycad.models.axis import Axis\nfrom kittycad.models.direction import Direction\nfrom kittycad.models.input_format3d import InputFormat3d\nfrom pathlib import Path\nfrom typing import Dict\nfrom kittycad._io_types import SyncUpload\nfrom kittycad.models import FileConversion\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_create_file_conversion_options():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    result: FileConversion = client.file.create_file_conversion_options(body=ConversionParams(\n        output_format=OutputFormat3d(OptionStl(\n        coords=System(\n        forward=AxisDirectionPair(\n        axis=Axis.Y,\n        direction=Direction.POSITIVE,\n        ),\n        up=AxisDirectionPair(\n        axis=Axis.Y,\n        direction=Direction.POSITIVE,\n        ),\n        ),\n        selection=Selection(OptionDefaultScene()),\n        storage=StlStorage.ASCII,\n        units=UnitLength.CM,\n        )),\n        src_format=InputFormat3d(OptionNx(\n        coords=System(\n        forward=AxisDirectionPair(\n        axis=Axis.Y,\n        direction=Direction.POSITIVE,\n        ),\n        up=AxisDirectionPair(\n        axis=Axis.Y,\n        direction=Direction.POSITIVE,\n        ),\n        ),\n        split_closed_faces=False,\n        )),\n        ),\n        file_attachments={\n        \"main.kcl\": Path(\"path/to/main.kcl\"),\n        \"helper.kcl\": Path(\"path/to/helper.kcl\"),\n        })\n\n\n    body: FileConversion = result\n    print(body)\n\n",
+      "example": "from kittycad.models.conversion_params import ConversionParams\nfrom kittycad.models.output_format3d import OptionFbx\nfrom kittycad.models.fbx_storage import FbxStorage\nfrom kittycad.models.output_format3d import OutputFormat3d\nfrom kittycad.models.input_format3d import OptionCatia\nfrom kittycad.models.system import System\nfrom kittycad.models.axis_direction_pair import AxisDirectionPair\nfrom kittycad.models.axis import Axis\nfrom kittycad.models.direction import Direction\nfrom kittycad.models.axis_direction_pair import AxisDirectionPair\nfrom kittycad.models.axis import Axis\nfrom kittycad.models.direction import Direction\nfrom kittycad.models.input_format3d import InputFormat3d\nfrom pathlib import Path\nfrom typing import Dict\nfrom kittycad._io_types import SyncUpload\nfrom kittycad.models import FileConversion\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_create_file_conversion_options():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    result: FileConversion = client.file.create_file_conversion_options(body=ConversionParams(\n        output_format=OutputFormat3d(OptionFbx(\n        storage=FbxStorage.ASCII,\n        )),\n        src_format=InputFormat3d(OptionCatia(\n        coords=System(\n        forward=AxisDirectionPair(\n        axis=Axis.Y,\n        direction=Direction.POSITIVE,\n        ),\n        up=AxisDirectionPair(\n        axis=Axis.Y,\n        direction=Direction.POSITIVE,\n        ),\n        ),\n        split_closed_faces=False,\n        )),\n        ),\n        file_attachments={\n        \"main.kcl\": Path(\"path/to/main.kcl\"),\n        \"helper.kcl\": Path(\"path/to/helper.kcl\"),\n        })\n\n\n    body: FileConversion = result\n    print(body)\n\n",
       "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD.file"
     }
   },
@@ -569,6 +569,14 @@
   },
   {
     "op": "add",
+    "path": "/paths/~1org~1factory~1jobs~1{job_id}~1cancel/post/x-python",
+    "value": {
+      "example": "from kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models import FactoryCustomerJobSummary\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_cancel_org_factory_job():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    result: FactoryCustomerJobSummary = client.factory.cancel_org_factory_job(job_id=Uuid(\"<string>\"))\n\n\n    body: FactoryCustomerJobSummary = result\n    print(body)\n\n",
+      "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD.factory"
+    }
+  },
+  {
+    "op": "add",
     "path": "/paths/~1org~1factory~1jobs~1{job_id}~1files~1{file_id}/get/x-python",
     "value": {
       "example": "from kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\ndef example_get_org_factory_job_file():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    client.factory.get_org_factory_job_file(job_id=Uuid(\"<string>\"),\n        file_id=Uuid(\"<string>\"))\n\n",
@@ -577,17 +585,25 @@
   },
   {
     "op": "add",
-    "path": "/paths/~1org~1factory~1jobs~1{job_id}~1quotes~1{quote_id}~1accept/post/x-python",
+    "path": "/paths/~1org~1factory~1jobs~1{job_id}~1quotes~1{quote_id}/get/x-python",
     "value": {
-      "example": "from kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models import FactoryQuoteAcceptance\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_accept_org_factory_quote():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    result: FactoryQuoteAcceptance = client.factory.accept_org_factory_quote(job_id=Uuid(\"<string>\"),\n        quote_id=Uuid(\"<string>\"),\n        use_credits=False,\n        max_amount_due_cents=None)\n\n\n    body: FactoryQuoteAcceptance = result\n    print(body)\n\n",
+      "example": "from kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models import FactoryQuoteDetail\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_get_org_factory_quote():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    result: FactoryQuoteDetail = client.factory.get_org_factory_quote(job_id=Uuid(\"<string>\"),\n        quote_id=Uuid(\"<string>\"),\n        payment_attempt_id=Uuid(\"<string>\"),\n        use_credits=False)\n\n\n    body: FactoryQuoteDetail = result\n    print(body)\n\n",
       "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD.factory"
     }
   },
   {
     "op": "add",
-    "path": "/paths/~1org~1factory~1jobs~1{job_id}~1quotes~1{quote_id}~1preview/get/x-python",
+    "path": "/paths/~1org~1factory~1jobs~1{job_id}~1quotes~1{quote_id}~1accept/post/x-python",
     "value": {
-      "example": "from kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models import FactoryQuotePreview\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_preview_org_factory_quote():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    result: FactoryQuotePreview = client.factory.preview_org_factory_quote(job_id=Uuid(\"<string>\"),\n        quote_id=Uuid(\"<string>\"),\n        use_credits=False)\n\n\n    body: FactoryQuotePreview = result\n    print(body)\n\n",
+      "example": "from kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models import FactoryQuoteAcceptance\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_accept_org_factory_quote():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    result: FactoryQuoteAcceptance = client.factory.accept_org_factory_quote(job_id=Uuid(\"<string>\"),\n        quote_id=Uuid(\"<string>\"),\n        payment_attempt_id=Uuid(\"<string>\"),\n        use_credits=False,\n        max_amount_due_cents=None)\n\n\n    body: FactoryQuoteAcceptance = result\n    print(body)\n\n",
+      "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD.factory"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/paths/~1org~1factory~1jobs~1{job_id}~1quotes~1{quote_id}~1decline/post/x-python",
+    "value": {
+      "example": "from kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models import FactoryCustomerJobSummary\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_decline_org_factory_quote():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    result: FactoryCustomerJobSummary = client.factory.decline_org_factory_quote(job_id=Uuid(\"<string>\"),\n        quote_id=Uuid(\"<string>\"))\n\n\n    body: FactoryCustomerJobSummary = result\n    print(body)\n\n",
       "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD.factory"
     }
   },
@@ -955,7 +971,7 @@
     "op": "add",
     "path": "/paths/~1projects~1public~1{id}~1download/get/x-python",
     "value": {
-      "example": "from kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models.project_archive_format import ProjectArchiveFormat\nfrom typing import List\nfrom kittycad.models import ProjectDownloadErrorResponse\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_download_public_project():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    result = client.projects.download_public_project(id=Uuid(\"<string>\"),\n        format=ProjectArchiveFormat.TAR,\n        file_ids=[\"<string>\"])\n\n\n    print(result)\n\n",
+      "example": "from kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models.project_archive_format import ProjectArchiveFormat\nfrom typing import List\nfrom kittycad.models import ProjectDownloadErrorResponse\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_download_public_project():\n    client = KittyCAD()\n    with client.projects.download_public_project(id=Uuid(\"<string>\"),\n        format=ProjectArchiveFormat.TAR,\n        file_ids=[\"<string>\"]) as response:\n        for chunk in response.iter_bytes():\n            print(len(chunk))\n",
       "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD.projects"
     }
   },
@@ -987,7 +1003,7 @@
     "op": "add",
     "path": "/paths/~1projects~1shared~1{key}~1download/get/x-python",
     "value": {
-      "example": "from kittycad.models.project_archive_format import ProjectArchiveFormat\nfrom typing import List\nfrom kittycad.models import ProjectDownloadErrorResponse\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_download_shared_project():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    result = client.hidden.download_shared_project(key=\"<string>\",\n        format=ProjectArchiveFormat.TAR,\n        file_ids=[\"<string>\"])\n\n\n    print(result)\n\n",
+      "example": "from kittycad.models.project_archive_format import ProjectArchiveFormat\nfrom typing import List\nfrom kittycad.models import ProjectDownloadErrorResponse\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_download_shared_project():\n    client = KittyCAD()\n    with client.hidden.download_shared_project(key=\"<string>\",\n        format=ProjectArchiveFormat.TAR,\n        file_ids=[\"<string>\"]) as response:\n        for chunk in response.iter_bytes():\n            print(len(chunk))\n",
       "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD.hidden"
     }
   },
@@ -1233,6 +1249,14 @@
   },
   {
     "op": "add",
+    "path": "/paths/~1user~1avatar/delete/x-python",
+    "value": {
+      "example": "\n\ndef example_remove_user_avatar():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    client.users.remove_user_avatar()\n\n",
+      "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD.users"
+    }
+  },
+  {
+    "op": "add",
     "path": "/paths/~1user~1billing~1usage-collection-threshold/delete/x-python",
     "value": {
       "example": "from kittycad.models import AggregateUsageCollectionThresholdView\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_reset_user_usage_collection_threshold():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    result: AggregateUsageCollectionThresholdView = client.payments.reset_user_usage_collection_threshold(expected_version=10)\n\n\n    body: AggregateUsageCollectionThresholdView = result\n    print(body)\n\n",
@@ -1345,6 +1369,14 @@
   },
   {
     "op": "add",
+    "path": "/paths/~1user~1factory~1jobs~1{job_id}~1cancel/post/x-python",
+    "value": {
+      "example": "from kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models import FactoryCustomerJobSummary\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_cancel_user_factory_job():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    result: FactoryCustomerJobSummary = client.factory.cancel_user_factory_job(job_id=Uuid(\"<string>\"))\n\n\n    body: FactoryCustomerJobSummary = result\n    print(body)\n\n",
+      "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD.factory"
+    }
+  },
+  {
+    "op": "add",
     "path": "/paths/~1user~1factory~1jobs~1{job_id}~1files~1{file_id}/get/x-python",
     "value": {
       "example": "from kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\ndef example_get_user_factory_job_file():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    client.factory.get_user_factory_job_file(job_id=Uuid(\"<string>\"),\n        file_id=Uuid(\"<string>\"))\n\n",
@@ -1353,17 +1385,25 @@
   },
   {
     "op": "add",
-    "path": "/paths/~1user~1factory~1jobs~1{job_id}~1quotes~1{quote_id}~1accept/post/x-python",
+    "path": "/paths/~1user~1factory~1jobs~1{job_id}~1quotes~1{quote_id}/get/x-python",
     "value": {
-      "example": "from kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models import FactoryQuoteAcceptance\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_accept_user_factory_quote():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    result: FactoryQuoteAcceptance = client.factory.accept_user_factory_quote(job_id=Uuid(\"<string>\"),\n        quote_id=Uuid(\"<string>\"),\n        use_credits=False,\n        max_amount_due_cents=None)\n\n\n    body: FactoryQuoteAcceptance = result\n    print(body)\n\n",
+      "example": "from kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models import FactoryQuoteDetail\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_get_user_factory_quote():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    result: FactoryQuoteDetail = client.factory.get_user_factory_quote(job_id=Uuid(\"<string>\"),\n        quote_id=Uuid(\"<string>\"),\n        payment_attempt_id=Uuid(\"<string>\"),\n        use_credits=False)\n\n\n    body: FactoryQuoteDetail = result\n    print(body)\n\n",
       "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD.factory"
     }
   },
   {
     "op": "add",
-    "path": "/paths/~1user~1factory~1jobs~1{job_id}~1quotes~1{quote_id}~1preview/get/x-python",
+    "path": "/paths/~1user~1factory~1jobs~1{job_id}~1quotes~1{quote_id}~1accept/post/x-python",
     "value": {
-      "example": "from kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models import FactoryQuotePreview\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_preview_user_factory_quote():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    result: FactoryQuotePreview = client.factory.preview_user_factory_quote(job_id=Uuid(\"<string>\"),\n        quote_id=Uuid(\"<string>\"),\n        use_credits=False)\n\n\n    body: FactoryQuotePreview = result\n    print(body)\n\n",
+      "example": "from kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models import FactoryQuoteAcceptance\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_accept_user_factory_quote():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    result: FactoryQuoteAcceptance = client.factory.accept_user_factory_quote(job_id=Uuid(\"<string>\"),\n        quote_id=Uuid(\"<string>\"),\n        payment_attempt_id=Uuid(\"<string>\"),\n        use_credits=False,\n        max_amount_due_cents=None)\n\n\n    body: FactoryQuoteAcceptance = result\n    print(body)\n\n",
+      "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD.factory"
+    }
+  },
+  {
+    "op": "add",
+    "path": "/paths/~1user~1factory~1jobs~1{job_id}~1quotes~1{quote_id}~1decline/post/x-python",
+    "value": {
+      "example": "from kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models import FactoryCustomerJobSummary\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_decline_user_factory_quote():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    result: FactoryCustomerJobSummary = client.factory.decline_user_factory_quote(job_id=Uuid(\"<string>\"),\n        quote_id=Uuid(\"<string>\"))\n\n\n    body: FactoryCustomerJobSummary = result\n    print(body)\n\n",
       "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD.factory"
     }
   },
@@ -1651,7 +1691,7 @@
     "op": "add",
     "path": "/paths/~1user~1projects/post/x-python",
     "value": {
-      "example": "from kittycad.models import ProjectResponse\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_create_project():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    result: ProjectResponse = client.projects.create_project()\n\n\n    body: ProjectResponse = result\n    print(body)\n\n",
+      "example": "from kittycad.models.create_project_request import CreateProjectRequest\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom typing import List\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models.kcl_project_publication_status import KclProjectPublicationStatus\nfrom pathlib import Path\nfrom typing import Dict\nfrom kittycad._io_types import SyncUpload\nfrom kittycad.models import ProjectResponse\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_create_project():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    result: ProjectResponse = client.projects.create_project(body=CreateProjectRequest(\n        category_ids=[Uuid(\"<string>\")],\n        description=\"<string>\",\n        entrypoint_path=\"<string>\",\n        library_id=Uuid(\"<string>\"),\n        publication_status=KclProjectPublicationStatus.PRIVATE,\n        title=\"<string>\",\n        ),\n        file_attachments={\n        \"main.kcl\": Path(\"path/to/main.kcl\"),\n        \"helper.kcl\": Path(\"path/to/helper.kcl\"),\n        })\n\n\n    body: ProjectResponse = result\n    print(body)\n\n",
       "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD.projects"
     }
   },
@@ -1675,7 +1715,7 @@
     "op": "add",
     "path": "/paths/~1user~1projects~1{id}/put/x-python",
     "value": {
-      "example": "from kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models import ProjectResponse\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_update_project():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    result: ProjectResponse = client.projects.update_project(id=Uuid(\"<string>\"))\n\n\n    body: ProjectResponse = result\n    print(body)\n\n",
+      "example": "from kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models.update_project_request import UpdateProjectRequest\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom typing import List\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models.kcl_project_publication_status import KclProjectPublicationStatus\nfrom pathlib import Path\nfrom typing import Dict\nfrom kittycad._io_types import SyncUpload\nfrom kittycad.models import ProjectResponse\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_update_project():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    result: ProjectResponse = client.projects.update_project(id=Uuid(\"<string>\"),\n        body=UpdateProjectRequest(\n        category_ids=[Uuid(\"<string>\")],\n        description=\"<string>\",\n        entrypoint_path=\"<string>\",\n        library_id=Uuid(\"<string>\"),\n        publication_status=KclProjectPublicationStatus.PRIVATE,\n        title=\"<string>\",\n        ),\n        file_attachments={\n        \"main.kcl\": Path(\"path/to/main.kcl\"),\n        \"helper.kcl\": Path(\"path/to/helper.kcl\"),\n        })\n\n\n    body: ProjectResponse = result\n    print(body)\n\n",
       "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD.projects"
     }
   },
@@ -1683,7 +1723,7 @@
     "op": "add",
     "path": "/paths/~1user~1projects~1{id}~1download/get/x-python",
     "value": {
-      "example": "from kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models.project_archive_format import ProjectArchiveFormat\nfrom typing import List\nfrom kittycad.models import ProjectDownloadErrorResponse\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_download_project():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    result = client.projects.download_project(id=Uuid(\"<string>\"),\n        format=ProjectArchiveFormat.TAR,\n        file_ids=[\"<string>\"])\n\n\n    print(result)\n\n",
+      "example": "from kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models.project_archive_format import ProjectArchiveFormat\nfrom typing import List\nfrom kittycad.models import ProjectDownloadErrorResponse\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_download_project():\n    client = KittyCAD()\n    with client.projects.download_project(id=Uuid(\"<string>\"),\n        format=ProjectArchiveFormat.TAR,\n        file_ids=[\"<string>\"]) as response:\n        for chunk in response.iter_bytes():\n            print(len(chunk))\n",
       "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD.projects"
     }
   },
@@ -1763,7 +1803,7 @@
     "op": "add",
     "path": "/paths/~1user~1projects~1{id}~1versions/post/x-python",
     "value": {
-      "example": "from kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models import CreateProjectVersionResponse\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_create_project_version():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    result: CreateProjectVersionResponse = client.projects.create_project_version(id=Uuid(\"<string>\"))\n\n\n    body: CreateProjectVersionResponse = result\n    print(body)\n\n",
+      "example": "from kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models.create_project_version_request import CreateProjectVersionRequest\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom pathlib import Path\nfrom typing import Dict\nfrom kittycad._io_types import SyncUpload\nfrom kittycad.models import CreateProjectVersionResponse\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_create_project_version():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    result: CreateProjectVersionResponse = client.projects.create_project_version(id=Uuid(\"<string>\"),\n        idempotency_key=\"<string>\",\n        body=CreateProjectVersionRequest(\n        description=\"<string>\",\n        entrypoint_path=\"<string>\",\n        parent_version_id=Uuid(\"<string>\"),\n        title=\"<string>\",\n        ),\n        file_attachments={\n        \"main.kcl\": Path(\"path/to/main.kcl\"),\n        \"helper.kcl\": Path(\"path/to/helper.kcl\"),\n        })\n\n\n    body: CreateProjectVersionResponse = result\n    print(body)\n\n",
       "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD.projects"
     }
   },
@@ -1779,7 +1819,7 @@
     "op": "add",
     "path": "/paths/~1user~1projects~1{id}~1versions~1{version_id}~1download/get/x-python",
     "value": {
-      "example": "from kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models.project_archive_format import ProjectArchiveFormat\nfrom typing import List\nfrom kittycad.models import ProjectDownloadErrorResponse\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_download_project_version():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    result = client.projects.download_project_version(id=Uuid(\"<string>\"),\n        version_id=Uuid(\"<string>\"),\n        format=ProjectArchiveFormat.TAR,\n        file_ids=[\"<string>\"])\n\n\n    print(result)\n\n",
+      "example": "from kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models.project_archive_format import ProjectArchiveFormat\nfrom typing import List\nfrom kittycad.models import ProjectDownloadErrorResponse\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_download_project_version():\n    client = KittyCAD()\n    with client.projects.download_project_version(id=Uuid(\"<string>\"),\n        version_id=Uuid(\"<string>\"),\n        format=ProjectArchiveFormat.TAR,\n        file_ids=[\"<string>\"]) as response:\n        for chunk in response.iter_bytes():\n            print(len(chunk))\n",
       "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD.projects"
     }
   },
@@ -1923,15 +1963,7 @@
     "op": "add",
     "path": "/paths/~1ws~1ml~1copilot/get/x-python",
     "value": {
-      "example": "from kittycad.models.ml_copilot_replay_attachment_mode import MlCopilotReplayAttachmentMode\nfrom kittycad.models import MlCopilotClientMessage\nfrom kittycad.models.ml_copilot_client_message import OptionListModes\nfrom kittycad.models import MlCopilotServerMessage\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_ml_copilot_ws():\n            client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n            # Connect to the websocket.\n            with client.ml.ml_copilot_ws(replay_attachment_mode=MlCopilotReplayAttachmentMode.FULL,\n        replay=None,\n        conversation_id=None,\n        pr=None) as websocket:\n\n                # Send a message.\n                websocket.send(MlCopilotClientMessage(OptionListModes()))\n\n                # Get a message.\n                message = websocket.recv()\n                print(message)\n\n        ",
-      "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD.ml"
-    }
-  },
-  {
-    "op": "add",
-    "path": "/paths/~1ws~1ml~1kcl-migration/get/x-python",
-    "value": {
-      "example": "from kittycad.models import KclMigrationClientMessage\nfrom kittycad.models.kcl_migration_client_message import OptionStatus\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models import KclMigrationServerMessage\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_kcl_migration_ws():\n            client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n            # Connect to the websocket.\n            with client.ml.kcl_migration_ws() as websocket:\n\n                # Send a message.\n                websocket.send(KclMigrationClientMessage(OptionStatus(\noperation_id=Uuid(\"<string>\"),\n)))\n\n                # Get a message.\n                message = websocket.recv()\n                print(message)\n\n        ",
+      "example": "from kittycad.models.ml_copilot_replay_attachment_mode import MlCopilotReplayAttachmentMode\nfrom kittycad.models import MlCopilotClientMessage\nfrom kittycad.models.ml_copilot_client_message import OptionHeaders\nfrom kittycad.models import MlCopilotServerMessage\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_ml_copilot_ws():\n            client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n            # Connect to the websocket.\n            with client.ml.ml_copilot_ws(replay_attachment_mode=MlCopilotReplayAttachmentMode.FULL,\n        replay_pagination=False,\n        replay=None,\n        conversation_id=None,\n        pr=None) as websocket:\n\n                # Send a message.\n                websocket.send(MlCopilotClientMessage(OptionHeaders(\nheaders={\"<string>\": \"<string>\"},\n)))\n\n                # Get a message.\n                message = websocket.recv()\n                print(message)\n\n        ",
       "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD.ml"
     }
   },
@@ -1947,7 +1979,7 @@
     "op": "add",
     "path": "/paths/~1ws~1modeling~1commands/get/x-python",
     "value": {
-      "example": "from kittycad.models.post_effect_type import PostEffectType\nfrom kittycad.models.kcl_version import KclVersion\nfrom kittycad.models import WebSocketRequest\nfrom kittycad.models.web_socket_request import OptionModelingCmdBatchReq\nfrom kittycad.models.modeling_cmd_id import ModelingCmdId\nfrom kittycad.models.modeling_cmd_id import ModelingCmdId\nfrom kittycad.models.modeling_cmd_req import ModelingCmdReq\nfrom kittycad.models.modeling_cmd import OptionSetObjectTransform\nfrom kittycad.models.component_transform import ComponentTransform\nfrom typing import List\nfrom kittycad.models.modeling_cmd import ModelingCmd\nfrom kittycad.models.modeling_cmd_id import ModelingCmdId\nfrom kittycad.models.modeling_cmd_id import ModelingCmdId\nfrom typing import List\nfrom kittycad.models import WebSocketResponse\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_modeling_commands_ws():\n            client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n            # Connect to the websocket.\n            with client.modeling.modeling_commands_ws(video_res_width=10,\n        video_res_height=10,\n        fps=10,\n        unlocked_framerate=False,\n        post_effect=PostEffectType.PHOSPHOR,\n        webrtc=False,\n        geometry_only=False,\n        show_grid=False,\n        order_independent_transparency=False,\n        kcl_version=KclVersion.VAL_1_0,\n        pool=None,\n        replay=None,\n        api_call_id=None,\n        pr=None) as websocket:\n\n                # Send a message.\n                websocket.send(WebSocketRequest(OptionModelingCmdBatchReq(\nbatch_id=ModelingCmdId(\"<string>\"),\n\nrequests=[ModelingCmdReq(\ncmd=ModelingCmd(OptionSetObjectTransform(\nobject_id=\"<string>\",\n\ntransforms=[ComponentTransform()],\n)),\n\ncmd_id=ModelingCmdId(\"<string>\"),\n)],\n\nresponses=False,\n)))\n\n                # Get a message.\n                message = websocket.recv()\n                print(message)\n\n        ",
+      "example": "from kittycad.models.post_effect_type import PostEffectType\nfrom kittycad.models.kcl_version import KclVersion\nfrom kittycad.models import WebSocketRequest\nfrom kittycad.models.web_socket_request import OptionModelingCmdReq\nfrom kittycad.models.modeling_cmd import OptionEdgeGetLength\nfrom kittycad.models.modeling_cmd import ModelingCmd\nfrom kittycad.models.modeling_cmd_id import ModelingCmdId\nfrom kittycad.models.modeling_cmd_id import ModelingCmdId\nfrom kittycad.models import WebSocketResponse\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_modeling_commands_ws():\n            client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n            # Connect to the websocket.\n            with client.modeling.modeling_commands_ws(video_res_width=10,\n        video_res_height=10,\n        fps=10,\n        unlocked_framerate=False,\n        post_effect=PostEffectType.PHOSPHOR,\n        webrtc=False,\n        geometry_only=False,\n        show_grid=False,\n        order_independent_transparency=False,\n        kcl_version=KclVersion.VAL_1_0,\n        pool=None,\n        replay=None,\n        api_call_id=None,\n        pr=None) as websocket:\n\n                # Send a message.\n                websocket.send(WebSocketRequest(OptionModelingCmdReq(\ncmd=ModelingCmd(OptionEdgeGetLength(\nedge_id=\"<string>\",\n)),\n\ncmd_id=ModelingCmdId(\"<string>\"),\n)))\n\n                # Get a message.\n                message = websocket.recv()\n                print(message)\n\n        ",
       "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD.modeling"
     }
   }
