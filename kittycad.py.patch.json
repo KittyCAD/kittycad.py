@@ -793,6 +793,14 @@
   },
   {
     "op": "add",
+    "path": "/paths/~1org~1payment~1methods~1{id}~1default/post/x-python",
+    "value": {
+      "example": "\n\ndef example_set_default_payment_method_for_org():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    client.payments.set_default_payment_method_for_org(id=\"<string>\")\n\n",
+      "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD.payments"
+    }
+  },
+  {
+    "op": "add",
     "path": "/paths/~1org~1payment~1subscriptions/get/x-python",
     "value": {
       "example": "from kittycad.models import ZooProductSubscriptions\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_get_org_subscription():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    result: ZooProductSubscriptions = client.payments.get_org_subscription()\n\n\n    body: ZooProductSubscriptions = result\n    print(body)\n\n",
@@ -1691,7 +1699,7 @@
     "op": "add",
     "path": "/paths/~1user~1projects/post/x-python",
     "value": {
-      "example": "from kittycad.models.create_project_request import CreateProjectRequest\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom typing import List\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models.kcl_project_publication_status import KclProjectPublicationStatus\nfrom pathlib import Path\nfrom typing import Dict\nfrom kittycad._io_types import SyncUpload\nfrom kittycad.models import ProjectResponse\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_create_project():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    result: ProjectResponse = client.projects.create_project(body=CreateProjectRequest(\n        category_ids=[Uuid(\"<string>\")],\n        description=\"<string>\",\n        entrypoint_path=\"<string>\",\n        library_id=Uuid(\"<string>\"),\n        publication_status=KclProjectPublicationStatus.PRIVATE,\n        title=\"<string>\",\n        ),\n        file_attachments={\n        \"main.kcl\": Path(\"path/to/main.kcl\"),\n        \"helper.kcl\": Path(\"path/to/helper.kcl\"),\n        })\n\n\n    body: ProjectResponse = result\n    print(body)\n\n",
+      "example": "from kittycad.models.create_project_request import CreateProjectRequest\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom typing import List\nfrom pathlib import Path\nfrom typing import Dict\nfrom kittycad._io_types import SyncUpload\nfrom kittycad.models import ProjectResponse\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_create_project():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    result: ProjectResponse = client.projects.create_project(body=CreateProjectRequest(\n        category_ids=[Uuid(\"<string>\")],\n        description=\"<string>\",\n        entrypoint_path=\"<string>\",\n        title=\"<string>\",\n        ),\n        file_attachments={\n        \"main.kcl\": Path(\"path/to/main.kcl\"),\n        \"helper.kcl\": Path(\"path/to/helper.kcl\"),\n        })\n\n\n    body: ProjectResponse = result\n    print(body)\n\n",
       "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD.projects"
     }
   },
@@ -1715,7 +1723,7 @@
     "op": "add",
     "path": "/paths/~1user~1projects~1{id}/put/x-python",
     "value": {
-      "example": "from kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models.update_project_request import UpdateProjectRequest\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom typing import List\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models.kcl_project_publication_status import KclProjectPublicationStatus\nfrom pathlib import Path\nfrom typing import Dict\nfrom kittycad._io_types import SyncUpload\nfrom kittycad.models import ProjectResponse\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_update_project():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    result: ProjectResponse = client.projects.update_project(id=Uuid(\"<string>\"),\n        body=UpdateProjectRequest(\n        category_ids=[Uuid(\"<string>\")],\n        description=\"<string>\",\n        entrypoint_path=\"<string>\",\n        library_id=Uuid(\"<string>\"),\n        publication_status=KclProjectPublicationStatus.PRIVATE,\n        title=\"<string>\",\n        ),\n        file_attachments={\n        \"main.kcl\": Path(\"path/to/main.kcl\"),\n        \"helper.kcl\": Path(\"path/to/helper.kcl\"),\n        })\n\n\n    body: ProjectResponse = result\n    print(body)\n\n",
+      "example": "from kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models.update_project_request import UpdateProjectRequest\nfrom kittycad.models.uuid import Uuid\nfrom kittycad.models.uuid import Uuid\nfrom typing import List\nfrom pathlib import Path\nfrom typing import Dict\nfrom kittycad._io_types import SyncUpload\nfrom kittycad.models import ProjectResponse\nfrom typing import Union, Any, Optional, List, Tuple\nfrom kittycad.types import Response\ndef example_update_project():\n    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable\n\n    result: ProjectResponse = client.projects.update_project(id=Uuid(\"<string>\"),\n        body=UpdateProjectRequest(\n        category_ids=[Uuid(\"<string>\")],\n        description=\"<string>\",\n        entrypoint_path=\"<string>\",\n        title=\"<string>\",\n        ),\n        file_attachments={\n        \"main.kcl\": Path(\"path/to/main.kcl\"),\n        \"helper.kcl\": Path(\"path/to/helper.kcl\"),\n        })\n\n\n    body: ProjectResponse = result\n    print(body)\n\n",
       "libDocsLink": "https://python.api.docs.zoo.dev/_autosummary/kittycad.KittyCAD.html#kittycad.KittyCAD.projects"
     }
   },

@@ -28,14 +28,6 @@ class Feature(str, Enum):
 
     EXECUTION_JOBS = "execution_jobs"
 
-    """# Enables the Z0006 lint, for converting to new face api syntax in Zoo Design Studio."""  # noqa: E501
-
-    ENABLE_Z0006_LINT = "enable_z0006_lint"
-
-    """# Enables the Factory portal."""  # noqa: E501
-
-    FACTORY_PORTAL = "factory_portal"
-
     """# Enables the authenticated hosted MCP proxy."""  # noqa: E501
 
     HOSTED_MCP = "hosted_mcp"

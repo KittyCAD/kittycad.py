@@ -1,6 +1,5 @@
 from typing import Optional
 
-from ..models.uuid import Uuid
 from .base import KittyCadBaseModel
 
 
@@ -9,4 +8,4 @@ class UpdateProjectLibraryRequest(KittyCadBaseModel):
 
     expected_revision: str
 
-    library_id: Optional[Uuid] = None
+    library_id: Optional[str] = None

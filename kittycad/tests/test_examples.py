@@ -145,7 +145,6 @@ from kittycad.models.input_format3d import InputFormat3d, OptionCatia
 from kittycad.models.kcl_code_completion_params import KclCodeCompletionParams
 from kittycad.models.kcl_code_completion_request import KclCodeCompletionRequest
 from kittycad.models.kcl_project_library_source import KclProjectLibrarySource
-from kittycad.models.kcl_project_publication_status import KclProjectPublicationStatus
 from kittycad.models.kcl_project_share_link_access_mode import (
     KclProjectShareLinkAccessMode,
 )
@@ -2831,6 +2830,23 @@ async def test_delete_payment_method_for_org_async():
     client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
 
     await client.payments.delete_payment_method_for_org(id="<string>")
+
+
+@pytest.mark.skip
+def test_set_default_payment_method_for_org():
+    client = KittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    client.payments.set_default_payment_method_for_org(id="<string>")
+
+
+# OR run async
+@pytest.mark.asyncio
+@pytest.mark.skip
+async def test_set_default_payment_method_for_org_async():
+
+    client = AsyncKittyCAD()  # Uses KITTYCAD_API_TOKEN environment variable
+
+    await client.payments.set_default_payment_method_for_org(id="<string>")
 
 
 @pytest.mark.skip
@@ -5550,8 +5566,6 @@ def test_create_project():
             category_ids=[Uuid("<string>")],
             description="<string>",
             entrypoint_path="<string>",
-            library_id=Uuid("<string>"),
-            publication_status=KclProjectPublicationStatus.PRIVATE,
             title="<string>",
         ),
         file_attachments={
@@ -5576,8 +5590,6 @@ async def test_create_project_async():
             category_ids=[Uuid("<string>")],
             description="<string>",
             entrypoint_path="<string>",
-            library_id=Uuid("<string>"),
-            publication_status=KclProjectPublicationStatus.PRIVATE,
             title="<string>",
         ),
         file_attachments={
@@ -5634,8 +5646,6 @@ def test_update_project():
             category_ids=[Uuid("<string>")],
             description="<string>",
             entrypoint_path="<string>",
-            library_id=Uuid("<string>"),
-            publication_status=KclProjectPublicationStatus.PRIVATE,
             title="<string>",
         ),
         file_attachments={
@@ -5661,8 +5671,6 @@ async def test_update_project_async():
             category_ids=[Uuid("<string>")],
             description="<string>",
             entrypoint_path="<string>",
-            library_id=Uuid("<string>"),
-            publication_status=KclProjectPublicationStatus.PRIVATE,
             title="<string>",
         ),
         file_attachments={

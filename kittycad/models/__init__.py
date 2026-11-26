@@ -95,6 +95,7 @@ from .color import Color
 from .company_size import CompanySize
 from .complementary_edges import ComplementaryEdges
 from .component_transform import ComponentTransform
+from .compression_type import CompressionType
 from .conversation import Conversation
 from .conversation_results_page import ConversationResultsPage
 from .conversion_params import ConversionParams

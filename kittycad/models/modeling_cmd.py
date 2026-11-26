@@ -13,6 +13,7 @@ from ..models.camera_movement import CameraMovement
 from ..models.camera_view_state import CameraViewState
 from ..models.color import Color
 from ..models.component_transform import ComponentTransform
+from ..models.compression_type import CompressionType
 from ..models.cut_strategy import CutStrategy
 from ..models.cut_type import CutType
 from ..models.cut_type_v2 import CutTypeV2
@@ -438,6 +439,8 @@ class OptionExport3d(KittyCadBaseModel):
     """Export the scene to a file.
 
     The response is a MsgPack-encoded message in a WebSocket binary frame."""
+
+    compression: Optional[CompressionType] = None
 
     entity_ids: List[str]
 

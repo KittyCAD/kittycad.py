@@ -10441,7 +10441,7 @@ class PaymentsAPI:
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
     ) -> "SyncPageIterator":
-        """This endpoint requires authentication by an org member. It lists payment methods for the authenticated user's org, with the valid default card first.
+        """This endpoint requires authentication by an org member. It lists payment methods for the authenticated user's org, with the valid default card first. The response identifies the default card, or null when none is valid.
 
         Returns an iterator that automatically handles pagination.
         Iterate over all items across all pages:
@@ -10524,6 +10524,28 @@ class PaymentsAPI:
         _client = self.client.get_http_client()
 
         response = _client.delete(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    def set_default_payment_method_for_org(
+        self,
+        id: str,
+    ):
+        """This endpoint requires authentication by an org admin. It sets the default payment method for the authenticated user's org."""
+
+        url = "{}/org/payment/methods/{id}/default".format(self.client.base_url, id=id)
+
+        _client = self.client.get_http_client()
+
+        response = _client.post(
             url=url,
             headers=self.client.get_headers(),
         )
@@ -11021,7 +11043,7 @@ class PaymentsAPI:
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
     ) -> "SyncPageIterator":
-        """This endpoint requires authentication by any Zoo user. It lists payment methods for the authenticated user, with the valid default card first.
+        """This endpoint requires authentication by any Zoo user. It lists payment methods for the authenticated user, with the valid default card first. The response identifies the default card, or null when none is valid.
 
         Returns an iterator that automatically handles pagination.
         Iterate over all items across all pages:
@@ -11630,7 +11652,7 @@ class AsyncPaymentsAPI:
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
     ) -> "AsyncPageIterator":
-        """This endpoint requires authentication by an org member. It lists payment methods for the authenticated user's org, with the valid default card first.
+        """This endpoint requires authentication by an org member. It lists payment methods for the authenticated user's org, with the valid default card first. The response identifies the default card, or null when none is valid.
 
         Returns an async iterator that automatically handles pagination.
         Iterate over all items across all pages:
@@ -11713,6 +11735,28 @@ class AsyncPaymentsAPI:
         _client = self.client.get_http_client()
 
         response = await _client.delete(
+            url=url,
+            headers=self.client.get_headers(),
+        )
+
+        if not response.is_success:
+            from kittycad.response_helpers import raise_for_status
+
+            raise_for_status(response)
+
+        return response.json() if response.content else None
+
+    async def set_default_payment_method_for_org(
+        self,
+        id: str,
+    ):
+        """This endpoint requires authentication by an org admin. It sets the default payment method for the authenticated user's org."""
+
+        url = "{}/org/payment/methods/{id}/default".format(self.client.base_url, id=id)
+
+        _client = self.client.get_http_client()
+
+        response = await _client.post(
             url=url,
             headers=self.client.get_headers(),
         )
@@ -12210,7 +12254,7 @@ class AsyncPaymentsAPI:
         limit: Optional[int] = None,
         page_token: Optional[str] = None,
     ) -> "AsyncPageIterator":
-        """This endpoint requires authentication by any Zoo user. It lists payment methods for the authenticated user, with the valid default card first.
+        """This endpoint requires authentication by any Zoo user. It lists payment methods for the authenticated user, with the valid default card first. The response identifies the default card, or null when none is valid.
 
         Returns an async iterator that automatically handles pagination.
         Iterate over all items across all pages:
@@ -15374,11 +15418,11 @@ class ProjectsAPI:
         body: CreateProjectRequest,
         file_attachments: Dict[str, SyncUpload],
     ) -> ProjectResponse:
-        """Send multipart data with a JSON `body` part and file parts whose filenames are relative project paths. Include an optional `library_id` in the JSON to create the project in a named library:
+        """Send multipart data with a JSON `body` part and file parts whose filenames are relative project paths. The `filename` parameter carries the path even when the file data comes from bytes or a stream.
 
-        ```json { "title": "Bracket", "entrypoint_path": "main.kcl", "library_id": "<LIBRARY_ID>" } ```
+        `curl --fail-with-body "$API_BASE_URL/user/projects" -H "Authorization: Bearer $API_TOKEN" -F 'body={"title":"Bracket","entrypoint_path":"main.kcl"};type=application/json' -F 'root=@main.kcl;filename=main.kcl' -F 'part=@parts/bracket.kcl;filename=parts/bracket.kcl'`
 
-        A personal library creates a personal project. An accessible library belonging to the active organization creates an organization project with the caller as its creator; creating the project does not require library-management rights. Omitting `library_id` or passing null creates an unassigned personal project, even when the request has an active organization.
+        Include `library_id` in the JSON to create the project in a named library. A personal library creates a personal project. An accessible library belonging to the active organization creates an organization project with the caller as its creator; creating the project does not require library-management rights. Omitting `library_id` or passing null creates an unassigned personal project, even when the request has an active organization.
 
         The HTTP 201 response includes `id`, `library_id`, content `revision`, and `metadata_revision`. Later saves preserve membership, even if they include a library field. Use `PUT /user/projects/{id}/library` to move or unassign an existing project instead of uploading its files again.
 
@@ -15388,9 +15432,6 @@ class ProjectsAPI:
         from kittycad.models.uuid import Uuid
         from kittycad.models.uuid import Uuid
         from typing import List
-        from kittycad.models.uuid import Uuid
-        from kittycad.models.uuid import Uuid
-        from kittycad.models.kcl_project_publication_status import KclProjectPublicationStatus
         from pathlib import Path
         from typing import Dict
         from kittycad._io_types import SyncUpload
@@ -15404,8 +15445,6 @@ class ProjectsAPI:
                 category_ids=[Uuid("<string>")],
                 description="<string>",
                 entrypoint_path="<string>",
-                library_id=Uuid("<string>"),
-                publication_status=KclProjectPublicationStatus.PRIVATE,
                 title="<string>",
                 ),
                 file_attachments={
@@ -15487,7 +15526,7 @@ class ProjectsAPI:
         body: UpdateProjectRequest,
         file_attachments: Dict[str, SyncUpload],
     ) -> ProjectResponse:
-        """Content saves use the project's content `revision` as `expected_revision` and preserve its current library assignment. Omitting `library_id`, setting it to null, or supplying another library ID here does not move the project. Use `PUT /user/projects/{id}/library` with `metadata_revision` for library changes.
+        """Content saves use the project's content `revision` as `expected_revision` and preserve its current library assignment and publication state. Omitting `library_id`, setting it to null, or supplying another library ID here does not move the project. Use `PUT /user/projects/{id}/library` with `metadata_revision` for library changes.
 
         Examples:
         ```python
@@ -15497,9 +15536,6 @@ class ProjectsAPI:
         from kittycad.models.uuid import Uuid
         from kittycad.models.uuid import Uuid
         from typing import List
-        from kittycad.models.uuid import Uuid
-        from kittycad.models.uuid import Uuid
-        from kittycad.models.kcl_project_publication_status import KclProjectPublicationStatus
         from pathlib import Path
         from typing import Dict
         from kittycad._io_types import SyncUpload
@@ -15514,8 +15550,6 @@ class ProjectsAPI:
                 category_ids=[Uuid("<string>")],
                 description="<string>",
                 entrypoint_path="<string>",
-                library_id=Uuid("<string>"),
-                publication_status=KclProjectPublicationStatus.PRIVATE,
                 title="<string>",
                 ),
                 file_attachments={
@@ -16911,11 +16945,11 @@ class AsyncProjectsAPI:
         body: CreateProjectRequest,
         file_attachments: Dict[str, SyncUpload],
     ) -> ProjectResponse:
-        """Send multipart data with a JSON `body` part and file parts whose filenames are relative project paths. Include an optional `library_id` in the JSON to create the project in a named library:
+        """Send multipart data with a JSON `body` part and file parts whose filenames are relative project paths. The `filename` parameter carries the path even when the file data comes from bytes or a stream.
 
-        ```json { "title": "Bracket", "entrypoint_path": "main.kcl", "library_id": "<LIBRARY_ID>" } ```
+        `curl --fail-with-body "$API_BASE_URL/user/projects" -H "Authorization: Bearer $API_TOKEN" -F 'body={"title":"Bracket","entrypoint_path":"main.kcl"};type=application/json' -F 'root=@main.kcl;filename=main.kcl' -F 'part=@parts/bracket.kcl;filename=parts/bracket.kcl'`
 
-        A personal library creates a personal project. An accessible library belonging to the active organization creates an organization project with the caller as its creator; creating the project does not require library-management rights. Omitting `library_id` or passing null creates an unassigned personal project, even when the request has an active organization.
+        Include `library_id` in the JSON to create the project in a named library. A personal library creates a personal project. An accessible library belonging to the active organization creates an organization project with the caller as its creator; creating the project does not require library-management rights. Omitting `library_id` or passing null creates an unassigned personal project, even when the request has an active organization.
 
         The HTTP 201 response includes `id`, `library_id`, content `revision`, and `metadata_revision`. Later saves preserve membership, even if they include a library field. Use `PUT /user/projects/{id}/library` to move or unassign an existing project instead of uploading its files again.
 
@@ -16925,9 +16959,6 @@ class AsyncProjectsAPI:
         from kittycad.models.uuid import Uuid
         from kittycad.models.uuid import Uuid
         from typing import List
-        from kittycad.models.uuid import Uuid
-        from kittycad.models.uuid import Uuid
-        from kittycad.models.kcl_project_publication_status import KclProjectPublicationStatus
         from pathlib import Path
         from typing import Dict
         from kittycad._io_types import SyncUpload
@@ -16941,8 +16972,6 @@ class AsyncProjectsAPI:
                 category_ids=[Uuid("<string>")],
                 description="<string>",
                 entrypoint_path="<string>",
-                library_id=Uuid("<string>"),
-                publication_status=KclProjectPublicationStatus.PRIVATE,
                 title="<string>",
                 ),
                 file_attachments={
@@ -17024,7 +17053,7 @@ class AsyncProjectsAPI:
         body: UpdateProjectRequest,
         file_attachments: Dict[str, SyncUpload],
     ) -> ProjectResponse:
-        """Content saves use the project's content `revision` as `expected_revision` and preserve its current library assignment. Omitting `library_id`, setting it to null, or supplying another library ID here does not move the project. Use `PUT /user/projects/{id}/library` with `metadata_revision` for library changes.
+        """Content saves use the project's content `revision` as `expected_revision` and preserve its current library assignment and publication state. Omitting `library_id`, setting it to null, or supplying another library ID here does not move the project. Use `PUT /user/projects/{id}/library` with `metadata_revision` for library changes.
 
         Examples:
         ```python
@@ -17034,9 +17063,6 @@ class AsyncProjectsAPI:
         from kittycad.models.uuid import Uuid
         from kittycad.models.uuid import Uuid
         from typing import List
-        from kittycad.models.uuid import Uuid
-        from kittycad.models.uuid import Uuid
-        from kittycad.models.kcl_project_publication_status import KclProjectPublicationStatus
         from pathlib import Path
         from typing import Dict
         from kittycad._io_types import SyncUpload
@@ -17051,8 +17077,6 @@ class AsyncProjectsAPI:
                 category_ids=[Uuid("<string>")],
                 description="<string>",
                 entrypoint_path="<string>",
-                library_id=Uuid("<string>"),
-                publication_status=KclProjectPublicationStatus.PRIVATE,
                 title="<string>",
                 ),
                 file_attachments={
