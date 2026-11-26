@@ -1,6 +1,5 @@
 from typing import List, Optional
 
-from ..models.kcl_project_publication_status import KclProjectPublicationStatus
 from ..models.uuid import Uuid
 from .base import KittyCadBaseModel
 
@@ -18,8 +17,8 @@ class UpdateProjectRequest(KittyCadBaseModel):
 
     expected_revision: Optional[str] = None
 
-    library_id: Optional[Uuid] = None
+    library_id: Optional[str] = None
 
-    publication_status: Optional[KclProjectPublicationStatus] = None
+    publication_status: Optional[str] = None
 
     title: str
