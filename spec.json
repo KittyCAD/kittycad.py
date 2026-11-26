@@ -17142,7 +17142,7 @@
           "payments"
         ],
         "summary": "List payment methods for your org.",
-        "description": "This endpoint requires authentication by an org member. It lists payment methods for the authenticated user's org, with the valid default card first.",
+        "description": "This endpoint requires authentication by an org member. It lists payment methods for the authenticated user's org, with the valid default card first. The response identifies the default card, or null when none is valid.",
         "operationId": "list_payment_methods_for_org",
         "parameters": [
           {
@@ -17362,6 +17362,202 @@
         "summary": "OPTIONS endpoint.",
         "description": "This is necessary for some preflight requests, specifically POST, PUT, and DELETE.",
         "operationId": "options_payment_methods_for_org",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Stripe payment method identifier.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "successful operation, no content",
+            "headers": {
+              "Access-Control-Allow-Credentials": {
+                "description": "Access-Control-Allow-Credentials header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Headers": {
+                "description": "Access-Control-Allow-Headers header. This is a comma-separated list of headers.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Methods": {
+                "description": "Access-Control-Allow-Methods header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Origin": {
+                "description": "Access-Control-Allow-Origin header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Content-Location": {
+                "description": "The Content-Location header for responses that are not the final destination. This is used to indicate where the resource can be found, when it is finished.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Location": {
+                "description": "The location header for redirects and letting users know if there is a websocket they can listen to for status updates on their operation.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Set-Cookie": {
+                "description": "Set-Cookie header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "X-Api-Call-Id": {
+                "description": "ID for this request. We return it so that users can report this to us and help us debug their problems.",
+                "style": "simple",
+                "required": true,
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/Error"
+          },
+          "5XX": {
+            "$ref": "#/components/responses/Error"
+          }
+        },
+        "x-billable": false
+      }
+    },
+    "/org/payment/methods/{id}/default": {
+      "post": {
+        "tags": [
+          "payments"
+        ],
+        "summary": "Set the default payment method for your org.",
+        "description": "This endpoint requires authentication by an org admin. It sets the default payment method for the authenticated user's org.",
+        "operationId": "set_default_payment_method_for_org",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "description": "Stripe payment method identifier.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "successful operation, no content",
+            "headers": {
+              "Access-Control-Allow-Credentials": {
+                "description": "Access-Control-Allow-Credentials header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Headers": {
+                "description": "Access-Control-Allow-Headers header. This is a comma-separated list of headers.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Methods": {
+                "description": "Access-Control-Allow-Methods header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Access-Control-Allow-Origin": {
+                "description": "Access-Control-Allow-Origin header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Content-Location": {
+                "description": "The Content-Location header for responses that are not the final destination. This is used to indicate where the resource can be found, when it is finished.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Location": {
+                "description": "The location header for redirects and letting users know if there is a websocket they can listen to for status updates on their operation.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "Set-Cookie": {
+                "description": "Set-Cookie header.",
+                "style": "simple",
+                "schema": {
+                  "nullable": true,
+                  "type": "string"
+                }
+              },
+              "X-Api-Call-Id": {
+                "description": "ID for this request. We return it so that users can report this to us and help us debug their problems.",
+                "style": "simple",
+                "required": true,
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "4XX": {
+            "$ref": "#/components/responses/Error"
+          },
+          "5XX": {
+            "$ref": "#/components/responses/Error"
+          }
+        },
+        "x-billable": false
+      },
+      "options": {
+        "tags": [
+          "hidden"
+        ],
+        "summary": "OPTIONS endpoint.",
+        "description": "This is necessary for some preflight requests, specifically POST, PUT, and DELETE.",
+        "operationId": "options_default_payment_method_for_org",
         "parameters": [
           {
             "in": "path",
@@ -31047,7 +31243,7 @@
           "payments"
         ],
         "summary": "List payment methods for your user.",
-        "description": "This endpoint requires authentication by any Zoo user. It lists payment methods for the authenticated user, with the valid default card first.",
+        "description": "This endpoint requires authentication by any Zoo user. It lists payment methods for the authenticated user, with the valid default card first. The response identifies the default card, or null when none is valid.",
         "operationId": "list_payment_methods_for_user",
         "parameters": [
           {
@@ -33308,7 +33504,7 @@
           "projects"
         ],
         "summary": "Create a project for the authenticated user.",
-        "description": "Send multipart data with a JSON `body` part and file parts whose filenames are relative project paths. Include an optional `library_id` in the JSON to create the project in a named library:\n\n```json { \"title\": \"Bracket\", \"entrypoint_path\": \"main.kcl\", \"library_id\": \"<LIBRARY_ID>\" } ```\n\nA personal library creates a personal project. An accessible library belonging to the active organization creates an organization project with the caller as its creator; creating the project does not require library-management rights. Omitting `library_id` or passing null creates an unassigned personal project, even when the request has an active organization.\n\nThe HTTP 201 response includes `id`, `library_id`, content `revision`, and `metadata_revision`. Later saves preserve membership, even if they include a library field. Use `PUT /user/projects/{id}/library` to move or unassign an existing project instead of uploading its files again.",
+        "description": "Send multipart data with a JSON `body` part and file parts whose filenames are relative project paths. The `filename` parameter carries the path even when the file data comes from bytes or a stream.\n\n`curl --fail-with-body \"$API_BASE_URL/user/projects\" -H \"Authorization: Bearer $API_TOKEN\" -F 'body={\"title\":\"Bracket\",\"entrypoint_path\":\"main.kcl\"};type=application/json' -F 'root=@main.kcl;filename=main.kcl' -F 'part=@parts/bracket.kcl;filename=parts/bracket.kcl'`\n\nInclude `library_id` in the JSON to create the project in a named library. A personal library creates a personal project. An accessible library belonging to the active organization creates an organization project with the caller as its creator; creating the project does not require library-management rights. Omitting `library_id` or passing null creates an unassigned personal project, even when the request has an active organization.\n\nThe HTTP 201 response includes `id`, `library_id`, content `revision`, and `metadata_revision`. Later saves preserve membership, even if they include a library field. Use `PUT /user/projects/{id}/library` to move or unassign an existing project instead of uploading its files again.",
         "operationId": "create_project",
         "requestBody": {
           "description": "Send project metadata as a JSON body part and at least one file part. File part names are arbitrary, except body and event, which are reserved for JSON metadata. Each file part's filename must be its relative project path. Send the complete project snapshot, including unchanged files.",
@@ -33621,7 +33817,7 @@
           "projects"
         ],
         "summary": "Replace one of the authenticated user's projects.",
-        "description": "Content saves use the project's content `revision` as `expected_revision` and preserve its current library assignment. Omitting `library_id`, setting it to null, or supplying another library ID here does not move the project. Use `PUT /user/projects/{id}/library` with `metadata_revision` for library changes.",
+        "description": "Content saves use the project's content `revision` as `expected_revision` and preserve its current library assignment and publication state. Omitting `library_id`, setting it to null, or supplying another library ID here does not move the project. Use `PUT /user/projects/{id}/library` with `metadata_revision` for library changes.",
         "operationId": "update_project",
         "parameters": [
           {
@@ -35580,7 +35776,7 @@
           {
             "in": "header",
             "name": "Idempotency-Key",
-            "description": "Reuse this key and the same save contents within 24 hours to recover the original version.",
+            "description": "Reuse this key and the same save contents within 24 hours to recover the original version. Must contain 1–255 bytes with no surrounding whitespace.",
             "schema": {
               "type": "string",
               "minLength": 1,
@@ -40090,7 +40286,7 @@
           },
           "to_edge_reference": {
             "nullable": true,
-            "description": "Edge reference to use to measure the dimension from If both `to_entity_id` and `to_edge_reference` are provided, `to_edge_reference` takes precedence.",
+            "description": "Edge reference to use to measure the dimension to If both `to_entity_id` and `to_edge_reference` are provided, `to_edge_reference` takes precedence. Note - If no \"to\" entity is provided, then a single leader is used to annotate the dimension.",
             "allOf": [
               {
                 "$ref": "#/components/schemas/EdgeSpecifier"
@@ -40105,7 +40301,7 @@
           },
           "to_entity_leader_pos": {
             "nullable": true,
-            "description": "Position within the entity to position the dimension leader from",
+            "description": "Position within the entity to position the dimension leader to",
             "allOf": [
               {
                 "$ref": "#/components/schemas/AnnotationMbdLeaderPosition"
@@ -43669,6 +43865,18 @@
           }
         }
       },
+      "CompressionType": {
+        "description": "Compression requested for a binary command response. Small or incompressible responses may remain uncompressed.",
+        "oneOf": [
+          {
+            "description": "Zstandard framing, detected by magic bytes `28 b5 2f fd`, around the complete MessagePack response.",
+            "type": "string",
+            "enum": [
+              "zstd"
+            ]
+          }
+        ]
+      },
       "Conversation": {
         "description": "A conversation composed of many ML prompts.",
         "type": "object",
@@ -44065,19 +44273,31 @@
             "type": "string"
           },
           "entrypoint_path": {
-            "description": "Relative path to the project's entrypoint file.",
+            "description": "Relative project path matching an uploaded filename. Must be nonblank and cannot contain `..`.",
             "default": "main.kcl",
-            "type": "string"
+            "type": "string",
+            "minLength": 1
           },
           "library_id": {
-            "$ref": "#/components/schemas/Uuid"
+            "nullable": true,
+            "description": "Optional destination library for a new project. Omitted or null leaves the project unassigned.",
+            "type": "string",
+            "format": "uuid"
           },
           "publication_status": {
-            "$ref": "#/components/schemas/KclProjectPublicationStatus"
+            "nullable": true,
+            "description": "Owner-controlled publication state.\n\nOn creation, omit or send null to start private. Replacement preserves the existing state.",
+            "type": "string",
+            "enum": [
+              "private",
+              "draft",
+              null
+            ]
           },
           "title": {
-            "description": "User-facing title for the new project.",
-            "type": "string"
+            "description": "User-facing title. Must contain at least one non-whitespace character.",
+            "type": "string",
+            "minLength": 1
           }
         },
         "required": [
@@ -44117,16 +44337,18 @@
             "type": "string"
           },
           "entrypoint_path": {
-            "description": "Relative path to the new version's entrypoint KCL file.",
+            "description": "Relative project path matching an uploaded filename. Must be nonblank and cannot contain `..`.",
             "default": "main.kcl",
-            "type": "string"
+            "type": "string",
+            "minLength": 1
           },
           "parent_version_id": {
             "$ref": "#/components/schemas/Uuid"
           },
           "title": {
-            "description": "Title saved with the new version.",
-            "type": "string"
+            "description": "Title saved with the new version. Must contain at least one non-whitespace character.",
+            "type": "string",
+            "minLength": 1
           }
         },
         "required": [
@@ -47829,20 +48051,6 @@
             "type": "string",
             "enum": [
               "execution_jobs"
-            ]
-          },
-          {
-            "description": "Enables the Z0006 lint, for converting to new face api syntax in Zoo Design Studio.",
-            "type": "string",
-            "enum": [
-              "enable_z0006_lint"
-            ]
-          },
-          {
-            "description": "Enables the Factory portal.",
-            "type": "string",
-            "enum": [
-              "factory_portal"
             ]
           },
           {
@@ -54824,6 +55032,15 @@
             "description": "Export the scene to a file.\n\nThe response is a MsgPack-encoded message in a WebSocket binary frame.",
             "type": "object",
             "properties": {
+              "compression": {
+                "nullable": true,
+                "description": "Optional compression for the binary response. Defaults to uncompressed.",
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/CompressionType"
+                  }
+                ]
+              },
               "entity_ids": {
                 "description": "IDs of the entities to be exported. If this is empty, then all entities are exported.",
                 "type": "array",
@@ -65556,11 +65773,16 @@
         }
       },
       "PaymentMethodResultsPage": {
-        "description": "A single page of results",
+        "description": "A single page of payment methods and the default selected for this traversal.",
         "type": "object",
         "properties": {
+          "default_payment_method_id": {
+            "nullable": true,
+            "description": "The valid default card's ID when the first page was fetched, or null if none.",
+            "type": "string"
+          },
           "items": {
-            "description": "list of items on this page of results",
+            "description": "List of items on this page of results.",
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/PaymentMethod"
@@ -65568,7 +65790,7 @@
           },
           "next_page": {
             "nullable": true,
-            "description": "token used to fetch the next page of results (if any)",
+            "description": "Token used to fetch the next page of results (if any).",
             "type": "string"
           }
         },
@@ -72068,11 +72290,8 @@
           "library_id": {
             "nullable": true,
             "description": "Destination library; null leaves the project unassigned.",
-            "allOf": [
-              {
-                "$ref": "#/components/schemas/Uuid"
-              }
-            ]
+            "type": "string",
+            "format": "uuid"
           }
         },
         "required": [
@@ -72105,9 +72324,10 @@
             "type": "string"
           },
           "entrypoint_path": {
-            "description": "Relative path to the project's entrypoint file.",
+            "description": "Relative project path matching an uploaded filename. Must be nonblank and cannot contain `..`.",
             "default": "main.kcl",
-            "type": "string"
+            "type": "string",
+            "minLength": 1
           },
           "expected_revision": {
             "nullable": true,
@@ -72115,14 +72335,25 @@
             "type": "string"
           },
           "library_id": {
-            "$ref": "#/components/schemas/Uuid"
+            "nullable": true,
+            "description": "Optional destination library for a new project. Omitted or null leaves the project unassigned.",
+            "type": "string",
+            "format": "uuid"
           },
           "publication_status": {
-            "$ref": "#/components/schemas/KclProjectPublicationStatus"
+            "nullable": true,
+            "description": "Owner-controlled publication state.\n\nOn creation, omit or send null to start private. Replacement preserves the existing state.",
+            "type": "string",
+            "enum": [
+              "private",
+              "draft",
+              null
+            ]
           },
           "title": {
-            "description": "User-facing title for the new project.",
-            "type": "string"
+            "description": "User-facing title. Must contain at least one non-whitespace character.",
+            "type": "string",
+            "minLength": 1
           }
         },
         "required": [
